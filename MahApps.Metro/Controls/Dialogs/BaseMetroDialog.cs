@@ -51,12 +51,24 @@ namespace MahApps.Metro.Controls.Dialogs
             set { SetValue(DialogBottomProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the size of the dialog title font.
+        /// </summary>
+        /// <value>
+        /// The size of the dialog title font.
+        /// </value>
         public double DialogTitleFontSize
         {
             get { return (double)GetValue(DialogTitleFontSizeProperty); }
             set { SetValue(DialogTitleFontSizeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the size of the dialog message font.
+        /// </summary>
+        /// <value>
+        /// The size of the dialog message font.
+        /// </value>
         public double DialogMessageFontSize
         {
             get { return (double)GetValue(DialogMessageFontSizeProperty); }
@@ -111,17 +123,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 this.Resources.MergedDictionaries.Add(DialogSettings.CustomResourceDictionary);
             }
 
-            var titleFontSizeResource = TryFindResource("DialogTitleFontSize") as double?;
-            if(titleFontSizeResource.HasValue)
-            {
-                this.DialogTitleFontSize = titleFontSizeResource.Value;
-            }
-            var messageFontSizeResource = TryFindResource("DialogMessageFontSize") as double?;
-            if (messageFontSizeResource.HasValue)
-            {
-                this.DialogMessageFontSize = messageFontSizeResource.Value;
-            }
-
+            this.DialogTitleFontSize = (TryFindResource("DialogTitleFontSize") as double?).GetValueOrDefault(this.DialogTitleFontSize);
+            this.DialogMessageFontSize = (TryFindResource("DialogMessageFontSize") as double?).GetValueOrDefault(this.DialogMessageFontSize);
 
             this.Loaded += (sender, args) =>
             {
@@ -384,7 +387,6 @@ namespace MahApps.Metro.Controls.Dialogs
             CancellationToken = CancellationToken.None;
             DialogTitleFontSize = Double.NaN;
             DialogMessageFontSize = Double.NaN;
-
         }
 
         /// <summary>
@@ -448,12 +450,19 @@ namespace MahApps.Metro.Controls.Dialogs
         public bool SuppressDefaultResources { get; set; }
 
         /// <summary>
-        /// Gets/sets the font size for the title.
+        /// Gets or sets the size of the dialog title font.
         /// </summary>
+        /// <value>
+        /// The size of the dialog title font.
+        /// </value>
         public double DialogTitleFontSize { get; set; }
+
         /// <summary>
-        /// Gets/sets the font size for the text.
+        /// Gets or sets the size of the dialog message font.
         /// </summary>
+        /// <value>
+        /// The size of the dialog message font.
+        /// </value>
         public double DialogMessageFontSize { get; set; }
     }
 
