@@ -125,6 +125,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="Controls\Helper\AutomationHelper.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
     <Compile Include="Controls\Helper\ControlsHelper.cs" />
