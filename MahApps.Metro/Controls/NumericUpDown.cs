@@ -779,11 +779,7 @@ namespace MahApps.Metro.Controls
                     if (_valueTextBox != null)
                     {
                         _valueTextBox.Text = (this.TextIfNull != null) ? TextIfNull : null;
-                        //if (this.TextIfNull!=null)
-                        //{
-
-                        //}
-                        //_valueTextBox.Text = null;
+                       
                     }
                     if (oldValue != newValue)
                     {
