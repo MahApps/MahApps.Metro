@@ -57,8 +57,6 @@ namespace MahApps.Metro.Controls
         
         public FlipView()
         {
-            this.Unloaded += FlipView_Unloaded;
-            this.Loaded += FlipView_Loaded;
             this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
         }
 
@@ -123,51 +121,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        void FlipView_Loaded(object sender, RoutedEventArgs e)
-        {
-            /* Loaded event fires twice if its a child of a TabControl.
-             * Once because the TabControl seems to initiali(z|s)e everything.
-             * And a second time when the Tab (housing the FlipView) is switched to. */
-
-            if (backButton == null || forwardButton == null) //OnApplyTemplate hasn't been called yet.
-                ApplyTemplate();
-
-            if (loaded) return; //Counteracts the double 'Loaded' event issue.
-
-            backButton.Click += backButton_Click;
-            forwardButton.Click += forwardButton_Click;
-            upButton.Click += upButton_Click;
-            downButton.Click += downButton_Click;
-
-            this.SelectionChanged += FlipView_SelectionChanged;
-            this.PreviewKeyDown += FlipView_PreviewKeyDown;
-
-            SelectedIndex = 0;
-
-            DetectControlButtonsStatus();
-
-            ShowBanner();
-
-            loaded = true;
-        }
-
-        void FlipView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.Unloaded -= FlipView_Unloaded;
-            this.MouseLeftButtonDown -= FlipView_MouseLeftButtonDown;
-            this.SelectionChanged -= FlipView_SelectionChanged;
-
-            this.PreviewKeyDown -= FlipView_PreviewKeyDown;
-            backButton.Click -= backButton_Click;
-            forwardButton.Click -= forwardButton_Click;
-            upButton.Click -= upButton_Click;
-            downButton.Click -= downButton_Click;
-
-            if (hideControlStoryboardCompletedHandler != null)
-                hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
-
-            loaded = false;
-        }
+       
 
         void FlipView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -206,6 +160,20 @@ namespace MahApps.Metro.Controls
             bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
 
             bannerLabel.Opacity = IsBannerEnabled ? 1.0 : 0.0;
+
+            backButton.Click += backButton_Click;
+            forwardButton.Click += forwardButton_Click;
+            upButton.Click += upButton_Click;
+            downButton.Click += downButton_Click;
+
+            this.SelectionChanged += FlipView_SelectionChanged;
+            this.PreviewKeyDown += FlipView_PreviewKeyDown;
+
+            SelectedIndex = 0;
+
+            DetectControlButtonsStatus();
+
+            ShowBanner();
         }
 
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
