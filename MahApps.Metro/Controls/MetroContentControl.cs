@@ -48,12 +48,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
             var sb = ((Storyboard)GetTemplateChild("AfterLoadedStoryBoard"));
-            sb.Completed += Sb_Completed;
-        }
-
-        private void Sb_Completed(object sender, EventArgs e)
-        {
-            this.InvalidateVisual();
+            sb.Completed += (s, e) => { InvalidateVisual(); };
         }
 
         void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
