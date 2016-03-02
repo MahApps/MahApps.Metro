@@ -47,7 +47,6 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
-        private bool loaded;
         private bool controlsVisibilityOverride;
 
         static FlipView()
