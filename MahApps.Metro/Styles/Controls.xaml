@@ -193,7 +193,8 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      Data="M0,39.984375L96,39.984375 96,48 0,48 0,39.984375z"
+                      Data="M0,40 L96,40 96,48 0,48 0,40z"
+                      RenderOptions.EdgeMode="Aliased"
                       SnapsToDevicePixels="True"
                       Stretch="Uniform" />
             </Button>
@@ -216,15 +217,17 @@
                     </MultiBinding>
                 </Button.Visibility>
                 <!--  normal state  -->
-                <Path x:Name="PART_MaxPath"
-                      Width="10"
-                      Height="10"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      Data="M42.75,42.75L42.75,469.25 469.25,469.25 469.25,42.75 42.75,42.75z M0,0L512,0 512,512 0,512 0,0z"
-                      SnapsToDevicePixels="True"
-                      Stretch="Uniform" />
+                <Canvas Width="12"
+                        Height="12"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Path x:Name="PART_MaxPath"
+                          Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                          Data="M2,2 2,10 10,10 10,2 2,2Z M1,11 1,1 11,1 11,11 1,11Z"
+                          RenderOptions.EdgeMode="Aliased"
+                          SnapsToDevicePixels="True"
+                          Stretch="Uniform" />
+                </Canvas>
             </Button>
             <Button x:Name="PART_Close"
                     Focusable="False"
@@ -254,7 +257,7 @@
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-                <Setter TargetName="PART_MaxPath" Property="Data" Value="M42.75,128L42.75,469.25 384,469.25 384,128 42.75,128z M128,42.75L128,85.25 426.75,85.25 426.75,384 469.25,384 469.25,42.75 128,42.75z M85.25,0L512,0 512,426.75 426.75,426.75 426.75,512 0,512 0,85.25 85.25,85.25 85.25,0z" />
+                <Setter TargetName="PART_MaxPath" Property="Data" Value="M10,9 9,9 9,3 3,3 3,2 10,2 10,9Z M8,11 1,11 1,4 8,4 8,11Z M2,1 2,3 0,3 0,12 9,12 9,10 11,10 11,1 2,1Z" />
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
