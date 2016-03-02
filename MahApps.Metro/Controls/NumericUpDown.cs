@@ -438,11 +438,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets the formatting for the displaying <see cref="Value" />
+        ///     Gets or sets the text that will be displayed if value is zero <see cref="TextIfZero" />
         /// </summary>
         /// <remarks>
-        ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
-        /// </remarks>
+        ///    If set to any other value than null, the property value will be shown when the NumericUpDownValue is equal to zero.
         [Category("Common")]
         public string TextIfZero
         {
@@ -451,11 +450,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets the formatting for the displaying <see cref="Value" />
+        ///     Gets or sets the text that will be displayed if value is null <see cref="TextIfNull" />
         /// </summary>
         /// <remarks>
-        ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
-        /// </remarks>
+        ///    If set to any other value than null, the property value will be shown when the NumericUpDownValue is null.
         [Category("Common")]
         public string TextIfNull
         {
