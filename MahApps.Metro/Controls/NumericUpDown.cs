@@ -66,6 +66,18 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true));
 
+        public static readonly DependencyProperty TextIfZeroProperty = DependencyProperty.Register(
+           "TextIfZero",
+           typeof(string),
+           typeof(NumericUpDown),
+           new FrameworkPropertyMetadata(null));
+
+        public static readonly DependencyProperty TextIfNullProperty = DependencyProperty.Register(
+          "TextIfNull",
+          typeof(string),
+          typeof(NumericUpDown),
+          new FrameworkPropertyMetadata(null));
+
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             "Value",
             typeof(double?),
@@ -426,6 +438,33 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        ///     Gets or sets the formatting for the displaying <see cref="Value" />
+        /// </summary>
+        /// <remarks>
+        ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
+        /// </remarks>
+        [Category("Common")]
+        public string TextIfZero
+        {
+            get { return (string)GetValue(TextIfZeroProperty); }
+            set { SetValue(TextIfZeroProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets the formatting for the displaying <see cref="Value" />
+        /// </summary>
+        /// <remarks>
+        ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
+        /// </remarks>
+        [Category("Common")]
+        public string TextIfNull
+        {
+            get { return (string)GetValue(TextIfNullProperty); }
+            set { SetValue(TextIfNullProperty, value); }
+        }
+
+
+        /// <summary>
         ///     Gets or sets the horizontal alignment of the contents of the text box.
         /// </summary>
         [Bindable(true)]
@@ -741,7 +780,12 @@ namespace MahApps.Metro.Controls
                 {
                     if (_valueTextBox != null)
                     {
-                        _valueTextBox.Text = null;
+                        _valueTextBox.Text = (this.TextIfNull != null) ? TextIfNull : null;
+                        //if (this.TextIfNull!=null)
+                        //{
+
+                        //}
+                        //_valueTextBox.Text = null;
                     }
                     if (oldValue != newValue)
                     {
@@ -921,7 +965,13 @@ namespace MahApps.Metro.Controls
         {
             if (!newValue.HasValue)
             {
-                _valueTextBox.Text = null;
+                _valueTextBox.Text = (this.TextIfNull != null)? this.TextIfNull: null;
+                return;
+            }
+
+            if(newValue==0 && this.TextIfZero!=null)
+            {
+                _valueTextBox.Text = this.TextIfZero;
                 return;
             }
 
