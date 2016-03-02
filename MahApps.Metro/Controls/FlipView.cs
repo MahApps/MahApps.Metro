@@ -355,7 +355,7 @@ namespace MahApps.Metro.Controls
             {
                 var newValue = value ?? BannerText;
 
-                if (newValue == null) return;
+                if (newValue == null|| hideControlStoryboard==null) return;
 
                 if (hideControlStoryboardCompletedHandler != null)
                     hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
