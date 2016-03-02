@@ -35,7 +35,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         Message = message
                     };
-
+                    SetDialogFontSizes(settings, dialog);
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
 
@@ -99,8 +99,12 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         Title = title,
                         Message = message,
-                        Input = settings.DefaultText
+                        Input = settings.DefaultText,
+
+
                     };
+
+                    SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -140,6 +144,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+
+       
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -168,6 +174,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         ButtonStyle = style
                     };
+                    SetDialogFontSizes(settings, dialog);
+
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -231,7 +239,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         IsCancelable = isCancelable
                     };
-
+                    SetDialogFontSizes(settings, dialog);
                     if (settings == null)
                     {
                         settings = window.MetroDialogOptions;
@@ -512,6 +520,22 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Closed += closedHandler;
 
             return win;
+        }
+
+        private static void SetDialogFontSizes(MetroDialogSettings settings, BaseMetroDialog dialog)
+        {
+            if (settings == null)
+            {
+                return;
+            }
+            if (!double.IsNaN(settings.DialogTitleFontSize))
+            {
+                dialog.DialogTitleFontSize = settings.DialogTitleFontSize;
+            }
+            if (!double.IsNaN(settings.DialogMessageFontSize))
+            {
+                dialog.DialogMessageFontSize = settings.DialogMessageFontSize;
+            }
         }
 
         public static event EventHandler<DialogStateChangedEventArgs> DialogOpened;
