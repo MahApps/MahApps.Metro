@@ -322,24 +322,27 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
-                dialog.Dispatcher.Invoke(new Action(() =>
+                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                 {
+                    settings = settings ?? window.MetroDialogOptions;
+
+                    SetDialogFontSizes(settings, dialog);
+
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
-                }));
-            }).ContinueWith(y =>
-                ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync().ContinueWith(x =>
-                {
-                    dialog.OnShown();
 
-                    if (DialogOpened != null)
+                    return dialog.WaitForLoadAsync().ContinueWith(x =>
                     {
-                        DialogOpened(window, new DialogStateChangedEventArgs());
-                    }
-                })))));
+                        dialog.OnShown();
+
+                        if (DialogOpened != null)
+                        {
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                        }
+                    });
+                }));
+            }).Unwrap();
         }
-
-
 
         /// <summary>
         /// Hides a visible Metro Dialog instance.
