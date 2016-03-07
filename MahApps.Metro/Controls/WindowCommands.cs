@@ -9,6 +9,7 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(WindowCommands))]
     public class WindowCommands : ItemsControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ThemeProperty =
@@ -177,10 +178,17 @@ namespace MahApps.Metro.Controls
         {
             if (container != null)
             {
-                // hide the container, if there is no UIElement
                 if (null == item)
                 {
-                    container.Visibility = Visibility.Collapsed;
+                    // if item is not a UIElement then maybe the ItemsSource binds to a collection of objects
+                    // and an ItemTemplate is set, so let's try to solve this
+                    container.ApplyTemplate();
+                    var content = container.ContentTemplate?.LoadContent() as UIElement;
+                    if (null == content)
+                    {
+                        // no UIElement was found, so don't show this container
+                        container.Visibility = Visibility.Collapsed;
+                    }
                     return;
                 }
 
@@ -313,6 +321,11 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsSeparatorVisibleProperty); }
             set { SetValue(IsSeparatorVisibleProperty, value); }
+        }
+
+        static WindowCommandsItem()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommandsItem), new FrameworkPropertyMetadata(typeof(WindowCommandsItem)));
         }
     }
 }
