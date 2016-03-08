@@ -20,7 +20,6 @@
                     Height="40"
                     VerticalAlignment="Bottom"
                     Style="{DynamicResource MetroCircleButtonStyle}"
-                     AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat='nav{0}' , Mode=OneWay }"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
