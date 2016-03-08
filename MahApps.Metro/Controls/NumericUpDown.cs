@@ -1063,7 +1063,7 @@ namespace MahApps.Metro.Controls
         {
             _manualChange = true;
 
-            if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
+            if (HasDecimals == true && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
             {
                 TextBox textBox = sender as TextBox;
 
