@@ -32,6 +32,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToolBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TreeView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.StatusBar.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="FloatingMessageContainerStyle" TargetType="{x:Type ContentControl}">
@@ -42,13 +44,6 @@
         <Setter Property="MaxHeight" Value="0" />
         <Setter Property="Visibility" Value="Visible" />
     </Style>
-
-    <Style x:Key="MetroToggleSwitchButton"
-           BasedOn="{StaticResource {x:Type Controls:ToggleSwitchButton}}"
-           TargetType="{x:Type Controls:ToggleSwitchButton}" />
-    <Style x:Key="MetroToggleSwitch"
-           BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}"
-           TargetType="{x:Type Controls:ToggleSwitch}" />
 
     <!--  note: default style for textblock is now in MetroWindow !!!  -->
 
