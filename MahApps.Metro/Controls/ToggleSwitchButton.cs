@@ -112,7 +112,7 @@ namespace MahApps.Metro.Controls
         {
             if (_ThumbTranslate != null && _SwitchTrack != null && _ThumbIndicator != null)
             {
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
 
                 _thumbAnimation = new DoubleAnimation();
                 _thumbAnimation.To = destination;
@@ -172,7 +172,7 @@ namespace MahApps.Metro.Controls
             if (_ThumbTranslate != null)
             {
                 _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, null);
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
                 _ThumbTranslate.X = destination;
                 _thumbAnimation = null;
             }
@@ -189,7 +189,7 @@ namespace MahApps.Metro.Controls
                 if (_SwitchTrack != null && _ThumbIndicator != null)
                 {
                     double lastDragPosition = _lastDragPosition.Value;
-                    _ThumbTranslate.X = Math.Min(ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth), Math.Max(0, lastDragPosition + e.HorizontalChange));
+                    _ThumbTranslate.X = Math.Min(ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right), Math.Max(0, lastDragPosition + e.HorizontalChange));
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace MahApps.Metro.Controls
         {
             if (_ThumbTranslate != null && _SwitchTrack != null && _ThumbIndicator != null)
             {
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
                 _ThumbTranslate.X = destination;
             }
         }
