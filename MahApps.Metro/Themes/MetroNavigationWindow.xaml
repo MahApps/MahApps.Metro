@@ -12,6 +12,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="PART_BackButton"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_BackButton"
                     Width="40"
                     Height="40"
                     VerticalAlignment="Bottom"
@@ -44,6 +45,7 @@
                 </Button.LayoutTransform>
             </Button>
             <Button x:Name="PART_ForwardButton"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_ForwardButton"
                     Width="40"
                     Height="40"
                     HorizontalAlignment="Right"

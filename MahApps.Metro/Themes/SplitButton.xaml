@@ -29,6 +29,7 @@
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}"
                         FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        Controls:AutomationHelper.DefaultAutomationId="PART_Button"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -64,6 +65,7 @@
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
                         BorderBrush="{TemplateBinding BorderBrush}"
+                        Controls:AutomationHelper.DefaultAutomationId="PART_Expander"
                         FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Rectangle x:Name="PART_Rectangle"
@@ -101,6 +103,7 @@
                        StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              Style="{TemplateBinding ListBoxStyle}"
+                             Controls:AutomationHelper.DefaultAutomationId="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -132,6 +135,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button x:Name="PART_Button"
+                        Controls:AutomationHelper.DefaultAutomationId="PART_Button"
                         Grid.Row="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
@@ -174,6 +178,7 @@
                     </StackPanel>
                 </Button>
                 <Button x:Name="PART_Expander"
+                        Controls:AutomationHelper.DefaultAutomationId="PART_Expander"
                         Grid.Row="1"
                         Height="20"
                         Style="{TemplateBinding ButtonArrowStyle}"
@@ -210,6 +215,7 @@
                     </Rectangle>
                 </Button>
                 <Popup x:Name="PART_Popup"
+                       Controls:AutomationHelper.DefaultAutomationId="PART_Popup"
                        MinWidth="{TemplateBinding ActualWidth}"
                        IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                        PlacementTarget="{Binding ElementName=PART_Expander}"
@@ -217,6 +223,7 @@
                        StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              Style="{TemplateBinding ListBoxStyle}"
+                             Controls:AutomationHelper.DefaultAutomationId="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"

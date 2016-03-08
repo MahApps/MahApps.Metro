@@ -7,7 +7,178 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="PART_Min"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Min"
+                    Focusable="False"
+                    IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowMinButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ResizeMode"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                      SnapsToDevicePixels="True" />
+            </Button>
+            <Button x:Name="PART_Max"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Max"
+                    Focusable="False"
+                    IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowMaxRestoreButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ResizeMode"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <!--  normal state  -->
+                <Path x:Name="PART_MaxPath"
+                      Width="10"
+                      Height="10"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
+                      SnapsToDevicePixels="True" />
+            </Button>
+            <Button x:Name="PART_Close"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Close"
+                    Focusable="False"
+                    IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    RenderOptions.EdgeMode="Aliased"
+                    ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowCloseButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                      SnapsToDevicePixels="True" />
+            </Button>
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                <Setter TargetName="PART_MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
+    <ControlTemplate x:Key="Win10WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="PART_Min"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Min"
+                    Focusable="False"
+                    IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                    UseLayoutRounding="True">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowMinButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ResizeMode"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <Path Width="10"
+                      Height="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="M0,39.984375L96,39.984375 96,48 0,48 0,39.984375z"
+                      SnapsToDevicePixels="True"
+                      Stretch="Uniform" />
+            </Button>
+            <Button x:Name="PART_Max"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Max"
+                    Focusable="False"
+                    IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                    UseLayoutRounding="True">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowMaxRestoreButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ResizeMode"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <!--  normal state  -->
+                <Path x:Name="PART_MaxPath"
+                      Width="10"
+                      Height="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="M42.75,42.75L42.75,469.25 469.25,469.25 469.25,42.75 42.75,42.75z M0,0L512,0 512,512 0,512 0,0z"
+                      SnapsToDevicePixels="True"
+                      Stretch="Uniform" />
+            </Button>
+            <Button x:Name="PART_Close"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Close"
+                    Focusable="False"
+                    IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                    UseLayoutRounding="True">
+                <Button.Visibility>
+                    <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="ShowCloseButton"
+                                 Mode="OneWay" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 Path="UseNoneWindowStyle"
+                                 Mode="OneWay" />
+                    </MultiBinding>
+                </Button.Visibility>
+                <Path Width="10"
+                      Height="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      Data="M51.25,28.75L240,217.5 428.75,28.75 451.25,51.25 262.5,240 451.25,428.75 428.75,451.25 240,262.5 51.25,451.25 28.75,428.75 217.5,240 28.75,51.25 51.25,28.75z"
+                      SnapsToDevicePixels="True"
+                      Stretch="Uniform" />
+            </Button>
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                <Setter TargetName="PART_MaxPath" Property="Data" Value="M42.75,128L42.75,469.25 384,469.25 384,128 42.75,128z M128,42.75L128,85.25 426.75,85.25 426.75,384 469.25,384 469.25,42.75 128,42.75z M85.25,0L512,0 512,426.75 426.75,426.75 426.75,512 0,512 0,85.25 85.25,85.25 85.25,0z" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />

@@ -59,6 +59,7 @@
                         <ListView x:Name="PART_Headers"
                                   Grid.Row="1"
                                   Style="{x:Null}"
+                                  Controls:AutomationHelper.DefaultAutomationId="PART_Headers"
                                   BorderBrush="{x:Null}"
                                   ItemContainerStyle="{StaticResource PivotListViewItem}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
@@ -83,7 +84,8 @@
                                       Grid.Row="2"
                                       VerticalAlignment="Stretch"
                                       HorizontalScrollBarVisibility="Auto"
-                                      VerticalScrollBarVisibility="Disabled">
+                                      VerticalScrollBarVisibility="Disabled"
+                                      Controls:AutomationHelper.DefaultAutomationId="PART_Scroll">
                             <ItemsControl x:Name="itemscontrol"
                                           Margin="0 0 250 0"
                                           ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">

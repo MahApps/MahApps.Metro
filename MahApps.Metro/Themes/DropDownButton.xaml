@@ -23,6 +23,7 @@
                     <ContentControl x:Name="PART_ButtonContent"
                                     MinWidth="20"
                                     Margin="3"
+                                    Controls:AutomationHelper.DefaultAutomationId="PART_ButtonContent"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -57,6 +58,7 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
+                                 Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                  MinWidth="{TemplateBinding ActualWidth}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                                  IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -81,6 +83,7 @@
             <Button x:Name="PART_Button"
                     Width="{TemplateBinding Width}"
                     Style="{TemplateBinding ButtonStyle}"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Button"
                     Background="{TemplateBinding Background}"
                     Foreground="{TemplateBinding Foreground}"
                     Command="{TemplateBinding Command}"
@@ -138,6 +141,7 @@
                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding ItemsSource}"
+                                 Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                  StaysOpen="False" />
                 </Button.ContextMenu>
             </Button>
@@ -195,7 +199,8 @@
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                 CommandTarget="{TemplateBinding CommandTarget}"
                                 FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Controls:AutomationHelper.DefaultAutomationId="PART_Button">
                             <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
@@ -268,6 +273,7 @@
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
+                                             Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                              StaysOpen="False" />
                             </Button.ContextMenu>
                         </Button>

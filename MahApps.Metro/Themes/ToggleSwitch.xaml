@@ -69,7 +69,8 @@
                                 </Rectangle.RenderTransform>
                             </Rectangle>
                         </Grid>
-                        <Thumb x:Name="PART_DraggingThumb">
+                        <Thumb x:Name="PART_DraggingThumb"
+                               Controls:AutomationHelper.DefaultAutomationId="PART_DraggingThumb">
                             <Thumb.Template>
                                 <ControlTemplate>
                                     <Rectangle Fill="Transparent" />
@@ -150,6 +151,7 @@
                                                          Grid.Row="1"
                                                          Grid.Column="1"
                                                          VerticalAlignment="Center"
+                                                         Controls:AutomationHelper.DefaultAutomationId="Switch"
                                                          Style="{TemplateBinding ToggleSwitchButtonStyle}"
                                                          Background="{TemplateBinding Background}"
                                                          FocusVisualStyle="{x:Null}"
