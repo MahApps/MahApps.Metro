@@ -12,7 +12,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using MahApps.Metro.Converters;
 
 namespace MahApps.Metro.Controls
 {
