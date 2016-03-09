@@ -69,10 +69,10 @@
                                 </Rectangle.RenderTransform>
                             </Rectangle>
                         </Grid>
-                        <Thumb x:Name="PART_DraggingThumb">
+                        <Thumb x:Name="PART_DraggingThumb" Background="Transparent">
                             <Thumb.Template>
                                 <ControlTemplate>
-                                    <Rectangle Fill="Transparent" />
+                                    <Grid Background="{TemplateBinding Background}" />
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>

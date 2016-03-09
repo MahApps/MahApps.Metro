@@ -30,6 +30,7 @@ namespace MahApps.Metro.Controls
         private Grid _SwitchTrack;
         private Shape _ThumbIndicator;
         private TranslateTransform _ThumbTranslate;
+        private readonly PropertyChangeNotifier isCheckedPropertyChangeNotifier;
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
@@ -98,11 +99,11 @@ namespace MahApps.Metro.Controls
         public ToggleSwitchButton()
         {
             DefaultStyleKey = typeof(ToggleSwitchButton);
-            Checked += ToggleSwitchButton_Checked;
-            Unchecked += ToggleSwitchButton_Checked;
+            isCheckedPropertyChangeNotifier = new PropertyChangeNotifier(this, ToggleSwitchButton.IsCheckedProperty);
+            isCheckedPropertyChangeNotifier.ValueChanged += IsCheckedPropertyChangeNotifierValueChanged;
         }
 
-        void ToggleSwitchButton_Checked(object sender, RoutedEventArgs e)
+        private void IsCheckedPropertyChangeNotifierValueChanged(object sender, EventArgs e)
         {
             UpdateThumb();
         }
@@ -132,12 +133,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnToggle()
-        {
-            IsChecked = IsChecked != true;
-            UpdateThumb();
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -147,7 +142,7 @@ namespace MahApps.Metro.Controls
             _ThumbIndicator = GetTemplateChild(PART_ThumbIndicator) as Shape;
             _ThumbTranslate = GetTemplateChild(PART_ThumbTranslate) as TranslateTransform;
 
-            if (_ThumbIndicator != null && _BackgroundTranslate != null)
+            if (_ThumbIndicator != null && _ThumbTranslate != null && _BackgroundTranslate != null)
             {
                 Binding translationBinding;
                 translationBinding = new System.Windows.Data.Binding("X");
@@ -155,13 +150,19 @@ namespace MahApps.Metro.Controls
                 BindingOperations.SetBinding(_BackgroundTranslate, TranslateTransform.XProperty, translationBinding);
             }
 
-            if (_DraggingThumb != null && _SwitchTrack != null && _ThumbIndicator != null && _ThumbTranslate != null)
+            if (_DraggingThumb != null && _ThumbIndicator != null && _ThumbTranslate != null)
             {
+                _DraggingThumb.DragStarted -= _DraggingThumb_DragStarted;
+                _DraggingThumb.DragDelta -= _DraggingThumb_DragDelta;
+                _DraggingThumb.DragCompleted -= _DraggingThumb_DragCompleted;
                 _DraggingThumb.DragStarted += _DraggingThumb_DragStarted;
                 _DraggingThumb.DragDelta += _DraggingThumb_DragDelta;
                 _DraggingThumb.DragCompleted += _DraggingThumb_DragCompleted;
-
-                _SwitchTrack.SizeChanged += _SwitchTrack_SizeChanged;
+                if (_SwitchTrack != null)
+                {
+                    _SwitchTrack.SizeChanged -= _SwitchTrack_SizeChanged;
+                    _SwitchTrack.SizeChanged += _SwitchTrack_SizeChanged;
+                }
             }
         }
 
@@ -199,19 +200,22 @@ namespace MahApps.Metro.Controls
             _lastDragPosition = null;
             if (!_isDragging)
             {
-                OnToggle();
+                OnClick();
             }
             else if (_ThumbTranslate != null && _SwitchTrack != null)
             {
                 if (!IsChecked.GetValueOrDefault() && _ThumbTranslate.X + 6.5 >= _SwitchTrack.ActualWidth / 2)
                 {
-                    OnToggle();
+                    OnClick();
                 }
                 else if (IsChecked.GetValueOrDefault() && _ThumbTranslate.X + 6.5 <= _SwitchTrack.ActualWidth / 2)
                 {
-                    OnToggle();
+                    OnClick();
                 }
-                else UpdateThumb();
+                else
+                {
+                    UpdateThumb();
+                }
             }
         }
 
