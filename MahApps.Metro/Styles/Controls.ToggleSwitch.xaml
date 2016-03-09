@@ -19,12 +19,12 @@
            TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="20" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
@@ -35,23 +35,23 @@
                         <Grid x:Name="PART_SwitchTrack"
                               SnapsToDevicePixels="True"
                               UseLayoutRounding="False">
-                            <Border Background="Gray"
+                            <Border Background="{TemplateBinding BorderBrush}"
                                     BorderThickness="0"
                                     CornerRadius="10"
                                     SnapsToDevicePixels="False">
                                 <Grid>
                                     <Border x:Name="PART_SwitchBrushBorder"
-                                            Margin="2"
-                                            Background="White"
+                                            Margin="{TemplateBinding BorderThickness}"
+                                            Background="{TemplateBinding OffSwitchBrush}"
                                             BorderThickness="0"
                                             CornerRadius="8"
                                             SnapsToDevicePixels="False" />
                                     <Ellipse x:Name="PART_ThumbIndicator"
-                                             Width="10"
-                                             Height="10"
+                                             Width="{TemplateBinding ThumbIndicatorWidth}"
+                                             Height="{TemplateBinding ThumbIndicatorWidth}"
                                              Margin="5 0"
                                              HorizontalAlignment="Left"
-                                             Fill="Black"
+                                             Fill="{TemplateBinding ThumbIndicatorBrush}"
                                              Stroke="Transparent"
                                              StrokeThickness="0">
                                         <Ellipse.RenderTransform>
@@ -60,31 +60,12 @@
                                     </Ellipse>
                                 </Grid>
                             </Border>
-                            <!--  <Border Background="Transparent"  -->
-                            <!--  BorderThickness="0"  -->
-                            <!--  CornerRadius="10"  -->
-                            <!--  ClipToBounds="True"  -->
-                            <!--  SnapsToDevicePixels="False">  -->
-                            <!--  <Ellipse x:Name="PART_ThumbIndicator"  -->
-                            <!--  Width="10"  -->
-                            <!--  Height="10"  -->
-                            <!--  Margin="0"  -->
-                            <!--  HorizontalAlignment="Left"  -->
-                            <!--  Fill="Black"  -->
-                            <!--  Stroke="Transparent"  -->
-                            <!--  StrokeThickness="0">  -->
-                            <!--                                    <Ellipse.RenderTransform>-->
-                            <!--                                        <TranslateTransform x:Name="PART_ThumbTranslate" />-->
-                            <!--                                    </Ellipse.RenderTransform>-->
-                            <!--                                </Ellipse>-->
-                            <!--                            </Border>-->
                             <Border x:Name="PART_BackgroundOverlay"
                                     Background="{DynamicResource WhiteBrush}"
                                     BorderThickness="0"
                                     Opacity="0"
                                     CornerRadius="10"
                                     SnapsToDevicePixels="False" />
-
                             <!--  <Border Background="{TemplateBinding Background}"  -->
                             <!--  BorderBrush="{TemplateBinding BorderBrush}"  -->
                             <!--  BorderThickness="{TemplateBinding BorderThickness}">  -->
@@ -134,19 +115,20 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
-<!--                                    <Storyboard>-->
-<!--                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_BackgroundOverlay" Storyboard.TargetProperty="(UIElement.Opacity)">-->
-<!--                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.4" />-->
-<!--                                        </DoubleAnimationUsingKeyFrames>-->
-<!--                                    </Storyboard>-->
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_BackgroundOverlay" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.4" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OnSwitchBrush, Mode=OneWay}" />
-                            <Setter TargetName="PART_ThumbIndicator" Property="Fill" Value="White" />
+                        <Trigger Property="ToggleButton.IsChecked" Value="True">
+                            <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=OnSwitchBrush, Mode=OneWay}" />
+                            <Setter TargetName="PART_SwitchBrushBorder" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_ThumbIndicator" Property="Fill" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="PART_ThumbIndicator" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
@@ -160,7 +142,12 @@
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch.Win10"
            BasedOn="{StaticResource MetroToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}">
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton.Win10}" />
     </Style>
-
+    
 </ResourceDictionary>
