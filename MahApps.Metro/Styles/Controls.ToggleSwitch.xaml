@@ -3,14 +3,20 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <!--  Metro style  -->
 
+    <!--  obsolete  -->
     <Style x:Key="MetroToggleSwitchButton"
-           BasedOn="{StaticResource {x:Type Controls:ToggleSwitchButton}}"
+           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
            TargetType="{x:Type Controls:ToggleSwitchButton}" />
 
+    <!--  obsolete  -->
     <Style x:Key="MetroToggleSwitch"
-           BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}"
+           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}" />
 
     <!--  Win10 style  -->
@@ -18,7 +24,7 @@
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" />
 
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton.Win10"
-           BasedOn="{StaticResource MetroToggleSwitchButton}"
+           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
            TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="Width" Value="44" />
         <Setter Property="Height" Value="20" />
@@ -141,7 +147,7 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch.Win10"
-           BasedOn="{StaticResource MetroToggleSwitch}"
+           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffSwitchBrush.Win10}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />

@@ -97,9 +97,13 @@ namespace MahApps.Metro.Controls
             set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
+        static ToggleSwitchButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitchButton), new FrameworkPropertyMetadata(typeof(ToggleSwitchButton)));
+        }
+
         public ToggleSwitchButton()
         {
-            DefaultStyleKey = typeof(ToggleSwitchButton);
             isCheckedPropertyChangeNotifier = new PropertyChangeNotifier(this, ToggleSwitchButton.IsCheckedProperty);
             isCheckedPropertyChangeNotifier.ValueChanged += IsCheckedPropertyChangeNotifierValueChanged;
         }

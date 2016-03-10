@@ -158,14 +158,14 @@
                     HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
-                       BasedOn="{StaticResource MetroToggleSwitch}"
+                       BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
                        TargetType="{x:Type Controls:ToggleSwitch}">
                     <Setter Property="OffLabel" Value="False" />
                     <Setter Property="OnLabel" Value="True" />
                     <Setter Property="SwitchForeground" Value="Red" />
                 </Style>
                 <Style x:Key="CustomMetroToggleSwitchButton"
-                       BasedOn="{StaticResource MetroToggleSwitchButton}"
+                       BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
                        TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Setter Property="SwitchForeground" Value="YellowGreen" />
                 </Style>
