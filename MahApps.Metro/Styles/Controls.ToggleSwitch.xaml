@@ -45,25 +45,25 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               UseLayoutRounding="False">
                             <Rectangle x:Name="PART_SwitchBrushOuterBorder"
-                                       Height="20"
-                                       RadiusX="10"
-                                       RadiusY="10"
+                                       Height="{TemplateBinding Height}"
+                                       RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
+                                       RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
                                        Fill="{TemplateBinding OffSwitchBrush}"
                                        Stroke="{TemplateBinding BorderBrush}"
                                        StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDouble}}"
-                                       Width="44" />
+                                       Width="{TemplateBinding Width}" />
                             <Rectangle x:Name="PART_SwitchBrushBorder"
                                        Fill="{TemplateBinding OnSwitchBrush}"
                                        Opacity="0"
-                                       Height="20"
-                                       RadiusX="10"
-                                       RadiusY="10"
+                                       Height="{TemplateBinding Height}"
+                                       RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
+                                       RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
                                        StrokeThickness="0"
-                                       Width="44" />
+                                       Width="{TemplateBinding Width}" />
                             <Grid x:Name="PART_ThumbIndicator"
                                   HorizontalAlignment="Left"
-                                  Height="20"
-                                  Width="20">
+                                  Height="{TemplateBinding Height}"
+                                  Width="{TemplateBinding Height}">
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate" />
                                 </Grid.RenderTransform>

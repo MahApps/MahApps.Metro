@@ -179,6 +179,7 @@
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Converters\NullToUnsetValueConverter.cs" />
+    <Compile Include="Converters\RectangleHeightToRadiusConverter.cs" />
     <Compile Include="Converters\ThicknessBindingConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
