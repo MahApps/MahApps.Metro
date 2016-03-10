@@ -159,6 +159,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
+        public static readonly DependencyProperty HasScientificNotationProperty = DependencyProperty.Register(
+            "HasScientificNotation",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
+
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
@@ -463,6 +469,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(HasDecimalsProperty, value); }
         }
 
+        /// <summary>
+        ///     Indicates if the NumericUpDown should show the decimal separator or not.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool HasScientificNotation
+        {
+            get { return (bool)GetValue(HasScientificNotationProperty); }
+            set { SetValue(HasScientificNotationProperty, value); }
+        }
+        
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
@@ -704,13 +722,14 @@ namespace MahApps.Metro.Controls
                         else if (textBox.SelectionStart > 0)
                         {
                             string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp))
+                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp) && HasScientificNotation)
                             {
                                 e.Handled = false;
                             }
                         }
                     }
-                    else if (text.Equals(ScientificNotationChar, StrComp) &&
+                    else if (HasScientificNotation &&
+                             text.Equals(ScientificNotationChar, StrComp) &&
                              textBox.SelectionStart > 0 &&
                              !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
                     {
