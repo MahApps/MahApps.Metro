@@ -192,16 +192,30 @@
             </StackPanel.Resources>
             <Label Content="Enable / Visible" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch x:Name="enabledSwitch"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"
                                    OffLabel="Disabled"
                                    OnLabel="Enabled" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="False"
                                    OffLabel="Collapsed"
                                    OnLabel="Visible" />
-            <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
+            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
+                                   Margin="{StaticResource ControlMargin}"
+                                   Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
+
+            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   Margin="{StaticResource ControlMargin}"
+                                   IsChecked="True"
+                                   IsEnabled="False" />
+            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   Margin="{StaticResource ControlMargin}"
+                                   IsChecked="False"
+                                   IsEnabled="False" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"

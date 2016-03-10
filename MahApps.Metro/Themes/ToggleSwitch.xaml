@@ -11,6 +11,7 @@
         <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />

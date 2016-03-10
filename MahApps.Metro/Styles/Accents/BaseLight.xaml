@@ -85,4 +85,15 @@
 
     <!-- DataGrid brushes -->
     <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
+    
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10" Color="#FF666666" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10" Color="#FF333333" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffMouseOverBorderBrush.Win10" Color="#FF000000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffDisabledBorderBrush.Win10" Color="#FF999999" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchDisabledBrush.Win10" Color="#FFCCCCCC" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorBrush.Win10" Color="#FF333333" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOverBrush.Win10" Color="#FF000000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10" Color="#FFFFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10" Color="#FF999999" options:Freeze="True" />
+
 </ResourceDictionary>
