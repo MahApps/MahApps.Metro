@@ -1,7 +1,9 @@
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -166,10 +168,24 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void SetIsPressed(bool pressed)
+        {
+            // we can't use readonly IsPressedProperty
+            typeof(ToggleButton).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)
+                                .Invoke(this, new object[] { pressed });
+        }
+
         private double? _lastDragPosition;
         private bool _isDragging;
         void _DraggingThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (!IsPressed)
+                {
+                    SetIsPressed(true);
+                }
+            }
             if (_ThumbTranslate != null)
             {
                 _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, null);
@@ -197,6 +213,7 @@ namespace MahApps.Metro.Controls
 
         void _DraggingThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
+            SetIsPressed(false);
             _lastDragPosition = null;
             if (!_isDragging)
             {
