@@ -228,6 +228,7 @@
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Controls\WindowCommands.cs" />
     <Compile Include="Converters\NullToUnsetValueConverter.cs" />
+    <Compile Include="Converters\RectangleHeightToRadiusConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessBindingConverter.cs" />
@@ -496,6 +497,11 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.ToggleSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
