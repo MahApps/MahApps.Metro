@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_WindowTitleThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
@@ -54,7 +55,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register("AnimateOpacity", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
+
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
+
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
@@ -103,13 +107,22 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// An ICommand that executes when the flyout's close button is clicked.
+        /// Gets/sets a command which will be executed if the close button was clicked.
         /// Note that this won't execute when <see cref="IsOpen"/> is set to <c>false</c>.
         /// </summary>
         public ICommand CloseCommand
         {
             get { return (ICommand)GetValue(CloseCommandProperty); }
             set { SetValue(CloseCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the CloseCommand.
+        /// </summary>
+        public object CloseCommandParameter
+        {
+            get { return (object)GetValue(CloseCommandParameterProperty); }
+            set { SetValue(CloseCommandParameterProperty, value); }
         }
 
         /// <summary>
@@ -591,6 +604,7 @@ namespace MahApps.Metro.Controls
         ContentPresenter PART_Header;
         ContentPresenter PART_Content;
         Thumb windowTitleThumb;
+        Button backButton;
 
         public override void OnApplyTemplate()
         {
@@ -602,8 +616,16 @@ namespace MahApps.Metro.Controls
 
             PART_Header = (ContentPresenter)GetTemplateChild("PART_Header");
             PART_Content = (ContentPresenter)GetTemplateChild("PART_Content");
-            this.windowTitleThumb = GetTemplateChild("PART_WindowTitleThumb") as Thumb;
 
+            PART_Header.ApplyTemplate();
+            this.backButton = PART_Header?.FindChild<Button>("PART_BackButton");
+            if (this.backButton != null)
+            {
+                this.backButton.Click -= BackButtonClick;
+                this.backButton.Click += BackButtonClick;
+            }
+
+            this.windowTitleThumb = GetTemplateChild("PART_WindowTitleThumb") as Thumb;
             if (this.windowTitleThumb != null)
             {
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -632,6 +654,10 @@ namespace MahApps.Metro.Controls
 
         protected internal void CleanUp(FlyoutsControl flyoutsControl)
         {
+            if (this.backButton != null)
+            {
+                this.backButton.Click -= BackButtonClick;
+            }
             if (this.windowTitleThumb != null)
             {
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -640,6 +666,16 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             this.parentWindow = null;
+        }
+
+        private void BackButtonClick(object sender, RoutedEventArgs e)
+        {
+            // close the Flyout only if there is no command
+            var closeCommand = this.CloseCommand;
+            if (closeCommand == null)
+            {
+                this.IsOpen = false;
+            }
         }
 
         private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
