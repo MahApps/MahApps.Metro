@@ -35,6 +35,10 @@
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    
+    <!--  set up default styles for our custom controls  -->
+    <Style TargetType="{x:Type controls:ToggleSwitchButton}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" />
+    <Style TargetType="{x:Type controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" />
 
     <Style TargetType="{x:Type controls:ContentControlEx}">
         <Setter Property="Background" Value="Transparent" />

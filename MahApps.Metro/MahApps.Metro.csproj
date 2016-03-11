@@ -179,6 +179,7 @@
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Converters\NullToUnsetValueConverter.cs" />
+    <Compile Include="Converters\RectangleHeightToRadiusConverter.cs" />
     <Compile Include="Converters\ThicknessBindingConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
@@ -447,6 +448,11 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.ToggleSwitch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>

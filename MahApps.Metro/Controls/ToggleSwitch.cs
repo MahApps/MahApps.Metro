@@ -267,10 +267,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        static ToggleSwitch()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
+        }
+
         public ToggleSwitch()
         {
-            DefaultStyleKey = typeof(ToggleSwitch);
-
             PreviewKeyUp += ToggleSwitch_PreviewKeyUp;
             MouseUp += (sender, args) => Keyboard.Focus(this);
         }
