@@ -470,7 +470,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Indicates if the NumericUpDown should show the decimal separator or not.
+        ///     Indicates if the NumericUpDown should accept the scientific notation 'e' or not.
         /// </summary>
         [Bindable(true)]
         [Category("Common")]
