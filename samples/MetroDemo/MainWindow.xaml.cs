@@ -370,6 +370,7 @@ namespace MetroDemo
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (e.Cancel) return;
             e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
             if (_shutdown) return;
 

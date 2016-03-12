@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Native;
 using System.Windows.Shapes;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
@@ -742,6 +743,16 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // #2409: don't close window if there is a dialog still open
+            e.Cancel = this.GetCurrentDialogAsync<BaseMetroDialog>().Result != null;
+            if (!e.Cancel)
+            {
+                base.OnClosing(e);
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
