@@ -87,7 +87,7 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="FlyoutTemplate" TargetType="{x:Type Controls:Flyout}">
-        <Grid x:Name="root"
+        <Grid x:Name="PART_Root"
               Margin="{TemplateBinding Margin}"
               Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
@@ -112,7 +112,7 @@
                     <VisualState x:Name="Hide">
                         <Storyboard x:Name="HideStoryboard">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                 <SplineDoubleKeyFrame x:Name="hideFrame"
                                                       KeySpline="0.25,1,0.05,1"
@@ -120,7 +120,7 @@
                                                       Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                                 <SplineDoubleKeyFrame x:Name="hideFrameY"
                                                       KeySpline="0.25,1,0.05,1"
@@ -128,7 +128,7 @@
                                                       Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame x:Name="fadeOutFrame"
                                                       KeySpline="0.25,1,0.05,1"
@@ -140,7 +140,7 @@
                     <VisualState x:Name="Show">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                 <SplineDoubleKeyFrame x:Name="showFrame"
                                                       KeySpline="0.25,1,0.05,1"
@@ -148,7 +148,7 @@
                                                       Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                                 <SplineDoubleKeyFrame x:Name="showFrameY"
                                                       KeySpline="0.25,1,0.05,1"
@@ -156,7 +156,7 @@
                                                       Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeySpline="0.25,1,0.05,1"
                                                       KeyTime="00:00:00.750"
@@ -167,17 +167,17 @@
                     <VisualState x:Name="HideDirect">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
@@ -186,17 +186,17 @@
                     <VisualState x:Name="ShowDirect">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetName="root"
+                                                           Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeyTime="0" Value="1" />
                             </DoubleAnimationUsingKeyFrames>
