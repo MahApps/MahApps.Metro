@@ -165,11 +165,16 @@
                               ToolTip="Select an icon-type then click on any of the below listed items to view the icon inside a dialog message">
                         <MenuItem Click="SetDialogIcon"
                                   Header="{x:Static Dialog:MessageDialogIcon.None}" />
-                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Error}" />
-                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Hand}" />
-                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Information}" />
-                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Question}" />
-                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
+                        <MenuItem Click="SetDialogIcon" 
+                                  Header="{x:Static Dialog:MessageDialogIcon.Error}" />
+                        <MenuItem Click="SetDialogIcon" 
+                                  Header="{x:Static Dialog:MessageDialogIcon.Hand}" />
+                        <MenuItem Click="SetDialogIcon" 
+                                  Header="{x:Static Dialog:MessageDialogIcon.Information}" />
+                        <MenuItem Click="SetDialogIcon" 
+                                  Header="{x:Static Dialog:MessageDialogIcon.Question}" />
+                        <MenuItem Click="SetDialogIcon" 
+                                  Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
                     </MenuItem>
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
