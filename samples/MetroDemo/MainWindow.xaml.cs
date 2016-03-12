@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -90,6 +89,8 @@ namespace MetroDemo
             get { return (bool)GetValue(UseAccentForDialogsProperty); }
             set { SetValue(UseAccentForDialogsProperty, value); }
         }
+        private MessageDialogIcon MessageDialogIcon { get; set; }
+
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
         {
@@ -155,11 +156,6 @@ namespace MetroDemo
             await dialog.RequestCloseAsync();
         }
 
-        private async void ShowMessageDialogWithIcons(object sender, RoutedEventArgs e)
-        {
-            await this.ShowMessageAsync("This is a MessageDialog with an icon", "Left you see the ERROR icon.", MessageDialogIcon.Error);
-        }
-
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
@@ -173,11 +169,11 @@ namespace MetroDemo
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings, icon: MessageDialogIcon);
 
             if (result != MessageDialogResult.FirstAuxiliary)
                 await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
-                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."), icon: MessageDialogIcon);
         }
 
 
@@ -193,11 +189,11 @@ namespace MetroDemo
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc","def","ghi", "jkl","mno","pqr","stu","vwx","yz"),
-                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings, icon: MessageDialogIcon);
 
             if (result != MessageDialogResult.FirstAuxiliary)
                 await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
-                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."), icon: MessageDialogIcon);
         }
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
@@ -211,7 +207,7 @@ namespace MetroDemo
 
             await TaskEx.Delay(5000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", icon: MessageDialogIcon);
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await TaskEx.Delay(2000);
@@ -238,19 +234,19 @@ namespace MetroDemo
 
          private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true }, icon: MessageDialogIcon);
             if (result == null)
             {
                 //User pressed cancel
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password), icon: MessageDialogIcon);
             }
         }
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", icon: MessageDialogIcon);
             controller.SetIndeterminate();
 
             await TaskEx.Delay(5000);
@@ -276,34 +272,34 @@ namespace MetroDemo
 
             if (controller.IsCanceled)
             {
-                await this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
+                await this.ShowMessageAsync("No cupcakes!", "You stopped baking!", icon: MessageDialogIcon);
             }
             else
             {
-                await this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
+                await this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!", icon: MessageDialogIcon);
             }
         }
 
         private async void ShowInputDialog(object sender, RoutedEventArgs e)
         {
-            var result = await this.ShowInputAsync("Hello!", "What is your name?");
+            var result = await this.ShowInputAsync("Hello!", "What is your name?", icon: MessageDialogIcon);
 
             if (result == null) //user pressed cancel
                 return;
 
-            await this.ShowMessageAsync("Hello", "Hello " + result + "!");
+            await this.ShowMessageAsync("Hello", "Hello " + result + "!", icon: MessageDialogIcon);
         }
 
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps"});
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps"}, icon: MessageDialogIcon);
             if (result == null)
             {
                 //User pressed cancel
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password), icon: MessageDialogIcon);
             }
         }
 
@@ -388,6 +384,12 @@ namespace MetroDemo
             // use this to test the obsolete under the hood code
             w.EnableDWMDropShadow = true;
             w.Show();
+        }
+
+        private void SetDialogIcon(object sender, RoutedEventArgs e)
+        {
+            _viewModel.MessageDialogIcon = (MessageDialogIcon)((MenuItem)sender).Header;
+            MessageDialogIcon = _viewModel.MessageDialogIcon;
         }
     }
 }

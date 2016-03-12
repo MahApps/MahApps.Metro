@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings settings = null);
+        Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings settings = null, object icon = null);
 
         /// <summary>
         /// Creates a LoginDialog inside of the current window.
@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style"></param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null);
+        Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null, object icon = null);
 
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
@@ -38,7 +38,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null);
+        Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, object icon = null);
 
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
         Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-            bool isCancelable = false, MetroDialogSettings settings = null);
+            bool isCancelable = false, MetroDialogSettings settings = null, object icon = null);
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.        
@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null);
+            MetroDialogSettings settings = null, object icon = null);
 
         /// <summary>
         /// Hides a visible Metro Dialog instance.

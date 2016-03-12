@@ -161,6 +161,16 @@
                               x:Name="UseAccentForDialogsMenuItem"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}"
                               IsCheckable="True" />
+                    <MenuItem Header="Change Dialog Icon" 
+                              ToolTip="Select an icon-type then click on any of the below listed items to view the icon inside a dialog message">
+                        <MenuItem Click="SetDialogIcon"
+                                  Header="{x:Static Dialog:MessageDialogIcon.None}" />
+                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Error}" />
+                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Hand}" />
+                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Information}" />
+                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Question}" />
+                        <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
+                    </MenuItem>
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
                               Header="Show InputDialog" />
@@ -170,8 +180,6 @@
                               Header="Show Password Preview LoginDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
-                    <MenuItem Click="ShowMessageDialogWithIcons"
-                              Header="Show MessageDialog with Icon" />
                     <MenuItem Click="ShowLimitedMessageDialog"
                               Header="Show MessageDialog (Limited Size)" />
                     <MenuItem Click="ShowProgressDialog"
@@ -253,3 +261,66 @@
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -159,6 +159,18 @@ namespace MetroDemo
             }
         }
 
+        private MessageDialogIcon _messageDialogIcon;
+        public MessageDialogIcon MessageDialogIcon
+        {
+            get { return _messageDialogIcon; }
+            set
+            {
+                if (value.Equals(_messageDialogIcon)) return;
+                _messageDialogIcon = value;
+                RaisePropertyChanged("ShowIconsInDialogs");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd
@@ -276,7 +288,7 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = x =>
                     {
-                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
+                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window", icon: MessageDialogIcon).ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -293,7 +305,7 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = x =>
                     {
-                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
+                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.", icon: MessageDialogIcon).ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -310,7 +322,7 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = x =>
                     {
-                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
+                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!", icon: MessageDialogIcon).ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -332,7 +344,7 @@ namespace MetroDemo
 
         private async void RunProgressFromVm()
         {
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds", icon: MessageDialogIcon);
             controller.SetIndeterminate();
 
             await TaskEx.Delay(3000);

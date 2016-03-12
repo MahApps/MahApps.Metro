@@ -11,37 +11,37 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public static readonly DialogCoordinator Instance = new DialogCoordinator();
 
-        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
+        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null, object icon = null)
         {            
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowInputAsync(title, message, metroDialogSettings);
+            return metroWindow.ShowInputAsync(title, message, metroDialogSettings, icon);
         }
 
-        public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null)
+        public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null, object icon = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowLoginAsync(title, message, settings);
+            return metroWindow.ShowLoginAsync(title, message, settings, icon);
         }
 
-        public Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, object icon = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowMessageAsync(title, message, style, settings);
+            return metroWindow.ShowMessageAsync(title, message, style, settings, icon);
         }
 
         public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-            bool isCancelable = false, MetroDialogSettings settings = null)
+            bool isCancelable = false, MetroDialogSettings settings = null, object icon = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowProgressAsync(title, message, isCancelable, settings);
+            return metroWindow.ShowProgressAsync(title, message, isCancelable, settings, icon);
         }
 
         public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null)
+            MetroDialogSettings settings = null, object icon = null)
         {
             var metroWindow = GetMetroWindow(context);
 

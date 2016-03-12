@@ -6,11 +6,17 @@
 
     public class IconTemplateSelector : DataTemplateSelector
     {
+        public IconTemplateSelector()
+        {
+            None = new DataTemplate();
+        }
+
         public DataTemplate Error { get; set; }
         public DataTemplate Hand { get; set; }
         public DataTemplate Question { get; set; }
         public DataTemplate Warning { get; set; }
         public DataTemplate Information { get; set; }
+        private DataTemplate None { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -29,6 +35,8 @@
                         return Question;
                     case MessageDialogIcon.Warning:
                         return Warning;
+                    case MessageDialogIcon.None:
+                        return None;
                 }
             }
             return ((ContentPresenter)container).ContentTemplate;
