@@ -92,12 +92,6 @@
                         </ContentControl.Foreground>
                     </ContentControl>
 
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
-                                         Grid.Row="0"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
-
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Grid.Row="0"
@@ -143,6 +137,12 @@
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
+
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
 
                     <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
@@ -352,12 +352,6 @@
                         </Label>
                     </Grid>
 
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
-                                         Grid.Row="0"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
-
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Grid.Row="0"
@@ -403,6 +397,12 @@
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
+
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
 
                     <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
