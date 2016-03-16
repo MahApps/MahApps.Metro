@@ -57,7 +57,6 @@ namespace MahApps.Metro.Controls
         
         public FlipView()
         {
-            this.Unloaded += FlipView_Unloaded;
             this.Loaded += FlipView_Loaded;
             this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
         }
@@ -94,33 +93,16 @@ namespace MahApps.Metro.Controls
         {
             if (controlsVisibilityOverride) return;
 
-            if (backButton == null || forwardButton == null) return;
+            var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+            var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
 
-            backButton.Visibility = Visibility.Hidden;
-            forwardButton.Visibility = Visibility.Hidden;
-            upButton.Visibility = Visibility.Hidden;
-            downButton.Visibility = Visibility.Hidden;
+            if (prevButton == null || nextButton == null)
+            {
+                return;
+            }
 
-            if (Items.Count > 0)
-            {
-                if (Orientation == Orientation.Horizontal)
-                {
-                    backButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-                    forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
-                }
-                else
-                {
-                    upButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-                    downButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
-                }
-            }
-            else
-            {
-                backButton.Visibility = Visibility.Hidden;
-                forwardButton.Visibility = Visibility.Hidden;
-                upButton.Visibility = Visibility.Hidden;
-                downButton.Visibility = Visibility.Hidden;
-            }
+            prevButton.Visibility = this.Items.Count <= 0 || this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
+            nextButton.Visibility = this.Items.Count <= 0 || this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
         }
 
         void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -129,20 +111,31 @@ namespace MahApps.Metro.Controls
              * Once because the TabControl seems to initiali(z|s)e everything.
              * And a second time when the Tab (housing the FlipView) is switched to. */
 
-            if (backButton == null || forwardButton == null) //OnApplyTemplate hasn't been called yet.
+            // if OnApplyTemplate hasn't been called yet.
+            if (backButton == null || forwardButton == null || upButton == null || downButton == null)
+            {
                 ApplyTemplate();
+            }
 
-            if (loaded) return; //Counteracts the double 'Loaded' event issue.
+            // Counteracts the double 'Loaded' event issue.
+            if (loaded)
+            {
+                return;
+            }
 
-            backButton.Click += backButton_Click;
-            forwardButton.Click += forwardButton_Click;
-            upButton.Click += upButton_Click;
-            downButton.Click += downButton_Click;
+            this.Unloaded += FlipView_Unloaded;
+            backButton.Click += this.PrevButtonClick;
+            forwardButton.Click += this.NextButtonClick;
+            upButton.Click += this.PrevButtonClick;
+            downButton.Click += this.NextButtonClick;
 
             this.SelectionChanged += FlipView_SelectionChanged;
             this.PreviewKeyDown += FlipView_PreviewKeyDown;
 
-            SelectedIndex = 0;
+            if (SelectedIndex < 0)
+            {
+                SelectedIndex = 0;
+            }
 
             DetectControlButtonsStatus();
 
@@ -158,33 +151,36 @@ namespace MahApps.Metro.Controls
             this.SelectionChanged -= FlipView_SelectionChanged;
 
             this.PreviewKeyDown -= FlipView_PreviewKeyDown;
-            backButton.Click -= backButton_Click;
-            forwardButton.Click -= forwardButton_Click;
-            upButton.Click -= upButton_Click;
-            downButton.Click -= downButton_Click;
+            backButton.Click -= this.PrevButtonClick;
+            forwardButton.Click -= this.NextButtonClick;
+            upButton.Click -= this.PrevButtonClick;
+            downButton.Click -= this.NextButtonClick;
 
-            if (hideControlStoryboardCompletedHandler != null)
+            if (hideControlStoryboard != null && hideControlStoryboardCompletedHandler != null)
+            {
                 hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
+            }
 
             loaded = false;
         }
 
         void FlipView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if ((e.Key == Key.Left && Orientation == Orientation.Horizontal) || (e.Key == Key.Up && Orientation == Orientation.Vertical))
             {
-                case Key.Left:
-                    GoBack();
-                    e.Handled = true;
-                    break;
-                case Key.Right:
-                    GoForward();
-                    e.Handled = true;
-                    break;
+                this.GoBack();
+                e.Handled = true;
+            }
+            else if ((e.Key == Key.Right && Orientation == Orientation.Horizontal) || (e.Key == Key.Down && Orientation == Orientation.Vertical))
+            {
+                this.GoForward();
+                e.Handled = true;
             }
 
             if (e.Handled)
+            {
                 this.Focus();
+            }
         }
 
         public override void OnApplyTemplate()
@@ -222,22 +218,12 @@ namespace MahApps.Metro.Controls
             DetectControlButtonsStatus();
         }
 
-        void forwardButton_Click(object sender, RoutedEventArgs e)
+        void NextButtonClick(object sender, RoutedEventArgs e)
         {
             GoForward();
         }
 
-        void backButton_Click(object sender, RoutedEventArgs e)
-        {
-            GoBack();
-        }
-
-        void downButton_Click(object sender, RoutedEventArgs e)
-        {
-            GoForward();
-        }
-
-        void upButton_Click(object sender, RoutedEventArgs e)
+        void PrevButtonClick(object sender, RoutedEventArgs e)
         {
             GoBack();
         }
@@ -293,7 +279,9 @@ namespace MahApps.Metro.Controls
         private void ShowBanner()
         {
             if (IsBannerEnabled)
+            {
                 bannerGrid.BeginStoryboard(showBannerStoryboard);
+            }
         }
 
         private void HideBanner()
@@ -388,10 +376,15 @@ namespace MahApps.Metro.Controls
             {
                 var newValue = value ?? BannerText;
 
-                if (newValue == null) return;
+                if (newValue == null || hideControlStoryboard == null)
+                {
+                    return;
+                }
 
                 if (hideControlStoryboardCompletedHandler != null)
+                {
                     hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
+                }
 
                 hideControlStoryboardCompletedHandler = (sender, e) => {
                     try
