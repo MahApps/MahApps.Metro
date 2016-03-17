@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
@@ -315,15 +316,14 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
         public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
         public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
-        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        [Obsolete(@"This property will be deleted in the next release. You should use now MouseHoverBorderEnabled instead.")]
+        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (o, e) => ((FlipView)o).MouseHoverBorderEnabled = (bool)e.NewValue));
+        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
+        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
-        public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText",
-                                        typeof(string),
-                                        typeof(FlipView),
-                                        new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                      (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
 
         public TransitionType UpTransition
         {
@@ -353,6 +353,33 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(MouseOverGlowEnabledProperty); }
             set { SetValue(MouseOverGlowEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the border for mouse over state is enabled or not.
+        /// </summary>
+        public bool MouseHoverBorderEnabled
+        {
+            get { return (bool)GetValue(MouseHoverBorderEnabledProperty); }
+            set { SetValue(MouseHoverBorderEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the mouse hover border brush.
+        /// </summary>
+        public Brush MouseHoverBorderBrush
+        {
+            get { return (Brush)GetValue(MouseHoverBorderBrushProperty); }
+            set { SetValue(MouseHoverBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the mouse hover border thickness.
+        /// </summary>
+        public Thickness MouseHoverBorderThickness
+        {
+            get { return (Thickness)GetValue(MouseHoverBorderThicknessProperty); }
+            set { SetValue(MouseHoverBorderThicknessProperty, value); }
         }
 
         public Orientation Orientation
