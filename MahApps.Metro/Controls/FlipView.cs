@@ -131,7 +131,7 @@ namespace MahApps.Metro.Controls
             downButton.Click += this.NextButtonClick;
 
             this.SelectionChanged += FlipView_SelectionChanged;
-            this.PreviewKeyDown += FlipView_PreviewKeyDown;
+            this.KeyDown += FlipView_KeyDown;
 
             if (SelectedIndex < 0)
             {
@@ -151,7 +151,7 @@ namespace MahApps.Metro.Controls
             this.MouseLeftButtonDown -= FlipView_MouseLeftButtonDown;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
-            this.PreviewKeyDown -= FlipView_PreviewKeyDown;
+            this.KeyDown -= FlipView_KeyDown;
             backButton.Click -= this.PrevButtonClick;
             forwardButton.Click -= this.NextButtonClick;
             upButton.Click -= this.PrevButtonClick;
@@ -165,21 +165,22 @@ namespace MahApps.Metro.Controls
             loaded = false;
         }
 
-        void FlipView_PreviewKeyDown(object sender, KeyEventArgs e)
+        void FlipView_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key == Key.Left && Orientation == Orientation.Horizontal) || (e.Key == Key.Up && Orientation == Orientation.Vertical))
+            var canGoPrev = (e.Key == Key.Left && Orientation == Orientation.Horizontal && backButton != null && backButton.Visibility == Visibility.Visible && backButton.IsEnabled)
+                         || (e.Key == Key.Up && Orientation == Orientation.Vertical && upButton != null && upButton.Visibility == Visibility.Visible && upButton.IsEnabled);
+            var canGoNext = (e.Key == Key.Right && Orientation == Orientation.Horizontal && forwardButton != null && forwardButton.Visibility == Visibility.Visible && forwardButton.IsEnabled)
+                         || (e.Key == Key.Down && Orientation == Orientation.Vertical && downButton != null && downButton.Visibility == Visibility.Visible && downButton.IsEnabled);
+            if (canGoPrev)
             {
                 this.GoBack();
                 e.Handled = true;
+                this.Focus();
             }
-            else if ((e.Key == Key.Right && Orientation == Orientation.Horizontal) || (e.Key == Key.Down && Orientation == Orientation.Vertical))
+            else if (canGoNext)
             {
                 this.GoForward();
                 e.Handled = true;
-            }
-
-            if (e.Handled)
-            {
                 this.Focus();
             }
         }
@@ -259,11 +260,16 @@ namespace MahApps.Metro.Controls
         public void ShowControlButtons()
         {
             controlsVisibilityOverride = false;
-
-            ExecuteWhenLoaded(this, () => {
-                backButton.Visibility = Visibility.Visible;
-                forwardButton.Visibility = Visibility.Visible;
-            });
+            ExecuteWhenLoaded(this, () =>
+                {
+                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                    if (prevButton != null && nextButton != null)
+                    {
+                        prevButton.Visibility = Visibility.Visible;
+                        nextButton.Visibility = Visibility.Visible;
+                    }
+                });
         }
         /// <summary>
         /// Removes the control buttons (next/previous) from view.
@@ -271,10 +277,16 @@ namespace MahApps.Metro.Controls
         public void HideControlButtons()
         {
             controlsVisibilityOverride = true;
-            ExecuteWhenLoaded(this, () => {
-                backButton.Visibility = Visibility.Hidden;
-                forwardButton.Visibility = Visibility.Hidden;
-            });
+            ExecuteWhenLoaded(this, () =>
+                {
+                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                    if (prevButton != null && nextButton != null)
+                    {
+                        prevButton.Visibility = Visibility.Hidden;
+                        nextButton.Visibility = Visibility.Hidden;
+                    }
+                });
         }
 
         private void ShowBanner()
