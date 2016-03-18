@@ -2,28 +2,28 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.Resources</id>
-    <version>0.4.0.0</version>
+    <version>0.5.0.0</version>
     <title>MahApps.Metro.Resources</title>
-    <authors>Paul Jenkins; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76); Austin Andrews (Templarian)</authors>
-    <owners>Paul Jenkins</owners>
+    <authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Alex Mitchell, Austin Andrews</authors>
+    <owners>punker76,shiftkey,aeoth</owners>
     <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       "loose" file XAML Resource for Metro UI's.
-      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      All icons taken from "Modern UI Icons" created by Austin Andrews
       http://modernuiicons.com
       https://github.com/Templarian/WindowsIcons
     </description>
     <summary>
       "loose" file XAML Resource for Metro UI's.
-      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      All icons taken from "Modern UI Icons" created by Austin Andrews
       http://modernuiicons.com
       https://github.com/Templarian/WindowsIcons
     </summary>
-    <tags>WPF XAML UI Icon Metro</tags>
+    <tags>WPF UI Metro ModernUI Material XAML Toolkit Library .NET Icon</tags>
     <dependencies>
-      <dependency id="MahApps.Metro" version="1.0.0" />
+      <dependency id="MahApps.Metro" version="1.2.4" />
     </dependencies>
   </metadata>
   <files>
