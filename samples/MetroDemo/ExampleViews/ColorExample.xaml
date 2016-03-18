@@ -11,14 +11,6 @@
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <ScrollViewer>
         <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding BrushResources}">
             <ItemsControl.ItemsPanel>

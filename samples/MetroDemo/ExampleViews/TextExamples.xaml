@@ -11,14 +11,8 @@
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
-            <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
-            <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
-        </ResourceDictionary>
+        <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
+        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
     </UserControl.Resources>
 
     <AdornerDecorator>

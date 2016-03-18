@@ -27,7 +27,7 @@
                 Style="{DynamicResource MetroCircleButtonStyle}">
             <Rectangle Width="20" Height="20">
                 <Rectangle.Fill>
-                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
                 </Rectangle.Fill>
             </Rectangle>
         </Button>

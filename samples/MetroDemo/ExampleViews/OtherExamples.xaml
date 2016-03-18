@@ -128,7 +128,7 @@
                                    Height="50"
                                    Margin="0 0 10 0">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_cupcake}" />
+                                <VisualBrush Visual="{DynamicResource appbar_cupcake}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
@@ -137,7 +137,7 @@
                                    Height="50"
                                    Margin="0 0 10 0">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_xbox}" />
+                                <VisualBrush Visual="{DynamicResource appbar_xbox}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
@@ -146,7 +146,7 @@
                                    Height="50"
                                    Margin="0 0 10 0">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                                <VisualBrush Visual="{DynamicResource appbar_chess_horse}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
