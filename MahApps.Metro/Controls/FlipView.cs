@@ -102,8 +102,8 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            prevButton.Visibility = this.Items.Count <= 0 || this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-            nextButton.Visibility = this.Items.Count <= 0 || this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
+            prevButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
+            nextButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
         }
 
         void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -240,6 +240,13 @@ namespace MahApps.Metro.Controls
                 presenter.Transition = Orientation == Orientation.Horizontal ? RightTransition : UpTransition;
                 SelectedIndex--;
             }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    SelectedIndex = Items.Count - 1;
+                }
+            }
         }
 
         /// <summary>
@@ -251,6 +258,13 @@ namespace MahApps.Metro.Controls
             {
                 presenter.Transition = Orientation == Orientation.Horizontal ? LeftTransition : DownTransition;
                 SelectedIndex++;
+            }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    SelectedIndex = 0;
+                }
             }
         }
 
@@ -336,6 +350,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
         public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         public TransitionType UpTransition
         {
@@ -409,6 +424,25 @@ namespace MahApps.Metro.Controls
             set { SetValue(BannerTextProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the FlipView's banner is visible.
+        /// </summary>
+        public bool IsBannerEnabled
+        {
+            get { return (bool)GetValue(IsBannerEnabledProperty); }
+            set { SetValue(IsBannerEnabledProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the navigation is circular, so you get the first after last and the last before first.
+        /// </summary>
+        public bool CircularNavigation
+        {
+            get { return (bool)GetValue(CircularNavigationProperty); }
+            set { SetValue(CircularNavigationProperty, value); }
+        }
+
         private void ChangeBannerText(string value = null)
         {
             if (IsBannerEnabled)
@@ -451,15 +485,6 @@ namespace MahApps.Metro.Controls
                     bannerLabel.Content = value ?? BannerText;
                 });
             }
-        }
-
-        /// <summary>
-        /// Gets/sets whether the FlipView's banner is visible.
-        /// </summary>
-        public bool IsBannerEnabled
-        {
-            get { return (bool)GetValue(IsBannerEnabledProperty); }
-            set { SetValue(IsBannerEnabledProperty, value); }
         }
 
         private static void OnIsBannerEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)

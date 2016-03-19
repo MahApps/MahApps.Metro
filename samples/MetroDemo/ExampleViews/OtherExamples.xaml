@@ -106,21 +106,22 @@
                         Margin="0 0 0 5"
                         Orientation="Horizontal">
                 <CheckBox x:Name="ShowBannerCheckBox"
-                          Height="20"
-                          Margin="5 0 5 0"
-                          HorizontalAlignment="Right"
-                          Content="Show Banner?" />
+                          Margin="5 0"
+                          Content="Banner" />
                 <CheckBox x:Name="ShowMouseOverCheckBox"
-                          Height="20"
-                          Margin="5 0 5 0"
-                          HorizontalAlignment="Right"
-                          Content="Show MouseOver Glow?"
+                          Margin="5 0"
+                          Content="MouseOver Glow"
                           IsChecked="True" />
+                <CheckBox x:Name="CircularNaviCheckBox"
+                          Margin="5 0"
+                          Content="Circular Navi"
+                          IsChecked="False" />
             </StackPanel>
             <Controls:FlipView Height="200"
                                Margin="0 0 10 0"
                                IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
@@ -158,7 +159,9 @@
             <Controls:FlipView Height="400"
                                Margin="0 0 10 0"
                                BannerText="Databound Items"
-                               IsBannerEnabled="True"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
                                ItemsSource="{Binding FlipViewImages, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
