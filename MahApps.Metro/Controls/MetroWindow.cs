@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 
@@ -24,6 +25,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
+    [TemplatePart(Name = PART_FlyoutModalDragMoveThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -37,6 +39,7 @@ namespace MahApps.Metro.Controls
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
         private const string PART_WindowTitleThumb = "PART_WindowTitleThumb";
+        private const string PART_FlyoutModalDragMoveThumb = "PART_FlyoutModalDragMoveThumb";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
@@ -107,6 +110,7 @@ namespace MahApps.Metro.Controls
         UIElement titleBar;
         UIElement titleBarBackground;
         Thumb windowTitleThumb;
+        Thumb flyoutModalDragMoveThumb;
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal ContentPresenter WindowButtonCommandsPresenter;
@@ -908,6 +912,7 @@ namespace MahApps.Metro.Controls
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
             this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
+            this.flyoutModalDragMoveThumb = GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
@@ -933,6 +938,13 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+            if (this.flyoutModalDragMoveThumb != null)
+            {
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
@@ -957,6 +969,13 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+            if (this.flyoutModalDragMoveThumb != null)
+            {
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                this.flyoutModalDragMoveThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.flyoutModalDragMoveThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
@@ -988,7 +1007,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta(this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1006,8 +1025,17 @@ namespace MahApps.Metro.Controls
             Mouse.Capture(null);
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] Thumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
+            if (thumb == null)
+            {
+                throw new ArgumentNullException(nameof(thumb));
+            }
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
             // drag only if IsWindowDraggable is set to true
             if (!window.IsWindowDraggable ||
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) && !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2)))
@@ -1022,7 +1050,7 @@ namespace MahApps.Metro.Controls
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
-            var isMouseOnTitlebar = Mouse.GetPosition(window.windowTitleThumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
+            var isMouseOnTitlebar = Mouse.GetPosition(thumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
             if (!isMouseOnTitlebar && windowIsMaximized)
             {
                 return;
@@ -1040,7 +1068,7 @@ namespace MahApps.Metro.Controls
                     window.StateChanged -= windowOnStateChanged;
                     if (window.WindowState == WindowState.Normal)
                     {
-                        Mouse.Capture(window.windowTitleThumb, CaptureMode.Element);
+                        Mouse.Capture(thumb, CaptureMode.Element);
                     }
                 };
                 window.StateChanged += windowOnStateChanged;

@@ -92,6 +92,12 @@
                         </ContentControl.Foreground>
                     </ContentControl>
 
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
+
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Grid.Row="0"
@@ -137,12 +143,12 @@
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
-
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                    <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
                                          Grid.Row="0"
                                          Grid.Column="0"
                                          Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                     <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
@@ -223,9 +229,11 @@
         <ControlTemplate.Triggers>
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">
@@ -352,6 +360,12 @@
                         </Label>
                     </Grid>
 
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
+
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Grid.Row="0"
@@ -397,12 +411,12 @@
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
-
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                    <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
                                          Grid.Row="0"
                                          Grid.Column="0"
                                          Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                     <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
@@ -483,9 +497,11 @@
         <ControlTemplate.Triggers>
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">

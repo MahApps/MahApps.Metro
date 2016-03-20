@@ -697,7 +697,7 @@ namespace MahApps.Metro.Controls
             var window = this.ParentWindow;
             if (window != null && this.Position != Position.Bottom)
             {
-                MetroWindow.DoWindowTitleThumbMoveOnDragDelta(window, dragDeltaEventArgs);
+                MetroWindow.DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, window, dragDeltaEventArgs);
             }
         }
 
