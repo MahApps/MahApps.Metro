@@ -1,8 +1,7 @@
 source https://nuget.org/api/v2
 
 nuget JetBrains.Annotations 10.0.0 framework: >= net40
-nuget Caliburn.Micro 2.0.2 framework: >= net40
-nuget Caliburn.Micro.Core 2.0.2 framework: >= net40
+nuget Caliburn.Micro 3.0.0 framework: >= net40
 nuget ExposedObject 1.2.0.0 framework: >= net40
 nuget Microsoft.Bcl 1.1.10 framework: = net40
 nuget Microsoft.Bcl.Async 1.0.168 framework: = net40
