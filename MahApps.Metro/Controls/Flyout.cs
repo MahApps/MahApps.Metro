@@ -618,7 +618,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.flyoutHeader = this.GetTemplateChild("PART_Header") as ContentPresenter;
-            this.flyoutContent = this.GetTemplateChild("PART_Conte6nt") as ContentPresenter;
+            this.flyoutContent = this.GetTemplateChild("PART_Content") as ContentPresenter;
 
             this.flyoutHeader?.ApplyTemplate();
             this.backButton = this.flyoutHeader?.FindChild<Button>("PART_BackButton");
