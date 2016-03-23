@@ -13,8 +13,7 @@ namespace Caliburn.Metro.Demo.Controls
         {
             this.themeResources = new ResourceDictionary
                                       {
-                                          Source =
-                                              new Uri("pack://application:,,,/Resources/Theme1.xaml")
+                                          Source = new Uri("pack://application:,,,/Caliburn.Metro.Demo;component/Resources/Theme1.xaml")
                                       };
         }
 

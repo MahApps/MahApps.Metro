@@ -13,17 +13,18 @@
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
+    
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="CustomFlyoutStyle" BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
+            <Setter Property="Header" Value="{Binding Header}" />
+            <Setter Property="IsOpen" Value="{Binding IsOpen}" />
+            <Setter Property="Position" Value="{Binding Position}" />
+            <Setter Property="Theme" Value="{Binding Theme}" />
+        </Style>
+    </Controls:MetroWindow.Resources>
 
     <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl x:Name="Flyouts">
-            <Controls:FlyoutsControl.ItemContainerStyle>
-                <Style BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
-                    <Setter Property="Header" Value="{Binding Header}" />
-                    <Setter Property="IsOpen" Value="{Binding IsOpen}" />
-                    <Setter Property="Position" Value="{Binding Position}" />
-                </Style>
-            </Controls:FlyoutsControl.ItemContainerStyle>
-        </Controls:FlyoutsControl>
+        <Controls:FlyoutsControl x:Name="FlyoutViewModels" ItemContainerStyle="{StaticResource CustomFlyoutStyle}" />
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
