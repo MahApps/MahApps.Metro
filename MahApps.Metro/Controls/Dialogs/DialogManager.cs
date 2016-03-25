@@ -421,6 +421,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void AddDialog(this MetroWindow window, BaseMetroDialog dialog)
         {
+            window.StoreFocus();
+
             // if there's already an active dialog, move to the background
             var activeDialog = window.metroActiveDialogContainer.Children.Cast<UIElement>().SingleOrDefault();
             if (activeDialog != null)
@@ -449,6 +451,11 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
+            }
+
+            if (window.metroActiveDialogContainer.Children.Count == 0)
+            {
+                window.RestoreFocus();
             }
         }
 

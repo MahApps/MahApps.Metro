@@ -111,6 +111,7 @@ namespace MahApps.Metro.Controls
         UIElement titleBarBackground;
         Thumb windowTitleThumb;
         Thumb flyoutModalDragMoveThumb;
+        private IInputElement restoreFocus;
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal ContentPresenter WindowButtonCommandsPresenter;
@@ -739,6 +740,23 @@ namespace MahApps.Metro.Controls
             //overlayBox.Opacity = 0.0;
             overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        internal void StoreFocus()
+        {
+            restoreFocus = this.restoreFocus ?? FocusManager.GetFocusedElement(this);
+        }
+
+        internal void RestoreFocus()
+        {
+            if (restoreFocus != null)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Keyboard.Focus(restoreFocus);
+                        restoreFocus = null;
+                    }));
+            }
         }
 
         /// <summary>
