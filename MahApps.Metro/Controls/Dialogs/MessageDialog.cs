@@ -72,7 +72,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = null;
+            Action cleanUpHandlers = new Action(() => { });
 
             var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
             {
