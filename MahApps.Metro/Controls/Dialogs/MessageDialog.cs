@@ -72,11 +72,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = new Action(() => { });
+            Action cleanUpHandlers = null;
 
             var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
             {
-                cleanUpHandlers();
+                cleanUpHandlers?.Invoke();
                 tcs.TrySetResult(ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
             });
 
