@@ -187,15 +187,17 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = async x =>
                     {
-                        if (x is TextBox)
+                        if (x is string)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!",
-                                                                                                    string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
+                        }
+                        else if (x is TextBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!",
-                                                                                                    string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
                         }
                     }
                 });

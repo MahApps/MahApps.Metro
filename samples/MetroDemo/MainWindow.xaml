@@ -89,6 +89,8 @@
 
 
             </Dialog:CustomDialog>
+            
+            <VisualBrush x:Key="Test" Stretch="Uniform" Visual="{DynamicResource appbar_github}" />
 
         </ResourceDictionary>
     </Window.Resources>
@@ -98,10 +100,8 @@
             <Button Click="LaunchMahAppsOnGitHub" ToolTip="MahApps.Metro on GitHub">
                 <Rectangle Width="22"
                            Height="22"
+                           OpacityMask="{DynamicResource Test}"
                            Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_github}" />
-                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
         </Controls:WindowCommands>

@@ -13,6 +13,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <controls:MetroWindow.WindowButtonCommands>
+        <controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+    </controls:MetroWindow.WindowButtonCommands>
     <Grid Width="50"
           Height="50"
           Background="Firebrick">

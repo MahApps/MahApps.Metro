@@ -33,10 +33,11 @@ namespace Caliburn.Metro.Demo.Controls
             }
 
             var newInstance = (UIElement)Activator.CreateInstance(viewType);
-            var frameworkElement = newInstance as FrameworkElement;
-            if (frameworkElement != null)
+
+            var window = newInstance as Window;
+            if (window != null)
             {
-                frameworkElement.Resources.MergedDictionaries.Add(this.themeManager.GetThemeResources());
+                window.Resources.MergedDictionaries.Add(this.themeManager.GetThemeResources());
             }
 
             Micro.ViewLocator.InitializeComponent(newInstance);

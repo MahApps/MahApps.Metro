@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Native;
 using System.Windows.Shapes;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
+using JetBrains.Annotations;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
@@ -23,6 +25,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
+    [TemplatePart(Name = PART_FlyoutModalDragMoveThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -36,6 +39,7 @@ namespace MahApps.Metro.Controls
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
         private const string PART_WindowTitleThumb = "PART_WindowTitleThumb";
+        private const string PART_FlyoutModalDragMoveThumb = "PART_FlyoutModalDragMoveThumb";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
@@ -81,6 +85,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register("WindowButtonCommands", typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null));
 
         public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("RightWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
@@ -105,9 +110,11 @@ namespace MahApps.Metro.Controls
         UIElement titleBar;
         UIElement titleBarBackground;
         Thumb windowTitleThumb;
+        Thumb flyoutModalDragMoveThumb;
+        private IInputElement restoreFocus;
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
-        internal WindowButtonCommands WindowButtonCommands;
+        internal ContentPresenter WindowButtonCommandsPresenter;
 
         internal Grid overlayBox;
         internal Grid metroActiveDialogContainer;
@@ -280,12 +287,13 @@ namespace MahApps.Metro.Controls
             set { SetValue(RightWindowCommandsProperty, value); }
         }
 
-        private static void WindowCommandsPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Gets/sets the window button commands that hosts the min/max/close commands.
+        /// </summary>
+        public WindowButtonCommands WindowButtonCommands
         {
-            if (e.NewValue != e.OldValue && e.NewValue != null)
-            {
-                ((MetroWindow)dependencyObject).RightWindowCommands = (WindowCommands)e.NewValue;
-            }
+            get { return (WindowButtonCommands)GetValue(WindowButtonCommandsProperty); }
+            set { SetValue(WindowButtonCommandsProperty, value); }
         }
 
         /// <summary>
@@ -544,9 +552,9 @@ namespace MahApps.Metro.Controls
                 this.RightWindowCommandsPresenter.Visibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
                     Visibility.Visible : newVisibility;
             }
-            if (this.WindowButtonCommands != null)
+            if (this.WindowButtonCommandsPresenter != null)
             {
-                this.WindowButtonCommands.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
+                this.WindowButtonCommandsPresenter.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
                     Visibility.Visible : newVisibility;
             }
 
@@ -734,12 +742,39 @@ namespace MahApps.Metro.Controls
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
         }
 
+        internal void StoreFocus()
+        {
+            restoreFocus = this.restoreFocus ?? FocusManager.GetFocusedElement(this);
+        }
+
+        internal void RestoreFocus()
+        {
+            if (restoreFocus != null)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Keyboard.Focus(restoreFocus);
+                        restoreFocus = null;
+                    }));
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
         /// </summary>
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // #2409: don't close window if there is a dialog still open
+            e.Cancel = this.GetCurrentDialogAsync<BaseMetroDialog>().Result != null;
+            if (!e.Cancel)
+            {
+                base.OnClosing(e);
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -873,18 +908,16 @@ namespace MahApps.Metro.Controls
                 LeftWindowCommands = new WindowCommands();
             if (RightWindowCommands == null)
                 RightWindowCommands = new WindowCommands();
+            if (WindowButtonCommands == null)
+                WindowButtonCommands = new WindowButtonCommands();
 
             LeftWindowCommands.ParentWindow = this;
             RightWindowCommands.ParentWindow = this;
+            WindowButtonCommands.ParentWindow = this;
 
             LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
             RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
-            WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
-
-            if (WindowButtonCommands != null)
-            {
-                WindowButtonCommands.ParentWindow = this;
-            }
+            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
@@ -897,6 +930,7 @@ namespace MahApps.Metro.Controls
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
             this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
+            this.flyoutModalDragMoveThumb = GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
@@ -922,6 +956,13 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+            if (this.flyoutModalDragMoveThumb != null)
+            {
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
@@ -946,6 +987,13 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+            if (this.flyoutModalDragMoveThumb != null)
+            {
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                this.flyoutModalDragMoveThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.flyoutModalDragMoveThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
@@ -977,7 +1025,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta(this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -995,8 +1043,17 @@ namespace MahApps.Metro.Controls
             Mouse.Capture(null);
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] Thumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
+            if (thumb == null)
+            {
+                throw new ArgumentNullException(nameof(thumb));
+            }
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
             // drag only if IsWindowDraggable is set to true
             if (!window.IsWindowDraggable ||
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) && !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2)))
@@ -1011,7 +1068,7 @@ namespace MahApps.Metro.Controls
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
-            var isMouseOnTitlebar = Mouse.GetPosition(window.windowTitleThumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
+            var isMouseOnTitlebar = Mouse.GetPosition(thumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
             if (!isMouseOnTitlebar && windowIsMaximized)
             {
                 return;
@@ -1029,7 +1086,7 @@ namespace MahApps.Metro.Controls
                     window.StateChanged -= windowOnStateChanged;
                     if (window.WindowState == WindowState.Normal)
                     {
-                        Mouse.Capture(window.windowTitleThumb, CaptureMode.Element);
+                        Mouse.Capture(thumb, CaptureMode.Element);
                     }
                 };
                 window.StateChanged += windowOnStateChanged;
@@ -1143,9 +1200,9 @@ namespace MahApps.Metro.Controls
                         this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
                 }
 
-                if (WindowButtonCommands != null)
+                if (WindowButtonCommandsPresenter != null)
                 {
-                    WindowButtonCommands.SetValue(Panel.ZIndexProperty,
+                    WindowButtonCommandsPresenter.SetValue(Panel.ZIndexProperty,
                         this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
                 }
 

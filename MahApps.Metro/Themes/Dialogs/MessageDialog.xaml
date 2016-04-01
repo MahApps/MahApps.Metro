@@ -11,11 +11,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollViewer x:Name="PART_MessageScrollViewer"
+                      Focusable="False"
+                      FocusVisualStyle="{x:Null}"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="PART_MessageTextBlock"
                        Margin="0 5 0 0"
-                       FontSize="{DynamicResource DialogMessageFontSize}"
+                       FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap" />

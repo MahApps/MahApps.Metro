@@ -35,6 +35,10 @@
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    
+    <!--  set up default styles for our custom controls  -->
+    <Style TargetType="{x:Type controls:ToggleSwitchButton}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" />
+    <Style TargetType="{x:Type controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" />
 
     <Style TargetType="{x:Type controls:ContentControlEx}">
         <Setter Property="Background" Value="Transparent" />
@@ -96,12 +100,11 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Viewbox Margin="{TemplateBinding Padding}">
-                                <Canvas Width="24" Height="24">
-                                    <Path Fill="{TemplateBinding Foreground}"
-                                          Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
-                                          SnapsToDevicePixels="True"
-                                          UseLayoutRounding="True" />
-                                </Canvas>
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"
+                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="True" />
                             </Viewbox>
                         </Grid>
                     </Grid>
@@ -113,7 +116,7 @@
     <Style TargetType="{x:Type metro:PackIconModern}">
         <Setter Property="Height" Value="16" />
         <Setter Property="Width" Value="16" />
-        <Setter Property="Padding" Value="-2" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -130,12 +133,11 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Viewbox Margin="{TemplateBinding Padding}">
-                                <Canvas Width="76" Height="76">
-                                    <Path Fill="{TemplateBinding Foreground}"
-                                          Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
-                                          SnapsToDevicePixels="True"
-                                          UseLayoutRounding="True" />
-                                </Canvas>
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"
+                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="True" />
                             </Viewbox>
                         </Grid>
                     </Grid>

@@ -24,6 +24,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty TextButtonProperty = DependencyProperty.RegisterAttached("TextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonsAlignmentProperty = DependencyProperty.RegisterAttached("ButtonsAlignment", typeof(ButtonsAlignment), typeof(TextBoxHelper), new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         /// <summary>
         /// The clear text button behavior property. It sets a click event to the button if the value is true.
@@ -329,15 +330,38 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the clear text button visibility / feature. Can be used to enable text deletion.
+        /// </summary>
         [Category(AppName.MahApps)]
         public static bool GetClearTextButton(DependencyObject d)
         {
             return (bool)d.GetValue(ClearTextButtonProperty);
         }
 
+        /// <summary>
+        /// Sets the clear text button visibility / feature. Can be used to enable text deletion.
+        /// </summary>
         public static void SetClearTextButton(DependencyObject obj, bool value)
         {
             obj.SetValue(ClearTextButtonProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the text button visibility.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public static bool GetTextButton(DependencyObject d)
+        {
+            return (bool)d.GetValue(TextButtonProperty);
+        }
+
+        /// <summary>
+        /// Sets the text button visibility.
+        /// </summary>
+        public static void SetTextButton(DependencyObject obj, bool value)
+        {
+            obj.SetValue(TextButtonProperty, value);
         }
 
         /// <summary>

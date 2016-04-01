@@ -251,6 +251,7 @@
     <Style x:Key="MetroButtonTextBox"
            BasedOn="{StaticResource MetroTextBox}"
            TargetType="{x:Type TextBox}">
+        <Setter Property="Controls:TextBoxHelper.TextButton" Value="True" />
         <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource ChromelessButtonTemplate}" />
         <!--  change SnapsToDevicePixels to True to view a better border and validation error  -->
         <Setter Property="Template">
@@ -353,7 +354,8 @@
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
                                     IsTabStop="False"
-                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}" />
+                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.TextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
                                 Background="{DynamicResource ControlsDisabledBrush}"
@@ -393,7 +395,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}" Value="Right" />
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.TextButton)}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
@@ -460,7 +462,7 @@
                 <DataTemplate>
                     <metro:PackIconModern x:Name="PART_PackIcon"
                                           Kind="Magnify"
-                                          Padding="-6"
+                                          Padding="3"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"

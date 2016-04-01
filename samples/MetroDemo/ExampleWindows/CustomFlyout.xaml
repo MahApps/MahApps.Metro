@@ -7,6 +7,7 @@
                  x:Name="customFlyout"
                  Width="250"
                  CloseCommand="{Binding ElementName=customFlyout, Path=CloseCmd}"
+                 IsOpen="{Binding ElementName=customFlyout, Path=FlyoutIsOpen}"
                  Header="Custom Flyout"
                  Position="Right"
                  mc:Ignorable="d"
