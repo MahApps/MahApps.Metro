@@ -4,49 +4,51 @@
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="Controls:Tile">
-        <Setter Property="Width" Value="140" />
-        <Setter Property="Height" Value="140" />
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{x:Null}" />
         <Setter Property="CountFontSize" Value="28" />
-        <Setter Property="TitleFontSize" Value="16" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Height" Value="140" />
+        <Setter Property="Width" Value="140" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="3" />
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="TitleFontSize" Value="16" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
                     <Grid>
                         <Border x:Name="PART_Border"
+                                Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid Background="{TemplateBinding Background}">
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid>
                                 <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                             Orientation="Horizontal">
                                     <ContentPresenter RecognizesAccessKey="True" />
                                     <TextBlock VerticalAlignment="Center"
-                                               FontSize="{Binding CountFontSize, RelativeSource={RelativeSource TemplatedParent}}"
+                                               FontSize="{TemplateBinding CountFontSize}"
                                                Text="{TemplateBinding Count}" />
                                 </StackPanel>
-
-                                <Label HorizontalAlignment="Left"
-                                       VerticalAlignment="Bottom"
+                                <Label HorizontalAlignment="{TemplateBinding HorizontalTitleAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalTitleAlignment}"
                                        Foreground="{TemplateBinding Foreground}">
                                     <AccessText Margin="3"
                                                 Foreground="{TemplateBinding Foreground}"
-                                                FontSize="{Binding TitleFontSize, RelativeSource={RelativeSource TemplatedParent}}"
-                                                Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                                FontSize="{TemplateBinding TitleFontSize}"
+                                                Text="{TemplateBinding Title}"
                                                 TextWrapping="Wrap" />
                                 </Label>
                             </Grid>
                         </Border>
                         <Border x:Name="PART_HoverBorder"
-                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}"
+                                BorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
                                 BorderThickness="2"
-                                Opacity="0" />
+                                Opacity="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiDataTrigger>
