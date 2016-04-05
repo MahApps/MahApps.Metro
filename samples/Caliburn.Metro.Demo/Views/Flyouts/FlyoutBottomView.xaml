@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="300"
@@ -19,7 +18,7 @@
                 Style="{DynamicResource MetroCircleButtonStyle}"
                 FontFamily="Segoe UI Symbol"
                 FontSize="16">
-            <metro:PackIconModern Kind="Add" />
+            <controls:PackIconModern Kind="Add" />
         </Button>
     </StackPanel>
 

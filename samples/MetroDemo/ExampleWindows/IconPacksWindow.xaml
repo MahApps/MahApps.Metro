@@ -6,7 +6,6 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
                       xmlns:virtualizing="clr-namespace:MetroDemo.Virtualizing"
                       Title="IconPacks"
                       Width="800"
@@ -26,14 +25,14 @@
                              x:Shared="False"
                              TargetType="{x:Type Button}">
                 <Grid Background="{TemplateBinding Background}" ToolTip="Copy to Clipboard">
-                    <metro:PackIconMaterial x:Name="PART_PackIcon"
-                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                            Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                            Padding="0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Opacity="0.75"
-                                            Kind="Clipboard" />
+                    <controls:PackIconMaterial x:Name="PART_PackIcon"
+                                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                               Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                               Padding="0"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Opacity="0.75"
+                                               Kind="Clipboard" />
                 </Grid>
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
@@ -77,7 +76,7 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="metro:PackIconMaterialKind">
+                            <DataTemplate DataType="controls:PackIconMaterialKind">
                                 <DockPanel Width="64"
                                            Height="64"
                                            HorizontalAlignment="Center"
@@ -88,11 +87,11 @@
                                                DockPanel.Dock="Bottom"
                                                Text="{Binding Mode=OneWay}"
                                                TextTrimming="CharacterEllipsis" />
-                                    <metro:PackIconMaterial Width="32"
-                                                            Height="32"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Kind="{Binding Mode=OneWay}" />
+                                    <controls:PackIconMaterial Width="32"
+                                                               Height="32"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Kind="{Binding Mode=OneWay}" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -122,7 +121,7 @@
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
                                      IsReadOnly="True"
-                                     Text="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+                                     Text="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
@@ -133,49 +132,49 @@
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="16x16" />
-                                <metro:PackIconMaterial Width="16"
-                                                        Height="16"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        BorderBrush="{DynamicResource AccentColorBrush}"
-                                                        BorderThickness="1"
-                                                        Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconMaterial Width="16"
+                                                           Height="16"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           BorderBrush="{DynamicResource AccentColorBrush}"
+                                                           BorderThickness="1"
+                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="24x24" />
-                                <metro:PackIconMaterial Width="24"
-                                                        Height="24"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        BorderBrush="{DynamicResource AccentColorBrush}"
-                                                        BorderThickness="1"
-                                                        Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconMaterial Width="24"
+                                                           Height="24"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           BorderBrush="{DynamicResource AccentColorBrush}"
+                                                           BorderThickness="1"
+                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="48x48" />
-                                <metro:PackIconMaterial Width="48"
-                                                        Height="48"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        BorderBrush="{DynamicResource AccentColorBrush}"
-                                                        BorderThickness="1"
-                                                        Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconMaterial Width="48"
+                                                           Height="48"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           BorderBrush="{DynamicResource AccentColorBrush}"
+                                                           BorderThickness="1"
+                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="76x76" />
-                                <metro:PackIconMaterial Width="76"
-                                                        Height="76"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        BorderBrush="{DynamicResource AccentColorBrush}"
-                                                        BorderThickness="1"
-                                                        Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconMaterial Width="76"
+                                                           Height="76"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           BorderBrush="{DynamicResource AccentColorBrush}"
+                                                           BorderThickness="1"
+                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
@@ -212,7 +211,7 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="metro:PackIconModernKind">
+                            <DataTemplate DataType="controls:PackIconModernKind">
                                 <DockPanel Width="64"
                                            Height="64"
                                            HorizontalAlignment="Center"
@@ -223,11 +222,11 @@
                                                DockPanel.Dock="Bottom"
                                                Text="{Binding Mode=OneWay}"
                                                TextTrimming="CharacterEllipsis" />
-                                    <metro:PackIconModern Width="32"
-                                                          Height="32"
-                                                          HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center"
-                                                          Kind="{Binding Mode=OneWay}" />
+                                    <controls:PackIconModern Width="32"
+                                                             Height="32"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Kind="{Binding Mode=OneWay}" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -257,7 +256,7 @@
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
                                      IsReadOnly="True"
-                                     Text="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;metro:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
+                                     Text="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
@@ -268,49 +267,49 @@
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="16x16" />
-                                <metro:PackIconModern Width="16"
-                                                      Height="16"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="{DynamicResource AccentColorBrush}"
-                                                      BorderThickness="1"
-                                                      Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconModern Width="16"
+                                                         Height="16"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="24x24" />
-                                <metro:PackIconModern Width="24"
-                                                      Height="24"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="{DynamicResource AccentColorBrush}"
-                                                      BorderThickness="1"
-                                                      Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconModern Width="24"
+                                                         Height="24"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="48x48" />
-                                <metro:PackIconModern Width="48"
-                                                      Height="48"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="{DynamicResource AccentColorBrush}"
-                                                      BorderThickness="1"
-                                                      Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconModern Width="48"
+                                                         Height="48"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
                                            DockPanel.Dock="Bottom"
                                            Text="76x76" />
-                                <metro:PackIconModern Width="76"
-                                                      Height="76"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"
-                                                      BorderBrush="{DynamicResource AccentColorBrush}"
-                                                      BorderThickness="1"
-                                                      Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <controls:PackIconModern Width="76"
+                                                         Height="76"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>

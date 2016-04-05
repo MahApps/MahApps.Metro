@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MahApps.Metro
+namespace MahApps.Metro.Controls
 {
     /// ******************************************
     /// This code is auto generated. Do not amend.

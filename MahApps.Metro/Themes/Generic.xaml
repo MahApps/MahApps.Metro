@@ -1,8 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:metro="clr-namespace:MahApps.Metro">
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
@@ -80,7 +79,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type metro:PackIconMaterial}">
+    <Style TargetType="{x:Type controls:PackIconMaterial}">
         <Setter Property="Height" Value="16" />
         <Setter Property="Width" Value="16" />
         <Setter Property="Padding" Value="0" />
@@ -92,7 +91,7 @@
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type metro:PackIconMaterial}">
+                <ControlTemplate TargetType="{x:Type controls:PackIconMaterial}">
                     <Grid>
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -104,7 +103,7 @@
                                       Stretch="Uniform"
                                       Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
                                       SnapsToDevicePixels="True"
-                                      UseLayoutRounding="True" />
+                                      UseLayoutRounding="False" />
                             </Viewbox>
                         </Grid>
                     </Grid>
@@ -113,7 +112,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type metro:PackIconModern}">
+    <Style TargetType="{x:Type controls:PackIconModern}">
         <Setter Property="Height" Value="16" />
         <Setter Property="Width" Value="16" />
         <Setter Property="Padding" Value="0" />
@@ -125,7 +124,7 @@
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type metro:PackIconModern}">
+                <ControlTemplate TargetType="{x:Type controls:PackIconModern}">
                     <Grid>
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -137,7 +136,7 @@
                                       Stretch="Uniform"
                                       Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
                                       SnapsToDevicePixels="True"
-                                      UseLayoutRounding="True" />
+                                      UseLayoutRounding="False" />
                             </Viewbox>
                         </Grid>
                     </Grid>
