@@ -91,7 +91,7 @@
 
     <Style x:Key="MetroDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
