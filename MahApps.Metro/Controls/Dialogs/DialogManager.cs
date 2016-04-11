@@ -228,11 +228,10 @@ namespace MahApps.Metro.Controls.Dialogs
                     settings = settings ?? window.MetroDialogOptions;
 
                     //create the dialog control
-                    var dialog = new ProgressDialog(window)
+                    var dialog = new ProgressDialog(window, settings)
                     {
-                        Message = message,
-                        NegativeButtonText = settings.NegativeButtonText,
                         Title = title,
+                        Message = message,
                         IsCancelable = isCancelable
                     };
 
