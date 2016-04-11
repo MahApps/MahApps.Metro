@@ -15,6 +15,22 @@ namespace MahApps.Metro.Controls.Helper
         private const uint WM_SYSCOMMAND = 274;
         private static DateTime lastCloseRequest;
 
+        private static readonly Lazy<ProcessStartInfo> StartInfo = new Lazy<ProcessStartInfo>(() =>
+        {
+            ProcessStartInfo startInfo;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                startInfo = new ProcessStartInfo(@"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe");
+            }
+            else
+            {
+                startInfo = new ProcessStartInfo(@"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip32.exe");
+            }
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
+            return startInfo;
+        });
+
         public static readonly DependencyProperty EnableVirtualKeyboardProperty = DependencyProperty.RegisterAttached(
             "EnableVirtualKeyboard",
             typeof(bool),
@@ -90,17 +106,7 @@ namespace MahApps.Metro.Controls.Helper
 
         private static void OpenVirtualKeyboard()
         {
-            ProcessStartInfo startInfo;
-            if (Environment.Is64BitOperatingSystem)
-            {
-                startInfo = new ProcessStartInfo(@"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe");
-            }
-            else
-            {
-                startInfo = new ProcessStartInfo(@"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip32.exe");
-            }
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            Process.Start(startInfo);
+            Process.Start(StartInfo.Value);
         }
 
         [return: MarshalAs(UnmanagedType.Bool)]
