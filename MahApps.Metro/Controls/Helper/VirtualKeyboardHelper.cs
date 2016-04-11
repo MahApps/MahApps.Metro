@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls.Helper
         [DllImport("user32.dll")]
         private static extern IntPtr FindWindow(string sClassName, string sAppName);
 
-        private static bool IsSurfaceKeyboardAttached()
+        private static bool IsHardwareKeyboardAttached()
         {
             using (var objOsDetails = new ManagementObjectSearcher(new SelectQuery("Win32_Keyboard")))
             {
@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls.Helper
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             lastCloseRequest = DateTime.MaxValue;
-            if (GetEnableVirtualKeyboard((DependencyObject)sender) && !IsSurfaceKeyboardAttached())
+            if (GetEnableVirtualKeyboard((DependencyObject)sender) && !IsHardwareKeyboardAttached())
             {
                 OpenVirtualKeyboard();
             }
