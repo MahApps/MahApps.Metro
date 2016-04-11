@@ -52,7 +52,7 @@ namespace MahApps.Metro.Controls.Helper
 
         private static bool IsSurfaceKeyboardAttached()
         {
-            using (var objOsDetails = new ManagementObjectSearcher("Win32_Keyboard"))
+            using (var objOsDetails = new ManagementObjectSearcher(new SelectQuery("Win32_Keyboard")))
             {
                 using (var osDetailsCollection = objOsDetails.Get())
                 {
