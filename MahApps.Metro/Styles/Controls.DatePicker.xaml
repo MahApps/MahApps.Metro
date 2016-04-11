@@ -25,7 +25,6 @@
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
-        <Setter Property="helper:VirtualKeyboardHelper.EnableVirtualKeyboard" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -132,6 +131,7 @@
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="helper:VirtualKeyboardHelper.EnableVirtualKeyboard" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
