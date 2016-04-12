@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:helper="clr-namespace:MahApps.Metro.Controls.Helper">
 
     <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
     <converters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
@@ -119,6 +120,8 @@
         <Setter Property="controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="controls:TextBoxHelper.Watermark" Value="Select a date" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="helper:VirtualKeyboardHelper.EnableVirtualKeyboard" Value="True" />
+        <Setter Property="InputScope" Value="Date" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:DateTimePicker}">
