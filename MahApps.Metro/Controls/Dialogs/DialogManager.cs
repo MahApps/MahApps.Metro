@@ -382,7 +382,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the current shown dialog.
+        /// Gets the current shown dialog in async way.
         /// </summary>
         /// <param name="window">The dialog owner.</param>
         public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog

@@ -34,7 +34,7 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = new MetroWindow();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
         }

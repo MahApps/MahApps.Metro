@@ -1,6 +1,6 @@
 JetBrains.Annotations
 Microsoft.Bcl redirects: on
 Microsoft.Bcl.Async
-Microsoft.Bcl.Build
+Microsoft.Bcl.Build import_targets: true
 NHotkey
 NHotkey.Wpf
