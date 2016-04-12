@@ -767,15 +767,23 @@ namespace MahApps.Metro.Controls
             Loaded += this.MetroWindow_Loaded;
         }
 
+#if NET4_5
+        protected override async void OnClosing(CancelEventArgs e)
+        {
+            // #2409: don't close window if there is a dialog still open
+            var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
+            e.Cancel = dialog != null;
+            base.OnClosing(e);
+        }
+#else
         protected override void OnClosing(CancelEventArgs e)
         {
             // #2409: don't close window if there is a dialog still open
-            e.Cancel = this.GetCurrentDialogAsync<BaseMetroDialog>().Result != null;
-            if (!e.Cancel)
-            {
-                base.OnClosing(e);
-            }
+            var dialog = this.Invoke(() => this.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault());
+            e.Cancel = dialog != null;
+            base.OnClosing(e);
         }
+#endif
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
