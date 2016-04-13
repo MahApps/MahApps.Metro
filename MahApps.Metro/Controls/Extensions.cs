@@ -26,24 +26,44 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static void Invoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action setValueAction)
+        public static void Invoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction)
         {
             if (dispatcherObject == null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
-            if (setValueAction == null)
+            if (invokeAction == null)
             {
-                throw new ArgumentNullException(nameof(setValueAction));
+                throw new ArgumentNullException(nameof(invokeAction));
             }
             if (dispatcherObject.Dispatcher.CheckAccess())
             {
-                setValueAction();
+                invokeAction();
             }
             else
             {
-                dispatcherObject.Dispatcher.Invoke(setValueAction);
+                dispatcherObject.Dispatcher.Invoke(invokeAction);
             }
+        }
+
+        /// <summary> 
+        ///   Executes the specified action asynchronously with the DispatcherPriority.Background on the thread that the Dispatcher was created on.
+        /// </summary>
+        /// <param name="dispatcherObject">The dispatcher object where the action runs.</param>
+        /// <param name="invokeAction">
+        ///     An action that takes no parameters. 
+        /// </param> 
+        public static void BeginInvoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction)
+        {
+            if (dispatcherObject == null)
+            {
+                throw new ArgumentNullException(nameof(dispatcherObject));
+            }
+            if (invokeAction == null)
+            {
+                throw new ArgumentNullException(nameof(invokeAction));
+            }
+            dispatcherObject.Dispatcher.BeginInvoke(DispatcherPriority.Background, invokeAction);
         }
     }
 }

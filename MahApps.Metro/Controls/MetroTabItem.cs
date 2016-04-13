@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
             }
 
             // run the command handler for the TabControl
-            owningTabControl.InternalCloseTabCommand.Execute(this);
+            owningTabControl.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =

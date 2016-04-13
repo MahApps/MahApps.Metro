@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -29,7 +30,6 @@ namespace MahApps.Metro.Controls
     {
         public BaseMetroTabControl()
         {
-            InternalCloseTabCommand = new DefaultCloseTabCommand(this);
         }
 
         public Thickness TabStripMargin
@@ -72,17 +72,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseTabCommandProperty =
             DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
-        internal ICommand InternalCloseTabCommand
-        {
-            get { return (ICommand)GetValue(InternalCloseTabCommandProperty); }
-            set { SetValue(InternalCloseTabCommandProperty, value); }
-        }
-
-        private static readonly DependencyProperty InternalCloseTabCommandProperty =
-            DependencyProperty.Register("InternalCloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
-
-
         public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
+
         /// <summary>
         /// An event that is raised when a TabItem is closed.
         /// </summary>
@@ -103,7 +94,6 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
-
             return false;
         }
 
@@ -123,64 +113,49 @@ namespace MahApps.Metro.Controls
             public MetroTabItem ClosingTabItem { get; private set; }
         }
 
-        internal class DefaultCloseTabCommand : ICommand
+        internal void CloseThisTabItem([NotNull] MetroTabItem tabItem)
         {
-            private readonly BaseMetroTabControl owner;
-            internal DefaultCloseTabCommand(BaseMetroTabControl Owner)
+            if (tabItem == null)
             {
-                owner = Owner;
+                throw new ArgumentNullException(nameof(tabItem));
             }
 
-            public bool CanExecute(object parameter)
+            if (this.CloseTabCommand != null) // TODO: let MetroTabControl define parameter to pass to command
             {
-                return true;
+                this.CloseTabCommand.Execute(null);
             }
-
-#pragma warning disable 67
-            public event EventHandler CanExecuteChanged;
-#pragma warning restore 67
-
-            public void Execute(object parameter)
+            else
             {
-                if (this.owner.CloseTabCommand != null) // TODO: let MetroTabControl define parameter to pass to command
+                // KIDS: don't try this at home
+                // this is not good MVVM habits and I'm only doing it
+                // because I want the demos to be absolutely bitching
+
+                // the control is allowed to cancel this event
+                if (this.RaiseTabItemClosingEvent(tabItem))
                 {
-                    this.owner.CloseTabCommand.Execute(null);
+                    return;
                 }
-                else if (parameter is MetroTabItem)
+
+                if (this.ItemsSource == null)
                 {
-                    var tabItem = (MetroTabItem)parameter;
-
-                    // KIDS: don't try this at home
-                    // this is not good MVVM habits and I'm only doing it
-                    // because I want the demos to be absolutely bitching
-
-                    // the control is allowed to cancel this event
-                    if (this.owner.RaiseTabItemClosingEvent(tabItem))
+                    // if the list is hard-coded (i.e. has no ItemsSource)
+                    // then we remove the item from the collection
+                    this.Items.Remove(tabItem);
+                }
+                else
+                {
+                    // if ItemsSource is something we cannot work with, bail out
+                    var collection = this.ItemsSource as IList;
+                    if (collection == null)
                     {
                         return;
                     }
 
-                    if (this.owner.ItemsSource == null)
+                    // find the item and kill it (I mean, remove it)
+                    var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
+                    if (item2Remove != null)
                     {
-                        // if the list is hard-coded (i.e. has no ItemsSource)
-                        // then we remove the item from the collection
-                        this.owner.Items.Remove(tabItem);
-                    }
-                    else
-                    {
-                        // if ItemsSource is something we cannot work with, bail out
-                        var collection = this.owner.ItemsSource as IList;
-                        if (collection == null)
-                        {
-                            return;
-                        }
-
-                        // find the item and kill it (I mean, remove it)
-                        var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
-                        if (item2Remove != null)
-                        {
-                            collection.Remove(item2Remove);
-                        }
+                        collection.Remove(item2Remove);
                     }
                 }
             }
