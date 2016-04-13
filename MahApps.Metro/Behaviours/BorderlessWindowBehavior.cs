@@ -23,6 +23,8 @@ namespace MahApps.Metro.Behaviours
         private Thickness? savedBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
+        private ResizeMode savedResizeMode;
+        private PropertyChangeNotifier resizeModeChangeNotifier;
 
         protected override void OnAttached()
         {
@@ -75,6 +77,14 @@ namespace MahApps.Metro.Behaviours
             topMostChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.TopmostProperty);
             topMostChangeNotifier.ValueChanged += TopMostChangeNotifierOnValueChanged;
 
+            // #1823 try to fix another nasty issue
+            // WindowState = Maximized
+            // ResizeMode = NoResize
+            savedResizeMode = AssociatedObject.ResizeMode;
+            AssociatedObject.ResizeMode = ResizeMode.CanResize;
+            resizeModeChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.ResizeModeProperty);
+            resizeModeChangeNotifier.ValueChanged += ResizeModeChangeNotifierOnValueChanged;
+
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
@@ -94,6 +104,11 @@ namespace MahApps.Metro.Behaviours
         private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
             savedTopMost = AssociatedObject.Topmost;
+        }
+
+        private void ResizeModeChangeNotifierOnValueChanged(object sender, EventArgs e)
+        {
+            savedResizeMode = AssociatedObject.ResizeMode;
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
@@ -260,11 +275,10 @@ namespace MahApps.Metro.Behaviours
                         var monitorInfo = new MahApps.Metro.Native.MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                        //ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
-                        var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-                        var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                        var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-                        var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+                        var x = monitorInfo.rcMonitor.left;
+                        var y = monitorInfo.rcMonitor.top;
+                        var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
+                        var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
                         UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                     }
                 }
@@ -338,6 +352,8 @@ namespace MahApps.Metro.Behaviours
             {
                 return;
             }
+
+            AssociatedObject.ResizeMode = this.savedResizeMode;
 
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");

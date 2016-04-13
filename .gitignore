@@ -238,3 +238,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# JetBrains Rider
+.idea/
+*.sln.iml

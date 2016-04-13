@@ -53,7 +53,7 @@
                                         <DoubleAnimation Duration="0"
                                                          Storyboard.TargetName="HighlightBackground"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0.5" />
+                                                         To="0.75" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -61,7 +61,7 @@
                                         <DoubleAnimation Duration="0"
                                                          Storyboard.TargetName="HighlightBackground"
                                                          Storyboard.TargetProperty="Opacity"
-                                                         To="0.5" />
+                                                         To="0.9" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -109,6 +109,20 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsToday" Value="True">
+                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="TodayBackground" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsToday" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="DayButtonFocusVisual" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="DayButtonFocusVisual" Property="Stroke" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="TodayBackground" Property="Opacity" Value="1" />
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsToday" Value="False" />
@@ -117,10 +131,6 @@
                             <Setter TargetName="DayButtonFocusVisual" Property="Visibility" Value="Visible" />
                             <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource AccentColorBrush}" />
                         </MultiTrigger>
-                        <Trigger Property="IsToday" Value="True">
-                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="TodayBackground" Property="Opacity" Value="1" />
-                        </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsToday" Value="True" />

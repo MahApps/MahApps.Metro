@@ -166,6 +166,7 @@
     <ControlTemplate x:Key="MahApps.Metro.Templates.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    Width="46"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -194,6 +195,7 @@
                       Stretch="Uniform" />
             </Button>
             <Button x:Name="PART_Max"
+                    Width="46"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -225,6 +227,7 @@
                 </Canvas>
             </Button>
             <Button x:Name="PART_Close"
+                    Width="46"
                     Focusable="False"
                     IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"

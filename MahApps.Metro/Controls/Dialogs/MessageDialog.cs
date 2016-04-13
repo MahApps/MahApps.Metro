@@ -76,7 +76,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
             {
-                cleanUpHandlers();
+                cleanUpHandlers?.Invoke();
                 tcs.TrySetResult(ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
             });
 

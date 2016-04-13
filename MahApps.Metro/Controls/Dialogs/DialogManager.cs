@@ -228,11 +228,10 @@ namespace MahApps.Metro.Controls.Dialogs
                     settings = settings ?? window.MetroDialogOptions;
 
                     //create the dialog control
-                    var dialog = new ProgressDialog(window)
+                    var dialog = new ProgressDialog(window, settings)
                     {
-                        Message = message,
-                        NegativeButtonText = settings.NegativeButtonText,
                         Title = title,
+                        Message = message,
                         IsCancelable = isCancelable
                     };
 
@@ -383,7 +382,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the current shown dialog.
+        /// Gets the current shown dialog in async way.
         /// </summary>
         /// <param name="window">The dialog owner.</param>
         public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog
@@ -421,6 +420,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void AddDialog(this MetroWindow window, BaseMetroDialog dialog)
         {
+            window.StoreFocus();
+
             // if there's already an active dialog, move to the background
             var activeDialog = window.metroActiveDialogContainer.Children.Cast<UIElement>().SingleOrDefault();
             if (activeDialog != null)
@@ -449,6 +450,11 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
+            }
+
+            if (window.metroActiveDialogContainer.Children.Count == 0)
+            {
+                window.RestoreFocus();
             }
         }
 

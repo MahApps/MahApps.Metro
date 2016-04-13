@@ -13,7 +13,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -105,7 +104,6 @@
                             Orientation="Vertical">
 
                     <Controls:RangeSlider x:Name="RangeSlider1"
-                                          Height="28"
                                           Margin="0,0,0,20"
                                           AutoToolTipPlacement="BottomRight"
                                           AutoToolTipPrecision="2"

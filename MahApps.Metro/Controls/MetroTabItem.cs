@@ -86,13 +86,12 @@ namespace MahApps.Metro.Controls
 
             var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
             if (owningTabControl == null) // see #555
+            {
                 throw new InvalidOperationException();
+            }
 
             // run the command handler for the TabControl
-            var itemFromContainer = owningTabControl.ItemContainerGenerator.ItemFromContainer(this);
-
-            var data = itemFromContainer == DependencyProperty.UnsetValue ? this.Content : itemFromContainer;
-            owningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
+            owningTabControl.InternalCloseTabCommand.Execute(this);
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =

@@ -138,6 +138,7 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
+    <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />

@@ -28,21 +28,21 @@
                                                    RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="DarkGray" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="DarkGray" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MetroCircleButtonFocusVisual">
@@ -572,32 +572,6 @@
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="2" />
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush8}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush3}" />
-                        </MultiTrigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonMouseOverBorderBrush}" />
-                            <Setter TargetName="Border" Property="BorderThickness" Value="2" />
-                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
                             <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.3" />
@@ -606,6 +580,34 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="{DynamicResource GrayBrush2}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
+                <Setter Property="BorderThickness" Value="2" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsChecked" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsChecked" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource GrayBrush3}" />
+            </MultiTrigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource ButtonMouseOverBorderBrush}" />
+                <Setter Property="BorderThickness" Value="2" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="SquareMetroButton" TargetType="{x:Type Button}">

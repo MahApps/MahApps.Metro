@@ -8,6 +8,7 @@ namespace Caliburn.Metro.Demo.ViewModels.Flyouts
         {
             this.Header = "left";
             this.Position = Position.Left;
+            this.Theme = FlyoutTheme.Accent;
         }
     }
 }

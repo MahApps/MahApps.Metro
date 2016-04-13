@@ -15,10 +15,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <x:Array x:Key="DataGridSelectionUnitArray" Type="DataGridSelectionUnit">
                 <DataGridSelectionUnit>FullRow</DataGridSelectionUnit>
                 <DataGridSelectionUnit>CellOrRowHeader</DataGridSelectionUnit>

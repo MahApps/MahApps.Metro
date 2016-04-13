@@ -292,7 +292,14 @@ namespace MetroDemo
 
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
+            var mySettings = new MetroDialogSettings()
+            {
+                NegativeButtonText = "Close now",
+                AnimateShow = false,
+                AnimateHide = false
+            };
+
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
             controller.SetIndeterminate();
 
             await TaskEx.Delay(5000);
@@ -370,6 +377,7 @@ namespace MetroDemo
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (e.Cancel) return;
             e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
             if (_shutdown) return;
 
