@@ -67,9 +67,7 @@ namespace MahApps.Metro.Controls
 
         void closeButton_Click(object sender, RoutedEventArgs e)
         {
-            //Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=InternalCloseTabCommand
             // Click event fires BEFORE the command does so we have time to set and handle the event before hand.
-
             var closeTabCommand = this.CloseTabCommand;
             var closeTabCommandParameter = this.CloseTabCommandParameter ?? this;
             if (closeTabCommand != null)
@@ -79,19 +77,14 @@ namespace MahApps.Metro.Controls
                     // force the command handler to run
                     closeTabCommand.Execute(closeTabCommandParameter);
                 }
-                // cheat and dereference the handler now
-                CloseTabCommand = null;
-                CloseTabCommandParameter = null;
             }
 
             var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
-            if (owningTabControl == null) // see #555
+            if (owningTabControl != null) // see #555
             {
-                throw new InvalidOperationException();
+                // run the command handler for the TabControl
+                owningTabControl.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
             }
-
-            // run the command handler for the TabControl
-            owningTabControl.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =

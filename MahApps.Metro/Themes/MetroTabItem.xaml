@@ -45,8 +45,6 @@
                                         VerticalAlignment="Top"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         Background="{DynamicResource GrayNormalBrush}"
-                                        Command="{TemplateBinding CloseTabCommand}"
-                                        CommandParameter="{TemplateBinding CloseTabCommandParameter}"
                                         IsTabStop="False"
                                         Visibility="Collapsed">
                                     <Button.Resources>

@@ -77,6 +77,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// An event that is raised when a TabItem is closed.
         /// </summary>
+        // Todo Rename this to TabItemClosing
         public event TabItemClosingEventHandler TabItemClosingEvent;
 
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
@@ -120,9 +121,13 @@ namespace MahApps.Metro.Controls
                 throw new ArgumentNullException(nameof(tabItem));
             }
 
-            if (this.CloseTabCommand != null) // TODO: let MetroTabControl define parameter to pass to command
+            if (this.CloseTabCommand != null)
             {
-                this.CloseTabCommand.Execute(null);
+                var closeTabCommandParameter = tabItem.CloseTabCommandParameter ?? tabItem;
+                if (this.CloseTabCommand.CanExecute(closeTabCommandParameter))
+                {
+                    this.CloseTabCommand.Execute(closeTabCommandParameter);
+                }
             }
             else
             {
