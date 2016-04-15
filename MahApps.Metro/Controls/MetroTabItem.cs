@@ -5,6 +5,45 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
+    internal class MetroTabItemCloseCommand : ICommand
+    {
+        private readonly Func<object, bool> canExecute;
+        private readonly Action<object> executeAction;
+
+        public MetroTabItemCloseCommand(Func<object, bool> canExecute, Action<object> executeAction)
+        {
+            this.canExecute = canExecute;
+            this.executeAction = executeAction;
+        }
+
+        /// <summary>
+        /// Defines the method that determines whether the command can execute in its current state.
+        /// </summary>
+        /// <returns>
+        /// true if this command can be executed; otherwise, false.
+        /// </returns>
+        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        public bool CanExecute(object parameter)
+        {
+            return this.canExecute != null && this.canExecute(parameter);
+        }
+
+        /// <summary>
+        /// Defines the method to be called when the command is invoked.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        public void Execute(object parameter)
+        {
+            this.executeAction?.Invoke(parameter);
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+    }
+
     /// <summary>
     /// An extended TabItem with a metro style.
     /// </summary>
@@ -13,29 +52,32 @@ namespace MahApps.Metro.Controls
         public MetroTabItem()
         {
             DefaultStyleKey = typeof(MetroTabItem);
-            this.Unloaded += MetroTabItem_Unloaded;
-            this.Loaded += MetroTabItem_Loaded;
+            this.InternalCloseTabCommand = new MetroTabItemCloseCommand(InternalCloseTabCommandCanExecute, InternalCloseTabCommandExecuteAction);
         }
 
-        void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
+        private void InternalCloseTabCommandExecuteAction(object o)
         {
-            if (closeButton != null && closeButtonClickUnloaded)
+            var closeTabCommand = this.CloseTabCommand;
+            if (closeTabCommand != null)
             {
-                closeButton.Click += closeButton_Click;
-
-                closeButtonClickUnloaded = false;
+                var closeTabCommandParameter = this.CloseTabCommandParameter ?? this;
+                if (closeTabCommand.CanExecute(closeTabCommandParameter))
+                {
+                    // force the command handler to run
+                    closeTabCommand.Execute(closeTabCommandParameter);
+                }
             }
+
+            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
+            // run the command handler for the TabControl
+            // see #555
+            owningTabControl?.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
         }
 
-        void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
+        private bool InternalCloseTabCommandCanExecute(object o)
         {
-            this.Unloaded -= MetroTabItem_Unloaded;
-            if (closeButton != null)
-            {
-                closeButton.Click -= closeButton_Click;
-            }
-
-            closeButtonClickUnloaded = true;
+            var closeTabCommand = this.CloseTabCommand;
+            return closeTabCommand == null || closeTabCommand.CanExecute(this.CloseTabCommandParameter ?? this);
         }
 
         internal Button closeButton;
@@ -58,32 +100,6 @@ namespace MahApps.Metro.Controls
             if (closeButton != null)
             {
                 closeButton.Margin = newButtonMargin;
-
-                //TabControl's multi-loading/unloading issue
-                closeButton.Click -= closeButton_Click;
-                closeButton.Click += closeButton_Click;
-            }
-        }
-
-        void closeButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Click event fires BEFORE the command does so we have time to set and handle the event before hand.
-            var closeTabCommand = this.CloseTabCommand;
-            var closeTabCommandParameter = this.CloseTabCommandParameter ?? this;
-            if (closeTabCommand != null)
-            {
-                if (closeTabCommand.CanExecute(closeTabCommandParameter))
-                {
-                    // force the command handler to run
-                    closeTabCommand.Execute(closeTabCommandParameter);
-                }
-            }
-
-            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
-            if (owningTabControl != null) // see #555
-            {
-                // run the command handler for the TabControl
-                owningTabControl.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
             }
         }
 
@@ -98,10 +114,7 @@ namespace MahApps.Metro.Controls
         private static void OnCloseButtonEnabledPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var item = dependencyObject as MetroTabItem;
-            if (item != null)
-            {
-                item.AdjustCloseButton();
-            }
+            item?.AdjustCloseButton();
         }
 
         /// <summary>
@@ -111,6 +124,20 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
             set { SetValue(CloseButtonEnabledProperty, value); }
+        }
+
+        internal static readonly DependencyProperty InternalCloseTabCommandProperty =
+            DependencyProperty.Register("InternalCloseTabCommand",
+                                        typeof(ICommand),
+                                        typeof(MetroTabItem));
+
+        /// <summary>
+        /// Gets/sets the command that is executed when the Close Button is clicked.
+        /// </summary>
+        internal ICommand InternalCloseTabCommand
+        { 
+            get { return (ICommand)GetValue(InternalCloseTabCommandProperty); } 
+            set { SetValue(InternalCloseTabCommandProperty, value); } 
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
