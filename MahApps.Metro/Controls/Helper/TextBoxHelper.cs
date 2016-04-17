@@ -30,7 +30,11 @@ namespace MahApps.Metro.Controls
         /// The clear text button behavior property. It sets a click event to the button if the value is true.
         /// </summary>
         public static readonly DependencyProperty IsClearTextButtonBehaviorEnabledProperty = DependencyProperty.RegisterAttached("IsClearTextButtonBehaviorEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, IsClearTextButtonBehaviorEnabledChanged));
-        
+
+        /// <summary>
+        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
+        /// </summary>
+        public static readonly DependencyProperty ButtonWidthProperty = DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata("r"));
@@ -399,6 +403,17 @@ namespace MahApps.Metro.Controls
         public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static double GetButtonWidth(DependencyObject obj)
+        {
+            return (double)obj.GetValue(ButtonWidthProperty);
+        }
+
+        public static void SetButtonWidth(DependencyObject obj, double value)
+        {
+            obj.SetValue(ButtonWidthProperty, value);
         }
 
         [Category(AppName.MahApps)]

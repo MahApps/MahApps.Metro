@@ -26,8 +26,8 @@
                              TargetType="{x:Type Button}">
                 <Grid Background="{TemplateBinding Background}" ToolTip="Copy to Clipboard">
                     <controls:PackIconMaterial x:Name="PART_PackIcon"
-                                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                               Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                               Width="{TemplateBinding controls:TextBoxHelper.ButtonWidth}"
+                                               Height="{TemplateBinding controls:TextBoxHelper.ButtonWidth}"
                                                Padding="0"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"

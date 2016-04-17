@@ -15,7 +15,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="UpDownButtonsWidth" Value="22" />
-        <Setter Property="Controls:ControlsHelper.ButtonWidth" Value="22" />
+        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
@@ -74,7 +74,7 @@
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
-                                     Controls:ControlsHelper.ButtonWidth="{TemplateBinding Controls:ControlsHelper.ButtonWidth}"
+                                     Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                      Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                      Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                      Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"

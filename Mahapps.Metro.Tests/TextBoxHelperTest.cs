@@ -8,10 +8,49 @@ using Xunit;
 namespace MahApps.Metro.Tests
 {
     using System.Windows;
+    using System.Windows.Controls.Primitives;
     using System.Windows.Media;
 
     public class TextBoxHelperTest : AutomationTestBase
     {
+        [Fact]
+        public async Task TestAttachedPropertyButtonWidth()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<TextBoxHelperTestWindow>().ConfigureAwait(false);
+
+            window.Invoke(() =>
+                {
+                    var width = 42d;
+
+                    window.TestTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestTextBox.FindChild<Button>("PART_ClearText").Width);
+                    window.TestButtonTextBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestButtonTextBox.FindChild<Button>("PART_ClearText").Width);
+
+                    window.TestPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestPasswordBox.FindChild<Button>("PART_ClearText").Width);
+                    window.TestButtonPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestButtonPasswordBox.FindChild<Button>("PART_ClearText").Width);
+                    window.TestButtonRevealedPasswordBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText").Width);
+                    Assert.Equal(width, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_RevealButton").Width);
+
+                    window.TestComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+                    Assert.Equal(width, toggleButton.FindChild<Button>("PART_ClearText").Width);
+                    Assert.Equal(width, toggleButton.FindChild<Grid>("BtnArrowBackground").Width);
+
+                    window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    var edTextBox = window.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
+                    Assert.Equal(width, edTextBox.FindChild<Button>("PART_ClearText").Width);
+
+                    window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").Width);
+                });
+        }
+
         [Fact]
         public async Task TestAttachedPropertyButtonContent()
         {
@@ -36,7 +75,12 @@ namespace MahApps.Metro.Tests
                     Assert.Equal(content, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText").Content);
 
                     window.TestComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-                    Assert.Equal(content, window.TestComboBox.FindChild<Button>("PART_ClearText").Content);
+                    var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+                    Assert.Equal(content, toggleButton.FindChild<Button>("PART_ClearText").Content);
+
+                    window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+                    var edTextBox = window.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
+                    Assert.Equal(content, edTextBox.FindChild<Button>("PART_ClearText").Content);
 
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentProperty, content);
                     Assert.Equal(content, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").Content);
@@ -67,7 +111,12 @@ namespace MahApps.Metro.Tests
                     Assert.Equal(contentTemplate, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText").ContentTemplate);
 
                     window.TestComboBox.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
-                    Assert.Equal(contentTemplate, window.TestComboBox.FindChild<Button>("PART_ClearText").ContentTemplate);
+                    var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+                    Assert.Equal(contentTemplate, toggleButton.FindChild<Button>("PART_ClearText").ContentTemplate);
+
+                    window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
+                    var edTextBox = window.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
+                    Assert.Equal(contentTemplate, edTextBox.FindChild<Button>("PART_ClearText").ContentTemplate);
 
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
                     Assert.Equal(contentTemplate, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").ContentTemplate);
@@ -98,7 +147,12 @@ namespace MahApps.Metro.Tests
                     Assert.Equal(fontFamily, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText").FontFamily);
 
                     window.TestComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-                    Assert.Equal(fontFamily, window.TestComboBox.FindChild<Button>("PART_ClearText").FontFamily);
+                    var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+                    Assert.Equal(fontFamily, toggleButton.FindChild<Button>("PART_ClearText").FontFamily);
+
+                    window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+                    var edTextBox = window.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
+                    Assert.Equal(fontFamily, edTextBox.FindChild<Button>("PART_ClearText").FontFamily);
 
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
                     Assert.Equal(fontFamily, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").FontFamily);
@@ -129,7 +183,12 @@ namespace MahApps.Metro.Tests
                     Assert.Equal(fontSize, window.TestButtonRevealedPasswordBox.FindChild<Button>("PART_ClearText").FontSize);
 
                     window.TestComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-                    Assert.Equal(fontSize, window.TestComboBox.FindChild<Button>("PART_ClearText").FontSize);
+                    var toggleButton = window.TestComboBox.FindChild<ToggleButton>("PART_DropDownToggle");
+                    Assert.Equal(fontSize, toggleButton.FindChild<Button>("PART_ClearText").FontSize);
+
+                    window.TestEditableComboBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+                    var edTextBox = window.TestEditableComboBox.FindChild<TextBox>("PART_EditableTextBox");
+                    Assert.Equal(fontSize, edTextBox.FindChild<Button>("PART_ClearText").FontSize);
 
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
                     Assert.Equal(fontSize, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").FontSize);

@@ -14,6 +14,7 @@
         <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MetroButtonPasswordBox}" />
         <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MetroButtonRevealedPasswordBox}" />
         <ComboBox x:Name="TestComboBox" />
+        <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
         <controls:NumericUpDown x:Name="TestNumericUpDown" />
     </StackPanel>
 </controls:MetroWindow>

@@ -153,23 +153,22 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
-        /// For multiline TextBox, PasswordBox is this the fallback for the clear text button! so it must set manually!
-        /// For normal TextBox, PasswordBox the width is the height. 
+        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static readonly DependencyProperty ButtonWidthProperty =
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         [Category(AppName.MahApps)]
         public static double GetButtonWidth(DependencyObject obj)
         {
-            return (double)obj.GetValue(ButtonWidthProperty);
+            return TextBoxHelper.GetButtonWidth(obj);
         }
 
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
-            obj.SetValue(ButtonWidthProperty, value);
+            TextBoxHelper.SetButtonWidth(obj, value);
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
