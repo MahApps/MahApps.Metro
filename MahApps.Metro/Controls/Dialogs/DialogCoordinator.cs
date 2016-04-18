@@ -10,7 +10,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the default instance if the dialog coordinator, which can be injected into a view model.
         /// </summary>
-        public static readonly DialogCoordinator Instance = new DialogCoordinator();
+        public static readonly IDialogCoordinator Instance = new DialogCoordinator();
 
         public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
         {            
