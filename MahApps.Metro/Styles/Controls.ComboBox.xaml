@@ -304,8 +304,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="TextColumn" Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn" Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}" />
-                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <ToggleButton x:Name="PART_DropDownToggle"
