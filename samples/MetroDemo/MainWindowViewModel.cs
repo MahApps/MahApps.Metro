@@ -332,10 +332,9 @@ namespace MetroDemo
                 return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
-                    {
-                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
+                    ExecuteDelegate = x => PerformDialogCoordinatorAction(
+                        () => this._dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result)),
+                        bool.Parse((string)x))
                 });
             }
         }
@@ -363,7 +362,19 @@ namespace MetroDemo
 
             await controller.CloseAsync();
         }
-        
+
+        private static void PerformDialogCoordinatorAction(Action action, bool runInBackground)
+        {
+            if (runInBackground)
+            {
+                Task.Factory.StartNew(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
 
         private ICommand showCustomDialogCommand;
 
