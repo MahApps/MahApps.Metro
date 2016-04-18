@@ -41,7 +41,6 @@
 
                             <Button x:Name="PART_Button"
                                     Grid.Column="1"
-                                    FlowDirection="{TemplateBinding FlowDirection}"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False">
