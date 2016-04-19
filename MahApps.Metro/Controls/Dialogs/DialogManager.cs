@@ -391,7 +391,7 @@ namespace MahApps.Metro.Controls.Dialogs
             var t = new TaskCompletionSource<TDialog>();
             window.Dispatcher.Invoke((Action)(() =>
             {
-                TDialog dialog = window.metroActiveDialogContainer.Children.OfType<TDialog>().LastOrDefault();
+                TDialog dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
                 t.TrySetResult(dialog);
             }));
             return t.Task;

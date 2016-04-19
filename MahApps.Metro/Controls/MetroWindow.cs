@@ -779,7 +779,7 @@ namespace MahApps.Metro.Controls
         protected override void OnClosing(CancelEventArgs e)
         {
             // #2409: don't close window if there is a dialog still open
-            var dialog = this.Invoke(() => this.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault());
+            var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
             e.Cancel = dialog != null;
             base.OnClosing(e);
         }
