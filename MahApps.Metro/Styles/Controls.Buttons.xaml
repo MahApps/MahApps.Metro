@@ -79,6 +79,7 @@
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </Trigger>
 
             <MultiTrigger>
