@@ -89,6 +89,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
             AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
+            AssociatedObject.ContentRendered += AssociatedObject_ContentRendered;
 
             // handle the maximized state here too (to handle the border in a correct way)
             this.HandleMaximize();
@@ -203,6 +204,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
                 AssociatedObject.StateChanged -= OnAssociatedObjectHandleMaximize;
+                AssociatedObject.ContentRendered -= AssociatedObject_ContentRendered;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -331,7 +333,7 @@ namespace MahApps.Metro.Behaviours
                 hwndSource.AddHook(WindowProc);
             }
 
-            if (AssociatedObject.ResizeMode != ResizeMode.NoResize)
+            if (this.savedResizeMode != ResizeMode.NoResize)
             {
                 // handle size to content (thanks @lynnx).
                 // This is necessary when ResizeMode != NoResize. Without this workaround,
@@ -353,8 +355,6 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            AssociatedObject.ResizeMode = this.savedResizeMode;
-
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");
             window.SetIsHitTestVisibleInChromeProperty<Thumb>("PART_WindowTitleThumb");
@@ -363,6 +363,11 @@ namespace MahApps.Metro.Behaviours
             window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
 
             window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
+        }
+
+        private void AssociatedObject_ContentRendered(object sender, EventArgs e)
+        {
+            AssociatedObject.ResizeMode = this.savedResizeMode;
         }
 
         [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" properties in your Window to get a drop shadow around it.")]
