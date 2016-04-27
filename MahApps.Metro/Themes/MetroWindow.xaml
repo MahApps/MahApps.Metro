@@ -68,18 +68,23 @@
                                       Focusable="False"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
                     <!--  the title bar  -->
-                    <ContentControl x:Name="PART_TitleBar"
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Content="{TemplateBinding Title}"
-                                    ContentTemplate="{TemplateBinding TitleTemplate}"
-                                    Focusable="False"
-                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Controls:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                       Grid.Row="0"
+                                                       Grid.Column="2"
+                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                       HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                       HorizontalContentAlignment="Stretch"
+                                                       VerticalContentAlignment="Stretch"
+                                                       Content="{TemplateBinding Title}"
+                                                       ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                       Focusable="False"
+                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -90,13 +95,7 @@
                                          Mode="OneWay" />
                             </MultiBinding>
                         </ContentControl.Foreground>
-                    </ContentControl>
-
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
-                                         Grid.Row="0"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
+                    </Controls:MetroThumbContentControl>
 
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
@@ -331,6 +330,11 @@
                                       Focusable="False"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
                     <!--  the title bar  -->
                     <Grid x:Name="PART_TitleBar"
                           Grid.Row="0"
@@ -359,12 +363,6 @@
                             </ContentControl>
                         </Label>
                     </Grid>
-
-                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
-                                         Grid.Row="0"
-                                         Grid.Column="0"
-                                         Grid.ColumnSpan="5"
-                                         Style="{StaticResource WindowTitleThumbStyle}" />
 
                     <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"

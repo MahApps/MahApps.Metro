@@ -145,6 +145,8 @@
     <Compile Include="Controls\IconPacks\PackIconModern.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
+    <Compile Include="Controls\IMetroThumb.cs" />
+    <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\TimePartVisibility.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />

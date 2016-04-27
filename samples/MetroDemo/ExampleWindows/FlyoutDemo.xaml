@@ -54,13 +54,17 @@
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <TextBlock Margin="0 -1 8 0"
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Click Me..." Margin="1" />
+
+                <TextBlock Margin="0 -1 8 0"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
                        FontFamily="{DynamicResource HeaderFontFamily}"
                        FontSize="{DynamicResource WindowTitleFontSize}"
                        Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}"
                        TextTrimming="CharacterEllipsis" />
+            </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
 

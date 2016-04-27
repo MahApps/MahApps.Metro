@@ -959,14 +959,22 @@ namespace MahApps.Metro.Controls
             // clear all event handlers first:
             if (this.windowTitleThumb != null)
             {
-                this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+            var thumbContentControl = this.titleBar as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
             if (this.flyoutModalDragMoveThumb != null)
             {
-                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.flyoutModalDragMoveThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -995,6 +1003,14 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+            var thumbContentControl = this.titleBar as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             if (this.flyoutModalDragMoveThumb != null)
             {
@@ -1033,7 +1049,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta((IMetroThumb)sender, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1054,7 +1070,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] Thumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] IMetroThumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             if (thumb == null)
             {
