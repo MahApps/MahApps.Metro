@@ -1048,7 +1048,10 @@ namespace MahApps.Metro.Controls
 
         internal static void DoWindowTitleThumbOnPreviewMouseLeftButtonUp(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            Mouse.Capture(null);
+            if (mouseButtonEventArgs.Source == mouseButtonEventArgs.OriginalSource)
+            {
+                Mouse.Capture(null);
+            }
         }
 
         internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] Thumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
