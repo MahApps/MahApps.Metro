@@ -813,16 +813,18 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
             // this all works only for centered title
+            if (TitleAlignment != HorizontalAlignment.Center)
+            {
+                return;
+            }
 
-            var titleBarGrid = (Grid)titleBar;
-            var titleBarLabel = (Label)titleBarGrid.Children[0];
-            var titleControl = (ContentControl)titleBarLabel.Content;
+            var titleBarGrid = (ContentControl)this.titleBar;
             var iconContentControl = (ContentControl)icon;
 
             // Half of this MetroWindow
-            var halfDistance = this.Width / 2;
+            var halfDistance = this.ActualWidth / 2;
             // Distance between center and left/right
-            var distanceToCenter = titleControl.ActualWidth / 2;
+            var distanceToCenter = titleBarGrid.DesiredSize.Width / 2;
             // Distance between right edge from LeftWindowCommands to left window side
             var distanceFromLeft = iconContentControl.ActualWidth + LeftWindowCommands.ActualWidth;
             // Distance between left edge from RightWindowCommands to right window side
@@ -1021,7 +1023,8 @@ namespace MahApps.Metro.Controls
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
-            if (titleBar != null && titleBar.GetType() == typeof(Grid))
+            //if (titleBar != null && titleBar.GetType() == typeof(Grid))
+            if (titleBar != null && TitleAlignment == HorizontalAlignment.Center)
             {
                 SizeChanged += MetroWindow_SizeChanged;
             }
