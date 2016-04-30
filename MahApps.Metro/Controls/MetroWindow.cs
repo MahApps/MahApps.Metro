@@ -65,7 +65,8 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch));
+        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, PropertyChangedCallback));
+
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
@@ -106,7 +107,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
-        UIElement icon;
+        FrameworkElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
         Thumb windowTitleThumb;
@@ -579,6 +580,19 @@ namespace MahApps.Metro.Controls
             set { SetValue(TitleAlignmentProperty, value); }
         }
 
+        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = dependencyObject as MetroWindow;
+            if (window != null)
+            {
+                window.SizeChanged -= window.MetroWindow_SizeChanged;
+                if (e.NewValue is HorizontalAlignment && (HorizontalAlignment)e.NewValue == HorizontalAlignment.Center)
+                {
+                    window.SizeChanged += window.MetroWindow_SizeChanged;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets/sets the brush used for the Window's title bar.
         /// </summary>
@@ -818,29 +832,28 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var titleBarGrid = (ContentControl)this.titleBar;
-            var iconContentControl = (ContentControl)icon;
-
             // Half of this MetroWindow
             var halfDistance = this.ActualWidth / 2;
             // Distance between center and left/right
-            var distanceToCenter = titleBarGrid.DesiredSize.Width / 2;
+            var distanceToCenter = this.titleBar.DesiredSize.Width / 2;
             // Distance between right edge from LeftWindowCommands to left window side
-            var distanceFromLeft = iconContentControl.ActualWidth + LeftWindowCommands.ActualWidth;
+            var distanceFromLeft = this.icon.ActualWidth + this.LeftWindowCommands.ActualWidth;
             // Distance between left edge from RightWindowCommands to right window side
-            var distanceFromRight = WindowButtonCommands.ActualWidth + RightWindowCommands.ActualWidth;
+            var distanceFromRight = this.WindowButtonCommands.ActualWidth + this.RightWindowCommands.ActualWidth;
             // Margin
             const double horizontalMargin = 5.0;
 
-            if ((distanceFromLeft + distanceToCenter + horizontalMargin < halfDistance) && (distanceFromRight + distanceToCenter + horizontalMargin < halfDistance))
+            var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
+            var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
+            if ((dLeft < halfDistance) && (dRight < halfDistance))
             {
-                Grid.SetColumn(titleBarGrid, 0);
-                Grid.SetColumnSpan(titleBarGrid, 5);
+                Grid.SetColumn(this.titleBar, 0);
+                Grid.SetColumnSpan(this.titleBar, 5);
             }
             else
             {
-                Grid.SetColumn(titleBarGrid, 2);
-                Grid.SetColumnSpan(titleBarGrid, 1);
+                Grid.SetColumn(this.titleBar, 2);
+                Grid.SetColumnSpan(this.titleBar, 1);
             }
         }
 
@@ -936,7 +949,7 @@ namespace MahApps.Metro.Controls
             flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
             this.PreviewMouseDown += FlyoutsPreviewMouseDown;
 
-            icon = GetTemplateChild(PART_Icon) as UIElement;
+            icon = GetTemplateChild(PART_Icon) as FrameworkElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
             this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
@@ -985,7 +998,7 @@ namespace MahApps.Metro.Controls
             {
                 icon.MouseDown -= IconMouseDown;
             }
-            SizeChanged -= MetroWindow_SizeChanged;
+            this.SizeChanged -= this.MetroWindow_SizeChanged;
         }
 
         private void SetWindowEvents()
@@ -1026,7 +1039,7 @@ namespace MahApps.Metro.Controls
             //if (titleBar != null && titleBar.GetType() == typeof(Grid))
             if (titleBar != null && TitleAlignment == HorizontalAlignment.Center)
             {
-                SizeChanged += MetroWindow_SizeChanged;
+                this.SizeChanged += this.MetroWindow_SizeChanged;
             }
         }
 
