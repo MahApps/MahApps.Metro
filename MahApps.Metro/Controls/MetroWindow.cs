@@ -64,7 +64,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
-        public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
+        public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, (o, e) => ((MetroWindow)o).TitleCharacterCasing = (bool)e.NewValue ? CharacterCasing.Upper : CharacterCasing.Normal));
+        public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register("TitleCharacterCasing", typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
         public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, PropertyChangedCallback));
 
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
@@ -565,10 +567,20 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets if the TitleBar's text is automatically capitalized.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
         public bool TitleCaps
         {
             get { return (bool)GetValue(TitleCapsProperty); }
             set { SetValue(TitleCapsProperty, value); }
+        }
+
+        /// <summary> 
+        /// Character casing of the title
+        /// </summary> 
+        public CharacterCasing TitleCharacterCasing
+        {
+            get { return (CharacterCasing)GetValue(TitleCharacterCasingProperty); }
+            set { SetValue(TitleCharacterCasingProperty, value); }
         }
 
         /// <summary>
@@ -638,9 +650,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(NonActiveWindowTitleBrushProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the TitleBar/Window's Text.
-        /// </summary>
+        [Obsolete("This property will be deleted in the next release.")]
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }

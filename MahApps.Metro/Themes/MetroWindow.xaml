@@ -77,6 +77,7 @@
                     <Controls:MetroThumbContentControl x:Name="PART_TitleBar"
                                                        Grid.Row="0"
                                                        Grid.Column="2"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                        HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                        HorizontalContentAlignment="Stretch"
@@ -340,6 +341,7 @@
                                                        Grid.Row="0"
                                                        Grid.Column="0"
                                                        Grid.ColumnSpan="5"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                        HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                        HorizontalContentAlignment="Center"
@@ -567,20 +569,6 @@
         </Setter>
         <Setter Property="WindowTitleBrush" Value="{DynamicResource WindowTitleColorBrush}" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay}" Value="True">
-                <Setter Property="TitleTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <TextBlock Margin="8 -1 0 0"
-                                       VerticalAlignment="Center"
-                                       FontFamily="{DynamicResource HeaderFontFamily}"
-                                       FontSize="{DynamicResource WindowTitleFontSize}"
-                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}"
-                                       TextTrimming="CharacterEllipsis" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">
                     <Setter.Value>
