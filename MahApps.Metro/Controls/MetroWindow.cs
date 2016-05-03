@@ -1075,7 +1075,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta((IMetroThumb)sender, this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1096,7 +1096,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] IMetroThumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             if (thumb == null)
             {
@@ -1130,18 +1130,19 @@ namespace MahApps.Metro.Controls
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
 
-            if (windowIsMaximized) {
+            if (windowIsMaximized)
+            {
                 window.Top = 2;
                 window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
-                {
-                    window.StateChanged -= windowOnStateChanged;
-                    if (window.WindowState == WindowState.Normal)
                     {
-                        Mouse.Capture(thumb, CaptureMode.Element);
-                    }
-                };
+                        window.StateChanged -= windowOnStateChanged;
+                        if (window.WindowState == WindowState.Normal)
+                        {
+                            Mouse.Capture(thumb, CaptureMode.Element);
+                        }
+                    };
                 window.StateChanged += windowOnStateChanged;
             }
 
