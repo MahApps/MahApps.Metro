@@ -145,6 +145,8 @@
     <Compile Include="Controls\IconPacks\PackIconModern.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
+    <Compile Include="Controls\IMetroThumb.cs" />
+    <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\TimePartVisibility.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
@@ -571,6 +573,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ContentControlEx.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
