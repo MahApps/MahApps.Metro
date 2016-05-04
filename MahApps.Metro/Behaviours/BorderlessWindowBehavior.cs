@@ -23,7 +23,6 @@ namespace MahApps.Metro.Behaviours
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
         private ResizeMode savedResizeMode;
-        private PropertyChangeNotifier resizeModeChangeNotifier;
 
         protected override void OnAttached()
         {
@@ -82,16 +81,14 @@ namespace MahApps.Metro.Behaviours
             savedResizeMode = AssociatedObject.ResizeMode;
             if (savedResizeMode == ResizeMode.NoResize)
             {
-                AssociatedObject.ResizeMode = ResizeMode.CanResize;
+                this.AssociatedObject.ResizeMode = ResizeMode.CanResize;
+                this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
-            resizeModeChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.ResizeModeProperty);
-            resizeModeChangeNotifier.ValueChanged += ResizeModeChangeNotifierOnValueChanged;
 
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
             AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
-            AssociatedObject.ContentRendered += AssociatedObject_ContentRendered;
 
             // handle the maximized state here too (to handle the border in a correct way)
             this.HandleMaximize();
@@ -107,11 +104,6 @@ namespace MahApps.Metro.Behaviours
         private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
             savedTopMost = AssociatedObject.Topmost;
-        }
-
-        private void ResizeModeChangeNotifierOnValueChanged(object sender, EventArgs e)
-        {
-            savedResizeMode = AssociatedObject.ResizeMode;
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
@@ -206,7 +198,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
                 AssociatedObject.StateChanged -= OnAssociatedObjectHandleMaximize;
-                AssociatedObject.ContentRendered -= AssociatedObject_ContentRendered;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -366,20 +357,7 @@ namespace MahApps.Metro.Behaviours
                 window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
                 window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
                 window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_WindowButtonCommands");
-            }
-
-            window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
-        }
-
-        private void AssociatedObject_ContentRendered(object sender, EventArgs e)
-        {
-            if (this.AssociatedObject.ResizeMode != this.savedResizeMode && savedResizeMode == ResizeMode.NoResize)
-            {
-                this.BeginInvoke(() =>
-                {
-                    this.windowChrome.ResizeBorderThickness = new Thickness(0);
-                    //this.AssociatedObject.ResizeMode = this.savedResizeMode;
-                });
+                window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
             }
         }
 
