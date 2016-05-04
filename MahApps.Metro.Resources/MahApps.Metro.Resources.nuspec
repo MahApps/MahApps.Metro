@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.Resources</id>
-    <version>0.5.0.0</version>
+    <version>0.6.1.0</version>
     <title>MahApps.Metro.Resources</title>
     <authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Alex Mitchell, Austin Andrews</authors>
     <owners>punker76,shiftkey,aeoth</owners>
@@ -30,6 +30,7 @@
     <file src="..\MahApps.Metro.Resources\Entypo-license.txt" target="content\Resources\Entypo-license.txt" />
     <file src="..\MahApps.Metro.Resources\Entypo.ttf" target="content\Resources\Entypo.ttf" />
     <file src="..\MahApps.Metro.Resources\Icons.xaml" target="content\Resources\Icons.xaml" />
+    <file src="..\MahApps.Metro.Resources\IconsNonShared.xaml" target="content\Resources\IconsNonShared.xaml" />
     <file src="..\MahApps.Metro.Resources\WindowsIcons-license.txt" target="content\Resources\WindowsIcons-license.txt" />
   </files>
 </package>

@@ -32,6 +32,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
+
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
@@ -39,45 +41,8 @@
     <Style TargetType="{x:Type controls:ToggleSwitchButton}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" />
     <Style TargetType="{x:Type controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" />
 
-    <Style TargetType="{x:Type controls:ContentControlEx}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:ContentControlEx}">
-                    <Grid Background="Transparent">
-                        <ContentPresenter x:Name="PART_ContentPresenter"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                          RecognizesAccessKey="{TemplateBinding RecognizesAccessKey}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          UseLayoutRounding="{TemplateBinding UseLayoutRounding}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="ContentCharacterCasing" Value="Normal">
-                            <Setter TargetName="PART_ContentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger>
-                        <Trigger Property="ContentCharacterCasing" Value="Upper">
-                            <Setter TargetName="PART_ContentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="ContentCharacterCasing" Value="Lower">
-                            <Setter TargetName="PART_ContentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={converters:ToLowerConverter}}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <Style TargetType="{x:Type controls:ContentControlEx}" BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" />
+    <Style TargetType="{x:Type controls:MetroThumbContentControl}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" />
 
     <Style TargetType="{x:Type controls:PackIconMaterial}">
         <Setter Property="Height" Value="16" />
