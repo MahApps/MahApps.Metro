@@ -50,10 +50,9 @@ namespace MahApps.Metro.Controls
         ///   Executes the specified action asynchronously with the DispatcherPriority.Background on the thread that the Dispatcher was created on.
         /// </summary>
         /// <param name="dispatcherObject">The dispatcher object where the action runs.</param>
-        /// <param name="invokeAction">
-        ///     An action that takes no parameters. 
-        /// </param> 
-        public static void BeginInvoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction)
+        /// <param name="invokeAction">An action that takes no parameters.</param>
+        /// <param name="priority">The dispatcher priority.</param> 
+        public static void BeginInvoke([NotNull] this DispatcherObject dispatcherObject, [NotNull] Action invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
         {
             if (dispatcherObject == null)
             {
@@ -63,7 +62,7 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
-            dispatcherObject.Dispatcher.BeginInvoke(DispatcherPriority.Background, invokeAction);
+            dispatcherObject.Dispatcher.BeginInvoke(priority, invokeAction);
         }
     }
 }
