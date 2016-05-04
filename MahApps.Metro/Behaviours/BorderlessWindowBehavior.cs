@@ -2,7 +2,6 @@
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
@@ -81,7 +80,10 @@ namespace MahApps.Metro.Behaviours
             // WindowState = Maximized
             // ResizeMode = NoResize
             savedResizeMode = AssociatedObject.ResizeMode;
-            AssociatedObject.ResizeMode = ResizeMode.CanResize;
+            if (savedResizeMode == ResizeMode.NoResize)
+            {
+                AssociatedObject.ResizeMode = ResizeMode.CanResize;
+            }
             resizeModeChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.ResizeModeProperty);
             resizeModeChangeNotifier.ValueChanged += ResizeModeChangeNotifierOnValueChanged;
 
@@ -263,7 +265,7 @@ namespace MahApps.Metro.Behaviours
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 // note (punker76): check this, maybe we doesn't need this anymore
-                windowChrome.ResizeBorderThickness = new Thickness(0);
+                //windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
 
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
@@ -289,9 +291,9 @@ namespace MahApps.Metro.Behaviours
             {
                 // note (punker76): check this, maybe we doesn't need this anymore
 #if NET4_5
-                windowChrome.ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+                //windowChrome.ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
 #else
-                windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
+                //windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
 #endif
                 if (!enableDWMDropShadow)
                 {
@@ -355,19 +357,30 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
-            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");
-            window.SetIsHitTestVisibleInChromeProperty<Thumb>("PART_WindowTitleThumb");
-            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
-            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
-            window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
+            if (this.savedResizeMode != ResizeMode.NoResize)
+            {
+                window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
+                window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
+                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_TitleBar");
+                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_WindowTitleThumb");
+                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
+                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
+                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_WindowButtonCommands");
+            }
 
             window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
         }
 
         private void AssociatedObject_ContentRendered(object sender, EventArgs e)
         {
-            AssociatedObject.ResizeMode = this.savedResizeMode;
+            if (this.AssociatedObject.ResizeMode != this.savedResizeMode && savedResizeMode == ResizeMode.NoResize)
+            {
+                this.BeginInvoke(() =>
+                {
+                    this.windowChrome.ResizeBorderThickness = new Thickness(0);
+                    //this.AssociatedObject.ResizeMode = this.savedResizeMode;
+                });
+            }
         }
 
         [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" properties in your Window to get a drop shadow around it.")]
