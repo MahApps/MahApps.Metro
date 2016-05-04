@@ -20,15 +20,19 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="window">The MetroWindow.</param>
         /// <param name="name">The name of the template child.</param>
-        public static void SetIsHitTestVisibleInChromeProperty<T>([NotNull] this MetroWindow window, string name) where T : class
+        /// <param name="hitTestVisible"></param>
+        public static void SetIsHitTestVisibleInChromeProperty<T>([NotNull] this MetroWindow window, string name, bool hitTestVisible = true) where T : class
         {
             if (window == null)
             {
                 throw new ArgumentNullException(nameof(window));
             }
-            var elementPart = window.GetPart<T>(name) as IInputElement;
-            Debug.Assert(elementPart != null, $"{name} is not a IInputElement");
-            WindowChrome.SetIsHitTestVisibleInChrome(elementPart, true);
+            var inputElement = window.GetPart<T>(name) as IInputElement;
+            Debug.Assert(inputElement != null, $"{name} is not a IInputElement");
+            if (WindowChrome.GetIsHitTestVisibleInChrome(inputElement) != hitTestVisible)
+            {
+                WindowChrome.SetIsHitTestVisibleInChrome(inputElement, hitTestVisible);
+            }
         }
 
         /// <summary>
@@ -37,14 +41,15 @@ namespace MahApps.Metro.Controls
         /// <param name="window">The MetroWindow.</param>
         /// <param name="name">The name of the template child.</param>
         /// <param name="direction">The direction.</param>
-        public static void SetWindowChromeResizeGripDirection(this MetroWindow window, string name, ResizeGripDirection direction)
+        public static void SetWindowChromeResizeGripDirection([NotNull] this MetroWindow window, string name, ResizeGripDirection direction)
         {
             if (window == null)
             {
-                return;
+                throw new ArgumentNullException(nameof(window));
             }
             var inputElement = window.GetPart(name) as IInputElement;
-            if (inputElement != null)
+            Debug.Assert(inputElement != null, $"{name} is not a IInputElement");
+            if (WindowChrome.GetResizeGripDirection(inputElement) != direction)
             {
                 WindowChrome.SetResizeGripDirection(inputElement, direction);
             }
