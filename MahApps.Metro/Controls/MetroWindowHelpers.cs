@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Windows.Shell;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -18,17 +20,15 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="window">The MetroWindow.</param>
         /// <param name="name">The name of the template child.</param>
-        public static void SetIsHitTestVisibleInChromeProperty<T>(this MetroWindow window, string name) where T : DependencyObject
+        public static void SetIsHitTestVisibleInChromeProperty<T>([NotNull] this MetroWindow window, string name) where T : class
         {
             if (window == null)
             {
-                return;
+                throw new ArgumentNullException(nameof(window));
             }
-            var elementPart = window.GetPart<T>(name);
-            if (elementPart != null)
-            {
-                elementPart.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
+            var elementPart = window.GetPart<T>(name) as IInputElement;
+            Debug.Assert(elementPart != null, $"{name} is not a IInputElement");
+            WindowChrome.SetIsHitTestVisibleInChrome(elementPart, true);
         }
 
         /// <summary>

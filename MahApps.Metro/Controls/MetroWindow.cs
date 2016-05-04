@@ -1196,11 +1196,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
-        internal T GetPart<T>(string name) where T : DependencyObject
+        internal T GetPart<T>(string name) where T : class
         {
             return GetTemplateChild(name) as T;
         }
-
+        
         /// <summary>
         /// Gets the template child with the given name.
         /// </summary>
