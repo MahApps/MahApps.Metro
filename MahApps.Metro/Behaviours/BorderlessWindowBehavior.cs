@@ -26,69 +26,69 @@ namespace MahApps.Metro.Behaviours
 
         protected override void OnAttached()
         {
-            windowChrome = new WindowChrome
-            {
+            this.windowChrome = new WindowChrome
+                                {
 #if NET4_5
-                ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness, 
+                                    ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness, 
 #else
-                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness,
+                                    ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness,
 #endif
-                CaptionHeight = 0, 
-                CornerRadius = new CornerRadius(0), 
-                GlassFrameThickness = new Thickness(0), 
-                UseAeroCaptionButtons = false
-            };
+                                    CaptionHeight = 0,
+                                    CornerRadius = new CornerRadius(0),
+                                    GlassFrameThickness = new Thickness(0),
+                                    UseAeroCaptionButtons = false
+                                };
 
-            var metroWindow = AssociatedObject as MetroWindow;
+            var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null)
             {
-                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
-                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                this.windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                this.windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
-                      .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                      .AddValueChanged(this.AssociatedObject, this.IgnoreTaskbarOnMaximizePropertyChangedCallback);
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
-                      .AddValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
+                      .AddValueChanged(this.AssociatedObject, this.UseNoneWindowStylePropertyChangedCallback);
             }
 
-            AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+            this.AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, this.windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
-            var windowHandle = new WindowInteropHelper(AssociatedObject).Handle;
-            if (!AssociatedObject.IsLoaded && windowHandle == IntPtr.Zero)
+            var windowHandle = new WindowInteropHelper(this.AssociatedObject).Handle;
+            if (!this.AssociatedObject.IsLoaded && windowHandle == IntPtr.Zero)
             {
                 try
                 {
-                    AssociatedObject.AllowsTransparency = false;
+                    this.AssociatedObject.AllowsTransparency = false;
                 }
                 catch (Exception)
                 {
                     //For some reason, we can't determine if the window has loaded or not, so we swallow the exception.
                 }
             }
-            AssociatedObject.WindowStyle = WindowStyle.None;
+            this.AssociatedObject.WindowStyle = WindowStyle.None;
 
-            savedBorderThickness = AssociatedObject.BorderThickness;
-            borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.BorderThicknessProperty);
-            borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
+            this.savedBorderThickness = this.AssociatedObject.BorderThickness;
+            this.borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Control.BorderThicknessProperty);
+            this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
 
-            savedTopMost = AssociatedObject.Topmost;
-            topMostChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.TopmostProperty);
-            topMostChangeNotifier.ValueChanged += TopMostChangeNotifierOnValueChanged;
+            this.savedTopMost = this.AssociatedObject.Topmost;
+            this.topMostChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.TopmostProperty);
+            this.topMostChangeNotifier.ValueChanged += this.TopMostChangeNotifierOnValueChanged;
 
             // #1823 try to fix another nasty issue
             // WindowState = Maximized
             // ResizeMode = NoResize
-            savedResizeMode = AssociatedObject.ResizeMode;
-            if (savedResizeMode == ResizeMode.NoResize)
+            this.savedResizeMode = this.AssociatedObject.ResizeMode;
+            if (this.savedResizeMode == ResizeMode.NoResize)
             {
                 this.AssociatedObject.ResizeMode = ResizeMode.CanResize;
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
 
-            AssociatedObject.Loaded += AssociatedObject_Loaded;
-            AssociatedObject.Unloaded += AssociatedObject_Unloaded;
-            AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
-            AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
+            this.AssociatedObject.Loaded += this.AssociatedObject_Loaded;
+            this.AssociatedObject.Unloaded += this.AssociatedObject_Unloaded;
+            this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
+            this.AssociatedObject.StateChanged += this.OnAssociatedObjectHandleMaximize;
 
             // handle the maximized state here too (to handle the border in a correct way)
             this.HandleMaximize();
@@ -98,22 +98,22 @@ namespace MahApps.Metro.Behaviours
 
         private void BorderThicknessChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
-            savedBorderThickness = AssociatedObject.BorderThickness;
+            this.savedBorderThickness = this.AssociatedObject.BorderThickness;
         }
 
         private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
-            savedTopMost = AssociatedObject.Topmost;
+            this.savedTopMost = this.AssociatedObject.Topmost;
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
         {
             var metroWindow = sender as MetroWindow;
-            if (metroWindow != null && windowChrome != null)
+            if (metroWindow != null && this.windowChrome != null)
             {
-                if (!Equals(windowChrome.UseNoneWindowStyle, metroWindow.UseNoneWindowStyle))
+                if (!Equals(this.windowChrome.UseNoneWindowStyle, metroWindow.UseNoneWindowStyle))
                 {
-                    windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                    this.windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
                     this.ForceRedrawWindowFromPropertyChanged();
                 }
             }
@@ -122,9 +122,9 @@ namespace MahApps.Metro.Behaviours
         private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
         {
             var metroWindow = sender as MetroWindow;
-            if (metroWindow != null && windowChrome != null)
+            if (metroWindow != null && this.windowChrome != null)
             {
-                if (!Equals(windowChrome.IgnoreTaskbarOnMaximize, metroWindow.IgnoreTaskbarOnMaximize))
+                if (!Equals(this.windowChrome.IgnoreTaskbarOnMaximize, metroWindow.IgnoreTaskbarOnMaximize))
                 {
                     // another special hack to avoid nasty resizing
                     // repro
@@ -132,12 +132,12 @@ namespace MahApps.Metro.Behaviours
                     // WindowState="Maximized"
                     // IgnoreTaskbarOnMaximize="True"
                     // this only happens if we change this at runtime
-                    var removed = _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
-                    windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                    var removed = this._ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
+                    this.windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
                     this.ForceRedrawWindowFromPropertyChanged();
                     if (removed)
                     {
-                        _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
+                        this._ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
                     }
                 }
             }
@@ -182,46 +182,47 @@ namespace MahApps.Metro.Behaviours
 
         private void Cleanup()
         {
-            if (!isCleanedUp)
+            if (!this.isCleanedUp)
             {
-                isCleanedUp = true;
+                this.isCleanedUp = true;
 
                 // clean up events
-                if (AssociatedObject is MetroWindow)
+                if (this.AssociatedObject is MetroWindow)
                 {
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
-                          .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                          .RemoveValueChanged(this.AssociatedObject, this.IgnoreTaskbarOnMaximizePropertyChangedCallback);
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
-                          .RemoveValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
+                          .RemoveValueChanged(this.AssociatedObject, this.UseNoneWindowStylePropertyChangedCallback);
                 }
-                AssociatedObject.Loaded -= AssociatedObject_Loaded;
-                AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
-                AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
-                AssociatedObject.StateChanged -= OnAssociatedObjectHandleMaximize;
-                if (hwndSource != null)
+                this.AssociatedObject.Loaded -= this.AssociatedObject_Loaded;
+                this.AssociatedObject.Unloaded -= this.AssociatedObject_Unloaded;
+                this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
+                this.AssociatedObject.StateChanged -= this.OnAssociatedObjectHandleMaximize;
+                if (this.hwndSource != null)
                 {
-                    hwndSource.RemoveHook(WindowProc);
+                    this.hwndSource.RemoveHook(this.WindowProc);
                 }
-                windowChrome = null;
+                this.windowChrome = null;
             }
         }
 
         protected override void OnDetaching()
         {
-            Cleanup();
+            this.Cleanup();
             base.OnDetaching();
         }
 
         private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
         {
-            Cleanup();
+            this.Cleanup();
         }
 
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
-            
-            switch (msg) {
+
+            switch (msg)
+            {
                 case Constants.WM_NCPAINT:
                     handled = true;
                     break;
@@ -237,58 +238,50 @@ namespace MahApps.Metro.Behaviours
 
         private void OnAssociatedObjectHandleMaximize(object sender, EventArgs e)
         {
-            HandleMaximize();
+            this.HandleMaximize();
         }
 
         private void HandleMaximize()
         {
-            borderThicknessChangeNotifier.ValueChanged -= BorderThicknessChangeNotifierOnValueChanged;
-            topMostChangeNotifier.ValueChanged -= TopMostChangeNotifierOnValueChanged;
+            this.borderThicknessChangeNotifier.ValueChanged -= this.BorderThicknessChangeNotifierOnValueChanged;
+            this.topMostChangeNotifier.ValueChanged -= this.TopMostChangeNotifierOnValueChanged;
 
-            var metroWindow = AssociatedObject as MetroWindow;
-            var enableDWMDropShadow = EnableDWMDropShadow;
+            var metroWindow = this.AssociatedObject as MetroWindow;
+            var enableDWMDropShadow = this.EnableDWMDropShadow;
             if (metroWindow != null)
             {
-                enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
+                enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || this.EnableDWMDropShadow);
             }
-            
-            if (AssociatedObject.WindowState == WindowState.Maximized)
+
+            if (this.AssociatedObject.WindowState == WindowState.Maximized)
             {
-                // remove resize border and window border, so we can move the window from top monitor position
-                // note (punker76): check this, maybe we doesn't need this anymore
-                //windowChrome.ResizeBorderThickness = new Thickness(0);
-                AssociatedObject.BorderThickness = new Thickness(0);
+                // remove window border, so we can move the window from top monitor position
+                this.AssociatedObject.BorderThickness = new Thickness(0);
 
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-                if (ignoreTaskBar && handle != IntPtr.Zero)
+                if (ignoreTaskBar && this.handle != IntPtr.Zero)
                 {
                     // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
                     // so set the window pos/size twice
-                    IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
+                    IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
                     if (monitor != IntPtr.Zero)
                     {
-                        var monitorInfo = new MahApps.Metro.Native.MONITORINFO();
+                        var monitorInfo = new MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
                         var x = monitorInfo.rcMonitor.left;
                         var y = monitorInfo.rcMonitor.top;
                         var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
                         var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
-                        UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                        UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                     }
                 }
             }
             else
             {
-                // note (punker76): check this, maybe we doesn't need this anymore
-#if NET4_5
-                //windowChrome.ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
-#else
-                //windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
-#endif
                 if (!enableDWMDropShadow)
                 {
-                    AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                    this.AssociatedObject.BorderThickness = this.savedBorderThickness.GetValueOrDefault(new Thickness(0));
                 }
             }
 
@@ -306,24 +299,24 @@ namespace MahApps.Metro.Behaviours
             // Note that the minimize animation in this case does actually run, but somehow the other
             // application (Google Chrome in this example) is instantly switched to being the top window,
             // and so blocking the animation view.
-            AssociatedObject.Topmost = false;
-            AssociatedObject.Topmost = AssociatedObject.WindowState == WindowState.Minimized || savedTopMost;
-            
-            borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
-            topMostChangeNotifier.ValueChanged += TopMostChangeNotifierOnValueChanged;
+            this.AssociatedObject.Topmost = false;
+            this.AssociatedObject.Topmost = this.AssociatedObject.WindowState == WindowState.Minimized || this.savedTopMost;
+
+            this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
+            this.topMostChangeNotifier.ValueChanged += this.TopMostChangeNotifierOnValueChanged;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
-            handle = new WindowInteropHelper(AssociatedObject).Handle;
-            if (null == handle)
+            this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
+            if (null == this.handle)
             {
                 throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
             }
-            hwndSource = HwndSource.FromHwnd(handle);
-            if (hwndSource != null)
+            this.hwndSource = HwndSource.FromHwnd(this.handle);
+            if (this.hwndSource != null)
             {
-                hwndSource.AddHook(WindowProc);
+                this.hwndSource.AddHook(this.WindowProc);
             }
 
             if (this.savedResizeMode != ResizeMode.NoResize)
@@ -331,12 +324,12 @@ namespace MahApps.Metro.Behaviours
                 // handle size to content (thanks @lynnx).
                 // This is necessary when ResizeMode != NoResize. Without this workaround,
                 // black bars appear at the right and bottom edge of the window.
-                var sizeToContent = AssociatedObject.SizeToContent;
-                var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
-                AssociatedObject.SnapsToDevicePixels = true;
-                AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
-                AssociatedObject.SizeToContent = sizeToContent;
-                AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+                var sizeToContent = this.AssociatedObject.SizeToContent;
+                var snapsToDevicePixels = this.AssociatedObject.SnapsToDevicePixels;
+                this.AssociatedObject.SnapsToDevicePixels = true;
+                this.AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
+                this.AssociatedObject.SizeToContent = sizeToContent;
+                this.AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
             }
         }
 
@@ -367,8 +360,8 @@ namespace MahApps.Metro.Behaviours
         [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" properties in your Window to get a drop shadow around it.")]
         public bool EnableDWMDropShadow
         {
-            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
-            set { SetValue(EnableDWMDropShadowProperty, value); }
+            get { return (bool)this.GetValue(EnableDWMDropShadowProperty); }
+            set { this.SetValue(EnableDWMDropShadowProperty, value); }
         }
     }
 }
