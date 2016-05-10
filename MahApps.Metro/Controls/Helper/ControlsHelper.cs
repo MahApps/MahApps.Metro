@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
+            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
         private static void HeaderFontSizePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -105,9 +105,7 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         public static double GetHeaderFontSize(UIElement element)
         {
             return (double)element.GetValue(HeaderFontSizeProperty);
@@ -122,9 +120,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new UIPropertyMetadata(FontStretches.Normal));
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         public static FontStretch GetHeaderFontStretch(UIElement element)
         {
             return (FontStretch)element.GetValue(HeaderFontStretchProperty);
@@ -139,9 +135,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new UIPropertyMetadata(FontWeights.Normal));
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         public static FontWeight GetHeaderFontWeight(UIElement element)
         {
             return (FontWeight)element.GetValue(HeaderFontWeightProperty);
