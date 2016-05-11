@@ -81,7 +81,6 @@ namespace MahApps.Metro.Behaviours
             this.savedResizeMode = this.AssociatedObject.ResizeMode;
             if (this.savedResizeMode == ResizeMode.NoResize)
             {
-                this.AssociatedObject.ResizeMode = ResizeMode.CanResize;
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
 
