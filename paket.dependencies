@@ -12,4 +12,5 @@ nuget NHotkey.Wpf 1.2.1
 nuget xunit 1.9.2
 nuget xunit.extensions 1.9.2
 
-github ControlzEx/ControlzEx:53707b8b855b32a02ee58fc3f865455a79b8b9d7 src/ControlzEx/PackIconBase.cs
+github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/KeyboardNavigationEx.cs
+github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/PackIconBase.cs
