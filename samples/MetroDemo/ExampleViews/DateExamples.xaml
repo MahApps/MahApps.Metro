@@ -54,7 +54,7 @@
                         Margin="0,0,20,0"
                         VerticalAlignment="Top"
                         Orientation="Vertical">
-                <Label Content="DateTime picker" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="DateTime/Time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <GroupBox Header="Current time">
                     <Controls:DateTimePicker>

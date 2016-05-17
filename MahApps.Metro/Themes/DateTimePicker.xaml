@@ -4,9 +4,11 @@
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
-    <converters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
-    <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"></converters:TimeSpanToStringConverter>
+    <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" 
+                                     TotalParts="60" />
+    <converters:ClockDegreeConverter x:Key="HourDegreeConverter" 
+                                     TotalParts="12" />
+    <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
 
     <DataTemplate x:Key="FiveMinuteIndicator">
         <StackPanel Height="57"
@@ -102,8 +104,7 @@
         <system:Int32>59</system:Int32>
     </x:Array>
 
-
-    <Style TargetType="{x:Type controls:TimePartPickerBase}" x:Key="TimePartPickerBase">
+    <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePartPickerBase}">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
@@ -288,7 +289,8 @@
                                                     <ComboBox x:Name="PART_SecondPicker"
                                                               Grid.Column="4"
                                                               ItemsSource="{TemplateBinding SourceSeconds}" />
-                                                    <ComboBox x:Name="PART_AmPmSwitcher" Grid.Column="5" />
+                                                    <ComboBox x:Name="PART_AmPmSwitcher" 
+                                                              Grid.Column="5" />
                                                 </Grid>
                                             </Grid>
                                         </StackPanel>

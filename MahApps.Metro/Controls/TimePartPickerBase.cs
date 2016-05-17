@@ -23,10 +23,11 @@ namespace MahApps.Metro.Controls
     public abstract class TimePartPickerBase : Control
     {
         /// <summary>
-        /// This dependency property is to contol whether to show the date-picker (in case of <see cref="DateTimePicker"/>) or hide it (in case of <see cref="TimePicker"/>.
+        /// This readonly dependency property is to contol whether to show the date-picker (in case of <see cref="DateTimePicker"/>) or hide it (in case of <see cref="TimePicker"/>.
         /// </summary>
-        protected internal static readonly DependencyPropertyKey IsDatePickerVisiblePropertyKey = DependencyProperty.RegisterReadOnly(
+        private static readonly DependencyPropertyKey IsDatePickerVisiblePropertyKey = DependencyProperty.RegisterReadOnly(
           "IsDatePickerVisible", typeof(bool), typeof(TimePartPickerBase), new PropertyMetadata(true));
+
         public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
@@ -146,7 +147,7 @@ namespace MahApps.Metro.Controls
         public bool IsDatePickerVisible
         {
             get { return (bool)GetValue(IsDatePickerVisibleProperty); }
-            private set { SetValue(IsDatePickerVisiblePropertyKey, value); }
+            protected set { SetValue(IsDatePickerVisiblePropertyKey, value); }
         }
 
         /// <summary>
