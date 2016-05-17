@@ -58,9 +58,9 @@
 
                 <GroupBox Header="Current time">
                     <Controls:DateTimePicker>
-                        <!--<i:Interaction.Behaviors>
+                        <i:Interaction.Behaviors>
                             <behaviors:DateTimeNowBehavior />
-                        </i:Interaction.Behaviors>-->
+                        </i:Interaction.Behaviors>
                     </Controls:DateTimePicker>
                 </GroupBox>
 
