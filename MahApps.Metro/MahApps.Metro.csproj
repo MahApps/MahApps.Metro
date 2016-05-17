@@ -170,6 +170,7 @@
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\Theme.cs" />
+    <Compile Include="Controls\TimePartPickerBase.cs" />
     <Compile Include="Controls\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
