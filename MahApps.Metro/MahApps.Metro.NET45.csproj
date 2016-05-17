@@ -184,6 +184,7 @@
     <Compile Include="Controls\Helper\SliderHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
+    <Compile Include="Controls\TimePicker.cs" />
     <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />

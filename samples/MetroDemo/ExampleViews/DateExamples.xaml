@@ -57,10 +57,10 @@
                 <Label Content="DateTime picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <GroupBox Header="Current time">
-                    <Controls:DateTimePicker>
-                        <i:Interaction.Behaviors>
+                    <Controls:DateTimePicker x:Name="test">
+                        <!--<i:Interaction.Behaviors>
                             <behaviors:DateTimeNowBehavior />
-                        </i:Interaction.Behaviors>
+                        </i:Interaction.Behaviors>-->
                     </Controls:DateTimePicker>
                 </GroupBox>
 
@@ -151,7 +151,7 @@
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
                         <GroupBox Header="Current time">
-                            <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                            <!--<Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                      IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -161,7 +161,8 @@
                                 <i:Interaction.Behaviors>
                                     <behaviors:DateTimeNowBehavior />
                                 </i:Interaction.Behaviors>
-                            </Controls:DateTimePicker>
+                            </Controls:DateTimePicker>-->
+                            <Controls:TimePicker  SelectedTime="{Binding Path=SelectedTime, ElementName=test}"></Controls:TimePicker>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
