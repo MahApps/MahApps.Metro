@@ -1,13 +1,16 @@
 ﻿namespace MahApps.Metro.Controls
 {
+    using System;
     using System.Windows;
+    using System.Windows.Data;
 
+    [ValueConversion(typeof(TimeSpan?), typeof(string))]
     public class TimePicker : TimePartPickerBase
     {
         static TimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePicker), new FrameworkPropertyMetadata(typeof(TimePicker)));
-            DatePickerVisibilityProperty.OverrideMetadata(typeof(TimePicker), new FrameworkPropertyMetadata(Visibility.Collapsed), DatePickerVisibilityPropertyKey);
+            IsDatePickerVisibleProperty.OverrideMetadata(typeof(TimePicker), new PropertyMetadata(false), IsDatePickerVisiblePropertyKey);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace MahApps.Metro.Controls
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
+    using System.Windows.Markup;
 
     [TemplatePart(Name = ElementButton, Type = typeof(Button))]
     [TemplatePart(Name = ElementHourHand, Type = typeof(UIElement))]
@@ -19,21 +20,14 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
-    public class TimePartPickerBase : Control
+    public abstract class TimePartPickerBase : Control
     {
-        protected internal static readonly DependencyPropertyKey DatePickerVisibilityPropertyKey = DependencyProperty.RegisterReadOnly(
-          "DatePickerVisibility", typeof(Visibility), typeof(DateTimePicker), new PropertyMetadata(default(Visibility)));
-
-        public static readonly DependencyProperty DatePickerVisibilityProperty = DatePickerVisibilityPropertyKey.DependencyProperty;
-
-        public Visibility DatePickerVisibility
-        {
-            get { return (Visibility)GetValue(DatePickerVisibilityProperty); }
-            private set { SetValue(DatePickerVisibilityPropertyKey, value); }
-        }
-
-
-
+        /// <summary>
+        /// This dependency property is to contol whether to show the date-picker (in case of <see cref="DateTimePicker"/>) or hide it (in case of <see cref="TimePicker"/>.
+        /// </summary>
+        protected internal static readonly DependencyPropertyKey IsDatePickerVisiblePropertyKey = DependencyProperty.RegisterReadOnly(
+          "IsDatePickerVisible", typeof(bool), typeof(TimePartPickerBase), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
           typeof(ICollection<int>),
@@ -50,6 +44,11 @@ namespace MahApps.Metro.Controls
             typeof(TimePartPickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
         public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase), new PropertyMetadata(default(bool), OnIsDropDownOpenChanged));
+        public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
+            "IsClockVisible",
+            typeof(bool),
+            typeof(TimePartPickerBase),
+            new PropertyMetadata(true));
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
             "IsReadOnly",
             typeof(bool),
@@ -130,6 +129,33 @@ namespace MahApps.Metro.Controls
         {
             get { return (TimePartVisibility)GetValue(HandVisibilityProperty); }
             set { SetValue(HandVisibilityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the date can be selected or not. This property is read-only.
+        /// </summary>
+        public bool IsDatePickerVisible
+        {
+            get { return (bool)GetValue(IsDatePickerVisibleProperty); }
+            private set { SetValue(IsDatePickerVisiblePropertyKey, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the clock of this control is visible in the user interface (UI). This is a
+        ///     dependency property.
+        /// </summary>
+        /// <remarks>
+        ///     If this value is set to false then <see cref="Orientation" /> is set to
+        ///     <see cref="System.Windows.Controls.Orientation.Vertical" />
+        /// </remarks>
+        /// <returns>
+        ///     true if the clock is visible; otherwise, false. The default value is true.
+        /// </returns>
+        [Category("Appearance")]
+        public bool IsClockVisible
+        {
+            get { return (bool)GetValue(IsClockVisibleProperty); }
+            set { SetValue(IsClockVisibleProperty, value); }
         }
 
         /// <summary>
@@ -264,7 +290,18 @@ namespace MahApps.Metro.Controls
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase)d).ApplyCulture();
+            var timePartPickerBase = ((TimePartPickerBase)d);
+
+            var cultureInfo = e.NewValue as CultureInfo;
+            if (cultureInfo == null)
+            {
+                timePartPickerBase.Language = XmlLanguage.Empty;
+            }
+            else
+            {
+                timePartPickerBase.Language = XmlLanguage.GetLanguage(cultureInfo.IetfLanguageTag);
+            }
+            timePartPickerBase.ApplyCulture();
         }
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

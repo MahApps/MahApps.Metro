@@ -4,7 +4,6 @@
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Markup;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -17,12 +16,7 @@
         public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
-
-        public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
-            "IsClockVisible", 
-            typeof(bool), 
-            typeof(DateTimePicker), 
-            new PropertyMetadata(true, OnClockVisibilityChanged));
+    
       
         public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
@@ -39,6 +33,7 @@
         static DateTimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
+            IsClockVisibleProperty.OverrideMetadata(typeof(DateTimePicker), new PropertyMetadata(OnClockVisibilityChanged));
         }
 
         /// <summary>
@@ -96,26 +91,6 @@
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the clock of this control is visible in the user interface (UI). This is a
-        ///     dependency property.
-        /// </summary>
-        /// <remarks>
-        ///     If this value is set to false then <see cref="Orientation" /> is set to
-        ///     <see cref="System.Windows.Controls.Orientation.Vertical" />
-        /// </remarks>
-        /// <returns>
-        ///     true if the clock is visible; otherwise, false. The default value is true.
-        /// </returns>
-        [Category("Appearance")]
-        public bool IsClockVisible
-        {
-            get { return (bool)GetValue(IsClockVisibleProperty); }
-            set { SetValue(IsClockVisibleProperty, value); }
-        }
-
-
-
-        /// <summary>
         ///     Gets or sets a value that indicates whether the current date will be highlighted.
         /// </summary>
         /// <returns>true if the current date is highlighted; otherwise, false. The default is true. </returns>
@@ -153,6 +128,7 @@
 
         public override void OnApplyTemplate()
         {
+            
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
             base.OnApplyTemplate();
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
@@ -206,12 +182,7 @@
         {
             base.ApplyCulture();
 
-            if (_calendar != null)
-            {
-                _calendar.Language = XmlLanguage.GetLanguage(SpecificCultureInfo.IetfLanguageTag);
-            }
-
-            FirstDayOfWeek = this.SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
