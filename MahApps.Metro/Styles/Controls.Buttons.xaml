@@ -255,7 +255,7 @@
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Opacity="0.5"
+                                                   Opacity="0.6"
                                                    Content="{TemplateBinding Content}"
                                                    ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
