@@ -19,45 +19,58 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
-    public abstract class TimePartPickerBase<T> : Control
+    public class TimePartPickerBase : Control
     {
+        protected internal static readonly DependencyPropertyKey DatePickerVisibilityPropertyKey = DependencyProperty.RegisterReadOnly(
+          "DatePickerVisibility", typeof(Visibility), typeof(DateTimePicker), new PropertyMetadata(default(Visibility)));
+
+        public static readonly DependencyProperty DatePickerVisibilityProperty = DatePickerVisibilityPropertyKey.DependencyProperty;
+
+        public Visibility DatePickerVisibility
+        {
+            get { return (Visibility)GetValue(DatePickerVisibilityProperty); }
+            private set { SetValue(DatePickerVisibilityPropertyKey, value); }
+        }
+
+
+
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
           typeof(ICollection<int>),
-          typeof(TimePartPickerBase<T>),
+          typeof(TimePartPickerBase),
           new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
         public static readonly DependencyProperty SourceSecondsProperty = DependencyProperty.Register(
             "SourceSeconds",
             typeof(ICollection<int>),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
-        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase<T>), new PropertyMetadata(default(bool), OnIsDropDownOpenChanged));
+        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase), new PropertyMetadata(default(bool), OnIsDropDownOpenChanged));
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
             "IsReadOnly",
             typeof(bool),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
             "HandVisibility",
             typeof(TimePartVisibility),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
         public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
-            "SelectedTime", typeof(TimeSpan?), typeof(TimePartPickerBase<T>), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
+            "SelectedTime", typeof(TimeSpan?), typeof(TimePartPickerBase), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new PropertyMetadata(null, OnCultureChanged));
         public static readonly DependencyProperty PickerVisibilityProperty = DependencyProperty.Register(
             "PickerVisibility",
             typeof(TimePartVisibility),
-            typeof(TimePartPickerBase<T>),
+            typeof(TimePartPickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
@@ -239,7 +252,7 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
         {
-            var dt = d as TimePartPickerBase<T>;
+            var dt = d as TimePartPickerBase;
             var hourList = basevalue as ICollection<int>;
             if (dt != null && !dt.IsMilitaryTime && hourList != null)
             {
@@ -251,43 +264,43 @@ namespace MahApps.Metro.Controls
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase<T>)d).ApplyCulture();
+            ((TimePartPickerBase)d).ApplyCulture();
         }
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase<T>)d).SetHandVisibility((TimePartVisibility)e.NewValue);
+            ((TimePartPickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
             {
-                ((TimePartPickerBase<T>)d).OnOpened();
+                ((TimePartPickerBase)d).OnOpened();
             }
             else
             {
-                ((TimePartPickerBase<T>)d).OnClosed();
+                ((TimePartPickerBase)d).OnClosed();
             }
         }
 
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase<T>)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
+            ((TimePartPickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase<T>)d)._timeOfDayChanged = true;
-            ((TimePartPickerBase<T>)d).SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
+            ((TimePartPickerBase)d)._timeOfDayChanged = true;
+            ((TimePartPickerBase)d).SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
         }
 
         static TimePartPickerBase()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePartPickerBase<T>), new FrameworkPropertyMetadata(typeof(TimePartPickerBase<T>)));
-            VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase<T>), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase<T>), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            LanguageProperty.OverrideMetadata(typeof(TimePartPickerBase<T>), new FrameworkPropertyMetadata(OnCultureChanged));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(typeof(TimePartPickerBase)));
+            VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
+            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+            LanguageProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>

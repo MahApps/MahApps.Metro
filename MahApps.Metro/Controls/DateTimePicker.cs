@@ -11,7 +11,7 @@
     /// </summary>
     [TemplatePart(Name = ElementCalendar, Type = typeof(Calendar))]
     [DefaultEvent("SelectedDateChanged")]
-    public class DateTimePicker : TimePartPickerBase<DateTime?>
+    public class DateTimePicker : TimePartPickerBase
     {
         public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
