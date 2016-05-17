@@ -1132,11 +1132,13 @@ namespace MahApps.Metro.Controls
 
             if (windowIsMaximized)
             {
-                window.Top = 2;
-                window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
+                var cursorXPos = cursorPos.x;
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
+                        window.Top = 2;
+                        window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
+
                         window.StateChanged -= windowOnStateChanged;
                         if (window.WindowState == WindowState.Normal)
                         {
