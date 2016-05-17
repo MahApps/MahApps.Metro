@@ -72,6 +72,15 @@ namespace MahApps.Metro.Controls
             typeof(TimePartPickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
+        /// <summary>
+        /// Represents the time 00:00:00; 12:00:00 AM respectively
+        /// </summary>
+        private static readonly TimeSpan MinValue = TimeSpan.Zero;
+        /// <summary>
+        /// Represents the time 23:59:59.9999999; 11:59:59.9999999 PM respectively
+        /// </summary>
+        private static readonly TimeSpan MaxValue = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
+
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementHourHand = "PART_HourHand";
@@ -262,7 +271,18 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceSelectedTime(DependencyObject d, object basevalue)
         {
-            return (TimeSpan?)basevalue < TimeSpan.Zero ? TimeSpan.Zero : (TimeSpan?)basevalue;
+            var spanOfTime = (TimeSpan?)basevalue;
+
+            if (spanOfTime < MinValue)
+            {
+                return MinValue;
+            }
+            if (spanOfTime > MaxValue)
+            {
+                return MaxValue;
+            }
+
+            return spanOfTime;
         }
 
         private static object CoerceSource60(DependencyObject d, object basevalue)
