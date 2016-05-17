@@ -1,10 +1,10 @@
 ﻿namespace MahApps.Metro.Controls
 {
-    using System;
     using System.Windows;
-    using System.Windows.Data;
 
-    [ValueConversion(typeof(TimeSpan?), typeof(string))]
+    /// <summary>
+    ///     Represents a control that allows the user to select a time.
+    /// </summary>
     public class TimePicker : TimePartPickerBase
     {
         static TimePicker()

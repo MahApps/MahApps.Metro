@@ -4,6 +4,7 @@
     using System.Globalization;
     using System.Windows.Data;
 
+    [ValueConversion(typeof(TimeSpan?), typeof(string))]
     internal class TimeSpanToStringConverter : IValueConverter
     {
         /// <summary>Converts a value. </summary>
