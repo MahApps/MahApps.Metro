@@ -9,7 +9,7 @@
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
     /// </summary>
-    [TemplatePart(Name = ElementCalendar, Type = typeof(System.Windows.Controls.Calendar))]
+    [TemplatePart(Name = ElementCalendar, Type = typeof(Calendar))]
     [DefaultEvent("SelectedDateChanged")]
     public class DateTimePicker : TimePartPickerBase<DateTime?>
     {
@@ -19,29 +19,26 @@
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
 
         public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
-            "IsClockVisible",
-            typeof(bool),
-            typeof(DateTimePicker),
+            "IsClockVisible", 
+            typeof(bool), 
+            typeof(DateTimePicker), 
             new PropertyMetadata(true, OnClockVisibilityChanged));
       
         public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation",
-            typeof(Orientation),
-            typeof(DateTimePicker),
+            "Orientation", 
+            typeof(Orientation), 
+            typeof(DateTimePicker), 
             new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
         public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
       
         private const string ElementCalendar = "PART_Calendar";
-        private System.Windows.Controls.Calendar _calendar;
+        private Calendar _calendar;
 
         static DateTimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
-            //VerticalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            //HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            //LanguageProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>
@@ -154,16 +151,13 @@
             set { SetValue(SelectedDateProperty, value); }
         }
 
-      
-
         public override void OnApplyTemplate()
         {
-            _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
+            _calendar = GetTemplateChild(ElementCalendar) as Calendar;
             base.OnApplyTemplate();
-            _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
+            _calendar = GetTemplateChild(ElementCalendar) as Calendar;
 
         }
-
 
         protected virtual void OnSelectedDateChanged()
         {
@@ -176,11 +170,9 @@
             {
                 return basevalue;
             }
+
             return Orientation.Vertical;
         }
-
-       
-
 
         private static void OnClockVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -201,11 +193,11 @@
 
             if (_calendar != null)
             {
-                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
-                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateStartProperty, GetBinding(DisplayDateStartProperty));
-                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateEndProperty, GetBinding(DisplayDateEndProperty));
-                _calendar.SetBinding(System.Windows.Controls.Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
-                _calendar.SetBinding(System.Windows.Controls.Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
+                _calendar.SetBinding(Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
+                _calendar.SetBinding(Calendar.DisplayDateStartProperty, GetBinding(DisplayDateStartProperty));
+                _calendar.SetBinding(Calendar.DisplayDateEndProperty, GetBinding(DisplayDateEndProperty));
+                _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
+                _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
             }
         }
@@ -233,12 +225,13 @@
         {
             if (toDate.HasValue)
             {
-                SetHourPartValues(toDate.Value.TimeOfDay);
+                SelectedTime = toDate.Value.TimeOfDay;
             }
             else
             {
                 SetDefaultTimeOfDayValues();
             }
+
             OnSelectedDateChanged();
         }
 
@@ -252,12 +245,10 @@
             }
         }
 
-
         private DateTime GetCorrectDateTime()
         {
             return SelectedDate.GetValueOrDefault(DateTime.Today).Date + GetTimeOfDay();
         }
-
 
         private void SetDatePartValues()
         {
@@ -278,7 +269,6 @@
                 _calendar.SelectedDatesChanged += OnSelectedDatesChanged;
             }
         }
-
 
         protected override void UnSubscribeEvents()
         {
