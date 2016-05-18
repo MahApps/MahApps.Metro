@@ -25,7 +25,6 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
     public abstract class TimePickerBase : Control
     {
-        public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
           typeof(ICollection<int>),
@@ -91,11 +90,17 @@ namespace MahApps.Metro.Controls
         private const string ElementSecondHand = "PART_SecondHand";
         private const string ElementSecondPicker = "PART_SecondPicker";
 
+        #region Do not change order of fields inside this region
+
         /// <summary>
         /// This readonly dependency property is to control whether to show the date-picker (in case of <see cref="DateTimePicker"/>) or hide it (in case of <see cref="TimePicker"/>.
         /// </summary>
         private static readonly DependencyPropertyKey IsDatePickerVisiblePropertyKey = DependencyProperty.RegisterReadOnly(
           "IsDatePickerVisible", typeof(bool), typeof(TimePickerBase), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
+
+        #endregion
 
         /// <summary>
         /// Represents the time 00:00:00; 12:00:00 AM respectively
