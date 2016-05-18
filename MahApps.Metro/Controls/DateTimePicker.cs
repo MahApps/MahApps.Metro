@@ -16,14 +16,13 @@
         public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
-    
-      
         public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
             "Orientation", 
             typeof(Orientation), 
             typeof(DateTimePicker), 
             new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
+
         public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
       
@@ -128,48 +127,14 @@
 
         public override void OnApplyTemplate()
         {
-            
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
             base.OnApplyTemplate();
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
-
         }
 
         protected virtual void OnSelectedDateChanged(SelectionChangedEventArgs e)
         {
             RaiseEvent(e);
-        }
-
-        private static object CoerceOrientation(DependencyObject d, object basevalue)
-        {
-            if (((DateTimePicker)d).IsClockVisible)
-            {
-                return basevalue;
-            }
-
-            return Orientation.Vertical;
-        }
-
-        private static void OnClockVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            d.CoerceValue(OrientationProperty);
-        }
-
-
-        private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var dateTimePicker = (DateTimePicker)d;
-
-            var dt = (DateTime?)e.NewValue;
-            if (dt.HasValue)
-            {
-                dateTimePicker.SelectedTime = dt.Value.TimeOfDay;
-                dateTimePicker.OnSelectedDateChanged(new SelectionChangedEventArgs(SelectedDateChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
-            }
-            else
-            {
-                dateTimePicker.SetDefaultTimeOfDayValues();
-            }
         }
 
         protected override void ApplyBindings()
@@ -201,31 +166,6 @@
             SetDatePartValues();
         }
 
-        private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems != null)
-            {
-                var dt = (DateTime)e.AddedItems[0];
-                dt = dt.Add(SelectedTime.GetValueOrDefault());
-                SelectedDate = dt;
-            }
-        }
-
-        private DateTime GetCorrectDateTime()
-        {
-            return SelectedDate.GetValueOrDefault(DateTime.Today).Date + SelectedTime.GetValueOrDefault();
-        }
-
-        private void SetDatePartValues()
-        {
-            var dateTime = GetCorrectDateTime();
-            DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-            if (SelectedDate != DisplayDate || _popup != null && _popup.IsOpen)
-            {
-                SelectedDate = DisplayDate;
-            }
-        }
-
         protected override void SubscribeEvents()
         {
             base.SubscribeEvents();
@@ -246,5 +186,60 @@
             }
         }
 
+        private static object CoerceOrientation(DependencyObject d, object basevalue)
+        {
+            if (((DateTimePicker)d).IsClockVisible)
+            {
+                return basevalue;
+            }
+
+            return Orientation.Vertical;
+        }
+
+        private static void OnClockVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.CoerceValue(OrientationProperty);
+        }
+
+        private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dateTimePicker = (DateTimePicker)d;
+
+            var dt = (DateTime?)e.NewValue;
+            if (dt.HasValue)
+            {
+                dateTimePicker.SelectedTime = dt.Value.TimeOfDay;
+                dateTimePicker.OnSelectedDateChanged(new SelectionChangedEventArgs(SelectedDateChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+            }
+            else
+            {
+                dateTimePicker.SetDefaultTimeOfDayValues();
+            }
+        }
+
+        private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null)
+            {
+                var dt = (DateTime)e.AddedItems[0];
+                dt = dt.Add(SelectedTime.GetValueOrDefault());
+                SelectedDate = dt;
+            }
+        }
+
+        private DateTime GetCorrectDateTime()
+        {
+            return SelectedDate.GetValueOrDefault(DateTime.Today).Date + SelectedTime.GetValueOrDefault();
+        }
+
+        private void SetDatePartValues()
+        {
+            var dateTime = GetCorrectDateTime();
+            DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
+            if (SelectedDate != DisplayDate || (Popup != null && Popup.IsOpen))
+            {
+                SelectedDate = DisplayDate;
+            }
+        }
     }
 }
