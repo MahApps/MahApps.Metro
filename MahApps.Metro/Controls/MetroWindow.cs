@@ -64,8 +64,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
-        public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch));
+        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
+        public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, (o, e) => ((MetroWindow)o).TitleCharacterCasing = (bool)e.NewValue ? CharacterCasing.Upper : CharacterCasing.Normal));
+        public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register("TitleCharacterCasing", typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
+        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, PropertyChangedCallback));
+
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
@@ -106,7 +109,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
-        UIElement icon;
+        FrameworkElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
         Thumb windowTitleThumb;
@@ -564,10 +567,20 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets if the TitleBar's text is automatically capitalized.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
         public bool TitleCaps
         {
             get { return (bool)GetValue(TitleCapsProperty); }
             set { SetValue(TitleCapsProperty, value); }
+        }
+
+        /// <summary> 
+        /// Character casing of the title
+        /// </summary> 
+        public CharacterCasing TitleCharacterCasing
+        {
+            get { return (CharacterCasing)GetValue(TitleCharacterCasingProperty); }
+            set { SetValue(TitleCharacterCasingProperty, value); }
         }
 
         /// <summary>
@@ -577,6 +590,19 @@ namespace MahApps.Metro.Controls
         {
             get { return (HorizontalAlignment)GetValue(TitleAlignmentProperty); }
             set { SetValue(TitleAlignmentProperty, value); }
+        }
+
+        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = dependencyObject as MetroWindow;
+            if (window != null)
+            {
+                window.SizeChanged -= window.MetroWindow_SizeChanged;
+                if (e.NewValue is HorizontalAlignment && (HorizontalAlignment)e.NewValue == HorizontalAlignment.Center)
+                {
+                    window.SizeChanged += window.MetroWindow_SizeChanged;
+                }
+            }
         }
 
         /// <summary>
@@ -624,9 +650,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(NonActiveWindowTitleBrushProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the TitleBar/Window's Text.
-        /// </summary>
+        [Obsolete("This property will be deleted in the next release.")]
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
@@ -767,15 +791,23 @@ namespace MahApps.Metro.Controls
             Loaded += this.MetroWindow_Loaded;
         }
 
+#if NET4_5
+        protected override async void OnClosing(CancelEventArgs e)
+        {
+            // #2409: don't close window if there is a dialog still open
+            var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
+            e.Cancel = dialog != null;
+            base.OnClosing(e);
+        }
+#else
         protected override void OnClosing(CancelEventArgs e)
         {
             // #2409: don't close window if there is a dialog still open
-            e.Cancel = this.GetCurrentDialogAsync<BaseMetroDialog>().Result != null;
-            if (!e.Cancel)
-            {
-                base.OnClosing(e);
-            }
+            var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
+            e.Cancel = dialog != null;
+            base.OnClosing(e);
         }
+#endif
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -805,32 +837,33 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
             // this all works only for centered title
-
-            var titleBarGrid = (Grid)titleBar;
-            var titleBarLabel = (Label)titleBarGrid.Children[0];
-            var titleControl = (ContentControl)titleBarLabel.Content;
-            var iconContentControl = (ContentControl)icon;
+            if (TitleAlignment != HorizontalAlignment.Center)
+            {
+                return;
+            }
 
             // Half of this MetroWindow
-            var halfDistance = this.Width / 2;
+            var halfDistance = this.ActualWidth / 2;
             // Distance between center and left/right
-            var distanceToCenter = titleControl.ActualWidth / 2;
+            var distanceToCenter = this.titleBar.DesiredSize.Width / 2;
             // Distance between right edge from LeftWindowCommands to left window side
-            var distanceFromLeft = iconContentControl.ActualWidth + LeftWindowCommands.ActualWidth;
+            var distanceFromLeft = this.icon.ActualWidth + this.LeftWindowCommands.ActualWidth;
             // Distance between left edge from RightWindowCommands to right window side
-            var distanceFromRight = WindowButtonCommands.ActualWidth + RightWindowCommands.ActualWidth;
+            var distanceFromRight = this.WindowButtonCommands.ActualWidth + this.RightWindowCommands.ActualWidth;
             // Margin
             const double horizontalMargin = 5.0;
 
-            if ((distanceFromLeft + distanceToCenter + horizontalMargin < halfDistance) && (distanceFromRight + distanceToCenter + horizontalMargin < halfDistance))
+            var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
+            var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
+            if ((dLeft < halfDistance) && (dRight < halfDistance))
             {
-                Grid.SetColumn(titleBarGrid, 0);
-                Grid.SetColumnSpan(titleBarGrid, 5);
+                Grid.SetColumn(this.titleBar, 0);
+                Grid.SetColumnSpan(this.titleBar, 5);
             }
             else
             {
-                Grid.SetColumn(titleBarGrid, 2);
-                Grid.SetColumnSpan(titleBarGrid, 1);
+                Grid.SetColumn(this.titleBar, 2);
+                Grid.SetColumnSpan(this.titleBar, 1);
             }
         }
 
@@ -926,7 +959,7 @@ namespace MahApps.Metro.Controls
             flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
             this.PreviewMouseDown += FlyoutsPreviewMouseDown;
 
-            icon = GetTemplateChild(PART_Icon) as UIElement;
+            icon = GetTemplateChild(PART_Icon) as FrameworkElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
             this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
@@ -951,14 +984,22 @@ namespace MahApps.Metro.Controls
             // clear all event handlers first:
             if (this.windowTitleThumb != null)
             {
-                this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+            var thumbContentControl = this.titleBar as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
             if (this.flyoutModalDragMoveThumb != null)
             {
-                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.flyoutModalDragMoveThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.flyoutModalDragMoveThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.flyoutModalDragMoveThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -967,7 +1008,7 @@ namespace MahApps.Metro.Controls
             {
                 icon.MouseDown -= IconMouseDown;
             }
-            SizeChanged -= MetroWindow_SizeChanged;
+            this.SizeChanged -= this.MetroWindow_SizeChanged;
         }
 
         private void SetWindowEvents()
@@ -988,6 +1029,14 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
+            var thumbContentControl = this.titleBar as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
             if (this.flyoutModalDragMoveThumb != null)
             {
                 this.flyoutModalDragMoveThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -997,9 +1046,10 @@ namespace MahApps.Metro.Controls
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
-            if (titleBar != null && titleBar.GetType() == typeof(Grid))
+            //if (titleBar != null && titleBar.GetType() == typeof(Grid))
+            if (titleBar != null && TitleAlignment == HorizontalAlignment.Center)
             {
-                SizeChanged += MetroWindow_SizeChanged;
+                this.SizeChanged += this.MetroWindow_SizeChanged;
             }
         }
 
@@ -1025,7 +1075,7 @@ namespace MahApps.Metro.Controls
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, this, dragDeltaEventArgs);
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1040,10 +1090,13 @@ namespace MahApps.Metro.Controls
 
         internal static void DoWindowTitleThumbOnPreviewMouseLeftButtonUp(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            Mouse.Capture(null);
+            if (mouseButtonEventArgs.Source == mouseButtonEventArgs.OriginalSource)
+            {
+                Mouse.Capture(null);
+            }
         }
 
-        internal static void DoWindowTitleThumbMoveOnDragDelta([NotNull] Thumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta(IMetroThumb thumb, [NotNull] MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             if (thumb == null)
             {
@@ -1077,18 +1130,21 @@ namespace MahApps.Metro.Controls
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
 
-            if (windowIsMaximized) {
-                window.Top = 2;
-                window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
+            if (windowIsMaximized)
+            {
+                var cursorXPos = cursorPos.x;
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
-                {
-                    window.StateChanged -= windowOnStateChanged;
-                    if (window.WindowState == WindowState.Normal)
                     {
-                        Mouse.Capture(thumb, CaptureMode.Element);
-                    }
-                };
+                        window.Top = 2;
+                        window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
+
+                        window.StateChanged -= windowOnStateChanged;
+                        if (window.WindowState == WindowState.Normal)
+                        {
+                            Mouse.Capture(thumb, CaptureMode.Element);
+                        }
+                    };
                 window.StateChanged += windowOnStateChanged;
             }
 
@@ -1142,11 +1198,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
         /// <param name="name">The name of the template child.</param>
-        internal T GetPart<T>(string name) where T : DependencyObject
+        internal T GetPart<T>(string name) where T : class
         {
             return GetTemplateChild(name) as T;
         }
-
+        
         /// <summary>
         /// Gets the template child with the given name.
         /// </summary>

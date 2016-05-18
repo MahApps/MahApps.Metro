@@ -19,7 +19,7 @@
         <Setter Property="CaretBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
-        <Setter Property="Controls:ControlsHelper.ButtonWidth" Value="22" />
+        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
@@ -121,14 +121,14 @@
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                    Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
-                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
-                                    FontSize="16"
+                                    FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
-                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
-                                    ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
@@ -344,16 +344,16 @@
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                    Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
-                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
-                                    FontSize="16"
+                                    FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
-                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
-                                    ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
-                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
+                                    Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.TextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
@@ -449,6 +449,7 @@
         </Setter>
     </Style>
 
+    <!--  obsolete  -->
     <Style x:Key="ButtonCommandMetroTextBox"
            BasedOn="{StaticResource MetroButtonTextBox}"
            TargetType="{x:Type TextBox}" />
@@ -464,8 +465,8 @@
                                              Padding="3"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center"
-                                             Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                             Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                             Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                             Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

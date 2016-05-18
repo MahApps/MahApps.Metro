@@ -9,9 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using MahApps.Metro;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.Models;
 
 namespace MetroDemo.ExampleWindows
@@ -23,8 +21,8 @@ namespace MetroDemo.ExampleWindows
     {
         public IconPacksWindow()
         {
-            DataContext = new IconPacksViewModel();
-            InitializeComponent();
+            this.InitializeComponent();
+            this.DataContext = new IconPacksViewModel();
             this.Loaded += (sender, args) => ((IconPacksViewModel)this.DataContext).Initialize();
         }
 
@@ -52,31 +50,37 @@ namespace MetroDemo.ExampleWindows
 
         public IconPacksViewModel()
         {
+            this.CopyToClipboard =
+                new SimpleCommand
+                {
+                    CanExecuteDelegate = x => (x is TextBox),
+                    ExecuteDelegate = x => ((TextBox)x).Dispatcher.BeginInvoke(new Action(() => Clipboard.SetDataObject(((TextBox)x).Text)))
+                };
         }
 
         public void Initialize()
         {
-            MaterialKinds = new ObservableCollection<PackIconMaterialKind>(
+            this.MaterialKinds = new ObservableCollection<PackIconMaterialKind>(
                 Enum.GetValues(typeof(PackIconMaterialKind)).OfType<PackIconMaterialKind>()
                     .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
-            materialCVS = CollectionViewSource.GetDefaultView(MaterialKinds);
-            materialCVS.Filter = o => FilterMaterialKinds((PackIconMaterialKind)o);
+            this.materialCVS = CollectionViewSource.GetDefaultView(this.MaterialKinds);
+            this.materialCVS.Filter = o => this.FilterMaterialKinds((PackIconMaterialKind)o);
 
-            ModernKinds = new ObservableCollection<PackIconModernKind>(
+            this.ModernKinds = new ObservableCollection<PackIconModernKind>(
                 Enum.GetValues(typeof(PackIconModernKind)).OfType<PackIconModernKind>()
                     .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
-            modernCVS = CollectionViewSource.GetDefaultView(ModernKinds);
-            modernCVS.Filter = o => FilterModernKindss((PackIconModernKind)o);
+            this.modernCVS = CollectionViewSource.GetDefaultView(this.ModernKinds);
+            this.modernCVS.Filter = o => this.FilterModernKindss((PackIconModernKind)o);
         }
 
         private bool FilterMaterialKinds(PackIconMaterialKind packIconMaterialKind)
         {
-            return string.IsNullOrWhiteSpace(MaterialFilterTerm) || packIconMaterialKind.ToString().IndexOf(MaterialFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            return string.IsNullOrWhiteSpace(this.MaterialFilterTerm) || packIconMaterialKind.ToString().IndexOf(this.MaterialFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         private bool FilterModernKindss(PackIconModernKind packIconModernKind)
         {
-            return string.IsNullOrWhiteSpace(ModernFilterTerm) || packIconModernKind.ToString().IndexOf(ModernFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            return string.IsNullOrWhiteSpace(this.ModernFilterTerm) || packIconModernKind.ToString().IndexOf(this.ModernFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         private string materialFilterTerm;
@@ -111,18 +115,18 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private IEnumerable<PackIconModernKind> _modernKinds;
+        private IEnumerable<PackIconModernKind> modernKinds;
 
         public IEnumerable<PackIconModernKind> ModernKinds
         {
-            get { return _modernKinds; }
+            get { return this.modernKinds; }
             set
             {
-                if (Equals(value, _modernKinds)) {
+                if (Equals(value, this.modernKinds)) {
                     return;
                 }
-                _modernKinds = value;
-                OnPropertyChanged();
+                this.modernKinds = value;
+                this.OnPropertyChanged();
             }
         }
 
@@ -141,18 +145,18 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private IEnumerable<PackIconMaterialKind> _materialKinds;
+        private IEnumerable<PackIconMaterialKind> materialKinds;
 
         public IEnumerable<PackIconMaterialKind> MaterialKinds
         {
-            get { return _materialKinds; }
+            get { return this.materialKinds; }
             set
             {
-                if (Equals(value, _materialKinds)) {
+                if (Equals(value, this.materialKinds)) {
                     return;
                 }
-                _materialKinds = value;
-                OnPropertyChanged();
+                this.materialKinds = value;
+                this.OnPropertyChanged();
             }
         }
 
@@ -175,14 +179,15 @@ namespace MetroDemo.ExampleWindows
 
         public ICommand CopyToClipboard
         {
-            get
+            get { return this.copyToClipboard; }
+            set
             {
-                return this.copyToClipboard ?? (this.copyToClipboard =
-                    new SimpleCommand
-                    {
-                        CanExecuteDelegate = x => (x is TextBox),
-                        ExecuteDelegate = x => ((TextBox)x).Dispatcher.BeginInvoke(new Action(() => Clipboard.SetDataObject(((TextBox)x).Text)))
-                    });
+                if (Equals(value, this.CopyToClipboard))
+                {
+                    return;
+                }
+                this.copyToClipboard = value;
+                this.OnPropertyChanged();
             }
         }
 
@@ -191,7 +196,7 @@ namespace MetroDemo.ExampleWindows
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

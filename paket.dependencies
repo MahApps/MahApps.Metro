@@ -1,13 +1,16 @@
 source https://nuget.org/api/v2
+framework >= net40
 
-nuget JetBrains.Annotations 10.0.0 framework: >= net40
-nuget Caliburn.Micro 3.0.0 framework: >= net40
-nuget ExposedObject 1.2.0.0 framework: >= net40
+nuget JetBrains.Annotations 10.0.0
+nuget Caliburn.Micro 3.0.0
+nuget ExposedObject 1.2.0.0
 nuget Microsoft.Bcl 1.1.10 framework: = net40
 nuget Microsoft.Bcl.Async 1.0.168 framework: = net40
 nuget Microsoft.Bcl.Build 1.0.21 framework: = net40
-nuget NHotkey 1.2.1 framework: >= net40
-nuget NHotkey.Wpf 1.2.1 framework: >= net40
-nuget xunit 1.9.2 framework: >= net40
-nuget xunit.extensions 1.9.2 framework: >= net40
-github ControlzEx/ControlzEx:53707b8b855b32a02ee58fc3f865455a79b8b9d7 src/ControlzEx/PackIconBase.cs
+nuget NHotkey 1.2.1
+nuget NHotkey.Wpf 1.2.1
+nuget xunit 1.9.2
+nuget xunit.extensions 1.9.2
+
+github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/KeyboardNavigationEx.cs
+github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/PackIconBase.cs

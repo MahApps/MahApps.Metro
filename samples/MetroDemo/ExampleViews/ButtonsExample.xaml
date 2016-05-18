@@ -75,6 +75,15 @@
                           Margin="{StaticResource ControlMargin}"
                           Content="Disabled"
                           IsEnabled="False" />
+            <ToggleButton Width="100"
+                          Margin="{StaticResource ControlMargin}"
+                          Style="{DynamicResource MetroFlatToggleButton}"
+                          Content="Enabled" />
+            <ToggleButton Width="100"
+                          Margin="{StaticResource ControlMargin}"
+                          Style="{DynamicResource MetroFlatToggleButton}"
+                          Content="Disabled"
+                          IsEnabled="False" />
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">

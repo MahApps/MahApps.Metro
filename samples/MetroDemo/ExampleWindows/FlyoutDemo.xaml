@@ -2,13 +2,13 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metroDemo="clr-namespace:MetroDemo"
                       x:Name="flyoutsDemo"
                       Title="Flyouts Demo"
+                      TitleCharacterCasing="Normal"
                       Width="700"
                       Height="500"
                       MinWidth="700"
@@ -54,13 +54,15 @@
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <TextBlock Margin="0 -1 8 0"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontFamily="{DynamicResource HeaderFontFamily}"
-                       FontSize="{DynamicResource WindowTitleFontSize}"
-                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}"
-                       TextTrimming="CharacterEllipsis" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Margin="0 -1 8 0"
+                           VerticalAlignment="Center"
+                           FontFamily="{DynamicResource HeaderFontFamily}"
+                           FontSize="{DynamicResource WindowTitleFontSize}"
+                           Text="{TemplateBinding Content}"
+                           TextTrimming="CharacterEllipsis" />
+                <Button Content="Click Me..." Margin="1" Click="ClickMeOnClick" />
+            </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
 

@@ -1,25 +1,27 @@
+FRAMEWORK: >= NET40
 NUGET
   remote: https://www.nuget.org/api/v2
   specs:
-    Caliburn.Micro (3.0.0) - framework: >= net40
-      Caliburn.Micro.Core (3.0.0)
-      Microsoft.Xaml.Behaviors.Uwp.Managed (>= 1.1.0)
-    Caliburn.Micro.Core (3.0.0) - framework: >= net40
-    ExposedObject (1.2.0) - framework: >= net40
-    JetBrains.Annotations (10.0.0) - framework: >= net40
+    Caliburn.Micro (3.0)
+      Caliburn.Micro.Core (3.0)
+      Microsoft.Xaml.Behaviors.Uwp.Managed (>= 1.1)
+    Caliburn.Micro.Core (3.0)
+    ExposedObject (1.2)
+    JetBrains.Annotations (10.0)
     Microsoft.Bcl (1.1.10) - framework: net40
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Async (1.0.168) - framework: net40
       Microsoft.Bcl (>= 1.1.8)
-    Microsoft.Bcl.Build (1.0.21) - import_targets: false, framework: net40
-    Microsoft.Xaml.Behaviors.Uwp.Managed (1.1.0) - framework: >= net40
-    NHotkey (1.2.1) - framework: >= net40
-    NHotkey.Wpf (1.2.1) - framework: >= net40
+    Microsoft.Bcl.Build (1.0.21) - import_targets: false
+    Microsoft.Xaml.Behaviors.Uwp.Managed (1.1)
+    NHotkey (1.2.1)
+    NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
-    xunit (1.9.2) - framework: >= net40
-    xunit.extensions (1.9.2) - framework: >= net40
+    xunit (1.9.2)
+    xunit.extensions (1.9.2)
       xunit (1.9.2)
 GITHUB
   remote: ControlzEx/ControlzEx
   specs:
-    src/ControlzEx/PackIconBase.cs (53707b8b855b32a02ee58fc3f865455a79b8b9d7)
+    src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
+    src/ControlzEx/PackIconBase.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
