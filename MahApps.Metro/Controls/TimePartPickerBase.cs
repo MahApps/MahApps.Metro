@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
             typeof(ICollection<int>),
             typeof(TimePartPickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
-        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase), new PropertyMetadata(default(bool), OnIsDropDownOpenChanged));
+        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase), new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
             "IsClockVisible",
             typeof(bool),
@@ -102,16 +102,6 @@ namespace MahApps.Metro.Controls
         private Selector _minuteInput;
         private UIElement _secondHand;
         private Selector _secondInput;
-
-        /// <summary>
-        ///     Occurs when the drop-down date-time-picker is closed.
-        /// </summary>
-        public event RoutedEventHandler Closed;
-
-        /// <summary>
-        ///     Occurs when the drop-down date-time-picker is opened.
-        /// </summary>
-        public event RoutedEventHandler Opened;
 
         /// <summary>
         ///     Gets or sets a value indicating the culture to be used in string formatting operations.
@@ -327,18 +317,6 @@ namespace MahApps.Metro.Controls
             ((TimePartPickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
         }
 
-        private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue)
-            {
-                ((TimePartPickerBase)d).OnOpened();
-            }
-            else
-            {
-                ((TimePartPickerBase)d).OnClosed();
-            }
-        }
-
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((TimePartPickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
@@ -427,24 +405,6 @@ namespace MahApps.Metro.Controls
         protected Binding GetBinding(DependencyProperty property)
         {
             return new Binding(property.Name) { Source = this };
-        }
-
-        protected virtual void OnClosed()
-        {
-            var handler = Closed;
-            if (null != handler)
-            {
-                handler(this, new RoutedEventArgs());
-            }
-        }
-
-        protected virtual void OnOpened()
-        {
-            var handler = Opened;
-            if (null != handler)
-            {
-                handler(this, new RoutedEventArgs());
-            }
         }
 
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
