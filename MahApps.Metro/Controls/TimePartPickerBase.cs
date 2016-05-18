@@ -103,6 +103,17 @@ namespace MahApps.Metro.Controls
         private UIElement _secondHand;
         private Selector _secondInput;
 
+        public static RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct, typeof(EventHandler<SelectionChangedEventArgs>), typeof(TimePartPickerBase));
+
+        /// <summary>
+        ///     Occurs when the <see cref="SelectedTime" /> property is changed.
+        /// </summary>
+        public event EventHandler<SelectionChangedEventArgs> SelectedTimeChanged
+        {
+            add { AddHandler(SelectedTimeChangedEvent, value); }
+            remove { RemoveHandler(SelectedTimeChangedEvent, value); }
+        }
+
         /// <summary>
         ///     Gets or sets a value indicating the culture to be used in string formatting operations.
         /// </summary>
@@ -324,7 +335,16 @@ namespace MahApps.Metro.Controls
 
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase)d).SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
+            var timePartPickerBase = ((TimePartPickerBase)d);
+            timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
+
+            timePartPickerBase.OnSelectedTimeChanged(new SelectionChangedEventArgs(SelectedTimeChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+
+        }
+
+        protected virtual void OnSelectedTimeChanged(SelectionChangedEventArgs e)
+        {
+            RaiseEvent(e);
         }
 
         static TimePartPickerBase()

@@ -135,9 +135,9 @@
 
         }
 
-        protected virtual void OnSelectedDateChanged()
+        protected virtual void OnSelectedDateChanged(SelectionChangedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent));
+            RaiseEvent(e);
         }
 
         private static object CoerceOrientation(DependencyObject d, object basevalue)
@@ -159,8 +159,17 @@
         private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var dateTimePicker = (DateTimePicker)d;
+
             var dt = (DateTime?)e.NewValue;
-            dateTimePicker.OnSelectedDateChanged(dt);
+            if (dt.HasValue)
+            {
+                dateTimePicker.SelectedTime = dt.Value.TimeOfDay;
+                dateTimePicker.OnSelectedDateChanged(new SelectionChangedEventArgs(SelectedDateChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+            }
+            else
+            {
+                dateTimePicker.SetDefaultTimeOfDayValues();
+            }
         }
 
         protected override void ApplyBindings()
@@ -190,20 +199,6 @@
             base.OnRangeBaseValueChanged(sender, e);
             
             SetDatePartValues();
-        }
-
-        private void OnSelectedDateChanged(DateTime? toDate)
-        {
-            if (toDate.HasValue)
-            {
-                SelectedTime = toDate.Value.TimeOfDay;
-            }
-            else
-            {
-                SetDefaultTimeOfDayValues();
-            }
-
-            OnSelectedDateChanged();
         }
 
         private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
