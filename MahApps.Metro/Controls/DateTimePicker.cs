@@ -211,14 +211,14 @@
             if (e.AddedItems != null)
             {
                 var dt = (DateTime)e.AddedItems[0];
-                dt = dt.Add(GetTimeOfDay());
+                dt = dt.Add(SelectedTime.GetValueOrDefault());
                 SelectedDate = dt;
             }
         }
 
         private DateTime GetCorrectDateTime()
         {
-            return SelectedDate.GetValueOrDefault(DateTime.Today).Date + GetTimeOfDay();
+            return SelectedDate.GetValueOrDefault(DateTime.Today).Date + SelectedTime.GetValueOrDefault();
         }
 
         private void SetDatePartValues()

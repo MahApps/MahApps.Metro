@@ -103,9 +103,6 @@ namespace MahApps.Metro.Controls
         private UIElement _secondHand;
         private Selector _secondInput;
 
-        private TimeSpan? _timeOfDay;
-        private bool _timeOfDayChanged;
-
         /// <summary>
         ///     Occurs when the drop-down date-time-picker is closed.
         /// </summary>
@@ -349,7 +346,6 @@ namespace MahApps.Metro.Controls
 
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase)d)._timeOfDayChanged = true;
             ((TimePartPickerBase)d).SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
         }
 
@@ -433,33 +429,6 @@ namespace MahApps.Metro.Controls
             return new Binding(property.Name) { Source = this };
         }
 
-        protected TimeSpan GetTimeOfDay()   
-        {
-            if (_timeOfDayChanged || !_timeOfDay.HasValue)
-            {
-                if (IsValueSelected(_hourInput) &&
-                    IsValueSelected(_minuteInput) &&
-                    IsValueSelected(_secondInput))
-                {
-                    var hours = (int)_hourInput.SelectedItem;
-                    var minutes = (int)_minuteInput.SelectedItem;
-                    var seconds = (int)_secondInput.SelectedItem;
-
-                    hours += GetAmPmOffset(hours);
-
-                    _timeOfDay = new TimeSpan(hours, minutes, seconds);
-                }
-                else
-                {
-                    _timeOfDay = SelectedTime;
-                }
-
-                _timeOfDayChanged = false;
-            }
-
-            return _timeOfDay.Value;
-        }
-
         protected virtual void OnClosed()
         {
             var handler = Closed;
@@ -485,8 +454,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            _timeOfDayChanged = true;
-            SelectedTime = GetTimeOfDay();
+            SelectedTime = this.GetTimeOfDayFromClockHands();
         }
 
         protected void SetDefaultTimeOfDayValues()
@@ -514,6 +482,25 @@ namespace MahApps.Metro.Controls
             if (_button != null)
             {
                 _button.Click -= OnButtonClicked;
+            }
+        }
+
+        private TimeSpan? GetTimeOfDayFromClockHands()
+        {
+            {
+                if (IsValueSelected(_hourInput) &&
+                    IsValueSelected(_minuteInput) &&
+                    IsValueSelected(_secondInput))
+                {
+                    var hours = (int)_hourInput.SelectedItem;
+                    var minutes = (int)_minuteInput.SelectedItem;
+                    var seconds = (int)_secondInput.SelectedItem;
+
+                    hours += GetAmPmOffset(hours);
+
+                    return new TimeSpan(hours, minutes, seconds);
+                }
+                return SelectedTime;
             }
         }
 
@@ -583,28 +570,18 @@ namespace MahApps.Metro.Controls
             {
                 if (currentHour == 12)
                 {
-                    if (GetSelectedHourDesignator() == SpecificCultureInfo.DateTimeFormat.AMDesignator)
+                    if (Equals(_ampmSwitcher.SelectedItem, SpecificCultureInfo.DateTimeFormat.AMDesignator))
                     {
                         return -12;
                     }
                 }
-                else if (GetSelectedHourDesignator() == SpecificCultureInfo.DateTimeFormat.PMDesignator)
+                else if (Equals(_ampmSwitcher.SelectedItem == SpecificCultureInfo.DateTimeFormat.PMDesignator))
                 {
                     return 12;
                 }
             }
 
             return 0;
-        }
-
-        private string GetSelectedHourDesignator()
-        {
-            if (_ampmSwitcher.SelectedItem == null)
-            {
-                return null;
-            }
-
-            return (string)_ampmSwitcher.SelectedItem;
         }
 
         private void OnButtonClicked(object sender, RoutedEventArgs e)
