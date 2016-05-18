@@ -144,9 +144,8 @@
     <Compile Include="Controls\IconPacks\PackIconModern.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
-    <Compile Include="Controls\TimePartPickerBase.cs" />
-    <Compile Include="Controls\TimePartVisibility.cs" />
-    <Compile Include="Controls\DateTimePicker.cs" />
+    <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
+    <Compile Include="Controls\TimePicker\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
@@ -185,7 +184,8 @@
     <Compile Include="Controls\Helper\SliderHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
-    <Compile Include="Controls\TimePicker.cs" />
+    <Compile Include="Controls\TimePicker\TimePicker.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
     <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />

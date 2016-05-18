@@ -23,63 +23,63 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
-    public abstract class TimePartPickerBase : Control
+    public abstract class TimePickerBase : Control
     {
         public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
           typeof(ICollection<int>),
-          typeof(TimePartPickerBase),
+          typeof(TimePickerBase),
           new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
 
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
         public static readonly DependencyProperty SourceSecondsProperty = DependencyProperty.Register(
             "SourceSeconds",
             typeof(ICollection<int>),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
-        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePartPickerBase), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase), new PropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
             "IsClockVisible",
             typeof(bool),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new PropertyMetadata(true));
 
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
             "IsReadOnly",
             typeof(bool),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new PropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
             "HandVisibility",
             typeof(TimePartVisibility),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
 
         public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
-            "SelectedTime", typeof(TimeSpan?), typeof(TimePartPickerBase), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
+            "SelectedTime", typeof(TimeSpan?), typeof(TimePickerBase), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
 
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new PropertyMetadata(null, OnCultureChanged));
 
         public static readonly DependencyProperty PickerVisibilityProperty = DependencyProperty.Register(
             "PickerVisibility",
             typeof(TimePartVisibility),
-            typeof(TimePartPickerBase),
+            typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
-        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct, typeof(EventHandler<SelectionChangedEventArgs>), typeof(TimePartPickerBase));
+        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct, typeof(EventHandler<SelectionChangedEventArgs>), typeof(TimePickerBase));
 
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
@@ -95,7 +95,7 @@ namespace MahApps.Metro.Controls
         /// This readonly dependency property is to control whether to show the date-picker (in case of <see cref="DateTimePicker"/>) or hide it (in case of <see cref="TimePicker"/>.
         /// </summary>
         private static readonly DependencyPropertyKey IsDatePickerVisiblePropertyKey = DependencyProperty.RegisterReadOnly(
-          "IsDatePickerVisible", typeof(bool), typeof(TimePartPickerBase), new PropertyMetadata(true));
+          "IsDatePickerVisible", typeof(bool), typeof(TimePickerBase), new PropertyMetadata(true));
 
         /// <summary>
         /// Represents the time 00:00:00; 12:00:00 AM respectively
@@ -118,12 +118,12 @@ namespace MahApps.Metro.Controls
         private UIElement _secondHand;
         private Selector _secondInput;
 
-        static TimePartPickerBase()
+        static TimePickerBase()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(typeof(TimePartPickerBase)));
-            VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            LanguageProperty.OverrideMetadata(typeof(TimePartPickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
+            VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
+            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+            LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the drop-down for a <see cref="TimePartPickerBase"/> box is currently
+        ///     Gets or sets a value indicating whether the drop-down for a <see cref="TimePickerBase"/> box is currently
         ///         open.
         /// </summary>
         /// <returns>true if the drop-down is open; otherwise, false. The default is false.</returns>
@@ -199,10 +199,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the contents of the <see cref="TimePartPickerBase" /> are not editable.
+        ///     Gets or sets a value indicating whether the contents of the <see cref="TimePickerBase" /> are not editable.
         /// </summary>
         /// <returns>
-        ///     true if the <see cref="TimePartPickerBase" /> is read-only; otherwise, false. The default is false.
+        ///     true if the <see cref="TimePickerBase" /> is read-only; otherwise, false. The default is false.
         /// </returns>
         public bool IsReadOnly
         {
@@ -443,7 +443,7 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
         {
-            var dt = d as TimePartPickerBase;
+            var dt = d as TimePickerBase;
             var hourList = basevalue as ICollection<int>;
             if (dt != null && !dt.IsMilitaryTime && hourList != null)
             {
@@ -455,7 +455,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var timePartPickerBase = (TimePartPickerBase)d;
+            var timePartPickerBase = (TimePickerBase)d;
 
             var cultureInfo = e.NewValue as CultureInfo;
             if (cultureInfo == null)
@@ -472,17 +472,17 @@ namespace MahApps.Metro.Controls
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
+            ((TimePickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TimePartPickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
+            ((TimePickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var timePartPickerBase = (TimePartPickerBase)d;
+            var timePartPickerBase = (TimePickerBase)d;
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
             timePartPickerBase.OnSelectedTimeChanged(new SelectionChangedEventArgs(SelectedTimeChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));

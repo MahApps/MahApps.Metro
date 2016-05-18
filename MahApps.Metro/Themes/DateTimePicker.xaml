@@ -104,7 +104,7 @@
         <system:Int32>59</system:Int32>
     </x:Array>
 
-    <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePartPickerBase}">
+    <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePickerBase}">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
@@ -122,7 +122,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:TimePartPickerBase}">
+                <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Base"
                                 BorderBrush="{DynamicResource ControlBorderBrush}"

@@ -5,7 +5,7 @@
     /// <summary>
     ///     Represents a control that allows the user to select a time.
     /// </summary>
-    public class TimePicker : TimePartPickerBase
+    public class TimePicker : TimePickerBase
     {
         static TimePicker()
         {

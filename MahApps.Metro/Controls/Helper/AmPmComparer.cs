@@ -4,11 +4,11 @@ namespace MahApps.Metro.Controls
 
     /// <summary>
     /// Represents an hour comparison operation that ensures that 12 is smaller than 1.
-    /// This ensures that in the <see cref="TimePartPickerBase"/> control the first hour that is selectable is 12 (AM/PM). 
+    /// This ensures that in the <see cref="TimePickerBase"/> control the first hour that is selectable is 12 (AM/PM). 
     /// </summary>
     ///<remarks>
     /// This ensures that the first hour that is selectable is 12 (AM/PM). <br></br>
-    /// This comparer is used only if in the corresponding <see cref="TimePartPickerBase"/> the value for <see cref="TimePartPickerBase.IsMilitaryTime"/> is false.
+    /// This comparer is used only if in the corresponding <see cref="TimePickerBase"/> the value for <see cref="TimePickerBase.IsMilitaryTime"/> is false.
     /// </remarks>
     internal class AmPmComparer : IComparer<int>
     {
