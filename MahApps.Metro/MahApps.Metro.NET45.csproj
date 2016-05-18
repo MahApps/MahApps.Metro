@@ -153,8 +153,6 @@
     <Compile Include="Controls\TimePicker\DateTimePicker.cs" />
     <Compile Include="Controls\IMetroThumb.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
-    <Compile Include="Controls\TimePartVisibility.cs" />
-    <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />

@@ -181,7 +181,6 @@
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
-    <Compile Include="Controls\TimePartVisibility.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>
