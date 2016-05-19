@@ -298,9 +298,9 @@ namespace MetroDemo
                 return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
+                    ExecuteDelegate = async x =>
                     {
-                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
+                        await _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -315,9 +315,9 @@ namespace MetroDemo
                 return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
+                    ExecuteDelegate = async x =>
                     {
-                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
+                        await _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -332,9 +332,9 @@ namespace MetroDemo
                 return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
+                    ExecuteDelegate = async x =>
                     {
-                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
+                        await _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
