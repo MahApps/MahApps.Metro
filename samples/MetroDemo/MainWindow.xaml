@@ -84,7 +84,9 @@
                                Foreground="{DynamicResource AccentColorBrush}"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog" Content="Close Me!" />
+                    <Button x:Name="CloseButton"
+                            Click="CloseCustomDialog" Content="Close Me!"
+                            Style="{DynamicResource AccentedDialogSquareButton}"/>
                 </StackPanel>
 
 
