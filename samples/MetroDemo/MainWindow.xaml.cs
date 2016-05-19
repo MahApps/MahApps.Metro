@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,6 +8,8 @@ using MetroDemo.ExampleWindows;
 
 namespace MetroDemo
 {
+    using System.Windows.Input;
+
     public partial class MainWindow
     {
         private bool _shutdown;
@@ -151,15 +153,16 @@ namespace MetroDemo
 #endif
         }
 
-        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
+        private void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+            var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
             dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
-            dialog = dialog.ShowDialogExternally();
+            dialog.Loaded += (o, args) => dialog.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            dialog = dialog.ShowModalDialogExternally((MetroWindow)this);
 
-            await TaskEx.Delay(5000);
+            //await TaskEx.Delay(5000);
 
-            await dialog.RequestCloseAsync();
+            //await dialog.RequestCloseAsync();
         }
 
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
@@ -244,11 +247,11 @@ namespace MetroDemo
             await dialog.WaitUntilUnloadedAsync();
         }
 
-        private async void CloseCustomDialog(object sender, RoutedEventArgs e)
+        private void CloseCustomDialog(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
-            await this.HideMetroDialogAsync(dialog);
+            dialog.RequestCloseAsync();
         }
 
         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
