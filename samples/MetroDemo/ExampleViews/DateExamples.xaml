@@ -54,7 +54,7 @@
                         Margin="0,0,20,0"
                         VerticalAlignment="Top"
                         Orientation="Vertical">
-                <Label Content="DateTime picker" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="DateTime/Time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <GroupBox Header="Current time">
                     <Controls:DateTimePicker>
@@ -151,17 +151,26 @@
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
                         <GroupBox Header="Current time">
-                            <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                            <StackPanel>
+                                <Controls:DateTimePicker x:Name="DateTimePicker"
+                                                         Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                         HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                         IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
+                                                         IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                         IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                         Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                         PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DateTimeNowBehavior />
+                                    </i:Interaction.Behaviors>
+                                </Controls:DateTimePicker>  
+                                <Controls:TimePicker SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}"
+                                                     Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                     IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                      IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                     Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DateTimeNowBehavior />
-                                </i:Interaction.Behaviors>
-                            </Controls:DateTimePicker>
+                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
+                            </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
