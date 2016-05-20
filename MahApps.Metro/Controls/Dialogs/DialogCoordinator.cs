@@ -11,11 +11,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public static readonly DialogCoordinator Instance = new DialogCoordinator();
 
-        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
+        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings settings = null)
         {            
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowInputAsync(title, message, metroDialogSettings);
+            return metroWindow.ShowInputAsync(title, message, settings);
         }
 
         public string ShowModalInputExternal(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
