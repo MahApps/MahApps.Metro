@@ -18,11 +18,11 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowInputAsync(title, message, metroDialogSettings);
         }
 
-        public string ShowInputExternal(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
+        public string ShowModalInputExternal(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowInputExternal(title, message, metroDialogSettings);
+            return metroWindow.ShowModalInputExternal(title, message, metroDialogSettings);
         }
 
         public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null)
@@ -32,11 +32,11 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowLoginAsync(title, message, settings);
         }
 
-        public LoginDialogData ShowLoginExternal(object context, string title, string message, LoginDialogSettings settings = null)
+        public LoginDialogData ShowModalLoginExternal(object context, string title, string message, LoginDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowLoginExternal(title, message, settings);
+            return metroWindow.ShowModalLoginExternal(title, message, settings);
         }
 
         public Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
@@ -46,11 +46,11 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowMessageAsync(title, message, style, settings);
         }
 
-        public MessageDialogResult ShowMessageExternal(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public MessageDialogResult ShowModalMessageExternal(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
 
-            return metroWindow.ShowMessageExternal(title, message, style, settings);
+            return metroWindow.ShowModalMessageExternal(title, message, style, settings);
         }
 
         public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,

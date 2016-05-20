@@ -442,24 +442,24 @@ namespace MetroDemo
 
         private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
         {
-            var result = this.ShowInputExternal("Hello!", "What is your name?");
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
 
             if (result == null) //user pressed cancel
                 return;
 
-            this.ShowMessageExternal("Hello", "Hello " + result + "!");
+            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
         }
 
         private void ShowLoginDialogOutsid(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = this.ShowLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
             {
                 //User pressed cancel
             }
             else
             {
-                MessageDialogResult messageResult = this.ShowMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
 
@@ -473,11 +473,11 @@ namespace MetroDemo
                 ColorScheme = MetroDialogOptions.ColorScheme
             };
 
-            MessageDialogResult result = this.ShowMessageExternal("Hello!", "Welcome to the world of metro!",
+            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
                 MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-                this.ShowMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
     }
