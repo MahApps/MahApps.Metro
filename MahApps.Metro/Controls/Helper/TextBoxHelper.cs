@@ -236,11 +236,11 @@ namespace MahApps.Metro.Controls
 
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    txtBox.BeginInvoke(() => TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None)));
+
                     txtBox.TextChanged += TextChanged;
                     txtBox.GotFocus += TextBoxGotFocus;
-
-                    txtBox.Dispatcher.BeginInvoke((Action)(() => 
-                        TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None))));
                 }
                 else
                 {
@@ -254,12 +254,11 @@ namespace MahApps.Metro.Controls
 
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    passBox.BeginInvoke(() => PasswordChanged(passBox, new RoutedEventArgs(PasswordBox.PasswordChangedEvent, passBox)));
+
                     passBox.PasswordChanged += PasswordChanged;
                     passBox.GotFocus += PasswordGotFocus;
-
-                    // Also fixes 1343, also triggers the show of the floating watermark if necessary
-                    passBox.Dispatcher.BeginInvoke((Action)(() =>
-                        PasswordChanged(passBox, new RoutedEventArgs(PasswordBox.PasswordChangedEvent, passBox))));
                 }
                 else
                 {
@@ -273,6 +272,9 @@ namespace MahApps.Metro.Controls
                 numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
+
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
                     numericUpDown.GotFocus += NumericUpDownGotFocus;
             }
