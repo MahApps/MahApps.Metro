@@ -14,7 +14,7 @@
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="PART_BackButton"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
                     Width="40"
                     Height="40"
@@ -52,7 +52,6 @@
             <TextBlock x:Name="PART_BackHeaderText"
                        Margin="15 0 0 0"
                        VerticalAlignment="Center"
-                       FontSize="{StaticResource FlyoutHeaderFontSize}"
                        Text="{Binding}"
                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}" />
         </DockPanel>
@@ -95,10 +94,15 @@
             </Grid.RenderTransform>
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
-                    <ContentPresenter x:Name="PART_Header"
-                                      ContentSource="Header"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      DockPanel.Dock="Top" />
+                    <Controls:ContentControlEx x:Name="PART_Header"
+                                               DockPanel.Dock="Top"
+                                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                               FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                               FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                               Content="{TemplateBinding Header}"
+                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                               RecognizesAccessKey="True"
+                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
@@ -222,6 +226,7 @@
         <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource FlyoutHeaderFontSize}" />
         <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
