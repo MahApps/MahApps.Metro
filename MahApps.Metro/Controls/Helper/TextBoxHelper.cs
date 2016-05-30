@@ -281,12 +281,27 @@ namespace MahApps.Metro.Controls
 
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
                     numericUpDown.GotFocus += NumericUpDownGotFocus;
-            }
+                }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
                     numericUpDown.GotFocus -= NumericUpDownGotFocus;
-        }
+                }
+            }
+            else if (d is TimePickerBase)
+            {
+                var timePicker = d as TimePickerBase;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedTimeChanged += OnTimePickerBaseSelectedTimeChanged;
+                    //timePicker.GotFocus += TimePickerBaseGotFocus;
+                }
+                else
+                {
+
+                    timePicker.SelectedTimeChanged -= OnTimePickerBaseSelectedTimeChanged;
+                    //timePicker.GotFocus -= TimePickerBaseGotFocus;
+                }
             }
         }
 
@@ -313,6 +328,11 @@ namespace MahApps.Metro.Controls
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
             SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
+        }
+
+        private static void OnTimePickerBaseSelectedTimeChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedTime.HasValue ? 1 : 0);
         }
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
