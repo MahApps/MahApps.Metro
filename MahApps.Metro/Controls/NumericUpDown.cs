@@ -937,7 +937,7 @@ namespace MahApps.Metro.Controls
 
             if ((bool)GetValue(TextBoxHelper.IsMonitoringProperty))
             {
-                SetValue(TextBoxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+                SetValue(TextBoxHelper.HasTextProperty, _valueTextBox.Text.Length > 0);
             }
         }
 
