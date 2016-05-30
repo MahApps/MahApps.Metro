@@ -10,7 +10,7 @@
 
     <DataTemplate x:Key="HeaderTemplate" x:Shared="False">
         <DockPanel x:Name="dpHeader"
-                   Margin="10 25 10 10"
+                   Margin="10"
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="PART_BackButton"
@@ -67,7 +67,6 @@
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Top">
-                <Setter TargetName="dpHeader" Property="Margin" Value="10" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="-90" />
@@ -75,7 +74,6 @@
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Bottom">
-                <Setter TargetName="dpHeader" Property="Margin" Value="10" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="90" />
@@ -210,15 +208,35 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}" Value="Top">
+            <Trigger Property="Position" Value="Right">
+                <Setter TargetName="PART_Header" Property="Margin" Value="0 20 0 0" />
+            </Trigger>
+            <Trigger Property="Position" Value="Left">
+                <Setter TargetName="PART_Header" Property="Margin" Value="0 20 0 0" />
+            </Trigger>
+            <Trigger Property="Position" Value="Top">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}" Value="Bottom">
+            </Trigger>
+            <Trigger Property="Position" Value="Bottom">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="CloseButtonVisibility" Value="Collapsed" />
+                    <Condition Property="TitleVisibility" Value="Collapsed" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="CloseButtonVisibility" Value="Hidden" />
+                    <Condition Property="TitleVisibility" Value="Hidden" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -237,3 +255,4 @@
         <Setter Property="Visibility" Value="Hidden" />
     </Style>
 </ResourceDictionary>
+
