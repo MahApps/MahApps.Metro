@@ -711,17 +711,4 @@ namespace MahApps.Metro.Controls
             }
         }
     }
-
-    public class TimePickerBaseSelectionChangedEventArgs<T> : RoutedEventArgs
-    {
-        public TimePickerBaseSelectionChangedEventArgs(RoutedEvent eventId, T oldValue, T newValue) :
-            base(eventId)
-        {
-            OldValue = oldValue;
-            NewValue = newValue;
-        }
-
-        public T OldValue { get; }
-        public T NewValue { get; }
-    }
 }

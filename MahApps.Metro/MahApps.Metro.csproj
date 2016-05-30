@@ -180,6 +180,7 @@
     <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />

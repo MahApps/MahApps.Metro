@@ -194,6 +194,7 @@
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
     <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
