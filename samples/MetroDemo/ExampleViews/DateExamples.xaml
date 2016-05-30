@@ -171,8 +171,7 @@
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                      IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                     Controls:TextBoxHelper.UseFloatingWatermark="True"/>
+                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
