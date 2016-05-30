@@ -24,6 +24,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
+    [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     public abstract class TimePickerBase : Control
     {
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
@@ -90,6 +91,7 @@ namespace MahApps.Metro.Controls
         private const string ElementPopup = "PART_Popup";
         private const string ElementSecondHand = "PART_SecondHand";
         private const string ElementSecondPicker = "PART_SecondPicker";
+        private const string ElementTextBox = "PART_TextBox";
 
         #region Do not change order of fields inside this region
 
@@ -124,9 +126,11 @@ namespace MahApps.Metro.Controls
         private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
+        private DatePickerTextBox _textBox;
 
         static TimePickerBase()
         {
+            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
@@ -324,6 +328,7 @@ namespace MahApps.Metro.Controls
             _ampmSwitcher = GetTemplateChild(ElementAmPmSwitcher) as Selector;
             _minuteHand = GetTemplateChild(ElementMinuteHand) as FrameworkElement;
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
+            _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
@@ -474,6 +479,24 @@ namespace MahApps.Metro.Controls
             }
 
             timePartPickerBase.ApplyCulture();
+        }
+
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            TimePickerBase picker = (TimePickerBase)sender;
+            if (!e.Handled && (picker._textBox != null))
+            {
+                if (Equals(e.OriginalSource, picker))
+                {
+                    picker._textBox.Focus();
+                    e.Handled = true;
+                }
+                else if (Equals(e.OriginalSource, picker._textBox))
+                {
+                    picker._textBox.SelectAll();
+                    e.Handled = true;
+                }
+            }
         }
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

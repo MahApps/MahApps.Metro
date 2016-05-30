@@ -143,7 +143,7 @@
                                     <RowDefinition x:Name="ButtonRow" Height="*" />
                                 </Grid.RowDefinitions>
                                 <DatePickerTextBox VerticalAlignment="Center"
-                                                   x:Name="DatePickerTextBox"
+                                                   x:Name="PART_TextBox"
                                                    Grid.Row="1"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                                                    Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" 
@@ -343,7 +343,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
+                        <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
@@ -372,7 +372,7 @@
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
                             <Setter TargetName="StackPanel" Property="Orientation" Value="{Binding Path=Orientation, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="DatePickerTextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
                         
                         <MultiDataTrigger>
