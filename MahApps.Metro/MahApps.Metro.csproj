@@ -96,6 +96,7 @@
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />

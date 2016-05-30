@@ -2,7 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
@@ -86,7 +88,11 @@
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
                                                ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
-                                               Focusable="{TemplateBinding Focusable}" />
+                                               Focusable="{TemplateBinding Focusable}">
+                                <i:Interaction.Behaviors>
+                                    <behaviours:DatePickerTextBoxBehavior />
+                                </i:Interaction.Behaviors>
+                            </DatePickerTextBox>
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Column="0"
                                             Grid.Row="0"
