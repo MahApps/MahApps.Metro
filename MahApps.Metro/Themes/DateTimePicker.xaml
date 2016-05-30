@@ -143,9 +143,16 @@
                                 <DatePickerTextBox VerticalAlignment="Center"
                                                    x:Name="DatePickerTextBox"
                                                    Grid.Row="1"
-                                                   controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" />
+                                                   Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" 
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                                   CaretBrush="{DynamicResource BlackBrush}"
+                                                   ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
+                                                   Focusable="{TemplateBinding Focusable}" />
                                 <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Column="0"
                                             Grid.Row="0"
@@ -332,6 +339,8 @@
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />

@@ -27,6 +27,7 @@
                 <DatePicker Width="150"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.UseFloatingWatermark="True"
                             Controls:TextBoxHelper.Watermark="Select a date" />
                 <DatePicker Width="150"
                             Margin="0, 10, 0, 0"

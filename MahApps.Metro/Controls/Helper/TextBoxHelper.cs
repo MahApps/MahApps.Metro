@@ -303,6 +303,20 @@ namespace MahApps.Metro.Controls
                     //timePicker.GotFocus -= TimePickerBaseGotFocus;
                 }
             }
+            else if (d is DatePicker)
+            {
+                var timePicker = d as DatePicker;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
+                    //timePicker.GotFocus += TimePickerBaseGotFocus;
+                }
+                else
+                {
+                    timePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
+                    //timePicker.GotFocus -= TimePickerBaseGotFocus;
+                }
+            }
         }
 
         private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
@@ -328,6 +342,11 @@ namespace MahApps.Metro.Controls
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
             SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
+        }
+
+        private static void OnDatePickerBaseSelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as DatePicker, timePickerBase => timePickerBase.SelectedDate.HasValue ? 1 : 0);
         }
 
         private static void OnTimePickerBaseSelectedTimeChanged(object sender, RoutedEventArgs e)
