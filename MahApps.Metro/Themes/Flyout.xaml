@@ -208,12 +208,6 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="Position" Value="Right">
-                <Setter TargetName="PART_Header" Property="Margin" Value="0 20 0 0" />
-            </Trigger>
-            <Trigger Property="Position" Value="Left">
-                <Setter TargetName="PART_Header" Property="Margin" Value="0 20 0 0" />
-            </Trigger>
             <Trigger Property="Position" Value="Top">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
@@ -241,7 +235,6 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
-<!--        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />-->
         <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -255,6 +248,14 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
+        <Style.Triggers>
+            <Trigger Property="Position" Value="Right">
+                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+            </Trigger>
+            <Trigger Property="Position" Value="Left">
+                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
 
