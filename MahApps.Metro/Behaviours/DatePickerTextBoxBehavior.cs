@@ -13,6 +13,12 @@
             AssociatedObject.TextChanged += OnTextChanged;
         }
 
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            AssociatedObject.TextChanged -= OnTextChanged;
+        }
+
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
             AssociatedObject.TemplatedParent.SetValue(TextBoxHelper.HasTextProperty, AssociatedObject.Text.Length > 0);
