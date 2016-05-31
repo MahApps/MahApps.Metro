@@ -149,6 +149,22 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderFontWeightProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderMarginProperty =
+            DependencyProperty.RegisterAttached("HeaderMargin", typeof(Thickness), typeof(ControlsHelper), new UIPropertyMetadata(new Thickness()));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
+        public static Thickness GetHeaderMargin(UIElement element)
+        {
+            return (Thickness)element.GetValue(HeaderMarginProperty);
+        }
+
+        public static void SetHeaderMargin(UIElement element, Thickness value)
+        {
+            element.SetValue(HeaderMarginProperty, value);
+        }
+
         /// <summary>
         /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
         /// </summary>

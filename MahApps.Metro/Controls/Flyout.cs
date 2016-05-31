@@ -9,8 +9,6 @@ using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
-    using ControlzEx;
-
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>

@@ -10,7 +10,6 @@
 
     <DataTemplate x:Key="HeaderTemplate" x:Shared="False">
         <DockPanel x:Name="dpHeader"
-                   Margin="10"
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="PART_BackButton"
@@ -93,6 +92,7 @@
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
                     <Controls:ContentControlEx x:Name="PART_Header"
+                                               Padding="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
                                                DockPanel.Dock="Top"
                                                FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
@@ -140,7 +140,7 @@
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
-                        <Storyboard>
+                        <Storyboard x:Name="ShowStoryboard">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
@@ -241,10 +241,12 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
+<!--        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />-->
         <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource FlyoutHeaderFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
         <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
