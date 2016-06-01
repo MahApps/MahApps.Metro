@@ -99,6 +99,7 @@
                                                FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                Content="{TemplateBinding Header}"
                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                               ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                RecognizesAccessKey="True"
                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />

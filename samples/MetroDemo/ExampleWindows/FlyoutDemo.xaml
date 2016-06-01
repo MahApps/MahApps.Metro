@@ -92,6 +92,7 @@
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
+                             Controls:ControlsHelper.ContentCharacterCasing="Upper"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Margin="100 0 0 0"
                              AreAnimationsEnabled="False"
