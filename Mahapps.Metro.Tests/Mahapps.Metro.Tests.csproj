@@ -92,6 +92,7 @@
       <DependentUpon>TextBoxHelperTestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThemeManagerTest.cs" />
+    <Compile Include="TileTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj">

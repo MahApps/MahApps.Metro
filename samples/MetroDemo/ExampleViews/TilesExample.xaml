@@ -16,13 +16,17 @@
 
             <Style x:Key="LargeTileStyle" TargetType="Controls:Tile">
                 <Setter Property="Height" Value="125" />
-                <Setter Property="TitleFontSize" Value="12" />
+                <Setter Property="TitleFontSize" Value="14" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
                 <Setter Property="Width" Value="300" />
             </Style>
 
             <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
                 <Setter Property="Height" Value="125" />
                 <Setter Property="TitleFontSize" Value="10" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
                 <Setter Property="Width" Value="147" />
             </Style>
         </ResourceDictionary>

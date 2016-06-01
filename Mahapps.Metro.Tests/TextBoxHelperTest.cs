@@ -1,16 +1,14 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
-
 namespace MahApps.Metro.Tests
 {
-    using System.Windows;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Media;
-
     public class TextBoxHelperTest : AutomationTestBase
     {
         [Fact]
