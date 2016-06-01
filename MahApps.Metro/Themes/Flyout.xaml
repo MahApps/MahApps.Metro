@@ -10,11 +10,10 @@
 
     <DataTemplate x:Key="HeaderTemplate" x:Shared="False">
         <DockPanel x:Name="dpHeader"
-                   Margin="10 25 10 10"
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="PART_BackButton"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
                     Width="40"
                     Height="40"
@@ -52,7 +51,6 @@
             <TextBlock x:Name="PART_BackHeaderText"
                        Margin="15 0 0 0"
                        VerticalAlignment="Center"
-                       FontSize="{StaticResource FlyoutHeaderFontSize}"
                        Text="{Binding}"
                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}" />
         </DockPanel>
@@ -68,7 +66,6 @@
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Top">
-                <Setter TargetName="dpHeader" Property="Margin" Value="10" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="-90" />
@@ -76,7 +73,6 @@
                 </Setter>
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Bottom">
-                <Setter TargetName="dpHeader" Property="Margin" Value="10" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="90" />
@@ -95,10 +91,17 @@
             </Grid.RenderTransform>
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
-                    <ContentPresenter x:Name="PART_Header"
-                                      ContentSource="Header"
-                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                      DockPanel.Dock="Top" />
+                    <Controls:ContentControlEx x:Name="PART_Header"
+                                               Padding="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                               DockPanel.Dock="Top"
+                                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                               FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                               FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                               Content="{TemplateBinding Header}"
+                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                               ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                               RecognizesAccessKey="True"
+                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
@@ -138,7 +141,7 @@
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
-                        <Storyboard>
+                        <Storyboard x:Name="ShowStoryboard">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetName="PART_Root"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
@@ -206,15 +209,29 @@
             </VisualStateManager.VisualStateGroups>
         </Grid>
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}" Value="Top">
+            <Trigger Property="Position" Value="Top">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}" Value="Bottom">
+            </Trigger>
+            <Trigger Property="Position" Value="Bottom">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
                 <Setter TargetName="PART_WindowTitleThumb" Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="CloseButtonVisibility" Value="Collapsed" />
+                    <Condition Property="TitleVisibility" Value="Collapsed" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="CloseButtonVisibility" Value="Hidden" />
+                    <Condition Property="TitleVisibility" Value="Hidden" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Header" Property="Visibility" Value="Collapsed" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -222,6 +239,8 @@
         <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource FlyoutHeaderFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
         <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
@@ -230,5 +249,14 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
+        <Style.Triggers>
+            <Trigger Property="Position" Value="Right">
+                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+            </Trigger>
+            <Trigger Property="Position" Value="Left">
+                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
+
