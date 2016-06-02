@@ -187,17 +187,14 @@ namespace MahApps.Metro.Tests
                                 });
         }
 
-        public class ColorTest
+        [Fact]
+        public async Task DefaultFlyoutThemeIsDark()
         {
-            [Fact]
-            public async Task DefaultFlyoutThemeIsDark()
-            {
-                await TestHost.SwitchToAppThread();
+            await TestHost.SwitchToAppThread();
 
-                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-                Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
-            }
+            Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
         }
     }
 }
