@@ -53,6 +53,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
 
+        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowDialogsOverTitleBarPropertyChangedCallback));
+
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -355,6 +357,33 @@ namespace MahApps.Metro.Controls
             if (e.NewValue != e.OldValue)
             {
                 window.SetVisibiltyForIcon();
+            }
+        }
+
+        /// <summary>
+        /// Get/sets whether dialogs show over the title bar.
+        /// </summary>
+        public bool ShowDialogsOverTitleBar
+        {
+            get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
+            set { SetValue(ShowDialogsOverTitleBarProperty, value); }
+        }
+
+        private static void OnShowDialogsOverTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (MetroWindow)d;
+            if (e.NewValue != e.OldValue)
+            {
+                window.UpdateDialogPlacement((bool)e.NewValue);
+            }
+        }
+
+        private void UpdateDialogPlacement(bool shouldShowOverTitleBar)
+        {
+            if (overlayBox != null)
+            {
+                int row = shouldShowOverTitleBar == true ? 0 : 1;
+                Grid.SetRow(overlayBox, row);
             }
         }
 
@@ -966,6 +995,7 @@ namespace MahApps.Metro.Controls
             this.flyoutModalDragMoveThumb = GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
+            this.UpdateDialogPlacement(ShowDialogsOverTitleBar);
         }
 
         protected IntPtr CriticalHandle

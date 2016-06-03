@@ -88,6 +88,28 @@ namespace MetroDemo
             }
         }
 
+        public bool HideTitleBarForDialogs
+        {
+            get { return (bool)GetValue(HideTitleBarForDialogsProperty); }
+            set { SetValue(HideTitleBarForDialogsProperty, value); }
+        }
+
+        public static readonly DependencyProperty HideTitleBarForDialogsProperty =
+            DependencyProperty.Register("HideTitleBarForDialogs",
+                                        typeof(bool),
+                                        typeof(MainWindow),
+                                        new PropertyMetadata(true, ToggleHideTitleBarForDialogsPropertyChangedCallback));
+
+        private static void ToggleHideTitleBarForDialogsPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var metroWindow = (MetroWindow)dependencyObject;
+            if (e.OldValue != e.NewValue)
+            {
+                var hideTitleBarForDialogs = (bool)e.NewValue;
+                metroWindow.ShowDialogsOverTitleBar = hideTitleBarForDialogs;
+            }
+        }
+
         public bool UseAccentForDialogs
         {
             get { return (bool)GetValue(UseAccentForDialogsProperty); }
