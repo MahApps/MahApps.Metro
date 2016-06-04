@@ -160,10 +160,12 @@
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
                           ItemsSource="{Binding AccentColors, Mode=OneWay}" />
                 <MenuItem Header="Dialogs">
-                    <MenuItem x:Name="UseAccentForDialogsMenuItem"
-                              Header="Use Accent?"
+                    <MenuItem Header="Use Accent?"
                               IsCheckable="True"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}" />
+                    <MenuItem Header="Show Dialogs over TitleBar"
+                              IsCheckable="True"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                     <Separator />
                     <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                     <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
