@@ -21,8 +21,7 @@
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      ShowDialogsOverTitleBar="True">
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
     <!--
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
@@ -161,14 +160,12 @@
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
                           ItemsSource="{Binding AccentColors, Mode=OneWay}" />
                 <MenuItem Header="Dialogs">
-                    <MenuItem x:Name="UseAccentForDialogsMenuItem"
-                              Header="Use Accent?"
+                    <MenuItem Header="Use Accent?"
                               IsCheckable="True"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}" />
-                    <MenuItem x:Name="HideTitleBarForDialogsMenuItem"
-                              Header="Hide Title Bar When Displaying Dialog?"
+                    <MenuItem Header="Show Dialogs over TitleBar"
                               IsCheckable="True"
-                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=HideTitleBarForDialogs}" />
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                     <Separator />
                     <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                     <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
