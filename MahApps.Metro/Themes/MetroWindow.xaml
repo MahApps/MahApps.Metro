@@ -227,6 +227,12 @@
         </ControlTemplate.Resources>
 
         <ControlTemplate.Triggers>
+            <Trigger Property="ShowDialogsOverTitleBar" Value="False">
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
+            </Trigger>
+            
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
