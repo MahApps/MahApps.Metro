@@ -4,7 +4,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="ProgressBarFillBrush" Color="#FF008287" />
-    <SolidColorBrush x:Key="ProgressBarTrackBrush" Color="#59FFFFFF" />
+    <SolidColorBrush x:Key="ProgressBarTrackBrush" Color="#1FFFFFFF" />
     <Thickness x:Key="OutlineBorderThickness">0</Thickness>
     <System:Double x:Key="ProgressBarMinHeight">6</System:Double>
     <SolidColorBrush x:Key="TransparentOutlineBrush">Transparent</SolidColorBrush>
