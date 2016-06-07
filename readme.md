@@ -4,24 +4,27 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 [![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
 
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetro.svg?style=flat-square&&label=TeamCity%20dev)]()
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroMaster.svg?style=flat-square&&label=TeamCity%20rel)]()
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroDevelopAlpha.svg?style=flat-square&&label=TeamCity%20dev)]()
 [![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
 
 [![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![main demo window](./docs/main_demo_window.png)
+## Want to say thanks?
 
-![iconpacks](https://cloud.githubusercontent.com/assets/658431/13028849/7a25dbea-d27b-11e5-9059-0e672e5e2268.gif)
-
-![main demo window animated](./docs/main_demo_window.gif)
+Hit the :star: Star :star: button, thx :squirrel:
 
 ## Documentation
 
 You can read the documentation on the web site: [http://mahapps.com](http://mahapps.com)  
 You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+
+![maindemowindow01](./docs/main_demo_window.png)
+
+![maindemowindow02](https://cloud.githubusercontent.com/assets/658431/13028849/7a25dbea-d27b-11e5-9059-0e672e5e2268.gif)
+
+![maindemowindow03](./docs/main_demo_window.gif)
 
 ## Release Notes
 
