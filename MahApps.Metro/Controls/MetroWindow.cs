@@ -913,6 +913,8 @@ namespace MahApps.Metro.Controls
             {
                 // no preview if we just clicked these elements
                 if (element.TryFindParent<Flyout>() != null
+                    || Equals(element, this.overlayBox)
+                    || element.TryFindParent<BaseMetroDialog>() != null
                     || Equals(element.TryFindParent<ContentControl>(), this.icon)
                     || element.TryFindParent<WindowCommands>() != null
                     || element.TryFindParent<WindowButtonCommands>() != null)
