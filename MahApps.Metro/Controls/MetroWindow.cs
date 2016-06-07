@@ -777,9 +777,16 @@ namespace MahApps.Metro.Controls
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        internal void StoreFocus()
+        /// <summary>
+        /// Stores the given element, or the last focused element via FocusManager, for restoring the focus after closing a dialog.
+        /// </summary>
+        /// <param name="thisElement">The element which will be focused again.</param>
+        public void StoreFocus([CanBeNull] IInputElement thisElement = null)
         {
-            restoreFocus = this.restoreFocus ?? FocusManager.GetFocusedElement(this);
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this));
+                }));
         }
 
         internal void RestoreFocus()
@@ -792,6 +799,14 @@ namespace MahApps.Metro.Controls
                         restoreFocus = null;
                     }));
             }
+        }
+
+        /// <summary>
+        /// Clears the stored element which would get the focus after closing a dialog.
+        /// </summary>
+        public void ResetStoredFocus()
+        {
+            restoreFocus = null;
         }
 
         /// <summary>
