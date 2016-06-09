@@ -74,15 +74,12 @@
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
                                  Title="Custom Dialog which is awaitable"
                                  x:Name="CustomCloseDialogTest">
-                
                 <StackPanel>
                     <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
                                TextWrapping="Wrap"
                                Foreground="{DynamicResource AccentColorBrush}" />
                     <Button Content="Close Me!" Click="CloseCustomDialog"/>
                 </StackPanel>
-
-                
             </Dialog:CustomDialog>
 
         </ResourceDictionary>
@@ -255,77 +252,13 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
-            
+
             <StatusBar Grid.Row="2">
                 <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
                 <Separator Style="{StaticResource MetroStatusBarSeparator}" />
                 <StatusBarItem>Selected Tab:</StatusBarItem>
                 <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
             </StatusBar>
-
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
