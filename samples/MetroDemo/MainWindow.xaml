@@ -155,11 +155,17 @@
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?"
-                              x:Name="UseAccentForDialogsMenuItem"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}"
                               IsCheckable="True" />
-                    <MenuItem Header="Change Dialog Icon" 
-                              ToolTip="Select an icon-type then click on any of the below listed items to view the icon inside a dialog message">
+                    <MenuItem Header="Change Dialog Icon" >
+                        <MenuItem IsHitTestVisible="False"
+                                  Background="{DynamicResource AccentColorBrush}">
+                            <MenuItem.Header>
+                                <TextBlock Width="200" 
+                                           TextWrapping="Wrap"
+                                           Text="Select the icon type that is shown on opening dialogs" />
+                            </MenuItem.Header>
+                        </MenuItem>
                         <MenuItem Click="SetDialogIcon"
                                   Header="{x:Static Dialog:MessageDialogIcon.None}" />
                         <MenuItem Click="SetDialogIcon" 
