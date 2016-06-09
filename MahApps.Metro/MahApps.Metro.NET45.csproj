@@ -136,6 +136,13 @@
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
+    <Compile Include="Controls\Dialogs\LoginDialogData.cs" />
+    <Compile Include="Controls\Dialogs\LoginDialogSettings.cs" />
+    <Compile Include="Controls\Dialogs\MessageDialogIcon.cs" />
+    <Compile Include="Controls\Dialogs\MessageDialogResult.cs" />
+    <Compile Include="Controls\Dialogs\MessageDialogStyle.cs" />
+    <Compile Include="Controls\Dialogs\MetroDialogColorScheme.cs" />
+    <Compile Include="Controls\Dialogs\MetroDialogSettings.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
