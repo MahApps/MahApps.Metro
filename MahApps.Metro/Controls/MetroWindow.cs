@@ -53,6 +53,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
 
+        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -356,6 +358,15 @@ namespace MahApps.Metro.Controls
             {
                 window.SetVisibiltyForIcon();
             }
+        }
+
+        /// <summary>
+        /// Get/sets whether dialogs show over the title bar.
+        /// </summary>
+        public bool ShowDialogsOverTitleBar
+        {
+            get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
+            set { SetValue(ShowDialogsOverTitleBarProperty, value); }
         }
 
         /// <summary>
@@ -766,9 +777,16 @@ namespace MahApps.Metro.Controls
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        internal void StoreFocus()
+        /// <summary>
+        /// Stores the given element, or the last focused element via FocusManager, for restoring the focus after closing a dialog.
+        /// </summary>
+        /// <param name="thisElement">The element which will be focused again.</param>
+        public void StoreFocus([CanBeNull] IInputElement thisElement = null)
         {
-            restoreFocus = this.restoreFocus ?? FocusManager.GetFocusedElement(this);
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this));
+                }));
         }
 
         internal void RestoreFocus()
@@ -781,6 +799,14 @@ namespace MahApps.Metro.Controls
                         restoreFocus = null;
                     }));
             }
+        }
+
+        /// <summary>
+        /// Clears the stored element which would get the focus after closing a dialog.
+        /// </summary>
+        public void ResetStoredFocus()
+        {
+            restoreFocus = null;
         }
 
         /// <summary>
@@ -902,6 +928,8 @@ namespace MahApps.Metro.Controls
             {
                 // no preview if we just clicked these elements
                 if (element.TryFindParent<Flyout>() != null
+                    || Equals(element, this.overlayBox)
+                    || element.TryFindParent<BaseMetroDialog>() != null
                     || Equals(element.TryFindParent<ContentControl>(), this.icon)
                     || element.TryFindParent<WindowCommands>() != null
                     || element.TryFindParent<WindowButtonCommands>() != null)
