@@ -532,13 +532,14 @@ namespace MahApps.Metro.Controls.Dialogs
             var win = GetExternalWindow();
             win.Owner = window;
             win.Topmost = false; //It is not necessary here because the owner is setted
+            win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             //Set Width and Height maximum according Owner
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
 
             win.SizeToContent = SizeToContent.Height;
-
+            
             return win;
         }
 
