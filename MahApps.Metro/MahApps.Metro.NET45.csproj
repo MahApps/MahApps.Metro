@@ -141,6 +141,7 @@
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
+    <Compile Include="Controls\CloseCommand.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />

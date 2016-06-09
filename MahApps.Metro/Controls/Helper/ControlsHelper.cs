@@ -106,6 +106,7 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static double GetHeaderFontSize(UIElement element)
         {
             return (double)element.GetValue(HeaderFontSizeProperty);
@@ -121,6 +122,7 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontStretch GetHeaderFontStretch(UIElement element)
         {
             return (FontStretch)element.GetValue(HeaderFontStretchProperty);
@@ -136,6 +138,7 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontWeight GetHeaderFontWeight(UIElement element)
         {
             return (FontWeight)element.GetValue(HeaderFontWeightProperty);
@@ -144,6 +147,22 @@ namespace MahApps.Metro.Controls
         public static void SetHeaderFontWeight(UIElement element, FontWeight value)
         {
             element.SetValue(HeaderFontWeightProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderMarginProperty =
+            DependencyProperty.RegisterAttached("HeaderMargin", typeof(Thickness), typeof(ControlsHelper), new UIPropertyMetadata(new Thickness()));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
+        public static Thickness GetHeaderMargin(UIElement element)
+        {
+            return (Thickness)element.GetValue(HeaderMarginProperty);
+        }
+
+        public static void SetHeaderMargin(UIElement element, Thickness value)
+        {
+            element.SetValue(HeaderMarginProperty, value);
         }
 
         /// <summary>
