@@ -29,7 +29,7 @@
                     case "m":
                         return 360.0 / 60 * dateTime.TotalMinutes;
                     case "s":
-                        return 360.0 / 60 * dateTime.TotalSeconds;
+                        return 360.0 / 60 * dateTime.Seconds;
                     default:
                         throw new ArgumentException("must be \"h\", \"m\", or \"s", nameof(parameter));
                 }
