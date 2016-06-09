@@ -14,6 +14,27 @@
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return 0;
+            }
+            if (value is TimeSpan)
+            {
+                var dateTime = (TimeSpan)value;
+
+                switch ((string)parameter)
+                {
+                    case "h":
+                        return 360.0 / 12 * dateTime.TotalHours;
+                    case "m":
+                        return 360.0 / 60 * dateTime.TotalMinutes;
+                    case "s":
+                        return 360.0 / 60 * dateTime.TotalSeconds;
+                    default:
+                        throw new ArgumentException("must be \"h\", \"m\", or \"s", nameof(parameter));
+                }
+            }
+
             if (value is int)
             {
                 return 360 / TotalParts * (int)value;
