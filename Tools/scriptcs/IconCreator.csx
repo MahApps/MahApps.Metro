@@ -17,14 +17,16 @@ public class IconConverter
 {
     public void StartConvertion()
     {
+        GetMaterialDesignIconsAndGeneratePackIconData();
+        GetModernUIIconsAndGeneratePackIconData();
+        GetFontAwesomeIconsAndGeneratePackIconData();
+    }
+
+    private GetMaterialDesignIconsAndGeneratePackIconData()
+    {
         Console.WriteLine("Downloading Material Design icon data...");
         var nameDataMaterialPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B")).ToList();
-        Console.WriteLine("Items: " + nameDataMaterialPairs.Count);
-
-        Console.WriteLine("Downloading Modern UI icon data...");
-        var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
-        var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
-        Console.WriteLine("Items: " + nameDataModernPairs.Count);
+        Console.WriteLine("Got "  + nameDataMaterialPairs.Count + " Items");
 
         Console.WriteLine("Updating PackIconMaterialKind...");
         var newEnumSource = UpdatePackIconKind("PackIconMaterialKind.template.cs", nameDataMaterialPairs);
@@ -33,6 +35,17 @@ public class IconConverter
         var newDataFactorySource = UpdatePackIconDataFactory("PackIconMaterialDataFactory.template.cs", "PackIconMaterialKind", nameDataMaterialPairs);
         Write(newDataFactorySource, "PackIconMaterialDataFactory.cs");
 
+        Console.WriteLine("Material Design done!");
+        Console.WriteLine();
+    }
+
+    private GetModernUIIconsAndGeneratePackIconData()
+    {
+        Console.WriteLine("Downloading Modern UI icon data...");
+        var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
+        var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
+        Console.WriteLine("Got " + nameDataModernPairs.Count + " Items");
+
         Console.WriteLine("Updating PackIconModernKind...");
         newEnumSource = UpdatePackIconKind("PackIconModernKind.template.cs", nameDataModernPairs);
         Write(newEnumSource, "PackIconModernKind.cs");
@@ -40,7 +53,26 @@ public class IconConverter
         newDataFactorySource = UpdatePackIconDataFactory("PackIconModernDataFactory.template.cs", "PackIconModernKind", nameDataModernPairs);
         Write(newDataFactorySource, "PackIconModernDataFactory.cs");
 
-        Console.WriteLine("Done!");
+        Console.WriteLine("Modern UI done!");
+        Console.WriteLine();
+    }
+
+    private GetFontAwesomeIconsAndGeneratePackIconData()
+    {
+        Console.WriteLine("Downloading FontAwesome icon data...");
+        // var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
+        // var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
+        // Console.WriteLine("Got " + nameDataModernPairs.Count + " Items");
+
+        // Console.WriteLine("Updating PackIconModernKind...");
+        // newEnumSource = UpdatePackIconKind("PackIconModernKind.template.cs", nameDataModernPairs);
+        // Write(newEnumSource, "PackIconModernKind.cs");
+        // Console.WriteLine("Updating PackIconModernDataFactory...");
+        // newDataFactorySource = UpdatePackIconDataFactory("PackIconModernDataFactory.template.cs", "PackIconModernKind", nameDataModernPairs);
+        // Write(newDataFactorySource, "PackIconModernDataFactory.cs");
+
+        Console.WriteLine("FontAwesome done!");
+        Console.WriteLine();
     }
 
     private IEnumerable<Tuple<string, string>> GetNameDataPairs(string sourceData)
