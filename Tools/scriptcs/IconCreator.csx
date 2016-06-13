@@ -11,7 +11,24 @@ using System.Xml.Linq;
 using Humanizer;
 using Newtonsoft.Json.Linq;
 
-Console.WriteLine("Convert Material Design Icons to MahApps.Metro PackIconMaterialKind");
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+
+public class FontAwesomeIcons
+{
+    public List<FontAwesomeIconEntry> Icons { get; set; }
+}
+
+public class FontAwesomeIconEntry
+{
+    public string Name { get; set; }
+    public string Id { get; set; }
+    public string Unicode { get; set; }
+    public string Created { get; set; }
+    public List<string> Aliases { get; set; }
+    public List<string> Filter { get; set; }
+    public List<string> Categories { get; set; }
+}
 
 public class IconConverter
 {
@@ -22,7 +39,7 @@ public class IconConverter
         GetFontAwesomeIconsAndGeneratePackIconData();
     }
 
-    private GetMaterialDesignIconsAndGeneratePackIconData()
+    private void GetMaterialDesignIconsAndGeneratePackIconData()
     {
         Console.WriteLine("Downloading Material Design icon data...");
         var nameDataMaterialPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B")).ToList();
@@ -39,7 +56,7 @@ public class IconConverter
         Console.WriteLine();
     }
 
-    private GetModernUIIconsAndGeneratePackIconData()
+    private void GetModernUIIconsAndGeneratePackIconData()
     {
         Console.WriteLine("Downloading Modern UI icon data...");
         var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
@@ -47,29 +64,67 @@ public class IconConverter
         Console.WriteLine("Got " + nameDataModernPairs.Count + " Items");
 
         Console.WriteLine("Updating PackIconModernKind...");
-        newEnumSource = UpdatePackIconKind("PackIconModernKind.template.cs", nameDataModernPairs);
+        var newEnumSource = UpdatePackIconKind("PackIconModernKind.template.cs", nameDataModernPairs);
         Write(newEnumSource, "PackIconModernKind.cs");
         Console.WriteLine("Updating PackIconModernDataFactory...");
-        newDataFactorySource = UpdatePackIconDataFactory("PackIconModernDataFactory.template.cs", "PackIconModernKind", nameDataModernPairs);
+        var newDataFactorySource = UpdatePackIconDataFactory("PackIconModernDataFactory.template.cs", "PackIconModernKind", nameDataModernPairs);
         Write(newDataFactorySource, "PackIconModernDataFactory.cs");
 
         Console.WriteLine("Modern UI done!");
         Console.WriteLine();
     }
 
-    private GetFontAwesomeIconsAndGeneratePackIconData()
+    private void GetFontAwesomeIconsAndGeneratePackIconData()
     {
         Console.WriteLine("Downloading FontAwesome icon data...");
-        // var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
-        // var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
-        // Console.WriteLine("Got " + nameDataModernPairs.Count + " Items");
 
-        // Console.WriteLine("Updating PackIconModernKind...");
-        // newEnumSource = UpdatePackIconKind("PackIconModernKind.template.cs", nameDataModernPairs);
-        // Write(newEnumSource, "PackIconModernKind.cs");
-        // Console.WriteLine("Updating PackIconModernDataFactory...");
-        // newDataFactorySource = UpdatePackIconDataFactory("PackIconModernDataFactory.template.cs", "PackIconModernKind", nameDataModernPairs);
-        // Write(newDataFactorySource, "PackIconModernDataFactory.cs");
+        var faRoot = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/fddd2c240452e6c8990c4ef75e0265b455aa7968/";
+
+        var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention(), ignoreUnmatched: true);
+        //FontAwesomeConfig config = deserializer.Deserialize<FontAwesomeConfig>(GetSourceStream(faRoot + "_config.yml"));
+        FontAwesomeIcons allIcons = deserializer.Deserialize<FontAwesomeIcons>(GetSourceStream(faRoot + "src/icons.yml"));
+        if (null == allIcons || allIcons.Icons.Count <= 0) {
+            Console.WriteLine("Could not find any Font-Awesome icon!");
+            return;
+        }
+        var allIconsDict = allIcons.Icons.ToDictionary(i => i.Unicode, i => i);
+        Console.WriteLine("Found " + allIconsDict.Count + " icons");
+
+        var svgStream = GetSourceData(faRoot + "src/assets/font-awesome/fonts/fontawesome-webfont.svg")
+            .Replace("&#x", "")
+            .Replace("\"&#x", "\"")
+            .Replace(";\"", "\"");
+
+        var xmlDoc = XDocument.Parse(svgStream);
+        var elements = xmlDoc
+            .Root
+            .Elements("{http://www.w3.org/2000/svg}defs")
+            .Elements("{http://www.w3.org/2000/svg}font")
+            .Elements()
+            .ToList();
+
+        var iconTuples = new List<Tuple<string, string>>();
+        foreach (var xElement in elements)
+        {
+            var unicode = (string)xElement.Attribute("unicode");
+            var data = (string)xElement.Attribute("d");
+            if (null == unicode || null == data) continue;
+            FontAwesomeIconEntry iconEntry;
+            if (allIconsDict.TryGetValue(unicode, out iconEntry))
+            {
+                var name = GetName(iconEntry.Id);
+                iconTuples.Add(new Tuple<string, string>(name, data));
+            }
+        }
+        //FontAwesome
+        Console.WriteLine("Got " + iconTuples.Count + " Items");
+
+        Console.WriteLine("Updating PackIconFontAwesomeKind...");
+        var newEnumSource = UpdatePackIconKind("PackIconFontAwesomeKind.template.cs", iconTuples);
+        Write(newEnumSource, "PackIconFontAwesomeKind.cs");
+        Console.WriteLine("Updating PackIconFontAwesomeDataFactory...");
+        var newDataFactorySource = UpdatePackIconDataFactory("PackIconFontAwesomeDataFactory.template.cs", "PackIconFontAwesomeKind", iconTuples);
+        Write(newDataFactorySource, "PackIconFontAwesomeDataFactory.cs");
 
         Console.WriteLine("FontAwesome done!");
         Console.WriteLine();
@@ -113,6 +168,10 @@ public class IconConverter
     private string GetName(string name)
     {
         var oldname = name;
+        if (name.EndsWith("-o") || name.Contains("-o-"))
+        {
+            name = name.Replace("-o", "-outline");
+        }
         name = name.Underscore().Pascalize();
         if (name.Length > 0 && Char.IsNumber(name[0]))
         {
@@ -188,9 +247,22 @@ public class IconConverter
         using (var sr = new StreamReader(webRequest.GetResponse().GetResponseStream()))
         {
             var iconData = sr.ReadToEnd();
-            Console.WriteLine("Got.");
+            //Console.WriteLine("Got.");
             return iconData;
         }
+    }
+
+    private StreamReader GetSourceStream(string url)
+    {
+        var webRequest = WebRequest.CreateDefault(new Uri(url));
+
+        webRequest.Credentials = CredentialCache.DefaultCredentials;
+        if (webRequest.Proxy != null)
+        {
+            webRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
+        }
+
+        return new StreamReader(webRequest.GetResponse().GetResponseStream());
     }
 
     private void Write(string content, string filename)
@@ -199,7 +271,8 @@ public class IconConverter
     }
 }
 
+Console.WriteLine("Magic icon converter startet...");
+
 var iconConverter = new IconConverter();
 iconConverter.StartConvertion();
-
-Console.WriteLine("...finished");
+Console.WriteLine();
