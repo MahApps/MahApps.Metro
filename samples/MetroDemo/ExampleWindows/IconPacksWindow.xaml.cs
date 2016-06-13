@@ -28,12 +28,17 @@ namespace MetroDemo.ExampleWindows
 
         private void HyperlinkMaterialOnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://materialdesignicons.com/");
+            System.Diagnostics.Process.Start("https://materialdesignicons.com");
         }
 
         private void HyperlinkModernOnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://modernuiicons.com/");
+            System.Diagnostics.Process.Start("http://modernuiicons.com");
+        }
+
+        private void HyperlinkFontAwesomeOnClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://fontawesome.io");
         }
 
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs e)
@@ -47,6 +52,7 @@ namespace MetroDemo.ExampleWindows
     {
         private ICollectionView materialCVS;
         private ICollectionView modernCVS;
+        private ICollectionView faCVS;
 
         public IconPacksViewModel()
         {
@@ -71,6 +77,12 @@ namespace MetroDemo.ExampleWindows
                     .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
             this.modernCVS = CollectionViewSource.GetDefaultView(this.ModernKinds);
             this.modernCVS.Filter = o => this.FilterModernKindss((PackIconModernKind)o);
+
+            this.FontAwesomeKinds = new ObservableCollection<PackIconFontAwesomeKind>(
+                Enum.GetValues(typeof(PackIconFontAwesomeKind)).OfType<PackIconFontAwesomeKind>()
+                    .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
+            this.faCVS = CollectionViewSource.GetDefaultView(this.FontAwesomeKinds);
+            this.faCVS.Filter = o => this.FilterFontAwesomeKindss((PackIconFontAwesomeKind)o);
         }
 
         private bool FilterMaterialKinds(PackIconMaterialKind packIconMaterialKind)
@@ -81,6 +93,11 @@ namespace MetroDemo.ExampleWindows
         private bool FilterModernKindss(PackIconModernKind packIconModernKind)
         {
             return string.IsNullOrWhiteSpace(this.ModernFilterTerm) || packIconModernKind.ToString().IndexOf(this.ModernFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        private bool FilterFontAwesomeKindss(PackIconFontAwesomeKind packIconFontAwesomeKind)
+        {
+            return string.IsNullOrWhiteSpace(this.FontAwesomeFilterTerm) || packIconFontAwesomeKind.ToString().IndexOf(this.FontAwesomeFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         private string materialFilterTerm;
@@ -112,6 +129,22 @@ namespace MetroDemo.ExampleWindows
                 this.modernFilterTerm = value;
                 this.OnPropertyChanged();
                 this.modernCVS.Refresh();
+            }
+        }
+
+        private string fontAwesomeFilterTerm;
+
+        public string FontAwesomeFilterTerm
+        {
+            get { return this.fontAwesomeFilterTerm; }
+            set
+            {
+                if (Equals(value, this.FontAwesomeFilterTerm)) {
+                    return;
+                }
+                this.fontAwesomeFilterTerm = value;
+                this.OnPropertyChanged();
+                this.faCVS.Refresh();
             }
         }
 
@@ -167,10 +200,42 @@ namespace MetroDemo.ExampleWindows
             get { return this.selectedMaterialKind; }
             set
             {
-                if (Equals(value, this.SelectedMaterialKind)) {
+                if (Equals(value, this.SelectedMaterialKind))
+                {
                     return;
                 }
                 this.selectedMaterialKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<PackIconFontAwesomeKind> fontAwesomeKinds;
+
+        public IEnumerable<PackIconFontAwesomeKind> FontAwesomeKinds
+        {
+            get { return this.fontAwesomeKinds; }
+            set
+            {
+                if (Equals(value, this.fontAwesomeKinds)) {
+                    return;
+                }
+                this.fontAwesomeKinds = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private PackIconFontAwesomeKind selectedFontAwesomeKind;
+
+        public PackIconFontAwesomeKind SelectedFontAwesomeKind
+        {
+            get { return this.selectedFontAwesomeKind; }
+            set
+            {
+                if (Equals(value, this.SelectedFontAwesomeKind))
+                {
+                    return;
+                }
+                this.selectedFontAwesomeKind = value;
                 this.OnPropertyChanged();
             }
         }

@@ -64,4 +64,32 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MahApps.Metro.Styles.PackIconFontAwesome" TargetType="{x:Type controls:PackIconFontAwesome}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconBase}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PackIconFontAwesome}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Viewbox Margin="{TemplateBinding Padding}">
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"
+                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="False">
+                                    <Path.LayoutTransform>
+                                        <RotateTransform Angle="180" />
+                                    </Path.LayoutTransform>
+                                </Path>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
