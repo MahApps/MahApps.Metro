@@ -332,11 +332,19 @@ namespace MetroDemo
                 return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => PerformDialogCoordinatorAction(
-                        () => this._dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result)),
-                        bool.Parse((string)x))
+                    ExecuteDelegate = x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
                 });
             }
+        }
+
+        private Action ShowMessage(string startingThread)
+        {
+            return () =>
+                       {
+                           var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
+                                         $"The current main Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
+                           this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
+                       };
         }
 
         private ICommand showProgressDialogCommand;
@@ -363,9 +371,9 @@ namespace MetroDemo
             await controller.CloseAsync();
         }
 
-        private static void PerformDialogCoordinatorAction(Action action, bool runInBackground)
+        private static void PerformDialogCoordinatorAction(Action action, bool runInMainThread)
         {
-            if (runInBackground)
+            if (!runInMainThread)
             {
                 Task.Factory.StartNew(action);
             }
