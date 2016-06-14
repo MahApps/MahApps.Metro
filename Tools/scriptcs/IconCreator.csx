@@ -120,7 +120,12 @@ public class IconConverter
             if (allIconsDict.TryGetValue(unicode, out iconEntry))
             {
                 var name = GetName(iconEntry.Id, true);
-                iconDataList.Add(new PackIconData() { Name = name, Description = iconEntry.Name, Data = data });
+                var aliases = string.Empty;
+                if (iconEntry.Aliases != null && iconEntry.Aliases.Count > 0)
+                {
+                    aliases = string.Format(" ({0})", string.Join(", ", iconEntry.Aliases.Select(a => GetName(a, true))));
+                }
+                iconDataList.Add(new PackIconData() { Name = name, Description = iconEntry.Name + aliases, Data = data });
             }
         }
         iconDataList = iconDataList.OrderBy(d => d.Name, StringComparer.InvariantCultureIgnoreCase).ToList();
@@ -140,7 +145,14 @@ public class IconConverter
     private IEnumerable<PackIconData> GetPackIconData(string sourceData)
     {
         var jObject = JObject.Parse(sourceData);
-        return jObject["icons"].Select(t => new PackIconData() { Name = GetName(t["name"].ToString()), Description = t["name"].ToString(), Data = t["data"].ToString().Trim() });
+        return jObject["icons"].Select(t => {
+                var aliases = string.Join(", ", t["aliases"].Values<string>().Select(a => GetName(a)));
+                if (!string.IsNullOrEmpty(aliases))
+                {
+                    aliases = string.Format(" ({0})", aliases);
+                }
+                return new PackIconData() { Name = GetName(t["name"].ToString()), Description = t["name"].ToString() + aliases, Data = t["data"].ToString().Trim() };
+            });
     }
 
     private IEnumerable<Tuple<string, string>> GetNameDataOldModernPairs(string sourceData)
