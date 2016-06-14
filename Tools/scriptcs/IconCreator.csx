@@ -66,7 +66,7 @@ public class IconConverter
     private void GetModernUIIconsAndGeneratePackIconData()
     {
         Console.WriteLine("Downloading Modern UI icon data...");
-        var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
+        var nameDataModernPairs = GetPackIconData(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
         var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
         Console.WriteLine("Got " + nameDataModernPairs.Count + " Items");
 
@@ -143,17 +143,6 @@ public class IconConverter
         return jObject["icons"].Select(t => new PackIconData() { Name = GetName(t["name"].ToString()), Description = t["name"].ToString(), Data = t["data"].ToString().Trim() });
     }
 
-    private IEnumerable<Tuple<string, string>> GetNameDataPairs(string sourceData)
-    {
-        var jObject = JObject.Parse(sourceData);
-        return jObject["icons"].Select(t => GetNameDataPair(GetName(t["name"].ToString()), t["data"].ToString().Trim()));
-    }
-
-    private Tuple<string, string> GetNameDataPair(string name, string data)
-    {
-        return new Tuple<string, string>(name, data);
-    }
-
     private IEnumerable<Tuple<string, string>> GetNameDataOldModernPairs(string sourceData)
     {
         var jToken = JToken.Parse(sourceData);
@@ -208,24 +197,6 @@ public class IconConverter
         }
 
         return data;
-    }
-
-    private string UpdatePackIconKind(string sourceFile, IEnumerable<Tuple<string, string>> nameDataPairs)
-    {
-        // line 15
-        var allLines = File.ReadAllLines(sourceFile).ToList();
-        allLines.InsertRange(15, nameDataPairs.Where(t => !string.IsNullOrEmpty(t.Item2))
-                                              .Select(t => string.Format("        {0},", t.Item1)).ToArray());
-        return string.Join(Environment.NewLine, allLines);
-    }
-
-    private string UpdatePackIconDataFactory(string sourceFile, string enumKind, IEnumerable<Tuple<string, string>> nameDataPairs)
-    {
-        // line 14
-        var allLines = File.ReadAllLines(sourceFile).ToList();
-        allLines.InsertRange(14, nameDataPairs.Where(t => !string.IsNullOrEmpty(t.Item2))
-                                              .Select(t => string.Format("                       {{{0}.{1}, \"{2}\"}},", enumKind, t.Item1, t.Item2)).ToArray());
-        return string.Join(Environment.NewLine, allLines);
     }
 
     private string UpdatePackIconKind(string sourceFile, IEnumerable<PackIconData> iconDataList)
