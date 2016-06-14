@@ -18,8 +18,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_WindowTitleThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Root", Type = typeof(Grid))]
-    [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
-    [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
     public class Flyout : ContentControl
     {
         /// <summary>
@@ -59,6 +59,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
+        internal static readonly DependencyProperty InternalCloseCommandProperty = DependencyProperty.Register("InternalCloseCommand", typeof(ICommand), typeof(Flyout));
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
@@ -124,6 +125,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(CloseCommandParameterProperty); }
             set { SetValue(CloseCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets a command which will be executed if the close button was clicked.
+        /// </summary>
+        internal ICommand InternalCloseCommand
+        {
+            get { return (ICommand)GetValue(InternalCloseCommandProperty); }
+            set { SetValue(InternalCloseCommandProperty, value); }
         }
 
         /// <summary>
@@ -252,10 +262,41 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(AllowFocusElementProperty, value); }
         }
 
+        static Flyout()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
+        }
+
         public Flyout()
         {
+            this.InternalCloseCommand = new CloseCommand(InternalCloseCommandCanExecute, InternalCloseCommandExecuteAction);
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
+        }
+
+        private void InternalCloseCommandExecuteAction(object o)
+        {
+            var closeCommand = this.CloseCommand;
+            // close the Flyout only if there is no command
+            if (closeCommand == null)
+            {
+                this.IsOpen = false;
+            }
+            else
+            {
+                var closeCommandParameter = this.CloseCommandParameter ?? this;
+                if (closeCommand.CanExecute(closeCommandParameter))
+                {
+                    // force the command handler to run
+                    closeCommand.Execute(closeCommandParameter);
+                }
+            }
+        }
+
+        private bool InternalCloseCommandCanExecute(object o)
+        {
+            var closeCommand = this.CloseCommand;
+            return closeCommand == null || closeCommand.CanExecute(this.CloseCommandParameter ?? this);
         }
 
         private void InitializeAutoCloseTimer()
@@ -589,11 +630,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        static Flyout()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
-        }
-
         DispatcherTimer autoCloseTimer;
         Grid flyoutRoot;
         Storyboard hideStoryboard;
@@ -602,10 +638,9 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame showFrame;
         SplineDoubleKeyFrame showFrameY;
         SplineDoubleKeyFrame fadeOutFrame;
-        ContentPresenter flyoutHeader;
-        ContentPresenter flyoutContent;
+        FrameworkElement flyoutHeader;
+        FrameworkElement flyoutContent;
         Thumb windowTitleThumb;
-        Button backButton;
 
         public override void OnApplyTemplate()
         {
@@ -617,16 +652,9 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.flyoutHeader = this.GetTemplateChild("PART_Header") as ContentPresenter;
-            this.flyoutContent = this.GetTemplateChild("PART_Content") as ContentPresenter;
-
+            this.flyoutHeader = this.GetTemplateChild("PART_Header") as FrameworkElement;
             this.flyoutHeader?.ApplyTemplate();
-            this.backButton = this.flyoutHeader?.FindChild<Button>("PART_BackButton");
-            if (this.backButton != null)
-            {
-                this.backButton.Click -= this.BackButtonClick;
-                this.backButton.Click += this.BackButtonClick;
-            }
+            this.flyoutContent = this.GetTemplateChild("PART_Content") as FrameworkElement;
 
             this.windowTitleThumb = this.GetTemplateChild("PART_WindowTitleThumb") as Thumb;
             if (this.windowTitleThumb != null)
@@ -659,10 +687,6 @@ namespace MahApps.Metro.Controls
 
         protected internal void CleanUp(FlyoutsControl flyoutsControl)
         {
-            if (this.backButton != null)
-            {
-                this.backButton.Click -= this.BackButtonClick;
-            }
             if (this.windowTitleThumb != null)
             {
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
@@ -671,16 +695,6 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             this.parentWindow = null;
-        }
-
-        private void BackButtonClick(object sender, RoutedEventArgs e)
-        {
-            // close the Flyout only if there is no command
-            var closeCommand = this.CloseCommand;
-            if (closeCommand == null)
-            {
-                this.IsOpen = false;
-            }
         }
 
         private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -697,7 +711,7 @@ namespace MahApps.Metro.Controls
             var window = this.ParentWindow;
             if (window != null && this.Position != Position.Bottom)
             {
-                MetroWindow.DoWindowTitleThumbMoveOnDragDelta((Thumb)sender, window, dragDeltaEventArgs);
+                MetroWindow.DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, window, dragDeltaEventArgs);
             }
         }
 

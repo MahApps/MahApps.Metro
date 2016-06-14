@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = new MetroWindow();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
         }
@@ -280,6 +281,54 @@ namespace MahApps.Metro.Tests
             var settings = window.GetWindowPlacementSettings();
             Assert.NotNull(settings);
             Assert.Equal(true, settings.UpgradeSettings);
+        }
+
+        [Fact]
+        public async Task TestTitleCapsProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+            var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
+            var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
+
+            var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
+            Assert.NotNull(be);
+            be.UpdateTarget();
+
+            // default should be UPPER
+            Assert.Equal(true, window.TitleCaps);
+            Assert.Equal("TEST", titleBarContent.Content);
+
+            window.TitleCaps = false;
+            be.UpdateTarget();
+            Assert.Equal("Test", titleBarContent.Content);
+        }
+
+        [Fact]
+        public async Task TestTitleCharacterCasingProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+            var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
+            var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
+
+            var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
+            Assert.NotNull(be);
+            be.UpdateTarget();
+
+            // default should be UPPER
+            Assert.Equal(CharacterCasing.Upper, window.TitleCharacterCasing);
+            Assert.Equal("TEST", titleBarContent.Content);
+
+            window.TitleCharacterCasing = CharacterCasing.Lower;
+            be.UpdateTarget();
+            Assert.Equal("test", titleBarContent.Content);
+
+            window.TitleCharacterCasing = CharacterCasing.Normal;
+            be.UpdateTarget();
+            Assert.Equal("Test", titleBarContent.Content);
         }
     }
 }

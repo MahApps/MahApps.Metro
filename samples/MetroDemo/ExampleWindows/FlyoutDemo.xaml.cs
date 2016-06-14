@@ -182,5 +182,15 @@ namespace MetroDemo.ExampleWindows
         {
             this.ToggleFlyout(12);
         }
+
+        private async void ClickMeOnClick(object sender, RoutedEventArgs e)
+        {
+            await this.ShowMessageAsync("Title Template Test", "Thx for using MahApps.Metro!!!");
+        }
+
+        private void TopFlyoutCloseButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            this.ToggleFlyout(8);
+        }
     }
 }

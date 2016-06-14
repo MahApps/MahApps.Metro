@@ -26,9 +26,6 @@
                              TargetType="{x:Type Button}">
                 <Grid Background="{TemplateBinding Background}" ToolTip="Copy to Clipboard">
                     <controls:PackIconMaterial x:Name="PART_PackIcon"
-                                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                               Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
-                                               Padding="0"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                Opacity="0.75"
@@ -67,9 +64,10 @@
                     <ListBox x:Name="PackIconMaterialKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
+                             Validation.ErrorTemplate="{x:Null}"
                              Style="{DynamicResource VirtualisedMetroListBox}"
                              ItemsSource="{Binding MaterialKinds}"
-                             SelectedValue="{Binding SelectedMaterialKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                             SelectedValue="{Binding SelectedMaterialKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
@@ -120,7 +118,6 @@
                                      controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
-                                     IsReadOnly="True"
                                      Text="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 
@@ -202,9 +199,10 @@
                     <ListBox x:Name="PackIconModernKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
+                             Validation.ErrorTemplate="{x:Null}"
                              Style="{DynamicResource VirtualisedMetroListBox}"
                              ItemsSource="{Binding ModernKinds}"
-                             SelectedValue="{Binding SelectedModernKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                             SelectedValue="{Binding SelectedModernKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
@@ -255,7 +253,6 @@
                                      controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
-                                     IsReadOnly="True"
                                      Text="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 

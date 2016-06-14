@@ -19,11 +19,7 @@ namespace MahApps.Metro.Tests.TestHelpers
                 ShowInTaskbar = false
             };
 
-            var changePropertiesAction = changeAddiotionalProperties;
-            if (changePropertiesAction != null)
-            {
-                changePropertiesAction(window);
-            }
+            changeAddiotionalProperties?.Invoke(window);
 
             var completionSource = new TaskCompletionSource<T>();
 

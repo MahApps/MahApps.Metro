@@ -17,6 +17,7 @@
     <System:Double x:Key="TabItemFontSize">26.67</System:Double>
     <System:Double x:Key="UpperCaseContentFontSize">10</System:Double>
     <System:Double x:Key="FloatingWatermarkFontSize">10</System:Double>
+    <System:Double x:Key="ClearTextButtonFontSize">16</System:Double>
 
     <System:Double x:Key="TooltipFontSize">12</System:Double>
     <System:Double x:Key="MenuFontSize">14</System:Double>

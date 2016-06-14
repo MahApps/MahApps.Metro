@@ -2,13 +2,13 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metroDemo="clr-namespace:MetroDemo"
                       x:Name="flyoutsDemo"
                       Title="Flyouts Demo"
+                      TitleCharacterCasing="Normal"
                       Width="700"
                       Height="500"
                       MinWidth="700"
@@ -17,6 +17,10 @@
                       BorderThickness="1"
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
+                      IconOverlayBehavior="Never"
+                      LeftWindowCommandsOverlayBehavior="Never"
+                      RightWindowCommandsOverlayBehavior="Never"
+                      WindowButtonCommandsOverlayBehavior="Always"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
 
@@ -54,13 +58,15 @@
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <TextBlock Margin="0 -1 8 0"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       FontFamily="{DynamicResource HeaderFontFamily}"
-                       FontSize="{DynamicResource WindowTitleFontSize}"
-                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}"
-                       TextTrimming="CharacterEllipsis" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Margin="0 -1 8 0"
+                           VerticalAlignment="Center"
+                           FontFamily="{DynamicResource HeaderFontFamily}"
+                           FontSize="{DynamicResource WindowTitleFontSize}"
+                           Text="{TemplateBinding Content}"
+                           TextTrimming="CharacterEllipsis" />
+                <Button Content="Click Me..." Margin="1" Click="ClickMeOnClick" />
+            </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
 
@@ -86,6 +92,7 @@
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
+                             Controls:ControlsHelper.ContentCharacterCasing="Upper"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Margin="100 0 0 0"
                              AreAnimationsEnabled="False"
@@ -227,24 +234,28 @@
                     </ComboBox>
                 </StackPanel>
             </Controls:Flyout>
-            <Controls:Flyout Header="Top" Position="Top">
-                <StackPanel Height="100"
-                            Margin="5,5,5,5"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                    <Button Width="40"
-                            Height="40"
-                            FontFamily="Segoe UI Symbol"
-                            FontSize="16"
-                            Style="{DynamicResource MetroCircleButtonStyle}">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Button>
-                </StackPanel>
+
+            <Controls:Flyout Header="Top"
+                             Position="Top"
+                             Theme="Light"
+                             IsModal="True"
+                             Margin="50 0 50 0"
+                             TitleVisibility="Collapsed"
+                             CloseButtonVisibility="Collapsed">
+                <Grid Height="150">
+                    <TextBlock Text="Flyout on the top..." FontSize="22" Margin="10" />
+                    <Grid VerticalAlignment="Bottom" Background="{DynamicResource AccentColorBrush2}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Style="{DynamicResource MetroFlatButton}" Margin="5" Content="_Save" IsEnabled="False" />
+                        <Button Grid.Column="2" Style="{DynamicResource MetroFlatButton}" Margin="5" IsCancel="True" Content="_Close" Click="TopFlyoutCloseButtonOnClick" />
+                    </Grid>
+                </Grid>
             </Controls:Flyout>
+
             <Controls:Flyout Header="Bottom" Position="Bottom">
                 <StackPanel Height="80"
                             Margin="5,5,5,5"

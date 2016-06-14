@@ -86,19 +86,19 @@ namespace MahApps.Metro.Controls
             set { SetValue(TiltFactorProperty, value); }
         }
 
-        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register("TitleFontSize", typeof(int), typeof(Tile), new PropertyMetadata(16));
+        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register("TitleFontSize", typeof(double), typeof(Tile), new PropertyMetadata(16d));
 
-        public int TitleFontSize
+        public double TitleFontSize
         {
-            get { return (int)GetValue(TitleFontSizeProperty); }
+            get { return (double)GetValue(TitleFontSizeProperty); }
             set { SetValue(TitleFontSizeProperty, value); }
         }
 
-        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register("CountFontSize", typeof(int), typeof(Tile), new PropertyMetadata(28));
+        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register("CountFontSize", typeof(double), typeof(Tile), new PropertyMetadata(28d));
 
-        public int CountFontSize
+        public double CountFontSize
         {
-            get { return (int)GetValue(CountFontSizeProperty); }
+            get { return (double)GetValue(CountFontSizeProperty); }
             set { SetValue(CountFontSizeProperty, value); }
         }
     }

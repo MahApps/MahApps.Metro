@@ -16,19 +16,20 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             // Reset the application as good as we can
             Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                foreach (Window window in Application.Current.Windows)
                 {
-                    window.Close();
-                }
-            }));
+                    var windows = Application.Current.Windows.OfType<Window>().ToList();
+                    foreach (Window window in windows)
+                    {
+                        window.Close();
+                    }
+                }));
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
-                var theme = ThemeManager.GetAppTheme("BaseLight");
-                ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
-            }));
+                {
+                    var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
+                    var theme = ThemeManager.GetAppTheme("BaseLight");
+                    ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+                }));
         }
     }
 }
