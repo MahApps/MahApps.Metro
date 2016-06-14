@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Icon from the Material Design Icons project, <see><cref>https://materialdesignicons.com/</cref></see>.
+    /// Icons from the Modern UI Icons project, <see><cref>http://modernuiicons.com</cref></see>.
     /// </summary>
     public class PackIconModern : PackIconBase<PackIconModernKind>
     {        

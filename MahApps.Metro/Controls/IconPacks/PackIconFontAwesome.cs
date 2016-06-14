@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Icon from the FontAwesome Icons project, <see><cref>http://fontawesome.io</cref></see>.
+    /// Icons from the FontAwesome Icons project, <see><cref>http://fontawesome.io</cref></see>.
     /// </summary>
     public class PackIconFontAwesome : PackIconBase<PackIconFontAwesomeKind>
     {        
