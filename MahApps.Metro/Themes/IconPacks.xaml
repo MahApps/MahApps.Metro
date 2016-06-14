@@ -81,7 +81,7 @@
                                       SnapsToDevicePixels="True"
                                       UseLayoutRounding="False">
                                     <Path.LayoutTransform>
-                                        <RotateTransform Angle="180" />
+                                        <ScaleTransform ScaleY="-1" />
                                     </Path.LayoutTransform>
                                 </Path>
                             </Viewbox>
