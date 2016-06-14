@@ -1,5 +1,7 @@
 ﻿namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     /// ******************************************
     /// This code is auto generated. Do not amend.
     /// ******************************************

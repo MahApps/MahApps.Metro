@@ -30,7 +30,7 @@ public class FontAwesomeIconEntry
     public List<string> Categories { get; set; }
 }
 
-public class PackIconFontAwesomeData
+public class PackIconData
 {
     public string Name { get; set; }
     public string Description { get; set; }
@@ -49,7 +49,7 @@ public class IconConverter
     private void GetMaterialDesignIconsAndGeneratePackIconData()
     {
         Console.WriteLine("Downloading Material Design icon data...");
-        var nameDataMaterialPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B")).ToList();
+        var nameDataMaterialPairs = GetPackIconData(GetSourceData("https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B")).ToList();
         Console.WriteLine("Got "  + nameDataMaterialPairs.Count + " Items");
 
         Console.WriteLine("Updating PackIconMaterialKind...");
@@ -110,7 +110,7 @@ public class IconConverter
             .Elements()
             .ToList();
 
-        var iconDataList = new List<PackIconFontAwesomeData>();
+        var iconDataList = new List<PackIconData>();
         foreach (var xElement in elements)
         {
             var unicode = (string)xElement.Attribute("unicode");
@@ -120,7 +120,7 @@ public class IconConverter
             if (allIconsDict.TryGetValue(unicode, out iconEntry))
             {
                 var name = GetName(iconEntry.Id, true);
-                iconDataList.Add(new PackIconFontAwesomeData() { Name = name, Description = iconEntry.Name, Data = data });
+                iconDataList.Add(new PackIconData() { Name = name, Description = iconEntry.Name, Data = data });
             }
         }
         iconDataList = iconDataList.OrderBy(d => d.Name, StringComparer.InvariantCultureIgnoreCase).ToList();
@@ -135,6 +135,12 @@ public class IconConverter
 
         Console.WriteLine("FontAwesome done!");
         Console.WriteLine();
+    }
+
+    private IEnumerable<PackIconData> GetPackIconData(string sourceData)
+    {
+        var jObject = JObject.Parse(sourceData);
+        return jObject["icons"].Select(t => new PackIconData() { Name = GetName(t["name"].ToString()), Description = t["name"].ToString(), Data = t["data"].ToString().Trim() });
     }
 
     private IEnumerable<Tuple<string, string>> GetNameDataPairs(string sourceData)
@@ -222,7 +228,7 @@ public class IconConverter
         return string.Join(Environment.NewLine, allLines);
     }
 
-    private string UpdatePackIconKind(string sourceFile, IEnumerable<PackIconFontAwesomeData> iconDataList)
+    private string UpdatePackIconKind(string sourceFile, IEnumerable<PackIconData> iconDataList)
     {
         // line 17
         var allLines = File.ReadAllLines(sourceFile).ToList();
@@ -231,7 +237,7 @@ public class IconConverter
         return string.Join(Environment.NewLine, allLines);
     }
 
-    private string UpdatePackIconDataFactory(string sourceFile, string enumKind, IEnumerable<PackIconFontAwesomeData> iconDataList)
+    private string UpdatePackIconDataFactory(string sourceFile, string enumKind, IEnumerable<PackIconData> iconDataList)
     {
         // line 14
         var allLines = File.ReadAllLines(sourceFile).ToList();
