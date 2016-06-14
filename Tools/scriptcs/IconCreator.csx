@@ -78,11 +78,12 @@ public class IconConverter
     {
         Console.WriteLine("Downloading FontAwesome icon data...");
 
-        var faRoot = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/fddd2c240452e6c8990c4ef75e0265b455aa7968/";
+        var faSVG = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/src/assets/font-awesome/fonts/fontawesome-webfont.svg";
+        var faIcons = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/src/icons.yml";
 
         var deserializer = new Deserializer(namingConvention: new CamelCaseNamingConvention(), ignoreUnmatched: true);
         //FontAwesomeConfig config = deserializer.Deserialize<FontAwesomeConfig>(GetSourceStream(faRoot + "_config.yml"));
-        FontAwesomeIcons allIcons = deserializer.Deserialize<FontAwesomeIcons>(GetSourceStream(faRoot + "src/icons.yml"));
+        FontAwesomeIcons allIcons = deserializer.Deserialize<FontAwesomeIcons>(GetSourceStream(faIcons));
         if (null == allIcons || allIcons.Icons.Count <= 0) {
             Console.WriteLine("Could not find any Font-Awesome icon!");
             return;
@@ -90,8 +91,7 @@ public class IconConverter
         var allIconsDict = allIcons.Icons.ToDictionary(i => i.Unicode, i => i);
         Console.WriteLine("Found " + allIconsDict.Count + " icons");
 
-        var svgStream = GetSourceData(faRoot + "src/assets/font-awesome/fonts/fontawesome-webfont.svg")
-            .Replace("&#x", "")
+        var svgStream = GetSourceData(faSVG)
             .Replace("\"&#x", "\"")
             .Replace(";\"", "\"");
 
@@ -116,7 +116,7 @@ public class IconConverter
                 iconTuples.Add(new Tuple<string, string>(name, data));
             }
         }
-        //FontAwesome
+        iconTuples = iconTuples.OrderBy(t => t.Item1, StringComparer.InvariantCultureIgnoreCase).ToList();
         Console.WriteLine("Got " + iconTuples.Count + " Items");
 
         Console.WriteLine("Updating PackIconFontAwesomeKind...");
