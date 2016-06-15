@@ -25,7 +25,7 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ![maindemowindow01](./docs/main_demo_window.png)
 
-![maindemowindow02](https://cloud.githubusercontent.com/assets/658431/13028849/7a25dbea-d27b-11e5-9059-0e672e5e2268.gif)
+![iconpacks](https://cloud.githubusercontent.com/assets/658431/16098473/6a88963a-3353-11e6-8b97-71c07700c17c.gif)
 
 ![maindemowindow03](./docs/main_demo_window.gif)
 
