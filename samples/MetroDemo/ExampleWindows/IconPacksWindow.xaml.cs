@@ -41,6 +41,11 @@ namespace MetroDemo.ExampleWindows
             System.Diagnostics.Process.Start("http://fontawesome.io");
         }
 
+        private void HyperlinkEntypoOnClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.entypo.com");
+        }
+
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs e)
         {
             var textBox = (TextBox)sender;
@@ -62,6 +67,7 @@ namespace MetroDemo.ExampleWindows
         private ICollectionView materialCVS;
         private ICollectionView modernCVS;
         private ICollectionView faCVS;
+        private ICollectionView entypoCVS;
 
         public IconPacksViewModel()
         {
@@ -89,6 +95,11 @@ namespace MetroDemo.ExampleWindows
             this.faCVS = CollectionViewSource.GetDefaultView(this.FontAwesomeKinds);
             this.faCVS.Filter = o => this.FilterKinds(this.FontAwesomeFilterTerm, (IconPacksEnumModel)o);
             this.SelectedFontAwesomeKind = this.FontAwesomeKinds.First();
+
+            this.EntypoKinds = GetIconPackKinds(typeof(PackIconEntypoKind));
+            this.entypoCVS = CollectionViewSource.GetDefaultView(this.EntypoKinds);
+            this.entypoCVS.Filter = o => this.FilterKinds(this.EntypoFilterTerm, (IconPacksEnumModel)o);
+            this.SelectedEntypoKind = this.EntypoKinds.First();
         }
 
         private static string GetDescription(Enum value)
@@ -159,6 +170,23 @@ namespace MetroDemo.ExampleWindows
                 this.fontAwesomeFilterTerm = value;
                 this.OnPropertyChanged();
                 this.faCVS.Refresh();
+            }
+        }
+
+        private string entypoFilterTerm;
+
+        public string EntypoFilterTerm
+        {
+            get { return this.entypoFilterTerm; }
+            set
+            {
+                if (Equals(value, this.entypoFilterTerm))
+                {
+                    return;
+                }
+                this.entypoFilterTerm = value;
+                this.OnPropertyChanged();
+                this.entypoCVS.Refresh();
             }
         }
 
@@ -254,6 +282,38 @@ namespace MetroDemo.ExampleWindows
                     return;
                 }
                 this.selectedFontAwesomeKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<IconPacksEnumModel> entypoKinds;
+
+        public IEnumerable<IconPacksEnumModel> EntypoKinds
+        {
+            get { return this.entypoKinds; }
+            set
+            {
+                if (Equals(value, this.entypoKinds))
+                {
+                    return;
+                }
+                this.entypoKinds = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IconPacksEnumModel selectedEntypoKind;
+
+        public IconPacksEnumModel SelectedEntypoKind
+        {
+            get { return this.selectedEntypoKind; }
+            set
+            {
+                if (Equals(value, this.selectedEntypoKind))
+                {
+                    return;
+                }
+                this.selectedEntypoKind = value;
                 this.OnPropertyChanged();
             }
         }
