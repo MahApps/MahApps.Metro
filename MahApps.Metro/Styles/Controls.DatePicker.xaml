@@ -43,7 +43,7 @@
                         <Grid x:Name="PART_InnerGrid" Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -56,26 +56,10 @@
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False">
-                                <Controls:PackIconModern Kind="Calendar14">
-                                    <Controls:PackIconModern.Width>
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="FontSize"
-                                                 Converter="{x:Static Converters:FontSizeOffsetConverter.Instance}">
-                                            <Binding.ConverterParameter>
-                                                <System:Double>4</System:Double>
-                                            </Binding.ConverterParameter>
-                                        </Binding>
-                                    </Controls:PackIconModern.Width>
-                                    <Controls:PackIconModern.Height>
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="FontSize"
-                                                 Converter="{x:Static Converters:FontSizeOffsetConverter.Instance}">
-                                            <Binding.ConverterParameter>
-                                                <System:Double>4</System:Double>
-                                            </Binding.ConverterParameter>
-                                        </Binding>
-                                    </Controls:PackIconModern.Height>
-                                </Controls:PackIconModern>
+                                <Controls:PackIconModern Kind="Calendar14"
+                                                         Height="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
+                                                         Width="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
+                                                         Padding="2" />
                             </Button>
 
                             <DatePickerTextBox x:Name="PART_TextBox"
