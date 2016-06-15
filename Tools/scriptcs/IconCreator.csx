@@ -236,7 +236,7 @@ public class IconConverter
         {
             name = name.Replace("-o", "-outline");
         }
-        name = name.Replace("+", "plus").Underscore().Pascalize();
+        name = name.Replace("+", "Plus").Replace("%", "Percent").Underscore().Pascalize();
         if (name.Length > 0 && Char.IsNumber(name[0]))
         {
             return '_' + name;

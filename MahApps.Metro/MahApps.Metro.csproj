@@ -147,6 +147,9 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypo.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypoDataFactory.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypoKind.cs" />
     <Compile Include="Controls\IconPacks\PackIconFontAwesome.cs" />
     <Compile Include="Controls\IconPacks\PackIconFontAwesomeDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconFontAwesomeKind.cs" />

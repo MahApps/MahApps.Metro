@@ -45,6 +45,7 @@
     <Style TargetType="{x:Type controls:PackIconMaterial}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconMaterial}" />
     <Style TargetType="{x:Type controls:PackIconModern}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconModern}" />
     <Style TargetType="{x:Type controls:PackIconFontAwesome}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconFontAwesome}" />
+    <Style TargetType="{x:Type controls:PackIconEntypo}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconEntypo}" />
 
     <Style TargetType="{x:Type controls:WindowButtonCommands}" BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" />
 
