@@ -342,7 +342,7 @@ namespace MetroDemo
             return () =>
                        {
                            var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
-                                         $"The current main Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
+                                         $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
                            this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
                        };
         }

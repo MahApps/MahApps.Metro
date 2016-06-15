@@ -14,42 +14,42 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
         {            
-            return ExecuteShowMessageDialog(context, window => window.ShowInputAsync(title, message, metroDialogSettings));
+            return ExecuteShowMessageDialogAsync(context, window => window.ShowInputAsync(title, message, metroDialogSettings));
         }
 
         public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null)
         {
-            return ExecuteShowMessageDialog(context, window => window.ShowLoginAsync(title, message, settings));
+            return ExecuteShowMessageDialogAsync(context, window => window.ShowLoginAsync(title, message, settings));
         }
 
         public Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
-            return ExecuteShowMessageDialog(context, window => window.ShowMessageAsync(title, message, style, settings));
+            return ExecuteShowMessageDialogAsync(context, window => window.ShowMessageAsync(title, message, style, settings));
         }
 
         public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
             bool isCancelable = false, MetroDialogSettings settings = null)
         {
-            return ExecuteShowMessageDialog(context, window => window.ShowProgressAsync(title, message, isCancelable, settings));
+            return ExecuteShowMessageDialogAsync(context, window => window.ShowProgressAsync(title, message, isCancelable, settings));
         }
 
         public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
             MetroDialogSettings settings = null)
         {
-            return ExecuteShowMessageDialog(context, window => window.ShowMetroDialogAsync(dialog, settings));
+            return ExecuteShowMessageDialogAsync(context, window => window.ShowMetroDialogAsync(dialog, settings));
         }
 
         public Task HideMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null)
         {
-            return ExecuteShowMessageDialog(context, window => window.HideMetroDialogAsync(dialog, settings));
+            return ExecuteShowMessageDialogAsync(context, window => window.HideMetroDialogAsync(dialog, settings));
         }
 
         public Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog
         {
-            return ExecuteShowMessageDialog(context, window => window.GetCurrentDialogAsync<TDialog>());
+            return ExecuteShowMessageDialogAsync(context, window => window.GetCurrentDialogAsync<TDialog>());
         }
 
-        private static Task ExecuteShowMessageDialog(object context, Func<MetroWindow, Task> messageDialogFunc)
+        private static Task ExecuteShowMessageDialogAsync(object context, Func<MetroWindow, Task> messageDialogFunc)
         {
             var metroWindow = GetMetroWindow(context);
             if (metroWindow.CheckAccess())
@@ -59,7 +59,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.Dispatcher.Invoke(new Func<Task>(() => messageDialogFunc(metroWindow))) as Task;
         }
 
-        private static Task<TResult> ExecuteShowMessageDialog<TResult>(object context, Func<MetroWindow, Task<TResult>> messageDialogFunc)
+        private static Task<TResult> ExecuteShowMessageDialogAsync<TResult>(object context, Func<MetroWindow, Task<TResult>> messageDialogFunc)
         {
             var metroWindow = GetMetroWindow(context);
             if (metroWindow.CheckAccess())
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
             if (!DialogParticipation.IsRegistered(context))
             {
