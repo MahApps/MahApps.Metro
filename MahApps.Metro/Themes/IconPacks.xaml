@@ -92,4 +92,28 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MahApps.Metro.Styles.PackIconEntypo" TargetType="{x:Type controls:PackIconEntypo}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconBase}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PackIconEntypo}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Viewbox Margin="{TemplateBinding Padding}">
+                                <Path Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform"
+                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                      SnapsToDevicePixels="True"
+                                      UseLayoutRounding="False" />
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
