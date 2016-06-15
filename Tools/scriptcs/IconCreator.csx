@@ -44,6 +44,7 @@ public class IconConverter
         GetMaterialDesignIconsAndGeneratePackIconData();
         GetModernUIIconsAndGeneratePackIconData();
         GetFontAwesomeIconsAndGeneratePackIconData();
+        GetEntypoIconsAndGeneratePackIconData();
     }
 
     private void GetMaterialDesignIconsAndGeneratePackIconData()
@@ -142,6 +143,72 @@ public class IconConverter
         Console.WriteLine();
     }
 
+    public void GetEntypoIconsAndGeneratePackIconData()
+    {
+    	Console.WriteLine("Create Entypo+ icon data...");
+
+    	var iconSourceFolder = ".\\Entypo+";
+    	var allSVGFiles = new List<string>();
+    	ProcessDirectory(iconSourceFolder, allSVGFiles);
+    	Console.WriteLine("Found " + allSVGFiles.Count + " icons");
+
+    	var iconDataList = new List<PackIconData>();
+    	foreach (var fileName in allSVGFiles)
+    	{
+    		var svgData = File.ReadAllText(fileName);
+    		var xmlDoc = XDocument.Parse(svgData);
+    		var id = Path.GetFileNameWithoutExtension(fileName);
+    		var name = GetName(id, true);
+    		//var id = ((string)xmlDoc.Root.Attribute("id")).Pascalize().Pascalize().Underscore().Dasherize();
+	        var paths = xmlDoc.Root.Descendants("{http://www.w3.org/2000/svg}path");
+	        if (paths.Count() > 1)
+	        {
+	        	Console.WriteLine("Too many path data in " + name + " -> " + id);
+	        	continue;
+	        }
+	        var data = (string)paths.First().Attribute("d");
+	        if (data == null)
+	        {
+	        	Console.WriteLine("No path for " + name + " -> " + id);
+	        }
+	        if (fileName.Contains("Entypo+ Social Extension"))
+	        {
+	        	id = id + " (Social Extension)";
+	        }
+	        iconDataList.Add(new PackIconData() { Name = name, Description = id, Data = data });
+    	}
+        iconDataList = iconDataList.OrderBy(d => d.Name, StringComparer.InvariantCultureIgnoreCase).ToList();
+        Console.WriteLine("Got " + iconDataList.Count + " Items");
+
+        Console.WriteLine("Updating PackIconEntypoKind...");
+        var newEnumSource = UpdatePackIconKind("PackIconEntypoKind.template.cs", iconDataList);
+        Write(newEnumSource, "PackIconEntypoKind.cs");
+        Console.WriteLine("Updating PackIconEntypoDataFactory...");
+        var newDataFactorySource = UpdatePackIconDataFactory("PackIconEntypoDataFactory.template.cs", "PackIconEntypoKind", iconDataList);
+        Write(newDataFactorySource, "PackIconEntypoDataFactory.cs");
+
+    	Console.WriteLine("Entypo+ done!");
+        Console.WriteLine();
+    }
+
+    public static void ProcessDirectory(string targetDirectory, IList<string> allFiles) 
+    {
+        // Process the list of files found in the directory.
+        string [] fileEntries = Directory.GetFiles(targetDirectory);
+        foreach(string fileName in fileEntries)
+        {
+        	var extension = Path.GetExtension(fileName).ToLower();
+        	if (extension != ".svg") continue;
+        	allFiles.Add(fileName);
+        }
+        // Recurse into subdirectories of this directory.
+        string [] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
+        foreach(string subdirectory in subdirectoryEntries)
+        {
+            ProcessDirectory(subdirectory, allFiles);
+        }
+    }
+
     private IEnumerable<PackIconData> GetPackIconData(string sourceData)
     {
         var jObject = JObject.Parse(sourceData);
@@ -169,7 +236,7 @@ public class IconConverter
         {
             name = name.Replace("-o", "-outline");
         }
-        name = name.Underscore().Pascalize();
+        name = name.Replace("+", "plus").Underscore().Pascalize();
         if (name.Length > 0 && Char.IsNumber(name[0]))
         {
             return '_' + name;
