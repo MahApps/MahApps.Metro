@@ -2,8 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
     <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" 
                                      TotalParts="60" />
     <converters:ClockDegreeConverter x:Key="HourDegreeConverter" 
@@ -132,13 +138,43 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition x:Name="ButtonRow" Height="*" />
+                                </Grid.RowDefinitions>
                                 <DatePickerTextBox VerticalAlignment="Center"
-                                                   x:Name="DatePickerTextBox"
-                                                   controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}"
+                                                   x:Name="PART_TextBox"
+                                                   Grid.Row="1"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" />
+                                                   Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" 
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                                   CaretBrush="{DynamicResource BlackBrush}"
+                                                   ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
+                                                   Focusable="{TemplateBinding Focusable}">
+                                    <i:Interaction.Behaviors>
+                                        <behaviours:DatePickerTextBoxBehavior />
+                                    </i:Interaction.Behaviors>
+                                </DatePickerTextBox>
+                                <ContentControl x:Name="PART_FloatingMessageContainer"
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            Grid.ColumnSpan="2"
+                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                    <TextBlock x:Name="PART_FloatingMessage"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
+                                </ContentControl>
                                 <Button x:Name="PART_Button"
                                         Grid.Column="1"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         IsTabStop="False">
                                     <Path Fill="{Binding ElementName=PART_Button, Path=Foreground, Mode=OneWay}"
@@ -167,6 +203,8 @@
                                 <Border x:Name="DisabledVisualElement"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
                                         Background="{DynamicResource ControlsDisabledBrush}"
                                         BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -176,6 +214,7 @@
                                 <Popup x:Name="PART_Popup"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
+                                       Grid.Row="1"
                                        Placement="Bottom"
                                        PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                        StaysOpen="False">
@@ -225,7 +264,7 @@
                                                                    Fill="{DynamicResource BlackColorBrush}"
                                                                    RenderTransformOrigin=".5,1">
                                                             <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedTime.TotalMinutes, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, Mode=OneWay}" />
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
 
@@ -237,7 +276,7 @@
                                                                    Fill="{DynamicResource BlackColorBrush}"
                                                                    RenderTransformOrigin=".5,1">
                                                             <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedTime.TotalHours, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, Mode=OneWay}" />
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
                                                         <Ellipse Canvas.Left="-2"
@@ -256,7 +295,7 @@
                                                                    Opacity=".25"
                                                                    RenderTransformOrigin=".5,.75">
                                                             <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedTime.Seconds, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, Mode=OneWay}" />
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='s', Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
                                                     </Canvas>
@@ -304,8 +343,10 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
+                        <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
@@ -331,8 +372,22 @@
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
                             <Setter TargetName="StackPanel" Property="Orientation" Value="{Binding Path=Orientation, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="DatePickerTextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Trigger>
+                        
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

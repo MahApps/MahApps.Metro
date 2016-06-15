@@ -24,6 +24,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
+    [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     public abstract class TimePickerBase : Control
     {
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
@@ -64,9 +65,6 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
 
-        public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
-            "SelectedTime", typeof(TimeSpan?), typeof(TimePickerBase), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
-
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
@@ -79,7 +77,17 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
-        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct, typeof(EventHandler<SelectionChangedEventArgs>), typeof(TimePickerBase));
+        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedTimeChanged", 
+            RoutingStrategy.Direct,
+            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>>), 
+            typeof(TimePickerBase));
+
+        public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
+            "SelectedTime",
+            typeof(TimeSpan?),
+            typeof(TimePickerBase),
+            new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
 
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
@@ -90,6 +98,7 @@ namespace MahApps.Metro.Controls
         private const string ElementPopup = "PART_Popup";
         private const string ElementSecondHand = "PART_SecondHand";
         private const string ElementSecondPicker = "PART_SecondPicker";
+        private const string ElementTextBox = "PART_TextBox";
 
         #region Do not change order of fields inside this region
 
@@ -124,19 +133,20 @@ namespace MahApps.Metro.Controls
         private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
+        private DatePickerTextBox _textBox;
 
         static TimePickerBase()
         {
+            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>
         ///     Occurs when the <see cref="SelectedTime" /> property is changed.
         /// </summary>
-        public event EventHandler<SelectionChangedEventArgs> SelectedTimeChanged
+        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>> SelectedTimeChanged
         {
             add { AddHandler(SelectedTimeChangedEvent, value); }
             remove { RemoveHandler(SelectedTimeChangedEvent, value); }
@@ -325,6 +335,7 @@ namespace MahApps.Metro.Controls
             _ampmSwitcher = GetTemplateChild(ElementAmPmSwitcher) as Selector;
             _minuteHand = GetTemplateChild(ElementMinuteHand) as FrameworkElement;
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
+            _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
@@ -388,7 +399,7 @@ namespace MahApps.Metro.Controls
             SelectedTime = this.GetTimeOfDayFromClockHands();
         }
 
-        protected virtual void OnSelectedTimeChanged(SelectionChangedEventArgs e)
+        protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<TimeSpan?> e)
         {
             RaiseEvent(e);
         }
@@ -477,6 +488,24 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.ApplyCulture();
         }
 
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            TimePickerBase picker = (TimePickerBase)sender;
+            if (!e.Handled && (picker._textBox != null))
+            {
+                if (Equals(e.OriginalSource, picker))
+                {
+                    picker._textBox.Focus();
+                    e.Handled = true;
+                }
+                else if (Equals(e.OriginalSource, picker._textBox))
+                {
+                    picker._textBox.SelectAll();
+                    e.Handled = true;
+                }
+            }
+        }
+
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((TimePickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
@@ -492,7 +521,7 @@ namespace MahApps.Metro.Controls
             var timePartPickerBase = (TimePickerBase)d;
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
-            timePartPickerBase.OnSelectedTimeChanged(new SelectionChangedEventArgs(SelectedTimeChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+            timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)

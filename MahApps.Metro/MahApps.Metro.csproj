@@ -97,6 +97,7 @@
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Controls\CloseCommand.cs" />
+    <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
