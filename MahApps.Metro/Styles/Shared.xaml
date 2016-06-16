@@ -25,6 +25,7 @@
 
     <Storyboard x:Key="HideFloatingMessageStoryboard">
         <DoubleAnimation Duration="0:0:.2"
+                         From="15"
                          EasingFunction="{StaticResource ExpoEaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="MaxHeight"
@@ -42,6 +43,7 @@
 
     <Storyboard x:Key="ShowFloatingMessageStoryboard">
         <DoubleAnimation Duration="0:0:.2"
+                         From="0"
                          EasingFunction="{StaticResource ExpoEaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="MaxHeight"
