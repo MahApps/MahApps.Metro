@@ -8,6 +8,8 @@
              xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -38,7 +40,17 @@
                             HorizontalAlignment="Center"
                             Controls:TextBoxHelper.Watermark="Select a date"
                             FontSize="22"
-                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
+                    <Controls:TextBoxHelper.ButtonWidth>
+                        <Binding RelativeSource="{RelativeSource Self}"
+                                                 Path="FontSize"
+                                                 Converter="{x:Static Converters:FontSizeOffsetConverter.Instance}">
+                            <Binding.ConverterParameter>
+                                <system:Double>5</system:Double>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </Controls:TextBoxHelper.ButtonWidth>
+                </DatePicker>
             </StackPanel>
 
             <StackPanel Grid.Row="0"

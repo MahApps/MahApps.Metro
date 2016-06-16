@@ -6,7 +6,6 @@ using System.Windows.Data;
 namespace MahApps.Metro.Converters
 {
     // this converter is only used by DatePicker to convert the font size to width and height of the icon button
-    [Obsolete("This converter will be deleted in the next major release.")]
     public class FontSizeOffsetConverter : IValueConverter
     {
         private static FontSizeOffsetConverter _instance;

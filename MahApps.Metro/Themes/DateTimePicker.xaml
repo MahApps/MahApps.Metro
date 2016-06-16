@@ -124,6 +124,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
@@ -137,7 +138,7 @@
                             <Grid x:Name="PART_InnerGrid" Margin="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                    <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -179,9 +180,9 @@
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         IsTabStop="False">
                                     <controls:PackIconModern Kind="Calendar14"
-                                                             Height="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
-                                                             Width="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
-                                                             Padding="2" />
+                                                             Padding="2"
+                                                             Width="{TemplateBinding controls:TextBoxHelper.ButtonWidth}"
+                                                             Height="{TemplateBinding controls:TextBoxHelper.ButtonWidth}" />
                                 </Button>
                                 <Border x:Name="DisabledVisualElement"
                                         Grid.Column="0"

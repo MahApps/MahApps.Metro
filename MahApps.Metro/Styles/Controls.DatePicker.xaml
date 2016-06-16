@@ -22,6 +22,7 @@
         <Setter Property="CalendarStyle" Value="{DynamicResource MetroCalendar}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
@@ -43,7 +44,7 @@
                         <Grid x:Name="PART_InnerGrid" Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -57,9 +58,9 @@
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False">
                                 <Controls:PackIconModern Kind="Calendar14"
-                                                         Height="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
-                                                         Width="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"
-                                                         Padding="2" />
+                                                         Padding="2"
+                                                         Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                                                         Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}" />
                             </Button>
 
                             <DatePickerTextBox x:Name="PART_TextBox"
