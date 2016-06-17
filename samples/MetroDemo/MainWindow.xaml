@@ -176,8 +176,12 @@
                     <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
-                    <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
                     <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                    <Separator />
+                    <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
+                    <MenuItem Click="ShowLoginDialogOutsid" Header="Show ShowLoginDialog Externally" />
+                    <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
+                    <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
                     <Separator />
                     <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
                     <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM" />
