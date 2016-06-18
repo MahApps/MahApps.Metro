@@ -447,5 +447,46 @@ namespace MetroDemo
             w.EnableDWMDropShadow = true;
             w.Show();
         }
+
+        private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
+
+            if (result == null) //user pressed cancel
+                return;
+
+            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
+        }
+
+        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+            }
+        }
+
+        private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = MetroDialogOptions.ColorScheme
+            };
+
+            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+        }
     }
 }
