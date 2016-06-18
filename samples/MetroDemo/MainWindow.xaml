@@ -179,7 +179,7 @@
                     <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
                     <Separator />
                     <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
-                    <MenuItem Click="ShowLoginDialogOutsid" Header="Show ShowLoginDialog Externally" />
+                    <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
                     <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
                     <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
                     <Separator />

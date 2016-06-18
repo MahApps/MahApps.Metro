@@ -527,7 +527,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return win;
         }
 
-        private static Window CreateExternalMessageWindow(MetroWindow window)
+        private static Window CreateModalExternalWindow(MetroWindow window)
         {
             var win = CreateExternalWindow();
             win.Owner = window;
@@ -537,7 +537,6 @@ namespace MahApps.Metro.Controls.Dialogs
             //Set Width and Height maximum according Owner
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
-
             win.SizeToContent = SizeToContent.Height;
             
             return win;
@@ -553,7 +552,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
         public static LoginDialogData ShowModalLoginExternal(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
         {
-            var win = CreateExternalMessageWindow(window);
+            var win = CreateModalExternalWindow(window);
 
             settings = settings ?? new LoginDialogSettings();
 
@@ -591,7 +590,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
         public static string ShowModalInputExternal(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
         {
-            var win = CreateExternalMessageWindow(window);
+            var win = CreateModalExternalWindow(window);
 
             settings = settings ?? window.MetroDialogOptions;
 
@@ -631,7 +630,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task promising the result of which button was pressed.</returns>
         public static MessageDialogResult ShowModalMessageExternal(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
-            var win = CreateExternalMessageWindow(window);
+            var win = CreateModalExternalWindow(window);
 
             settings = settings ?? window.MetroDialogOptions;
 

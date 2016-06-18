@@ -458,7 +458,7 @@ namespace MetroDemo
             this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
         }
 
-        private void ShowLoginDialogOutsid(object sender, RoutedEventArgs e)
+        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
         {
             LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
