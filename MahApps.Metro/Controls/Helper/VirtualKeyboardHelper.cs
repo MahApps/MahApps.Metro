@@ -9,6 +9,8 @@ using System.Management;
 
 namespace MahApps.Metro.Controls.Helper
 {
+    using System.IO;
+
     public class VirtualKeyboardHelper
     {
         private const uint SC_CLOSE = 61536;
@@ -17,18 +19,18 @@ namespace MahApps.Metro.Controls.Helper
 
         private static readonly Lazy<ProcessStartInfo> StartInfo = new Lazy<ProcessStartInfo>(() =>
         {
-            ProcessStartInfo startInfo;
-            if (Environment.Is64BitOperatingSystem)
+            string tabTipExe = "TabTip.exe";
+            if (!Environment.Is64BitProcess)
             {
-                startInfo = new ProcessStartInfo(@"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip.exe");
+                tabTipExe = "TabTip32.exe";
             }
-            else
-            {
-                startInfo = new ProcessStartInfo(@"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip32.exe");
-            }
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-            return startInfo;
+            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "ink", tabTipExe);
+
+            return new ProcessStartInfo(fileName)
+                   {
+                       WindowStyle = ProcessWindowStyle.Hidden
+                   };
         });
 
         public static readonly DependencyProperty EnableVirtualKeyboardProperty = DependencyProperty.RegisterAttached(
