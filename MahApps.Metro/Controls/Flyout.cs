@@ -664,10 +664,14 @@ namespace MahApps.Metro.Controls
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
 
-                this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
-                this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                var flyoutsControl = this.TryFindParent<FlyoutsControl>();
+                if (flyoutsControl != null)
+                {
+                    this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                    this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                    this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                    this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                }
             }
 
             this.hideStoryboard = this.GetTemplateChild("HideStoryboard") as Storyboard;

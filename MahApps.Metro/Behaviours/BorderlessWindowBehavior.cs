@@ -22,7 +22,6 @@ namespace MahApps.Metro.Behaviours
         private Thickness? savedBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
-        private ResizeMode savedResizeMode;
 
         protected override void OnAttached()
         {
@@ -78,8 +77,7 @@ namespace MahApps.Metro.Behaviours
             // #1823 try to fix another nasty issue
             // WindowState = Maximized
             // ResizeMode = NoResize
-            this.savedResizeMode = this.AssociatedObject.ResizeMode;
-            if (this.savedResizeMode == ResizeMode.NoResize)
+            if (this.AssociatedObject.ResizeMode == ResizeMode.NoResize)
             {
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
@@ -318,7 +316,7 @@ namespace MahApps.Metro.Behaviours
                 this.hwndSource.AddHook(this.WindowProc);
             }
 
-            if (this.savedResizeMode != ResizeMode.NoResize)
+            if (this.AssociatedObject.ResizeMode != ResizeMode.NoResize)
             {
                 // handle size to content (thanks @lynnx).
                 // This is necessary when ResizeMode != NoResize. Without this workaround,
@@ -340,15 +338,10 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            if (this.savedResizeMode != ResizeMode.NoResize)
+            if (window.ResizeMode != ResizeMode.NoResize)
             {
                 window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
                 window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
-                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_TitleBar");
-                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_WindowTitleThumb");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_WindowButtonCommands");
                 window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
             }
         }

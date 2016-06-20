@@ -23,7 +23,12 @@
             typeof(DateTimePicker), 
             new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
 
-        public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
+        public static readonly RoutedEvent SelectedDateChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedDateChanged", 
+            RoutingStrategy.Direct, 
+            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>),
+            typeof(DateTimePicker));
+
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
       
         private const string ElementCalendar = "PART_Calendar";
@@ -38,7 +43,7 @@
         /// <summary>
         ///     Occurs when the <see cref="SelectedDate" /> property is changed.
         /// </summary>
-        public event EventHandler<SelectionChangedEventArgs> SelectedDateChanged
+        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>> SelectedDateChanged
         {
             add { AddHandler(SelectedDateChangedEvent, value); }
             remove { RemoveHandler(SelectedDateChangedEvent, value); }
@@ -132,7 +137,7 @@
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
         }
 
-        protected virtual void OnSelectedDateChanged(SelectionChangedEventArgs e)
+        protected virtual void OnSelectedDateChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
         {
             RaiseEvent(e);
         }
@@ -209,7 +214,7 @@
             if (dt.HasValue)
             {
                 dateTimePicker.SelectedTime = dt.Value.TimeOfDay;
-                dateTimePicker.OnSelectedDateChanged(new SelectionChangedEventArgs(SelectedDateChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+                dateTimePicker.OnSelectedDateChanged(new TimePickerBaseSelectionChangedEventArgs<DateTime?>(SelectedDateChangedEvent, (DateTime?)e.OldValue, (DateTime?)e.NewValue));
             }
             else
             {

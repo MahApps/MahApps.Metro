@@ -411,10 +411,18 @@ namespace MetroDemo
             return testWindow;
         }
 
+        private void MenuWindowWithoutBorderOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock() { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            //w.BorderThickness = new Thickness(1);
+            w.Show();
+        }
+
         private void MenuWindowWithBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock() { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.GlowBrush = null;
             w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
@@ -424,7 +432,7 @@ namespace MetroDemo
         private void MenuWindowWithGlowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock() { Text = "MetroWindow with Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
             w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
@@ -434,10 +442,51 @@ namespace MetroDemo
         private void MenuWindowWithShadowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock() { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             // use this to test the obsolete under the hood code
             w.EnableDWMDropShadow = true;
             w.Show();
+        }
+
+        private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
+
+            if (result == null) //user pressed cancel
+                return;
+
+            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
+        }
+
+        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+            }
+        }
+
+        private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = MetroDialogOptions.ColorScheme
+            };
+
+            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
     }
 }

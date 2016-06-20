@@ -28,12 +28,22 @@ namespace MetroDemo.ExampleWindows
 
         private void HyperlinkMaterialOnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://materialdesignicons.com/");
+            System.Diagnostics.Process.Start("https://materialdesignicons.com");
         }
 
         private void HyperlinkModernOnClick(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://modernuiicons.com/");
+            System.Diagnostics.Process.Start("http://modernuiicons.com");
+        }
+
+        private void HyperlinkFontAwesomeOnClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://fontawesome.io");
+        }
+
+        private void HyperlinkEntypoOnClick(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.entypo.com");
         }
 
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs e)
@@ -43,10 +53,21 @@ namespace MetroDemo.ExampleWindows
         }
     }
 
+    public class IconPacksEnumModel
+    {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public object Value { get; set; }
+    }
+
     public class IconPacksViewModel : INotifyPropertyChanged
     {
         private ICollectionView materialCVS;
         private ICollectionView modernCVS;
+        private ICollectionView faCVS;
+        private ICollectionView entypoCVS;
 
         public IconPacksViewModel()
         {
@@ -60,27 +81,45 @@ namespace MetroDemo.ExampleWindows
 
         public void Initialize()
         {
-            this.MaterialKinds = new ObservableCollection<PackIconMaterialKind>(
-                Enum.GetValues(typeof(PackIconMaterialKind)).OfType<PackIconMaterialKind>()
-                    .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
+            this.MaterialKinds = GetIconPackKinds(typeof(PackIconMaterialKind));
             this.materialCVS = CollectionViewSource.GetDefaultView(this.MaterialKinds);
-            this.materialCVS.Filter = o => this.FilterMaterialKinds((PackIconMaterialKind)o);
+            this.materialCVS.Filter = o => this.FilterKinds(this.MaterialFilterTerm, (IconPacksEnumModel)o);
+            this.SelectedMaterialKind = this.MaterialKinds.First();
 
-            this.ModernKinds = new ObservableCollection<PackIconModernKind>(
-                Enum.GetValues(typeof(PackIconModernKind)).OfType<PackIconModernKind>()
-                    .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
+            this.ModernKinds = GetIconPackKinds(typeof(PackIconModernKind));
             this.modernCVS = CollectionViewSource.GetDefaultView(this.ModernKinds);
-            this.modernCVS.Filter = o => this.FilterModernKindss((PackIconModernKind)o);
+            this.modernCVS.Filter = o => this.FilterKinds(this.ModernFilterTerm, (IconPacksEnumModel)o);
+            this.SelectedModernKind = this.ModernKinds.First();
+
+            this.FontAwesomeKinds = GetIconPackKinds(typeof(PackIconFontAwesomeKind));
+            this.faCVS = CollectionViewSource.GetDefaultView(this.FontAwesomeKinds);
+            this.faCVS.Filter = o => this.FilterKinds(this.FontAwesomeFilterTerm, (IconPacksEnumModel)o);
+            this.SelectedFontAwesomeKind = this.FontAwesomeKinds.First();
+
+            this.EntypoKinds = GetIconPackKinds(typeof(PackIconEntypoKind));
+            this.entypoCVS = CollectionViewSource.GetDefaultView(this.EntypoKinds);
+            this.entypoCVS.Filter = o => this.FilterKinds(this.EntypoFilterTerm, (IconPacksEnumModel)o);
+            this.SelectedEntypoKind = this.EntypoKinds.First();
         }
 
-        private bool FilterMaterialKinds(PackIconMaterialKind packIconMaterialKind)
+        private static string GetDescription(Enum value)
         {
-            return string.IsNullOrWhiteSpace(this.MaterialFilterTerm) || packIconMaterialKind.ToString().IndexOf(this.MaterialFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var attribute = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute;
+            return attribute != null ? attribute.Description : value.ToString();
         }
 
-        private bool FilterModernKindss(PackIconModernKind packIconModernKind)
+        private static IEnumerable<IconPacksEnumModel> GetIconPackKinds(Type enumType)
         {
-            return string.IsNullOrWhiteSpace(this.ModernFilterTerm) || packIconModernKind.ToString().IndexOf(this.ModernFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            return new ObservableCollection<IconPacksEnumModel>(
+                Enum.GetValues(enumType).OfType<Enum>()
+                    .Select(k => new IconPacksEnumModel() { Name = k.ToString(), Description = GetDescription(k), Value = k })
+                    .OrderBy(m => m.Name, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        private bool FilterKinds(string filterTerm, IconPacksEnumModel enumModel)
+        {
+            return string.IsNullOrWhiteSpace(filterTerm) || enumModel.Name.IndexOf(filterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
         private string materialFilterTerm;
@@ -90,7 +129,8 @@ namespace MetroDemo.ExampleWindows
             get { return this.materialFilterTerm; }
             set
             {
-                if (Equals(value, this.MaterialFilterTerm)) {
+                if (Equals(value, this.materialFilterTerm))
+                {
                     return;
                 }
                 this.materialFilterTerm = value;
@@ -106,7 +146,8 @@ namespace MetroDemo.ExampleWindows
             get { return this.modernFilterTerm; }
             set
             {
-                if (Equals(value, this.ModernFilterTerm)) {
+                if (Equals(value, this.modernFilterTerm))
+                {
                     return;
                 }
                 this.modernFilterTerm = value;
@@ -115,14 +156,49 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private IEnumerable<PackIconModernKind> modernKinds;
+        private string fontAwesomeFilterTerm;
 
-        public IEnumerable<PackIconModernKind> ModernKinds
+        public string FontAwesomeFilterTerm
+        {
+            get { return this.fontAwesomeFilterTerm; }
+            set
+            {
+                if (Equals(value, this.fontAwesomeFilterTerm))
+                {
+                    return;
+                }
+                this.fontAwesomeFilterTerm = value;
+                this.OnPropertyChanged();
+                this.faCVS.Refresh();
+            }
+        }
+
+        private string entypoFilterTerm;
+
+        public string EntypoFilterTerm
+        {
+            get { return this.entypoFilterTerm; }
+            set
+            {
+                if (Equals(value, this.entypoFilterTerm))
+                {
+                    return;
+                }
+                this.entypoFilterTerm = value;
+                this.OnPropertyChanged();
+                this.entypoCVS.Refresh();
+            }
+        }
+
+        private IEnumerable<IconPacksEnumModel> modernKinds;
+
+        public IEnumerable<IconPacksEnumModel> ModernKinds
         {
             get { return this.modernKinds; }
             set
             {
-                if (Equals(value, this.modernKinds)) {
+                if (Equals(value, this.modernKinds))
+                {
                     return;
                 }
                 this.modernKinds = value;
@@ -130,14 +206,15 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private PackIconModernKind selectedModernKind;
+        private IconPacksEnumModel selectedModernKind;
 
-        public PackIconModernKind SelectedModernKind
+        public IconPacksEnumModel SelectedModernKind
         {
             get { return this.selectedModernKind; }
             set
             {
-                if (Equals(value, this.SelectedModernKind)) {
+                if (Equals(value, this.selectedModernKind))
+                {
                     return;
                 }
                 this.selectedModernKind = value;
@@ -145,14 +222,15 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private IEnumerable<PackIconMaterialKind> materialKinds;
+        private IEnumerable<IconPacksEnumModel> materialKinds;
 
-        public IEnumerable<PackIconMaterialKind> MaterialKinds
+        public IEnumerable<IconPacksEnumModel> MaterialKinds
         {
             get { return this.materialKinds; }
             set
             {
-                if (Equals(value, this.materialKinds)) {
+                if (Equals(value, this.materialKinds))
+                {
                     return;
                 }
                 this.materialKinds = value;
@@ -160,17 +238,82 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
-        private PackIconMaterialKind selectedMaterialKind;
+        private IconPacksEnumModel selectedMaterialKind;
 
-        public PackIconMaterialKind SelectedMaterialKind
+        public IconPacksEnumModel SelectedMaterialKind
         {
             get { return this.selectedMaterialKind; }
             set
             {
-                if (Equals(value, this.SelectedMaterialKind)) {
+                if (Equals(value, this.selectedMaterialKind))
+                {
                     return;
                 }
                 this.selectedMaterialKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<IconPacksEnumModel> fontAwesomeKinds;
+
+        public IEnumerable<IconPacksEnumModel> FontAwesomeKinds
+        {
+            get { return this.fontAwesomeKinds; }
+            set
+            {
+                if (Equals(value, this.fontAwesomeKinds))
+                {
+                    return;
+                }
+                this.fontAwesomeKinds = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IconPacksEnumModel selectedFontAwesomeKind;
+
+        public IconPacksEnumModel SelectedFontAwesomeKind
+        {
+            get { return this.selectedFontAwesomeKind; }
+            set
+            {
+                if (Equals(value, this.selectedFontAwesomeKind))
+                {
+                    return;
+                }
+                this.selectedFontAwesomeKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IEnumerable<IconPacksEnumModel> entypoKinds;
+
+        public IEnumerable<IconPacksEnumModel> EntypoKinds
+        {
+            get { return this.entypoKinds; }
+            set
+            {
+                if (Equals(value, this.entypoKinds))
+                {
+                    return;
+                }
+                this.entypoKinds = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private IconPacksEnumModel selectedEntypoKind;
+
+        public IconPacksEnumModel SelectedEntypoKind
+        {
+            get { return this.selectedEntypoKind; }
+            set
+            {
+                if (Equals(value, this.selectedEntypoKind))
+                {
+                    return;
+                }
+                this.selectedEntypoKind = value;
                 this.OnPropertyChanged();
             }
         }
@@ -182,7 +325,7 @@ namespace MetroDemo.ExampleWindows
             get { return this.copyToClipboard; }
             set
             {
-                if (Equals(value, this.CopyToClipboard))
+                if (Equals(value, this.copyToClipboard))
                 {
                     return;
                 }

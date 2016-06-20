@@ -8,6 +8,8 @@
              xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -24,11 +26,12 @@
             <StackPanel VerticalAlignment="Top">
                 <Label Content="Date picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <DatePicker Width="150"
+                <DatePicker Width="200"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.UseFloatingWatermark="True"
                             Controls:TextBoxHelper.Watermark="Select a date" />
-                <DatePicker Width="150"
+                <DatePicker Width="200"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
                             IsEnabled="False" />
@@ -36,8 +39,18 @@
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
                             Controls:TextBoxHelper.Watermark="Select a date"
-                            FontSize="24"
-                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                            FontSize="22"
+                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
+                    <Controls:TextBoxHelper.ButtonWidth>
+                        <Binding RelativeSource="{RelativeSource Self}"
+                                                 Path="FontSize"
+                                                 Converter="{x:Static Converters:FontSizeOffsetConverter.Instance}">
+                            <Binding.ConverterParameter>
+                                <system:Double>5</system:Double>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </Controls:TextBoxHelper.ButtonWidth>
+                </DatePicker>
             </StackPanel>
 
             <StackPanel Grid.Row="0"
@@ -149,7 +162,8 @@
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                  IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
+                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" 
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="True"/>
                         <GroupBox Header="Current time">
                             <StackPanel>
                                 <Controls:DateTimePicker x:Name="DateTimePicker"
@@ -169,7 +183,7 @@
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                      IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
+                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

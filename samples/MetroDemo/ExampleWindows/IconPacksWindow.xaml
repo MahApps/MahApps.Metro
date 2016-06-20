@@ -42,7 +42,7 @@
             </ControlTemplate>
         </Grid.Resources>
 
-        <controls:MetroAnimatedTabControl>
+        <controls:MetroAnimatedTabControl controls:TabControlHelper.IsUnderlined="True">
             <TabItem Header="Material">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -64,32 +64,32 @@
                     <ListBox x:Name="PackIconMaterialKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             Validation.ErrorTemplate="{x:Null}"
                              Style="{DynamicResource VirtualisedMetroListBox}"
                              ItemsSource="{Binding MaterialKinds}"
-                             SelectedValue="{Binding SelectedMaterialKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}">
+                             SelectedValue="{Binding SelectedMaterialKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}"
+                             Validation.ErrorTemplate="{x:Null}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="controls:PackIconMaterialKind">
+                            <DataTemplate DataType="{x:Type exampleWindows:IconPacksEnumModel}">
                                 <DockPanel Width="64"
                                            Height="64"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Background="Transparent"
-                                           ToolTip="{Binding Mode=OneWay}">
+                                           ToolTip="{Binding Description, Mode=OneWay}">
                                     <TextBlock HorizontalAlignment="Center"
                                                DockPanel.Dock="Bottom"
-                                               Text="{Binding Mode=OneWay}"
+                                               Text="{Binding Name, Mode=OneWay}"
                                                TextTrimming="CharacterEllipsis" />
                                     <controls:PackIconMaterial Width="32"
                                                                Height="32"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
-                                                               Kind="{Binding Mode=OneWay}" />
+                                                               Kind="{Binding Value, Mode=OneWay}" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -118,7 +118,7 @@
                                      controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
-                                     Text="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+                                     Text="{Binding SelectedMaterialKind.Name, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
@@ -135,7 +135,7 @@
                                                            VerticalAlignment="Center"
                                                            BorderBrush="{DynamicResource AccentColorBrush}"
                                                            BorderThickness="1"
-                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                           Kind="{Binding SelectedMaterialKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -147,7 +147,7 @@
                                                            VerticalAlignment="Center"
                                                            BorderBrush="{DynamicResource AccentColorBrush}"
                                                            BorderThickness="1"
-                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                           Kind="{Binding SelectedMaterialKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -159,7 +159,7 @@
                                                            VerticalAlignment="Center"
                                                            BorderBrush="{DynamicResource AccentColorBrush}"
                                                            BorderThickness="1"
-                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                           Kind="{Binding SelectedMaterialKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -171,7 +171,7 @@
                                                            VerticalAlignment="Center"
                                                            BorderBrush="{DynamicResource AccentColorBrush}"
                                                            BorderThickness="1"
-                                                           Kind="{Binding SelectedMaterialKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                           Kind="{Binding SelectedMaterialKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
@@ -199,32 +199,32 @@
                     <ListBox x:Name="PackIconModernKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             Validation.ErrorTemplate="{x:Null}"
                              Style="{DynamicResource VirtualisedMetroListBox}"
                              ItemsSource="{Binding ModernKinds}"
-                             SelectedValue="{Binding SelectedModernKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}">
+                             SelectedValue="{Binding SelectedModernKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}"
+                             Validation.ErrorTemplate="{x:Null}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
-                            <DataTemplate DataType="controls:PackIconModernKind">
+                            <DataTemplate DataType="{x:Type exampleWindows:IconPacksEnumModel}">
                                 <DockPanel Width="64"
                                            Height="64"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Background="Transparent"
-                                           ToolTip="{Binding Mode=OneWay}">
+                                           ToolTip="{Binding Description, Mode=OneWay}">
                                     <TextBlock HorizontalAlignment="Center"
                                                DockPanel.Dock="Bottom"
-                                               Text="{Binding Mode=OneWay}"
+                                               Text="{Binding Name, Mode=OneWay}"
                                                TextTrimming="CharacterEllipsis" />
                                     <controls:PackIconModern Width="32"
                                                              Height="32"
                                                              HorizontalAlignment="Center"
                                                              VerticalAlignment="Center"
-                                                             Kind="{Binding Mode=OneWay}" />
+                                                             Kind="{Binding Value, Mode=OneWay}" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -253,7 +253,7 @@
                                      controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
                                      controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
                                      GotFocus="TextBoxOnGotFocus"
-                                     Text="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
+                                     Text="{Binding SelectedModernKind.Name, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
@@ -270,7 +270,7 @@
                                                          VerticalAlignment="Center"
                                                          BorderBrush="{DynamicResource AccentColorBrush}"
                                                          BorderThickness="1"
-                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                         Kind="{Binding SelectedModernKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -282,7 +282,7 @@
                                                          VerticalAlignment="Center"
                                                          BorderBrush="{DynamicResource AccentColorBrush}"
                                                          BorderThickness="1"
-                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                         Kind="{Binding SelectedModernKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -294,7 +294,7 @@
                                                          VerticalAlignment="Center"
                                                          BorderBrush="{DynamicResource AccentColorBrush}"
                                                          BorderThickness="1"
-                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                         Kind="{Binding SelectedModernKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -306,12 +306,283 @@
                                                          VerticalAlignment="Center"
                                                          BorderBrush="{DynamicResource AccentColorBrush}"
                                                          BorderThickness="1"
-                                                         Kind="{Binding SelectedModernKind, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                                         Kind="{Binding SelectedModernKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </TabItem>
+
+            <TabItem Header="FontAwesome">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Margin="5"
+                                   FontSize="{DynamicResource SubHeaderFontSize}"
+                                   Text="FontAwesome Icons collection" />
+                        <TextBlock Margin="10" FontSize="{DynamicResource NormalFontSize}">
+                            For more information see the official website:
+                            <Hyperlink Click="HyperlinkFontAwesomeOnClick">http://fontawesome.io</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <ListBox x:Name="PackIconFontAwesomeKindListBox"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             ItemsSource="{Binding FontAwesomeKinds}"
+                             SelectedValue="{Binding SelectedFontAwesomeKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}"
+                             Validation.ErrorTemplate="{x:Null}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type exampleWindows:IconPacksEnumModel}">
+                                <DockPanel Width="64"
+                                           Height="64"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Background="Transparent"
+                                           ToolTip="{Binding Description, Mode=OneWay}">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               DockPanel.Dock="Bottom"
+                                               Text="{Binding Name, Mode=OneWay}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <controls:PackIconFontAwesome Width="32"
+                                                                  Height="32"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
+                                                                  Kind="{Binding Value, Mode=OneWay}" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush4}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                                    Width="450"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBox x:Name="FontAwesomeFilterTextBox"
+                                     Margin="8 2"
+                                     controls:TextBoxHelper.ClearTextButton="True"
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     Text="{Binding FontAwesomeFilterTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
+                            <TextBox Margin="8 2"
+                                     Style="{StaticResource MetroButtonTextBox}"
+                                     FontFamily="Consolas"
+                                     controls:TextBoxHelper.ButtonCommand="{Binding CopyToClipboard, Mode=OneWay}"
+                                     controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
+                                     controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
+                                     GotFocus="TextBoxOnGotFocus"
+                                     Text="{Binding SelectedFontAwesomeKind.Name, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconFontAwesome Kind=&quot;{0}&quot; \/&gt;'}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="16x16" />
+                                <controls:PackIconFontAwesome Width="16"
+                                                              Height="16"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              BorderBrush="{DynamicResource AccentColorBrush}"
+                                                              BorderThickness="1"
+                                                              Kind="{Binding SelectedFontAwesomeKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="24x24" />
+                                <controls:PackIconFontAwesome Width="24"
+                                                              Height="24"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              BorderBrush="{DynamicResource AccentColorBrush}"
+                                                              BorderThickness="1"
+                                                              Kind="{Binding SelectedFontAwesomeKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="48x48" />
+                                <controls:PackIconFontAwesome Width="48"
+                                                              Height="48"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              BorderBrush="{DynamicResource AccentColorBrush}"
+                                                              BorderThickness="1"
+                                                              Kind="{Binding SelectedFontAwesomeKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="76x76" />
+                                <controls:PackIconFontAwesome Width="76"
+                                                              Height="76"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              BorderBrush="{DynamicResource AccentColorBrush}"
+                                                              BorderThickness="1"
+                                                              Kind="{Binding SelectedFontAwesomeKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Entypo+">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Margin="5"
+                                   FontSize="{DynamicResource SubHeaderFontSize}"
+                                   Text="Entypo+ Icons collection" />
+                        <TextBlock Margin="10" FontSize="{DynamicResource NormalFontSize}">
+                            For more information see the official website:
+                            <Hyperlink Click="HyperlinkEntypoOnClick">http://www.entypo.com</Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <ListBox x:Name="PackIconEntypoKindListBox"
+                             Grid.Row="1"
+                             Margin="0 8 0 0"
+                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             ItemsSource="{Binding EntypoKinds}"
+                             SelectedValue="{Binding SelectedEntypoKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=False, NotifyOnValidationError=False}"
+                             Validation.ErrorTemplate="{x:Null}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type exampleWindows:IconPacksEnumModel}">
+                                <DockPanel Width="64"
+                                           Height="64"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Background="Transparent"
+                                           ToolTip="{Binding Description, Mode=OneWay}">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               DockPanel.Dock="Bottom"
+                                               Text="{Binding Name, Mode=OneWay}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <controls:PackIconEntypo Width="32"
+                                                             Height="32"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Kind="{Binding Value, Mode=OneWay}" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush4}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                                    Width="450"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBox x:Name="EntypoFilterTextBox"
+                                     Margin="8 2"
+                                     controls:TextBoxHelper.ClearTextButton="True"
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     Text="{Binding EntypoFilterTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
+                            <TextBox Margin="8 2"
+                                     Style="{StaticResource MetroButtonTextBox}"
+                                     FontFamily="Consolas"
+                                     controls:TextBoxHelper.ButtonCommand="{Binding CopyToClipboard, Mode=OneWay}"
+                                     controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}"
+                                     controls:TextBoxHelper.ButtonTemplate="{StaticResource ClipBoardButton}"
+                                     GotFocus="TextBoxOnGotFocus"
+                                     Text="{Binding SelectedEntypoKind.Name, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}, StringFormat='&lt;Controls:PackIconEntypo Kind=&quot;{0}&quot; \/&gt;'}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="16x16" />
+                                <controls:PackIconEntypo Width="16"
+                                                         Height="16"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedEntypoKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="24x24" />
+                                <controls:PackIconEntypo Width="24"
+                                                         Height="24"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedEntypoKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="48x48" />
+                                <controls:PackIconEntypo Width="48"
+                                                         Height="48"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedEntypoKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="76x76" />
+                                <controls:PackIconEntypo Width="76"
+                                                         Height="76"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center"
+                                                         BorderBrush="{DynamicResource AccentColorBrush}"
+                                                         BorderThickness="1"
+                                                         Kind="{Binding SelectedEntypoKind.Value, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                            </DockPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
         </controls:MetroAnimatedTabControl>
 
     </Grid>

@@ -97,6 +97,7 @@
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Controls\CloseCommand.cs" />
+    <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
@@ -147,6 +148,12 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypo.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypoDataFactory.cs" />
+    <Compile Include="Controls\IconPacks\PackIconEntypoKind.cs" />
+    <Compile Include="Controls\IconPacks\PackIconFontAwesome.cs" />
+    <Compile Include="Controls\IconPacks\PackIconFontAwesomeDataFactory.cs" />
+    <Compile Include="Controls\IconPacks\PackIconFontAwesomeKind.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
@@ -180,6 +187,7 @@
     <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
