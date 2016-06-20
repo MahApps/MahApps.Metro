@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls.Helper
             }
             else
             {
-                startInfo = new ProcessStartInfo(@"C:\Program Files (x86)\Common Files\Microsoft Shared\ink\TabTip32.exe");
+                startInfo = new ProcessStartInfo(@"C:\Program Files\Common Files\Microsoft Shared\ink\TabTip32.exe");
             }
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
