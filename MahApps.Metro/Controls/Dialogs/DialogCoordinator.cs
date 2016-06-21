@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly IDialogCoordinator Instance = new DialogCoordinator();
 
         public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings settings = null)
-        {            
+        {
             return ExecuteShowMessageDialogAsync(context, window => window.ShowInputAsync(title, message, settings));
         }
 
@@ -48,14 +48,12 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowModalMessageExternal(title, message, style, settings);
         }
 
-        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-            bool isCancelable = false, MetroDialogSettings settings = null)
+        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             return ExecuteShowMessageDialogAsync(context, window => window.ShowProgressAsync(title, message, isCancelable, settings));
         }
 
-        public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null)
+        public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null)
         {
             return ExecuteShowMessageDialogAsync(context, window => window.ShowMetroDialogAsync(dialog, settings));
         }
