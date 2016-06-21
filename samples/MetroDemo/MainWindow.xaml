@@ -7,6 +7,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
@@ -184,8 +185,12 @@
                     <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
                     <Separator />
                     <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
-                    <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM" />
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}" Header="Show MessageDialog via VM" />
+                    <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
+                    <MenuItem Header="Show MessageDialog via VM">
+                        <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="DISPATCHER_THREAD" Header="... from Main Thread" />
+                        <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="BACKGROUND_THREAD" Header="... from Background Thread" />
+                    </MenuItem>
+                    
                     <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
                     <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
                 </MenuItem>
