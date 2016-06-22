@@ -251,7 +251,7 @@
                                         TextAlignment="Left"
                                         Value="5" />
 
-                <Label Content="Interval=&quot;5&quot;" />
+                <Label Content="Interval=&quot;5&quot; IsTabStop=&quot;False&quot;" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
@@ -320,7 +320,6 @@
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        IsTabStop="False"
                                         Value="500" />
             </StackPanel>
 

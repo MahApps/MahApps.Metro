@@ -236,8 +236,7 @@ namespace MahApps.Metro.Controls
         {
             if (d is TextBox)
             {
-                var txtBox = d as TextBox;
-
+                var txtBox = (TextBox)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
@@ -254,8 +253,7 @@ namespace MahApps.Metro.Controls
             }
             else if (d is PasswordBox)
             {
-                var passBox = d as PasswordBox;
-
+                var passBox = (PasswordBox)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
@@ -272,49 +270,43 @@ namespace MahApps.Metro.Controls
             }
             else if (d is NumericUpDown)
             {
-                var numericUpDown = d as NumericUpDown;
-                numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
+                var numericUpDown = (NumericUpDown)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
                     numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
 
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus += NumericUpDownGotFocus;
+                    //numericUpDown.GotFocus += NumericUpDownGotFocus;
                 }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
+                    //numericUpDown.GotFocus -= NumericUpDownGotFocus;
                 }
             }
             else if (d is TimePickerBase)
             {
-                var timePicker = d as TimePickerBase;
+                var timePicker = (TimePickerBase)d;
                 if ((bool)e.NewValue)
                 {
                     timePicker.SelectedTimeChanged += OnTimePickerBaseSelectedTimeChanged;
-                    //timePicker.GotFocus += TimePickerBaseGotFocus;
                 }
                 else
                 {
-
                     timePicker.SelectedTimeChanged -= OnTimePickerBaseSelectedTimeChanged;
-                    //timePicker.GotFocus -= TimePickerBaseGotFocus;
                 }
             }
             else if (d is DatePicker)
             {
-                var timePicker = d as DatePicker;
+                var timePicker = (DatePicker)d;
                 if ((bool)e.NewValue)
                 {
                     timePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
-                    //timePicker.GotFocus += TimePickerBaseGotFocus;
                 }
                 else
                 {
                     timePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
-                    //timePicker.GotFocus -= TimePickerBaseGotFocus;
                 }
             }
         }
