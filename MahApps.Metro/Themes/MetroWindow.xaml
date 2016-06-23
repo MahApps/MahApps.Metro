@@ -580,8 +580,8 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowTitleBrush" Value="{DynamicResource WindowTitleColorBrush}" />
-<!--        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />-->
-<!--        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />-->
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">
