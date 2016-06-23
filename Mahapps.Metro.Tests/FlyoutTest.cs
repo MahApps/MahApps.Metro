@@ -15,6 +15,7 @@ namespace MahApps.Metro.Tests
     public class FlyoutTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task AdaptsWindowCommandsToDarkFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -32,6 +33,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultFlyoutPositionIsLeft()
         {
             await TestHost.SwitchToAppThread();
@@ -42,6 +44,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task FlyoutIsClosedByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -52,6 +55,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task FlyoutIsHiddenByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -63,6 +67,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task HiddenIconIsBelowFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -79,6 +84,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task HiddenLeftWindowCommandsAreBelowFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -95,6 +101,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task HiddenRightWindowCommandsAreBelowFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -111,6 +118,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task LeftWindowCommandsAreOverFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -126,6 +134,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task RightWindowCommandsAreOverFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -141,6 +150,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WindowButtonCommandsAreOverFlyout()
         {
             await TestHost.SwitchToAppThread();
@@ -155,6 +165,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task RaisesIsOpenChangedEvent()
         {
             await TestHost.SwitchToAppThread();
@@ -174,6 +185,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task FindFlyoutWithFindChildren()
         {
             await TestHost.SwitchToAppThread();
@@ -188,6 +200,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultFlyoutThemeIsDark()
         {
             await TestHost.SwitchToAppThread();

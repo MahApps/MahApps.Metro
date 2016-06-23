@@ -9,6 +9,7 @@ namespace MahApps.Metro.Tests
     public class TileTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task TemplateBindingShouldGetTheFontSize()
         {
             await TestHost.SwitchToAppThread();
