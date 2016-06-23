@@ -54,8 +54,8 @@
     <SolidColorBrush x:Key="BlackColorBrush" Color="{DynamicResource BlackColor}" />
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{DynamicResource AccentColor}" />
-    <SolidColorBrush x:Key="NonActiveWindowTitleColorBrush" Color="Gray" options:Freeze="True" />
-    <SolidColorBrush x:Key="NonActiveBorderColorBrush" Color="Gray" options:Freeze="True" />
+    <SolidColorBrush x:Key="NonActiveWindowTitleColorBrush" Color="#808080" options:Freeze="True" />
+    <SolidColorBrush x:Key="NonActiveBorderColorBrush" Color="#808080" options:Freeze="True" />
 
     <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}" />
     <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{DynamicResource WhiteColor}" />
