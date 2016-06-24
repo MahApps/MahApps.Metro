@@ -16,6 +16,6 @@
         <ComboBox x:Name="TestComboBox" />
         <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
         <controls:NumericUpDown x:Name="TestNumericUpDown" />
-<!--        <controls:HotKeyBox x:Name="TestHotKeyBox" />-->
+        <controls:HotKeyBox x:Name="TestHotKeyBox" />
     </StackPanel>
 </controls:MetroWindow>

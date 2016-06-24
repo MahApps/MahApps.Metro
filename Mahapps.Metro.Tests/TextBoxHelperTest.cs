@@ -48,8 +48,8 @@ namespace MahApps.Metro.Tests
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonWidthProperty, width);
                     Assert.Equal(width, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").Width);
 
-//                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
-//                    Assert.Equal(width, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").Width);
+                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonWidthProperty, width);
+                    Assert.Equal(width, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").Width);
                 });
         }
 
@@ -88,8 +88,8 @@ namespace MahApps.Metro.Tests
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentProperty, content);
                     Assert.Equal(content, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").Content);
 
-//                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
-//                    Assert.Equal(content, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").Content);
+                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentProperty, content);
+                    Assert.Equal(content, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").Content);
                 });
         }
 
@@ -128,8 +128,8 @@ namespace MahApps.Metro.Tests
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
                     Assert.Equal(contentTemplate, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").ContentTemplate);
 
-//                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
-//                    Assert.Equal(contentTemplate, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").ContentTemplate);
+                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonContentTemplateProperty, contentTemplate);
+                    Assert.Equal(contentTemplate, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").ContentTemplate);
                 });
         }
 
@@ -168,8 +168,8 @@ namespace MahApps.Metro.Tests
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
                     Assert.Equal(fontFamily, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").FontFamily);
 
-//                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
-//                    Assert.Equal(fontFamily, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").FontFamily);
+                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontFamilyProperty, fontFamily);
+                    Assert.Equal(fontFamily, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").FontFamily);
                 });
         }
 
@@ -208,8 +208,8 @@ namespace MahApps.Metro.Tests
                     window.TestNumericUpDown.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
                     Assert.Equal(fontSize, window.TestNumericUpDown.FindChild<Button>("PART_ClearText").FontSize);
 
-//                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
-//                    Assert.Equal(fontSize, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").FontSize);
+                    window.TestHotKeyBox.SetValue(TextBoxHelper.ButtonFontSizeProperty, fontSize);
+                    Assert.Equal(fontSize, window.TestHotKeyBox.FindChild<Button>("PART_ClearText").FontSize);
                 });
         }
 
