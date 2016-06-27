@@ -38,7 +38,7 @@ namespace MahApps.Metro.Controls
         private void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
             // reset Storyboard if Visibility is set to Visible #1300
-            if (IsIndeterminate)
+            if (this.IsIndeterminate)
             {
                 ToggleIndeterminate(this, (bool)e.OldValue, (bool)e.NewValue);
             }
@@ -46,33 +46,40 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            ToggleIndeterminate(dependencyObject as MetroProgressBar, (bool)e.OldValue, (bool)e.NewValue);
+            var bar = (MetroProgressBar)dependencyObject;
+            if (!bar.IsLoaded || !bar.IsVisible)
+            {
+                return;
+            }
+            ToggleIndeterminate(bar, (bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void ToggleIndeterminate(MetroProgressBar bar, bool oldValue, bool newValue)
         {
-            if (bar != null && newValue != oldValue)
+            if (newValue == oldValue)
             {
-                var indeterminateState = bar.GetIndeterminate();
-                var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
-                if (indeterminateState != null && containingObject != null)
-                {
-                    if (oldValue && indeterminateState.Storyboard != null)
+                return;
+            }
+            var indeterminateState = bar.GetIndeterminate();
+            var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
+            if (indeterminateState != null && containingObject != null)
+            {
+                var resetAction = new Action(() =>
                     {
-                        // remove the previous storyboard from the Grid #1855
-                        indeterminateState.Storyboard.Stop(containingObject);
-                        indeterminateState.Storyboard.Remove(containingObject);
-                    }
-                    if (newValue)
-                    {
-                        var resetAction = new Action(() => {
-                                                         bar.InvalidateMeasure();
-                                                         bar.InvalidateArrange();
-                                                         bar.ResetStoryboard(bar.ActualSize(), false);
-                                                     });
-                        bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
-                    }
-                }
+                        if (oldValue && indeterminateState.Storyboard != null)
+                        {
+                            // remove the previous storyboard from the Grid #1855
+                            indeterminateState.Storyboard.Stop(containingObject);
+                            indeterminateState.Storyboard.Remove(containingObject);
+                        }
+                        if (newValue)
+                        {
+                            bar.InvalidateMeasure();
+                            bar.InvalidateArrange();
+                            bar.ResetStoryboard(bar.ActualSize(), false);
+                        }
+                    });
+                bar.Invoke(resetAction);
             }
         }
 
