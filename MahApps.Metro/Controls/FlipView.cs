@@ -351,6 +351,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
         public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
         public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register("IsNavigationEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsNavigationEnabledPropertyChangedCallback));
 
         public TransitionType UpTransition
         {
@@ -443,6 +444,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(CircularNavigationProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the FlipView's NavigationButton is visible.
+        /// </summary>
+        public bool IsNavigationEnabled
+        {
+            get { return (bool)GetValue(IsNavigationEnabledProperty); }
+            set { SetValue(IsNavigationEnabledProperty, value); }
+        }
+
         private void ChangeBannerText(string value = null)
         {
             if (IsBannerEnabled)
@@ -522,5 +532,37 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static void OnIsNavigationEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var flipview = ((FlipView)d);
+
+            if (!flipview.IsLoaded)
+            {
+                //wait to be loaded?
+                ExecuteWhenLoaded(flipview, () => {
+                    flipview.ApplyTemplate();
+
+                    if ((bool)e.NewValue)
+                    {
+                        flipview.ShowControlButtons();
+                    }
+                    else
+                    {
+                        flipview.HideControlButtons();
+                    }
+                });
+            }
+            else
+            {
+                if ((bool)e.NewValue)
+                {
+                    flipview.ShowControlButtons();
+                }
+                else
+                {
+                    flipview.HideControlButtons();
+                }
+            }
+        }
     }
 }
