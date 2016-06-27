@@ -116,12 +116,17 @@
                           Margin="5 0"
                           Content="Circular Navi"
                           IsChecked="False" />
+                <CheckBox x:Name="ShowNaviCheckBox"
+                          Margin="5 0"
+                          Content="Show NaviButtons"
+                          IsChecked="True" />
             </StackPanel>
             <Controls:FlipView Height="200"
                                Margin="0 0 10 0"
                                IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
@@ -162,6 +167,7 @@
                                IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
                                ItemsSource="{Binding FlipViewImages, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
