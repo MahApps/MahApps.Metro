@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls
                         var resetAction = new Action(() => {
                                                          bar.InvalidateMeasure();
                                                          bar.InvalidateArrange();
-                                                         bar.ResetStoryboard(bar.ActualWidth, false);
+                                                         bar.ResetStoryboard(bar.ActualSize(), false);
                                                      });
                         bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
                     }
@@ -96,12 +96,17 @@ namespace MahApps.Metro.Controls
 
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            var actualWidth = ActualWidth;
+            var size = this.ActualSize();
             var bar = this;
             if (this.Visibility == Visibility.Visible && this.IsIndeterminate)
             {
-                bar.ResetStoryboard(actualWidth, true);
+                bar.ResetStoryboard(size, true);
             }
+        }
+
+        private double ActualSize()
+        {
+            return this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
         }
 
         private void ResetStoryboard(double width, bool removeOldStoryboard)
@@ -298,11 +303,11 @@ namespace MahApps.Metro.Controls
             // only if they haven't been user-set.
             if (EllipseDiameter.Equals(0))
             {
-                SetEllipseDiameter(ActualWidth);
+                SetEllipseDiameter(this.ActualSize());
             }
             if (EllipseOffset.Equals(0))
             {
-                SetEllipseOffset(ActualWidth);
+                SetEllipseOffset(this.ActualSize());
             }
         }
     }
