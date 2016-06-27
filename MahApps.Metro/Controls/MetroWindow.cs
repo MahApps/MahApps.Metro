@@ -1165,8 +1165,8 @@ namespace MahApps.Metro.Controls
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
-                        window.Top = 2;
-                        window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
+                        //window.Top = 2;
+                        //window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
 
                         window.StateChanged -= windowOnStateChanged;
                         if (window.WindowState == WindowState.Normal)
