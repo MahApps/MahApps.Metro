@@ -10,10 +10,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <Style x:Key="LargeTileStyle" TargetType="Controls:Tile">
                 <Setter Property="Height" Value="125" />
                 <Setter Property="TitleFontSize" Value="14" />
@@ -70,24 +66,49 @@
                 <Controls:Tile Title="Desktop"
                                Margin="3"
                                Style="{StaticResource LargeTileStyle}"
-                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" />
+                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}">
+                    <Controls:PackIconFontAwesome Width="40"
+                                                  Height="40"
+                                                  Kind="Desktop" />
+                </Controls:Tile>
                 <Controls:Tile Title="Finance"
                                Style="{StaticResource LargeTileStyle}"
-                               Background="Green" />
+                               Background="DimGray">
+                    <Controls:PackIconModern Width="40"
+                                             Height="40"
+                                              Kind="Money" />
+                </Controls:Tile>
                 <Controls:Tile Title="People"
                                Style="{StaticResource LargeTileStyle}"
                                Background="#D2691E"
-                               HorizontalTitleAlignment="Right" />
-                <Controls:Tile Title="People (disabled)"
+                               HorizontalTitleAlignment="Right">
+                    <Controls:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="PeopleMultiple" />
+                </Controls:Tile>
+                <Controls:Tile Title="Count"
+                               TitleFontSize="16"
+                               HorizontalTitleAlignment="Center"
+                               VerticalTitleAlignment="Top"
+                               Count="28"
+                               CountFontSize="42"
                                Style="{StaticResource SmallTileStyle}"
-                               Background="#D2691E"
+                               Background="#FF842D"
                                IsEnabled="False" />
                 <Controls:Tile Title="Weather"
                                Style="{StaticResource SmallTileStyle}"
-                               Background="#1E90FF" />
+                               Background="#1E90FF">
+                    <Controls:PackIconMaterial Width="40"
+                                               Height="40"
+                                               Kind="WeatherCloudy" />
+                </Controls:Tile>
                 <Controls:Tile Title="Store"
                                Style="{StaticResource LargeTileStyle}"
-                               Background="Green" />
+                               Background="Green">
+                    <Controls:PackIconEntypo Width="40"
+                                             Height="40"
+                                             Kind="WindowsStore" />
+                </Controls:Tile>
             </WrapPanel>
         </Grid>
     </ScrollViewer>

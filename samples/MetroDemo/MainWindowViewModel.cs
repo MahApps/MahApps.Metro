@@ -75,20 +75,12 @@ namespace MetroDemo
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
 
-            FlipViewTemplateSelector = new RandomDataTemplateSelector();
-
-            FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
-            spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
-            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
-            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
-            FlipViewTemplateSelector.TemplateOne = new DataTemplate()
-            {
-                VisualTree = spFactory
-            };
-            FlipViewImages = new string[] { "http://trinities.org/blog/wp-content/uploads/red-ball.jpg", "http://savingwithsisters.files.wordpress.com/2012/05/ball.gif" };
-
-            RaisePropertyChanged("FlipViewTemplateSelector");
-
+            FlipViewImages = new Uri[]
+                             {
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/landscapes/mountains/painted-desert.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-3/landscapes/forest/breaking-the-clouds-on-winter-day.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/travel/bodie/bodie-streets.jpg", UriKind.Absolute)
+                             };
 
             BrushResources = FindBrushResources();
 
@@ -444,13 +436,7 @@ namespace MetroDemo
             return resources;
         }
 
-        public RandomDataTemplateSelector FlipViewTemplateSelector
-        {
-            get;
-            set;
-        }
-
-        public string[] FlipViewImages
+        public Uri[] FlipViewImages
         {
             get;
             set;
