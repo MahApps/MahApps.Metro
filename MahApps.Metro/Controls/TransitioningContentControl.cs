@@ -232,8 +232,13 @@ namespace MahApps.Metro.Controls
             if (CurrentContentPresentationSite != null)
             {
                 if (ContentTemplateSelector != null)
+                {
                     CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(Content, this);
-
+                }
+                else
+                {
+                    CurrentContentPresentationSite.ContentTemplate = this.ContentTemplate;
+                }
                 CurrentContentPresentationSite.Content = Content;
             }
 
@@ -274,7 +279,11 @@ namespace MahApps.Metro.Controls
                     PreviousContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(oldContent, this);
                     CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(newContent, this);
                 }
-
+                else
+                {
+                    PreviousContentPresentationSite.ContentTemplate = this.ContentTemplate;
+                    CurrentContentPresentationSite.ContentTemplate = this.ContentTemplate;
+                }
                 CurrentContentPresentationSite.Content = newContent;
                 PreviousContentPresentationSite.Content = oldContent;
 
@@ -335,6 +344,7 @@ namespace MahApps.Metro.Controls
             IsTransitioning = false;
             if (PreviousContentPresentationSite != null)
             {
+                PreviousContentPresentationSite.ContentTemplate = null;
                 PreviousContentPresentationSite.Content = null;
             }
         }
