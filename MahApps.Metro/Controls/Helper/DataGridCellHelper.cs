@@ -1,18 +1,19 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    using System;
     using System.ComponentModel;
 
     public class DataGridCellHelper
     {
-        public static readonly DependencyProperty SaveDataGridProperty =
-            DependencyProperty.RegisterAttached("SaveDataGrid", typeof(bool), typeof(DataGridCellHelper),
-                                                new FrameworkPropertyMetadata(default(bool),
-                                                                              FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure,
-                                                                              CellPropertyChangedCallback));
+        [Obsolete(@"This property will be deleted in the next release.")]
+        public static readonly DependencyProperty SaveDataGridProperty
+            = DependencyProperty.RegisterAttached("SaveDataGrid",
+                                                  typeof(bool),
+                                                  typeof(DataGridCellHelper),
+                                                  new FrameworkPropertyMetadata(default(bool), CellPropertyChangedCallback));
 
         private static void CellPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -50,7 +51,6 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Save the DataGrid.
         /// </summary>
-        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
         public static bool GetSaveDataGrid(UIElement element)
         {
@@ -62,14 +62,16 @@ namespace MahApps.Metro.Controls
             element.SetValue(SaveDataGridProperty, value);
         }
 
-        public static readonly DependencyProperty DataGridProperty =
-            DependencyProperty.RegisterAttached("DataGrid", typeof(DataGrid), typeof(DataGridCellHelper),
-                                                new FrameworkPropertyMetadata(default(DataGrid), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        [Obsolete(@"This property will be deleted in the next release.")]
+        public static readonly DependencyProperty DataGridProperty
+            = DependencyProperty.RegisterAttached("DataGrid",
+                                                  typeof(DataGrid),
+                                                  typeof(DataGridCellHelper),
+                                                  new FrameworkPropertyMetadata(default(DataGrid)));
 
         /// <summary>
         /// Get the DataGrid.
         /// </summary>
-        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
         public static DataGrid GetDataGrid(UIElement element)
         {
@@ -79,6 +81,63 @@ namespace MahApps.Metro.Controls
         public static void SetDataGrid(UIElement element, DataGrid value)
         {
             element.SetValue(DataGridProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectionUnitProperty
+            = DependencyProperty.RegisterAttached("SelectionUnit",
+                                                  typeof(DataGridSelectionUnit),
+                                                  typeof(DataGridCellHelper),
+                                                  new FrameworkPropertyMetadata(DataGridSelectionUnit.Cell, SelectionUnitOnPropertyChangedCallback));
+
+        private static void SelectionUnitOnPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (args.OldValue != args.NewValue)
+            {
+                var cell = (DataGridCell)dependencyObject;
+                SetIsCellOrRowHeader(cell, !Equals(args.NewValue, DataGridSelectionUnit.FullRow));
+            }
+        }
+
+        /// <summary>
+        /// Gets the value to define the DataGridCell selection behavior.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        public static DataGridSelectionUnit GetSelectionUnit(UIElement element)
+        {
+            return (DataGridSelectionUnit)element.GetValue(SelectionUnitProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to define the DataGridCell selection behavior.
+        /// </summary>
+        public static void SetSelectionUnit(UIElement element, DataGridSelectionUnit value)
+        {
+            element.SetValue(SelectionUnitProperty, value);
+        }
+
+        public static readonly DependencyProperty IsCellOrRowHeaderProperty
+            = DependencyProperty.RegisterAttached("IsCellOrRowHeader",
+                                                  typeof(bool),
+                                                  typeof(DataGridCellHelper),
+                                                  new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Gets the value to define the DataGridCell selection behavior.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        public static bool GetIsCellOrRowHeader(UIElement element)
+        {
+            return (bool)element.GetValue(IsCellOrRowHeaderProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to define the DataGridCell selection behavior.
+        /// </summary>
+        internal static void SetIsCellOrRowHeader(UIElement element, bool value)
+        {
+            element.SetValue(IsCellOrRowHeaderProperty, value);
         }
     }
 }
