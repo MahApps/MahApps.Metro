@@ -17,25 +17,13 @@ namespace MahApps.Metro.Controls
      TemplatePart(Name = "PART_Popup", Type = typeof(Popup)),
      TemplatePart(Name = "PART_Expander", Type = typeof(Button)),
      TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
-    public class SplitButton : ItemsControl
+    public class SplitButton : Selector
     {
         public static readonly RoutedEvent ClickEvent
             = EventManager.RegisterRoutedEvent("Click",
                                                RoutingStrategy.Bubble,
                                                typeof(RoutedEventHandler),
                                                typeof(SplitButton));
-
-        public static readonly RoutedEvent SelectionChangedEvent
-            = EventManager.RegisterRoutedEvent("SelectionChanged",
-                                               RoutingStrategy.Bubble,
-                                               typeof(SelectionChangedEventHandler),
-                                               typeof(SplitButton));
-
-        public event SelectionChangedEventHandler SelectionChanged
-        {
-            add { this.AddHandler(SelectionChangedEvent, value); }
-            remove { this.RemoveHandler(SelectionChangedEvent, value); }
-        }
 
         public event RoutedEventHandler Click
         {
@@ -44,9 +32,6 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
-
-        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(SplitButton), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(object), typeof(SplitButton), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(object), typeof(SplitButton));
 
@@ -89,24 +74,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (ICommand)this.GetValue(CommandProperty); }
             set { this.SetValue(CommandProperty, value); }
-        }
-
-        /// <summary> 
-        ///  The index of the first item in the current selection or -1 if the selection is empty. 
-        /// </summary>
-        public int SelectedIndex
-        {
-            get { return (int)this.GetValue(SelectedIndexProperty); }
-            set { this.SetValue(SelectedIndexProperty, value); }
-        }
-
-        /// <summary>
-        ///  The first item in the current selection, or null if the selection is empty. 
-        /// </summary>
-        public object SelectedItem
-        {
-            get { return this.GetValue(SelectedItemProperty); }
-            set { this.SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary> 

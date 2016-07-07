@@ -112,6 +112,10 @@
                              ItemsSource="{TemplateBinding ItemsSource}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectedValuePath="{TemplateBinding SelectedValuePath}"
+                             IsSelected="{TemplateBinding IsSelected}"
+                             IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
                              SelectionMode="Single" />
                 </Popup>
             </Grid>
@@ -228,6 +232,10 @@
                              ItemsSource="{TemplateBinding ItemsSource}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             SelectedValuePath="{TemplateBinding SelectedValuePath}"
+                             IsSelected="{TemplateBinding IsSelected}"
+                             IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
                              SelectionMode="Single" />
                 </Popup>
             </Grid>
