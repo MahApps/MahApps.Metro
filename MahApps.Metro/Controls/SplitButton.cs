@@ -173,13 +173,13 @@ namespace MahApps.Metro.Controls
         {
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
+            this.IsExpanded = false;
         }
 
         private void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.RoutedEvent = SelectionChangedEvent;
             this.RaiseEvent(e);
-
             this.IsExpanded = false;
         }
 
