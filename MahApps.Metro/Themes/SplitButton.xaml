@@ -62,36 +62,11 @@
                             Width="20"
                             Style="{TemplateBinding ButtonArrowStyle}"
                             Background="{TemplateBinding Background}"
-                            Foreground="{TemplateBinding Foreground}"
+                            Foreground="{TemplateBinding ArrowBrush}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Rectangle x:Name="PART_Rectangle"
-                                   Width="10"
-                                   Height="6"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{TemplateBinding ArrowBrush}"
-                                   UseLayoutRounding="False">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Width="18"
-                                                  Height="16"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                                  Stretch="Fill" />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
+                        <Controls:PackIconMaterial Kind="ChevronDown" Width="9" Height="9" />
                     </Button>
                 </Grid>
             </Border>
@@ -124,6 +99,14 @@
                          SelectionMode="Single" />
             </Popup>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="SplitButtonVertical" TargetType="{x:Type Controls:SplitButton}">
@@ -186,36 +169,11 @@
                             Height="20"
                             Style="{TemplateBinding ButtonArrowStyle}"
                             Background="{TemplateBinding Background}"
-                            Foreground="{TemplateBinding Foreground}"
+                            Foreground="{TemplateBinding ArrowBrush}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Rectangle x:Name="PART_Rectangle"
-                                   Width="10"
-                                   Height="6"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{TemplateBinding ArrowBrush}"
-                                   UseLayoutRounding="False">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Width="18"
-                                                  Height="16"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                                  Stretch="Fill" />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
+                        <Controls:PackIconMaterial Kind="ChevronDown" Width="9" Height="9" />
                     </Button>
                 </Grid>
             </Border>
@@ -248,6 +206,14 @@
                          SelectionMode="Single" />
             </Popup>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="ButtonSplitFocusVisual">
@@ -266,6 +232,8 @@
 
     <Style TargetType="{x:Type Controls:SplitButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
@@ -285,9 +253,6 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{StaticResource SplitButtonVertical}" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ArrowBrush" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />

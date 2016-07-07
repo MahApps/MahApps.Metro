@@ -48,6 +48,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ListBoxStyleProperty = DependencyProperty.Register("ListBoxStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ArrowMouseOverBrushProperty = DependencyProperty.Register("ArrowMouseOverBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ArrowPressedBrushProperty = DependencyProperty.Register("ArrowPressedBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Reflects the parameter to pass to the CommandProperty upon execution. 
@@ -157,6 +159,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)this.GetValue(ArrowBrushProperty); }
             set { this.SetValue(ArrowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon if the mouse is over the split button.
+        /// </summary>
+        public Brush ArrowMouseOverBrush
+        {
+            get { return (Brush)this.GetValue(ArrowMouseOverBrushProperty); }
+            set { this.SetValue(ArrowMouseOverBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon if the arrow button is pressed.
+        /// </summary>
+        public Brush ArrowPressedBrush
+        {
+            get { return (Brush)this.GetValue(ArrowPressedBrushProperty); }
+            set { this.SetValue(ArrowPressedBrushProperty, value); }
         }
 
         private Button _clickButton;

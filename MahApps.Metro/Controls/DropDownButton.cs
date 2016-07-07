@@ -54,6 +54,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty MenuStyleProperty = DependencyProperty.Register("MenuStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ArrowMouseOverBrushProperty = DependencyProperty.Register("ArrowMouseOverBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ArrowPressedBrushProperty = DependencyProperty.Register("ArrowPressedBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty ArrowVisibilityProperty = DependencyProperty.Register("ArrowVisibility", typeof(Visibility), typeof(DropDownButton), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
@@ -164,6 +166,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(ArrowBrushProperty); }
             set { SetValue(ArrowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon if the mouse is over the drop down button.
+        /// </summary>
+        public Brush ArrowMouseOverBrush
+        {
+            get { return (Brush)this.GetValue(ArrowMouseOverBrushProperty); }
+            set { this.SetValue(ArrowMouseOverBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon if the arrow button is pressed.
+        /// </summary>
+        public Brush ArrowPressedBrush
+        {
+            get { return (Brush)this.GetValue(ArrowPressedBrushProperty); }
+            set { this.SetValue(ArrowPressedBrushProperty, value); }
         }
 
         /// <summary>

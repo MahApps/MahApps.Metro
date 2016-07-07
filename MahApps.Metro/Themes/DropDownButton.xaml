@@ -160,6 +160,8 @@
 
     <Style TargetType="{x:Type Controls:DropDownButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
@@ -199,35 +201,16 @@
                             <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
-                                <Rectangle x:Name="PART_Rectangle"
-                                           Width="10"
-                                           Height="6"
-                                           Margin="0 0 3 0"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Fill="{TemplateBinding ArrowBrush}"
-                                           DockPanel.Dock="Right"
-                                           UseLayoutRounding="False"
-                                           Visibility="{TemplateBinding ArrowVisibility}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Fill">
-                                            <VisualBrush.Visual>
-                                                <Canvas Width="18"
-                                                        Height="18"
-                                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                        UseLayoutRounding="False">
-                                                    <Path Canvas.Left="14.9063"
-                                                          Canvas.Top="15.75"
-                                                          Width="18"
-                                                          Height="16"
-                                                          Fill="{DynamicResource BlackColorBrush}"
-                                                          Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                                          Stretch="Fill" />
-                                                </Canvas>
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
+                                <Controls:PackIconMaterial x:Name="PART_Arrow"
+                                                           Kind="ChevronDown"
+                                                           Width="9"
+                                                           Height="9"
+                                                           Foreground="{TemplateBinding ArrowBrush}"
+                                                           Margin="0 0 3 0"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           DockPanel.Dock="Right"
+                                                           Visibility="{TemplateBinding ArrowVisibility}" />
                                 <StackPanel x:Name="PART_ContentOrientation"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -278,17 +261,20 @@
                         </Trigger>
                         <Trigger Property="Orientation" Value="Vertical">
                             <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
-                            <Setter TargetName="PART_Rectangle" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="PART_Rectangle" Property="Margin" Value="0 0 0 3" />
+                            <Setter TargetName="PART_Arrow" Property="DockPanel.Dock" Value="Bottom" />
+                            <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ArrowBrush" Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
