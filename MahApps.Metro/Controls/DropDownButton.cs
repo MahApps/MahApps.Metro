@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -215,6 +217,74 @@ namespace MahApps.Metro.Controls
             this.clickButton = this.EnforceInstance<Button>("PART_Button");
             this.menu = this.EnforceInstance<ContextMenu>("PART_Menu");
             this.InitializeVisualElementsContainer();
+            if (this.menu != null && this.Items != null && this.ItemsSource == null)
+            {
+                foreach (var newItem in this.Items)
+                {
+                    this.menu.Items.Add(newItem);
+                }
+            }
+        }
+
+        /// <summary>Invoked when the <see cref="P:System.Windows.Controls.ItemsControl.Items" /> property changes.</summary>
+        /// <param name="e">Information about the change.</param>
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+            if (this.menu == null || this.ItemsSource != null)
+            {
+                return;
+            }
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null)
+                    {
+                        foreach (var newItem in e.NewItems)
+                        {
+                            this.menu.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems != null)
+                    {
+                        foreach (var oldItem in e.OldItems)
+                        {
+                            this.menu.Items.Remove(oldItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldItems != null)
+                    {
+                        foreach (var oldItem in e.OldItems)
+                        {
+                            this.menu.Items.Remove(oldItem);
+                        }
+                    }
+                    if (e.NewItems != null)
+                    {
+                        foreach (var newItem in e.NewItems)
+                        {
+                            this.menu.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    if (this.Items != null)
+                    {
+                        this.menu.Items.Clear();
+                        foreach (var newItem in this.Items)
+                        {
+                            this.menu.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         //Get element from name. If it exist then element instance return, if not, new will be created

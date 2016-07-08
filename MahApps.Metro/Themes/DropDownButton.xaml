@@ -251,6 +251,7 @@
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
+                                             ItemsPanel="{TemplateBinding ItemsPanel}"
                                              StaysOpen="False" />
                             </Button.ContextMenu>
                         </Button>
