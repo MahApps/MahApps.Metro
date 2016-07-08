@@ -51,6 +51,18 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(DropDownButton));
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(DropDownButton));
+        /// <summary>
+        /// The DependencyProperty for the ContentTemplate property.
+        /// </summary>
+        public static readonly DependencyProperty ContentTemplateProperty = DependencyProperty.Register("ContentTemplate", typeof(DataTemplate), typeof(DropDownButton), new FrameworkPropertyMetadata((DataTemplate)null));
+        /// <summary>
+        /// The DependencyProperty for the ContentTemplateSelector property.
+        /// </summary>
+        public static readonly DependencyProperty ContentTemplateSelectorProperty = DependencyProperty.Register("ContentTemplateSelector", typeof(DataTemplateSelector), typeof(DropDownButton), new FrameworkPropertyMetadata((DataTemplateSelector)null));
+        /// <summary>
+        /// The DependencyProperty for the ContentStringFormat property. 
+        /// </summary> 
+        public static readonly DependencyProperty ContentStringFormatProperty = DependencyProperty.Register("ContentStringFormat", typeof(string), typeof(DropDownButton), new FrameworkPropertyMetadata((string)null));
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty MenuStyleProperty = DependencyProperty.Register("MenuStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -66,6 +78,42 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)this.GetValue(ContentProperty); }
             set { this.SetValue(ContentProperty, value); }
+        }
+
+        /// <summary> 
+        /// ContentTemplate is the template used to display the content of the control. 
+        /// </summary>
+        [Bindable(true)]
+        public DataTemplate ContentTemplate
+        {
+            get { return (DataTemplate)this.GetValue(ContentTemplateProperty); }
+            set { this.SetValue(ContentTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// ContentTemplateSelector allows to provide custom logic for choosing the template used to display the content of the control.
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        public DataTemplateSelector ContentTemplateSelector
+        {
+            get { return (DataTemplateSelector)this.GetValue(ContentTemplateSelectorProperty); }
+            set { this.SetValue(ContentTemplateSelectorProperty, value); }
+        }
+
+        /// <summary>
+        /// ContentStringFormat is the format used to display the content of the control as a string
+        /// </summary>
+        /// <remarks> 
+        /// This property is ignored if <seealso cref="ContentTemplate"/> is set.
+        /// </remarks>
+        [Bindable(true)]
+        public string ContentStringFormat
+        {
+            get { return (string)this.GetValue(ContentStringFormatProperty); }
+            set { this.SetValue(ContentStringFormatProperty, value); }
         }
 
         /// <summary>

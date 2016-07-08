@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <!--  obsolete  -->
     <ControlTemplate x:Key="SplitButtonHorizontal" TargetType="{x:Type Controls:DropDownButton}">
@@ -26,8 +27,9 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                    ContentTemplate="{TemplateBinding ItemTemplate}" />
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
                     <Rectangle x:Name="PART_Rectangle"
                                Width="10"
                                Height="6"
@@ -70,6 +72,29 @@
                 </Button.ContextMenu>
             </Button>
         </Border>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!--  obsolete  -->
@@ -98,8 +123,9 @@
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                    ContentTemplate="{TemplateBinding ItemTemplate}" />
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
                     <Rectangle x:Name="PART_Rectangle"
                                Width="10"
                                Height="6"
@@ -142,6 +168,29 @@
                 </Button.ContextMenu>
             </Button>
         </Border>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="ButtonDropDownFocusVisual">
@@ -232,8 +281,9 @@
                                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                                ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                               ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                               ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                                RecognizesAccessKey="True"
                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                UseLayoutRounding="False" />
@@ -257,6 +307,28 @@
                         </Button>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+                        </MultiDataTrigger>
+
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter TargetName="PART_ButtonContent" Property="Margin" Value="0" />
                         </Trigger>
