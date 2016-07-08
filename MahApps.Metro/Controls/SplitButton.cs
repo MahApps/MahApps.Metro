@@ -217,7 +217,7 @@ namespace MahApps.Metro.Controls
             this._listBox = this.EnforceInstance<ListBox>("PART_ListBox");
             this._popup = this.EnforceInstance<Popup>("PART_Popup");
             this.InitializeVisualElementsContainer();
-            if (this.Items != null && this.ItemsSource == null)
+            if (this._listBox != null && this.Items != null && this.ItemsSource == null)
             {
                 foreach (var newItem in this.Items)
                 {
