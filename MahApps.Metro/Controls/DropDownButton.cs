@@ -3,7 +3,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -31,11 +30,15 @@ namespace MahApps.Metro.Controls
 
         private static void IsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            DropDownButton button = (DropDownButton)dependencyObject;
-            if (button.clickButton != null)
+            DropDownButton dropDownButton = (DropDownButton)dependencyObject;
+            dropDownButton.SetContextMenuPlacementTarget(dropDownButton.menu);
+        }
+
+        protected virtual void SetContextMenuPlacementTarget(ContextMenu contextMenu)
+        {
+            if (this.clickButton != null)
             {
-                button.menu.Placement = PlacementMode.Bottom;
-                button.menu.PlacementTarget = button.clickButton;
+                contextMenu.PlacementTarget = this.clickButton;
             }
         }
 

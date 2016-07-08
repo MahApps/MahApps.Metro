@@ -59,6 +59,7 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
+                                 Placement="Bottom"
                                  MinWidth="{TemplateBinding ActualWidth}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                                  IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -155,6 +156,7 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
+                                 Placement="Bottom"
                                  MinWidth="{TemplateBinding ActualWidth}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                                  IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -291,6 +293,7 @@
                             </DockPanel>
                             <Button.ContextMenu>
                                 <ContextMenu x:Name="PART_Menu"
+                                             Placement="Bottom"
                                              MinWidth="{TemplateBinding ActualWidth}"
                                              Style="{TemplateBinding MenuStyle}"
                                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -328,7 +331,7 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
                         </MultiDataTrigger>
-
+                        
                         <Trigger Property="Content" Value="{x:Null}">
                             <Setter TargetName="PART_ButtonContent" Property="Margin" Value="0" />
                         </Trigger>
