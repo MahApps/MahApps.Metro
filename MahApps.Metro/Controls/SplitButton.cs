@@ -221,7 +221,22 @@ namespace MahApps.Metro.Controls
             {
                 foreach (var newItem in this.Items)
                 {
+                    this.TryRemoveVisualFromOldTree(newItem);
                     this._listBox.Items.Add(newItem);
+                }
+            }
+        }
+
+        private void TryRemoveVisualFromOldTree(object newItem)
+        {
+            var visual = newItem as Visual;
+            if (visual != null)
+            {
+                var fe = LogicalTreeHelper.GetParent(visual) as FrameworkElement ?? VisualTreeHelper.GetParent(visual) as FrameworkElement;
+                if (Equals(this, fe))
+                {
+                    this.RemoveLogicalChild(visual);
+                    this.RemoveVisualChild(visual);
                 }
             }
         }
@@ -242,6 +257,7 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (var newItem in e.NewItems)
                         {
+                            this.TryRemoveVisualFromOldTree(newItem);
                             this._listBox.Items.Add(newItem);
                         }
                     }
@@ -268,6 +284,7 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (var newItem in e.NewItems)
                         {
+                            this.TryRemoveVisualFromOldTree(newItem);
                             this._listBox.Items.Add(newItem);
                         }
                     }
@@ -278,6 +295,7 @@ namespace MahApps.Metro.Controls
                         this._listBox.Items.Clear();
                         foreach (var newItem in this.Items)
                         {
+                            this.TryRemoveVisualFromOldTree(newItem);
                             this._listBox.Items.Add(newItem);
                         }
                     }
