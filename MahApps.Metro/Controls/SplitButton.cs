@@ -353,12 +353,25 @@ namespace MahApps.Metro.Controls
         {
             Mouse.Capture(this, CaptureMode.SubTree);
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            Mouse.AddLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
+        }
+
+        private void RemoveMouseCaptureHandlers()
+        {
+            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            Mouse.RemoveLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
         }
 
         private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             this.IsExpanded = false;
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            this.RemoveMouseCaptureHandlers();
+        }
+
+        private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
+        {
+            this.IsExpanded = false;
+            this.RemoveMouseCaptureHandlers();
         }
     }
 }
