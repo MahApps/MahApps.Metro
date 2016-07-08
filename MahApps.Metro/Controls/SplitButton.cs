@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -216,6 +217,74 @@ namespace MahApps.Metro.Controls
             this._listBox = this.EnforceInstance<ListBox>("PART_ListBox");
             this._popup = this.EnforceInstance<Popup>("PART_Popup");
             this.InitializeVisualElementsContainer();
+            if (this.Items != null && this.ItemsSource == null)
+            {
+                foreach (var newItem in this.Items)
+                {
+                    this._listBox.Items.Add(newItem);
+                }
+            }
+        }
+
+        /// <summary>Updates the current selection when an item in the <see cref="T:System.Windows.Controls.Primitives.Selector" /> has changed</summary>
+        /// <param name="e">The event data.</param>
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+            if (this._listBox == null || this.ItemsSource != null)
+            {
+                return;
+            }
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null)
+                    {
+                        foreach (var newItem in e.NewItems)
+                        {
+                            this._listBox.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems != null)
+                    {
+                        foreach (var oldItem in e.OldItems)
+                        {
+                            this._listBox.Items.Remove(oldItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldItems != null)
+                    {
+                        foreach (var oldItem in e.OldItems)
+                        {
+                            this._listBox.Items.Remove(oldItem);
+                        }
+                    }
+                    if (e.NewItems != null)
+                    {
+                        foreach (var newItem in e.NewItems)
+                        {
+                            this._listBox.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    if (this.Items != null)
+                    {
+                        this._listBox.Items.Clear();
+                        foreach (var newItem in this.Items)
+                        {
+                            this._listBox.Items.Add(newItem);
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         //Get element from name. If it exist then element instance return, if not, new will be created
