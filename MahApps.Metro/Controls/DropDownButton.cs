@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,19 +10,19 @@ namespace MahApps.Metro.Controls
 {
     [ContentProperty("ItemsSource")]
     [TemplatePart(Name = "PART_Button", Type = typeof(Button)),
-    TemplatePart(Name = "PART_Image", Type = typeof(Image)),
-    TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
-    TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu))]
+     TemplatePart(Name = "PART_Image", Type = typeof(Image)),
+     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
+     TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu))]
     public class DropDownButton : ItemsControl
     {
         public static readonly RoutedEvent ClickEvent =
             EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(DropDownButton));
+                                             typeof(RoutedEventHandler), typeof(DropDownButton));
 
         public event RoutedEventHandler Click
         {
-            add { AddHandler(ClickEvent, value); }
-            remove { RemoveHandler(ClickEvent, value); }
+            add { this.AddHandler(ClickEvent, value); }
+            remove { this.RemoveHandler(ClickEvent, value); }
         }
 
         public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(IsExpandedPropertyChangedCallback)));
@@ -38,18 +37,18 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(object), typeof(DropDownButton));
 
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(DropDownButton), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(DropDownButton));
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(DropDownButton));
 
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(DropDownButton));
         public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(DropDownButton));
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(DropDownButton));
 
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(DropDownButton));
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty MenuStyleProperty = DependencyProperty.Register("MenuStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -61,19 +60,19 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the Content of this control..
         /// </summary>
-        public Object Content
+        public object Content
         {
-            get { return (Object)GetValue(ContentProperty); }
-            set { SetValue(ContentProperty, value); }
+            get { return (object)this.GetValue(ContentProperty); }
+            set { this.SetValue(ContentProperty, value); }
         }
 
         /// <summary>
         /// Reflects the parameter to pass to the CommandProperty upon execution. 
         /// </summary>
-        public Object CommandParameter
+        public object CommandParameter
         {
-            get { return (Object)GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
+            get { return (object)this.GetValue(CommandParameterProperty); }
+            set { this.SetValue(CommandParameterProperty, value); }
         }
 
         /// <summary>
@@ -81,8 +80,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public IInputElement CommandTarget
         {
-            get { return (IInputElement)GetValue(CommandTargetProperty); }
-            set { SetValue(CommandTargetProperty, value); }
+            get { return (IInputElement)this.GetValue(CommandTargetProperty); }
+            set { this.SetValue(CommandTargetProperty, value); }
         }
 
         /// <summary>
@@ -90,26 +89,26 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand Command
         {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
+            get { return (ICommand)this.GetValue(CommandProperty); }
+            set { this.SetValue(CommandProperty, value); }
         }
 
         /// <summary> 
         /// Indicates whether the Menu is visible. 
         /// </summary>
-        public Boolean IsExpanded
+        public bool IsExpanded
         {
-            get { return (bool)GetValue(IsExpandedProperty); }
-            set { SetValue(IsExpandedProperty, value); }
+            get { return (bool)this.GetValue(IsExpandedProperty); }
+            set { this.SetValue(IsExpandedProperty, value); }
         }
 
         /// <summary>
         /// Gets or sets an extra tag.
         /// </summary>
-        public Object ExtraTag
+        public object ExtraTag
         {
-            get { return GetValue(ExtraTagProperty); }
-            set { SetValue(ExtraTagProperty, value); }
+            get { return this.GetValue(ExtraTagProperty); }
+            set { this.SetValue(ExtraTagProperty, value); }
         }
 
         /// <summary>
@@ -117,18 +116,18 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Orientation Orientation
         {
-            get { return (Orientation)GetValue(OrientationProperty); }
-            set { SetValue(OrientationProperty, value); }
+            get { return (Orientation)this.GetValue(OrientationProperty); }
+            set { this.SetValue(OrientationProperty, value); }
         }
 
         /// <summary>
         ///  Gets or sets the Content used to generate the icon part.
         /// </summary>
         [Bindable(true)]
-        public Object Icon
+        public object Icon
         {
-            get { return GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
+            get { return this.GetValue(IconProperty); }
+            set { this.SetValue(IconProperty, value); }
         }
 
         /// <summary> 
@@ -137,8 +136,8 @@ namespace MahApps.Metro.Controls
         [Bindable(true)]
         public DataTemplate IconTemplate
         {
-            get { return (DataTemplate)GetValue(IconTemplateProperty); }
-            set { SetValue(IconTemplateProperty, value); }
+            get { return (DataTemplate)this.GetValue(IconTemplateProperty); }
+            set { this.SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>
@@ -146,8 +145,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style ButtonStyle
         {
-            get { return (Style)GetValue(ButtonStyleProperty); }
-            set { SetValue(ButtonStyleProperty, value); }
+            get { return (Style)this.GetValue(ButtonStyleProperty); }
+            set { this.SetValue(ButtonStyleProperty, value); }
         }
 
         /// <summary>
@@ -155,8 +154,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style MenuStyle
         {
-            get { return (Style)GetValue(MenuStyleProperty); }
-            set { SetValue(MenuStyleProperty, value); }
+            get { return (Style)this.GetValue(MenuStyleProperty); }
+            set { this.SetValue(MenuStyleProperty, value); }
         }
 
         /// <summary>
@@ -164,8 +163,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Brush ArrowBrush
         {
-            get { return (Brush)GetValue(ArrowBrushProperty); }
-            set { SetValue(ArrowBrushProperty, value); }
+            get { return (Brush)this.GetValue(ArrowBrushProperty); }
+            set { this.SetValue(ArrowBrushProperty, value); }
         }
 
         /// <summary>
@@ -191,8 +190,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Visibility ArrowVisibility
         {
-            get { return (Visibility)GetValue(ArrowVisibilityProperty); }
-            set { SetValue(ArrowVisibilityProperty, value); }
+            get { return (Visibility)this.GetValue(ArrowVisibilityProperty); }
+            set { this.SetValue(ArrowVisibilityProperty, value); }
         }
 
         private Button clickButton;
@@ -205,35 +204,35 @@ namespace MahApps.Metro.Controls
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            IsExpanded = true;
+            this.IsExpanded = true;
             e.RoutedEvent = ClickEvent;
-            RaiseEvent(e);
+            this.RaiseEvent(e);
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            clickButton = EnforceInstance<Button>("PART_Button");
-            menu = EnforceInstance<ContextMenu>("PART_Menu");
-            InitializeVisualElementsContainer();
+            this.clickButton = this.EnforceInstance<Button>("PART_Button");
+            this.menu = this.EnforceInstance<ContextMenu>("PART_Menu");
+            this.InitializeVisualElementsContainer();
         }
 
         //Get element from name. If it exist then element instance return, if not, new will be created
-        T EnforceInstance<T>(string partName) where T : FrameworkElement, new()
+        private T EnforceInstance<T>(string partName) where T : FrameworkElement, new()
         {
-            T element = GetTemplateChild(partName) as T ?? new T();
+            T element = this.GetTemplateChild(partName) as T ?? new T();
             return element;
         }
 
         private void InitializeVisualElementsContainer()
         {
-            MouseRightButtonUp -= DropDownButton_MouseRightButtonUp;
-            clickButton.Click -= ButtonClick;
-            MouseRightButtonUp += DropDownButton_MouseRightButtonUp;
-            clickButton.Click += ButtonClick;
+            this.MouseRightButtonUp -= this.DropDownButtonMouseRightButtonUp;
+            this.clickButton.Click -= this.ButtonClick;
+            this.MouseRightButtonUp += this.DropDownButtonMouseRightButtonUp;
+            this.clickButton.Click += this.ButtonClick;
         }
 
-        void DropDownButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void DropDownButtonMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
