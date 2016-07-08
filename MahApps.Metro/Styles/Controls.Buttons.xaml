@@ -926,7 +926,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush6}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
