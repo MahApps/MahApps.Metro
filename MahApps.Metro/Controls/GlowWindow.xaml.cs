@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,8 +10,6 @@ using MahApps.Metro.Native;
 using NativeMethods = MahApps.Metro.Models.Win32.NativeMethods;
 using RECT = MahApps.Metro.Native.RECT;
 using SWP = MahApps.Metro.Models.Win32.SWP;
-using WM = MahApps.Metro.Models.Win32.WM;
-using WS = MahApps.Metro.Models.Win32.WS;
 
 namespace MahApps.Metro.Controls
 {
@@ -192,9 +189,8 @@ namespace MahApps.Metro.Controls
             var ws = hwndSource.Handle.GetWindowLong();
             var wsex = hwndSource.Handle.GetWindowLongEx();
 
-            //ws |= WS.POPUP;
             wsex ^= WSEX.APPWINDOW;
-            wsex |= WSEX.NOACTIVATE;
+            //wsex |= WSEX.NOACTIVATE;
             if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
             {
                 wsex |= WSEX.TRANSPARENT;
@@ -273,32 +269,35 @@ namespace MahApps.Metro.Controls
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == (int)WM.SHOWWINDOW)
+            if (msg == (int)Standard.WM.SHOWWINDOW)
             {
                 if((int)lParam == 3 && this.Visibility != Visibility.Visible) // 3 == SW_PARENTOPENING
                 {
                     handled = true; //handle this message so window isn't shown until we want it to                   
                 }
             }            
-            if (msg == (int)WM.MOUSEACTIVATE)
+            if (msg == (int)Standard.WM.MOUSEACTIVATE)
             {
                 handled = true;
+                if (this.ownerHandle != IntPtr.Zero)
+                {
+                    Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.ACTIVATE, wParam, lParam);
+                }
                 return new IntPtr(3);
             }
-
-            if (msg == (int)WM.LBUTTONDOWN)
+            if (msg == (int)Standard.WM.LBUTTONDOWN)
             {
                 var pt = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
                 NativeMethods.PostMessage(ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)getHitTestValue(pt), IntPtr.Zero);
             }
-            if (msg == (int)WM.NCHITTEST)
+            if (msg == (int)Standard.WM.NCHITTEST)
             {
                 var ptScreen = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
                 Point ptClient = PointFromScreen(ptScreen);
                 Cursor cursor = getCursor(ptClient);
                 if (cursor != Cursor) Cursor = cursor;
             }
-
+            
             return IntPtr.Zero;
         }
     }
