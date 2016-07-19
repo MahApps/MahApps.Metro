@@ -122,6 +122,42 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
 
+        /// <summary>
+        /// This list contains values from 0 to 55 with an interval of 5. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf5}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf5}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf5 = Enumerable.Range(0, 12).Select(i => i * 5).ToList();
+
+        /// <summary>
+        /// This list contains values from 0 to 50 with an interval of 10. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf10}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf10}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 10, 20, 30, 40, 50}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf10 = Enumerable.Range(0, 6).Select(i => i * 10).ToList();
+
+        /// <summary>
+        /// This list contains values from 0 to 45 with an interval of 15. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf15}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf15}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 15, 30, 45}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf15 = Enumerable.Range(0, 4).Select(i => i * 15).ToList();
+
         private Selector _ampmSwitcher;
         private Button _button;
         private bool _deactivateRangeBaseEvent;
