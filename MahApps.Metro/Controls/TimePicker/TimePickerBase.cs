@@ -115,12 +115,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Represents the time 00:00:00; 12:00:00 AM respectively
         /// </summary>
-        private static readonly TimeSpan MinValue = TimeSpan.Zero;
+        private static readonly TimeSpan MinTimeOfDay = TimeSpan.Zero;
 
         /// <summary>
         /// Represents the time 23:59:59.9999999; 11:59:59.9999999 PM respectively
         /// </summary>
-        private static readonly TimeSpan MaxValue = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
+        private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
 
         private Selector _ampmSwitcher;
         private Button _button;
@@ -433,18 +433,18 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceSelectedTime(DependencyObject d, object basevalue)
         {
-            var spanOfTime = (TimeSpan?)basevalue;
+            var timeOfDay = (TimeSpan?)basevalue;
 
-            if (spanOfTime < MinValue)
+            if (timeOfDay < MinTimeOfDay)
             {
-                return MinValue;
+                return MinTimeOfDay;
             }
-            else if (spanOfTime > MaxValue)
+            else if (timeOfDay > MaxTimeOfDay)
             {
-                return MaxValue;
+                return MaxTimeOfDay;
             }
 
-            return spanOfTime;
+            return timeOfDay;
         }
 
         private static object CoerceSource60(DependencyObject d, object basevalue)
