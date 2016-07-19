@@ -2,7 +2,6 @@ namespace MahApps.Metro.Controls
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
@@ -29,21 +28,21 @@ namespace MahApps.Metro.Controls
     {
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
-          typeof(ICollection<int>),
+          typeof(IEnumerable<int>),
           typeof(TimePickerBase),
-          new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
+          new FrameworkPropertyMetadata(Enumerable.Range(0, 24), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
 
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
-            typeof(ICollection<int>),
+            typeof(IEnumerable<int>),
             typeof(TimePickerBase),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
         public static readonly DependencyProperty SourceSecondsProperty = DependencyProperty.Register(
             "SourceSeconds",
-            typeof(ICollection<int>),
+            typeof(IEnumerable<int>),
             typeof(TimePickerBase),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
         public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase), new PropertyMetadata(default(bool)));
 
@@ -262,9 +261,9 @@ namespace MahApps.Metro.Controls
         ///     1 to 12 otherwise..
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceHours
+        public IEnumerable<int> SourceHours
         {
-            get { return (ICollection<int>)GetValue(SourceHoursProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceHoursProperty); }
             set { SetValue(SourceHoursProperty, value); }
         }
 
@@ -276,9 +275,9 @@ namespace MahApps.Metro.Controls
         ///     0 to 59.
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceMinutes
+        public IEnumerable<int> SourceMinutes
         {
-            get { return (ICollection<int>)GetValue(SourceMinutesProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceMinutesProperty); }
             set { SetValue(SourceMinutesProperty, value); }
         }
 
@@ -290,9 +289,9 @@ namespace MahApps.Metro.Controls
         ///     0 to 59.
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceSeconds
+        public IEnumerable<int> SourceSeconds
         {
-            get { return (ICollection<int>)GetValue(SourceSecondsProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceSecondsProperty); }
             set { SetValue(SourceSecondsProperty, value); }
         }
 
@@ -450,25 +449,28 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceSource60(DependencyObject d, object basevalue)
         {
-            var list = basevalue as ICollection<int>;
+            var list = basevalue as IEnumerable<int>;
             if (list != null)
             {
                 return list.Where(i => i >= 0 && i < 60);
             }
 
-            return null;
+            return Enumerable.Empty<int>();
         }
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
         {
-            var dt = d as TimePickerBase;
-            var hourList = basevalue as ICollection<int>;
-            if (dt != null && !dt.IsMilitaryTime && hourList != null)
+            var timePickerBase = d as TimePickerBase;
+            var hourList = basevalue as IEnumerable<int>;
+            if (timePickerBase != null && hourList != null)
             {
-                return new Collection<int>(hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer()).ToList());
+                if (!timePickerBase.IsMilitaryTime)
+                {
+                    return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
+                }
+                return hourList.Where(i => i > 0 && i <= 24);
             }
-
-            return basevalue;
+            return Enumerable.Empty<int>();
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
