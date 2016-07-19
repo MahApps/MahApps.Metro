@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
         /// <returns>
         /// Returns a list containing {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55}.
         /// </returns>
-        public static readonly IEnumerable<int> IntervalOf5 = Enumerable.Range(0, 12).Select(i => i * 5).ToList();
+        public static readonly IEnumerable<int> IntervalOf5 = CreateValueList(5);
 
         /// <summary>
         /// This list contains values from 0 to 50 with an interval of 10. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls
         /// <returns>
         /// Returns a list containing {0, 10, 20, 30, 40, 50}.
         /// </returns>
-        public static readonly IEnumerable<int> IntervalOf10 = Enumerable.Range(0, 6).Select(i => i * 10).ToList();
+        public static readonly IEnumerable<int> IntervalOf10 = CreateValueList(10);
 
         /// <summary>
         /// This list contains values from 0 to 45 with an interval of 15. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
@@ -156,7 +156,7 @@ namespace MahApps.Metro.Controls
         /// <returns>
         /// Returns a list containing {0, 15, 30, 45}.
         /// </returns>
-        public static readonly IEnumerable<int> IntervalOf15 = Enumerable.Range(0, 4).Select(i => i * 15).ToList();
+        public static readonly IEnumerable<int> IntervalOf15 = CreateValueList(15);
 
         private Selector _ampmSwitcher;
         private Button _button;
@@ -465,6 +465,13 @@ namespace MahApps.Metro.Controls
             {
                 _button.Click -= OnButtonClicked;
             }
+        }
+
+        private static IList<int> CreateValueList(int interval)
+        {
+            return Enumerable.Repeat(interval, 60 / interval)
+                             .Select((value, index) => value * index)
+                             .ToList();
         }
 
         private static object CoerceSelectedTime(DependencyObject d, object basevalue)
