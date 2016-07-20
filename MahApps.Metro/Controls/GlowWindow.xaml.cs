@@ -29,6 +29,8 @@ namespace MahApps.Metro.Controls
         private HwndSource hwndSource;
         private PropertyChangeNotifier resizeModeChangeNotifier;
 
+        private Window _owner;
+
         public GlowWindow(Window owner, GlowDirection direction)
         {
             this.InitializeComponent();
@@ -37,7 +39,8 @@ namespace MahApps.Metro.Controls
             this.AllowsTransparency = true;
             this.Closing += (sender, e) => e.Cancel = !this.closing;
 
-            this.Owner = owner;
+            this._owner = owner;
+            this.ShowInTaskbar = false;
             this.glow.Visibility = Visibility.Collapsed;
 
             var b = new Binding("GlowBrush");
@@ -166,9 +169,12 @@ namespace MahApps.Metro.Controls
             var ws = this.hwndSource.Handle.GetWindowLong();
             var wsex = this.hwndSource.Handle.GetWindowLongEx();
 
-            wsex ^= WSEX.APPWINDOW;
-            //wsex |= WSEX.NOACTIVATE;
-            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            ws |= WS.POPUP;
+
+            wsex &= ~WSEX.APPWINDOW;
+            wsex |= WSEX.TOOLWINDOW;
+
+            if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
             {
                 wsex |= WSEX.TRANSPARENT;
             }
@@ -178,16 +184,16 @@ namespace MahApps.Metro.Controls
             this.hwndSource.AddHook(this.WndProc);
 
             this.handle = this.hwndSource.Handle;
-            this.ownerHandle = new WindowInteropHelper(this.Owner).Handle;
+            this.ownerHandle = new WindowInteropHelper(this._owner).Handle;
 
-            this.resizeModeChangeNotifier = new PropertyChangeNotifier(this.Owner, ResizeModeProperty);
+            this.resizeModeChangeNotifier = new PropertyChangeNotifier(this._owner, ResizeModeProperty);
             this.resizeModeChangeNotifier.ValueChanged += this.ResizeModeChanged;
         }
 
         private void ResizeModeChanged(object sender, EventArgs e)
         {
             var wsex = this.hwndSource.Handle.GetWindowLongEx();
-            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
             {
                 wsex |= WSEX.TRANSPARENT;
             }
@@ -200,55 +206,65 @@ namespace MahApps.Metro.Controls
 
         public void Update()
         {
-            RECT rect;
-            if (this.Owner.Visibility == Visibility.Hidden)
+            if (this.closing)
             {
-                this.Visibility = Visibility.Hidden;
+                return;
+            }
 
-                if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
+            RECT rect;
+            if (this._owner.Visibility == Visibility.Hidden)
+            {
+                this.Invoke(() => this.glow.Visibility = Visibility.Collapsed);
+                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                if (this.IsGlowing && this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                 {
                     this.UpdateCore(rect);
                 }
             }
-            else if (this.Owner.WindowState == WindowState.Normal)
+            else if (this._owner.WindowState == WindowState.Normal)
             {
-                if (this.closing) return;
-
-                this.Visibility = this.IsGlowing ? Visibility.Visible : Visibility.Collapsed;
-                this.glow.Visibility = this.IsGlowing ? Visibility.Visible : Visibility.Collapsed;
-
-                if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
+                this.Invoke(() => this.glow.Visibility = this.IsGlowing ? Visibility.Visible : Visibility.Collapsed);
+                if (this.IsGlowing)
+                {
+                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOWNOACTIVATE);
+                }
+                else
+                {
+                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                }
+                if (this.IsGlowing && this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                 {
                     this.UpdateCore(rect);
                 }
             }
             else
             {
-                this.Visibility = Visibility.Collapsed;
+                this.Invoke(() => this.glow.Visibility = Visibility.Collapsed);
+                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
             }
         }
 
         public bool IsGlowing { set; get; }
 
-        internal void UpdateCore(RECT rect)
+        internal void UpdateCore(Native.RECT rect)
         {
             NativeMethods.SetWindowPos(this.handle, this.ownerHandle,
                                        (int)(this.getLeft(rect)),
                                        (int)(this.getTop(rect)),
                                        (int)(this.getWidth(rect)),
                                        (int)(this.getHeight(rect)),
-                                       SWP.NOACTIVATE | SWP.NOZORDER);
+                                       SWP.NOACTIVATE);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == (int)Standard.WM.SHOWWINDOW)
+            switch ((WM)msg)
             {
-                if ((int)lParam == 3 && this.Visibility != Visibility.Visible) // 3 == SW_PARENTOPENING
-                {
-                    handled = true; //handle this message so window isn't shown until we want it to                   
-                }
+                case WM.NCLBUTTONDBLCLK:
+                    var s = "";
+                    break;
             }
+
             if (msg == (int)Standard.WM.MOUSEACTIVATE)
             {
                 handled = true;
@@ -258,7 +274,7 @@ namespace MahApps.Metro.Controls
                 }
                 return new IntPtr(3);
             }
-            if (msg == (int)Standard.WM.LBUTTONDOWN)
+            else if (msg == (int)Standard.WM.LBUTTONDOWN)
             {
                 RECT rect;
                 if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
@@ -267,12 +283,12 @@ namespace MahApps.Metro.Controls
                     NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
                 }
             }
-            if (msg == (int)Standard.WM.NCHITTEST)
+            else if (msg == (int)Standard.WM.NCHITTEST)
             {
                 Cursor cursor = null;
-                if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+                if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
                 {
-                    cursor = this.Owner.Cursor;
+                    cursor = this._owner.Cursor;
                 }
                 else
                 {
