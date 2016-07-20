@@ -340,7 +340,7 @@ namespace MahApps.Metro.Behaviours
 
             if (window.ResizeMode != ResizeMode.NoResize)
             {
-                window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
+                //window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
                 window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
                 window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
             }
