@@ -97,7 +97,13 @@ namespace MahApps.Metro.Controls
                     break;
 
                 case GlowDirection.Top:
-                    this.PreviewMouseDoubleClick += this.GlowWindowPreviewMouseDoubleClick;
+                    this.PreviewMouseDoubleClick += (sender, e) =>
+                        {
+                            if (this.ownerHandle != IntPtr.Zero)
+                            {
+                                Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.TOP, IntPtr.Zero);
+                            }
+                        };
                     this.glow.Orientation = Orientation.Horizontal;
                     this.glow.VerticalAlignment = VerticalAlignment.Bottom;
                     this.getLeft = (rect) => rect.left - 2;
@@ -116,6 +122,13 @@ namespace MahApps.Metro.Controls
                             : Cursors.SizeNS;
                     break;
                 case GlowDirection.Bottom:
+                    this.PreviewMouseDoubleClick += (sender, e) =>
+                    {
+                        if (this.ownerHandle != IntPtr.Zero)
+                        {
+                            Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.BOTTOM, IntPtr.Zero);
+                        }
+                    };
                     this.glow.Orientation = Orientation.Horizontal;
                     this.glow.VerticalAlignment = VerticalAlignment.Top;
                     this.getLeft = (rect) => rect.left - 2;
@@ -149,14 +162,6 @@ namespace MahApps.Metro.Controls
                     this.closing = true;
                     this.Close();
                 };
-        }
-
-        private void GlowWindowPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (this.ownerHandle != IntPtr.Zero)
-            {
-                Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.TOP, IntPtr.Zero);
-            }
         }
 
         public Storyboard OpacityStoryboard { get; set; }
