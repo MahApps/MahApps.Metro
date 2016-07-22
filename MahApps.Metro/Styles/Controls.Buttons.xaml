@@ -137,7 +137,7 @@
     </Style>
 
     <!--  style for WP7/Circle button  -->
-    <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -147,7 +147,7 @@
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
                         <Ellipse Margin="4" Fill="{TemplateBinding Background}" StrokeThickness="0" />
                         <Ellipse x:Name="ellipsebg"
@@ -324,7 +324,7 @@
     </Style>
 
     <!--  style for default button  -->
-    <Style x:Key="MetroButton" TargetType="{x:Type Button}">
+    <Style x:Key="MetroButton" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
@@ -338,7 +338,7 @@
         <Setter Property="Padding" Value="5 6" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
                         <Border x:Name="Background" Background="{TemplateBinding Background}" CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="Border"
@@ -386,7 +386,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SquareButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="SquareButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
@@ -399,7 +399,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Background"
                                 Background="{x:Null}"
@@ -462,17 +462,17 @@
         </Setter>
     </Style>
 
-    <Style x:Key="AccentedSquareButtonStyle" BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type Button}">
+    <Style x:Key="AccentedSquareButtonStyle" BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
     </Style>
 
-    <Style x:Key="HighlightedSquareButtonStyle" BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type Button}">
+    <Style x:Key="HighlightedSquareButtonStyle" BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Background"
                                 Background="{x:Null}"
@@ -687,7 +687,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="SquareMetroButton" TargetType="{x:Type Button}">
+    <Style x:Key="SquareMetroButton" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
@@ -699,7 +699,7 @@
         <Setter Property="Padding" Value="12 4 12 4" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
 
                         <Border x:Name="Border"
@@ -795,13 +795,13 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroAccentButton" BasedOn="{StaticResource SquareMetroButton}" TargetType="{x:Type Button}">
+    <Style x:Key="MetroAccentButton" BasedOn="{StaticResource SquareMetroButton}" TargetType="{x:Type ButtonBase}">
         <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
 
                         <Border x:Name="Border"

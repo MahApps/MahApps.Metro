@@ -52,6 +52,7 @@
     <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type Controls:CustomValidationPopup}" />
     <Style BasedOn="{StaticResource MetroToolTip}" TargetType="ToolTip" />
     <Style BasedOn="{StaticResource MetroButton}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MetroButton}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MetroToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MetroRichTextBox}" TargetType="RichTextBox" />
