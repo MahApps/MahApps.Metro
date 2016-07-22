@@ -89,11 +89,11 @@
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
-                                </ContentControl>
+                            </ContentControl>
 
-                                <Popup x:Name="PART_Popup"
-                                       Grid.Column="0"
-                                       Grid.Row="1"
+                            <Popup x:Name="PART_Popup"
+                                   Grid.Column="0"
+                                   Grid.Row="1"
                                    AllowsTransparency="True"
                                    Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=PART_Root}"
