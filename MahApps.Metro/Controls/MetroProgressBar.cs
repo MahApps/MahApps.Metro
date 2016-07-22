@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -114,7 +113,7 @@ namespace MahApps.Metro.Controls
             if (invalidateMeasureArrange)
             {
                 this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                this.Arrange(new Rect(0, 0, this.DesiredSize.Width, this.DesiredSize.Height));
+                this.InvalidateArrange();
             }
             return this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
         }
