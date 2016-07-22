@@ -74,9 +74,7 @@ namespace MahApps.Metro.Controls
                         }
                         if (newValue)
                         {
-                            bar.InvalidateMeasure();
-                            bar.InvalidateArrange();
-                            bar.ResetStoryboard(bar.ActualSize(), false);
+                            bar.ResetStoryboard(bar.ActualSize(true), false);
                         }
                     });
                 bar.Invoke(resetAction);
@@ -103,7 +101,7 @@ namespace MahApps.Metro.Controls
 
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            var size = this.ActualSize();
+            var size = this.ActualSize(false);
             var bar = this;
             if (this.Visibility == Visibility.Visible && this.IsIndeterminate)
             {
@@ -111,8 +109,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private double ActualSize()
+        private double ActualSize(bool invalidateMeasureArrange)
         {
+            if (invalidateMeasureArrange)
+            {
+                this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                this.Arrange(new Rect(0, 0, this.DesiredSize.Width, this.DesiredSize.Height));
+            }
             return this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
         }
 
@@ -310,11 +313,11 @@ namespace MahApps.Metro.Controls
             // only if they haven't been user-set.
             if (EllipseDiameter.Equals(0))
             {
-                SetEllipseDiameter(this.ActualSize());
+                SetEllipseDiameter(this.ActualSize(true));
             }
             if (EllipseOffset.Equals(0))
             {
-                SetEllipseOffset(this.ActualSize());
+                SetEllipseOffset(this.ActualSize(true));
             }
         }
     }
