@@ -24,4 +24,3 @@ GITHUB
   remote: ControlzEx/ControlzEx
   specs:
     src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
-    src/ControlzEx/PackIconBase.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)

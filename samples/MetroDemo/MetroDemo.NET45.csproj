@@ -133,9 +133,6 @@
     <Compile Include="ExampleWindows\FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExampleWindows\IconPacksWindow.xaml.cs">
-      <DependentUpon>IconPacksWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ExampleWindows\IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
     </Compile>
@@ -222,10 +219,6 @@
     <Page Include="ExampleWindows\FlyoutDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ExampleWindows\IconPacksWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExampleWindows\IconsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
