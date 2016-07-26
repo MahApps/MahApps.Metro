@@ -461,13 +461,15 @@
         <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Controls:PackIconModern x:Name="PART_PackIcon"
-                                             Kind="Magnify"
-                                             Padding="3"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
-                                             Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
+                    <!-- Modern - Magnify -->
+                    <ContentControl x:Name="PART_PackIcon"
+                                    Style="{DynamicResource PathIconContentControlStyle}"
+                                    Content="M42.5,22A12.5,12.5 0 0,1 55,34.5A12.5,12.5 0 0,1 42.5,47C40.14,47 37.92,46.34 36,45.24L26.97,54.27C25.8,55.44 23.9,55.44 22.73,54.27C21.56,53.1 21.56,51.2 22.73,50.03L31.8,40.96C30.66,39.08 30,36.86 30,34.5A12.5,12.5 0 0,1 42.5,22M42.5,26A8.5,8.5 0 0,0 34,34.5A8.5,8.5 0 0,0 42.5,43A8.5,8.5 0 0,0 51,34.5A8.5,8.5 0 0,0 42.5,26Z"
+                                    Padding="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                    Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
