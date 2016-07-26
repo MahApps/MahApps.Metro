@@ -427,7 +427,7 @@ namespace MahApps.Metro.Controls
         /// Gets the clear text button behavior.
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
         {
             return (bool)d.GetValue(IsClearTextButtonBehaviorEnabledProperty);
@@ -436,7 +436,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Sets the clear text button behavior.
         /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);

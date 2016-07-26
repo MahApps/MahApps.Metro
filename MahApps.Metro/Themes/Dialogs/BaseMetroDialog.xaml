@@ -7,7 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type ButtonBase}">
+    <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type Button}">
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
