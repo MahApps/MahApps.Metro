@@ -5,6 +5,7 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -148,21 +149,21 @@
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
-                        <Controls:PackIconModern Width="60"
+                        <iconPacks:PackIconModern Width="60"
                                                  Height="60"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"
                                                  Kind="Cupcake" />
                     </Grid>
                     <Grid Background="#00A600">
-                        <Controls:PackIconModern Width="60"
+                        <iconPacks:PackIconModern Width="60"
                                                  Height="60"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"
                                                  Kind="Xbox" />
                     </Grid>
                     <Grid Background="#BF1E4B">
-                        <Controls:PackIconModern Width="60"
+                        <iconPacks:PackIconModern Width="60"
                                                  Height="60"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"

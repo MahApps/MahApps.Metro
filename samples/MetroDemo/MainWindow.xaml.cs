@@ -122,7 +122,7 @@ namespace MetroDemo
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
 #if NET4_5
-            new IconPacksWindow().Show();
+            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro.IconPacks");
 #else
             new IconsWindow().Show();
 #endif

@@ -66,7 +66,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Controls:PackIconMaterial Kind="ChevronDown" Width="9" Height="9" />
+                        <!-- Material - ChevronDown -->
+                        <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
                     </Button>
                 </Grid>
             </Border>
@@ -173,7 +174,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Controls:PackIconMaterial Kind="ChevronDown" Width="9" Height="9" />
+                        <!-- Material - ChevronDown -->
+                        <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
                     </Button>
                 </Grid>
             </Border>

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metroDemo="clr-namespace:MetroDemo"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
 
@@ -59,7 +60,7 @@
                                Background="Teal"
                                Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
                                HorizontalTitleAlignment="Right">
-                    <Controls:PackIconModern Width="40"
+                    <iconPacks:PackIconModern Width="40"
                                              Height="40"
                                              Kind="Email" />
                 </Controls:Tile>
@@ -67,14 +68,14 @@
                                Margin="3"
                                Style="{StaticResource LargeTileStyle}"
                                Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}">
-                    <Controls:PackIconFontAwesome Width="40"
+                    <iconPacks:PackIconFontAwesome Width="40"
                                                   Height="40"
                                                   Kind="Desktop" />
                 </Controls:Tile>
                 <Controls:Tile Title="Finance"
                                Style="{StaticResource LargeTileStyle}"
                                Background="DimGray">
-                    <Controls:PackIconModern Width="40"
+                    <iconPacks:PackIconModern Width="40"
                                              Height="40"
                                               Kind="Money" />
                 </Controls:Tile>
@@ -82,7 +83,7 @@
                                Style="{StaticResource LargeTileStyle}"
                                Background="#D2691E"
                                HorizontalTitleAlignment="Right">
-                    <Controls:PackIconModern Width="40"
+                    <iconPacks:PackIconModern Width="40"
                                              Height="40"
                                              Kind="PeopleMultiple" />
                 </Controls:Tile>
@@ -98,14 +99,14 @@
                 <Controls:Tile Title="Weather"
                                Style="{StaticResource SmallTileStyle}"
                                Background="#1E90FF">
-                    <Controls:PackIconMaterial Width="40"
+                    <iconPacks:PackIconMaterial Width="40"
                                                Height="40"
                                                Kind="WeatherCloudy" />
                 </Controls:Tile>
                 <Controls:Tile Title="Store"
                                Style="{StaticResource LargeTileStyle}"
                                Background="Green">
-                    <Controls:PackIconEntypo Width="40"
+                    <iconPacks:PackIconEntypo Width="40"
                                              Height="40"
                                              Kind="WindowsStore" />
                 </Controls:Tile>

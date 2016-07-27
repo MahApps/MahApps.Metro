@@ -71,10 +71,6 @@
       <Paket>True</Paket>
       <Link>ControlzEx/KeyboardNavigationEx.cs</Link>
     </Compile>
-    <Compile Include="..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\PackIconBase.cs">
-      <Paket>True</Paket>
-      <Link>ControlzEx/PackIconBase.cs</Link>
-    </Compile>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -148,18 +144,6 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
-    <Compile Include="Controls\IconPacks\PackIconEntypo.cs" />
-    <Compile Include="Controls\IconPacks\PackIconEntypoDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconEntypoKind.cs" />
-    <Compile Include="Controls\IconPacks\PackIconFontAwesome.cs" />
-    <Compile Include="Controls\IconPacks\PackIconFontAwesomeDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconFontAwesomeKind.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModern.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
     <Compile Include="Controls\IMetroThumb.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
@@ -590,10 +574,6 @@
     <Page Include="Themes\HotKeyBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\IconPacks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>

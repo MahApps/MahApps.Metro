@@ -36,17 +36,29 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ## Icons
 
-MahApps.Metro has a [Material](<https://materialdesignicons.com/>) and [Modern](http://modernuiicons.com/) Icon pack for better usage (currently only available via pre-release).
+MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
 
-```xml
-<metro:PackIconMaterial Kind="EmoticonCool" />
+```xaml
+<iconPacks:PackIconMaterial Kind="EmoticonCool" />
 ```
+![2016-07-26_02h28_22](https://cloud.githubusercontent.com/assets/658431/17122168/71270be8-52d9-11e6-89a2-d670bd72aabb.png)
 
-```xml
-<metro:PackIconModern Kind="FuturamaFry" />
+```xaml
+<iconPacks:PackIconModern Kind="ThumbsUp" />
 ```
+![2016-07-26_02h28_37](https://cloud.githubusercontent.com/assets/658431/17122171/729eb156-52d9-11e6-8baf-12345ddb9262.png)
 
-You can still download the old resources via [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources).
+```xaml
+<iconPacks:PackIconFontAwesome Kind="FontAwesome" />
+```
+![2016-07-26_02h29_35](https://cloud.githubusercontent.com/assets/658431/17122172/73fe79f0-52d9-11e6-821e-204d1ee99fc3.png)
+
+```xaml
+<iconPacks:PackIconEntypo Kind="EmojiHappy" />
+```
+![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
+
+It's still possible to use the old Xaml icon resources via this [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources) (but you should use the new one for easier usage).
 
 ## Contributing to this project
 

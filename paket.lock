@@ -8,6 +8,8 @@ NUGET
     Caliburn.Micro.Core (3.0)
     ExposedObject (1.2)
     JetBrains.Annotations (10.0)
+    MahApps.Metro.IconPacks (1.0)
+    MahApps.Metro.IconPacks.Modern (1.0)
     Microsoft.Bcl (1.1.10) - framework: net40
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Async (1.0.168) - framework: net40
@@ -24,4 +26,3 @@ GITHUB
   remote: ControlzEx/ControlzEx
   specs:
     src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
-    src/ControlzEx/PackIconBase.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)

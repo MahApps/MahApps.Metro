@@ -31,7 +31,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/IconPacks.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
@@ -41,11 +40,6 @@
 
     <Style TargetType="{x:Type controls:ContentControlEx}" BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" />
     <Style TargetType="{x:Type controls:MetroThumbContentControl}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" />
-
-    <Style TargetType="{x:Type controls:PackIconMaterial}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconMaterial}" />
-    <Style TargetType="{x:Type controls:PackIconModern}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconModern}" />
-    <Style TargetType="{x:Type controls:PackIconFontAwesome}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconFontAwesome}" />
-    <Style TargetType="{x:Type controls:PackIconEntypo}" BasedOn="{StaticResource MahApps.Metro.Styles.PackIconEntypo}" />
 
     <Style TargetType="{x:Type controls:WindowButtonCommands}" BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" />
 
