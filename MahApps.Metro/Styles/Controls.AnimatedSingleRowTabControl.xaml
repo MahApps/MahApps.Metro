@@ -192,7 +192,10 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -206,23 +209,25 @@
                             <RowDefinition x:Name="RowDefinition1" Height="*" />
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="HeaderPanelScroll"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
                                       HorizontalScrollBarVisibility="Auto"
                                       Template="{StaticResource ScrollViewerTemplate}"
                                       VerticalScrollBarVisibility="Disabled">
                             <TabPanel x:Name="HeaderPanel"
-                                      Grid.Row="0"
-                                      Grid.Column="0"
                                       Panel.ZIndex="1"
                                       IsItemsHost="True"
                                       KeyboardNavigation.TabIndex="1" />
                         </ScrollViewer>
                         <Controls:TransitioningContentControl x:Name="ContentPanel"
+                                                              UseLayoutRounding="True"
                                                               Grid.Row="1"
                                                               Grid.Column="0"
                                                               Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                               RestartTransitionOnContentChange="True"
                                                               Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
                             <ContentPresenter x:Name="PART_SelectedContentHost"
+                                              UseLayoutRounding="False"
                                               Margin="{TemplateBinding Padding}"
                                               Content="{TemplateBinding SelectedContent}"
                                               ContentSource="SelectedContent"
