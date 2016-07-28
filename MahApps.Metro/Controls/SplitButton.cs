@@ -246,7 +246,7 @@ namespace MahApps.Metro.Controls
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
-            if (this._listBox == null || this.ItemsSource != null)
+            if (this._listBox == null || this.ItemsSource != null || this._listBox.ItemsSource != null)
             {
                 return;
             }

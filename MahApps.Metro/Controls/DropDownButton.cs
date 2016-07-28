@@ -297,7 +297,7 @@ namespace MahApps.Metro.Controls
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
-            if (this.menu == null || this.ItemsSource != null)
+            if (this.menu == null || this.ItemsSource != null || this.menu.ItemsSource != null)
             {
                 return;
             }
