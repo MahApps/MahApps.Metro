@@ -201,6 +201,7 @@
             </StackPanel.Resources>
             <Label Content="Enable / Visible" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch x:Name="enabledSwitch"
+                                   Header="Win10 Style"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"
