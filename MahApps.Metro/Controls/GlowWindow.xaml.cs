@@ -123,12 +123,12 @@ namespace MahApps.Metro.Controls
                     break;
                 case GlowDirection.Bottom:
                     this.PreviewMouseDoubleClick += (sender, e) =>
-                    {
-                        if (this.ownerHandle != IntPtr.Zero)
                         {
-                            Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.BOTTOM, IntPtr.Zero);
-                        }
-                    };
+                            if (this.ownerHandle != IntPtr.Zero)
+                            {
+                                Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.BOTTOM, IntPtr.Zero);
+                            }
+                        };
                     this.glow.Orientation = Orientation.Horizontal;
                     this.glow.VerticalAlignment = VerticalAlignment.Top;
                     this.getLeft = (rect) => rect.left - 2;
@@ -154,7 +154,11 @@ namespace MahApps.Metro.Controls
                     this.Update();
                     this.glow.IsGlow = true;
                 };
-            owner.Deactivated += (sender, e) => this.glow.IsGlow = false;
+            owner.Deactivated += (sender, e) =>
+                {
+                    this.Update();
+                    this.glow.IsGlow = false;
+                };
             owner.StateChanged += (sender, e) => this.Update();
             owner.IsVisibleChanged += (sender, e) => this.Update();
             owner.Closed += (sender, e) =>
