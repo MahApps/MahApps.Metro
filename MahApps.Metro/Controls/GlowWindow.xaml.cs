@@ -35,11 +35,13 @@ namespace MahApps.Metro.Controls
         {
             this.InitializeComponent();
 
+            this.Owner = owner;
+            this._owner = owner;
+
             this.IsGlowing = true;
             this.AllowsTransparency = true;
             this.Closing += (sender, e) => e.Cancel = !this.closing;
 
-            this._owner = owner;
             this.ShowInTaskbar = false;
             this.glow.Visibility = Visibility.Collapsed;
 
@@ -156,7 +158,6 @@ namespace MahApps.Metro.Controls
                 };
             owner.Deactivated += (sender, e) =>
                 {
-                    this.Update();
                     this.glow.IsGlow = false;
                 };
             owner.StateChanged += (sender, e) => this.Update();
@@ -233,7 +234,8 @@ namespace MahApps.Metro.Controls
             if (this._owner.Visibility == Visibility.Hidden)
             {
                 this.Invoke(() => this.glow.Visibility = Visibility.Collapsed);
-                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                this.Invoke(() => this.Visibility = Visibility.Collapsed);
+                //Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
                 if (this.IsGlowing && this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                 {
                     this.UpdateCore(rect);
@@ -242,14 +244,15 @@ namespace MahApps.Metro.Controls
             else if (this._owner.WindowState == WindowState.Normal)
             {
                 this.Invoke(() => this.glow.Visibility = this.IsGlowing ? Visibility.Visible : Visibility.Collapsed);
-                if (this.IsGlowing)
-                {
-                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOWNOACTIVATE);
-                }
-                else
-                {
-                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                }
+                this.Invoke(() => this.Visibility = this.IsGlowing ? Visibility.Visible : Visibility.Collapsed);
+//                if (this.IsGlowing)
+//                {
+//                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOWNOACTIVATE);
+//                }
+//                else
+//                {
+//                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+//                }
                 if (this.IsGlowing && this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                 {
                     this.UpdateCore(rect);
@@ -258,7 +261,8 @@ namespace MahApps.Metro.Controls
             else
             {
                 this.Invoke(() => this.glow.Visibility = Visibility.Collapsed);
-                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                this.Invoke(() => this.Visibility = Visibility.Collapsed);
+                //Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
             }
         }
 
@@ -279,6 +283,12 @@ namespace MahApps.Metro.Controls
             RECT rect;
             switch ((WM)msg)
             {
+                case WM.SHOWWINDOW:
+                    if ((int)lParam == 3 && this.Visibility != Visibility.Visible) // 3 == SW_PARENTOPENING
+                    {
+                        handled = true; //handle this message so window isn't shown until we want it to       
+                    }
+                    break;
                 case WM.MOUSEACTIVATE:
                     handled = true;
                     if (this.ownerHandle != IntPtr.Zero)
