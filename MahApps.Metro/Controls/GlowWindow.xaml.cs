@@ -276,53 +276,43 @@ namespace MahApps.Metro.Controls
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            RECT rect;
             switch ((WM)msg)
             {
-                case WM.NCLBUTTONDBLCLK:
-                    var s = "";
-                    break;
-            }
-
-            if (msg == (int)Standard.WM.MOUSEACTIVATE)
-            {
-                handled = true;
-                if (this.ownerHandle != IntPtr.Zero)
-                {
-                    Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.ACTIVATE, wParam, lParam);
-                }
-                return new IntPtr(3);
-            }
-            else if (msg == (int)Standard.WM.LBUTTONDOWN)
-            {
-                RECT rect;
-                if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
-                {
-                    var pt = this.GetRelativeMousePosition();
-                    NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
-                }
-            }
-            else if (msg == (int)Standard.WM.NCHITTEST)
-            {
-                Cursor cursor = null;
-                if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
-                {
-                    cursor = this._owner.Cursor;
-                }
-                else
-                {
-                    RECT rect;
+                case WM.MOUSEACTIVATE:
+                    handled = true;
+                    if (this.ownerHandle != IntPtr.Zero)
+                    {
+                        Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.ACTIVATE, wParam, lParam);
+                    }
+                    return new IntPtr(3);
+                case WM.LBUTTONDOWN:
                     if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                     {
                         var pt = this.GetRelativeMousePosition();
-                        cursor = this.getCursor(pt, rect);
+                        NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
                     }
-                }
-                if (cursor != null && cursor != this.Cursor)
-                {
-                    this.Cursor = cursor;
-                }
+                    break;
+                case WM.NCHITTEST:
+                    Cursor cursor = null;
+                    if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
+                    {
+                        cursor = this._owner.Cursor;
+                    }
+                    else
+                    {
+                        if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
+                        {
+                            var pt = this.GetRelativeMousePosition();
+                            cursor = this.getCursor(pt, rect);
+                        }
+                    }
+                    if (cursor != null && cursor != this.Cursor)
+                    {
+                        this.Cursor = cursor;
+                    }
+                    break;
             }
-
             return IntPtr.Zero;
         }
 
