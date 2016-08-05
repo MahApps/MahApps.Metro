@@ -4,48 +4,79 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 [![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
 
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetro.svg?style=flat-square&&label=TeamCity%20dev)]()
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
+[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg)](http://stackoverflow.com/questions/tagged/mahapps.metro)
 
 [![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
-[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
+[![NuGet](https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
+[![NuGetPre](https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![main demo window](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.png)
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroDevelopAlpha.svg?style=flat-square&&label=TeamCity%20dev)]()
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
 
-![main demo window animated](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.gif)
+## Want to say thanks?
+
+Hit the :star: Star :star: button, thx :squirrel:
 
 ## Documentation
 
-Read it here: [http://mahapps.com](http://mahapps.com)
+You can read the documentation on the web site: [http://mahapps.com](http://mahapps.com)  
+You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
-You can help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+![maindemowindow01](./docs/main_demo_window.png)
+
+![iconpacks](https://cloud.githubusercontent.com/assets/658431/16098473/6a88963a-3353-11e6-8b97-71c07700c17c.gif)
+
+![maindemowindow03](./docs/main_demo_window.gif)
 
 ## Release Notes
 
-- upcoming [v1.2.0](./docs/release-notes/1.2.0.md)
-- current [v1.1.2](./docs/release-notes/1.1.2.md)
+- current [v1.2.4](./docs/release-notes/1.2.4.md)
 - all [other](./docs/release-notes/)
 
 ## Icons
 
-MahApps.Metro has also an icon package used from [WindowsIcons](https://github.com/Templarian/WindowsIcons) by [Templarian](https://github.com/Templarian)
+MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
 
-You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
+```xaml
+<iconPacks:PackIconMaterial Kind="EmoticonCool" />
+```
+![2016-07-26_02h28_22](https://cloud.githubusercontent.com/assets/658431/17122168/71270be8-52d9-11e6-89a2-d670bd72aabb.png)
 
-## Styles
+```xaml
+<iconPacks:PackIconModern Kind="ThumbsUp" />
+```
+![2016-07-26_02h28_37](https://cloud.githubusercontent.com/assets/658431/17122171/729eb156-52d9-11e6-8baf-12345ddb9262.png)
 
-`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+```xaml
+<iconPacks:PackIconFontAwesome Kind="FontAwesome" />
+```
+![2016-07-26_02h29_35](https://cloud.githubusercontent.com/assets/658431/17122172/73fe79f0-52d9-11e6-821e-204d1ee99fc3.png)
+
+```xaml
+<iconPacks:PackIconEntypo Kind="EmojiHappy" />
+```
+![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
+
+It's still possible to use the old Xaml icon resources via this [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources) (but you should use the new one for easier usage).
 
 ## Contributing to this project
 
 Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
 
-If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute. Please take a moment to review the [guidelines for contributing](CONTRIBUTING.md).
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute.
 
-* [Bug reports](CONTRIBUTING.md#bugs)
-* [Feature requests](CONTRIBUTING.md#features)
-* [Pull requests](CONTRIBUTING.md#pull-requests)
+Please take a moment to review the [guidelines for contributing](.github/CONTRIBUTING.md).
+
+* [Bug reports](.github/CONTRIBUTING.md#bugs)
+* [Feature requests](.github/CONTRIBUTING.md#features)
+* [Pull requests](.github/CONTRIBUTING.md#pull-requests)
+
+You need [Visual Studio 2015 Community Edition](<https://www.visualstudio.com/>) to build the solution (comes with [#2330](https://github.com/MahApps/MahApps.Metro/pull/2330)), so we can use the new C# 6 features. You can use the [dev-vc2013](<https://github.com/MahApps/MahApps.Metro/tree/dev-vc2013>) branch if you still have the Visual Studio 2013, but no new feature or fix will be added in this branch by me™.
+
+## Styles
+
+`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
 
 ## Missing a control?
 
@@ -88,8 +119,9 @@ Or, how to create a simple `MahApps.Metro` Application and a Window...
                       Height="600"
                       Width="800">
   <Grid>
-    <!-- now your content -->
-  
+
+    <!-- your content -->
+
   </Grid>
 </controls:MetroWindow>
 ```
@@ -107,6 +139,11 @@ namespace WpfApplication
 }
 ```
 
+## Awesome tools which MahApps can use
+
+[![TeamCity](./docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
+[![Resharper](./docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
+
 ## Visual Studio Templates
 
 MahApps.Metro have 4 simple templates to start with the awesome MahApps.Metro library.
@@ -116,10 +153,10 @@ MahApps.Metro have 4 simple templates to start with the awesome MahApps.Metro li
 * Visual Basic WPF MahApps.Metro Application (.NET45)
 * Window MahApps.Metro (WPF)
 
-Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
+Download this [Templates.zip](./Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
 
 ```
-c:\Users\<USER>\Documents\Visual Studio 2013\
+c:\Users\<USER>\Documents\Visual Studio 201x\
 ```
 
 Now you can choose the templates at the `New Project` dialog.
@@ -129,7 +166,7 @@ Now you can choose the templates at the `New Project` dialog.
 ## Breaking Changes
 
 * For version [0.11.3.1](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
-* For version [0.14 to 1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
+* For version [0.14 to 1.0.0](./docs/v1.0-Migration-Guide.md)
 
 ## Licence
 

@@ -1,0 +1,21 @@
+﻿<controls:MetroWindow x:Class="MahApps.Metro.Tests.TextBoxHelperTestWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      mc:Ignorable="d"
+                      d:DesignHeight="300"
+                      d:DesignWidth="300">
+    <StackPanel>
+        <TextBox x:Name="TestTextBox" />
+        <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MetroButtonTextBox}" />
+        <PasswordBox x:Name="TestPasswordBox" />
+        <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MetroButtonPasswordBox}" />
+        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MetroButtonRevealedPasswordBox}" />
+        <ComboBox x:Name="TestComboBox" />
+        <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
+        <controls:NumericUpDown x:Name="TestNumericUpDown" />
+        <controls:HotKeyBox x:Name="TestHotKeyBox" />
+    </StackPanel>
+</controls:MetroWindow>

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -38,7 +37,7 @@ namespace MahApps.Metro.Controls
         private void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
             // reset Storyboard if Visibility is set to Visible #1300
-            if (IsIndeterminate)
+            if (this.IsIndeterminate)
             {
                 ToggleIndeterminate(this, (bool)e.OldValue, (bool)e.NewValue);
             }
@@ -46,33 +45,38 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            ToggleIndeterminate(dependencyObject as MetroProgressBar, (bool)e.OldValue, (bool)e.NewValue);
+            var bar = (MetroProgressBar)dependencyObject;
+            if (!bar.IsLoaded || !bar.IsVisible)
+            {
+                return;
+            }
+            ToggleIndeterminate(bar, (bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void ToggleIndeterminate(MetroProgressBar bar, bool oldValue, bool newValue)
         {
-            if (bar != null && newValue != oldValue)
+            if (newValue == oldValue)
             {
-                var indeterminateState = bar.GetIndeterminate();
-                var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
-                if (indeterminateState != null && containingObject != null)
-                {
-                    if (oldValue && indeterminateState.Storyboard != null)
+                return;
+            }
+            var indeterminateState = bar.GetIndeterminate();
+            var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
+            if (indeterminateState != null && containingObject != null)
+            {
+                var resetAction = new Action(() =>
                     {
-                        // remove the previous storyboard from the Grid #1855
-                        indeterminateState.Storyboard.Stop(containingObject);
-                        indeterminateState.Storyboard.Remove(containingObject);
-                    }
-                    if (newValue)
-                    {
-                        var resetAction = new Action(() => {
-                                                         bar.InvalidateMeasure();
-                                                         bar.InvalidateArrange();
-                                                         bar.ResetStoryboard(bar.ActualWidth, false);
-                                                     });
-                        bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
-                    }
-                }
+                        if (oldValue && indeterminateState.Storyboard != null)
+                        {
+                            // remove the previous storyboard from the Grid #1855
+                            indeterminateState.Storyboard.Stop(containingObject);
+                            indeterminateState.Storyboard.Remove(containingObject);
+                        }
+                        if (newValue)
+                        {
+                            bar.ResetStoryboard(bar.ActualSize(true), false);
+                        }
+                    });
+                bar.Invoke(resetAction);
             }
         }
 
@@ -96,12 +100,22 @@ namespace MahApps.Metro.Controls
 
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            var actualWidth = ActualWidth;
+            var size = this.ActualSize(false);
             var bar = this;
             if (this.Visibility == Visibility.Visible && this.IsIndeterminate)
             {
-                bar.ResetStoryboard(actualWidth, true);
+                bar.ResetStoryboard(size, true);
             }
+        }
+
+        private double ActualSize(bool invalidateMeasureArrange)
+        {
+            if (invalidateMeasureArrange)
+            {
+                this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                this.InvalidateArrange();
+            }
+            return this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
         }
 
         private void ResetStoryboard(double width, bool removeOldStoryboard)
@@ -298,11 +312,11 @@ namespace MahApps.Metro.Controls
             // only if they haven't been user-set.
             if (EllipseDiameter.Equals(0))
             {
-                SetEllipseDiameter(ActualWidth);
+                SetEllipseDiameter(this.ActualSize(true));
             }
             if (EllipseOffset.Equals(0))
             {
-                SetEllipseOffset(ActualWidth);
+                SetEllipseOffset(this.ActualSize(true));
             }
         }
     }

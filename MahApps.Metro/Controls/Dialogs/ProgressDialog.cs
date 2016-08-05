@@ -10,36 +10,29 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class ProgressDialog : BaseMetroDialog
     {
+        internal ProgressDialog(MetroWindow parentWindow)
+            : this(parentWindow, null)
+        {
+        }
+
         internal ProgressDialog(MetroWindow parentWindow, MetroDialogSettings settings)
             : base(parentWindow, settings)
         {
-            InitializeComponent();
-
-            if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
-            {
-                try
-                {
-                    ProgressBarForeground = ThemeManager.GetResourceFromAppStyle(parentWindow, "AccentColorBrush") as Brush;
-                }
-                catch (Exception) { }
-            }
-
-            else
-            {
-                ProgressBarForeground = Brushes.White;
-            }
+            this.InitializeComponent();
         }
 
-        internal ProgressDialog(MetroWindow parentWindow)
-            : this(parentWindow, null)
-        { }
+        protected override void OnLoaded()
+        {
+            this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
+            this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "AccentColorBrush" : "BlackBrush");
+        }
 
-        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) =>
-        {
-            ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
-        }));
+            {
+                ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
+            }));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
 
         public string Message

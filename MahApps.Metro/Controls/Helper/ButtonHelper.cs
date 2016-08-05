@@ -34,7 +34,7 @@ namespace MahApps.Metro.Controls
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static bool GetPreserveTextCase(UIElement element)
         {
             return (bool)element.GetValue(PreserveTextCaseProperty);
@@ -62,7 +62,7 @@ namespace MahApps.Metro.Controls
         /// Description taken from original Microsoft description :-D
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static CornerRadius GetCornerRadius(UIElement element)
         {

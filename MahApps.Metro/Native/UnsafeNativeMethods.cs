@@ -12,7 +12,7 @@ namespace MahApps.Metro.Native
 
     /// <devdoc>http://msdn.microsoft.com/en-us/library/ms182161.aspx</devdoc>
     [SuppressUnmanagedCodeSecurity]
-    internal static class UnsafeNativeMethods 
+    internal static class UnsafeNativeMethods
     {
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/aa969518%28v=vs.85%29.aspx</devdoc>
         [DllImport("dwmapi", PreserveSig = false, CallingConvention = CallingConvention.Winapi)]
@@ -227,6 +227,12 @@ namespace MahApps.Metro.Native
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, Constants.RedrawWindowFlags flags); 
+        internal static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, Constants.RedrawWindowFlags flags);
+
+        [DllImport("user32.dll")]
+        internal static extern int MapVirtualKey(uint uCode, uint uMapType);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern int GetKeyNameText(int lParam, [MarshalAs(UnmanagedType.LPWStr), Out] StringBuilder str, int size);
     }
 }

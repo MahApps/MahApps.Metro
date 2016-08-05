@@ -3,50 +3,50 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    public class MetroThumb : Thumb
+    public class MetroThumb : Thumb, IMetroThumb
     {
-        private TouchDevice _currentDevice = null;
+        private TouchDevice currentDevice = null;
 
         protected override void OnPreviewTouchDown(TouchEventArgs e)
         {
             // Release any previous capture
-            ReleaseCurrentDevice();
+            this.ReleaseCurrentDevice();
             // Capture the new touch
-            CaptureCurrentDevice(e);
+            this.CaptureCurrentDevice(e);
         }
 
         protected override void OnPreviewTouchUp(TouchEventArgs e)
         {
-            ReleaseCurrentDevice();
+            this.ReleaseCurrentDevice();
         }
 
         protected override void OnLostTouchCapture(TouchEventArgs e)
         {
             // Only re-capture if the reference is not null
             // This way we avoid re-capturing after calling ReleaseCurrentDevice()
-            if (_currentDevice != null)
+            if (this.currentDevice != null)
             {
-                CaptureCurrentDevice(e);
+                this.CaptureCurrentDevice(e);
             }
         }
 
         private void ReleaseCurrentDevice()
         {
-            if (_currentDevice != null)
+            if (this.currentDevice != null)
             {
                 // Set the reference to null so that we don't re-capture in the OnLostTouchCapture() method
-                var temp = _currentDevice;
-                _currentDevice = null;
-                ReleaseTouchCapture(temp);
+                var temp = this.currentDevice;
+                this.currentDevice = null;
+                this.ReleaseTouchCapture(temp);
             }
         }
 
         private void CaptureCurrentDevice(TouchEventArgs e)
         {
-            bool gotTouch = CaptureTouch(e.TouchDevice);
+            bool gotTouch = this.CaptureTouch(e.TouchDevice);
             if (gotTouch)
             {
-                _currentDevice = e.TouchDevice;
+                this.currentDevice = e.TouchDevice;
             }
         }
     }

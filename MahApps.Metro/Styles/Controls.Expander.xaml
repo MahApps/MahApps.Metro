@@ -5,41 +5,30 @@
 
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
-    <Style x:Key="ExpanderBaseHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="BorderBrush"
-                Value="Transparent" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Margin"
-                Value="4" />
-        <Setter Property="Padding"
-                Value="0" />
-        <Setter Property="FocusVisualStyle"
-                Value="{x:Null}" />
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
+    <Style x:Key="ExpanderBaseHeaderStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
     <Style x:Key="ExpanderRightHeaderStyle"
-           TargetType="{x:Type ToggleButton}"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Stretch" />
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent"
-                              SnapsToDevicePixels="False">
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="19" />
                                 <RowDefinition Height="*" />
@@ -63,52 +52,37 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="2"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      SnapsToDevicePixels="false" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
-                                                       Margin="0,4,0,0"
+                                                       Margin="0 4 0 0"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        RecognizesAccessKey="True"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Arrow"
-                                    Property="Data"
-                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle"
-                                    Property="StrokeThickness"
-                                    Value="2" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -117,21 +91,18 @@
     </Style>
 
     <Style x:Key="ExpanderUpHeaderStyle"
-           TargetType="{x:Type ToggleButton}"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent"
-                              SnapsToDevicePixels="False">
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="19" />
                                 <ColumnDefinition Width="*" />
@@ -155,52 +126,37 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="2"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      SnapsToDevicePixels="false" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Column="1"
-                                                       Margin="4,0,0,0"
+                                                       Margin="4 0 0 0"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        RecognizesAccessKey="True"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Arrow"
-                                    Property="Data"
-                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle"
-                                    Property="StrokeThickness"
-                                    Value="2" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -209,17 +165,16 @@
     </Style>
 
     <Style x:Key="ExpanderLeftHeaderStyle"
-           TargetType="{x:Type ToggleButton}"
-           BasedOn="{StaticResource ExpanderRightHeaderStyle}">
+           BasedOn="{StaticResource ExpanderRightHeaderStyle}"
+           TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent"
-                              SnapsToDevicePixels="False">
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="19" />
                                 <RowDefinition Height="*" />
@@ -243,52 +198,37 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false"
                                       Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2" />
+                                      StrokeThickness="2"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      SnapsToDevicePixels="false" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
-                                                       Margin="0,4,0,0"
+                                                       Margin="0 4 0 0"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        RecognizesAccessKey="True"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Arrow"
-                                    Property="Data"
-                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle"
-                                    Property="StrokeThickness"
-                                    Value="2" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -297,17 +237,16 @@
     </Style>
 
     <Style x:Key="ExpanderDownHeaderStyle"
-           TargetType="{x:Type ToggleButton}"
-           BasedOn="{StaticResource ExpanderUpHeaderStyle}">
+           BasedOn="{StaticResource ExpanderUpHeaderStyle}"
+           TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent"
-                              SnapsToDevicePixels="False">
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="19" />
                                 <ColumnDefinition Width="*" />
@@ -321,51 +260,36 @@
                             <Path x:Name="Arrow"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                  SnapsToDevicePixels="false"
                                   Stroke="{TemplateBinding Foreground}"
-                                  StrokeThickness="2" />
+                                  StrokeThickness="2"
+                                  Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                  SnapsToDevicePixels="false" />
                             <Controls:ContentControlEx Grid.Column="1"
-                                                       Margin="4,0,0,0"
+                                                       Margin="4 0 0 0"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                        RecognizesAccessKey="True"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Arrow"
-                                    Property="Data"
-                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource GrayBrush2}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Circle"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle"
-                                    Property="StrokeThickness"
-                                    Value="2" />
-                            <Setter TargetName="Arrow"
-                                    Property="Stroke"
-                                    Value="{DynamicResource BlackColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -373,90 +297,56 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroExpander"
-           TargetType="{x:Type Expander}">
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
-                Value="Upper" />
-        <Setter Property="Padding"
-                Value="5" />
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background"
-                Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="BorderThickness"
-                Value="1" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
-                Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
-                Value="{x:Null}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle"
-                Value="{StaticResource ExpanderUpHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle"
-                Value="{StaticResource ExpanderDownHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle"
-                Value="{StaticResource ExpanderLeftHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle"
-                Value="{StaticResource ExpanderRightHeaderStyle}" />
+    <Style x:Key="MetroExpander" TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource ExpanderDownHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource ExpanderLeftHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource ExpanderRightHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource ExpanderUpHeaderStyle}" />
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="DisabledVisualElement">
-                                            <SplineDoubleKeyFrame KeyTime="0"
-                                                                  Value="0.7" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="ExpanderRoot">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0.3" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
-                                   Opacity="0" />
+                                   Opacity="0"
+                                   IsHitTestVisible="false" />
                         <DockPanel x:Name="ExpanderRoot">
                             <Border x:Name="HeaderSite"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    DockPanel.Dock="Top">
+                                    DockPanel.Dock="Top"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True">
                                 <ToggleButton x:Name="ToggleSite"
-                                              UseLayoutRounding="False"
-                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}"
+                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                               Content="{TemplateBinding Header}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                              Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}">
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              UseLayoutRounding="False">
                                     <ToggleButton.Foreground>
                                         <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                            <Binding Mode="OneWay"
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                      Path="Background"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
-                                            <Binding Mode="OneWay"
+                                                     Mode="OneWay" />
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                      Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                     Mode="OneWay" />
                                         </MultiBinding>
                                     </ToggleButton.Foreground>
                                 </ToggleButton>
@@ -464,29 +354,42 @@
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True"
                                     Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Top}}"
+                                    Opacity="0"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
-                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
                                     Visibility="Collapsed">
-                                <ContentPresenter UseLayoutRounding="False"
-                                                  Margin="{TemplateBinding Padding}"
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Cursor="{TemplateBinding Cursor}" />
+                                                  Cursor="{TemplateBinding Cursor}"
+                                                  UseLayoutRounding="False" />
                             </Border>
                         </DockPanel>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ExpanderRoot" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded"
-                                 Value="true">
-                            <Setter TargetName="ExpandSite"
-                                    Property="Visibility"
-                                    Value="Visible" />
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -508,55 +411,26 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-                        <Trigger Property="ExpandDirection"
-                                 Value="Right">
-                            <Setter TargetName="ExpandSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Right" />
-                            <Setter TargetName="ExpandSite"
-                                    Property="BorderThickness"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Left}}" />
-                            <Setter TargetName="HeaderSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Left" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="Style"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
+                        <Trigger Property="ExpandDirection" Value="Right">
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Left}}" />
+                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
                         </Trigger>
-                        <Trigger Property="ExpandDirection"
-                                 Value="Up">
-                            <Setter TargetName="ExpandSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Top" />
-                            <Setter TargetName="ExpandSite"
-                                    Property="BorderThickness"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Bottom}}" />
-                            <Setter TargetName="HeaderSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Bottom" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="Style"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderUpStyle)}" />
+                        <Trigger Property="ExpandDirection" Value="Up">
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Bottom}}" />
+                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
+                            <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderUpStyle)}" />
                         </Trigger>
-                        <Trigger Property="ExpandDirection"
-                                 Value="Left">
-                            <Setter TargetName="ExpandSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Left" />
-                            <Setter TargetName="ExpandSite"
-                                    Property="BorderThickness"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Right}}" />
-                            <Setter TargetName="HeaderSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Right" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="Style"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
+                        <Trigger Property="ExpandDirection" Value="Left">
+                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Right}}" />
+                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="ToggleSite" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

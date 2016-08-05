@@ -1,8 +1,9 @@
 using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Shapes;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Data;
@@ -15,7 +16,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_BackgroundTranslate, Type = typeof(TranslateTransform))]
     [TemplatePart(Name = PART_DraggingThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_SwitchTrack, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_ThumbIndicator, Type = typeof(Shape))]
+    [TemplatePart(Name = PART_ThumbIndicator, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = PART_ThumbTranslate, Type = typeof(TranslateTransform))]
     public class ToggleSwitchButton : ToggleButton
     {
@@ -28,8 +29,9 @@ namespace MahApps.Metro.Controls
         private TranslateTransform _BackgroundTranslate;
         private Thumb _DraggingThumb;
         private Grid _SwitchTrack;
-        private Shape _ThumbIndicator;
+        private FrameworkElement _ThumbIndicator;
         private TranslateTransform _ThumbTranslate;
+        private readonly PropertyChangeNotifier isCheckedPropertyChangeNotifier;
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
@@ -95,14 +97,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
-        public ToggleSwitchButton()
+        static ToggleSwitchButton()
         {
-            DefaultStyleKey = typeof(ToggleSwitchButton);
-            Checked += ToggleSwitchButton_Checked;
-            Unchecked += ToggleSwitchButton_Checked;
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitchButton), new FrameworkPropertyMetadata(typeof(ToggleSwitchButton)));
         }
 
-        void ToggleSwitchButton_Checked(object sender, RoutedEventArgs e)
+        public ToggleSwitchButton()
+        {
+            isCheckedPropertyChangeNotifier = new PropertyChangeNotifier(this, ToggleSwitchButton.IsCheckedProperty);
+            isCheckedPropertyChangeNotifier.ValueChanged += IsCheckedPropertyChangeNotifierValueChanged;
+        }
+
+        private void IsCheckedPropertyChangeNotifierValueChanged(object sender, EventArgs e)
         {
             UpdateThumb();
         }
@@ -112,7 +118,7 @@ namespace MahApps.Metro.Controls
         {
             if (_ThumbTranslate != null && _SwitchTrack != null && _ThumbIndicator != null)
             {
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
 
                 _thumbAnimation = new DoubleAnimation();
                 _thumbAnimation.To = destination;
@@ -132,22 +138,16 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnToggle()
-        {
-            IsChecked = IsChecked != true;
-            UpdateThumb();
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             _BackgroundTranslate = GetTemplateChild(PART_BackgroundTranslate) as TranslateTransform;
             _DraggingThumb = GetTemplateChild(PART_DraggingThumb) as Thumb;
             _SwitchTrack = GetTemplateChild(PART_SwitchTrack) as Grid;
-            _ThumbIndicator = GetTemplateChild(PART_ThumbIndicator) as Shape;
+            _ThumbIndicator = GetTemplateChild(PART_ThumbIndicator) as FrameworkElement;
             _ThumbTranslate = GetTemplateChild(PART_ThumbTranslate) as TranslateTransform;
 
-            if (_ThumbIndicator != null && _BackgroundTranslate != null)
+            if (_ThumbIndicator != null && _ThumbTranslate != null && _BackgroundTranslate != null)
             {
                 Binding translationBinding;
                 translationBinding = new System.Windows.Data.Binding("X");
@@ -155,24 +155,44 @@ namespace MahApps.Metro.Controls
                 BindingOperations.SetBinding(_BackgroundTranslate, TranslateTransform.XProperty, translationBinding);
             }
 
-            if (_DraggingThumb != null && _SwitchTrack != null && _ThumbIndicator != null && _ThumbTranslate != null)
+            if (_DraggingThumb != null && _ThumbIndicator != null && _ThumbTranslate != null)
             {
+                _DraggingThumb.DragStarted -= _DraggingThumb_DragStarted;
+                _DraggingThumb.DragDelta -= _DraggingThumb_DragDelta;
+                _DraggingThumb.DragCompleted -= _DraggingThumb_DragCompleted;
                 _DraggingThumb.DragStarted += _DraggingThumb_DragStarted;
                 _DraggingThumb.DragDelta += _DraggingThumb_DragDelta;
                 _DraggingThumb.DragCompleted += _DraggingThumb_DragCompleted;
-
-                _SwitchTrack.SizeChanged += _SwitchTrack_SizeChanged;
+                if (_SwitchTrack != null)
+                {
+                    _SwitchTrack.SizeChanged -= _SwitchTrack_SizeChanged;
+                    _SwitchTrack.SizeChanged += _SwitchTrack_SizeChanged;
+                }
             }
+        }
+
+        private void SetIsPressed(bool pressed)
+        {
+            // we can't use readonly IsPressedProperty
+            typeof(ToggleButton).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic)
+                                .Invoke(this, new object[] { pressed });
         }
 
         private double? _lastDragPosition;
         private bool _isDragging;
         void _DraggingThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (!IsPressed)
+                {
+                    SetIsPressed(true);
+                }
+            }
             if (_ThumbTranslate != null)
             {
                 _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, null);
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
                 _ThumbTranslate.X = destination;
                 _thumbAnimation = null;
             }
@@ -189,29 +209,33 @@ namespace MahApps.Metro.Controls
                 if (_SwitchTrack != null && _ThumbIndicator != null)
                 {
                     double lastDragPosition = _lastDragPosition.Value;
-                    _ThumbTranslate.X = Math.Min(ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth), Math.Max(0, lastDragPosition + e.HorizontalChange));
+                    _ThumbTranslate.X = Math.Min(ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right), Math.Max(0, lastDragPosition + e.HorizontalChange));
                 }
             }
         }
 
         void _DraggingThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
+            SetIsPressed(false);
             _lastDragPosition = null;
             if (!_isDragging)
             {
-                OnToggle();
+                OnClick();
             }
             else if (_ThumbTranslate != null && _SwitchTrack != null)
             {
                 if (!IsChecked.GetValueOrDefault() && _ThumbTranslate.X + 6.5 >= _SwitchTrack.ActualWidth / 2)
                 {
-                    OnToggle();
+                    OnClick();
                 }
                 else if (IsChecked.GetValueOrDefault() && _ThumbTranslate.X + 6.5 <= _SwitchTrack.ActualWidth / 2)
                 {
-                    OnToggle();
+                    OnClick();
                 }
-                else UpdateThumb();
+                else
+                {
+                    UpdateThumb();
+                }
             }
         }
 
@@ -219,7 +243,7 @@ namespace MahApps.Metro.Controls
         {
             if (_ThumbTranslate != null && _SwitchTrack != null && _ThumbIndicator != null)
             {
-                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth + _ThumbIndicator.Margin.Left + _ThumbIndicator.Margin.Right) : 0;
                 _ThumbTranslate.X = destination;
             }
         }

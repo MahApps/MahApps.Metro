@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -33,13 +34,10 @@ namespace MetroDemo.ValueConverter
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
             var bindingGroup = value as BindingGroup;
-            if (bindingGroup != null)
+            var album = bindingGroup?.Items.OfType<Album>().ElementAtOrDefault(0);
+            if (album != null && album.Price >= 20)
             {
-                var album = (Album)bindingGroup.Items[0];
-                if (album.Price >= 20)
-                {
-                    return new ValidationResult(false, string.Format("The price {0} of the album '{1}' by '{2}' is too much!", album.Price, album.Title, album.Artist.Name));
-                }
+                return new ValidationResult(false, $"The price {album.Price} of the album '{album.Title}' by '{album.Artist.Name}' is too much!");
             }
             return ValidationResult.ValidResult;
         }

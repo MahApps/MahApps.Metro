@@ -34,6 +34,21 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
+        private bool flyoutIsOpen;
+
+        public bool FlyoutIsOpen
+        {
+            get { return this.flyoutIsOpen; }
+            set
+            {
+                if (Equals(value, this.flyoutIsOpen)) {
+                    return;
+                }
+                this.flyoutIsOpen = value;
+                this.RaisePropertyChanged("FlyoutIsOpen");
+            }
+        }
+
         private ICommand closeCmd;
 
         public ICommand CloseCmd
@@ -42,7 +57,7 @@ namespace MetroDemo.ExampleWindows
             {
                 return this.closeCmd ?? (this.closeCmd = new SimpleCommand {
                     CanExecuteDelegate = x => this.CanCloseFlyout,
-                    ExecuteDelegate = x => this.IsOpen = false
+                    ExecuteDelegate = x => this.FlyoutIsOpen = false
                 });
             }
         }

@@ -11,21 +11,20 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <ControlTemplate x:Key="WindowTemplateKey"
-                     TargetType="{x:Type Controls:MetroWindow}">
+    <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid>
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
-                        <!-- icon -->
+                        <!--  icon  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- left window commands -->
+                        <!--  left window commands  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- title -->
+                        <!--  title  -->
                         <ColumnDefinition Width="*" />
-                        <!-- right window commands -->
+                        <!--  right window commands  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- min,max,close buttons -->
+                        <!--  min,max,close buttons  -->
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -34,53 +33,59 @@
                     </Grid.RowDefinitions>
 
                     <Rectangle x:Name="PART_WindowTitleBackground"
-                               Focusable="False"
-                               UseLayoutRounding="True"
-                               Fill="{TemplateBinding WindowTitleBrush}"
-                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                Grid.Column="0"
                                Grid.ColumnSpan="5"
-                               StrokeThickness="0" />
+                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                               Fill="{TemplateBinding WindowTitleBrush}"
+                               StrokeThickness="0"
+                               Focusable="False"
+                               UseLayoutRounding="True"
+                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- icon -->
+                    <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
-                                    Focusable="False"
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
                                     Panel.ZIndex="1"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the left window commands -->
+                    <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Panel.ZIndex="1"
                                       Grid.Row="0"
-                                      Grid.Column="1"
                                       Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
+                                      Grid.Column="1"
                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the title bar -->
-                    <ContentControl x:Name="PART_TitleBar"
-                                    Focusable="False"
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    Content="{TemplateBinding Title}"
-                                    ContentTemplate="{TemplateBinding TitleTemplate}"
-                                    HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
+                    <!--  the title bar  -->
+                    <Controls:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                       Grid.Row="0"
+                                                       Grid.Column="2"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                       HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                       HorizontalContentAlignment="Stretch"
+                                                       VerticalContentAlignment="Stretch"
+                                                       Content="{TemplateBinding Title}"
+                                                       ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                       Focusable="False"
+                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -91,216 +96,204 @@
                                          Mode="OneWay" />
                             </MultiBinding>
                         </ContentControl.Foreground>
-                    </ContentControl>
+                    </Controls:MetroThumbContentControl>
 
-                    <Thumb Grid.Row="0"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="5"
-                           Style="{StaticResource WindowTitleThumbStyle}"
-                           x:Name="PART_WindowTitleThumb" />
-
-                    <!-- the right window commands -->
+                    <!--  the right window commands  -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Panel.ZIndex="1"
                                       Grid.Row="0"
-                                      Grid.Column="3"
                                       Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
+                                      Grid.Column="3"
                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the window button commands -->
-                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                   Focusable="False"
-                                                   Panel.ZIndex="1"
-                                                   Grid.Row="0"
-                                                   Grid.Column="4"
-                                                   Grid.RowSpan="2"
-                                                   VerticalAlignment="Top"
-                                                   UseLayoutRounding="True"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    <!--  the window button commands  -->
+                    <ContentPresenter x:Name="PART_WindowButtonCommands"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="4"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
+                                      UseLayoutRounding="True" />
 
-                    <!-- the main window content -->
+                    <!--  the main window content  -->
                     <Controls:MetroContentControl Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
-                                                  IsTabStop="False"
-                                                  UseLayoutRounding="True"
                                                   FocusVisualStyle="{x:Null}"
+                                                  IsTabStop="False"
                                                   OnlyLoadTransition="True"
-                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                  UseLayoutRounding="True">
                         <ContentPresenter />
                     </Controls:MetroContentControl>
 
-                    <!-- disables the main content when a modal flyout is shown -->
-                    <Rectangle Grid.Row="0"
+                    <!--  disables the main content when a modal flyout is shown  -->
+                    <Rectangle Name="PART_FlyoutModal"
+                               Grid.Row="0"
                                Grid.RowSpan="2"
-                               Grid.ColumnSpan="5"
                                Grid.Column="0"
-                               Name="PART_FlyoutModal"
+                               Grid.ColumnSpan="5"
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
+                    <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
-                    <!-- flyouts -->
+                    <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
+                                    Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Grid.RowSpan="2"
+                                    VerticalAlignment="Stretch"
                                     Panel.ZIndex="2"
-                                    Focusable="False"
-                                    KeyboardNavigation.TabNavigation="None"
                                     Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    VerticalAlignment="Stretch" />
+                                    Focusable="False"
+                                    KeyboardNavigation.TabNavigation="None" />
 
-                    <!-- inactive dialog container -->
-                    <Grid Grid.Row="0"
+                    <!--  inactive dialog container  -->
+                    <Grid x:Name="PART_MetroInactiveDialogsContainer"
+                          Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="3"
-                          FocusVisualStyle="{x:Null}"
-                          x:Name="PART_MetroInactiveDialogsContainer" />
+                          FocusVisualStyle="{x:Null}" />
 
-                    <!-- overlay effect container -->
+                    <!--  overlay effect container  -->
                     <Grid x:Name="PART_OverlayBox"
                           Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="4"
-                          Focusable="False"
-                          FocusVisualStyle="{x:Null}"
                           Background="{DynamicResource BlackColorBrush}"
                           Opacity="0"
+                          FocusVisualStyle="{x:Null}"
+                          Focusable="False"
                           Visibility="Hidden" />
 
-                    <!-- active dialog container -->
+                    <!--  active dialog container  -->
                     <Grid x:Name="PART_MetroActiveDialogContainer"
                           Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="5"
                           FocusVisualStyle="{x:Null}" />
                 </Grid>
             </AdornerDecorator>
 
             <Border x:Name="PART_Border"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Background="{x:Null}"
                     BorderBrush="{TemplateBinding GlowBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" />
+                    UseLayoutRounding="True" />
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed"
-                        VerticalAlignment="Bottom" />
+                        Visibility="Collapsed" />
         </Grid>
 
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"
-                        BeginTime="0:0:0"
                         AccelerationRatio=".97"
-                        Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.7">
+                        BeginTime="0:0:0"
+                        SpeedRatio="2.7"
+                        Storyboard.TargetProperty="Opacity">
                 <DoubleAnimation To=".7" />
             </Storyboard>
             <Storyboard x:Key="OverlayFastSemiFadeOut"
-                        BeginTime="0:0:0"
                         AccelerationRatio=".97"
-                        Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.7">
+                        BeginTime="0:0:0"
+                        SpeedRatio="2.7"
+                        Storyboard.TargetProperty="Opacity">
                 <DoubleAnimation To="0.0" />
             </Storyboard>
         </ControlTemplate.Resources>
-        
+
         <ControlTemplate.Triggers>
+            <Trigger Property="ShowDialogsOverTitleBar" Value="False">
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
+            </Trigger>
+            
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
-            <!-- handle active/inactive state -->
-            <Trigger Property="IsActive"
-                     Value="False">
-                <Setter TargetName="PART_WindowTitleBackground"
-                        Property="Fill"
-                        Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Trigger Property="ShowTitleBar" Value="False">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
+            <!--  handle active/inactive state  -->
+            <Trigger Property="IsActive" Value="False">
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_WindowTitleBackground" Property="Fill" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsActive"
-                               Value="False" />
-                    <Condition Property="GlowBrush"
-                               Value="{x:Null}" />
+                    <Condition Property="IsActive" Value="False" />
+                    <Condition Property="GlowBrush" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsActive"
-                               Value="True" />
-                    <Condition Property="GlowBrush"
-                               Value="{x:Null}" />
+                    <Condition Property="IsActive" Value="True" />
+                    <Condition Property="GlowBrush" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
-            <!-- no icon and no icon content template -> collapse the icon content control -->
+            <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Icon"
-                               Value="{x:Null}" />
-                    <Condition Property="IconTemplate"
-                               Value="{x:Null}" />
+                    <Condition Property="Icon" Value="{x:Null}" />
+                    <Condition Property="IconTemplate" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Icon"
-                        Property="Visibility"
-                        Value="Collapsed" />
-                <Setter TargetName="PART_Icon"
-                        Property="MinWidth"
-                        Value="0" />
+                <Setter TargetName="PART_Icon" Property="MinWidth" Value="0" />
+                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="ResizeMode"
-                               Value="CanResizeWithGrip" />
-                    <Condition Property="WindowState"
-                               Value="Normal" />
+                    <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+                    <Condition Property="WindowState" Value="Normal" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Visibility"
-                        TargetName="WindowResizeGrip"
-                        Value="Visible" />
+                <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
-        
+
     </ControlTemplate>
 
-    <ControlTemplate x:Key="CenterWindowTemplateKey"
-                     TargetType="{x:Type Controls:MetroWindow}">
+    <ControlTemplate x:Key="CenterWindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid>
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
-                        <!-- icon -->
+                        <!--  icon  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- left window commands -->
+                        <!--  left window commands  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- title -->
+                        <!--  title  -->
                         <ColumnDefinition Width="*" />
-                        <!-- right window commands -->
+                        <!--  right window commands  -->
                         <ColumnDefinition Width="Auto" />
-                        <!-- min,max,close buttons -->
+                        <!--  min,max,close buttons  -->
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -309,277 +302,256 @@
                     </Grid.RowDefinitions>
 
                     <Rectangle x:Name="PART_WindowTitleBackground"
-                               Focusable="False"
-                               UseLayoutRounding="True"
-                               Fill="{TemplateBinding WindowTitleBrush}"
-                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                Grid.Column="0"
                                Grid.ColumnSpan="5"
-                               StrokeThickness="0" />
+                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                               Fill="{TemplateBinding WindowTitleBrush}"
+                               StrokeThickness="0"
+                               Focusable="False"
+                               UseLayoutRounding="True"
+                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- icon -->
+                    <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
-                                    Focusable="False"
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
                                     Panel.ZIndex="1"
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Focusable="False"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the left window commands -->
+                    <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Panel.ZIndex="1"
                                       Grid.Row="0"
+                                      Grid.RowSpan="2"
                                       Grid.Column="1"
-                                      Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
-
-                    <!-- the title bar -->
-                    <Grid x:Name="PART_TitleBar"
-                          Focusable="False"
-                          Grid.Row="0"
-                          Grid.Column="0"
-                          Grid.ColumnSpan="5"
-                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <!-- this element is used so that everything still responds to drag -->
-                        <Label HorizontalContentAlignment="Center"
-                               VerticalContentAlignment="Center">
-                            <ContentControl x:Name="TitleControl"
-                                            Focusable="False"
-                                            Content="{TemplateBinding Title}"
-                                            ContentTemplate="{TemplateBinding TitleTemplate}"
-                                            HorizontalAlignment="Center">
-                                <ContentControl.Foreground>
-                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding ElementName="PART_WindowTitleBackground"
-                                                 Path="Fill"
-                                                 Mode="OneWay" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="TitleForeground"
-                                                 Mode="OneWay" />
-                                    </MultiBinding>
-                                </ContentControl.Foreground>
-                            </ContentControl>
-                        </Label>
-                    </Grid>
-
-                    <Thumb Grid.Row="0"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="5"
-                           Style="{StaticResource WindowTitleThumbStyle}"
-                           x:Name="PART_WindowTitleThumb" />
-
-                    <!-- the right window commands -->
-                    <ContentPresenter x:Name="PART_RightWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
                                       Panel.ZIndex="1"
-                                      Grid.Row="0"
-                                      Grid.Column="3"
-                                      Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the window button commands -->
-                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                   Focusable="False"
-                                                   Panel.ZIndex="1"
-                                                   Grid.Row="0"
-                                                   Grid.Column="4"
-                                                   Grid.RowSpan="2"
-                                                   VerticalAlignment="Top"
-                                                   UseLayoutRounding="True"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}" />
+                    <!--  the title bar  -->
+                    <Controls:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                       Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       Grid.ColumnSpan="5"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                       HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                       HorizontalContentAlignment="Center"
+                                                       VerticalContentAlignment="Center"
+                                                       Content="{TemplateBinding Title}"
+                                                       ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                       Focusable="False"
+                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ContentControl.Foreground>
+                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                <Binding ElementName="PART_WindowTitleBackground"
+                                         Path="Fill"
+                                         Mode="OneWay" />
+                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                         Path="TitleForeground"
+                                         Mode="OneWay" />
+                            </MultiBinding>
+                        </ContentControl.Foreground>
+                    </Controls:MetroThumbContentControl>
 
-                    <!-- the main window content -->
+                    <!--  the right window commands  -->
+                    <ContentPresenter x:Name="PART_RightWindowCommands"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="3"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                    <!--  the window button commands  -->
+                    <ContentPresenter x:Name="PART_WindowButtonCommands"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="4"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
+                                      UseLayoutRounding="True" />
+
+                    <!--  the main window content  -->
                     <Controls:MetroContentControl Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
-                                                  IsTabStop="False"
-                                                  UseLayoutRounding="True"
                                                   FocusVisualStyle="{x:Null}"
+                                                  IsTabStop="False"
                                                   OnlyLoadTransition="True"
-                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                  UseLayoutRounding="True">
                         <ContentPresenter />
                     </Controls:MetroContentControl>
 
-                    <!-- disables the main content when a modal flyout is shown -->
-                    <Rectangle Grid.Row="0"
+                    <!--  disables the main content when a modal flyout is shown  -->
+                    <Rectangle Name="PART_FlyoutModal"
+                               Grid.Row="0"
                                Grid.RowSpan="2"
-                               Grid.ColumnSpan="5"
                                Grid.Column="0"
-                               Name="PART_FlyoutModal"
+                               Grid.ColumnSpan="5"
                                Fill="{DynamicResource BlackColorBrush}"
                                Opacity="0.5"
                                Visibility="Hidden" />
+                    <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
-                    <!-- flyouts -->
+                    <!--  flyouts  -->
                     <ContentControl Grid.Row="0"
+                                    Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Grid.RowSpan="2"
+                                    VerticalAlignment="Stretch"
                                     Panel.ZIndex="2"
-                                    Focusable="False"
-                                    KeyboardNavigation.TabNavigation="None"
                                     Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    VerticalAlignment="Stretch" />
+                                    Focusable="False"
+                                    KeyboardNavigation.TabNavigation="None" />
 
-                    <!-- inactive dialog container -->
-                    <Grid Grid.Row="0"
+                    <!--  inactive dialog container  -->
+                    <Grid x:Name="PART_MetroInactiveDialogsContainer"
+                          Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="3"
-                          FocusVisualStyle="{x:Null}"
-                          x:Name="PART_MetroInactiveDialogsContainer" />
+                          FocusVisualStyle="{x:Null}" />
 
-                    <!-- overlay effect container -->
+                    <!--  overlay effect container  -->
                     <Grid x:Name="PART_OverlayBox"
                           Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="4"
-                          Focusable="False"
-                          FocusVisualStyle="{x:Null}"
                           Background="{DynamicResource BlackColorBrush}"
                           Opacity="0"
+                          FocusVisualStyle="{x:Null}"
+                          Focusable="False"
                           Visibility="Hidden" />
 
-                    <!-- active dialog container -->
+                    <!--  active dialog container  -->
                     <Grid x:Name="PART_MetroActiveDialogContainer"
                           Grid.Row="0"
+                          Grid.RowSpan="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Grid.RowSpan="2"
                           Panel.ZIndex="5"
                           FocusVisualStyle="{x:Null}" />
                 </Grid>
             </AdornerDecorator>
 
             <Border x:Name="PART_Border"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Background="{x:Null}"
                     BorderBrush="{TemplateBinding GlowBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    UseLayoutRounding="True"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" />
+                    UseLayoutRounding="True" />
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
                         IsTabStop="False"
                         UseLayoutRounding="True"
-                        Visibility="Collapsed"
-                        VerticalAlignment="Bottom" />
+                        Visibility="Collapsed" />
         </Grid>
 
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"
-                        BeginTime="0:0:0"
                         AccelerationRatio=".97"
-                        Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.7">
+                        BeginTime="0:0:0"
+                        SpeedRatio="2.7"
+                        Storyboard.TargetProperty="Opacity">
                 <DoubleAnimation To=".7" />
             </Storyboard>
             <Storyboard x:Key="OverlayFastSemiFadeOut"
-                        BeginTime="0:0:0"
                         AccelerationRatio=".97"
-                        Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.7">
+                        BeginTime="0:0:0"
+                        SpeedRatio="2.7"
+                        Storyboard.TargetProperty="Opacity">
                 <DoubleAnimation To="0.0" />
             </Storyboard>
         </ControlTemplate.Resources>
 
         <ControlTemplate.Triggers>
+            <Trigger Property="ShowDialogsOverTitleBar" Value="False">
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
+            </Trigger>
+
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
-            <!-- handle active/inactive state -->
-            <Trigger Property="IsActive"
-                     Value="False">
-                <Setter TargetName="PART_WindowTitleBackground"
-                        Property="Fill"
-                        Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Trigger Property="ShowTitleBar" Value="False">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
+            <!--  handle active/inactive state  -->
+            <Trigger Property="IsActive" Value="False">
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveGlowBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_WindowTitleBackground" Property="Fill" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsActive"
-                               Value="False" />
-                    <Condition Property="GlowBrush"
-                               Value="{x:Null}" />
+                    <Condition Property="IsActive" Value="False" />
+                    <Condition Property="GlowBrush" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsActive"
-                               Value="True" />
-                    <Condition Property="GlowBrush"
-                               Value="{x:Null}" />
+                    <Condition Property="IsActive" Value="True" />
+                    <Condition Property="GlowBrush" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
-            <!-- no icon and no icon content template -> collapse the icon content control -->
+            <!--  no icon and no icon content template -> collapse the icon content control  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Icon"
-                               Value="{x:Null}" />
-                    <Condition Property="IconTemplate"
-                               Value="{x:Null}" />
+                    <Condition Property="Icon" Value="{x:Null}" />
+                    <Condition Property="IconTemplate" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_Icon"
-                        Property="Visibility"
-                        Value="Collapsed" />
-                <Setter TargetName="PART_Icon"
-                        Property="MinWidth"
-                        Value="0" />
+                <Setter TargetName="PART_Icon" Property="MinWidth" Value="0" />
+                <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="ResizeMode"
-                               Value="CanResizeWithGrip" />
-                    <Condition Property="WindowState"
-                               Value="Normal" />
+                    <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
+                    <Condition Property="WindowState" Value="Normal" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Visibility"
-                        TargetName="WindowResizeGrip"
-                        Value="Visible" />
+                <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
 
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="BorderThickness"
-                Value="1" />
-        <Setter Property="BorderBrush"
-                Value="Transparent" />
-        <Setter Property="WindowTitleBrush"
-                Value="{DynamicResource WindowTitleColorBrush}" />
-        <Setter Property="TextElement.FontSize"
-                Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
@@ -589,72 +561,55 @@
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
-        <Setter Property="TitleForeground"
-                Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="Template"
-                Value="{StaticResource WindowTemplateKey}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
+        <Setter Property="TextElement.FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Text="{TemplateBinding Content}"
-                               TextTrimming="CharacterEllipsis"
+                    <TextBlock Margin="8 -1 0 0"
                                VerticalAlignment="Center"
-                               Margin="8 -1 0 0"
+                               FontFamily="{DynamicResource HeaderFontFamily}"
                                FontSize="{DynamicResource WindowTitleFontSize}"
-                               FontFamily="{DynamicResource HeaderFontFamily}" />
+                               Text="{TemplateBinding Content}"
+                               TextTrimming="CharacterEllipsis" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="WindowTitleBrush" Value="{DynamicResource WindowTitleColorBrush}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay}"
-                         Value="True">
-                <Setter Property="TitleTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"
-                                       Margin="8 -1 0 0"
-                                       FontSize="{DynamicResource WindowTitleFontSize}"
-                                       FontFamily="{DynamicResource HeaderFontFamily}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}"
-                         Value="False">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">
                     <Setter.Value>
                         <DataTemplate>
                             <Controls:MultiFrameImage Width="{TemplateBinding Width}"
                                                       Height="{TemplateBinding Height}"
-                                                      Source="{TemplateBinding Content}"
+                                                      RenderOptions.BitmapScalingMode="{Binding IconBitmapScalingMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                       RenderOptions.EdgeMode="{Binding IconEdgeMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                                      RenderOptions.BitmapScalingMode="{Binding IconBitmapScalingMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                                                      Source="{TemplateBinding Content}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
-            <Trigger Property="TitleAlignment"
-                     Value="Center">
-                <Setter Property="Template"
-                        Value="{StaticResource CenterWindowTemplateKey}" />
+            <Trigger Property="TitleAlignment" Value="Center">
+                <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="TitleAlignment"
-                               Value="Stretch" />
-                    <Condition Property="TitleAlignment"
-                               Value="Left" />
-                    <Condition Property="TitleAlignment"
-                               Value="Right" />
+                    <Condition Property="TitleAlignment" Value="Stretch" />
+                    <Condition Property="TitleAlignment" Value="Left" />
+                    <Condition Property="TitleAlignment" Value="Right" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Template"
-                            Value="{StaticResource WindowTemplateKey}" />
+                    <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-    
+
 </ResourceDictionary>

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -42,16 +42,16 @@ namespace MahApps.Metro.Controls.Dialogs
                 switch (defaultButtonFocus)
                 {
                     case MessageDialogResult.Affirmative:
-                        PART_AffirmativeButton.Focus();
+                        KeyboardNavigationEx.Focus(PART_AffirmativeButton);
                         break;
                     case MessageDialogResult.Negative:
-                        PART_NegativeButton.Focus();
+                        KeyboardNavigationEx.Focus(PART_NegativeButton);
                         break;
                     case MessageDialogResult.FirstAuxiliary:
-                        PART_FirstAuxiliaryButton.Focus();
+                        KeyboardNavigationEx.Focus(PART_FirstAuxiliaryButton);
                         break;
                     case MessageDialogResult.SecondAuxiliary:
-                        PART_SecondAuxiliaryButton.Focus();
+                        KeyboardNavigationEx.Focus(PART_SecondAuxiliaryButton);
                         break;
                 }
             }));
@@ -76,7 +76,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
             {
-                cleanUpHandlers();
+                cleanUpHandlers?.Invoke();
                 tcs.TrySetResult(ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
             });
 

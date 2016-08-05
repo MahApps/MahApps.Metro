@@ -147,11 +147,12 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
             "SelectAllOnFocus",
             typeof(bool),
             typeof(NumericUpDown),
-            new PropertyMetadata(true));
+            new PropertyMetadata(true, (o, e) => TextBoxHelper.SetSelectAllOnFocus(o, (bool)e.NewValue)));
 
         public static readonly DependencyProperty HasDecimalsProperty = DependencyProperty.Register(
             "HasDecimals",
@@ -359,6 +360,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(IntervalProperty, value); }
         }
 
+        [Obsolete(@"This property will be deleted in the next release. You should use Controls:TextBoxHelper.SelectAllOnFocus instead.")]
         [Bindable(true)]
         [Category("Behavior")]
         [DefaultValue(true)]
@@ -474,20 +476,20 @@ namespace MahApps.Metro.Controls
             // If we're an editable NumericUpDown, forward focus to the TextBox element
             if (!e.Handled)
             {
-                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown._valueTextBox != null)
+                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && numericUpDown._valueTextBox != null)
                 {
                     if (e.OriginalSource == numericUpDown)
                     {
-                        numericUpDown._valueTextBox.Focus();
+                        // MoveFocus takes a TraversalRequest as its argument.
+                        var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
+                        // Gets the element with keyboard focus.
+                        var elementWithFocus = Keyboard.FocusedElement as UIElement;
+                        // Change keyboard focus.
+                        elementWithFocus?.MoveFocus(request);
                         e.Handled = true;
-                    }
-                    else if (e.OriginalSource == numericUpDown._valueTextBox && numericUpDown.SelectAllOnFocus)
-                    {
-                        numericUpDown._valueTextBox.SelectAll();
                     }
                 }
             }
-            
         }
 
         /// <summary>
@@ -1063,7 +1065,7 @@ namespace MahApps.Metro.Controls
         {
             _manualChange = true;
 
-            if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
+            if (HasDecimals && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
             {
                 TextBox textBox = sender as TextBox;
 
@@ -1161,7 +1163,7 @@ namespace MahApps.Metro.Controls
 
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
-            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart));
+            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
             double number;
             if (!ValidateText(newText, out number))
             {

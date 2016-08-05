@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -31,6 +30,10 @@ namespace MetroDemo
                     if (!e.Cancel && flyoutDemo != null)
                     {
                         flyoutDemo.Dispose();
+                    }
+                    if (!e.Cancel)
+                    {
+                        _viewModel.Dispose();
                     }
                 };
         }
@@ -118,7 +121,11 @@ namespace MetroDemo
 
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
+#if NET4_5
+            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro.IconPacks");
+#else
             new IconsWindow().Show();
+#endif
         }
 
         private Window cleanWindowDemo;
@@ -216,12 +223,25 @@ namespace MetroDemo
 
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
+            EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
+            dialogManagerOnDialogOpened = (o, args) => {
+                                              DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
+                                              Console.WriteLine("Custom Dialog opened!");
+                                          };
+            DialogManager.DialogOpened += dialogManagerOnDialogOpened;
+
+            EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogClosed = null;
+            dialogManagerOnDialogClosed = async (o, args) => {
+                                                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
+                                                    Console.WriteLine("Custom Dialog closed!");
+                                                    await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
+                                                };
+            DialogManager.DialogClosed += dialogManagerOnDialogClosed;
+
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
             await this.ShowMetroDialogAsync(dialog);
             await dialog.WaitUntilUnloadedAsync();
-
-            await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
         }
 
         private async void CloseCustomDialog(object sender, RoutedEventArgs e)
@@ -257,9 +277,29 @@ namespace MetroDemo
             }
         }
 
+        private async void ShowLoginDialogWithRememberCheckBox(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
+            }
+        }
+
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
+            var mySettings = new MetroDialogSettings()
+            {
+                NegativeButtonText = "Close now",
+                AnimateShow = false,
+                AnimateHide = false
+            };
+
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
             controller.SetIndeterminate();
 
             await TaskEx.Delay(5000);
@@ -337,6 +377,7 @@ namespace MetroDemo
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (e.Cancel) return;
             e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
             if (_shutdown) return;
 
@@ -370,10 +411,18 @@ namespace MetroDemo
             return testWindow;
         }
 
+        private void MenuWindowWithoutBorderOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock() { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            //w.BorderThickness = new Thickness(1);
+            w.Show();
+        }
+
         private void MenuWindowWithBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock() { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.GlowBrush = null;
             w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
@@ -383,7 +432,7 @@ namespace MetroDemo
         private void MenuWindowWithGlowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new Button() { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
             w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
@@ -393,10 +442,51 @@ namespace MetroDemo
         private void MenuWindowWithShadowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock() { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             // use this to test the obsolete under the hood code
             w.EnableDWMDropShadow = true;
             w.Show();
+        }
+
+        private void ShowInputDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var result = this.ShowModalInputExternal("Hello!", "What is your name?");
+
+            if (result == null) //user pressed cancel
+                return;
+
+            this.ShowModalMessageExternal("Hello", "Hello " + result + "!");
+        }
+
+        private void ShowLoginDialogOutside(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = this.ShowModalLoginExternal("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+            }
+        }
+
+        private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = MetroDialogOptions.ColorScheme
+            };
+
+            MessageDialogResult result = this.ShowModalMessageExternal("Hello!", "Welcome to the world of metro!",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+                this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
     }
 }

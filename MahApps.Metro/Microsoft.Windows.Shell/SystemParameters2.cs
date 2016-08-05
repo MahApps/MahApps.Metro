@@ -223,14 +223,26 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
-            string name;
-            string color;
-            string size;
-            NativeMethods.GetCurrentThemeName(out name, out color, out size);
+            try
+            {
+                // wrap GetCurrentThemeName in a try/catch as we were seeing an exception
+                // even though the theme service seemed to be active (UxTheme IsThemeActive)
+                // see http://stackoverflow.com/questions/8893854/wpf-application-ribbon-crash as an example.
 
-            // Consider whether this is the most useful way to expose this...
-            UxThemeName = System.IO.Path.GetFileNameWithoutExtension(name);
-            UxThemeColor = color;
+                string name;
+                string color;
+                string size;
+                NativeMethods.GetCurrentThemeName(out name, out color, out size);
+
+                // Consider whether this is the most useful way to expose this...
+                UxThemeName = System.IO.Path.GetFileNameWithoutExtension(name);
+                UxThemeColor = color;
+            }
+            catch (Exception)
+            {
+                UxThemeName = "Classic";
+                UxThemeColor = "";
+            }
         }
 
         private void _UpdateThemeInfo(IntPtr wParam, IntPtr lParam)

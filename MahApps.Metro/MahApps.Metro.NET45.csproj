@@ -105,6 +105,10 @@
     <AssemblyOriginatorKeyFile>mahapps.metro.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\KeyboardNavigationEx.cs">
+      <Paket>True</Paket>
+      <Link>ControlzEx/KeyboardNavigationEx.cs</Link>
+    </Compile>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -127,16 +131,24 @@
     <Compile Include="AppTheme.cs" />
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
+    <Compile Include="Controls\CloseCommand.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
+    <Compile Include="Controls\Extensions.cs" />
+    <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
+    <Compile Include="Controls\TimePicker\DateTimePicker.cs" />
+    <Compile Include="Controls\IMetroThumb.cs" />
+    <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
+    <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
@@ -169,7 +181,12 @@
     <Compile Include="Controls\Helper\MouseWheelChange.cs" />
     <Compile Include="Controls\Helper\MouseWheelState.cs" />
     <Compile Include="Controls\Helper\SliderHelper.cs" />
+    <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
+    <Compile Include="Controls\TimePicker\TimePicker.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
+    <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
@@ -212,10 +229,13 @@
     <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Controls\WindowCommands.cs" />
+    <Compile Include="Converters\NullToUnsetValueConverter.cs" />
+    <Compile Include="Converters\RectangleHeightToRadiusConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessBindingConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="MahAppsException.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
@@ -484,6 +504,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.ToggleSwitch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.Toolbar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -551,6 +576,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\ContentControlEx.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\DateTimePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Dialogs\BaseMetroDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -590,6 +623,10 @@
     <Page Include="Themes\Glow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\HotKeyBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -694,6 +731,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.Shadows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -767,4 +809,16 @@
   </Target>
   -->
   <Target Name="AfterCompile" />
+  <Import Project="..\.paket\paket.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
+      <ItemGroup>
+        <Reference Include="JetBrains.Annotations">
+          <HintPath>..\packages\JetBrains.Annotations\lib\net20\JetBrains.Annotations.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

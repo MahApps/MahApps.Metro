@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
@@ -10,6 +11,7 @@ namespace MahApps.Metro.Tests
     public class MetroWindowTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task MetroWindowSmokeTest()
         {
             await TestHost.SwitchToAppThread();
@@ -18,6 +20,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WindowCommandsShouldHaveTheParentWindow()
         {
             await TestHost.SwitchToAppThread();
@@ -26,20 +29,22 @@ namespace MahApps.Metro.Tests
 
             Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
             Assert.Equal(window, window.RightWindowCommands.ParentWindow);
-            Assert.Equal(window, window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands").ParentWindow);
+            Assert.Equal(window, window.WindowButtonCommands.ParentWindow);
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
 
-            var window = new MetroWindow();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeVisibleByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -51,6 +56,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeCollapsedWithShowIconOnTitleBarFalse()
         {
             await TestHost.SwitchToAppThread();
@@ -62,6 +68,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeCollapsedWithShowTitleBarFalse()
         {
             await TestHost.SwitchToAppThread();
@@ -73,6 +80,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeVisibleWithShowTitleBarFalseAndOverlayBehaviorHiddenTitleBar()
         {
             await TestHost.SwitchToAppThread();
@@ -87,6 +95,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeHiddenWithChangedShowIconOnTitleBar()
         {
             await TestHost.SwitchToAppThread();
@@ -102,6 +111,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconCanOverlayHiddenTitlebar()
         {
             await TestHost.SwitchToAppThread();
@@ -117,7 +127,7 @@ namespace MahApps.Metro.Tests
 
         private Button GetButton(MetroWindow window, string buttonName)
         {
-            var windowButtonCommands = window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands");
+            var windowButtonCommands = window.WindowButtonCommands;
             Assert.NotNull(windowButtonCommands);
 
             var button = windowButtonCommands.Template.FindName(buttonName, windowButtonCommands) as Button;
@@ -127,6 +137,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxCloseButtonsShouldBeVisibleByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -145,6 +156,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxButtonsShouldBeHiddenWithNoResizeMode()
         {
             await TestHost.SwitchToAppThread();
@@ -168,6 +180,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MaxButtonShouldBeHiddenWithCanMinimizeResizeMode()
         {
             await TestHost.SwitchToAppThread();
@@ -191,6 +204,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxButtonsShouldBeToggled()
         {
             await TestHost.SwitchToAppThread();
@@ -252,6 +266,7 @@ namespace MahApps.Metro.Tests
         /// #1362: ShowMinButton="False" and ShowMaxRestoreButton="False" not working
         /// </summary>
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxCloseButtonsShouldBeHidden()
         {
             await TestHost.SwitchToAppThread();
@@ -270,6 +285,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -280,6 +296,56 @@ namespace MahApps.Metro.Tests
             var settings = window.GetWindowPlacementSettings();
             Assert.NotNull(settings);
             Assert.Equal(true, settings.UpgradeSettings);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task TestTitleCapsProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+            var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
+            var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
+
+            var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
+            Assert.NotNull(be);
+            be.UpdateTarget();
+
+            // default should be UPPER
+            Assert.Equal(true, window.TitleCaps);
+            Assert.Equal("TEST", titleBarContent.Content);
+
+            window.TitleCaps = false;
+            be.UpdateTarget();
+            Assert.Equal("Test", titleBarContent.Content);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task TestTitleCharacterCasingProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
+            var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
+            var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
+
+            var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
+            Assert.NotNull(be);
+            be.UpdateTarget();
+
+            // default should be UPPER
+            Assert.Equal(CharacterCasing.Upper, window.TitleCharacterCasing);
+            Assert.Equal("TEST", titleBarContent.Content);
+
+            window.TitleCharacterCasing = CharacterCasing.Lower;
+            be.UpdateTarget();
+            Assert.Equal("test", titleBarContent.Content);
+
+            window.TitleCharacterCasing = CharacterCasing.Normal;
+            be.UpdateTarget();
+            Assert.Equal("Test", titleBarContent.Content);
         }
     }
 }

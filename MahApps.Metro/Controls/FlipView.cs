@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
@@ -57,7 +58,6 @@ namespace MahApps.Metro.Controls
         
         public FlipView()
         {
-            this.Unloaded += FlipView_Unloaded;
             this.Loaded += FlipView_Loaded;
             this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
         }
@@ -94,33 +94,16 @@ namespace MahApps.Metro.Controls
         {
             if (controlsVisibilityOverride) return;
 
-            if (backButton == null || forwardButton == null) return;
+            var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+            var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
 
-            backButton.Visibility = Visibility.Hidden;
-            forwardButton.Visibility = Visibility.Hidden;
-            upButton.Visibility = Visibility.Hidden;
-            downButton.Visibility = Visibility.Hidden;
+            if (prevButton == null || nextButton == null)
+            {
+                return;
+            }
 
-            if (Items.Count > 0)
-            {
-                if (Orientation == Orientation.Horizontal)
-                {
-                    backButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-                    forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
-                }
-                else
-                {
-                    upButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-                    downButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
-                }
-            }
-            else
-            {
-                backButton.Visibility = Visibility.Hidden;
-                forwardButton.Visibility = Visibility.Hidden;
-                upButton.Visibility = Visibility.Hidden;
-                downButton.Visibility = Visibility.Hidden;
-            }
+            prevButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
+            nextButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
         }
 
         void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -129,20 +112,31 @@ namespace MahApps.Metro.Controls
              * Once because the TabControl seems to initiali(z|s)e everything.
              * And a second time when the Tab (housing the FlipView) is switched to. */
 
-            if (backButton == null || forwardButton == null) //OnApplyTemplate hasn't been called yet.
+            // if OnApplyTemplate hasn't been called yet.
+            if (backButton == null || forwardButton == null || upButton == null || downButton == null)
+            {
                 ApplyTemplate();
+            }
 
-            if (loaded) return; //Counteracts the double 'Loaded' event issue.
+            // Counteracts the double 'Loaded' event issue.
+            if (loaded)
+            {
+                return;
+            }
 
-            backButton.Click += backButton_Click;
-            forwardButton.Click += forwardButton_Click;
-            upButton.Click += upButton_Click;
-            downButton.Click += downButton_Click;
+            this.Unloaded += FlipView_Unloaded;
+            backButton.Click += this.PrevButtonClick;
+            forwardButton.Click += this.NextButtonClick;
+            upButton.Click += this.PrevButtonClick;
+            downButton.Click += this.NextButtonClick;
 
             this.SelectionChanged += FlipView_SelectionChanged;
-            this.PreviewKeyDown += FlipView_PreviewKeyDown;
+            this.KeyDown += FlipView_KeyDown;
 
-            SelectedIndex = 0;
+            if (SelectedIndex < 0)
+            {
+                SelectedIndex = 0;
+            }
 
             DetectControlButtonsStatus();
 
@@ -157,34 +151,38 @@ namespace MahApps.Metro.Controls
             this.MouseLeftButtonDown -= FlipView_MouseLeftButtonDown;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
-            this.PreviewKeyDown -= FlipView_PreviewKeyDown;
-            backButton.Click -= backButton_Click;
-            forwardButton.Click -= forwardButton_Click;
-            upButton.Click -= upButton_Click;
-            downButton.Click -= downButton_Click;
+            this.KeyDown -= FlipView_KeyDown;
+            backButton.Click -= this.PrevButtonClick;
+            forwardButton.Click -= this.NextButtonClick;
+            upButton.Click -= this.PrevButtonClick;
+            downButton.Click -= this.NextButtonClick;
 
-            if (hideControlStoryboardCompletedHandler != null)
+            if (hideControlStoryboard != null && hideControlStoryboardCompletedHandler != null)
+            {
                 hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
+            }
 
             loaded = false;
         }
 
-        void FlipView_PreviewKeyDown(object sender, KeyEventArgs e)
+        void FlipView_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            var canGoPrev = (e.Key == Key.Left && Orientation == Orientation.Horizontal && backButton != null && backButton.Visibility == Visibility.Visible && backButton.IsEnabled)
+                         || (e.Key == Key.Up && Orientation == Orientation.Vertical && upButton != null && upButton.Visibility == Visibility.Visible && upButton.IsEnabled);
+            var canGoNext = (e.Key == Key.Right && Orientation == Orientation.Horizontal && forwardButton != null && forwardButton.Visibility == Visibility.Visible && forwardButton.IsEnabled)
+                         || (e.Key == Key.Down && Orientation == Orientation.Vertical && downButton != null && downButton.Visibility == Visibility.Visible && downButton.IsEnabled);
+            if (canGoPrev)
             {
-                case Key.Left:
-                    GoBack();
-                    e.Handled = true;
-                    break;
-                case Key.Right:
-                    GoForward();
-                    e.Handled = true;
-                    break;
-            }
-
-            if (e.Handled)
+                this.GoBack();
+                e.Handled = true;
                 this.Focus();
+            }
+            else if (canGoNext)
+            {
+                this.GoForward();
+                e.Handled = true;
+                this.Focus();
+            }
         }
 
         public override void OnApplyTemplate()
@@ -222,22 +220,12 @@ namespace MahApps.Metro.Controls
             DetectControlButtonsStatus();
         }
 
-        void forwardButton_Click(object sender, RoutedEventArgs e)
+        void NextButtonClick(object sender, RoutedEventArgs e)
         {
             GoForward();
         }
 
-        void backButton_Click(object sender, RoutedEventArgs e)
-        {
-            GoBack();
-        }
-
-        void downButton_Click(object sender, RoutedEventArgs e)
-        {
-            GoForward();
-        }
-
-        void upButton_Click(object sender, RoutedEventArgs e)
+        void PrevButtonClick(object sender, RoutedEventArgs e)
         {
             GoBack();
         }
@@ -252,6 +240,13 @@ namespace MahApps.Metro.Controls
                 presenter.Transition = Orientation == Orientation.Horizontal ? RightTransition : UpTransition;
                 SelectedIndex--;
             }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    SelectedIndex = Items.Count - 1;
+                }
+            }
         }
 
         /// <summary>
@@ -264,6 +259,13 @@ namespace MahApps.Metro.Controls
                 presenter.Transition = Orientation == Orientation.Horizontal ? LeftTransition : DownTransition;
                 SelectedIndex++;
             }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    SelectedIndex = 0;
+                }
+            }
         }
 
         /// <summary>
@@ -272,11 +274,16 @@ namespace MahApps.Metro.Controls
         public void ShowControlButtons()
         {
             controlsVisibilityOverride = false;
-
-            ExecuteWhenLoaded(this, () => {
-                backButton.Visibility = Visibility.Visible;
-                forwardButton.Visibility = Visibility.Visible;
-            });
+            ExecuteWhenLoaded(this, () =>
+                {
+                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                    if (prevButton != null && nextButton != null)
+                    {
+                        prevButton.Visibility = Visibility.Visible;
+                        nextButton.Visibility = Visibility.Visible;
+                    }
+                });
         }
         /// <summary>
         /// Removes the control buttons (next/previous) from view.
@@ -284,16 +291,24 @@ namespace MahApps.Metro.Controls
         public void HideControlButtons()
         {
             controlsVisibilityOverride = true;
-            ExecuteWhenLoaded(this, () => {
-                backButton.Visibility = Visibility.Hidden;
-                forwardButton.Visibility = Visibility.Hidden;
-            });
+            ExecuteWhenLoaded(this, () =>
+                {
+                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                    if (prevButton != null && nextButton != null)
+                    {
+                        prevButton.Visibility = Visibility.Hidden;
+                        nextButton.Visibility = Visibility.Hidden;
+                    }
+                });
         }
 
         private void ShowBanner()
         {
             if (IsBannerEnabled)
+            {
                 bannerGrid.BeginStoryboard(showBannerStoryboard);
+            }
         }
 
         private void HideBanner()
@@ -327,15 +342,16 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
         public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
         public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
-        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        [Obsolete(@"This property will be deleted in the next release. You should use now MouseHoverBorderEnabled instead.")]
+        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (o, e) => ((FlipView)o).MouseHoverBorderEnabled = (bool)e.NewValue));
+        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
+        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
-        public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText",
-                                        typeof(string),
-                                        typeof(FlipView),
-                                        new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender,
-                                                                      (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register("IsNavigationEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsNavigationEnabledPropertyChangedCallback));
 
         public TransitionType UpTransition
         {
@@ -367,6 +383,33 @@ namespace MahApps.Metro.Controls
             set { SetValue(MouseOverGlowEnabledProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the border for mouse over state is enabled or not.
+        /// </summary>
+        public bool MouseHoverBorderEnabled
+        {
+            get { return (bool)GetValue(MouseHoverBorderEnabledProperty); }
+            set { SetValue(MouseHoverBorderEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the mouse hover border brush.
+        /// </summary>
+        public Brush MouseHoverBorderBrush
+        {
+            get { return (Brush)GetValue(MouseHoverBorderBrushProperty); }
+            set { SetValue(MouseHoverBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the mouse hover border thickness.
+        /// </summary>
+        public Thickness MouseHoverBorderThickness
+        {
+            get { return (Thickness)GetValue(MouseHoverBorderThicknessProperty); }
+            set { SetValue(MouseHoverBorderThicknessProperty, value); }
+        }
+
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
@@ -382,16 +425,49 @@ namespace MahApps.Metro.Controls
             set { SetValue(BannerTextProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the FlipView's banner is visible.
+        /// </summary>
+        public bool IsBannerEnabled
+        {
+            get { return (bool)GetValue(IsBannerEnabledProperty); }
+            set { SetValue(IsBannerEnabledProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the navigation is circular, so you get the first after last and the last before first.
+        /// </summary>
+        public bool CircularNavigation
+        {
+            get { return (bool)GetValue(CircularNavigationProperty); }
+            set { SetValue(CircularNavigationProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether the FlipView's NavigationButton is visible.
+        /// </summary>
+        public bool IsNavigationEnabled
+        {
+            get { return (bool)GetValue(IsNavigationEnabledProperty); }
+            set { SetValue(IsNavigationEnabledProperty, value); }
+        }
+
         private void ChangeBannerText(string value = null)
         {
             if (IsBannerEnabled)
             {
                 var newValue = value ?? BannerText;
 
-                if (newValue == null) return;
+                if (newValue == null || hideControlStoryboard == null)
+                {
+                    return;
+                }
 
                 if (hideControlStoryboardCompletedHandler != null)
+                {
                     hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
+                }
 
                 hideControlStoryboardCompletedHandler = (sender, e) => {
                     try
@@ -419,15 +495,6 @@ namespace MahApps.Metro.Controls
                     bannerLabel.Content = value ?? BannerText;
                 });
             }
-        }
-
-        /// <summary>
-        /// Gets/sets whether the FlipView's banner is visible.
-        /// </summary>
-        public bool IsBannerEnabled
-        {
-            get { return (bool)GetValue(IsBannerEnabledProperty); }
-            set { SetValue(IsBannerEnabledProperty, value); }
         }
 
         private static void OnIsBannerEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -465,5 +532,37 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static void OnIsNavigationEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var flipview = ((FlipView)d);
+
+            if (!flipview.IsLoaded)
+            {
+                //wait to be loaded?
+                ExecuteWhenLoaded(flipview, () => {
+                    flipview.ApplyTemplate();
+
+                    if ((bool)e.NewValue)
+                    {
+                        flipview.ShowControlButtons();
+                    }
+                    else
+                    {
+                        flipview.HideControlButtons();
+                    }
+                });
+            }
+            else
+            {
+                if ((bool)e.NewValue)
+                {
+                    flipview.ShowControlButtons();
+                }
+                else
+                {
+                    flipview.HideControlButtons();
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Windows;
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
+    using System.Diagnostics;
+
     /// <summary>
     /// This class is the ultimate hack to work around that we can't 
     /// create more than one application in the same AppDomain
@@ -43,7 +45,19 @@ namespace MahApps.Metro.Tests.TestHelpers
         private void StartDispatcher()
         {
             app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
-            app.Startup += (sender, args) => gate.Set();
+            app.Exit += (sender, args) =>
+                {
+                    var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
+                                  $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
+                    Debug.WriteLine(message);
+                };
+            app.Startup += (sender, args) =>
+                {
+                    var message = $"Start TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
+                                  $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
+                    Debug.WriteLine(message);
+                    gate.Set();
+                };
             app.Run();
         }
 

@@ -234,11 +234,13 @@ namespace MahApps.Metro
             var styleKeys = new List<string>(new[]
             {
                 "HighlightColor",
+                "AccentBaseColor",
                 "AccentColor",
                 "AccentColor2",
                 "AccentColor3",
                 "AccentColor4",
                 "HighlightBrush",
+                "AccentBaseColorBrush",
                 "AccentColorBrush",
                 "AccentColorBrush2",
                 "AccentColorBrush3",
