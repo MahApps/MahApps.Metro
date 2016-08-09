@@ -92,6 +92,9 @@
       <DependentUpon>CustomDialogExample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\DateTimeNowBehavior.cs" />
+    <Compile Include="ExampleViews\SplitViewExamples.xaml.cs">
+      <DependentUpon>SplitViewExamples.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\TilesExample.xaml.cs">
       <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
     </Compile>
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
     <Page Include="ExampleViews\CustomDialogExample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExampleViews\SplitViewExamples.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
