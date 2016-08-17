@@ -174,10 +174,8 @@
                 <Setter Property="Height" Value="12" />
                 <Setter Property="MinHeight" Value="12" />
                 <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
-                <Setter Property="Width" Value="100" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Height" Value="100" />
                 <Setter Property="MinWidth" Value="12" />
                 <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
                 <Setter Property="Width" Value="12" />
