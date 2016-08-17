@@ -6,40 +6,34 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  Header="Dynamic Flyout"
                  mc:Ignorable="d"
-                 d:DesignHeight="300"
-                 d:DesignWidth="300">
+                 d:DesignHeight="400"
+                 d:DesignWidth="300"
+                 Width="300">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel>
-            <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
-            <TextBlock Grid.Row="0" Text="This Flyout animates its opacity when opening and closing." />
-        </StackPanel>
+        <TextBlock Margin="0 5 0 5" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et." />
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
-                <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="TextBox 01" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 02" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 03" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 04" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 05" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 06" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 07" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 08" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 09" />
-                <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 10" />
+                <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="Test watermark..." />
+                <PasswordBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="And a Password..." />
+                <Slider x:Name="TheSlider" Margin="0 5 0 0" LargeChange="10" Maximum="100" Minimum="0" SmallChange="1" Value="20" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
+                <TextBlock Margin="10" HorizontalAlignment="Center" Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat={}{0:N0}}" FontSize="48" />
             </StackPanel>
         </ScrollViewer>
         <UniformGrid Grid.Row="2"
                      Margin="10"
                      Columns="2">
             <Button Margin="10"
-                    Content="Create"
+                    Content="OK"
+                    Click="CloseFlyoutClick"
                     Style="{DynamicResource SquareButtonStyle}" />
             <Button Margin="10"
                     Content="Cancel"
+                    Click="CloseFlyoutClick"
                     Style="{DynamicResource SquareButtonStyle}" />
         </UniformGrid>
     </Grid>
