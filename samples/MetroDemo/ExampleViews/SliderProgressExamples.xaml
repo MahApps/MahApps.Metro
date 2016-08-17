@@ -32,6 +32,7 @@
         <StackPanel Grid.Column="0">
             <Label Content="Horizontal Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Slider x:Name="horizSlider"
+                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
                     Width="200"
                     Margin="0, 10, 0, 0"
                     LargeChange="10"
@@ -54,21 +55,22 @@
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1">
             <Label Content="Vertical Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Slider Height="200"
-                        Cursor="SizeNS"
-                        Orientation="Vertical" />
-                <Slider Height="200"
-                        Margin="10, 0, 0, 0"
+            <StackPanel Height="200" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Slider Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                        Orientation="Vertical"
+                        LargeChange="10"
+                        Maximum="100"
+                        Minimum="0"
+                        SmallChange="1"
+                        Value="20"/>
+                <Slider Margin="10, 0, 0, 0"
                         Orientation="Vertical"
                         Style="{DynamicResource FlatSlider}"
                         Value="50" />
-                <Slider Height="200"
-                        Margin="10, 0, 0, 0"
+                <Slider Margin="10, 0, 0, 0"
                         IsEnabled="False"
                         Orientation="Vertical" />
-                <Slider Height="200"
-                        Margin="10, 0, 0, 0"
+                <Slider Margin="10, 0, 0, 0"
                         IsEnabled="False"
                         Orientation="Vertical"
                         Style="{DynamicResource FlatSlider}"
