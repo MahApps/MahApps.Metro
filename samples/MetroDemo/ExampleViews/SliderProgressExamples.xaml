@@ -33,6 +33,7 @@
             <Label Content="Horizontal Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Slider x:Name="horizSlider"
                     Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                    Controls:SliderHelper.ChangeValueBy="LargeChange"
                     Width="200"
                     Margin="0, 10, 0, 0"
                     LargeChange="10"

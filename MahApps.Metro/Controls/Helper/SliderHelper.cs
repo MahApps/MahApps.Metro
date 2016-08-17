@@ -13,12 +13,9 @@
                                                   typeof(SliderHelper),
                                                   new PropertyMetadata(MouseWheelChange.SmallChange));
 
-        public static readonly DependencyProperty EnableMouseWheelProperty
-            = DependencyProperty.RegisterAttached("EnableMouseWheel",
-                                                  typeof(MouseWheelState),
-                                                  typeof(SliderHelper),
-                                                  new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
-
+        /// <summary>
+        /// Gets/Sets the type how the value will be changed if the user rotates the mouse wheel.
+        /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         public static MouseWheelChange GetChangeValueBy(Slider element)
@@ -26,11 +23,23 @@
             return (MouseWheelChange)element.GetValue(ChangeValueByProperty);
         }
 
+        /// <summary>
+        /// Gets/Sets the type how the value will be changed if the user rotates the mouse wheel.
+        /// </summary>
         public static void SetChangeValueBy(Slider element, MouseWheelChange value)
         {
             element.SetValue(ChangeValueByProperty, value);
         }
 
+        public static readonly DependencyProperty EnableMouseWheelProperty
+            = DependencyProperty.RegisterAttached("EnableMouseWheel",
+                                                  typeof(MouseWheelState),
+                                                  typeof(SliderHelper),
+                                                  new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
+
+        /// <summary>
+        /// Gets/Sets the value when the slider will be changed. Possible values are if the slider is focused or if the mouse is over the slider.
+        /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
         public static MouseWheelState GetEnableMouseWheel(Slider element)
@@ -38,6 +47,9 @@
             return (MouseWheelState)element.GetValue(EnableMouseWheelProperty);
         }
 
+        /// <summary>
+        /// Gets/Sets the value when the slider will be changed. Possible values are if the slider is focused or if the mouse is over the slider.
+        /// </summary>
         public static void SetEnableMouseWheel(Slider element, MouseWheelState value)
         {
             element.SetValue(EnableMouseWheelProperty, value);
