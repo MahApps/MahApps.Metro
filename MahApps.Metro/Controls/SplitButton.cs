@@ -347,31 +347,20 @@ namespace MahApps.Metro.Controls
         {
             this.ReleaseMouseCapture();
             this._expander?.Focus();
+            this._popup.StaysOpen = true; // if we don't set this back to true, then the popup will never show again
         }
 
         private void PopupOpened(object sender, EventArgs e)
         {
             Mouse.Capture(this, CaptureMode.SubTree);
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.AddLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
-        }
-
-        private void RemoveMouseCaptureHandlers()
-        {
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.RemoveLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
+            this._popup.StaysOpen = false; // hides popup on alt+tab
         }
 
         private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
-        }
-
-        private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
-        {
-            this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
+            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
         }
     }
 }
