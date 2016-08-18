@@ -329,7 +329,7 @@ namespace MahApps.Metro.Controls
             this._popup.Closed += this.PopupClosed;
         }
 
-        //Make popup close even if no selectionchanged event fired (case when user select the save item as before)
+        //Make popup close even if no selectionchanged event fired (case when user select the same item as before)
         private void ListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var source = e.OriginalSource as DependencyObject;
