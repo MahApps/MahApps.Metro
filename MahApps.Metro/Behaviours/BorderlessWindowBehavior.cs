@@ -20,6 +20,7 @@ namespace MahApps.Metro.Behaviours
         private WindowChrome windowChrome;
         private PropertyChangeNotifier borderThicknessChangeNotifier;
         private Thickness? savedBorderThickness;
+        private Thickness? savedResizeBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
 
@@ -67,6 +68,7 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.WindowStyle = WindowStyle.None;
 
             this.savedBorderThickness = this.AssociatedObject.BorderThickness;
+            this.savedResizeBorderThickness = this.windowChrome.ResizeBorderThickness;
             this.borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Control.BorderThicknessProperty);
             this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
 
@@ -271,6 +273,8 @@ namespace MahApps.Metro.Behaviours
                         var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
                         var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
                         UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+
+                        this.windowChrome.ResizeBorderThickness = new Thickness(0);
                     }
                 }
             }
@@ -279,6 +283,11 @@ namespace MahApps.Metro.Behaviours
                 if (!enableDWMDropShadow)
                 {
                     this.AssociatedObject.BorderThickness = this.savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                }
+                var resizeBorderThickness = this.savedResizeBorderThickness.GetValueOrDefault(new Thickness(0));
+                if (this.windowChrome.ResizeBorderThickness != resizeBorderThickness)
+                {
+                    this.windowChrome.ResizeBorderThickness = resizeBorderThickness;
                 }
             }
 
