@@ -351,7 +351,6 @@ namespace MahApps.Metro.Controls
             this.IsExpanded = false;
             Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
-            Mouse.RemoveMouseUpHandler(this._parentWindow, this.ParentWindowMouseDownHandler);
             if (_parentWindow != null)
             {
                 _parentWindow.Deactivated -= ParentWindowDeactivated;
@@ -382,13 +381,15 @@ namespace MahApps.Metro.Controls
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
         {
-            // If the list is still expanded, add a MouseDown event handler on the
-            // window so that we still can know when the user has clicked outside of the popup.
+            // If the list is still expanded, recapture the SplitButton subtree
+            // so that we still can know when the user has clicked outside of the popup.
+            // This happens on scroll bar mouse up, so this doesn't disrupt the scroll bar functionality
+            // at all.
             if (this.IsExpanded)
             {
-                Mouse.AddMouseDownHandler(this._parentWindow, this.ParentWindowMouseDownHandler);
+                Mouse.Capture(this, CaptureMode.SubTree);
+                Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             }
-            Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
             e.Handled = true;
         }
 
