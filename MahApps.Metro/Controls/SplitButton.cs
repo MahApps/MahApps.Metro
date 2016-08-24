@@ -388,7 +388,6 @@ namespace MahApps.Metro.Controls
             if (this.IsExpanded)
             {
                 Mouse.Capture(this, CaptureMode.SubTree);
-                Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             }
             e.Handled = true;
         }
