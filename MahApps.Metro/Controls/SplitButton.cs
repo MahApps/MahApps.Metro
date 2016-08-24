@@ -363,8 +363,8 @@ namespace MahApps.Metro.Controls
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
             // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
-            // (which the popup gains on mouse down of the scroll bar), then we can add a mouse down event on the window
-            // to monitor for essentially the same thing as OutsideCapturedElementHandler.
+            // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
+            // to cause OutsideCapturedElementHandler to be called again.
             Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
             // only find the "host" window once
             if (this._parentWindow == null)
