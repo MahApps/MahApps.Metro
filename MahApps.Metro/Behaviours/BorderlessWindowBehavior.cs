@@ -20,9 +20,9 @@ namespace MahApps.Metro.Behaviours
         private WindowChrome windowChrome;
         private PropertyChangeNotifier borderThicknessChangeNotifier;
         private Thickness? savedBorderThickness;
+        private Thickness? savedResizeBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
-        private ResizeMode savedResizeMode;
 
         protected override void OnAttached()
         {
@@ -68,6 +68,7 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.WindowStyle = WindowStyle.None;
 
             this.savedBorderThickness = this.AssociatedObject.BorderThickness;
+            this.savedResizeBorderThickness = this.windowChrome.ResizeBorderThickness;
             this.borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Control.BorderThicknessProperty);
             this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
 
@@ -78,8 +79,7 @@ namespace MahApps.Metro.Behaviours
             // #1823 try to fix another nasty issue
             // WindowState = Maximized
             // ResizeMode = NoResize
-            this.savedResizeMode = this.AssociatedObject.ResizeMode;
-            if (this.savedResizeMode == ResizeMode.NoResize)
+            if (this.AssociatedObject.ResizeMode == ResizeMode.NoResize)
             {
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
@@ -276,6 +276,7 @@ namespace MahApps.Metro.Behaviours
                         UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
                         Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
                         Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
+                        this.windowChrome.ResizeBorderThickness = new Thickness(0);
                     }
                 }
             }
@@ -284,6 +285,11 @@ namespace MahApps.Metro.Behaviours
                 if (!enableDWMDropShadow)
                 {
                     this.AssociatedObject.BorderThickness = this.savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                }
+                var resizeBorderThickness = this.savedResizeBorderThickness.GetValueOrDefault(new Thickness(0));
+                if (this.windowChrome.ResizeBorderThickness != resizeBorderThickness)
+                {
+                    this.windowChrome.ResizeBorderThickness = resizeBorderThickness;
                 }
             }
 
@@ -321,7 +327,7 @@ namespace MahApps.Metro.Behaviours
                 this.hwndSource.AddHook(this.WindowProc);
             }
 
-            if (this.savedResizeMode != ResizeMode.NoResize)
+            if (this.AssociatedObject.ResizeMode != ResizeMode.NoResize)
             {
                 // handle size to content (thanks @lynnx).
                 // This is necessary when ResizeMode != NoResize. Without this workaround,
@@ -343,15 +349,10 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            if (this.savedResizeMode != ResizeMode.NoResize)
+            if (window.ResizeMode != ResizeMode.NoResize)
             {
-                window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
+                //window.SetIsHitTestVisibleInChromeProperty<Border>("PART_Border");
                 window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
-                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_TitleBar");
-                window.SetIsHitTestVisibleInChromeProperty<IMetroThumb>("PART_WindowTitleThumb");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
-                window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_WindowButtonCommands");
                 window.SetWindowChromeResizeGripDirection("WindowResizeGrip", ResizeGripDirection.BottomRight);
             }
         }

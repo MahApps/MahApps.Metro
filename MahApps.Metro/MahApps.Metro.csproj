@@ -71,10 +71,6 @@
       <Paket>True</Paket>
       <Link>ControlzEx/KeyboardNavigationEx.cs</Link>
     </Compile>
-    <Compile Include="..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\PackIconBase.cs">
-      <Paket>True</Paket>
-      <Link>ControlzEx/PackIconBase.cs</Link>
-    </Compile>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -97,6 +93,7 @@
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Controls\CloseCommand.cs" />
+    <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Controls\Extensions.cs" />
     <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
@@ -147,12 +144,6 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModern.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
-    <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
     <Compile Include="Controls\IMetroThumb.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
@@ -180,6 +171,7 @@
     <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
+    <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
@@ -582,10 +574,6 @@
     <Page Include="Themes\HotKeyBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\IconPacks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>

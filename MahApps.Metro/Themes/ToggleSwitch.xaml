@@ -92,6 +92,9 @@
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="IsTabStop" Value="True" />
@@ -103,28 +106,13 @@
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.ToggleSwitchButton}" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <TextBlock Margin="0 0 0 5"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Opacity="0.65"
-                               FontFamily="{DynamicResource ToggleSwitchHeaderFontFamily}"
-                               FontSize="{DynamicResource ToggleSwitchHeaderFontSize}"
-                               FontWeight="Normal"
-                               Text="{Binding Mode=OneWay}"
-                               TextWrapping="Wrap" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
-                    <Border Padding="{TemplateBinding Padding}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid Background="Transparent">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid Background="Transparent" Margin="{TemplateBinding Padding}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -135,10 +123,17 @@
                             </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
                                             Grid.ColumnSpan="2"
+                                            Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                            FontFamily="{TemplateBinding HeaderFontFamily}"
+                                            FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                            FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                             Content="{TemplateBinding Header}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                            ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                            ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                             IsTabStop="False" />
                             <ContentControl x:Name="Content"
+                                            Margin="0 0 2 0"
                                             Grid.Row="1"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -146,6 +141,8 @@
                                             FontSize="{TemplateBinding FontSize}"
                                             Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                             IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Row="1"
@@ -215,7 +212,7 @@
                             <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <Trigger Property="ContentDirection" Value="RightToLeft">
-                            <Setter Property="HorizontalContentAlignment" Value="Right" />
+                            <Setter TargetName="Content" Property="Margin" Value="2 0 0 0" />
                             <Setter TargetName="Content" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
                             <Setter TargetName="firstCol" Property="Width" Value="Auto" />

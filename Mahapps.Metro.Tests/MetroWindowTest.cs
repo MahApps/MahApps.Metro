@@ -11,6 +11,7 @@ namespace MahApps.Metro.Tests
     public class MetroWindowTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task MetroWindowSmokeTest()
         {
             await TestHost.SwitchToAppThread();
@@ -19,6 +20,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WindowCommandsShouldHaveTheParentWindow()
         {
             await TestHost.SwitchToAppThread();
@@ -31,6 +33,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -41,6 +44,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeVisibleByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -52,6 +56,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeCollapsedWithShowIconOnTitleBarFalse()
         {
             await TestHost.SwitchToAppThread();
@@ -63,6 +68,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeCollapsedWithShowTitleBarFalse()
         {
             await TestHost.SwitchToAppThread();
@@ -74,6 +80,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeVisibleWithShowTitleBarFalseAndOverlayBehaviorHiddenTitleBar()
         {
             await TestHost.SwitchToAppThread();
@@ -88,6 +95,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconShouldBeHiddenWithChangedShowIconOnTitleBar()
         {
             await TestHost.SwitchToAppThread();
@@ -103,6 +111,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task IconCanOverlayHiddenTitlebar()
         {
             await TestHost.SwitchToAppThread();
@@ -128,6 +137,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxCloseButtonsShouldBeVisibleByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -146,6 +156,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxButtonsShouldBeHiddenWithNoResizeMode()
         {
             await TestHost.SwitchToAppThread();
@@ -169,6 +180,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MaxButtonShouldBeHiddenWithCanMinimizeResizeMode()
         {
             await TestHost.SwitchToAppThread();
@@ -192,6 +204,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxButtonsShouldBeToggled()
         {
             await TestHost.SwitchToAppThread();
@@ -253,6 +266,7 @@ namespace MahApps.Metro.Tests
         /// #1362: ShowMinButton="False" and ShowMaxRestoreButton="False" not working
         /// </summary>
         [Fact]
+        [DisplayTestMethodName]
         public async Task MinMaxCloseButtonsShouldBeHidden()
         {
             await TestHost.SwitchToAppThread();
@@ -271,6 +285,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -284,6 +299,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task TestTitleCapsProperty()
         {
             await TestHost.SwitchToAppThread();
@@ -306,6 +322,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task TestTitleCharacterCasingProperty()
         {
             await TestHost.SwitchToAppThread();

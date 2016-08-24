@@ -9,6 +9,7 @@ namespace MahApps.Metro.Tests
     public class CleanWindowTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultWindowCommandColorIsBlack()
         {
             await TestHost.SwitchToAppThread();

@@ -94,7 +94,7 @@
                                Height="20"
                                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
+                            <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_city}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </ToggleButton>
@@ -106,7 +106,7 @@
                                Height="20"
                                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
+                            <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_city}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </ToggleButton>
@@ -143,7 +143,7 @@
                                Height="20"
                                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
+                            <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_city}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
@@ -155,7 +155,7 @@
                                Height="20"
                                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
+                            <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_city}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
@@ -201,6 +201,7 @@
             </StackPanel.Resources>
             <Label Content="Enable / Visible" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch x:Name="enabledSwitch"
+                                   Header="Win10 Style"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"

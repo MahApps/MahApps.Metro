@@ -75,20 +75,12 @@ namespace MetroDemo
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
 
-            FlipViewTemplateSelector = new RandomDataTemplateSelector();
-
-            FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
-            spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
-            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
-            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
-            FlipViewTemplateSelector.TemplateOne = new DataTemplate()
-            {
-                VisualTree = spFactory
-            };
-            FlipViewImages = new string[] { "http://trinities.org/blog/wp-content/uploads/red-ball.jpg", "http://savingwithsisters.files.wordpress.com/2012/05/ball.gif" };
-
-            RaisePropertyChanged("FlipViewTemplateSelector");
-
+            FlipViewImages = new Uri[]
+                             {
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/landscapes/mountains/painted-desert.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-3/landscapes/forest/breaking-the-clouds-on-winter-day.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/travel/bodie/bodie-streets.jpg", UriKind.Absolute)
+                             };
 
             BrushResources = FindBrushResources();
 
@@ -332,12 +324,19 @@ namespace MetroDemo
                 return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
+                    ExecuteDelegate = x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
                 });
             }
+        }
+
+        private Action ShowMessage(string startingThread)
+        {
+            return () =>
+                       {
+                           var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
+                                         $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
+                           this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
+                       };
         }
 
         private ICommand showProgressDialogCommand;
@@ -363,7 +362,19 @@ namespace MetroDemo
 
             await controller.CloseAsync();
         }
-        
+
+        private static void PerformDialogCoordinatorAction(Action action, bool runInMainThread)
+        {
+            if (!runInMainThread)
+            {
+                Task.Factory.StartNew(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
 
         private ICommand showCustomDialogCommand;
 
@@ -425,13 +436,7 @@ namespace MetroDemo
             return resources;
         }
 
-        public RandomDataTemplateSelector FlipViewTemplateSelector
-        {
-            get;
-            set;
-        }
-
-        public string[] FlipViewImages
+        public Uri[] FlipViewImages
         {
             get;
             set;

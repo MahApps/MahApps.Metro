@@ -13,13 +13,13 @@
 
     <Style x:Key="AccentedDialogSquareButton"
            BasedOn="{StaticResource AccentedSquareButtonStyle}"
-           TargetType="{x:Type Button}">
+           TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
     <Style x:Key="AccentedDialogHighlightedSquareButton"
            BasedOn="{StaticResource HighlightedSquareButtonStyle}"
-           TargetType="{x:Type Button}">
+           TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
@@ -61,7 +61,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"
+                            <TextBlock x:Name="PART_Title"
+                                       Grid.Row="0"
                                        FontSize="{TemplateBinding DialogTitleFontSize}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Text="{TemplateBinding Title}"
@@ -74,6 +75,9 @@
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="Title" Value="{x:Null}">
+                <Setter TargetName="PART_Title" Property="Visibility" Value="Collapsed" />
+            </Trigger>
             <EventTrigger RoutedEvent="Loaded">
                 <EventTrigger.Actions>
                     <BeginStoryboard Storyboard="{StaticResource DialogShownStoryboard}" />

@@ -9,71 +9,85 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the default instance if the dialog coordinator, which can be injected into a view model.
         /// </summary>
-        public static readonly DialogCoordinator Instance = new DialogCoordinator();
+        public static readonly IDialogCoordinator Instance = new DialogCoordinator();
 
-        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
-        {            
+        public Task<string> ShowInputAsync(object context, string title, string message, MetroDialogSettings settings = null)
+        {
             var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowInputAsync(title, message, settings));
+        }
 
-            return metroWindow.ShowInputAsync(title, message, metroDialogSettings);
+        public string ShowModalInputExternal(object context, string title, string message, MetroDialogSettings metroDialogSettings = null)
+        {
+            var metroWindow = GetMetroWindow(context);
+            return metroWindow.ShowModalInputExternal(title, message, metroDialogSettings);
         }
 
         public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowLoginAsync(title, message, settings));
+        }
 
-            return metroWindow.ShowLoginAsync(title, message, settings);
+        public LoginDialogData ShowModalLoginExternal(object context, string title, string message, LoginDialogSettings settings = null)
+        {
+            var metroWindow = GetMetroWindow(context);
+            return metroWindow.ShowModalLoginExternal(title, message, settings);
         }
 
         public Task<MessageDialogResult> ShowMessageAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
-
-            return metroWindow.ShowMessageAsync(title, message, style, settings);
+            return metroWindow.Invoke(() => metroWindow.ShowMessageAsync(title, message, style, settings));
         }
 
-        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-            bool isCancelable = false, MetroDialogSettings settings = null)
+        public MessageDialogResult ShowModalMessageExternal(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
-
-            return metroWindow.ShowProgressAsync(title, message, isCancelable, settings);
+            return metroWindow.ShowModalMessageExternal(title, message, style, settings);
         }
 
-        public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null)
+        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowProgressAsync(title, message, isCancelable, settings));
+        }
 
-            return metroWindow.ShowMetroDialogAsync(dialog, settings);
+        public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null)
+        {
+            var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowMetroDialogAsync(dialog, settings));
         }
 
         public Task HideMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
-
-            return metroWindow.HideMetroDialogAsync(dialog, settings);
+            return metroWindow.Invoke(() => metroWindow.HideMetroDialogAsync(dialog, settings));
         }
 
         public Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog
         {
             var metroWindow = GetMetroWindow(context);
-
-            return metroWindow.GetCurrentDialogAsync<TDialog>();
+            return metroWindow.Invoke(() => metroWindow.GetCurrentDialogAsync<TDialog>());
         }
 
         private static MetroWindow GetMetroWindow(object context)
         {
-            if (context == null) throw new ArgumentNullException("context");
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             if (!DialogParticipation.IsRegistered(context))
-                throw new InvalidOperationException(
-                    "Context is not registered. Consider using DialogParticipation.Register in XAML to bind in the DataContext.");
+            {
+                throw new InvalidOperationException("Context is not registered. Consider using DialogParticipation.Register in XAML to bind in the DataContext.");
+            }
 
             var association = DialogParticipation.GetAssociation(context);
-            var metroWindow = Window.GetWindow(association) as MetroWindow;
-
+            var metroWindow = association.Invoke(() => Window.GetWindow(association) as MetroWindow);
             if (metroWindow == null)
-                throw new InvalidOperationException("Control is not inside a MetroWindow.");
+            {
+                throw new InvalidOperationException("Context is not inside a MetroWindow.");
+            }
             return metroWindow;
         }
     }

@@ -236,8 +236,7 @@ namespace MahApps.Metro.Controls
         {
             if (d is TextBox)
             {
-                var txtBox = d as TextBox;
-
+                var txtBox = (TextBox)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
@@ -254,8 +253,7 @@ namespace MahApps.Metro.Controls
             }
             else if (d is PasswordBox)
             {
-                var passBox = d as PasswordBox;
-
+                var passBox = (PasswordBox)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
@@ -272,21 +270,44 @@ namespace MahApps.Metro.Controls
             }
             else if (d is NumericUpDown)
             {
-                var numericUpDown = d as NumericUpDown;
-                numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
+                var numericUpDown = (NumericUpDown)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
                     numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
 
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus += NumericUpDownGotFocus;
-            }
+                    //numericUpDown.GotFocus += NumericUpDownGotFocus;
+                }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
-        }
+                    //numericUpDown.GotFocus -= NumericUpDownGotFocus;
+                }
+            }
+            else if (d is TimePickerBase)
+            {
+                var timePicker = (TimePickerBase)d;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedTimeChanged += OnTimePickerBaseSelectedTimeChanged;
+                }
+                else
+                {
+                    timePicker.SelectedTimeChanged -= OnTimePickerBaseSelectedTimeChanged;
+                }
+            }
+            else if (d is DatePicker)
+            {
+                var timePicker = (DatePicker)d;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
+                }
+                else
+                {
+                    timePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
+                }
             }
         }
 
@@ -313,6 +334,16 @@ namespace MahApps.Metro.Controls
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
             SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
+        }
+
+        private static void OnDatePickerBaseSelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as DatePicker, timePickerBase => timePickerBase.SelectedDate.HasValue ? 1 : 0);
+        }
+
+        private static void OnTimePickerBaseSelectedTimeChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedTime.HasValue ? 1 : 0);
         }
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
@@ -396,7 +427,7 @@ namespace MahApps.Metro.Controls
         /// Gets the clear text button behavior.
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
         {
             return (bool)d.GetValue(IsClearTextButtonBehaviorEnabledProperty);
@@ -405,7 +436,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Sets the clear text button behavior.
         /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);

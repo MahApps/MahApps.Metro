@@ -25,6 +25,11 @@ namespace MahApps.Metro.Controls
             return element.GetValue(CapsLockIconProperty);
         }
 
+        public static void SetCapsLockIcon(PasswordBox element, object value)
+        {
+            element.SetValue(CapsLockIconProperty, value);
+        }
+
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static object GetCapsLockWarningToolTip(PasswordBox element)
@@ -32,14 +37,30 @@ namespace MahApps.Metro.Controls
             return element.GetValue(CapsLockWarningToolTipProperty);
         }
 
-        public static void SetCapsLockIcon(PasswordBox element, object value)
-        {
-            element.SetValue(CapsLockIconProperty, value);
-        }
-
         public static void SetCapsLockWarningToolTip(PasswordBox element, object value)
         {
             element.SetValue(CapsLockWarningToolTipProperty, value);
+        }
+
+        private static void ShowCapslockWarningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                PasswordBox pb = (PasswordBox)d;
+
+                pb.KeyDown -= RefreshCapslockStatus;
+                pb.GotFocus -= RefreshCapslockStatus;
+                pb.PreviewGotKeyboardFocus -= RefreshCapslockStatus;
+                pb.LostFocus -= HandlePasswordBoxLostFocus;
+
+                if (e.NewValue != null)
+                {
+                    pb.KeyDown += RefreshCapslockStatus;
+                    pb.GotFocus += RefreshCapslockStatus;
+                    pb.PreviewGotKeyboardFocus += RefreshCapslockStatus;
+                    pb.LostFocus += HandlePasswordBoxLostFocus;
+                }
+            }
         }
 
         private static void RefreshCapslockStatus(object sender, RoutedEventArgs e)
@@ -51,37 +72,18 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static FrameworkElement FindCapsLockIndicator(Control pb)
-        {
-            return pb.Template.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
-        }
-
         private static void HandlePasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
             FrameworkElement fe = FindCapsLockIndicator((Control)sender);
-
             if (fe != null)
             {
                 fe.Visibility = Visibility.Collapsed;
             }
         }
 
-        private static void ShowCapslockWarningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static FrameworkElement FindCapsLockIndicator(Control pb)
         {
-            PasswordBox pb = (PasswordBox)d;
-
-            pb.KeyDown -= RefreshCapslockStatus;
-            pb.GotFocus -= RefreshCapslockStatus;
-            pb.PreviewGotKeyboardFocus -= RefreshCapslockStatus;
-            pb.LostFocus -= HandlePasswordBoxLostFocus;
-
-            if (e.NewValue != null)
-            {
-                pb.KeyDown += RefreshCapslockStatus;
-                pb.GotFocus += RefreshCapslockStatus;
-                pb.PreviewGotKeyboardFocus += RefreshCapslockStatus;
-                pb.LostFocus += HandlePasswordBoxLostFocus;
-            }
+            return pb?.Template?.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
         }
     }
 }

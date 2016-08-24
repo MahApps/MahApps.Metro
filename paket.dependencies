@@ -4,6 +4,8 @@ framework >= net40
 nuget JetBrains.Annotations 10.0.0
 nuget Caliburn.Micro 3.0.0
 nuget ExposedObject 1.2.0.0
+nuget MahApps.Metro.IconPacks
+nuget MahApps.Metro.IconPacks.Modern
 nuget Microsoft.Bcl 1.1.10 framework: = net40
 nuget Microsoft.Bcl.Async 1.0.168 framework: = net40
 nuget Microsoft.Bcl.Build 1.0.21 framework: = net40
@@ -13,4 +15,3 @@ nuget xunit 1.9.2
 nuget xunit.extensions 1.9.2
 
 github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/KeyboardNavigationEx.cs
-github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/PackIconBase.cs

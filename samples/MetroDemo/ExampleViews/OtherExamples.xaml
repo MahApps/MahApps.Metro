@@ -5,6 +5,7 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -12,16 +13,17 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
 
-            <!--  better results for the examples  -->
+            <!--  better results for this examples  -->
             <Style BasedOn="{StaticResource {x:Type Controls:TransitioningContentControl}}" TargetType="{x:Type Controls:TransitioningContentControl}">
                 <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
             </Style>
+            
+            <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
+                <Image Stretch="Fill" Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+            </DataTemplate>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -36,7 +38,8 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel>
+
+        <StackPanel Grid.Column="0">
             <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Transitions" />
             <Controls:TransitioningContentControl x:Name="transitioning"
                                                   Width="250"
@@ -98,76 +101,92 @@
                 </Controls:TransitioningContentControl.CustomVisualStates>
             </Controls:TransitioningContentControl>
         </StackPanel>
+
         <StackPanel Grid.Row="0"
                     Grid.RowSpan="2"
-                    Grid.Column="2">
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
             <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="FlipView" />
-            <StackPanel Height="20"
-                        Margin="0 0 0 5"
-                        Orientation="Horizontal">
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Group1" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <CheckBox x:Name="ShowBannerCheckBox"
-                          Margin="5 0"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Margin="5 2"
                           Content="Banner" />
                 <CheckBox x:Name="ShowMouseOverCheckBox"
-                          Margin="5 0"
+                          Grid.Column="1"
+                          Grid.Row="0"
+                          Margin="5 2"
                           Content="MouseOver Glow"
                           IsChecked="True" />
                 <CheckBox x:Name="CircularNaviCheckBox"
-                          Margin="5 0"
+                          Grid.Column="0"
+                          Grid.Row="1"
+                          Margin="5 2"
                           Content="Circular Navi"
                           IsChecked="False" />
-            </StackPanel>
+                <CheckBox x:Name="ShowNaviCheckBox"
+                          Grid.Column="1"
+                          Grid.Row="1"
+                          Margin="5 2"
+                          Content="Show NaviButtons"
+                          IsChecked="True" />
+            </Grid>
             <Controls:FlipView Height="200"
-                               Margin="0 0 10 0"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
-                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
-                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               Margin="0 0 5 0"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
-                        <Rectangle Width="50"
-                                   Height="50"
-                                   Margin="0 0 10 0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{DynamicResource appbar_cupcake}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="Cupcake" />
                     </Grid>
                     <Grid Background="#00A600">
-                        <Rectangle Width="50"
-                                   Height="50"
-                                   Margin="0 0 10 0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{DynamicResource appbar_xbox}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="Xbox" />
                     </Grid>
                     <Grid Background="#BF1E4B">
-                        <Rectangle Width="50"
-                                   Height="50"
-                                   Margin="0 0 10 0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{DynamicResource appbar_chess_horse}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="ChessHorse" />
                     </Grid>
                 </Controls:FlipView.Items>
             </Controls:FlipView>
 
             <Separator Margin="0 5" />
 
-            <Controls:FlipView Height="400"
-                               Margin="0 0 10 0"
+            <Controls:FlipView Height="200"
+                               Margin="0 0 5 0"
                                BannerText="Databound Items"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
-                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
-                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
-                               ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
-                               ItemsSource="{Binding FlipViewImages, UpdateSourceTrigger=PropertyChanged}" />
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               ItemTemplate="{StaticResource ImageDataTemplate}"
+                               ItemsSource="{Binding FlipViewImages, Mode=OneWay}" />
         </StackPanel>
+
         <Grid Grid.Row="1"
-              Grid.Column="0"
-              Grid.ColumnSpan="2">
+              Grid.Column="0">
             <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Context menu" />
             <Label HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"

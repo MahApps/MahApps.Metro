@@ -62,6 +62,30 @@ namespace MahApps.Metro.Controls {
         static HotKeyBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HotKeyBox), new FrameworkPropertyMetadata(typeof(HotKeyBox)));
+            EventManager.RegisterClassHandler(typeof(HotKeyBox), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
+        }
+
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            HotKeyBox hotKeyBox = (HotKeyBox)sender;
+
+            // If we're an editable HotKeyBox, forward focus to the TextBox or previous element
+            if (!e.Handled)
+            {
+                if (hotKeyBox.Focusable && hotKeyBox._textBox != null)
+                {
+                    if (e.OriginalSource == hotKeyBox)
+                    {
+                        // MoveFocus takes a TraversalRequest as its argument.
+                        var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
+                        // Gets the element with keyboard focus.
+                        var elementWithFocus = Keyboard.FocusedElement as UIElement;
+                        // Change keyboard focus.
+                        elementWithFocus?.MoveFocus(request);
+                        e.Handled = true;
+                    }
+                }
+            }
         }
 
         public override void OnApplyTemplate()

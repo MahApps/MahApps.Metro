@@ -31,8 +31,8 @@ namespace MahApps.Metro.Controls
 
         public event RoutedEventHandler IsOpenChanged
         {
-            add { AddHandler(IsOpenChangedEvent, value); }
-            remove { RemoveHandler(IsOpenChangedEvent, value); }
+            add { this.AddHandler(IsOpenChangedEvent, value); }
+            remove { this.RemoveHandler(IsOpenChangedEvent, value); }
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace MahApps.Metro.Controls
 
         public event RoutedEventHandler ClosingFinished
         {
-            add { AddHandler(ClosingFinishedEvent, value); }
-            remove { RemoveHandler(ClosingFinishedEvent, value); }
+            add { this.AddHandler(ClosingFinishedEvent, value); }
+            remove { this.RemoveHandler(ClosingFinishedEvent, value); }
         }
 
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
@@ -77,8 +77,8 @@ namespace MahApps.Metro.Controls
 
         public bool AreAnimationsEnabled
         {
-            get { return (bool)GetValue(AreAnimationsEnabledProperty); }
-            set { SetValue(AreAnimationsEnabledProperty, value); }
+            get { return (bool)this.GetValue(AreAnimationsEnabledProperty); }
+            set { this.SetValue(AreAnimationsEnabledProperty, value); }
         }
 
         /// <summary>
@@ -86,8 +86,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Visibility TitleVisibility
         {
-            get { return (Visibility)GetValue(TitleVisibilityProperty); }
-            set { SetValue(TitleVisibilityProperty, value); }
+            get { return (Visibility)this.GetValue(TitleVisibilityProperty); }
+            set { this.SetValue(TitleVisibilityProperty, value); }
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Visibility CloseButtonVisibility
         {
-            get { return (Visibility)GetValue(CloseButtonVisibilityProperty); }
-            set { SetValue(CloseButtonVisibilityProperty, value); }
+            get { return (Visibility)this.GetValue(CloseButtonVisibilityProperty); }
+            set { this.SetValue(CloseButtonVisibilityProperty, value); }
         }
 
         /// <summary>
@@ -104,8 +104,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool CloseButtonIsCancel
         {
-            get { return (bool)GetValue(CloseButtonIsCancelProperty); }
-            set { SetValue(CloseButtonIsCancelProperty, value); }
+            get { return (bool)this.GetValue(CloseButtonIsCancelProperty); }
+            set { this.SetValue(CloseButtonIsCancelProperty, value); }
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand CloseCommand
         {
-            get { return (ICommand)GetValue(CloseCommandProperty); }
-            set { SetValue(CloseCommandProperty, value); }
+            get { return (ICommand)this.GetValue(CloseCommandProperty); }
+            set { this.SetValue(CloseCommandProperty, value); }
         }
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object CloseCommandParameter
         {
-            get { return (object)GetValue(CloseCommandParameterProperty); }
-            set { SetValue(CloseCommandParameterProperty, value); }
+            get { return (object)this.GetValue(CloseCommandParameterProperty); }
+            set { this.SetValue(CloseCommandParameterProperty, value); }
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         internal ICommand InternalCloseCommand
         {
-            get { return (ICommand)GetValue(InternalCloseCommandProperty); }
-            set { SetValue(InternalCloseCommandProperty, value); }
+            get { return (ICommand)this.GetValue(InternalCloseCommandProperty); }
+            set { this.SetValue(InternalCloseCommandProperty, value); }
         }
 
         /// <summary>
@@ -141,8 +141,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate HeaderTemplate
         {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
+            get { return (DataTemplate)this.GetValue(HeaderTemplateProperty); }
+            set { this.SetValue(HeaderTemplateProperty, value); }
         }
 
         /// <summary>
@@ -150,8 +150,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsOpen
         {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
+            get { return (bool)this.GetValue(IsOpenProperty); }
+            set { this.SetValue(IsOpenProperty, value); }
         }
 
         /// <summary>
@@ -159,8 +159,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool AnimateOnPositionChange
         {
-            get { return (bool)GetValue(AnimateOnPositionChangeProperty); }
-            set { SetValue(AnimateOnPositionChangeProperty, value); }
+            get { return (bool)this.GetValue(AnimateOnPositionChangeProperty); }
+            set { this.SetValue(AnimateOnPositionChangeProperty, value); }
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool AnimateOpacity
         {
-            get { return (bool)GetValue(AnimateOpacityProperty); }
-            set { SetValue(AnimateOpacityProperty, value); }
+            get { return (bool)this.GetValue(AnimateOpacityProperty); }
+            set { this.SetValue(AnimateOpacityProperty, value); }
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsPinned
         {
-            get { return (bool)GetValue(IsPinnedProperty); }
-            set { SetValue(IsPinnedProperty, value); }
+            get { return (bool)this.GetValue(IsPinnedProperty); }
+            set { this.SetValue(IsPinnedProperty, value); }
         }
 
         /// <summary>
@@ -186,8 +186,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MouseButton ExternalCloseButton
         {
-            get { return (MouseButton)GetValue(ExternalCloseButtonProperty); }
-            set { SetValue(ExternalCloseButtonProperty, value); }
+            get { return (MouseButton)this.GetValue(ExternalCloseButtonProperty); }
+            set { this.SetValue(ExternalCloseButtonProperty, value); }
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsModal
         {
-            get { return (bool)GetValue(IsModalProperty); }
-            set { SetValue(IsModalProperty, value); }
+            get { return (bool)this.GetValue(IsModalProperty); }
+            set { this.SetValue(IsModalProperty, value); }
         }
 
         /// <summary>
@@ -204,8 +204,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Position Position
         {
-            get { return (Position)GetValue(PositionProperty); }
-            set { SetValue(PositionProperty, value); }
+            get { return (Position)this.GetValue(PositionProperty); }
+            set { this.SetValue(PositionProperty, value); }
         }
 
         /// <summary>
@@ -213,8 +213,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public string Header
         {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get { return (string)this.GetValue(HeaderProperty); }
+            set { this.SetValue(HeaderProperty, value); }
         }
 
         /// <summary>
@@ -222,8 +222,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FlyoutTheme Theme
         {
-            get { return (FlyoutTheme)GetValue(ThemeProperty); }
-            set { SetValue(ThemeProperty, value); }
+            get { return (FlyoutTheme)this.GetValue(ThemeProperty); }
+            set { this.SetValue(ThemeProperty, value); }
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
-            this.InternalCloseCommand = new CloseCommand(InternalCloseCommandCanExecute, InternalCloseCommandExecuteAction);
+            this.InternalCloseCommand = new CloseCommand(this.InternalCloseCommandCanExecute, this.InternalCloseCommandExecuteAction);
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
         }
@@ -659,15 +659,45 @@ namespace MahApps.Metro.Controls
             this.windowTitleThumb = this.GetTemplateChild("PART_WindowTitleThumb") as Thumb;
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.DragStarted -= this.WindowTitleThumbOnDragStarted;
+                this.windowTitleThumb.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
 
-                this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
-                this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                var flyoutsControl = this.TryFindParent<FlyoutsControl>();
+                if (flyoutsControl != null)
+                {
+                    this.windowTitleThumb.DragStarted += this.WindowTitleThumbOnDragStarted;
+                    this.windowTitleThumb.DragCompleted += this.WindowTitleThumbOnDragCompleted;
+                    this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                    this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                    this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                    this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                }
+            }
+
+            var thumbContentControl = this.flyoutHeader as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.DragStarted -= this.WindowTitleThumbOnDragStarted;
+                thumbContentControl.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
+                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+
+                var flyoutsControl = this.TryFindParent<FlyoutsControl>();
+                if (flyoutsControl != null)
+                {
+                    thumbContentControl.DragStarted += this.WindowTitleThumbOnDragStarted;
+                    thumbContentControl.DragCompleted += this.WindowTitleThumbOnDragCompleted;
+                    thumbContentControl.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                    thumbContentControl.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                    thumbContentControl.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                    thumbContentControl.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+                }
             }
 
             this.hideStoryboard = this.GetTemplateChild("HideStoryboard") as Storyboard;
@@ -685,14 +715,46 @@ namespace MahApps.Metro.Controls
             this.ApplyAnimation(this.Position, this.AnimateOpacity);
         }
 
+        private void WindowTitleThumbOnDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            this.dragStartedMousePos = null;
+        }
+
+        private Point? dragStartedMousePos = null;
+
+        private void WindowTitleThumbOnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            var window = this.ParentWindow;
+            if (window != null && this.Position != Position.Bottom)
+            {
+                this.dragStartedMousePos = Mouse.GetPosition((IInputElement)sender);
+            }
+            else
+            {
+                this.dragStartedMousePos = null;
+            }
+        }
+
         protected internal void CleanUp(FlyoutsControl flyoutsControl)
         {
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.DragStarted -= this.WindowTitleThumbOnDragStarted;
+                this.windowTitleThumb.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
                 this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+            var thumbContentControl = this.flyoutHeader as IMetroThumb;
+            if (thumbContentControl != null)
+            {
+                thumbContentControl.DragStarted -= this.WindowTitleThumbOnDragStarted;
+                thumbContentControl.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
+                thumbContentControl.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
+                thumbContentControl.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                thumbContentControl.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                thumbContentControl.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             this.parentWindow = null;
         }
@@ -704,12 +766,13 @@ namespace MahApps.Metro.Controls
             {
                 MetroWindow.DoWindowTitleThumbOnPreviewMouseLeftButtonUp(window, e);
             }
+            this.dragStartedMousePos = null;
         }
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom)
+            if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
             {
                 MetroWindow.DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, window, dragDeltaEventArgs);
             }
@@ -718,7 +781,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom)
+            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
             {
                 MetroWindow.DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(window, mouseButtonEventArgs);
             }
@@ -727,7 +790,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom)
+            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
             {
                 MetroWindow.DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(window, e);
             }

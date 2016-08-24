@@ -10,6 +10,7 @@ namespace MahApps.Metro.Tests
     public class CustomDialogTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task ReceivesDataContext()
         {
             await TestHost.SwitchToAppThread();

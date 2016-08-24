@@ -28,7 +28,23 @@
                              BorderThickness="{TemplateBinding BorderThickness}"
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
+                             IsTabStop="{TemplateBinding IsTabStop}"
+                             Focusable="{TemplateBinding Focusable}"
+                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                             Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}"
+                             Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                             Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                             Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
+                             Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
+                             Controls:TextBoxHelper.ButtonFontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
+                             Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding Controls:TextBoxHelper.ButtonsAlignment}"
+                             Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
+                             Controls:TextBoxHelper.IsWaitingForData="{TemplateBinding Controls:TextBoxHelper.IsWaitingForData}"
+                             Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
+                             Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                              Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"
+                             Controls:ControlsHelper.FocusBorderBrush="{TemplateBinding Controls:ControlsHelper.FocusBorderBrush}"
+                             Controls:ControlsHelper.MouseOverBorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
                              Text="{TemplateBinding Text}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">

@@ -80,10 +80,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(new MetroDialogSettings()));
 
         public static readonly DependencyProperty WindowTitleBrushProperty = DependencyProperty.Register("WindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register("NonActiveWindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
+
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
-        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
-        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register("NonActiveWindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
@@ -777,9 +778,16 @@ namespace MahApps.Metro.Controls
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        internal void StoreFocus()
+        /// <summary>
+        /// Stores the given element, or the last focused element via FocusManager, for restoring the focus after closing a dialog.
+        /// </summary>
+        /// <param name="thisElement">The element which will be focused again.</param>
+        public void StoreFocus([CanBeNull] IInputElement thisElement = null)
         {
-            restoreFocus = this.restoreFocus ?? FocusManager.GetFocusedElement(this);
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    restoreFocus = thisElement ?? (this.restoreFocus ?? FocusManager.GetFocusedElement(this));
+                }));
         }
 
         internal void RestoreFocus()
@@ -792,6 +800,14 @@ namespace MahApps.Metro.Controls
                         restoreFocus = null;
                     }));
             }
+        }
+
+        /// <summary>
+        /// Clears the stored element which would get the focus after closing a dialog.
+        /// </summary>
+        public void ResetStoredFocus()
+        {
+            restoreFocus = null;
         }
 
         /// <summary>
@@ -913,6 +929,8 @@ namespace MahApps.Metro.Controls
             {
                 // no preview if we just clicked these elements
                 if (element.TryFindParent<Flyout>() != null
+                    || Equals(element, this.overlayBox)
+                    || element.TryFindParent<BaseMetroDialog>() != null
                     || Equals(element.TryFindParent<ContentControl>(), this.icon)
                     || element.TryFindParent<WindowCommands>() != null
                     || element.TryFindParent<WindowButtonCommands>() != null)
@@ -1147,8 +1165,8 @@ namespace MahApps.Metro.Controls
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
-                        window.Top = 2;
-                        window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
+                        //window.Top = 2;
+                        //window.Left = Math.Max(cursorXPos - window.RestoreBounds.Width / 2, 0);
 
                         window.StateChanged -= windowOnStateChanged;
                         if (window.WindowState == WindowState.Normal)

@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
@@ -18,7 +19,7 @@
                 Style="{DynamicResource MetroCircleButtonStyle}"
                 FontFamily="Segoe UI Symbol"
                 FontSize="16">
-            <controls:PackIconModern Kind="Add" />
+            <iconPacks:PackIconModern Kind="Add" />
         </Button>
     </StackPanel>
 

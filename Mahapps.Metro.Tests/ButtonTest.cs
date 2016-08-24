@@ -9,6 +9,7 @@ namespace MahApps.Metro.Tests
     public class ButtonTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultButtonTextIsUpperCase()
         {
             await TestHost.SwitchToAppThread();
@@ -20,6 +21,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultButtonRespectsButtonHelperPreserveTextCase()
         {
             await TestHost.SwitchToAppThread();
@@ -34,6 +36,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task DefaultButtonRespectsControlsHelperContentCharacterCasing()
         {
             await TestHost.SwitchToAppThread();
@@ -54,6 +57,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task SquareButtonButtonTextIsLowerCase()
         {
             await TestHost.SwitchToAppThread();
@@ -65,6 +69,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task SquareButtonBespectsButtonHelperContentCharacterCasing()
         {
             await TestHost.SwitchToAppThread();

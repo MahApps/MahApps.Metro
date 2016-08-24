@@ -2,7 +2,6 @@ namespace MahApps.Metro.Controls
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
@@ -24,25 +23,26 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementSecondPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
+    [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
     public abstract class TimePickerBase : Control
     {
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
-          typeof(ICollection<int>),
+          typeof(IEnumerable<int>),
           typeof(TimePickerBase),
-          new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
+          new FrameworkPropertyMetadata(Enumerable.Range(0, 24), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
 
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
-            typeof(ICollection<int>),
+            typeof(IEnumerable<int>),
             typeof(TimePickerBase),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
         public static readonly DependencyProperty SourceSecondsProperty = DependencyProperty.Register(
             "SourceSeconds",
-            typeof(ICollection<int>),
+            typeof(IEnumerable<int>),
             typeof(TimePickerBase),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
         public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase), new PropertyMetadata(default(bool)));
 
@@ -64,9 +64,6 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
 
-        public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
-            "SelectedTime", typeof(TimeSpan?), typeof(TimePickerBase), new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
-
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
@@ -79,7 +76,17 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
-        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent("SelectedTimeChanged", RoutingStrategy.Direct, typeof(EventHandler<SelectionChangedEventArgs>), typeof(TimePickerBase));
+        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedTimeChanged", 
+            RoutingStrategy.Direct,
+            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>>), 
+            typeof(TimePickerBase));
+
+        public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
+            "SelectedTime",
+            typeof(TimeSpan?),
+            typeof(TimePickerBase),
+            new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
 
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
@@ -90,6 +97,7 @@ namespace MahApps.Metro.Controls
         private const string ElementPopup = "PART_Popup";
         private const string ElementSecondHand = "PART_SecondHand";
         private const string ElementSecondPicker = "PART_SecondPicker";
+        private const string ElementTextBox = "PART_TextBox";
 
         #region Do not change order of fields inside this region
 
@@ -107,12 +115,48 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Represents the time 00:00:00; 12:00:00 AM respectively
         /// </summary>
-        private static readonly TimeSpan MinValue = TimeSpan.Zero;
+        private static readonly TimeSpan MinTimeOfDay = TimeSpan.Zero;
 
         /// <summary>
         /// Represents the time 23:59:59.9999999; 11:59:59.9999999 PM respectively
         /// </summary>
-        private static readonly TimeSpan MaxValue = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
+        private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
+
+        /// <summary>
+        /// This list contains values from 0 to 55 with an interval of 5. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf5}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf5}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf5 = CreateValueList(5);
+
+        /// <summary>
+        /// This list contains values from 0 to 50 with an interval of 10. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf10}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf10}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 10, 20, 30, 40, 50}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf10 = CreateValueList(10);
+
+        /// <summary>
+        /// This list contains values from 0 to 45 with an interval of 15. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
+        /// </summary>
+        /// <example>
+        /// <code>&lt;MahApps:TimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf15}" /&gt;</code>
+        /// <code>&lt;MahApps:DateTimePicker SourceSeconds="{x:Static MahApps:TimePickerBase.IntervalOf15}" /&gt;</code>
+        /// </example>
+        /// <returns>
+        /// Returns a list containing {0, 15, 30, 45}.
+        /// </returns>
+        public static readonly IEnumerable<int> IntervalOf15 = CreateValueList(15);
 
         private Selector _ampmSwitcher;
         private Button _button;
@@ -124,19 +168,20 @@ namespace MahApps.Metro.Controls
         private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
+        private DatePickerTextBox _textBox;
 
         static TimePickerBase()
         {
+            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>
         ///     Occurs when the <see cref="SelectedTime" /> property is changed.
         /// </summary>
-        public event EventHandler<SelectionChangedEventArgs> SelectedTimeChanged
+        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>> SelectedTimeChanged
         {
             add { AddHandler(SelectedTimeChangedEvent, value); }
             remove { RemoveHandler(SelectedTimeChangedEvent, value); }
@@ -252,9 +297,9 @@ namespace MahApps.Metro.Controls
         ///     1 to 12 otherwise..
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceHours
+        public IEnumerable<int> SourceHours
         {
-            get { return (ICollection<int>)GetValue(SourceHoursProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceHoursProperty); }
             set { SetValue(SourceHoursProperty, value); }
         }
 
@@ -266,9 +311,9 @@ namespace MahApps.Metro.Controls
         ///     0 to 59.
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceMinutes
+        public IEnumerable<int> SourceMinutes
         {
-            get { return (ICollection<int>)GetValue(SourceMinutesProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceMinutesProperty); }
             set { SetValue(SourceMinutesProperty, value); }
         }
 
@@ -280,9 +325,9 @@ namespace MahApps.Metro.Controls
         ///     0 to 59.
         /// </returns>
         [Category("Common")]
-        public ICollection<int> SourceSeconds
+        public IEnumerable<int> SourceSeconds
         {
-            get { return (ICollection<int>)GetValue(SourceSecondsProperty); }
+            get { return (IEnumerable<int>)GetValue(SourceSecondsProperty); }
             set { SetValue(SourceSecondsProperty, value); }
         }
 
@@ -325,6 +370,7 @@ namespace MahApps.Metro.Controls
             _ampmSwitcher = GetTemplateChild(ElementAmPmSwitcher) as Selector;
             _minuteHand = GetTemplateChild(ElementMinuteHand) as FrameworkElement;
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
+            _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
@@ -388,7 +434,7 @@ namespace MahApps.Metro.Controls
             SelectedTime = this.GetTimeOfDayFromClockHands();
         }
 
-        protected virtual void OnSelectedTimeChanged(SelectionChangedEventArgs e)
+        protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<TimeSpan?> e)
         {
             RaiseEvent(e);
         }
@@ -421,43 +467,53 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static IList<int> CreateValueList(int interval)
+        {
+            return Enumerable.Repeat(interval, 60 / interval)
+                             .Select((value, index) => value * index)
+                             .ToList();
+        }
+
         private static object CoerceSelectedTime(DependencyObject d, object basevalue)
         {
-            var spanOfTime = (TimeSpan?)basevalue;
+            var timeOfDay = (TimeSpan?)basevalue;
 
-            if (spanOfTime < MinValue)
+            if (timeOfDay < MinTimeOfDay)
             {
-                return MinValue;
+                return MinTimeOfDay;
             }
-            else if (spanOfTime > MaxValue)
+            else if (timeOfDay > MaxTimeOfDay)
             {
-                return MaxValue;
+                return MaxTimeOfDay;
             }
 
-            return spanOfTime;
+            return timeOfDay;
         }
 
         private static object CoerceSource60(DependencyObject d, object basevalue)
         {
-            var list = basevalue as ICollection<int>;
+            var list = basevalue as IEnumerable<int>;
             if (list != null)
             {
                 return list.Where(i => i >= 0 && i < 60);
             }
 
-            return null;
+            return Enumerable.Empty<int>();
         }
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
         {
-            var dt = d as TimePickerBase;
-            var hourList = basevalue as ICollection<int>;
-            if (dt != null && !dt.IsMilitaryTime && hourList != null)
+            var timePickerBase = d as TimePickerBase;
+            var hourList = basevalue as IEnumerable<int>;
+            if (timePickerBase != null && hourList != null)
             {
-                return new Collection<int>(hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer()).ToList());
+                if (!timePickerBase.IsMilitaryTime)
+                {
+                    return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
+                }
+                return hourList.Where(i => i > 0 && i <= 24);
             }
-
-            return basevalue;
+            return Enumerable.Empty<int>();
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -477,6 +533,24 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.ApplyCulture();
         }
 
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            TimePickerBase picker = (TimePickerBase)sender;
+            if (!e.Handled && (picker._textBox != null))
+            {
+                if (Equals(e.OriginalSource, picker))
+                {
+                    picker._textBox.Focus();
+                    e.Handled = true;
+                }
+                else if (Equals(e.OriginalSource, picker._textBox))
+                {
+                    picker._textBox.SelectAll();
+                    e.Handled = true;
+                }
+            }
+        }
+
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((TimePickerBase)d).SetHandVisibility((TimePartVisibility)e.NewValue);
@@ -492,7 +566,7 @@ namespace MahApps.Metro.Controls
             var timePartPickerBase = (TimePickerBase)d;
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
-            timePartPickerBase.OnSelectedTimeChanged(new SelectionChangedEventArgs(SelectedTimeChangedEvent, new object[] { e.OldValue }, new object[] { e.NewValue }));
+            timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)

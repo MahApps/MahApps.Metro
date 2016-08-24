@@ -4,24 +4,30 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 [![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
 
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetro.svg?style=flat-square&&label=TeamCity%20dev)]()
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroMaster.svg?style=flat-square&&label=TeamCity%20rel)]()
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
+[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg)](http://stackoverflow.com/questions/tagged/mahapps.metro)
 
 [![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
-[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
+[![NuGet](https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
+[![NuGetPre](https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![main demo window](./docs/main_demo_window.png)
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroDevelopAlpha.svg?style=flat-square&&label=TeamCity%20dev)]()
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
 
-![iconpacks](https://cloud.githubusercontent.com/assets/658431/13028849/7a25dbea-d27b-11e5-9059-0e672e5e2268.gif)
+## Want to say thanks?
 
-![main demo window animated](./docs/main_demo_window.gif)
+Hit the :star: Star :star: button, thx :squirrel:
 
 ## Documentation
 
 You can read the documentation on the web site: [http://mahapps.com](http://mahapps.com)  
 You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+
+![maindemowindow01](./docs/main_demo_window.png)
+
+![iconpacks](https://cloud.githubusercontent.com/assets/658431/16098473/6a88963a-3353-11e6-8b97-71c07700c17c.gif)
+
+![maindemowindow03](./docs/main_demo_window.gif)
 
 ## Release Notes
 
@@ -30,17 +36,29 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ## Icons
 
-MahApps.Metro has a [Material](<https://materialdesignicons.com/>) and [Modern](http://modernuiicons.com/) Icon pack for better usage (currently only available via pre-release).
+MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
 
-```xml
-<metro:PackIconMaterial Kind="EmoticonCool" />
+```xaml
+<iconPacks:PackIconMaterial Kind="EmoticonCool" />
 ```
+![2016-07-26_02h28_22](https://cloud.githubusercontent.com/assets/658431/17122168/71270be8-52d9-11e6-89a2-d670bd72aabb.png)
 
-```xml
-<metro:PackIconModern Kind="FuturamaFry" />
+```xaml
+<iconPacks:PackIconModern Kind="ThumbsUp" />
 ```
+![2016-07-26_02h28_37](https://cloud.githubusercontent.com/assets/658431/17122171/729eb156-52d9-11e6-8baf-12345ddb9262.png)
 
-You can still download the old resources via [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources).
+```xaml
+<iconPacks:PackIconFontAwesome Kind="FontAwesome" />
+```
+![2016-07-26_02h29_35](https://cloud.githubusercontent.com/assets/658431/17122172/73fe79f0-52d9-11e6-821e-204d1ee99fc3.png)
+
+```xaml
+<iconPacks:PackIconEntypo Kind="EmojiHappy" />
+```
+![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
+
+It's still possible to use the old Xaml icon resources via this [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources) (but you should use the new one for easier usage).
 
 ## Contributing to this project
 

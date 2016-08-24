@@ -7,6 +7,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
@@ -176,12 +177,20 @@
                     <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
-                    <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
                     <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
                     <Separator />
+                    <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
+                    <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
+                    <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
+                    <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
+                    <Separator />
                     <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
-                    <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM" />
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}" Header="Show MessageDialog via VM" />
+                    <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
+                    <MenuItem Header="Show MessageDialog via VM">
+                        <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="DISPATCHER_THREAD" Header="... from Main Thread" />
+                        <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="BACKGROUND_THREAD" Header="... from Background Thread" />
+                    </MenuItem>
+                    
                     <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
                     <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
                 </MenuItem>
@@ -199,8 +208,9 @@
                               IsCheckable="True"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
                     <Separator />
-                    <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with a Border" />
-                    <MenuItem Click="MenuWindowWithGlowOnClick" Header="Window with a Glow" />
+                    <MenuItem Click="MenuWindowWithoutBorderOnClick" Header="Window without Border" />
+                    <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with Border" />
+                    <MenuItem Click="MenuWindowWithGlowOnClick" Header="Window with Glow" />
                     <MenuItem Click="MenuWindowWithShadowOnClick" Header="Window with drop shadow" />
                     <Separator />
                     <MenuItem x:Name="ShowSeparatorsMI"

@@ -3,235 +3,219 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ControlTemplate x:Key="SplitButtonHorizontal" TargetType="{x:Type Controls:SplitButton}">
-        <Border x:Name="PART_Border"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                UseLayoutRounding="True">
-            <Grid x:Name="PART_Container"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button x:Name="PART_Button"
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        Style="{TemplateBinding ButtonStyle}"
-                        Background="{TemplateBinding Background}"
-                        Foreground="{TemplateBinding Foreground}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        CommandTarget="{TemplateBinding CommandTarget}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Orientation="Horizontal">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Content="{TemplateBinding Icon}"
-                                          ContentTemplate="{TemplateBinding IconTemplate}"
-                                          Focusable="False"
-                                          RecognizesAccessKey="True"
-                                          UseLayoutRounding="False" />
-                        <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                   Margin="2"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                   RecognizesAccessKey="True"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                   UseLayoutRounding="False" />
-                    </StackPanel>
-                </Button>
-                <Button x:Name="PART_Expander"
-                        Grid.Column="1"
-                        Width="20"
-                        Style="{TemplateBinding ButtonArrowStyle}"
-                        Background="{TemplateBinding Background}"
-                        Foreground="{TemplateBinding Foreground}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <Rectangle x:Name="PART_Rectangle"
-                               Width="10"
-                               Height="6"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Fill="{TemplateBinding ArrowBrush}"
-                               UseLayoutRounding="False">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill">
-                                <VisualBrush.Visual>
-                                    <Canvas Width="18"
-                                            Height="18"
-                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                            UseLayoutRounding="False">
-                                        <Path Canvas.Left="14.9063"
-                                              Canvas.Top="15.75"
-                                              Width="18"
-                                              Height="16"
-                                              Fill="{DynamicResource BlackColorBrush}"
-                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                              Stretch="Fill" />
-                                    </Canvas>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
-                <Popup x:Name="PART_Popup"
-                       MinWidth="{TemplateBinding ActualWidth}"
-                       IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                       PlacementTarget="{Binding ElementName=PART_Button}"
-                       PopupAnimation="Fade"
-                       StaysOpen="True">
-                    <ListBox x:Name="PART_ListBox"
-                             Style="{TemplateBinding ListBoxStyle}"
-                             BorderBrush="{TemplateBinding BorderBrush}"
-                             BorderThickness="{TemplateBinding BorderThickness}"
-                             DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                             ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                             ItemTemplate="{TemplateBinding ItemTemplate}"
-                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                             ItemsSource="{TemplateBinding ItemsSource}"
-                             SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                             SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                             SelectionMode="Single" />
-                </Popup>
-            </Grid>
-        </Border>
+        <Grid UseLayoutRounding="True">
+            <Border x:Name="PART_Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid x:Name="PART_Container"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="PART_Button"
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Style="{TemplateBinding ButtonStyle}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding Foreground}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Command="{TemplateBinding Command}"
+                            CommandParameter="{TemplateBinding CommandParameter}"
+                            CommandTarget="{TemplateBinding CommandTarget}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Orientation="Horizontal">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Icon}"
+                                              ContentTemplate="{TemplateBinding IconTemplate}"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True"
+                                              UseLayoutRounding="False" />
+                            <Controls:ContentControlEx x:Name="PART_ButtonContent"
+                                                       Margin="2"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       UseLayoutRounding="False" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="PART_Expander"
+                            Grid.Column="1"
+                            Width="20"
+                            Style="{TemplateBinding ButtonArrowStyle}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding ArrowBrush}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <!-- Material - ChevronDown -->
+                        <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
+                    </Button>
+                </Grid>
+            </Border>
+            <Popup x:Name="PART_Popup"
+                   MinWidth="{TemplateBinding ActualWidth}"
+                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   PlacementTarget="{Binding ElementName=PART_Border}"
+                   PopupAnimation="Fade"
+                   StaysOpen="True">
+                <ListBox x:Name="PART_ListBox"
+                         Margin="0"
+                         Style="{TemplateBinding ListBoxStyle}"
+                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                         BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="{TemplateBinding BorderThickness}"
+                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                         ItemsPanel="{TemplateBinding ItemsPanel}"
+                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                         ItemTemplate="{TemplateBinding ItemTemplate}"
+                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                         ItemsSource="{TemplateBinding ItemsSource}"
+                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
+                         IsSelected="{TemplateBinding IsSelected}"
+                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
+                         SelectionMode="Single" />
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="SplitButtonVertical" TargetType="{x:Type Controls:SplitButton}">
-        <Border x:Name="PART_Border"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                UseLayoutRounding="True">
-            <Grid x:Name="PART_Container"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Button x:Name="PART_Button"
-                        Grid.Row="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        VerticalContentAlignment="Stretch"
-                        Style="{TemplateBinding ButtonStyle}"
-                        Background="{TemplateBinding Background}"
-                        Foreground="{TemplateBinding Foreground}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        CommandTarget="{TemplateBinding CommandTarget}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Orientation="Vertical">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Content="{TemplateBinding Icon}"
-                                          ContentTemplate="{TemplateBinding IconTemplate}"
-                                          Focusable="False"
-                                          RecognizesAccessKey="True"
-                                          UseLayoutRounding="False" />
-                        <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                   Margin="2"
-                                                   Padding="{TemplateBinding Padding}"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                   RecognizesAccessKey="True"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                   UseLayoutRounding="False" />
-                    </StackPanel>
-                </Button>
-                <Button x:Name="PART_Expander"
-                        Grid.Row="1"
-                        Height="20"
-                        Style="{TemplateBinding ButtonArrowStyle}"
-                        Background="{TemplateBinding Background}"
-                        Foreground="{TemplateBinding Foreground}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                    <Rectangle x:Name="PART_Rectangle"
-                               Width="10"
-                               Height="6"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Fill="{TemplateBinding ArrowBrush}"
-                               UseLayoutRounding="False">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill">
-                                <VisualBrush.Visual>
-                                    <Canvas Width="18"
-                                            Height="18"
-                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                            UseLayoutRounding="False">
-                                        <Path Canvas.Left="14.9063"
-                                              Canvas.Top="15.75"
-                                              Width="18"
-                                              Height="16"
-                                              Fill="{DynamicResource BlackColorBrush}"
-                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
-                                              Stretch="Fill" />
-                                    </Canvas>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
-                <Popup x:Name="PART_Popup"
-                       MinWidth="{TemplateBinding ActualWidth}"
-                       IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                       PlacementTarget="{Binding ElementName=PART_Expander}"
-                       PopupAnimation="Fade"
-                       StaysOpen="True">
-                    <ListBox x:Name="PART_ListBox"
-                             Style="{TemplateBinding ListBoxStyle}"
-                             BorderBrush="{TemplateBinding BorderBrush}"
-                             BorderThickness="{TemplateBinding BorderThickness}"
-                             DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                             ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                             ItemTemplate="{TemplateBinding ItemTemplate}"
-                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                             ItemsSource="{TemplateBinding ItemsSource}"
-                             SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                             SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                             SelectionMode="Single" />
-                </Popup>
-            </Grid>
-        </Border>
+        <Grid UseLayoutRounding="True">
+            <Border x:Name="PART_Border"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid x:Name="PART_Container"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Button x:Name="PART_Button"
+                            Grid.Row="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Style="{TemplateBinding ButtonStyle}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding Foreground}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Command="{TemplateBinding Command}"
+                            CommandParameter="{TemplateBinding CommandParameter}"
+                            CommandTarget="{TemplateBinding CommandTarget}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Orientation="Vertical">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding Icon}"
+                                              ContentTemplate="{TemplateBinding IconTemplate}"
+                                              Focusable="False"
+                                              RecognizesAccessKey="True"
+                                              UseLayoutRounding="False" />
+                            <Controls:ContentControlEx x:Name="PART_ButtonContent"
+                                                       Margin="2"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       UseLayoutRounding="False" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="PART_Expander"
+                            Grid.Row="1"
+                            Height="20"
+                            Style="{TemplateBinding ButtonArrowStyle}"
+                            Background="{TemplateBinding Background}"
+                            Foreground="{TemplateBinding ArrowBrush}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <!-- Material - ChevronDown -->
+                        <ContentControl Style="{DynamicResource PathIconContentControlStyle}" Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" Width="9" Height="9" />
+                    </Button>
+                </Grid>
+            </Border>
+            <Popup x:Name="PART_Popup"
+                   MinWidth="{TemplateBinding ActualWidth}"
+                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   PlacementTarget="{Binding ElementName=PART_Border}"
+                   PopupAnimation="Fade"
+                   StaysOpen="True">
+                <ListBox x:Name="PART_ListBox"
+                         Margin="0"
+                         Style="{TemplateBinding ListBoxStyle}"
+                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                         BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="{TemplateBinding BorderThickness}"
+                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                         ItemsPanel="{TemplateBinding ItemsPanel}"
+                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                         ItemTemplate="{TemplateBinding ItemTemplate}"
+                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                         ItemsSource="{TemplateBinding ItemsSource}"
+                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
+                         IsSelected="{TemplateBinding IsSelected}"
+                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
+                         SelectionMode="Single" />
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
+                <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="ButtonSplitFocusVisual">
@@ -250,6 +234,8 @@
 
     <Style TargetType="{x:Type Controls:SplitButton}">
         <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
@@ -269,9 +255,6 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{StaticResource SplitButtonVertical}" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ArrowBrush" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />

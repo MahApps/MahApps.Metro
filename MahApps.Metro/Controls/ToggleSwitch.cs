@@ -21,7 +21,7 @@ namespace MahApps.Metro.Controls
     [TemplateVisualState(Name = NormalState, GroupName = CommonStates)]
     [TemplateVisualState(Name = DisabledState, GroupName = CommonStates)]
     [TemplatePart(Name = SwitchPart, Type = typeof(ToggleButton))]
-    public class ToggleSwitch : ContentControl
+    public class ToggleSwitch : HeaderedContentControl
     {
         private const string CommonStates = "CommonStates";
         private const string NormalState = "Normal";
@@ -30,10 +30,10 @@ namespace MahApps.Metro.Controls
 
         private ToggleButton _toggleButton;
 
+        public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(ToggleSwitch), new PropertyMetadata(SystemFonts.MessageFontFamily));
+
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
@@ -64,6 +64,16 @@ namespace MahApps.Metro.Controls
         public event EventHandler<RoutedEventArgs> Click;
 
         /// <summary>
+        /// Gets/sets the font family of the header.
+        /// </summary> 
+        [Bindable(true), Localizability(LocalizationCategory.Font)]
+        public FontFamily HeaderFontFamily
+        {
+            get { return (FontFamily)GetValue(HeaderFontFamilyProperty); }
+            set { SetValue(HeaderFontFamilyProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets the text to display when the control is in it's On state.
         /// </summary>
         public string OnLabel
@@ -79,24 +89,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (string)GetValue(OffLabelProperty); }
             set { SetValue(OffLabelProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the header to display on top of the control.
-        /// </summary>
-        public object Header
-        {
-            get { return GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the data template used to display the header on the top of the control.
-        /// </summary>
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
         }
 
         /// <summary>

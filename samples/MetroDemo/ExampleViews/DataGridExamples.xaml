@@ -44,6 +44,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0"
@@ -96,6 +97,20 @@
                               VerticalAlignment="Center"
                               ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
                               SelectedValue="{Binding HeadersVisibility}" />
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               Margin="2"
+                               VerticalAlignment="Center"
+                               Text="RowHeaderWidth" />
+                    <controls:NumericUpDown Grid.Row="4"
+                                            Grid.Column="1"
+                                            Width="100"
+                                            Margin="2"
+                                            VerticalAlignment="Center"
+                                            Minimum="0"
+                                            Maximum="40"
+                                            Value="{Binding RowHeaderWidth, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </ControlTemplate>
 
@@ -131,6 +146,7 @@
                   Grid.Row="1"
                   Grid.Column="1"
                   Margin="5"
+                  RowHeaderWidth="20"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
@@ -192,6 +208,7 @@
                   Grid.Row="3"
                   Grid.Column="1"
                   Margin="5"
+                  RowHeaderWidth="0"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
                   Style="{DynamicResource AzureDataGrid}">
