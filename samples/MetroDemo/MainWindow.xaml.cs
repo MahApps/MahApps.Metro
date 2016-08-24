@@ -52,9 +52,9 @@ namespace MetroDemo
                 var fullScreen = (bool)e.NewValue;
                 if (fullScreen)
                 {
+                    metroWindow.IgnoreTaskbarOnMaximize = true;
                     metroWindow.WindowState = WindowState.Maximized;
                     metroWindow.UseNoneWindowStyle = true;
-                    metroWindow.IgnoreTaskbarOnMaximize = true;
                 }
                 else
                 {
