@@ -10,6 +10,9 @@ using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Behaviours
 {
+    using System.Linq;
+    using System.Management;
+
     /// <summary>
     /// With this class we can make custom window styles.
     /// </summary>
@@ -24,8 +27,25 @@ namespace MahApps.Metro.Behaviours
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
 
+        // Versions can be taken from https://msdn.microsoft.com/library/windows/desktop/ms724832.aspx
+        private bool isWindwos10OrHigher;
+
+        private static bool IsWindows10OrHigher()
+        {
+            // Snippet from Koopakiller https://dotnet-snippets.de/snippet/os-version-name-mit-wmi/4929
+            using (var mos = new ManagementObjectSearcher("SELECT Caption, Version FROM Win32_OperatingSystem"))
+            {
+                var attribs = mos.Get().OfType<ManagementObject>();
+                //caption = attribs.FirstOrDefault().GetPropertyValue("Caption").ToString() ?? "Unknown";
+                var version = new Version((attribs.FirstOrDefault()?.GetPropertyValue("Version") ?? "0.0.0.0").ToString());
+                return version >= new Version(10, 0);
+            }
+        }
+
         protected override void OnAttached()
         {
+            this.isWindwos10OrHigher = IsWindows10OrHigher();
+
             this.windowChrome = new WindowChrome
                                 {
 #if NET4_5
@@ -133,11 +153,11 @@ namespace MahApps.Metro.Behaviours
                     // this only happens if we change this at runtime
                     var removed = this._ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
                     this.windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
-                    this.ForceRedrawWindowFromPropertyChanged();
                     if (removed)
                     {
                         this._ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
                     }
+                    this.ForceRedrawWindowFromPropertyChanged();
                 }
             }
         }
@@ -258,8 +278,10 @@ namespace MahApps.Metro.Behaviours
                 this.AssociatedObject.BorderThickness = new Thickness(0);
 
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-                if (ignoreTaskBar && this.handle != IntPtr.Zero)
+                if (this.handle != IntPtr.Zero)
                 {
+                    this.windowChrome.ResizeBorderThickness = new Thickness(0);
+
                     // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
                     // so set the window pos/size twice
                     IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
@@ -268,15 +290,34 @@ namespace MahApps.Metro.Behaviours
                         var monitorInfo = new MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                        var x = monitorInfo.rcMonitor.left;
-                        var y = monitorInfo.rcMonitor.top;
-                        var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                        var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
-                        var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
-                        UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
-                        Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                        Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
-                        this.windowChrome.ResizeBorderThickness = new Thickness(0);
+                        if (ignoreTaskBar)
+                        {
+                            var x = monitorInfo.rcMonitor.left;
+                            var y = monitorInfo.rcMonitor.top;
+                            var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
+                            var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+
+                            var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+                            if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
+                            {
+                                UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
+                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
+                            }
+                            else
+                            {
+                                UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                            }
+                        }
+                        else
+                        {
+                            var x = monitorInfo.rcWork.left;
+                            var y = monitorInfo.rcWork.top;
+                            var cx = Math.Abs(monitorInfo.rcWork.right - x);
+                            var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
+
+                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                        }
                     }
                 }
             }
