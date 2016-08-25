@@ -272,8 +272,10 @@ namespace MahApps.Metro.Behaviours
                         var y = monitorInfo.rcMonitor.top;
                         var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
                         var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
-                        UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
-
+                        var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+                        UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
+                        Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                        Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
                         this.windowChrome.ResizeBorderThickness = new Thickness(0);
                     }
                 }
