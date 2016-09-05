@@ -520,14 +520,17 @@ namespace MahApps.Metro.Controls
         {
             var timePartPickerBase = (TimePickerBase)d;
 
-            var cultureInfo = e.NewValue as CultureInfo;
-            if (cultureInfo == null)
+            if (e.NewValue is XmlLanguage)
             {
-                timePartPickerBase.Language = XmlLanguage.Empty;
+                timePartPickerBase.Language = (XmlLanguage)e.NewValue;
+            }
+            else if (e.NewValue is CultureInfo)
+            {
+                timePartPickerBase.Language = XmlLanguage.GetLanguage(((CultureInfo)e.NewValue).IetfLanguageTag);
             }
             else
             {
-                timePartPickerBase.Language = XmlLanguage.GetLanguage(cultureInfo.IetfLanguageTag);
+                timePartPickerBase.Language = XmlLanguage.Empty;
             }
 
             timePartPickerBase.ApplyCulture();
