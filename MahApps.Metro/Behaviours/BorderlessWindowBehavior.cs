@@ -109,9 +109,6 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
             this.AssociatedObject.StateChanged += this.OnAssociatedObjectHandleMaximize;
 
-            // handle the maximized state here too (to handle the border in a correct way)
-            this.HandleMaximize();
-
             base.OnAttached();
         }
 
@@ -358,7 +355,7 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
-            if (null == this.handle)
+            if (IntPtr.Zero == this.handle)
             {
                 throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
             }
@@ -380,6 +377,9 @@ namespace MahApps.Metro.Behaviours
                 this.AssociatedObject.SizeToContent = sizeToContent;
                 this.AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
             }
+
+            // handle the maximized state here too (to handle the border in a correct way)
+            this.HandleMaximize();
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
