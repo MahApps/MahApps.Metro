@@ -60,8 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ButtonTest.cs" />
+    <Compile Include="DateAndTimePickerWindow.xaml.cs">
+      <DependentUpon>DateAndTimePickerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CleanWindowTest.cs" />
     <Compile Include="CustomDialogTest.cs" />
+    <Compile Include="DateTimePickerTests.cs" />
     <Compile Include="DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DateAndTimePickerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CleanWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
