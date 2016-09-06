@@ -351,6 +351,7 @@ namespace MahApps.Metro.Controls
             this.IsExpanded = false;
             Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+            Keyboard.RemovePreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
             if (_parentWindow != null)
             {
                 _parentWindow.Deactivated -= ParentWindowDeactivated;
@@ -366,6 +367,9 @@ namespace MahApps.Metro.Controls
             // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
             // to cause OutsideCapturedElementHandler to be called again.
             Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+            // To allow you to click the dropdown arrow, then hit "tab" to tab away from the control,
+            // monitor the keyboard focus of the expander
+            Keyboard.AddPreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
             // only find the "host" window once
             if (this._parentWindow == null)
             {
@@ -377,6 +381,15 @@ namespace MahApps.Metro.Controls
                 // window.
                 this._parentWindow.Deactivated += ParentWindowDeactivated;
             }
+        }
+
+        private void LostKeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (this.IsExpanded)
+            {
+                PopupClosed(sender, e);
+            }
+            e.Handled = true;
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
