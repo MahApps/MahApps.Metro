@@ -134,6 +134,7 @@
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\DatePickerTextBoxBehavior.cs" />
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
+    <Compile Include="Behaviours\GridLengthAnimation.cs" />
     <Compile Include="Behaviours\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
@@ -142,6 +143,11 @@
     <Compile Include="Controls\CloseCommand.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
     <Compile Include="Controls\Extensions.cs" />
+    <Compile Include="Controls\SplitView.cs" />
+    <Compile Include="Controls\SplitViewDisplayMode.cs" />
+    <Compile Include="Controls\SplitViewPaneClosingEventArgs.cs" />
+    <Compile Include="Controls\SplitViewPanePlacement.cs" />
+    <Compile Include="Controls\SplitViewTemplateSettings.cs" />
     <Compile Include="Controls\TimePicker\TimePartVisibility.cs" />
     <Compile Include="Controls\TimePicker\DateTimePicker.cs" />
     <Compile Include="Controls\IMetroThumb.cs" />
@@ -678,6 +684,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\SplitButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\SplitView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
