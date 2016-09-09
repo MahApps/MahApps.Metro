@@ -389,7 +389,6 @@ namespace MahApps.Metro.Controls
             {
                 PopupClosed(sender, e);
             }
-            e.Handled = true;
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
@@ -402,7 +401,6 @@ namespace MahApps.Metro.Controls
             {
                 Mouse.Capture(this, CaptureMode.SubTree);
             }
-            e.Handled = true;
         }
 
         private void ParentWindowMouseDownHandler(object sender, MouseButtonEventArgs e)
@@ -411,7 +409,6 @@ namespace MahApps.Metro.Controls
             {
                 PopupClosed(sender, e);
             }
-            e.Handled = true;
         }
 
         private void ParentWindowDeactivated(object sender, EventArgs e)
