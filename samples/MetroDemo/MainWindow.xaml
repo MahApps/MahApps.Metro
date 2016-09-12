@@ -8,6 +8,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
@@ -34,7 +35,6 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
@@ -88,22 +88,15 @@
                     <Button Click="CloseCustomDialog" Content="Close Me!" />
                 </StackPanel>
 
-
             </Dialog:CustomDialog>
             
-            <VisualBrush x:Key="Test" Stretch="Uniform" Visual="{DynamicResource appbar_github}" />
-
         </ResourceDictionary>
     </Window.Resources>
 
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <Button Click="LaunchMahAppsOnGitHub" ToolTip="MahApps.Metro on GitHub">
-                <Rectangle Width="22"
-                           Height="22"
-                           OpacityMask="{DynamicResource Test}"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                </Rectangle>
+                <iconPacks:PackIconModern Kind="SocialGithubOctocat" Width="22" Height="22" />
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
