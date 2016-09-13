@@ -6,6 +6,7 @@
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metroDemo="clr-namespace:MetroDemo"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       x:Name="flyoutsDemo"
                       Title="Flyouts Demo"
                       TitleCharacterCasing="Normal"
@@ -28,7 +29,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <x:Array x:Key="WindowCommandsOverlayBehaviorArray" Type="Controls:WindowCommandsOverlayBehavior">
@@ -43,16 +43,11 @@
 
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
-            <Grid Width="{TemplateBinding Width}"
-                  Height="{TemplateBinding Height}"
-                  Margin="4"
-                  Background="{DynamicResource IdealForegroundColorBrush}"
-                  RenderOptions.BitmapScalingMode="HighQuality"
-                  RenderOptions.EdgeMode="Aliased">
-                <Grid.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_box}" />
-                </Grid.OpacityMask>
-            </Grid>
+            <iconPacks:PackIconModern Kind="Box"
+                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                      Margin="4"
+                                      Width="{TemplateBinding Width}"
+                                      Height="{TemplateBinding Height}" />
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
 
@@ -266,11 +261,7 @@
                             FontFamily="Segoe UI Symbol"
                             FontSize="16"
                             Style="{DynamicResource MetroCircleButtonStyle}">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <iconPacks:PackIconModern Kind="Add" />
                     </Button>
                 </StackPanel>
             </Controls:Flyout>
@@ -480,3 +471,4 @@
     </Grid>
 
 </Controls:MetroWindow>
+
