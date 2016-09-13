@@ -6,7 +6,7 @@
     <title>MahApps.Metro</title>
     <authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</authors>
     <owners>punker76,shiftkey,aeoth,jakeginnivan</owners>
-    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <licenseUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/LICENSE</licenseUrl>
     <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
