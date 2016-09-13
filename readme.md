@@ -58,7 +58,7 @@ MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/M
 ```
 ![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
 
-It's still possible to use the old Xaml icon resources via this [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources) (but you should use the new one for easier usage).
+It's still possible to use the old Xaml icon resources available [here](https://github.com/MahApps/MahApps.Metro.Resources) (but you should use the new one for easier usage).
 
 ## Contributing to this project
 
