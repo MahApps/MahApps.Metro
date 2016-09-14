@@ -172,6 +172,8 @@
     <Compile Include="Controls\TimePicker\TimePicker.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBase.cs" />
     <Compile Include="Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
+    <Compile Include="Controls\TreeListView.cs" />
+    <Compile Include="Controls\TreeListViewItem.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Controls\MetroThumbContentControl.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
@@ -644,6 +646,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\TransitioningContentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\TreeListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
