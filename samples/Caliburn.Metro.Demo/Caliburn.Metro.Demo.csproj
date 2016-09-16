@@ -145,10 +145,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
-      <Project>{e708ac99-605b-42a0-8d20-abca8fe42dd2}</Project>
-      <Name>MahApps.Metro.Resources</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj">
       <Project>{5b1710d2-5dc8-4754-91b2-19165de49b3d}</Project>
       <Name>MahApps.Metro</Name>
@@ -168,7 +164,7 @@
   -->
   <Import Project="..\..\.paket\paket.targets" />
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
         <Reference Include="Caliburn.Micro.Platform">
           <HintPath>..\..\packages\Caliburn.Micro\lib\net40\Caliburn.Micro.Platform.dll</HintPath>
@@ -177,7 +173,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
         <Reference Include="Caliburn.Micro.Platform.Core">
           <HintPath>..\..\packages\Caliburn.Micro\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
@@ -193,7 +189,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
         <Reference Include="Caliburn.Micro">
           <HintPath>..\..\packages\Caliburn.Micro.Core\lib\net40\Caliburn.Micro.dll</HintPath>
@@ -202,7 +198,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
         <Reference Include="Caliburn.Micro">
           <HintPath>..\..\packages\Caliburn.Micro.Core\lib\net45\Caliburn.Micro.dll</HintPath>
@@ -213,10 +209,19 @@
     </When>
   </Choose>
   <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net40\MahApps.Metro.IconPacks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
       <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net45\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -224,26 +229,8 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
       <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net451\MahApps.Metro.IconPacks.Modern.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6'">
-      <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net46\MahApps.Metro.IconPacks.Modern.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
-      <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net40\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net451\MahApps.Metro.IconPacks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -251,17 +238,26 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3')">
       <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net452\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net452\MahApps.Metro.IconPacks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6'">
       <ItemGroup>
-        <Reference Include="MahApps.Metro.IconPacks.Modern">
-          <HintPath>..\..\packages\MahApps.Metro.IconPacks.Modern\lib\net461\MahApps.Metro.IconPacks.Modern.dll</HintPath>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
+      <ItemGroup>
+        <Reference Include="MahApps.Metro.IconPacks">
+          <HintPath>..\..\packages\MahApps.Metro.IconPacks\lib\net461\MahApps.Metro.IconPacks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -292,6 +288,9 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
+        <Reference Include="System.Net">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
           <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
           <Private>True</Private>
@@ -305,9 +304,6 @@
         <Reference Include="Microsoft.Threading.Tasks">
           <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Net">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>

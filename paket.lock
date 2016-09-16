@@ -1,7 +1,6 @@
 FRAMEWORK: >= NET40
 NUGET
   remote: https://www.nuget.org/api/v2
-  specs:
     Caliburn.Micro (3.0)
       Caliburn.Micro.Core (3.0)
       Microsoft.Xaml.Behaviors.Uwp.Managed (>= 1.1)
@@ -9,7 +8,6 @@ NUGET
     ExposedObject (1.2)
     JetBrains.Annotations (10.0)
     MahApps.Metro.IconPacks (1.0)
-    MahApps.Metro.IconPacks.Modern (1.0)
     Microsoft.Bcl (1.1.10) - framework: net40
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Async (1.0.168) - framework: net40
@@ -24,5 +22,4 @@ NUGET
       xunit (1.9.2)
 GITHUB
   remote: ControlzEx/ControlzEx
-  specs:
     src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)

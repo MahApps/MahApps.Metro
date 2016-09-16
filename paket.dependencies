@@ -5,7 +5,6 @@ nuget JetBrains.Annotations 10.0.0
 nuget Caliburn.Micro 3.0.0
 nuget ExposedObject 1.2.0.0
 nuget MahApps.Metro.IconPacks
-nuget MahApps.Metro.IconPacks.Modern
 nuget Microsoft.Bcl 1.1.10 framework: = net40
 nuget Microsoft.Bcl.Async 1.0.168 framework: = net40
 nuget Microsoft.Bcl.Build 1.0.21 framework: = net40
