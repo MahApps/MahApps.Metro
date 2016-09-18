@@ -229,10 +229,7 @@
                             <ContentPresenter x:Name="PART_SelectedContentHost"
                                               UseLayoutRounding="False"
                                               Margin="{TemplateBinding Padding}"
-                                              Content="{TemplateBinding SelectedContent}"
                                               ContentSource="SelectedContent"
-                                              ContentStringFormat="{TemplateBinding SelectedContentStringFormat}"
-                                              ContentTemplate="{TemplateBinding SelectedContentTemplate}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Controls:TransitioningContentControl>
                     </Grid>
