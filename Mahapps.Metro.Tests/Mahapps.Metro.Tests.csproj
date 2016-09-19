@@ -59,7 +59,11 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimatedTabControlTest.cs" />
     <Compile Include="ButtonTest.cs" />
+    <Compile Include="AnimatedTabControlWindow.xaml.cs">
+      <DependentUpon>AnimatedTabControlWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DateAndTimePickerWindow.xaml.cs">
       <DependentUpon>DateAndTimePickerWindow.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AnimatedTabControlWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DateAndTimePickerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
