@@ -65,7 +65,7 @@
                         <Path Fill="{TemplateBinding Foreground}"
                               Stretch="Uniform"
                               Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
-                              SnapsToDevicePixels="True"
+                              SnapsToDevicePixels="False"
                               UseLayoutRounding="False" />
                     </Viewbox>
                 </ControlTemplate>
