@@ -252,6 +252,9 @@
                 <TabItem Header="split view">
                     <exampleViews:SplitViewExamples DataContext="{Binding}" />
                 </TabItem>
+                <TabItem Header="toolbars">
+                    <exampleViews:ToolBarExamples DataContext="{Binding}" />
+                </TabItem>
                 <TabItem Header="colors">
                     <exampleViews:ColorExample DataContext="{Binding}" />
                 </TabItem>

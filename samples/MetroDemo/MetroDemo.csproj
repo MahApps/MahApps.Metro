@@ -98,6 +98,9 @@
     <Compile Include="ExampleViews\TilesExample.xaml.cs">
       <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\ToolBarExamples.xaml.cs">
+      <DependentUpon>ToolBarExamples.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
     <Page Include="ExampleViews\TilesExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\ToolBarExamples.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExampleWindows\CleanWindowDemo.xaml">
       <SubType>Designer</SubType>

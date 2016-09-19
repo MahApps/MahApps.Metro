@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="MetroDemo.ExampleViews.ToolBarExamples"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="clr-namespace:MahApps.Metro.Controls.Helper;assembly=MahApps.Metro"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d"
+    >
+
+    <!--  #Resources  -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--  #Design  -->
+    <StackPanel Width="320" HorizontalAlignment="Left">
+        <ToolBarTray>
+            <ToolBar>
+                <Button ToolBar.OverflowMode="Never">
+                    <Rectangle
+                        Width="16"
+                        Height="16"
+                        Fill="Black"
+                        >
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button ToolBar.OverflowMode="Never">
+                    <Rectangle
+                        Width="16"
+                        Height="16"
+                        Fill="Black"
+                        >
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_delete}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button ToolBar.OverflowMode="Never">
+                    <Rectangle
+                        Width="16"
+                        Height="16"
+                        Fill="Black"
+                        >
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_save}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+                <Button helper:ToolBarHelper.TrackParentPanel="True" ToolBar.OverflowMode="AsNeeded">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
+
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Rectangle
+                                        Width="16"
+                                        Height="16"
+                                        Fill="Black"
+                                        >
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_question}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </Setter.Value>
+                            </Setter>
+
+                            <Style.Triggers>
+                                <Trigger Property="helper:ToolBarHelper.IsInOverflowPanel" Value="True">
+                                    <!--  The Overflow style setters  -->
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle
+                                                    Width="16"
+                                                    Height="16"
+                                                    Fill="Black"
+                                                    >
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_question}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Label Content="Question" />
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <TextBlock VerticalAlignment="Center" Text="Move my toolbar to the left" />
+            </ToolBar>
+        </ToolBarTray>
+    </StackPanel>
+</UserControl>
