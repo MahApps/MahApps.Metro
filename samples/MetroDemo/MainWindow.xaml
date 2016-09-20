@@ -241,6 +241,9 @@
             <TabItem Header="tiles">
                 <exampleViews:TilesExample DataContext="{Binding}" />
             </TabItem>
+            <TabItem Header="splitview">
+                <exampleViews:SplitViewExamples DataContext="{Binding}" />
+            </TabItem>
             <TabItem Header="colors">
                 <exampleViews:ColorExample DataContext="{Binding}" />
             </TabItem>
