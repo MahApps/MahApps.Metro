@@ -143,7 +143,6 @@
     <Compile Include="Controls\Helper\TabControlHelper.cs" />
     <Compile Include="Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
-    <Compile Include="Controls\Helper\ToolBarHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Controls\IMetroThumb.cs" />

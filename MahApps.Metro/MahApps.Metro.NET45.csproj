@@ -142,7 +142,6 @@
     <Compile Include="Controls\CloseCommand.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
     <Compile Include="Controls\Extensions.cs" />
-    <Compile Include="Controls\Helper\ToolBarHelper.cs" />
     <Compile Include="Controls\SplitView.cs" />
     <Compile Include="Controls\SplitViewDisplayMode.cs" />
     <Compile Include="Controls\SplitViewPaneClosingEventArgs.cs" />
