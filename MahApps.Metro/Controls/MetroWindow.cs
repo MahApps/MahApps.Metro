@@ -815,6 +815,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
         }
 
@@ -835,6 +836,14 @@ namespace MahApps.Metro.Controls
             base.OnClosing(e);
         }
 #endif
+
+        private void MetroWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.LeftWindowCommands != null) this.LeftWindowCommands.DataContext = this.DataContext;
+            if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
+            if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
+            if (this.Flyouts != null) this.Flyouts.DataContext = this.DataContext;
+        }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -965,13 +974,15 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
-            if (e.OldValue != null)
+            var oldChild = e.OldValue as FrameworkElement;
+            if (oldChild != null)
             {
-                window.RemoveLogicalChild(e.OldValue);
+                window.RemoveLogicalChild(oldChild);
             }
-            if (e.NewValue != null)
+            var newChild = e.NewValue as FrameworkElement;
+            if (newChild != null)
             {
-                window.AddLogicalChild(e.NewValue);
+                window.AddLogicalChild(newChild);
             }
         }
 
@@ -984,6 +995,10 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
+            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
+            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
+
             if (LeftWindowCommands == null)
                 LeftWindowCommands = new WindowCommands();
             if (RightWindowCommands == null)
@@ -994,10 +1009,6 @@ namespace MahApps.Metro.Controls
             LeftWindowCommands.ParentWindow = this;
             RightWindowCommands.ParentWindow = this;
             WindowButtonCommands.ParentWindow = this;
-
-            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
-            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
-            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
