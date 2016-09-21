@@ -168,7 +168,12 @@
                                     </Style>
                                 </GridViewRowPresenter.Resources>
                             </GridViewRowPresenter>
-                            <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Visibility="Collapsed"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

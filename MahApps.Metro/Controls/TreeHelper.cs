@@ -107,7 +107,7 @@ namespace MahApps.Metro.Controls
         {
             if (child == null) return null;
 
-            //handle content elements separately
+            // handle content elements separately
             var contentElement = child as ContentElement;
             if (contentElement != null)
             {
@@ -118,7 +118,13 @@ namespace MahApps.Metro.Controls
                 return fce != null ? fce.Parent : null;
             }
 
-            //also try searching for parent in framework elements (such as DockPanel, etc)
+            var childParent = VisualTreeHelper.GetParent(child);
+            if (childParent != null)
+            {
+                return childParent;
+            }
+
+            // also try searching for parent in framework elements (such as DockPanel, etc)
             var frameworkElement = child as FrameworkElement;
             if (frameworkElement != null)
             {
@@ -126,8 +132,7 @@ namespace MahApps.Metro.Controls
                 if (parent != null) return parent;
             }
 
-            //if it's not a ContentElement/FrameworkElement, rely on VisualTreeHelper
-            return VisualTreeHelper.GetParent(child);
+            return null;
         }
 
         /// <summary>

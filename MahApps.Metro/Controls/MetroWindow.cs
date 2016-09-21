@@ -75,7 +75,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(new MetroDialogSettings()));
 
@@ -89,9 +89,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register("WindowButtonCommands", typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register("WindowButtonCommands", typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
 
         public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("RightWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
@@ -815,6 +815,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
         }
 
@@ -835,6 +836,14 @@ namespace MahApps.Metro.Controls
             base.OnClosing(e);
         }
 #endif
+
+        private void MetroWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.LeftWindowCommands != null) this.LeftWindowCommands.DataContext = this.DataContext;
+            if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
+            if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
+            if (this.Flyouts != null) this.Flyouts.DataContext = this.DataContext;
+        }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -957,6 +966,26 @@ namespace MahApps.Metro.Controls
             }
         }
 
+
+        private static void UpdateLogicalChilds(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = dependencyObject as MetroWindow;
+            if (window == null)
+            {
+                return;
+            }
+            var oldChild = e.OldValue as FrameworkElement;
+            if (oldChild != null)
+            {
+                window.RemoveLogicalChild(oldChild);
+            }
+            var newChild = e.NewValue as FrameworkElement;
+            if (newChild != null)
+            {
+                window.AddLogicalChild(newChild);
+            }
+        }
+
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
@@ -965,6 +994,10 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
+            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
+            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             if (LeftWindowCommands == null)
                 LeftWindowCommands = new WindowCommands();
@@ -976,10 +1009,6 @@ namespace MahApps.Metro.Controls
             LeftWindowCommands.ParentWindow = this;
             RightWindowCommands.ParentWindow = this;
             WindowButtonCommands.ParentWindow = this;
-
-            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
-            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
-            WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
