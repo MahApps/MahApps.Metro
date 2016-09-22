@@ -27,19 +27,22 @@ namespace MahApps.Metro.Behaviours
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
 
-        // Versions can be taken from https://msdn.microsoft.com/library/windows/desktop/ms724832.aspx
         private bool isWindwos10OrHigher;
 
         private static bool IsWindows10OrHigher()
         {
-            // Snippet from Koopakiller https://dotnet-snippets.de/snippet/os-version-name-mit-wmi/4929
-            using (var mos = new ManagementObjectSearcher("SELECT Caption, Version FROM Win32_OperatingSystem"))
+            var version = Standard.NtDll.RtlGetVersion();
+            if (default(Version) == version)
             {
-                var attribs = mos.Get().OfType<ManagementObject>();
-                //caption = attribs.FirstOrDefault().GetPropertyValue("Caption").ToString() ?? "Unknown";
-                var version = new Version((attribs.FirstOrDefault()?.GetPropertyValue("Version") ?? "0.0.0.0").ToString());
-                return version >= new Version(10, 0);
+                // Snippet from Koopakiller https://dotnet-snippets.de/snippet/os-version-name-mit-wmi/4929
+                using (var mos = new ManagementObjectSearcher("SELECT Caption, Version FROM Win32_OperatingSystem"))
+                {
+                    var attribs = mos.Get().OfType<ManagementObject>();
+                    //caption = attribs.FirstOrDefault().GetPropertyValue("Caption").ToString() ?? "Unknown";
+                    version = new Version((attribs.FirstOrDefault()?.GetPropertyValue("Version") ?? "0.0.0.0").ToString());
+                }
             }
+            return version >= new Version(10, 0);
         }
 
         protected override void OnAttached()
