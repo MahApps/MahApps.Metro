@@ -43,6 +43,8 @@ You can also help keep the documentation up to date by submitting a pull request
 
 MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
 
+![iconbrowserfinal](https://cloud.githubusercontent.com/assets/658431/18764958/ec20dd3e-8113-11e6-8793-b012eaec2302.gif)
+
 ```xaml
 <iconPacks:PackIconMaterial Kind="EmoticonCool" />
 ```
@@ -64,8 +66,6 @@ MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/M
 ![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
 
 It's still possible to use the old Xaml icon resources available [here](https://github.com/MahApps/MahApps.Metro.Resources) (but you should use the new one for easier usage).
-
-![iconbrowserfinal](https://cloud.githubusercontent.com/assets/658431/18764958/ec20dd3e-8113-11e6-8793-b012eaec2302.gif)
 
 ## Contributing to this project
 
