@@ -82,17 +82,19 @@
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
-                <ToggleButton Width="50"
-                              Height="50"
-                              Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
+                              Style="{DynamicResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
                 </ToggleButton>
-                <ToggleButton Width="50"
-                              Height="50"
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
                               IsEnabled="False"
-                              Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                              Style="{DynamicResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -123,17 +125,19 @@
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
-                <Button Width="50"
-                        Height="50"
-                        Style="{DynamicResource MetroCircleButtonStyle}">
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
                 </Button>
-                <Button Width="50"
-                        Height="50"
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
                         IsEnabled="False"
-                        Style="{DynamicResource MetroCircleButtonStyle}">
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -264,10 +268,10 @@
                        TargetType="Controls:DropDownButton">
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="ButtonStyle" Value="{DynamicResource MetroCircleButtonStyle}" />
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleButtonFocusVisual}" />
-                    <Setter Property="Height" Value="50" />
-                    <Setter Property="Width" Value="50" />
+                    <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" />
+                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
+                    <Setter Property="Height" Value="48" />
+                    <Setter Property="Width" Value="48" />
                 </Style>
             </StackPanel.Resources>
 

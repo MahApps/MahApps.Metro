@@ -15,38 +15,21 @@
             <Button x:Name="PART_BackButton"
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
-                    Width="40"
-                    Height="40"
+                    Width="34"
+                    Height="34"
+                    Margin="2 4 2 2"
                     VerticalAlignment="Bottom"
-                    Style="{DynamicResource MetroCircleButtonStyle}"
+                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
                     DockPanel.Dock="Left"
                     IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}"
                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}">
-                <Rectangle Width="20"
-                           Height="15"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill">
-                            <VisualBrush.Visual>
-                                <Canvas Width="48"
-                                        Height="48"
-                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                        UseLayoutRounding="False">
-                                    <Path Canvas.Left="12"
-                                          Canvas.Top="15"
-                                          Width="25"
-                                          Height="18"
-                                          Fill="Black"
-                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "
-                                          Stretch="Fill" />
-                                </Canvas>
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+                <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
+                                Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
+                                Width="20"
+                                Height="20" />
             </Button>
             <TextBlock x:Name="PART_BackHeaderText"
                        Margin="15 0 0 0"

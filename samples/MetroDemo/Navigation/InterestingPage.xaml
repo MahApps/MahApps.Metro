@@ -9,7 +9,7 @@
       d:DesignHeight="300"
       d:DesignWidth="300">
 
-    <Grid>
+    <Grid Margin="2">
         <Label>Sorry, nothing is here.</Label>
     </Grid>
 </Page>

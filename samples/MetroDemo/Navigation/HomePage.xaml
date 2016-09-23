@@ -9,7 +9,7 @@
       d:DesignHeight="300"
       d:DesignWidth="300">
 
-    <StackPanel>
+    <StackPanel Margin="2">
         <Label FontSize="25">Hello</Label>
         <TextBox>This should persist between navigations. If you're not convinced, try changing it.</TextBox>
         <TextBlock>

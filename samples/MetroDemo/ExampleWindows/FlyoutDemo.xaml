@@ -141,6 +141,7 @@
                     <Button Content="cancel" />
                 </StackPanel>
             </Controls:Flyout>
+
             <exampleWindows:CustomFlyout />
 
             <Controls:Flyout Header="Accented"
@@ -256,11 +257,11 @@
                             Margin="5,5,5,5"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
-                    <Button Width="40"
-                            Height="40"
+                    <Button Width="36"
+                            Height="36"
                             FontFamily="Segoe UI Symbol"
                             FontSize="16"
-                            Style="{DynamicResource MetroCircleButtonStyle}">
+                            Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                         <iconPacks:PackIconModern Kind="Add" />
                     </Button>
                 </StackPanel>
@@ -287,10 +288,9 @@
                              Header="AutoClose"
                              IsAutoCloseEnabled="True"
                              Position="Right">
-                <StackPanel Width="400" Margin="10">
+                <StackPanel Width="400" Margin="10" SnapsToDevicePixels="True">
                     <CheckBox Margin="4"
                               Content="AutoClose Enabled"
-                              Foreground="{DynamicResource IdealForegroundColorBrush}"
                               IsChecked="{Binding IsAutoCloseEnabled, ElementName=AutoCloseFlyout, Mode=TwoWay}" />
                     <Slider Margin="4"
                             IsSnapToTickEnabled="True"

@@ -121,7 +121,21 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Ellipse Margin="3"
+                             Stroke="{DynamicResource BlackBrush}"
+                             StrokeThickness="1"
+                             SnapsToDevicePixels="True"
+                             StrokeDashArray="2 2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
+    <!--  obsolete  -->
     <Style x:Key="MetroCircleButtonFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -137,14 +151,13 @@
     </Style>
 
     <!--  style for WP7/Circle button  -->
-    <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MetroCircleButtonFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Margin" Value="4" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -156,6 +169,71 @@
                                  StrokeThickness="0"
                                  Opacity="0" />
                         <Ellipse x:Name="ellipse"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0"
+                                                         From="0"
+                                                         Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!--  some out fading  -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.5"
+                                                         Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  obsolete  -->
+    <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MetroCircleButtonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <Ellipse Margin="4" Fill="{TemplateBinding Background}" StrokeThickness="0" />
+                        <Ellipse x:Name="ellipsebg"
+                                 Margin="4"
+                                 Fill="{DynamicResource BlackBrush}"
+                                 StrokeThickness="0"
+                                 Opacity="0" />
+                        <Ellipse x:Name="ellipse"
+                                 Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
@@ -534,15 +612,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroCircleToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MetroCircleButtonFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Margin" Value="4" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -554,6 +631,73 @@
                                  StrokeThickness="0"
                                  Opacity="0" />
                         <Ellipse x:Name="ellipse"
+                                 Stroke="{TemplateBinding BorderBrush}"
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ToggleButton.IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3"
+                                                         From="0"
+                                                         Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!--  some out fading  -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.3"
+                                                         Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                            <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  obsolete  -->
+    <Style x:Key="MetroCircleToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MetroCircleButtonFocusVisual}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <Ellipse Margin="4" Fill="{TemplateBinding Background}" StrokeThickness="0" />
+                        <Ellipse x:Name="ellipsebg"
+                                 Margin="4"
+                                 Fill="{DynamicResource AccentColorBrush}"
+                                 StrokeThickness="0"
+                                 Opacity="0" />
+                        <Ellipse x:Name="ellipse"
+                                 Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
