@@ -70,7 +70,7 @@ namespace MetroDemo
             this.AppThemes = ThemeManager.AppThemes
                                            .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
                                            .ToList();
-            
+
 
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
@@ -385,7 +385,7 @@ namespace MetroDemo
                 return this.showCustomDialogCommand ?? (this.showCustomDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => RunCustomFromVm()                    
+                    ExecuteDelegate = x => RunCustomFromVm()
                 });
             }
         }
@@ -399,7 +399,7 @@ namespace MetroDemo
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 System.Diagnostics.Debug.WriteLine(instance.FirstName);
             });
-            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};            
+            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
@@ -482,5 +482,28 @@ namespace MetroDemo
                 "Hotkey pressed",
                 "You pressed the hotkey '" + HotKey + "' registered with the name '" + e.Name + "'");
         }
+
+        private ICommand toggleIconScalingCommand;
+
+        public ICommand ToggleIconScalingCommand
+        {
+            get {
+                return toggleIconScalingCommand ?? (toggleIconScalingCommand = new SimpleCommand
+                {
+                    ExecuteDelegate = ToggleIconScaling
+                });
+            }
+        }
+
+        private void ToggleIconScaling(object obj) {
+            var multiFrameImageMode = (MultiFrameImageMode)obj;
+            ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
+            RaisePropertyChanged("IsScaleDownLargerFrame");
+            RaisePropertyChanged("IsNoScaleSmallerFrame");
+        }
+
+        public bool IsScaleDownLargerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
+
+        public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
     }
 }
