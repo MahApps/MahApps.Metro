@@ -184,6 +184,7 @@ namespace MahApps.Metro.Controls
         private Button _expander;
         private ListBox _listBox;
         private Popup _popup;
+        private Window _parentWindow;
 
         static SplitButton()
         {
@@ -329,7 +330,7 @@ namespace MahApps.Metro.Controls
             this._popup.Closed += this.PopupClosed;
         }
 
-        //Make popup close even if no selectionchanged event fired (case when user select the save item as before)
+        //Make popup close even if no selectionchanged event fired (case when user select the same item as before)
         private void ListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var source = e.OriginalSource as DependencyObject;
@@ -347,31 +348,77 @@ namespace MahApps.Metro.Controls
         {
             this.ReleaseMouseCapture();
             this._expander?.Focus();
+            this.IsExpanded = false;
+            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+            Keyboard.RemovePreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
+            if (_parentWindow != null)
+            {
+                _parentWindow.Deactivated -= ParentWindowDeactivated;
+            }
         }
 
         private void PopupOpened(object sender, EventArgs e)
         {
             Mouse.Capture(this, CaptureMode.SubTree);
             Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.AddLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
+            // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
+            // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
+            // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
+            // to cause OutsideCapturedElementHandler to be called again.
+            Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+            // To allow you to click the dropdown arrow, then hit "tab" to tab away from the control,
+            // monitor the keyboard focus of the expander
+            Keyboard.AddPreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
+            // only find the "host" window once
+            if (this._parentWindow == null)
+            {
+                this._parentWindow = Window.GetWindow(this);
+            }
+            if (this._parentWindow != null)
+            {
+                // To hide the popup when the user alt+tabs, monitor for when the window becomes a background
+                // window.
+                this._parentWindow.Deactivated += ParentWindowDeactivated;
+            }
         }
 
-        private void RemoveMouseCaptureHandlers()
+        private void LostKeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e)
         {
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.RemoveLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
-        }
-
-        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
+            if (this.IsExpanded)
+            {
+                PopupClosed(sender, e);
+            }
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
         {
-            this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
+            // If the list is still expanded, recapture the SplitButton subtree
+            // so that we still can know when the user has clicked outside of the popup.
+            // This happens on scroll bar mouse up, so this doesn't disrupt the scroll bar functionality
+            // at all.
+            if (this.IsExpanded)
+            {
+                Mouse.Capture(this, CaptureMode.SubTree);
+            }
+        }
+
+        private void ParentWindowMouseDownHandler(object sender, MouseButtonEventArgs e)
+        {
+            if (this.IsExpanded)
+            {
+                PopupClosed(sender, e);
+            }
+        }
+
+        private void ParentWindowDeactivated(object sender, EventArgs e)
+        {
+            PopupClosed(sender, e);
+        }
+
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
+        {
+            PopupClosed(sender, e);
         }
     }
 }
