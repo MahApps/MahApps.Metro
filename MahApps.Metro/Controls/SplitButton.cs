@@ -184,11 +184,17 @@ namespace MahApps.Metro.Controls
         private Button _expander;
         private ListBox _listBox;
         private Popup _popup;
-        private Window _parentWindow;
 
         static SplitButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
+        }
+
+        public SplitButton()
+        {
+            // maybe later
+            //Keyboard.AddKeyDownHandler(this, this.OnKeyDown);
+            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
@@ -346,49 +352,23 @@ namespace MahApps.Metro.Controls
 
         private void PopupClosed(object sender, EventArgs e)
         {
-            this.ReleaseMouseCapture();
-            this._expander?.Focus();
             this.IsExpanded = false;
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            this.ReleaseMouseCapture();
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
-            Keyboard.RemovePreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
-            if (_parentWindow != null)
+            if (this.IsKeyboardFocusWithin)
             {
-                _parentWindow.Deactivated -= ParentWindowDeactivated;
+                this._expander?.Focus();
             }
         }
 
         private void PopupOpened(object sender, EventArgs e)
         {
             Mouse.Capture(this, CaptureMode.SubTree);
-            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
             // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
             // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
             // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
             // to cause OutsideCapturedElementHandler to be called again.
             Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
-            // To allow you to click the dropdown arrow, then hit "tab" to tab away from the control,
-            // monitor the keyboard focus of the expander
-            Keyboard.AddPreviewLostKeyboardFocusHandler(this._expander, this.LostKeyboardFocusHandler);
-            // only find the "host" window once
-            if (this._parentWindow == null)
-            {
-                this._parentWindow = Window.GetWindow(this);
-            }
-            if (this._parentWindow != null)
-            {
-                // To hide the popup when the user alt+tabs, monitor for when the window becomes a background
-                // window.
-                this._parentWindow.Deactivated += ParentWindowDeactivated;
-            }
-        }
-
-        private void LostKeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (this.IsExpanded)
-            {
-                PopupClosed(sender, e);
-            }
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
@@ -403,22 +383,52 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ParentWindowMouseDownHandler(object sender, MouseButtonEventArgs e)
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
         {
-            if (this.IsExpanded)
+            this.PopupClosed(sender, e);
+        }
+
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+            // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
+            if (!(bool)e.NewValue)
             {
-                PopupClosed(sender, e);
+                this.IsExpanded = false;
             }
         }
 
-        private void ParentWindowDeactivated(object sender, EventArgs e)
+        /* maybe later
+        private static bool IsKeyModifyingPopupState(KeyEventArgs e)
         {
-            PopupClosed(sender, e);
+            return (((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt) && ((e.SystemKey == Key.Down) || (e.SystemKey == Key.Up)))
+                    || (e.Key == Key.F4);
         }
 
-        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            PopupClosed(sender, e);
+            if (!this.IsExpanded)
+            {
+                if (IsKeyModifyingPopupState(e))
+                {
+                    this.IsExpanded = true;
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (IsKeyModifyingPopupState(e))
+                {
+                    this.PopupClosed(sender, e);
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Escape)
+                {
+                    this.PopupClosed(sender, e);
+                    e.Handled = true;
+                }
+            }
         }
+        */
     }
 }
