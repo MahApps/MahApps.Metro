@@ -6,8 +6,8 @@ NUGET
       Microsoft.Xaml.Behaviors.Uwp.Managed (>= 1.1)
     Caliburn.Micro.Core (3.0)
     ExposedObject (1.2)
-    JetBrains.Annotations (10.0)
-    MahApps.Metro.IconPacks (1.0)
+    JetBrains.Annotations (10.1.5)
+    MahApps.Metro.IconPacks (1.1)
     Microsoft.Bcl (1.1.10) - framework: net40
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Bcl.Async (1.0.168) - framework: net40

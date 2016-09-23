@@ -1,7 +1,7 @@
 source https://nuget.org/api/v2
 framework >= net40
 
-nuget JetBrains.Annotations 10.0.0
+nuget JetBrains.Annotations
 nuget Caliburn.Micro 3.0.0
 nuget ExposedObject 1.2.0.0
 nuget MahApps.Metro.IconPacks
