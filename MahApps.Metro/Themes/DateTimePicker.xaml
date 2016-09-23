@@ -201,8 +201,11 @@
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Grid.Row="1"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
                                        Placement="Bottom"
                                        PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       PopupAnimation="Fade"
                                        StaysOpen="False">
                                     <Border x:Name="PART_PopupContainer"
                                             BorderBrush="{DynamicResource ControlBorderBrush}"
