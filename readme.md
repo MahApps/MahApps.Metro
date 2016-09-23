@@ -25,13 +25,18 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ![maindemowindow01](./docs/main_demo_window.png)
 
-![iconpacks](https://cloud.githubusercontent.com/assets/658431/16098473/6a88963a-3353-11e6-8b97-71c07700c17c.gif)
+![maindemowindow02](./docs/main_demo_text.png)
 
-![maindemowindow03](./docs/main_demo_window.gif)
+![maindemowindow03](./docs/main_demo_flyout1.png)
+
+![maindemowindow03](./docs/main_demo_flyout2.png)
+
+![maindemowindow04](./docs/main_demo_window.gif)
 
 ## Release Notes
 
-- current [v1.2.4](./docs/release-notes/1.2.4.md)
+- [v1.3.0](./docs/release-notes/1.3.0.md)
+- [v1.2.4](./docs/release-notes/1.2.4.md)
 - all [other](./docs/release-notes/)
 
 ## Icons
@@ -59,6 +64,8 @@ MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/M
 ![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
 
 It's still possible to use the old Xaml icon resources available [here](https://github.com/MahApps/MahApps.Metro.Resources) (but you should use the new one for easier usage).
+
+![iconbrowserfinal](https://cloud.githubusercontent.com/assets/658431/18764958/ec20dd3e-8113-11e6-8793-b012eaec2302.gif)
 
 ## Contributing to this project
 
