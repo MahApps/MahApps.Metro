@@ -3,20 +3,19 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:models="clr-namespace:MetroDemo.Models"
-                      Icon="..\mahapps.metro.logo2.ico"
-                      ShowIconOnTitleBar="True"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
                       Title="CleanWindowDemo"
-                      Height="400"
                       Width="800"
+                      Height="400"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      Icon="..\mahapps.metro.logo2.ico"
                       ResizeMode="CanResizeWithGrip"
+                      ShowIconOnTitleBar="True"
                       Style="{DynamicResource CleanWindowStyleKey}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="Temp0">
@@ -56,43 +55,32 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
-                               Text="Something above the ScrollPanel" />
+                    <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
 
-                    <ScrollViewer Grid.Row="1"
-                                  VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
                             <TextBox Controls:TextBoxHelper.Watermark="TextBox 01" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 02" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 03" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 04" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 05" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 06" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 07" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 08" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 09" />
-                            <TextBox Margin="0,5,0,0"
-                                     Controls:TextBoxHelper.Watermark="TextBox 10" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 02" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 03" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 04" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 05" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 06" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 07" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 08" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 09" />
+                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 10" />
                         </StackPanel>
                     </ScrollViewer>
 
-                    <UniformGrid Columns="2"
-                                 Grid.Row="2"
-                                 Margin="10">
-                        <Button Style="{DynamicResource SquareButtonStyle}"
-                                Margin="10"
-                                Content="Create" />
-                        <Button Style="{DynamicResource SquareButtonStyle}"
-                                Margin="10"
-                                Content="Cancel" />
+                    <UniformGrid Grid.Row="2"
+                                 Margin="10"
+                                 Columns="2">
+                        <Button Margin="10"
+                                Content="Create"
+                                Style="{DynamicResource SquareButtonStyle}" />
+                        <Button Margin="10"
+                                Content="Cancel"
+                                Style="{DynamicResource SquareButtonStyle}" />
                     </UniformGrid>
 
                 </Grid>
@@ -118,7 +106,10 @@
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="artists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+            <GroupBox Grid.Column="0"
+                      Padding="5"
+                      Controls:ControlsHelper.HeaderFontSize="30"
+                      Header="artists">
                 <ListBox ItemsSource="{x:Static models:SampleData.Artists}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -136,25 +127,24 @@
             </GroupBox>
 
             <Controls:MetroTabControl x:Name="TC" Grid.Column="1">
-                <Controls:MetroTabItem Header="my music">
+                <Controls:MetroTabItem Header="my music" />
 
-                </Controls:MetroTabItem>
-
-                <Controls:MetroTabItem Header="youtube">
-
-                </Controls:MetroTabItem>
+                <Controls:MetroTabItem Header="youtube" />
             </Controls:MetroTabControl>
 
-            <GroupBox Grid.Column="2" Header="playlists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+            <GroupBox Grid.Column="2"
+                      Padding="5"
+                      Controls:ControlsHelper.HeaderFontSize="30"
+                      Header="playlists">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Test"
+                    <Button Width="40"
                             Height="20"
-                            Width="40"
-                            Click="Button_Click" />
-                    <Button Content="Test 2"
+                            Click="Button_Click"
+                            Content="Test" />
+                    <Button Width="40"
                             Height="20"
-                            Width="40"
-                            Click="Button_Click_1" />
+                            Click="Button_Click_1"
+                            Content="Test 2" />
                 </StackPanel>
             </GroupBox>
         </Grid>

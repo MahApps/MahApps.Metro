@@ -5,9 +5,12 @@
     <FontFamily x:Key="DefaultFont">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="HeaderFontFamily">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+
     <FontFamily x:Key="ToggleSwitchFontFamily">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="ToggleSwitchHeaderFontFamily">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    
+    <FontFamily x:Key="ToggleSwitchFontFamily.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="ToggleSwitchHeaderFontFamily.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+
     <System:Double x:Key="HeaderFontSize">40</System:Double>
     <System:Double x:Key="SubHeaderFontSize">29.333</System:Double>
     <System:Double x:Key="WindowTitleFontSize">16</System:Double>
@@ -17,7 +20,9 @@
     <System:Double x:Key="TabItemFontSize">26.67</System:Double>
     <System:Double x:Key="UpperCaseContentFontSize">10</System:Double>
     <System:Double x:Key="FloatingWatermarkFontSize">10</System:Double>
+    <System:Double x:Key="ClearTextButtonFontSize">16</System:Double>
 
+    <System:Double x:Key="TooltipFontSize">12</System:Double>
     <System:Double x:Key="MenuFontSize">14</System:Double>
     <System:Double x:Key="ContextMenuFontSize">14</System:Double>
 
@@ -30,5 +35,7 @@
 
     <System:Double x:Key="ToggleSwitchFontSize">14.667</System:Double>
     <System:Double x:Key="ToggleSwitchHeaderFontSize">16</System:Double>
+    <System:Double x:Key="ToggleSwitchFontSize.Win10">15</System:Double>
+    <System:Double x:Key="ToggleSwitchHeaderFontSize.Win10">15</System:Double>
 
 </ResourceDictionary>

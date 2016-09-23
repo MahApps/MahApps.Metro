@@ -24,17 +24,24 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty TextButtonProperty = DependencyProperty.RegisterAttached("TextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonsAlignmentProperty = DependencyProperty.RegisterAttached("ButtonsAlignment", typeof(ButtonsAlignment), typeof(TextBoxHelper), new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         /// <summary>
         /// The clear text button behavior property. It sets a click event to the button if the value is true.
         /// </summary>
         public static readonly DependencyProperty IsClearTextButtonBehaviorEnabledProperty = DependencyProperty.RegisterAttached("IsClearTextButtonBehaviorEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, IsClearTextButtonBehaviorEnabledChanged));
-        
+
+        /// <summary>
+        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
+        /// </summary>
+        public static readonly DependencyProperty ButtonWidthProperty = DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata("r"));
+        public static readonly DependencyProperty ButtonContentTemplateProperty = DependencyProperty.RegisterAttached("ButtonContentTemplate", typeof(DataTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata((DataTemplate)null));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
-        public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata((new FontFamilyConverter()).ConvertFromString("Marlett")));
+        public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata(new FontFamilyConverter().ConvertFromString("Marlett")));
+        public static readonly DependencyProperty ButtonFontSizeProperty = DependencyProperty.RegisterAttached("ButtonFontSize", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
         
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false));
@@ -179,6 +186,8 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static string GetWatermark(DependencyObject obj)
         {
             return (string)obj.GetValue(WatermarkProperty);
@@ -193,6 +202,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static bool GetUseFloatingWatermark(DependencyObject obj)
         {
             return (bool)obj.GetValue(UseFloatingWatermarkProperty);
@@ -208,9 +218,10 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static bool GetHasText(DependencyObject obj)
         {
             return (bool)obj.GetValue(HasTextProperty);
@@ -225,15 +236,14 @@ namespace MahApps.Metro.Controls
         {
             if (d is TextBox)
             {
-                var txtBox = d as TextBox;
-
+                var txtBox = (TextBox)d;
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    txtBox.BeginInvoke(() => TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None)));
+
                     txtBox.TextChanged += TextChanged;
                     txtBox.GotFocus += TextBoxGotFocus;
-
-                    txtBox.Dispatcher.BeginInvoke((Action)(() => 
-                        TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None))));
                 }
                 else
                 {
@@ -243,16 +253,14 @@ namespace MahApps.Metro.Controls
             }
             else if (d is PasswordBox)
             {
-                var passBox = d as PasswordBox;
-
+                var passBox = (PasswordBox)d;
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    passBox.BeginInvoke(() => PasswordChanged(passBox, new RoutedEventArgs(PasswordBox.PasswordChangedEvent, passBox)));
+
                     passBox.PasswordChanged += PasswordChanged;
                     passBox.GotFocus += PasswordGotFocus;
-
-                    // Also fixes 1343, also triggers the show of the floating watermark if necessary
-                    passBox.Dispatcher.BeginInvoke((Action)(() =>
-                        PasswordChanged(passBox, new RoutedEventArgs(PasswordBox.PasswordChangedEvent, passBox))));
                 }
                 else
                 {
@@ -262,18 +270,44 @@ namespace MahApps.Metro.Controls
             }
             else if (d is NumericUpDown)
             {
-                var numericUpDown = d as NumericUpDown;
-                numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
+                var numericUpDown = (NumericUpDown)d;
                 if ((bool)e.NewValue)
                 {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
+
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus += NumericUpDownGotFocus;
-            }
+                    //numericUpDown.GotFocus += NumericUpDownGotFocus;
+                }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
-        }
+                    //numericUpDown.GotFocus -= NumericUpDownGotFocus;
+                }
+            }
+            else if (d is TimePickerBase)
+            {
+                var timePicker = (TimePickerBase)d;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedTimeChanged += OnTimePickerBaseSelectedTimeChanged;
+                }
+                else
+                {
+                    timePicker.SelectedTimeChanged -= OnTimePickerBaseSelectedTimeChanged;
+                }
+            }
+            else if (d is DatePicker)
+            {
+                var timePicker = (DatePicker)d;
+                if ((bool)e.NewValue)
+                {
+                    timePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
+                }
+                else
+                {
+                    timePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
+                }
             }
         }
 
@@ -302,6 +336,16 @@ namespace MahApps.Metro.Controls
             SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
         }
 
+        private static void OnDatePickerBaseSelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as DatePicker, timePickerBase => timePickerBase.SelectedDate.HasValue ? 1 : 0);
+        }
+
+        private static void OnTimePickerBaseSelectedTimeChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedTime.HasValue ? 1 : 0);
+        }
+
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll());
@@ -328,15 +372,38 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the clear text button visibility / feature. Can be used to enable text deletion.
+        /// </summary>
         [Category(AppName.MahApps)]
         public static bool GetClearTextButton(DependencyObject d)
         {
             return (bool)d.GetValue(ClearTextButtonProperty);
         }
 
+        /// <summary>
+        /// Sets the clear text button visibility / feature. Can be used to enable text deletion.
+        /// </summary>
         public static void SetClearTextButton(DependencyObject obj, bool value)
         {
             obj.SetValue(ClearTextButtonProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the text button visibility.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public static bool GetTextButton(DependencyObject d)
+        {
+            return (bool)d.GetValue(TextButtonProperty);
+        }
+
+        /// <summary>
+        /// Sets the text button visibility.
+        /// </summary>
+        public static void SetTextButton(DependencyObject obj, bool value)
+        {
+            obj.SetValue(TextButtonProperty, value);
         }
 
         /// <summary>
@@ -360,7 +427,7 @@ namespace MahApps.Metro.Controls
         /// Gets the clear text button behavior.
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
         {
             return (bool)d.GetValue(IsClearTextButtonBehaviorEnabledProperty);
@@ -369,10 +436,21 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Sets the clear text button behavior.
         /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static double GetButtonWidth(DependencyObject obj)
+        {
+            return (double)obj.GetValue(ButtonWidthProperty);
+        }
+
+        public static void SetButtonWidth(DependencyObject obj, double value)
+        {
+            obj.SetValue(ButtonWidthProperty, value);
         }
 
         [Category(AppName.MahApps)]
@@ -408,6 +486,20 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonContentProperty, value);
         }
 
+        /// <summary> 
+        /// ButtonContentTemplate is the template used to display the content of the ClearText button. 
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public static DataTemplate GetButtonContentTemplate(DependencyObject d)
+        {
+            return (DataTemplate)d.GetValue(ButtonContentTemplateProperty);
+        }
+
+        public static void SetButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        {
+            obj.SetValue(ButtonContentTemplateProperty, value);
+        }
+
         [Category(AppName.MahApps)]
         public static ControlTemplate GetButtonTemplate(DependencyObject d)
         {
@@ -428,6 +520,17 @@ namespace MahApps.Metro.Controls
         public static void SetButtonFontFamily(DependencyObject obj, FontFamily value)
         {
             obj.SetValue(ButtonFontFamilyProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static double GetButtonFontSize(DependencyObject d)
+        {
+            return (double)d.GetValue(ButtonFontSizeProperty);
+        }
+
+        public static void SetButtonFontSize(DependencyObject obj, double value)
+        {
+            obj.SetValue(ButtonFontSizeProperty, value);
         }
 
         private static void IsClearTextButtonBehaviorEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -453,11 +556,10 @@ namespace MahApps.Metro.Controls
             }
 
             var command = GetButtonCommand(parent);
-            if (command != null && command.CanExecute(parent))
+            var commandParameter = GetButtonCommandParameter(parent) ?? parent;
+            if (command != null && command.CanExecute(commandParameter))
             {
-                var commandParameter = GetButtonCommandParameter(parent);
-
-                command.Execute(commandParameter ?? parent);
+                command.Execute(commandParameter);
             }
 
             if (GetClearTextButton(parent))

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,6 +18,48 @@ namespace MahApps.Metro.Controls
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
+        }
+
+        /// <summary> 
+        /// HorizontalTitleAlignment Dependency Property.
+        /// Default Value: HorizontalAlignment.Left
+        /// </summary>
+        public static readonly DependencyProperty HorizontalTitleAlignmentProperty =
+            DependencyProperty.Register(
+                "HorizontalTitleAlignment",
+                typeof(HorizontalAlignment),
+                typeof(Tile),
+                new FrameworkPropertyMetadata(HorizontalAlignment.Left));
+
+        /// <summary> 
+        /// Gets/Sets the horizontal alignment of the title.
+        /// </summary> 
+        [Bindable(true), Category("Layout")]
+        public HorizontalAlignment HorizontalTitleAlignment
+        {
+            get { return (HorizontalAlignment)GetValue(HorizontalTitleAlignmentProperty); }
+            set { SetValue(HorizontalTitleAlignmentProperty, value); }
+        }
+
+        /// <summary>
+        /// VerticalTitleAlignment Dependency Property. 
+        /// Default Value: VerticalAlignment.Bottom
+        /// </summary> 
+        public static readonly DependencyProperty VerticalTitleAlignmentProperty =
+            DependencyProperty.Register(
+                "VerticalTitleAlignment",
+                typeof(VerticalAlignment),
+                typeof(Tile),
+                new FrameworkPropertyMetadata(VerticalAlignment.Bottom));
+
+        /// <summary>
+        /// Gets/Sets the vertical alignment of the title.
+        /// </summary>
+        [Bindable(true), Category("Layout")]
+        public VerticalAlignment VerticalTitleAlignment
+        {
+            get { return (VerticalAlignment)GetValue(VerticalTitleAlignmentProperty); }
+            set { SetValue(VerticalTitleAlignmentProperty, value); }
         }
 
         public static readonly DependencyProperty CountProperty = DependencyProperty.Register("Count", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
@@ -43,19 +86,19 @@ namespace MahApps.Metro.Controls
             set { SetValue(TiltFactorProperty, value); }
         }
 
-        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register("TitleFontSize", typeof(int), typeof(Tile), new PropertyMetadata(16));
+        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register("TitleFontSize", typeof(double), typeof(Tile), new PropertyMetadata(16d));
 
-        public int TitleFontSize
+        public double TitleFontSize
         {
-            get { return (int)GetValue(TitleFontSizeProperty); }
+            get { return (double)GetValue(TitleFontSizeProperty); }
             set { SetValue(TitleFontSizeProperty, value); }
         }
 
-        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register("CountFontSize", typeof(int), typeof(Tile), new PropertyMetadata(28));
+        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register("CountFontSize", typeof(double), typeof(Tile), new PropertyMetadata(28d));
 
-        public int CountFontSize
+        public double CountFontSize
         {
-            get { return (int)GetValue(CountFontSizeProperty); }
+            get { return (double)GetValue(CountFontSizeProperty); }
             set { SetValue(CountFontSizeProperty, value); }
         }
     }

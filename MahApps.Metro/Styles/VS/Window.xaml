@@ -6,43 +6,30 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="VSWindowStyleKey"
-           TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="ShowTitleBar"
-                Value="True" />
-        <Setter Property="GlowBrush"
-                Value="{DynamicResource WindowGlowBrush}" />
-        <Setter Property="TitleForeground"
-                Value="{DynamicResource WindowTitleForeground}" />
+    <Style x:Key="VSWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="GlowBrush" Value="{DynamicResource WindowGlowBrush}" />
+        <Setter Property="ShowTitleBar" Value="True" />
+        <Setter Property="TitleForeground" Value="{DynamicResource WindowTitleForeground}" />
     </Style>
 
     <Style x:Key="VSWindowButtonStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
+           TargetType="{x:Type Button}">
         <Style.Triggers>
-            <Trigger Property="IsPressed"
-                     Value="True">
-                <Setter Property="Foreground"
-                        Value="{DynamicResource BlackColorBrush}" />
-                <Setter Property="Background"
-                        Value="{DynamicResource BackgroundSelected}" />
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="LightMinButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="LightMaxButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="LightCloseButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="DarkMinButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="DarkMaxButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="DarkCloseButtonStyle"
-                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="LightCloseButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="LightMaxButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="LightMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
     </Style>
 
 </ResourceDictionary>

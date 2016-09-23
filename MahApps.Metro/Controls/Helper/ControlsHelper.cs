@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
+            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
         private static void HeaderFontSizePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -105,9 +105,8 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static double GetHeaderFontSize(UIElement element)
         {
             return (double)element.GetValue(HeaderFontSizeProperty);
@@ -122,9 +121,8 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new UIPropertyMetadata(FontStretches.Normal));
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontStretch GetHeaderFontStretch(UIElement element)
         {
             return (FontStretch)element.GetValue(HeaderFontStretchProperty);
@@ -139,9 +137,8 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new UIPropertyMetadata(FontWeights.Normal));
 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontWeight GetHeaderFontWeight(UIElement element)
         {
             return (FontWeight)element.GetValue(HeaderFontWeightProperty);
@@ -152,24 +149,39 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderFontWeightProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderMarginProperty =
+            DependencyProperty.RegisterAttached("HeaderMargin", typeof(Thickness), typeof(ControlsHelper), new UIPropertyMetadata(new Thickness()));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
+        public static Thickness GetHeaderMargin(UIElement element)
+        {
+            return (Thickness)element.GetValue(HeaderMarginProperty);
+        }
+
+        public static void SetHeaderMargin(UIElement element, Thickness value)
+        {
+            element.SetValue(HeaderMarginProperty, value);
+        }
+
         /// <summary>
-        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
-        /// For multiline TextBox, PasswordBox is this the fallback for the clear text button! so it must set manually!
-        /// For normal TextBox, PasswordBox the width is the height. 
+        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static readonly DependencyProperty ButtonWidthProperty =
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         [Category(AppName.MahApps)]
         public static double GetButtonWidth(DependencyObject obj)
         {
-            return (double)obj.GetValue(ButtonWidthProperty);
+            return TextBoxHelper.GetButtonWidth(obj);
         }
 
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
-            obj.SetValue(ButtonWidthProperty, value);
+            TextBoxHelper.SetButtonWidth(obj, value);
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));

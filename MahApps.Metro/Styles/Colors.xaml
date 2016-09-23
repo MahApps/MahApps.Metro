@@ -10,6 +10,7 @@
 
     <!--ACCENT COLORS-->
     <Color x:Key="HighlightColor">#FF086F9E</Color>
+    <Color x:Key="AccentBaseColor">#FF119EDA</Color>
     <!--80%-->
     <Color x:Key="AccentColor">#CC119EDA</Color>
     <!--60%-->
@@ -53,6 +54,9 @@
     <SolidColorBrush x:Key="BlackColorBrush" Color="{DynamicResource BlackColor}" />
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{DynamicResource AccentColor}" />
+    <SolidColorBrush x:Key="NonActiveWindowTitleColorBrush" Color="#808080" options:Freeze="True" />
+    <SolidColorBrush x:Key="NonActiveBorderColorBrush" Color="#808080" options:Freeze="True" />
+
     <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}" />
     <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{DynamicResource WhiteColor}" />
 
@@ -61,6 +65,7 @@
     <SolidColorBrush x:Key="SemiTransparentGreyBrush" Color="#40808080"/>
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="#A5FFFFFF" />
 
+    <SolidColorBrush x:Key="AccentBaseColorBrush" Color="{DynamicResource AccentBaseColor}"/>
     <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}"/>
     <SolidColorBrush x:Key="AccentColorBrush2" Color="{DynamicResource AccentColor2}"/>
     <SolidColorBrush x:Key="AccentColorBrush3" Color="{DynamicResource AccentColor3}"/>
@@ -107,8 +112,6 @@
         <GradientStop Color="{DynamicResource HighlightColor}" Offset="0"/>
         <GradientStop Color="{DynamicResource AccentColor3}" Offset="1"/>
     </LinearGradientBrush>
-
-    <DropShadowEffect x:Key="DropShadowBrush" Direction="330" Opacity="0.3" ShadowDepth="0" BlurRadius="6"/>
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5"/>
@@ -178,4 +181,19 @@
     <SolidColorBrush x:Key="MetroDataGrid.FocusBorderBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightBrush" Color="{StaticResource AccentColor2}" options:Freeze="True" />
     <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightTextBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
+    
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10" Color="#FF999999" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10" Color="#FF333333" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffMouseOverBorderBrush.Win10" Color="#FF000000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffDisabledBorderBrush.Win10" Color="#FF999999" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffSwitchBrush.Win10" Color="Transparent" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchDisabledBrush.Win10" Color="#FFCCCCCC" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchMouseOverBrush.Win10" Color="{StaticResource AccentColor2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorBrush.Win10" Color="#FF333333" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOverBrush.Win10" Color="#FF000000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorCheckedBrush.Win10" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10" Color="#FFFFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10" Color="#FF999999" options:Freeze="True" />
+    
 </ResourceDictionary>

@@ -3,65 +3,47 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <DataTemplate x:Key="PivotHeaderTemplate">
-        <TextBlock Text="{Binding}"
+        <TextBlock FontFamily="{DynamicResource HeaderFontFamily}"
                    FontSize="{DynamicResource HeaderFontSize}"
-                   FontFamily="{DynamicResource HeaderFontFamily}" />
+                   Text="{Binding}" />
     </DataTemplate>
 
-    <Style x:Key="PivotListViewItem"
-           TargetType="{x:Type ListViewItem}">
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
-        <Setter Property="MinHeight"
-                Value="25" />
-        <Setter Property="Margin"
-                Value="0,0,0,0" />
-        <Setter Property="Border.BorderBrush"
-                Value="{DynamicResource GrayBrush1}" />
+    <Style x:Key="PivotListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Border.BorderBrush" Value="{DynamicResource GrayBrush1}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="25" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd"
-                            SnapsToDevicePixels="true">
+                    <Border x:Name="Bd" SnapsToDevicePixels="true">
                         <Grid>
                             <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             <ContentPresenter x:Name="contentPresenter"
-                                              Visibility="Collapsed"
-                                              Opacity="0.35" />
+                                              Opacity="0.35"
+                                              Visibility="Collapsed" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="GridView.ColumnCollection"
-                                 Value="{x:Null}">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Visibility"
-                                    Value="Visible" />
+                        <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible" />
                         </Trigger>
-                        <Trigger Property="IsSelected"
-                                 Value="true">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Opacity"
-                                    Value="1" />
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Opacity"
-                                    Value="1" />
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style TargetType="{x:Type Controls:Pivot}">
-        <Setter Property="HeaderTemplate"
-                Value="{StaticResource PivotHeaderTemplate}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource PivotHeaderTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Pivot}">
@@ -76,12 +58,12 @@
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView x:Name="PART_Headers"
                                   Grid.Row="1"
-                                  BorderBrush="{x:Null}"
                                   Style="{x:Null}"
+                                  BorderBrush="{x:Null}"
                                   ItemContainerStyle="{StaticResource PivotListViewItem}"
+                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" />
@@ -89,21 +71,21 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Header}"
-                                               FontSize="{DynamicResource SubHeaderFontSize}"
+                                    <TextBlock Margin="0 0 25 0"
                                                FontFamily="{DynamicResource HeaderFontFamily}"
-                                               Margin="0,0,25,0" />
+                                               FontSize="{DynamicResource SubHeaderFontSize}"
+                                               Text="{Binding Header}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListView>
 
-                        <ScrollViewer Grid.Row="2"
-                                      x:Name="PART_Scroll"
-                                      VerticalScrollBarVisibility="Disabled"
+                        <ScrollViewer x:Name="PART_Scroll"
+                                      Grid.Row="2"
+                                      VerticalAlignment="Stretch"
                                       HorizontalScrollBarVisibility="Auto"
-                                      VerticalAlignment="Stretch">
+                                      VerticalScrollBarVisibility="Disabled">
                             <ItemsControl x:Name="itemscontrol"
-                                          Margin="0,0,250,0"
+                                          Margin="0 0 250 0"
                                           ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -113,12 +95,10 @@
                             </ItemsControl>
                         </ScrollViewer>
 
-                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator"
-                                                             ScrollViewer="{Binding ElementName=PART_Scroll}">
+                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}">
                             <Controls:ScrollViewerOffsetMediator.Resources>
                                 <Storyboard x:Key="Storyboard1">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="HorizontalOffset"
-                                                                   Storyboard.TargetName="PART_Mediator">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Mediator" Storyboard.TargetProperty="HorizontalOffset">
                                         <EasingDoubleKeyFrame x:Name="edkf"
                                                               KeyTime="0:0:0.6"
                                                               Value="0">

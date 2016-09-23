@@ -11,6 +11,7 @@ namespace MahApps.Metro.Tests
     public class ThemeManagerTest : AutomationTestBase
     {
         [Fact]
+        [DisplayTestMethodName]
         public async Task CanAddAccentBeforeGetterIsCalled()
         {
             await TestHost.SwitchToAppThread();
@@ -19,6 +20,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task CanAddAppThemeBeforeGetterIsCalled()
         {
             await TestHost.SwitchToAppThread();
@@ -27,6 +29,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task ChangesWindowTheme()
         {
             await TestHost.SwitchToAppThread();
@@ -44,6 +47,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetInverseAppThemeReturnsDarkTheme()
         {
             await TestHost.SwitchToAppThread();
@@ -54,6 +58,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetInverseAppThemeReturnsLightTheme()
         {
             await TestHost.SwitchToAppThread();
@@ -64,6 +69,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetInverseAppThemeReturnsNullForMissingTheme()
         {
             await TestHost.SwitchToAppThread();
@@ -76,6 +82,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetAppThemeIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();
@@ -87,6 +94,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetAppThemeWithUriIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();
@@ -103,6 +111,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetAccentIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();
@@ -114,6 +123,7 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        [DisplayTestMethodName]
         public async Task GetAccentWithUriIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();

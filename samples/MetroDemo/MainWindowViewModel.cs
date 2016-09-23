@@ -14,6 +14,8 @@ using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleViews;
+using NHotkey;
+using NHotkey.Wpf;
 
 namespace MetroDemo
 {
@@ -48,7 +50,7 @@ namespace MetroDemo
         }
     }
 
-    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
+    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
@@ -73,24 +75,30 @@ namespace MetroDemo
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
 
-            FlipViewTemplateSelector = new RandomDataTemplateSelector();
-
-            FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
-            spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
-            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
-            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
-            FlipViewTemplateSelector.TemplateOne = new DataTemplate()
-            {
-                VisualTree = spFactory
-            };
-            FlipViewImages = new string[] { "http://trinities.org/blog/wp-content/uploads/red-ball.jpg", "http://savingwithsisters.files.wordpress.com/2012/05/ball.gif" };
-
-            RaisePropertyChanged("FlipViewTemplateSelector");
-
+            FlipViewImages = new Uri[]
+                             {
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/landscapes/mountains/painted-desert.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-3/landscapes/forest/breaking-the-clouds-on-winter-day.jpg", UriKind.Absolute),
+                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/travel/bodie/bodie-streets.jpg", UriKind.Absolute)
+                             };
 
             BrushResources = FindBrushResources();
 
             CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
+
+            try
+            {
+                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+            }
+            catch (HotkeyAlreadyRegisteredException exception)
+            {
+                System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
+            }
+        }
+
+        public void Dispose()
+        {
+            HotkeyManager.Current.Remove("demo");
         }
 
         public string Title { get; set; }
@@ -171,15 +179,17 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = async x =>
                     {
-                        if (x is TextBox)
+                        if (x is string)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!",
-                                                                                                    string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
+                        }
+                        else if (x is TextBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!",
-                                                                                                    string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
                         }
                     }
                 });
@@ -235,6 +245,11 @@ namespace MetroDemo
                     return "No date given!";
                 }
 
+                if (columnName == "HotKey" && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                {
+                    return "SHIFT-D is not allowed";
+                }
+
                 return null;
             }
         }
@@ -275,9 +290,9 @@ namespace MetroDemo
                 return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
+                    ExecuteDelegate = async x =>
                     {
-                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
+                        await _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -292,9 +307,9 @@ namespace MetroDemo
                 return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
+                    ExecuteDelegate = async x =>
                     {
-                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
+                        await _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
@@ -309,12 +324,19 @@ namespace MetroDemo
                 return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
                 {
                     CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x =>
-                    {
-                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
+                    ExecuteDelegate = x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
                 });
             }
+        }
+
+        private Action ShowMessage(string startingThread)
+        {
+            return () =>
+                       {
+                           var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
+                                         $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
+                           this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
+                       };
         }
 
         private ICommand showProgressDialogCommand;
@@ -340,7 +362,19 @@ namespace MetroDemo
 
             await controller.CloseAsync();
         }
-        
+
+        private static void PerformDialogCoordinatorAction(Action action, bool runInMainThread)
+        {
+            if (!runInMainThread)
+            {
+                Task.Factory.StartNew(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
 
         private ICommand showCustomDialogCommand;
 
@@ -367,7 +401,7 @@ namespace MetroDemo
             });
             customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};            
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
@@ -402,13 +436,7 @@ namespace MetroDemo
             return resources;
         }
 
-        public RandomDataTemplateSelector FlipViewTemplateSelector
-        {
-            get;
-            set;
-        }
-
-        public string[] FlipViewImages
+        public Uri[] FlipViewImages
         {
             get;
             set;
@@ -423,6 +451,36 @@ namespace MetroDemo
             {
                 return TemplateOne;
             }
+        }
+
+        private HotKey _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
+
+        public HotKey HotKey
+        {
+            get { return _hotKey; }
+            set
+            {
+                if (_hotKey != value)
+                {
+                    _hotKey = value;
+                    if (_hotKey != null && _hotKey.Key != Key.None)
+                    {
+                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                    }
+                    else
+                    {
+                        HotkeyManager.Current.Remove("demo");
+                    }
+                    RaisePropertyChanged("HotKey");
+                }
+            }
+        }
+
+        private async Task OnHotKey(object sender, HotkeyEventArgs e)
+        {
+            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
+                "Hotkey pressed",
+                "You pressed the hotkey '" + HotKey + "' registered with the name '" + e.Name + "'");
         }
     }
 }

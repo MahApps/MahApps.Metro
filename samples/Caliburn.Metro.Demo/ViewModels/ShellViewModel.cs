@@ -10,7 +10,7 @@ namespace Caliburn.Metro.Demo.ViewModels
         private readonly IObservableCollection<FlyoutBaseViewModel> flyouts =
             new BindableCollection<FlyoutBaseViewModel>();
 
-        public IObservableCollection<FlyoutBaseViewModel> Flyouts
+        public IObservableCollection<FlyoutBaseViewModel> FlyoutViewModels
         {
             get
             {

@@ -3,39 +3,37 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
-    <!-- obsolete -->
-    <ControlTemplate TargetType="{x:Type Controls:DropDownButton}"
-                     x:Key="SplitButtonHorizontal">
+    <!--  obsolete  -->
+    <ControlTemplate x:Key="SplitButtonHorizontal" TargetType="{x:Type Controls:DropDownButton}">
         <Border x:Name="PART_Border"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                BorderBrush="{TemplateBinding BorderBrush}">
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
             <Button x:Name="PART_Button"
                     Style="{TemplateBinding ButtonStyle}"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     Background="{TemplateBinding Background}"
                     Foreground="{TemplateBinding Foreground}"
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"
-                    CommandTarget="{TemplateBinding CommandTarget}">
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <ContentPresenter RecognizesAccessKey="True"
-                                      Content="{TemplateBinding Icon}" />
-                    <ContentControl MinWidth="20"
+                    CommandTarget="{TemplateBinding CommandTarget}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Orientation="Horizontal">
+                    <ContentPresenter Content="{TemplateBinding Icon}" RecognizesAccessKey="True" />
+                    <ContentControl x:Name="PART_ButtonContent"
+                                    MinWidth="20"
                                     Margin="3"
-                                    x:Name="PART_ButtonContent"
-                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentTemplate="{TemplateBinding ItemTemplate}">
-                    </ContentControl>
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
                     <Rectangle x:Name="PART_Rectangle"
-                               Height="6"
                                Width="10"
-                               Margin="0,0,3,0"
+                               Height="6"
+                               Margin="0 0 3 0"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Fill="{TemplateBinding ArrowBrush}">
@@ -46,13 +44,13 @@
                                             Height="18"
                                             Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
                                             UseLayoutRounding="False">
-                                        <Path Width="18"
-                                              Height="16"
-                                              Canvas.Left="14.9063"
+                                        <Path Canvas.Left="14.9063"
                                               Canvas.Top="15.75"
-                                              Stretch="Fill"
+                                              Width="18"
+                                              Height="16"
                                               Fill="{DynamicResource BlackColorBrush}"
-                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                                              Stretch="Fill" />
                                     </Canvas>
                                 </VisualBrush.Visual>
                             </VisualBrush>
@@ -61,56 +59,78 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
-                                 StaysOpen="False"
+                                 Placement="Bottom"
                                  MinWidth="{TemplateBinding ActualWidth}"
-                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                 ItemTemplate="{TemplateBinding ItemTemplate}"
-                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                  ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                 ItemsSource="{TemplateBinding ItemsSource}" />
+                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 ItemTemplate="{TemplateBinding ItemTemplate}"
+                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                 ItemsSource="{TemplateBinding ItemsSource}"
+                                 StaysOpen="False" />
                 </Button.ContextMenu>
             </Button>
         </Border>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- obsolete -->
-    <ControlTemplate TargetType="{x:Type Controls:DropDownButton}"
-                     x:Key="SplitButtonVertical">
+    <!--  obsolete  -->
+    <ControlTemplate x:Key="SplitButtonVertical" TargetType="{x:Type Controls:DropDownButton}">
         <Border x:Name="PART_Border"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
-                BorderBrush="{TemplateBinding BorderBrush}">
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
             <Button x:Name="PART_Button"
                     Width="{TemplateBinding Width}"
                     Style="{TemplateBinding ButtonStyle}"
-                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     Background="{TemplateBinding Background}"
                     Foreground="{TemplateBinding Foreground}"
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"
-                    CommandTarget="{TemplateBinding CommandTarget}">
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <ContentPresenter RecognizesAccessKey="True"
-                                      Content="{TemplateBinding Icon}" />
-                    <ContentControl MinHeight="20"
+                    CommandTarget="{TemplateBinding CommandTarget}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Orientation="Vertical">
+                    <ContentPresenter Content="{TemplateBinding Icon}" RecognizesAccessKey="True" />
+                    <ContentControl x:Name="PART_ButtonContent"
+                                    MinHeight="20"
                                     Margin="3"
-                                    x:Name="PART_ButtonContent"
-                                    VerticalAlignment="Stretch"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="Stretch"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    ContentTemplate="{TemplateBinding ItemTemplate}">
-                    </ContentControl>
-                    <Rectangle Margin="0,0,0,3"
-                               x:Name="PART_Rectangle"
-                               Height="6"
+                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    <Rectangle x:Name="PART_Rectangle"
                                Width="10"
+                               Height="6"
+                               Margin="0 0 0 3"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Fill="{TemplateBinding ArrowBrush}">
@@ -121,13 +141,13 @@
                                             Height="18"
                                             Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
                                             UseLayoutRounding="False">
-                                        <Path Width="18"
-                                              Height="16"
-                                              Canvas.Left="14.9063"
+                                        <Path Canvas.Left="14.9063"
                                               Canvas.Top="15.75"
-                                              Stretch="Fill"
+                                              Width="18"
+                                              Height="16"
                                               Fill="{DynamicResource BlackColorBrush}"
-                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                                              Stretch="Fill" />
                                     </Canvas>
                                 </VisualBrush.Visual>
                             </VisualBrush>
@@ -136,19 +156,43 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
-                                 StaysOpen="False"
+                                 Placement="Bottom"
                                  MinWidth="{TemplateBinding ActualWidth}"
-                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                 ItemTemplate="{TemplateBinding ItemTemplate}"
-                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                  ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                  ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                 ItemsSource="{TemplateBinding ItemsSource}" />
+                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 ItemTemplate="{TemplateBinding ItemTemplate}"
+                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                 ItemsSource="{TemplateBinding ItemsSource}"
+                                 StaysOpen="False" />
                 </Button.ContextMenu>
             </Button>
         </Border>
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="ButtonDropDownFocusVisual">
@@ -156,9 +200,9 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle Margin="1"
-                               SnapsToDevicePixels="true"
                                Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                StrokeThickness="1"
+                               SnapsToDevicePixels="true"
                                StrokeDashArray="1 2" />
                 </ControlTemplate>
             </Setter.Value>
@@ -166,177 +210,157 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:DropDownButton}">
-        <Setter Property="ButtonStyle"
-                Value="{DynamicResource ButtonDropDownStyle}" />
-        <Setter Property="MenuStyle"
-                Value="{DynamicResource MetroContextMenu}" />
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="ArrowBrush"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="MinHeight"
-                Value="26" />
-        <Setter Property="BorderThickness"
-                Value="1" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="FontFamily"
-                Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize"
-                Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
-        <Setter Property="Focusable"
-                Value="False" />
-        <Setter Property="FocusVisualStyle"
-                Value="{StaticResource ButtonDropDownFocusVisual}" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource ButtonDropDownStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonDropDownFocusVisual}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MetroContextMenu}" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:DropDownButton}">
                     <Border x:Name="PART_Border"
-                            UseLayoutRounding="True"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}">
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="True">
                         <Button x:Name="PART_Button"
-                                Style="{TemplateBinding ButtonStyle}"
-                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{TemplateBinding ButtonStyle}"
                                 Background="{TemplateBinding Background}"
                                 Foreground="{TemplateBinding Foreground}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Command="{TemplateBinding Command}"
                                 CommandParameter="{TemplateBinding CommandParameter}"
-                                CommandTarget="{TemplateBinding CommandTarget}">
+                                CommandTarget="{TemplateBinding CommandTarget}"
+                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
-                                <Rectangle x:Name="PART_Rectangle"
-                                           UseLayoutRounding="False"
-                                           DockPanel.Dock="Right"
-                                           Height="6"
-                                           Width="10"
-                                           Margin="0,0,3,0"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Visibility="{TemplateBinding ArrowVisibility}"
-                                           Fill="{TemplateBinding ArrowBrush}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Fill">
-                                            <VisualBrush.Visual>
-                                                <Canvas Width="18"
-                                                        Height="18"
-                                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                        UseLayoutRounding="False">
-                                                    <Path Width="18"
-                                                          Height="16"
-                                                          Canvas.Left="14.9063"
-                                                          Canvas.Top="15.75"
-                                                          Stretch="Fill"
-                                                          Fill="{DynamicResource BlackColorBrush}"
-                                                          Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                                </Canvas>
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
+                                <!-- Material - ChevronDown -->
+                                <ContentControl x:Name="PART_Arrow"
+                                                Style="{DynamicResource PathIconContentControlStyle}"
+                                                Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+                                                Width="9"
+                                                Height="9"
+                                                Foreground="{TemplateBinding ArrowBrush}"
+                                                Margin="0 0 3 0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                DockPanel.Dock="Right"
+                                                Visibility="{TemplateBinding ArrowVisibility}" />
                                 <StackPanel x:Name="PART_ContentOrientation"
-                                            Focusable="False"
-                                            Orientation="Horizontal"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                    <ContentPresenter UseLayoutRounding="False"
-                                                      RecognizesAccessKey="True"
-                                                      Focusable="False"
-                                                      HorizontalAlignment="Center"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Focusable="False"
+                                            Orientation="Horizontal">
+                                    <ContentPresenter HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"
                                                       Content="{TemplateBinding Icon}"
-                                                      ContentTemplate="{TemplateBinding IconTemplate}" />
+                                                      ContentTemplate="{TemplateBinding IconTemplate}"
+                                                      Focusable="False"
+                                                      RecognizesAccessKey="True"
+                                                      UseLayoutRounding="False" />
                                     <Controls:ContentControlEx x:Name="PART_ButtonContent"
                                                                Margin="3"
-                                                               UseLayoutRounding="False"
+                                                               Padding="{TemplateBinding Padding}"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
-                                                               Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                               ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                               ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                               Padding="{TemplateBinding Padding}"
                                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                               Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                               ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                               ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                                RecognizesAccessKey="True"
-                                                               ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
+                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                               UseLayoutRounding="False" />
                                 </StackPanel>
                             </DockPanel>
                             <Button.ContextMenu>
                                 <ContextMenu x:Name="PART_Menu"
-                                             Style="{TemplateBinding MenuStyle}"
-                                             StaysOpen="False"
+                                             Placement="Bottom"
                                              MinWidth="{TemplateBinding ActualWidth}"
-                                             IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                             Style="{TemplateBinding MenuStyle}"
                                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                             ItemTemplate="{TemplateBinding ItemTemplate}"
-                                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                             IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                              ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                              ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                             ItemsSource="{TemplateBinding ItemsSource}" />
+                                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                             ItemTemplate="{TemplateBinding ItemTemplate}"
+                                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                             ItemsSource="{TemplateBinding ItemsSource}"
+                                             ItemsPanel="{TemplateBinding ItemsPanel}"
+                                             StaysOpen="False" />
                             </Button.ContextMenu>
                         </Button>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Content"
-                                 Value="{x:Null}">
-                            <Setter TargetName="PART_ButtonContent"
-                                    Property="Margin"
-                                    Value="0" />
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplate, Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentTemplateSelector" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemTemplateSelector, Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ButtonContent" Property="ContentStringFormat" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemStringFormat, Mode=OneWay}" />
+                        </MultiDataTrigger>
+                        
+                        <Trigger Property="Content" Value="{x:Null}">
+                            <Setter TargetName="PART_ButtonContent" Property="Margin" Value="0" />
                         </Trigger>
-                        <Trigger Property="Orientation"
-                                 Value="Vertical">
-                            <Setter TargetName="PART_Rectangle"
-                                    Property="DockPanel.Dock"
-                                    Value="Bottom" />
-                            <Setter TargetName="PART_Rectangle"
-                                    Property="Margin"
-                                    Value="0,0,0,3" />
-                            <Setter TargetName="PART_ContentOrientation"
-                                    Property="Orientation"
-                                    Value="Vertical" />
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
+                            <Setter TargetName="PART_Arrow" Property="DockPanel.Dock" Value="Bottom" />
+                            <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter Property="ArrowBrush"
-                        Value="{DynamicResource AccentColorBrush}" />
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
-            <Trigger Property="IsFocused"
-                     Value="True">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}" />
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
-            <Trigger Property="IsKeyboardFocusWithin"
-                     Value="True">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Opacity"
-                        Value=".55"/>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".55" />
             </Trigger>
         </Style.Triggers>
     </Style>

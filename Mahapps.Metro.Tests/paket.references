@@ -1,0 +1,7 @@
+JetBrains.Annotations
+ExposedObject
+Microsoft.Bcl redirects: on
+Microsoft.Bcl.Async
+Microsoft.Bcl.Build import_targets: true
+xunit
+xunit.extensions

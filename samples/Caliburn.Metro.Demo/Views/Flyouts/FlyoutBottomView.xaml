@@ -3,33 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="300"
-             mc:Ignorable="d">
-
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
+             d:DesignWidth="300">
 
     <StackPanel Height="80"
-                Margin="5,5,5,5"
+                Margin="5 5 5 5"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-        <Button Width="40"
-                Height="40"
+        <Button Width="36"
+                Height="36"
+                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
                 FontFamily="Segoe UI Symbol"
-                FontSize="16"
-                Style="{DynamicResource MetroCircleButtonStyle}">
-            <Rectangle Width="20" Height="20">
-                <Rectangle.Fill>
-                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
-                </Rectangle.Fill>
-            </Rectangle>
+                FontSize="16">
+            <iconPacks:PackIconModern Kind="Add" />
         </Button>
     </StackPanel>
+
 </UserControl>

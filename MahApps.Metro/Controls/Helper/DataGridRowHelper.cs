@@ -26,6 +26,5 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(SelectionUnitProperty, value);
         }
-
     }
 }

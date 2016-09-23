@@ -6,6 +6,8 @@
 
     <Color x:Key="HighlightColor">#FF1377A7</Color>
     
+    <Color x:Key="AccentBaseColor">#FF1BA1E2</Color>
+    <!--80%-->
     <Color x:Key="AccentColor">#CC1BA1E2</Color>
     <!--60%-->
     <Color x:Key="AccentColor2">#991BA1E2</Color>
@@ -16,6 +18,7 @@
 
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentBaseColorBrush" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" options:Freeze="True" />
@@ -43,4 +46,8 @@
     <SolidColorBrush x:Key="MetroDataGrid.FocusBorderBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightBrush" Color="{StaticResource AccentColor2}" options:Freeze="True" />
     <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightTextBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchMouseOverBrush.Win10" Color="{StaticResource AccentColor2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorCheckedBrush.Win10" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
 </ResourceDictionary>

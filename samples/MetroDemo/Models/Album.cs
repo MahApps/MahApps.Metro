@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using MetroDemo.Annotations;
+using JetBrains.Annotations;
 
 namespace MetroDemo.Models
 {

@@ -5,7 +5,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <Grid />
+                    <Grid IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
