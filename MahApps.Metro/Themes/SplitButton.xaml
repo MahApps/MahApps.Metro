@@ -72,6 +72,8 @@
                 </Grid>
             </Border>
             <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
                    MinWidth="{TemplateBinding ActualWidth}"
                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=PART_Border}"
@@ -180,6 +182,8 @@
                 </Grid>
             </Border>
             <Popup x:Name="PART_Popup"
+                   AllowsTransparency="True"
+                   Focusable="False"
                    MinWidth="{TemplateBinding ActualWidth}"
                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                    PlacementTarget="{Binding ElementName=PART_Border}"

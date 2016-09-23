@@ -190,6 +190,13 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
         }
 
+        public SplitButton()
+        {
+            // maybe later
+            //Keyboard.AddKeyDownHandler(this, this.OnKeyDown);
+            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+        }
+
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             e.RoutedEvent = ClickEvent;
@@ -329,7 +336,7 @@ namespace MahApps.Metro.Controls
             this._popup.Closed += this.PopupClosed;
         }
 
-        //Make popup close even if no selectionchanged event fired (case when user select the save item as before)
+        //Make popup close even if no selectionchanged event fired (case when user select the same item as before)
         private void ListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var source = e.OriginalSource as DependencyObject;
@@ -345,33 +352,83 @@ namespace MahApps.Metro.Controls
 
         private void PopupClosed(object sender, EventArgs e)
         {
+            this.IsExpanded = false;
             this.ReleaseMouseCapture();
-            this._expander?.Focus();
+            Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+            if (this.IsKeyboardFocusWithin)
+            {
+                this._expander?.Focus();
+            }
         }
 
         private void PopupOpened(object sender, EventArgs e)
         {
             Mouse.Capture(this, CaptureMode.SubTree);
-            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.AddLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
-        }
-
-        private void RemoveMouseCaptureHandlers()
-        {
-            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
-            Mouse.RemoveLostMouseCaptureHandler(this, this.LostMouseCaptureHandler);
-        }
-
-        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs mouseButtonEventArgs)
-        {
-            this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
+            // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
+            // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
+            // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
+            // to cause OutsideCapturedElementHandler to be called again.
+            Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
         {
-            this.IsExpanded = false;
-            this.RemoveMouseCaptureHandlers();
+            // If the list is still expanded, recapture the SplitButton subtree
+            // so that we still can know when the user has clicked outside of the popup.
+            // This happens on scroll bar mouse up, so this doesn't disrupt the scroll bar functionality
+            // at all.
+            if (this.IsExpanded)
+            {
+                Mouse.Capture(this, CaptureMode.SubTree);
+            }
         }
+
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
+        {
+            this.PopupClosed(sender, e);
+        }
+
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+            // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
+            if (!(bool)e.NewValue)
+            {
+                this.IsExpanded = false;
+            }
+        }
+
+        /* maybe later
+        private static bool IsKeyModifyingPopupState(KeyEventArgs e)
+        {
+            return (((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt) && ((e.SystemKey == Key.Down) || (e.SystemKey == Key.Up)))
+                    || (e.Key == Key.F4);
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (!this.IsExpanded)
+            {
+                if (IsKeyModifyingPopupState(e))
+                {
+                    this.IsExpanded = true;
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (IsKeyModifyingPopupState(e))
+                {
+                    this.PopupClosed(sender, e);
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Escape)
+                {
+                    this.PopupClosed(sender, e);
+                    e.Handled = true;
+                }
+            }
+        }
+        */
     }
 }
