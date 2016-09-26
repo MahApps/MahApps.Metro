@@ -8,9 +8,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
-{
-    using System.Linq;
-
+{    
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>
