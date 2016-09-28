@@ -122,7 +122,10 @@ namespace MahApps.Metro.Behaviours
 
         private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
-            this.savedTopMost = this.AssociatedObject.Topmost;
+            if (this.AssociatedObject != null)
+            {
+                this.savedTopMost = this.AssociatedObject.Topmost;
+            }
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
