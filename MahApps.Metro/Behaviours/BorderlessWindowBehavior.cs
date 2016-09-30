@@ -107,6 +107,19 @@ namespace MahApps.Metro.Behaviours
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
 
+            var lostFocus = new Action(() =>
+                                           {
+                                               if (this.AssociatedObject.Topmost)
+                                               {
+                                                   this.topMostChangeNotifier.ValueChanged -= this.TopMostChangeNotifierOnValueChanged;
+                                                   this.AssociatedObject.Topmost = false;
+                                                   this.AssociatedObject.Topmost = true;
+                                                   this.topMostChangeNotifier.ValueChanged += this.TopMostChangeNotifierOnValueChanged;
+                                               }
+                                           });
+            this.AssociatedObject.LostFocus += (sender, args) => { lostFocus(); };
+            this.AssociatedObject.Deactivated += (sender, args) => { lostFocus(); };
+
             this.AssociatedObject.Loaded += this.AssociatedObject_Loaded;
             this.AssociatedObject.Unloaded += this.AssociatedObject_Unloaded;
             this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
@@ -117,14 +130,21 @@ namespace MahApps.Metro.Behaviours
 
         private void BorderThicknessChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
-            this.savedBorderThickness = this.AssociatedObject.BorderThickness;
+            // It's bad if the window is null at this point, but we check this here to prevent the possible occurred exception
+            var window = this.AssociatedObject;
+            if (window != null)
+            {
+                this.savedBorderThickness = window.BorderThickness;
+            }
         }
 
         private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
-            if (this.AssociatedObject != null)
+            // It's bad if the window is null at this point, but we check this here to prevent the possible occurred exception
+            var window = this.AssociatedObject;
+            if (window != null)
             {
-                this.savedTopMost = this.AssociatedObject.Topmost;
+                this.savedTopMost = window.Topmost;
             }
         }
 
