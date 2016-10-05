@@ -555,7 +555,7 @@ namespace MahApps.Metro.Controls
                 {
                     return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
                 }
-                return hourList.Where(i => i > 0 && i <= 24);
+                return hourList.Where(i => i >= 0 && i < 24);
             }
             return Enumerable.Empty<int>();
         }

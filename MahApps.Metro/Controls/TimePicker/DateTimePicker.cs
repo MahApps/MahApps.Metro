@@ -33,7 +33,7 @@
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
       
         private const string ElementCalendar = "PART_Calendar";
-        private System.Windows.Controls.Calendar _calendar;
+        private Calendar _calendar;
 
         static DateTimePicker()
         {
