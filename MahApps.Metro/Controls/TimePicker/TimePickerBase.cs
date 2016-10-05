@@ -430,7 +430,7 @@ namespace MahApps.Metro.Controls
 
         protected virtual string GetValueForTextBox()
         {
-            return SelectedTime?.ToString(SpecificCultureInfo.DateTimeFormat.LongTimePattern, SpecificCultureInfo);
+            return (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
         }
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
