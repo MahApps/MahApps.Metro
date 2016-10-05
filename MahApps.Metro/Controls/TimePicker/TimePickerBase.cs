@@ -161,6 +161,7 @@ namespace MahApps.Metro.Controls
         private Selector _ampmSwitcher;
         private Button _button;
         private bool _deactivateRangeBaseEvent;
+        private bool _textInputChanged;
         private UIElement _hourHand;
         private Selector _hourInput;
         private UIElement _minuteHand;
@@ -168,7 +169,7 @@ namespace MahApps.Metro.Controls
         private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
-        private DatePickerTextBox _textBox;
+        protected DatePickerTextBox _textBox;
 
         static TimePickerBase()
         {
@@ -372,6 +373,7 @@ namespace MahApps.Metro.Controls
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
             _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
+
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
 
@@ -424,6 +426,30 @@ namespace MahApps.Metro.Controls
             return new Binding(property.Name) { Source = this };
         }
 
+        protected virtual string GetValueForTextBox()
+        {
+            return SelectedTime?.ToString();
+        }
+
+        protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            this._textInputChanged = false;
+            TimeSpan ts;
+            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
+            {
+                SelectedTime = ts;
+            }
+            else
+            {
+                if (SelectedTime == null)
+                {
+                    // if already null, overwrite wrong data in textbox
+                    WriteValueToTextBox();
+                }
+                SelectedTime = null;
+            }
+        }
+
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_deactivateRangeBaseEvent)
@@ -455,6 +481,11 @@ namespace MahApps.Metro.Controls
             {
                 _button.Click += OnButtonClicked;
             }
+            if (_textBox != null)
+            {
+                _textBox.TextChanged += OnTextChanged;
+                _textBox.LostFocus += OnTextBoxLostFocus;
+            }
         }
 
         protected virtual void UnSubscribeEvents()
@@ -464,6 +495,19 @@ namespace MahApps.Metro.Controls
             if (_button != null)
             {
                 _button.Click -= OnButtonClicked;
+            }
+            if (_textBox != null)
+            {
+                _textBox.TextChanged -= OnTextChanged;
+                _textBox.LostFocus -= OnTextBoxLostFocus;
+            }
+        }
+
+        protected void WriteValueToTextBox()
+        {
+            if (_textBox != null)
+            {
+                _textBox.Text = GetValueForTextBox();
             }
         }
 
@@ -570,6 +614,13 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
             timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
+
+            timePartPickerBase.WriteValueToTextBox();
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            _textInputChanged = true;
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)

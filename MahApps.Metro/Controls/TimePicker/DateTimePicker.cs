@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -32,7 +33,7 @@
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
       
         private const string ElementCalendar = "PART_Calendar";
-        private Calendar _calendar;
+        private System.Windows.Controls.Calendar _calendar;
 
         static DateTimePicker()
         {
@@ -132,7 +133,7 @@
 
         public override void OnApplyTemplate()
         {
-            _calendar = GetTemplateChild(ElementCalendar) as Calendar;
+            _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
             base.OnApplyTemplate();
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
         }
@@ -164,11 +165,34 @@
             FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
         }
 
+        protected override string GetValueForTextBox()
+        {
+            return SelectedDate?.ToString();
+        }
+
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
             base.OnRangeBaseValueChanged(sender, e);
             
             SetDatePartValues();
+        }
+
+        protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            DateTime ts;
+            if (DateTime.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out ts))
+            {
+                SelectedDate = ts;
+            }
+            else
+            {
+                if (SelectedDate == null)
+                {
+                    // if already null, overwrite wrong data in textbox
+                    WriteValueToTextBox();
+                }
+                SelectedDate = null;
+            }
         }
 
         protected override void SubscribeEvents()
@@ -220,6 +244,8 @@
             {
                 dateTimePicker.SetDefaultTimeOfDayValues();
             }
+
+            dateTimePicker.WriteValueToTextBox();
         }
 
         private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)

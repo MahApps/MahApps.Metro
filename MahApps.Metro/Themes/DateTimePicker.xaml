@@ -148,7 +148,6 @@
                                                    x:Name="PART_TextBox"
                                                    Grid.Row="1"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Text="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource TimeSpanToStringConverter}}" 
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                    Foreground="{TemplateBinding Foreground}"
@@ -358,7 +357,7 @@
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
                             <Setter TargetName="StackPanel" Property="Orientation" Value="{Binding Path=Orientation, RelativeSource={RelativeSource TemplatedParent}}" />
-                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <!--<Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />-->
                         </Trigger>
                         
                         <MultiDataTrigger>
