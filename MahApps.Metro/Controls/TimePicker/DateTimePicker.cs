@@ -29,7 +29,7 @@
             typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>),
             typeof(DateTimePicker));
 
-        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
+        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
       
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
