@@ -381,6 +381,8 @@ namespace MahApps.Metro.Controls
             SubscribeEvents();
             ApplyCulture();
             ApplyBindings();
+
+            WriteValueToTextBox();
         }
 
         protected virtual void ApplyBindings()
@@ -428,7 +430,7 @@ namespace MahApps.Metro.Controls
 
         protected virtual string GetValueForTextBox()
         {
-            return SelectedTime?.ToString();
+            return SelectedTime?.ToString(SpecificCultureInfo.DateTimeFormat.LongTimePattern, SpecificCultureInfo);
         }
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)

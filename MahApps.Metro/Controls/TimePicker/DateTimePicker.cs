@@ -167,7 +167,10 @@
 
         protected override string GetValueForTextBox()
         {
-            return SelectedDate?.ToString();
+            var formatInfo = SpecificCultureInfo.DateTimeFormat;
+            var dateTimeFormat = $"{formatInfo.ShortDatePattern} {formatInfo.LongTimePattern}";
+
+            return SelectedDate?.ToString(string.Intern(dateTimeFormat), SpecificCultureInfo);
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
