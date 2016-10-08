@@ -118,7 +118,6 @@
             <Button Click="LauchCleanDemo"
                     Content="Clean"
                     ToolTip="Clean window style demo" />
-            <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo"
                     Content="Interop"
                     ToolTip="The interop demo" />

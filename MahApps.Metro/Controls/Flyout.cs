@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
-{
+{    
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>
@@ -452,9 +452,7 @@ namespace MahApps.Metro.Controls
                             }
                         }
                         else
-                        {
-                            // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
-                            flyout.Focus();
+                        {                            
                             flyout.StopAutoCloseTimer();
                             if (flyout.hideStoryboard != null)
                             {
@@ -480,8 +478,6 @@ namespace MahApps.Metro.Controls
                         }
                         else
                         {
-                            // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
-                            flyout.Focus();
                             flyout.StopAutoCloseTimer();
                             flyout.Hide();
                         }

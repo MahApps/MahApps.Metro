@@ -138,15 +138,6 @@ namespace MetroDemo
                 cleanWindowDemo.Show();
         }
 
-        private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
-        {
-#if NET4_5
-            //new RibbonDemo().Show();
-#else
-            MessageBox.Show("Ribbon is only supported on .NET 4.5 or higher.");
-#endif
-        }
-
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
