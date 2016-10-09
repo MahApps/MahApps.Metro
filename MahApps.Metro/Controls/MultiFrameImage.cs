@@ -15,6 +15,14 @@ namespace MahApps.Metro.Controls
             SourceProperty.OverrideMetadata(typeof(MultiFrameImage), new FrameworkPropertyMetadata(OnSourceChanged));
         }
 
+        public static readonly DependencyProperty MultiFrameImageModeProperty = DependencyProperty.Register(
+            "MultiFrameImageMode", typeof(MultiFrameImageMode), typeof(MultiFrameImage), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public MultiFrameImageMode MultiFrameImageMode {
+            get { return (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty); }
+            set { SetValue(MultiFrameImageModeProperty, value); }
+        }
+
         private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var multiFrameImage = (MultiFrameImage) d;
@@ -57,9 +65,25 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var minSize = Math.Max(RenderSize.Width, RenderSize.Height);
-            var frame = _frames.FirstOrDefault(f => f.Width >= minSize && f.Height >= minSize) ?? _frames.Last();
-            dc.DrawImage(frame, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+            switch (MultiFrameImageMode) {
+                case MultiFrameImageMode.ScaleDownLargerFrame:
+                    var minSize = Math.Max(RenderSize.Width, RenderSize.Height);
+                    var minFrame = _frames.FirstOrDefault(f => f.Width >= minSize && f.Height >= minSize) ?? _frames.Last();
+                    dc.DrawImage(minFrame, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+                    break;
+                case MultiFrameImageMode.NoScaleSmallerFrame:
+                    var maxSize = Math.Min(RenderSize.Width, RenderSize.Height);
+                    var maxFrame = _frames.LastOrDefault(f => f.Width <= maxSize && f.Height >= maxSize) ?? _frames.First();
+                    dc.DrawImage(maxFrame, new Rect((RenderSize.Width-maxFrame.Width)/2, (RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
+    }
+
+    public enum MultiFrameImageMode {
+        ScaleDownLargerFrame,
+        NoScaleSmallerFrame,
     }
 }

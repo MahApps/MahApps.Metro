@@ -213,6 +213,17 @@
                             IsCheckable="True"
                             IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}"
                             IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}" />
+                <Separator />
+                <MenuItem Header="Window icon: scale down larger frame"
+                          Command="{Binding ToggleIconScalingCommand}"
+                          CommandParameter="{x:Static Controls:MultiFrameImageMode.ScaleDownLargerFrame}"
+                          IsChecked="{Binding IsScaleDownLargerFrame, Mode=OneWay}"
+                          IsCheckable="True" />
+                <MenuItem Header="Window icon: no scale, smaller frame"
+                          Command="{Binding ToggleIconScalingCommand}"
+                          CommandParameter="{x:Static Controls:MultiFrameImageMode.NoScaleSmallerFrame}"
+                          IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}"
+                          IsCheckable="True" />
             </MenuItem>
         </Menu>
 

@@ -51,6 +51,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowIconOnTitleBarPropertyChangedCallback));
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
         public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
+        public static readonly DependencyProperty IconScalingModeProperty = DependencyProperty.Register("IconScalingMode", typeof(MultiFrameImageMode), typeof(MetroWindow), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
@@ -389,6 +390,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets icon scaling mode of the titlebar.
+        /// </summary>
+        public MultiFrameImageMode IconScalingMode
+        {
+            get { return (MultiFrameImageMode)this.GetValue(IconScalingModeProperty); }
+            set { SetValue(IconScalingModeProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets whether the TitleBar is visible or not.
         /// </summary>
         public bool ShowTitleBar
@@ -586,9 +596,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(TitleCapsProperty, value); }
         }
 
-        /// <summary> 
+        /// <summary>
         /// Character casing of the title
-        /// </summary> 
+        /// </summary>
         public CharacterCasing TitleCharacterCasing
         {
             get { return (CharacterCasing)GetValue(TitleCharacterCasingProperty); }
@@ -1260,7 +1270,7 @@ namespace MahApps.Metro.Controls
         {
             return GetTemplateChild(name) as T;
         }
-        
+
         /// <summary>
         /// Gets the template child with the given name.
         /// </summary>
