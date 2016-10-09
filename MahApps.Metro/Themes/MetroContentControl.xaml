@@ -29,7 +29,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LayoutStates">
                                 <VisualState x:Name="AfterLoaded">
-                                    <Storyboard>
+                                    <Storyboard x:Name="AfterLoadedStoryBoard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">

@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
@@ -40,6 +42,13 @@ namespace MahApps.Metro.Controls
 
             Loaded += MetroContentControlLoaded;
             Unloaded += MetroContentControlUnloaded;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            var sb = ((Storyboard)GetTemplateChild("AfterLoadedStoryBoard"));
+            sb.Completed += (s, e) => { InvalidateVisual(); };
         }
 
         void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -109,5 +118,6 @@ namespace MahApps.Metro.Controls
             }
 
         }
+      
     }
 }
