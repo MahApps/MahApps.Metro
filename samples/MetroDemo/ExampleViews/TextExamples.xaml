@@ -239,11 +239,16 @@
                               Margin="1"
                               Content="HasDecimals"
                               IsChecked="True" />
+                    <CheckBox x:Name="HasScientificNotationCheckBox"
+                              Margin="1"
+                              Content="HasScientificNotation"
+                              IsChecked="True" />
                 </UniformGrid>
 
                 <Label Content="Min=&quot;0&quot;, Max=&quot;10&quot;, TextAlignment=&quot;Left&quot;" />
                 <Controls:NumericUpDown x:Name="Test"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsEnabled="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10"
@@ -255,6 +260,7 @@
                 <Controls:NumericUpDown Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         IsTabStop="False"
@@ -263,6 +269,7 @@
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="No Speedup when long pressed"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="false" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
@@ -270,6 +277,7 @@
                                         Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
                                         Delay="1000"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="true" />
 
@@ -278,6 +286,7 @@
                        ContentStringFormat="StringFormat, Real Value = {0}" />
                 <Controls:NumericUpDown x:Name="test"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="100"
                                         StringFormat="pcs. {0:N2} pcs."
@@ -309,6 +318,7 @@
                 <Controls:NumericUpDown x:Name="StringFormatNumUpDown"
                                         Margin="{StaticResource ControlMargin}"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval=".1"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         StringFormat="0,000.00"
@@ -318,6 +328,7 @@
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
+                                        HasScientificNotation="{Binding ElementName=HasScientificNotationCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Value="500" />
