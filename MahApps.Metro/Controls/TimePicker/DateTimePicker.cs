@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using Standard;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -252,7 +253,8 @@
 
         private DateTime? GetSelectedDateTimeFromGUI()
         {
-            var selectedDate = _calendar?.SelectedDate;
+            // Because Calendar.SelectedDate is bound to this.SelectedDate return this.SelectedDate
+            var selectedDate = SelectedDate;
 
             if (selectedDate != null)
             {
