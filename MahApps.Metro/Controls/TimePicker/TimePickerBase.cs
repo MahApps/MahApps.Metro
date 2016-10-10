@@ -161,6 +161,7 @@ namespace MahApps.Metro.Controls
         private Selector _ampmSwitcher;
         private Button _button;
         private bool _deactivateRangeBaseEvent;
+        private bool _deactivateTextChangedEvent;
         private bool _textInputChanged;
         private UIElement _hourHand;
         private Selector _hourInput;
@@ -387,9 +388,9 @@ namespace MahApps.Metro.Controls
 
         protected virtual void ApplyBindings()
         {
-            if (this.Popup != null)
+            if (Popup != null)
             {
-                this.Popup.SetBinding(Popup.IsOpenProperty, GetBinding(IsDropDownOpenProperty));
+                Popup.SetBinding(Popup.IsOpenProperty, GetBinding(IsDropDownOpenProperty));
             }
         }
 
@@ -430,12 +431,12 @@ namespace MahApps.Metro.Controls
 
         protected virtual string GetValueForTextBox()
         {
-            return (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            return valueForTextBox;
         }
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            this._textInputChanged = false;
             TimeSpan ts;
             if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
             {
@@ -454,12 +455,7 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_deactivateRangeBaseEvent)
-            {
-                return;
-            }
-
-            SelectedTime = this.GetTimeOfDayFromClockHands();
+            SelectedTime = this.GetSelectedTimeFromGUI();
         }
 
         protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<TimeSpan?> e)
@@ -486,7 +482,7 @@ namespace MahApps.Metro.Controls
             if (_textBox != null)
             {
                 _textBox.TextChanged += OnTextChanged;
-                _textBox.LostFocus += OnTextBoxLostFocus;
+                _textBox.LostFocus += InternalOnTextBoxLostFocus;
             }
         }
 
@@ -501,15 +497,17 @@ namespace MahApps.Metro.Controls
             if (_textBox != null)
             {
                 _textBox.TextChanged -= OnTextChanged;
-                _textBox.LostFocus -= OnTextBoxLostFocus;
+                _textBox.LostFocus -= InternalOnTextBoxLostFocus;
             }
         }
 
-        protected void WriteValueToTextBox()
+        protected virtual void WriteValueToTextBox()
         {
             if (_textBox != null)
             {
+                _deactivateTextChangedEvent = true;
                 _textBox.Text = GetValueForTextBox();
+                _deactivateTextChangedEvent = false;
             }
         }
 
@@ -560,6 +558,24 @@ namespace MahApps.Metro.Controls
                 return hourList.Where(i => i >= 0 && i < 24);
             }
             return Enumerable.Empty<int>();
+        }
+
+        private void InternalOnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_textInputChanged)
+            {
+                _textInputChanged = false;
+
+                OnTextBoxLostFocus(sender, e);
+            }
+        }
+
+        private void InternalOnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_deactivateRangeBaseEvent)
+            {
+                OnRangeBaseValueChanged(sender, e);
+            }
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -613,6 +629,12 @@ namespace MahApps.Metro.Controls
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var timePartPickerBase = (TimePickerBase)d;
+
+            if (timePartPickerBase._deactivateRangeBaseEvent)
+            {
+                return;
+            }
+
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
             timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
@@ -622,7 +644,10 @@ namespace MahApps.Metro.Controls
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            _textInputChanged = true;
+            if (!_deactivateTextChangedEvent)
+            {
+                _textInputChanged = true;
+            }
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
@@ -659,7 +684,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private TimeSpan? GetTimeOfDayFromClockHands()
+        protected TimeSpan? GetSelectedTimeFromGUI()
         {
             {
                 if (IsValueSelected(_hourInput) &&
@@ -756,6 +781,11 @@ namespace MahApps.Metro.Controls
 
         private void SetHourPartValues(TimeSpan timeOfDay)
         {
+            if (this._deactivateRangeBaseEvent)
+            {
+                return;
+            }
+
             _deactivateRangeBaseEvent = true;
             if (_hourInput != null)
             {
@@ -800,7 +830,7 @@ namespace MahApps.Metro.Controls
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged += OnRangeBaseValueChanged;
+                selector.SelectionChanged += InternalOnRangeBaseValueChanged;
             }
         }
 
@@ -808,7 +838,7 @@ namespace MahApps.Metro.Controls
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged -= OnRangeBaseValueChanged;
+                selector.SelectionChanged -= InternalOnRangeBaseValueChanged;
             }
         }
     }

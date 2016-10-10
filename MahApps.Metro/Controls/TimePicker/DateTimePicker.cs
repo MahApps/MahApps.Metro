@@ -34,6 +34,7 @@
       
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
+        private bool _deactivateWriteValueToTextBox;
 
         static DateTimePicker()
         {
@@ -133,9 +134,8 @@
 
         public override void OnApplyTemplate()
         {
-            _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
-            base.OnApplyTemplate();
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
+            base.OnApplyTemplate();
         }
 
         protected virtual void OnSelectedDateChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
@@ -155,6 +155,7 @@
                 _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
+                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateProperty));
             }
         }
 
@@ -170,7 +171,9 @@
             var formatInfo = SpecificCultureInfo.DateTimeFormat;
             var dateTimeFormat = string.Intern($"{formatInfo.ShortDatePattern} {formatInfo.LongTimePattern}");
 
-            return SelectedDate?.ToString(dateTimeFormat, SpecificCultureInfo);
+            var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
+            var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
+            return valueForTextBox;
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
@@ -198,23 +201,11 @@
             }
         }
 
-        protected override void SubscribeEvents()
+        protected override void WriteValueToTextBox()
         {
-            base.SubscribeEvents();
-
-            if (_calendar != null)
+            if (!_deactivateWriteValueToTextBox)
             {
-                _calendar.SelectedDatesChanged += OnSelectedDatesChanged;
-            }
-        }
-
-        protected override void UnSubscribeEvents()
-        {
-            base.UnSubscribeEvents();
-
-            if (_calendar != null)
-            {
-                _calendar.SelectedDatesChanged -= OnSelectedDatesChanged;
+                base.WriteValueToTextBox();
             }
         }
 
@@ -237,6 +228,12 @@
         {
             var dateTimePicker = (DateTimePicker)d;
 
+            /* Without deactivating changing SelectedTime would callbase.OnSelectedTimeChanged.
+             * This would write too and this would result in duplicate writing.
+             * More problematic would be instead that a short amount of time SelectedTime would be as value in TextBox
+             */
+            dateTimePicker._deactivateWriteValueToTextBox = true; 
+
             var dt = (DateTime?)e.NewValue;
             if (dt.HasValue)
             {
@@ -248,27 +245,26 @@
                 dateTimePicker.SetDefaultTimeOfDayValues();
             }
 
+            dateTimePicker._deactivateWriteValueToTextBox = false;
+
             dateTimePicker.WriteValueToTextBox();
         }
 
-        private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        private DateTime? GetSelectedDateTimeFromGUI()
         {
-            if (e.AddedItems != null)
-            {
-                var dt = (DateTime)e.AddedItems[0];
-                dt = dt.Add(SelectedTime.GetValueOrDefault());
-                SelectedDate = dt;
-            }
-        }
+            var selectedDate = _calendar?.SelectedDate;
 
-        private DateTime GetCorrectDateTime()
-        {
-            return SelectedDate.GetValueOrDefault(DateTime.Today).Date + SelectedTime.GetValueOrDefault();
+            if (selectedDate != null)
+            {
+                return selectedDate.Value.Date + GetSelectedTimeFromGUI().GetValueOrDefault();
+            }
+
+            return null;
         }
 
         private void SetDatePartValues()
         {
-            var dateTime = GetCorrectDateTime();
+            var dateTime = GetSelectedDateTimeFromGUI();
             DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
             if (SelectedDate != DisplayDate || (Popup != null && Popup.IsOpen))
             {
