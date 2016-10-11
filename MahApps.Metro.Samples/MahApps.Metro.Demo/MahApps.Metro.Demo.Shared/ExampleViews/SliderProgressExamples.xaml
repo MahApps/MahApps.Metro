@@ -1,0 +1,268 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.SliderProgressExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="Horizontal Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Slider x:Name="horizSlider"
+                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                    Width="200"
+                    Margin="0, 10, 0, 0"
+                    LargeChange="10"
+                    Maximum="100"
+                    Minimum="0"
+                    SmallChange="1"
+                    Value="20" />
+            <Slider Width="200"
+                    Margin="0, 10, 0, 0"
+                    Style="{DynamicResource FlatSlider}"
+                    Value="50" />
+            <Slider Width="200"
+                    Margin="0, 10, 0, 0"
+                    IsEnabled="False" />
+            <Slider Width="200"
+                    Margin="0, 10, 0, 0"
+                    IsEnabled="False"
+                    Style="{DynamicResource FlatSlider}"
+                    Value="50" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Label Content="Vertical Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <StackPanel Height="200" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Slider Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                        Orientation="Vertical"
+                        LargeChange="10"
+                        Maximum="100"
+                        Minimum="0"
+                        SmallChange="1"
+                        Value="20"/>
+                <Slider Margin="10, 0, 0, 0"
+                        Orientation="Vertical"
+                        Style="{DynamicResource FlatSlider}"
+                        Value="50" />
+                <Slider Margin="10, 0, 0, 0"
+                        IsEnabled="False"
+                        Orientation="Vertical" />
+                <Slider Margin="10, 0, 0, 0"
+                        IsEnabled="False"
+                        Orientation="Vertical"
+                        Style="{DynamicResource FlatSlider}"
+                        Value="50" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <Label Content="RangeSlider" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                <Controls:RangeSlider x:Name="RangeSlider"
+                                      AutoToolTipPlacement="BottomRight"
+                                      AutoToolTipPrecision="2"
+                                      CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
+                                      CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted"
+                                      ExtendedMode="True"
+                                      IsMoveToPointEnabled="True"
+                                      IsSnapToTickEnabled="True"
+                                      LowerValue="-70"
+                                      LowerValueChanged="RangeSlider_OnLowerValueChanged"
+                                      Maximum="200"
+                                      MinRange="0"
+                                      MinRangeWidth="20"
+                                      Minimum="-200"
+                                      MoveWholeRange="False"
+                                      Orientation="Vertical"
+                                      SmallChange="0.1"
+                                      TickFrequency="20"
+                                      TickPlacement="Both"
+                                      UpperValue="60"
+                                      UpperValueChanged="RangeSlider_OnUpperValueChanged" />
+                <StackPanel Width="228"
+                            Margin="5, 0, 0, 0"
+                            Orientation="Vertical">
+
+                    <Controls:RangeSlider x:Name="RangeSlider1"
+                                          Margin="0,0,0,20"
+                                          AutoToolTipPlacement="BottomRight"
+                                          AutoToolTipPrecision="2"
+                                          CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
+                                          CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
+                                          CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted"
+                                          ExtendedMode="True"
+                                          IsMoveToPointEnabled="True"
+                                          IsSnapToTickEnabled="False"
+                                          LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
+                                          LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta"
+                                          LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted"
+                                          LowerValue="120"
+                                          LowerValueChanged="RangeSlider_OnLowerValueChanged"
+                                          Maximum="205"
+                                          MinRange="0"
+                                          MinRangeWidth="20"
+                                          Minimum="-200"
+                                          MoveWholeRange="False"
+                                          Orientation="Horizontal"
+                                          SmallChange="0.1"
+                                          TickFrequency="20"
+                                          TickPlacement="TopLeft"
+                                          UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
+                                          UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta"
+                                          UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted"
+                                          UpperValue="100"
+                                          UpperValueChanged="RangeSlider_OnUpperValueChanged" />
+
+                    <Controls:RangeSlider Name="RangeSlider2"
+                                          Margin="0,0,0,20"
+                                          AutoToolTipPlacement="TopLeft"
+                                          LowerValue="20"
+                                          Maximum="610"
+                                          TickPlacement="Both"
+                                          UpperValue="360" />
+
+                    <Controls:RangeSlider Margin="0,0,0,20"
+                                          IsEnabled="False"
+                                          TickPlacement="Both" />
+                    <Controls:RangeSlider Height="20"
+                                          Margin="0,0,0,20"
+                                          IsEnabled="False"
+                                          LowerValue="20"
+                                          UpperValue="60" />
+                </StackPanel>
+            </StackPanel>
+
+
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Label Content="ProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <ProgressBar Width="200"
+                         Margin="0, 10, 0, 0"
+                         Maximum="100"
+                         Minimum="0"
+                         Value="{Binding ElementName=horizSlider, Path=Value}" />
+            <ProgressBar Width="200"
+                         Margin="0, 10, 0, 0"
+                         Value="50" />
+            <ProgressBar Width="200"
+                         Margin="0, 10, 0, 0"
+                         IsIndeterminate="True"
+                         Value="100" />
+
+            <Label Content="MetroProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:MetroProgressBar Width="200"
+                                       Margin="0, 10, 0, 0"
+                                       Foreground="{DynamicResource AccentColorBrush}"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Value="{Binding ElementName=horizSlider, Path=Value}" />
+            <CheckBox Width="200"
+                      Margin="0, 10, 0, 0"
+                      Content="IsIndeterminate"
+                      IsChecked="{Binding ElementName=IsIndeterminatePB, Path=IsIndeterminate, UpdateSourceTrigger=PropertyChanged}"
+                      Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
+            <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
+                                       Width="200"
+                                       Margin="0, 10, 0, 0"
+                                       Foreground="{DynamicResource AccentColorBrush}"
+                                       IsIndeterminate="True"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                       Value="{Binding ElementName=horizSlider, Path=Value}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Label Content="ProgressRing" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Grid Margin="20, 0, 20, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Controls:ProgressRing Grid.Column="0" Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                <Controls:ProgressRing Grid.Column="1"
+                                       Width="40"
+                                       Height="40" />
+                <Controls:ProgressRing Grid.Column="2"
+                                       Width="20"
+                                       Height="20" />
+            </Grid>
+        </StackPanel>
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Label VerticalAlignment="top"
+                   Content="Sliders TickPlacement"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Slider Width="132"
+                    Margin="122,39,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    IsSnapToTickEnabled="True"
+                    Style="{DynamicResource FlatSlider}"
+                    TickFrequency="25"
+                    TickPlacement="Both" />
+            <Slider Width="132"
+                    Margin="122,112,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    TickFrequency="25"
+                    TickPlacement="BottomRight"
+                    Value="50" />
+            <Slider Width="132"
+                    Margin="122,207,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    TickFrequency="25"
+                    TickPlacement="TopLeft"
+                    Value="50" />
+            <Slider Height="113"
+                    Margin="10,44,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    Orientation="Vertical"
+                    Style="{DynamicResource FlatSlider}"
+                    TickFrequency="25"
+                    TickPlacement="Both"
+                    Value="50" />
+            <Slider Height="113"
+                    Margin="27,44,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    Orientation="Vertical"
+                    TickFrequency="25"
+                    TickPlacement="BottomRight"
+                    Value="50" />
+            <Slider Height="113"
+                    Margin="70,44,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="top"
+                    Orientation="Vertical"
+                    TickFrequency="25"
+                    TickPlacement="TopLeft"
+                    Value="50" />
+        </Grid>
+    </Grid>
+
+</UserControl>

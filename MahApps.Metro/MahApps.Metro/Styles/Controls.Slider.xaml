@@ -1,0 +1,325 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+
+    <System:Double x:Key="HorizontalThumbHeight">16</System:Double>
+    <System:Double x:Key="HorizontalThumbWidth">10</System:Double>
+    <System:Double x:Key="VerticalThumbWidth">16</System:Double>
+    <System:Double x:Key="VerticalThumbHeight">10</System:Double>
+    
+    <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" />
+
+    <!--  HorizontalSliderThumb  -->
+    <Style x:Key="HorizontalSliderThumb" TargetType="Thumb">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush2}" />
+        <Setter Property="BorderThickness" Value="1 0" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Rectangle Fill="{TemplateBinding Background}"
+                                   RadiusX="2"
+                                   RadiusY="2"
+                                   Margin="{TemplateBinding BorderThickness}" />
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource DisabledWhiteBrush}"
+                                   Opacity="0"
+                                   IsHitTestVisible="False" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.4" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.6" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  HorizontalTrackLargeDecrease  -->
+    <Style x:Key="HorizontalTrackLargeDecrease" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid x:Name="Root" Margin="0 -1 0 0">
+                        <Rectangle Height="3"
+                                   Margin="0,1,0,0"
+                                   Fill="{DynamicResource GrayBrush3}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HorizontalTrackValue" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid x:Name="Root" Margin="0 -1 0 0">
+                        <Rectangle Height="5" Margin="0,1,0,0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
+                                    <GradientStop Offset="0.25" Color="{DynamicResource AccentColor}" />
+                                    <GradientStop Offset="0.75" Color="{DynamicResource AccentColor}" />
+                                    <GradientStop Offset="1.0" Color="{TemplateBinding Background}" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="HorizontalSliderTemplate" TargetType="Slider">
+        <Grid x:Name="Root">
+            <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TickBar x:Name="TopTick"
+                         Grid.Row="0"
+                         Height="4"
+                         Fill="{TemplateBinding Foreground}"
+                         Placement="Top"
+                         Visibility="Collapsed" />
+                <TickBar x:Name="BottomTick"
+                         Grid.Row="2"
+                         Height="4"
+                         Fill="{TemplateBinding Foreground}"
+                         Placement="Bottom"
+                         Visibility="Collapsed" />
+                <Track x:Name="PART_Track"
+                       Grid.Row="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource HorizontalTrackValue}" Command="{x:Static Slider.DecreaseLarge}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource HorizontalTrackLargeDecrease}" Command="{x:Static Slider.IncreaseLarge}" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <controls:MetroThumb x:Name="HorizontalThumb"
+                                             Width="{DynamicResource HorizontalThumbWidth}"
+                                             Height="{DynamicResource HorizontalThumbHeight}"
+                                             Style="{StaticResource HorizontalSliderThumb}"
+                                             IsTabStop="True" />
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver" />
+                    <VisualState x:Name="Disabled" />
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Unfocused" />
+                    <VisualState x:Name="Focused" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  VerticalSliderThumb  -->
+    <Style x:Key="VerticalSliderThumb" BasedOn="{StaticResource HorizontalSliderThumb}" TargetType="Thumb">
+        <Setter Property="BorderThickness" Value="0 1" />
+    </Style>
+
+    <Style x:Key="VerticalTrackLargeDecrease" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid x:Name="Root" Margin="-1 0 0 0">
+                        <Rectangle Width="3"
+                                   Margin="1,0,0,0"
+                                   Fill="{DynamicResource GrayBrush3}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    <Style x:Key="VerticalTrackValue" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid x:Name="Root" Margin="-1 0 0 0">
+                        <Rectangle Width="5" Margin="1,0,0,0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
+                                    <GradientStop Offset="0.25" Color="{DynamicResource AccentColor}" />
+                                    <GradientStop Offset="0.75" Color="{DynamicResource AccentColor}" />
+                                    <GradientStop Offset="1.0" Color="{TemplateBinding Background}" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="VerticalSliderTemplate" TargetType="Slider">
+        <Grid x:Name="Root">
+            <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TickBar x:Name="TopTick"
+                         Grid.Column="0"
+                         Width="4"
+                         Fill="{TemplateBinding Foreground}"
+                         Placement="Left"
+                         Visibility="Collapsed" />
+                <TickBar x:Name="BottomTick"
+                         Grid.Column="2"
+                         Width="4"
+                         Fill="{TemplateBinding Foreground}"
+                         Placement="Right"
+                         Visibility="Collapsed" />
+                <Track x:Name="PART_Track"
+                       Grid.Column="1">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource VerticalTrackValue}" Command="{x:Static Slider.DecreaseLarge}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource VerticalTrackLargeDecrease}" Command="{x:Static Slider.IncreaseLarge}" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <controls:MetroThumb x:Name="VerticalThumb"
+                                             Width="{DynamicResource VerticalThumbWidth}"
+                                             Height="{DynamicResource VerticalThumbHeight}"
+                                             Style="{StaticResource VerticalSliderThumb}"
+                                             IsTabStop="True" />
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver" />
+                    <VisualState x:Name="Disabled" />
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Unfocused" />
+                    <VisualState x:Name="Focused" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  Slider Style  -->
+    <Style x:Key="MetroSlider" TargetType="Slider">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Template" Value="{DynamicResource HorizontalSliderTemplate}" />
+        <Setter Property="Value" Value="0" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{DynamicResource VerticalSliderTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
