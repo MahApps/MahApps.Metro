@@ -62,10 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Compile Include="..\MahApps.Metro.Demo.Shared\App.xaml.cs">
-      <Link>App.xaml.cs</Link>
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Include="..\MahApps.Metro.Demo.Shared\MainWindow.xaml.cs">
       <Link>MainWindow.xaml.cs</Link>
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -99,13 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="mahapps.metro.logo2.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="..\MahApps.Metro.Demo.Shared\App.xaml">
-      <Link>App.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\MahApps.Metro.Demo.Shared\MainWindow.xaml">

@@ -9,6 +9,9 @@
     <Import_RootNamespace>MetroDemo</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Behaviors\DateTimeNowBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\ButtonsExample.xaml.cs">
       <DependentUpon>ButtonsExample.xaml</DependentUpon>
@@ -74,6 +77,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
     <Page Include="$(MSBuildThisFileDirectory)ExampleViews\ButtonsExample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
