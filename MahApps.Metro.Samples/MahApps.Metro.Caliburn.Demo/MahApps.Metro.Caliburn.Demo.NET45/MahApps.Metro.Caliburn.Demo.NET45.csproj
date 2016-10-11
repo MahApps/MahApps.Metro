@@ -87,13 +87,6 @@
       <Name>MahApps.Metro.NET45</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="..\MahApps.Metro.Caliburn.Demo.Shared\App.xaml">
-      <Link>App.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
   <Import Project="..\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems" Label="Shared" />
   <Import Project="..\..\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -29,6 +29,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
     <Page Include="$(MSBuildThisFileDirectory)Resources\Theme1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
