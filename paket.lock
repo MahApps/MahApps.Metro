@@ -9,7 +9,7 @@ NUGET
       Fody (>= 1.26.1)
     ExposedObject (1.2)
     Fody (1.29.4)
-    JetBrains.Annotations (10.2)
+    JetBrains.Annotations (10.2.1)
     MahApps.Metro.IconPacks (1.2)
     Microsoft.Bcl (1.1.10) - framework: net40
       Microsoft.Bcl.Build (>= 1.0.14)
