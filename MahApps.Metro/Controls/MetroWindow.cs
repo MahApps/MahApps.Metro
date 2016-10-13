@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;

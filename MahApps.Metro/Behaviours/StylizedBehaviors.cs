@@ -4,7 +4,6 @@ using System.Windows.Interactivity;
 namespace MahApps.Metro.Behaviours
 {
     using System.ComponentModel;
-    using System.Windows.Threading;
 
     public class StylizedBehaviors
     {

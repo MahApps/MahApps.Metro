@@ -1,5 +1,4 @@
-﻿using System;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 
 namespace MetroDemo.ExampleWindows
 {
