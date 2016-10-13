@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>MahApps.Metro</id>
+    <version>1.4.0.0</version>
+    <title>MahApps.Metro</title>
+    <authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</authors>
+    <owners>punker76,shiftkey,aeoth,jakeginnivan</owners>
+    <licenseUrl>https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.</description>
+    <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.</summary>
+    <releaseNotes />
+	  <tags>WPF UI Metro ModernUI Material XAML Toolkit Library .NET</tags>
+    </metadata>
+    <files>
+      <file src="..\bin\MahApps.Metro\ReleaseNET40\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET40\MahApps.Metro.pdb" target="lib\net40\MahApps.Metro.pdb" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET40\MahApps.Metro.XML" target="lib\net40\MahApps.Metro.XML" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET40\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
+
+      <file src="..\bin\MahApps.Metro\ReleaseNET45\MahApps.Metro.dll" target="lib\net45\MahApps.Metro.dll" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET45\MahApps.Metro.pdb" target="lib\net45\MahApps.Metro.pdb" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET45\MahApps.Metro.XML" target="lib\net45\MahApps.Metro.XML" />
+      <file src="..\bin\MahApps.Metro\ReleaseNET45\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
+
+      <file src="install.ps1" target="tools\install.ps1" />
+    </files>
+</package>
