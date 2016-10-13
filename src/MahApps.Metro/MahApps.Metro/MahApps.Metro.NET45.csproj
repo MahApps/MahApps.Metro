@@ -18,23 +18,23 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\NET45\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\$(AssemblyName)\DebugNET45\</OutputPath>
     <IntermediateOutputPath>obj\Debug\NET45\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MahApps.Metro.XML</DocumentationFile>
+    <DocumentationFile>$(SolutionDir)\bin\$(AssemblyName)\DebugNET45\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\NET45\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\$(AssemblyName)\ReleaseNET45\</OutputPath>
     <IntermediateOutputPath>obj\Release\NET45\</IntermediateOutputPath>
     <DefineConstants>TRACE;NET4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MahApps.Metro.XML</DocumentationFile>
+    <DocumentationFile>$(SolutionDir)\bin\$(AssemblyName)\ReleaseNET45\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1572,1573,1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
