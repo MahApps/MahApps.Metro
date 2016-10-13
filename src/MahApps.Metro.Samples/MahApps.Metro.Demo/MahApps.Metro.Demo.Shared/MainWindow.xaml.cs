@@ -1,5 +1,7 @@
 ﻿using System;
+#if NET4
 using System.Threading.Tasks;
+#endif
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
