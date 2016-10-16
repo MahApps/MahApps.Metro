@@ -51,6 +51,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\GlowWindow.xaml.cs">
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.HamburgerButton.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Options.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Properties.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuGlyphItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuImageItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuItemCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\AmPmComparer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ButtonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ComboBoxHelper.cs" />

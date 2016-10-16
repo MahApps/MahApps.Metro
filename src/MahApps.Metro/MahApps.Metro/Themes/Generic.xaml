@@ -25,6 +25,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />

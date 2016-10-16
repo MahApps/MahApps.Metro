@@ -61,6 +61,18 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\BigFourSummerHeat.png">
+      <Link>Assets\Photos\BigFourSummerHeat.png</Link>
+    </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\BisonBadlandsChillin.png">
+      <Link>Assets\Photos\BisonBadlandsChillin.png</Link>
+    </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\GiantSlabInOregon.png">
+      <Link>Assets\Photos\GiantSlabInOregon.png</Link>
+    </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\LakeAnnMushroom.png">
+      <Link>Assets\Photos\LakeAnnMushroom.png</Link>
+    </Resource>
     <Content Include="FodyWeavers.xml" />
     <Compile Include="..\MahApps.Metro.Demo.Shared\MainWindow.xaml.cs">
       <Link>MainWindow.xaml.cs</Link>
