@@ -422,6 +422,7 @@
                         <FrameworkElement x:Name="ProxyElement"
                                           Width="0"
                                           Height="0"
+                                          Focusable="False"
                                           DataContext="{Binding TemplateSettings, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Visibility="Collapsed" />
 

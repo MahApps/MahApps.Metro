@@ -262,10 +262,21 @@
             }
         }
 
+        protected override void OnRenderSizeChanged(SizeChangedInfo info)
+        {
+            base.OnRenderSizeChanged(info);
+            if (this.paneClipRectangle != null)
+            {
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight);
+            }
+        }
+
         protected virtual void ChangeVisualState(bool animated = true)
         {
             if (this.paneClipRectangle != null)
-                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, short.MaxValue); // We could also use ActualHeight and subscribe to the SizeChanged property
+            {
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight); // We could also use ActualHeight and subscribe to the SizeChanged property
+            }
 
             var state = string.Empty;
             if (this.IsPaneOpen)
