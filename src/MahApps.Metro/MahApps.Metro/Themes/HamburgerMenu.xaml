@@ -3,46 +3,47 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="HamburgerButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="HamburgerButtonStyle"
+           BasedOn="{StaticResource ChromelessButtonStyle}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="8 4 8 4" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                   Content="{TemplateBinding Content}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   Padding="{TemplateBinding Margin}"
-                                                   RecognizesAccessKey="True"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid Background="Transparent">
+                        <Grid x:Name="PART_Background" Background="{TemplateBinding Background}" Opacity="0" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Opacity="0.75"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Background" Property="Opacity" Value="0.3" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="PART_Background" Property="Opacity" Value="0" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.75" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="DarkGray" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="HamburgerListBoxStyle"
@@ -56,9 +57,9 @@
                 <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="Transparent" />
                     <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="Padding" Value="0" />
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 </Style>
             </Setter.Value>
         </Setter>
@@ -99,13 +100,13 @@
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" />
                                     <ListBox Name="ButtonsListView"
-                                             Style="{StaticResource HamburgerListBoxStyle}"
                                              Grid.Row="1"
                                              Width="{TemplateBinding OpenPaneLength}"
                                              AutomationProperties.Name="Menu items"
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
                                              SelectionMode="Single"
+                                             Style="{StaticResource HamburgerListBoxStyle}"
                                              TabIndex="1" />
 
                                     <Grid Grid.Row="2" Visibility="{TemplateBinding OptionsVisibility}">
@@ -115,13 +116,13 @@
                                         </Grid.RowDefinitions>
 
                                         <ListBox Name="OptionsListView"
-                                                 Style="{StaticResource HamburgerListBoxStyle}"
                                                  Grid.Row="1"
                                                  Width="{TemplateBinding OpenPaneLength}"
                                                  VerticalAlignment="Bottom"
                                                  AutomationProperties.Name="Option items"
                                                  ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                                  ItemsSource="{TemplateBinding OptionsItemsSource}"
+                                                 Style="{StaticResource HamburgerListBoxStyle}"
                                                  TabIndex="2" />
                                     </Grid>
 
@@ -139,13 +140,12 @@
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                   Transition="{TemplateBinding ContentTransition}" />
                         </controls:SplitView>
-                        <Button Name="HamburgerButton"
+                        <Button x:Name="HamburgerButton"
                                 Width="{TemplateBinding HamburgerWidth}"
                                 Height="{TemplateBinding HamburgerHeight}"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 AutomationProperties.Name="Main button"
-                                Background="Transparent"
-                                Padding="0"
                                 Style="{StaticResource HamburgerButtonStyle}"
                                 TabIndex="0">
                             <ContentControl Margin="{TemplateBinding HamburgerMargin}"
