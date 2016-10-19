@@ -1,25 +1,26 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.HamburgerMenuSample"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="400"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
-            <Grid Width="240" Height="48">
+        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
+            <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <!--  <FontIcon Grid.Column="0"  -->
-                <!--  Margin="12,12,11,12"  -->
-                <!--  FontFamily="Segoe MDL2 Assets"  -->
-                <!--  Glyph="{Binding Glyph}"  -->
-                <!--  Foreground="White" />  -->
+                <ContentControl Grid.Column="0"
+                                Content="{Binding Tag}"
+                                Focusable="False"
+                                Foreground="White"
+                                IsTabStop="False" />
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
@@ -29,7 +30,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="HamburgerMenuImageItem" DataType="{x:Type controls:HamburgerMenuGlyphItem}">
-            <Grid Width="240" Height="48">
+            <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
@@ -50,7 +51,7 @@
 
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                Margin="50"
+                                Margin="20"
                                 Foreground="White"
                                 HamburgerWidth="48"
                                 ItemClick="HamburgerMenu_OnItemClick"
@@ -71,7 +72,15 @@
             <!--  Options  -->
             <controls:HamburgerMenu.OptionsItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Glyph="" Label="About" />
+                    <controls:HamburgerMenuGlyphItem Label="About">
+                        <controls:HamburgerMenuGlyphItem.Tag>
+                            <iconPacks:PackIconMaterial Width="22"
+                                                        Height="22"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Kind="Help" />
+                        </controls:HamburgerMenuGlyphItem.Tag>
+                    </controls:HamburgerMenuGlyphItem>
                 </controls:HamburgerMenuItemCollection>
             </controls:HamburgerMenu.OptionsItemsSource>
 
