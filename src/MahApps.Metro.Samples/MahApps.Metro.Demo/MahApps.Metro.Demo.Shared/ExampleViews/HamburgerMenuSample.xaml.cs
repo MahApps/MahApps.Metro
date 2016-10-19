@@ -13,7 +13,7 @@
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
         {
-            ContentGrid.DataContext = e.ClickedItem;
+            HamburgerMenuControl.Content = e.ClickedItem;
         }
 
         private async void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)

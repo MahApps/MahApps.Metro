@@ -85,23 +85,34 @@
             </controls:HamburgerMenu.OptionsItemsSource>
 
             <!--  Content  -->
-            <Grid x:Name="ContentGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="48" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" Background="Black">
-                    <TextBlock x:Name="Header"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="24"
-                               Foreground="White"
-                               Text="{Binding Label}" />
-                </Border>
-                <Image x:Name="Image"
-                       Grid.Row="1"
-                       Source="{Binding Glyph}" />
-            </Grid>
+            <controls:HamburgerMenu.ContentTemplate>
+                <DataTemplate>
+                    <Grid x:Name="ContentGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Background="#7A7A7A">
+                            <TextBlock x:Name="Header"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="24"
+                                       Foreground="White"
+                                       Text="{Binding Label}" />
+                        </Border>
+                        <controls:TransitioningContentControl Grid.Row="1"
+                                                              Content="{Binding Glyph}"
+                                                              RestartTransitionOnContentChange="True"
+                                                              Transition="Default">
+                            <controls:TransitioningContentControl.ContentTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding}" />
+                                </DataTemplate>
+                            </controls:TransitioningContentControl.ContentTemplate>
+                        </controls:TransitioningContentControl>
+                    </Grid>
+                </DataTemplate>
+            </controls:HamburgerMenu.ContentTemplate>
         </controls:HamburgerMenu>
     </Grid>
 </UserControl>
