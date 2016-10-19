@@ -243,6 +243,12 @@
             <TabItem Header="sliders and progress">
                 <exampleViews:SliderProgressExamples DataContext="{Binding}" />
             </TabItem>
+            <TabItem Header="splitview">
+                <exampleViews:SplitViewExamples DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="hamburger">
+                <exampleViews:HamburgerMenuSample DataContext="{Binding}" />
+            </TabItem>
             <TabItem Header="tabcontrol">
                 <exampleViews:TabControlExamples DataContext="{Binding}" />
             </TabItem>
