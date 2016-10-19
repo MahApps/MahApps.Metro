@@ -50,6 +50,8 @@
         /// </summary>
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register("ContentTransition", typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
         /// </summary>
@@ -157,6 +159,12 @@
         {
             get { return _buttonsListView.SelectedIndex; }
             set { _buttonsListView.SelectedIndex = value; }
+        }
+
+        public TransitionType ContentTransition
+        {
+            get { return (TransitionType)this.GetValue(ContentTransitionProperty); }
+            set { this.SetValue(ContentTransitionProperty, value); }
         }
     }
 }

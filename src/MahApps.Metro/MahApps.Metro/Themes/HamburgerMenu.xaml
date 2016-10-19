@@ -2,9 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style x:Key="HamburgerButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="8 4 8 4" />
         <Setter Property="Template">
             <Setter.Value>
@@ -40,7 +45,28 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="HamburgerListBoxStyle"
+           BasedOn="{StaticResource MetroListBox}"
+           TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    </Style>
+
     <Style TargetType="{x:Type controls:HamburgerMenu}">
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -52,24 +78,11 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:HamburgerMenu}">
                     <Grid>
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type ListBox}">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-                            </Style>
-                            <Style TargetType="{x:Type ListBoxItem}">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="Padding" Value="0" />
-                            </Style>
-                        </Grid.Resources>
                         <controls:SplitView x:Name="MainSplitView"
                                             CompactPaneLength="{TemplateBinding CompactPaneLength}"
                                             DisplayMode="{TemplateBinding DisplayMode}"
@@ -86,6 +99,7 @@
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" />
                                     <ListBox Name="ButtonsListView"
+                                             Style="{StaticResource HamburgerListBoxStyle}"
                                              Grid.Row="1"
                                              Width="{TemplateBinding OpenPaneLength}"
                                              AutomationProperties.Name="Menu items"
@@ -101,6 +115,7 @@
                                         </Grid.RowDefinitions>
 
                                         <ListBox Name="OptionsListView"
+                                                 Style="{StaticResource HamburgerListBoxStyle}"
                                                  Grid.Row="1"
                                                  Width="{TemplateBinding OpenPaneLength}"
                                                  VerticalAlignment="Bottom"
@@ -112,9 +127,17 @@
 
                                 </Grid>
                             </controls:SplitView.Pane>
-                            <ContentPresenter x:Name="ContentPart"
-                                              AutomationProperties.Name="Content"
-                                              Content="{TemplateBinding Content}" />
+                            <controls:TransitioningContentControl HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  AutomationProperties.Name="Content"
+                                                                  Content="{TemplateBinding Content}"
+                                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                                  Padding="{TemplateBinding Padding}"
+                                                                  RestartTransitionOnContentChange="True"
+                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                  Transition="{TemplateBinding ContentTransition}" />
                         </controls:SplitView>
                         <Button Name="HamburgerButton"
                                 Width="{TemplateBinding HamburgerWidth}"
@@ -134,6 +157,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>
+
+
 
