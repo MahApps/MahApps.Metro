@@ -267,10 +267,13 @@
         private void SetDatePartValues()
         {
             var dateTime = GetSelectedDateTimeFromGUI();
-            DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-            if (SelectedDate != DisplayDate || (Popup != null && Popup.IsOpen))
+            if (dateTime != null)
             {
-                SelectedDate = DisplayDate;
+                DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
+                if (SelectedDate != DisplayDate || (Popup != null && Popup.IsOpen))
+                {
+                    SelectedDate = DisplayDate;
+                }
             }
         }
     }
