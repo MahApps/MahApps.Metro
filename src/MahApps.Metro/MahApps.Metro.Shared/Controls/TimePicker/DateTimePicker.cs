@@ -136,6 +136,7 @@
         {
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
             base.OnApplyTemplate();
+            SetDatePartValues();
         }
 
         protected virtual void OnSelectedDateChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
