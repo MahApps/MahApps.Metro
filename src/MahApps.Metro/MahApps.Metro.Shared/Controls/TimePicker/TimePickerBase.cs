@@ -374,16 +374,17 @@ namespace MahApps.Metro.Controls
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
             _textBox = GetTemplateChild(ElementTextBox) as DatePickerTextBox;
 
-
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
+
+            SetHourPartValues(SelectedTime.GetValueOrDefault());
+            WriteValueToTextBox();
 
             SetDefaultTimeOfDayValues();
             SubscribeEvents();
             ApplyCulture();
             ApplyBindings();
 
-            WriteValueToTextBox();
         }
 
         protected virtual void ApplyBindings()
