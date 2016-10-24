@@ -161,6 +161,8 @@ namespace MahApps.Metro.Controls
         private Selector _ampmSwitcher;
         private Button _button;
         private bool _deactivateRangeBaseEvent;
+        private bool _deactivateTextChangedEvent;
+        private bool _textInputChanged;
         private UIElement _hourHand;
         private Selector _hourInput;
         private UIElement _minuteHand;
@@ -168,7 +170,7 @@ namespace MahApps.Metro.Controls
         private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
-        private DatePickerTextBox _textBox;
+        protected DatePickerTextBox _textBox;
 
         static TimePickerBase()
         {
@@ -375,17 +377,21 @@ namespace MahApps.Metro.Controls
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
 
+            SetHourPartValues(SelectedTime.GetValueOrDefault());
+            WriteValueToTextBox();
+
             SetDefaultTimeOfDayValues();
             SubscribeEvents();
             ApplyCulture();
             ApplyBindings();
+
         }
 
         protected virtual void ApplyBindings()
         {
-            if (this.Popup != null)
+            if (Popup != null)
             {
-                this.Popup.SetBinding(Popup.IsOpenProperty, GetBinding(IsDropDownOpenProperty));
+                Popup.SetBinding(Popup.IsOpenProperty, GetBinding(IsDropDownOpenProperty));
             }
         }
 
@@ -424,14 +430,33 @@ namespace MahApps.Metro.Controls
             return new Binding(property.Name) { Source = this };
         }
 
+        protected virtual string GetValueForTextBox()
+        {
+            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            return valueForTextBox;
+        }
+
+        protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            TimeSpan ts;
+            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
+            {
+                SelectedTime = ts;
+            }
+            else
+            {
+                if (SelectedTime == null)
+                {
+                    // if already null, overwrite wrong data in textbox
+                    WriteValueToTextBox();
+                }
+                SelectedTime = null;
+            }
+        }
+
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_deactivateRangeBaseEvent)
-            {
-                return;
-            }
-
-            SelectedTime = this.GetTimeOfDayFromClockHands();
+            SelectedTime = this.GetSelectedTimeFromGUI();
         }
 
         protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<TimeSpan?> e)
@@ -455,6 +480,11 @@ namespace MahApps.Metro.Controls
             {
                 _button.Click += OnButtonClicked;
             }
+            if (_textBox != null)
+            {
+                _textBox.TextChanged += OnTextChanged;
+                _textBox.LostFocus += InternalOnTextBoxLostFocus;
+            }
         }
 
         protected virtual void UnSubscribeEvents()
@@ -464,6 +494,21 @@ namespace MahApps.Metro.Controls
             if (_button != null)
             {
                 _button.Click -= OnButtonClicked;
+            }
+            if (_textBox != null)
+            {
+                _textBox.TextChanged -= OnTextChanged;
+                _textBox.LostFocus -= InternalOnTextBoxLostFocus;
+            }
+        }
+
+        protected virtual void WriteValueToTextBox()
+        {
+            if (_textBox != null)
+            {
+                _deactivateTextChangedEvent = true;
+                _textBox.Text = GetValueForTextBox();
+                _deactivateTextChangedEvent = false;
             }
         }
 
@@ -511,9 +556,27 @@ namespace MahApps.Metro.Controls
                 {
                     return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
                 }
-                return hourList.Where(i => i > 0 && i <= 24);
+                return hourList.Where(i => i >= 0 && i < 24);
             }
             return Enumerable.Empty<int>();
+        }
+
+        private void InternalOnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_textInputChanged)
+            {
+                _textInputChanged = false;
+
+                OnTextBoxLostFocus(sender, e);
+            }
+        }
+
+        private void InternalOnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_deactivateRangeBaseEvent)
+            {
+                OnRangeBaseValueChanged(sender, e);
+            }
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -567,9 +630,25 @@ namespace MahApps.Metro.Controls
         private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var timePartPickerBase = (TimePickerBase)d;
+
+            if (timePartPickerBase._deactivateRangeBaseEvent)
+            {
+                return;
+            }
+
             timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
 
             timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
+
+            timePartPickerBase.WriteValueToTextBox();
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_deactivateTextChangedEvent)
+            {
+                _textInputChanged = true;
+            }
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
@@ -606,7 +685,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private TimeSpan? GetTimeOfDayFromClockHands()
+        protected TimeSpan? GetSelectedTimeFromGUI()
         {
             {
                 if (IsValueSelected(_hourInput) &&
@@ -703,6 +782,11 @@ namespace MahApps.Metro.Controls
 
         private void SetHourPartValues(TimeSpan timeOfDay)
         {
+            if (this._deactivateRangeBaseEvent)
+            {
+                return;
+            }
+
             _deactivateRangeBaseEvent = true;
             if (_hourInput != null)
             {
@@ -747,7 +831,7 @@ namespace MahApps.Metro.Controls
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged += OnRangeBaseValueChanged;
+                selector.SelectionChanged += InternalOnRangeBaseValueChanged;
             }
         }
 
@@ -755,7 +839,7 @@ namespace MahApps.Metro.Controls
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged -= OnRangeBaseValueChanged;
+                selector.SelectionChanged -= InternalOnRangeBaseValueChanged;
             }
         }
     }
