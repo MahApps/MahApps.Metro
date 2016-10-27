@@ -125,11 +125,8 @@ namespace MahApps.Metro.Controls.Dialogs
             this.DialogTitleFontSize = (TryFindResource("DialogTitleFontSize") as double?).GetValueOrDefault(this.DialogTitleFontSize);
             this.DialogMessageFontSize = (TryFindResource("DialogMessageFontSize") as double?).GetValueOrDefault(this.DialogMessageFontSize);
 
-            this.Loaded += (sender, args) =>
-            {
-                OnLoaded();
-                HandleTheme();
-            };
+            HandleTheme();
+            this.Loaded += (sender, args) => { OnLoaded(); };
             ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
             this.Unloaded += BaseMetroDialog_Unloaded;
         }
