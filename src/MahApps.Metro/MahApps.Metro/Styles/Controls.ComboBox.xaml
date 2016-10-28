@@ -439,10 +439,14 @@
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         Effect="{DynamicResource DropShadowBrush}" />
                                 <ScrollViewer x:Name="DropDownScrollViewer"
+                                              Background="{DynamicResource WhiteBrush}"
                                               Margin="2"
                                               Padding="1"
                                               BorderThickness="0">
-                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    <Grid Background="{DynamicResource WhiteBrush}"
+                                          RenderOptions.ClearTypeHint="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=(RenderOptions.ClearTypeHint), Mode=OneWay}">
+                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </Grid>
                                 </ScrollViewer>
                             </Grid>
                         </Popup>
