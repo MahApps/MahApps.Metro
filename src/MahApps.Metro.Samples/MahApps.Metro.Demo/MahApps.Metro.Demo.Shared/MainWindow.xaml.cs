@@ -198,9 +198,9 @@ namespace MetroDemo
             await this.ShowMetroDialogAsync(dialog);
 
             var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
-            textBlock.Text = "A message box will appear in 5 seconds.";
+            textBlock.Text = "A message box will appear in 3 seconds.";
 
-            await TaskEx.Delay(5000);
+            await TaskEx.Delay(3000);
 
             await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
 
