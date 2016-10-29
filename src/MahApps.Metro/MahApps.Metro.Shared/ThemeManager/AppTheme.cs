@@ -30,8 +30,8 @@ namespace MahApps.Metro
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
-            this.Name = name;
-            this.Resources = new ResourceDictionary {Source = resourceAddress};
+            Name = name;
+            Resources = new ResourceDictionary {Source = resourceAddress};
         }
     }
 }
