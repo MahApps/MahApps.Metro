@@ -55,6 +55,20 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
+#if NET4_5
+        public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached("AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
+
+        private static readonly Dictionary<Type, DependencyProperty> AutoWatermarkPropertyMapping = new Dictionary<Type, DependencyProperty>
+                                                                                                    {
+                                                                                                        { typeof(TextBox), TextBox.TextProperty },
+                                                                                                        { typeof(ComboBox), Selector.SelectedItemProperty },
+                                                                                                        { typeof(NumericUpDown), NumericUpDown.ValueProperty },
+                                                                                                        { typeof(DatePicker), DatePicker.SelectedDateProperty },
+                                                                                                        { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
+                                                                                                        { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty }
+                                                                                                    };
+#endif
+
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
@@ -71,22 +85,7 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
         }
 
-
-        public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached(
-            "AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
-        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
-        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
-        public static void SetAutoWatermark(DependencyObject element, bool value)
-        {
-            element.SetValue(AutoWatermarkProperty, value);
-        }
-
-
+#if NET4_5
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
@@ -98,43 +97,37 @@ namespace MahApps.Metro.Controls
             return (bool)element.GetValue(AutoWatermarkProperty);
         }
 
+        public static void SetAutoWatermark(DependencyObject element, bool value)
+        {
+            element.SetValue(AutoWatermarkProperty, value);
+        }
+
         private static void OnAutoWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = d as FrameworkElement;
             if (element != null)
             {
-                element.Loaded += OnLoaded;
+                element.Loaded += OnControlWithAutoWatermarkSupportLoaded;
             }
         }
 
-        private static Dictionary<Type, DependencyProperty> _controlMainPropertyMapping = new Dictionary<Type, DependencyProperty>()
-                                                                                          {
-                                                                                              { typeof(TextBox), TextBox.TextProperty },
-                                                                                              { typeof(ComboBox), Selector.SelectedItemProperty },
-                                                                                              { typeof(NumericUpDown), NumericUpDown.ValueProperty },
-                                                                                              { typeof(DatePicker), DatePicker.SelectedDateProperty},
-                                                                                              { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
-                                                                                              { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty },
-                                                                                          };
-
-        private static void OnLoaded(object o, RoutedEventArgs routedEventArgs)
+        private static void OnControlWithAutoWatermarkSupportLoaded(object o, RoutedEventArgs routedEventArgs)
         {
             FrameworkElement obj = (FrameworkElement)o;
-            obj.Loaded -= OnLoaded;
+            obj.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
 
             DependencyProperty dependencyProperty;
 
-            if (!_controlMainPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
+            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
             {
                 throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
             }
-
             var binding = obj.GetBindingExpression(dependencyProperty);
 
             if (binding != null)
             {
                 var dataItem = binding.DataItem.GetType();
-                var property = dataItem.GetProperty(binding.ResolvedSourcePropertyName, BindingFlags.GetProperty | BindingFlags.Public| BindingFlags.Instance);
+                var property = dataItem.GetProperty(binding.ResolvedSourcePropertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
                 if (property != null)
                 {
                     var attribute = property.GetCustomAttribute<WatermarkAttribute>();
@@ -145,6 +138,7 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
+#endif
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -292,7 +286,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
-
+        
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
@@ -390,7 +384,7 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-
+        
         private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
         {
             if (sender != null)
@@ -398,7 +392,7 @@ namespace MahApps.Metro.Controls
                 var value = funcTextLength(sender);
                 sender.SetValue(TextLengthProperty, value);
                 sender.SetValue(HasTextProperty, value >= 1);
-        }
+            }
         }
 
         private static void TextChanged(object sender, RoutedEventArgs e)
