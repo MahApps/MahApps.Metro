@@ -16,6 +16,9 @@ using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
+#if NET4_5
+    using MahApps.Metro.Controls.Helper;
+#endif
 
 namespace MetroDemo
 {
@@ -125,6 +128,10 @@ namespace MetroDemo
         }
 
         DateTime? _datePickerDate;
+
+#if NET4_5
+        [Watermark("Auto resolved Watermark")]
+#endif
         public DateTime? DatePickerDate
         {
             get { return this._datePickerDate; }

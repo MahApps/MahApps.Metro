@@ -37,7 +37,6 @@
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox
                     Margin="{StaticResource ControlMargin}"
-                    Controls:TextBoxHelper.AutoWatermark="True"
                     Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                     Text="{Binding Path=Error, Mode=OneWay}" />
                 <TextBox

@@ -6,15 +6,15 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.ComponentModel;
+#if NET4_5
+using System.Collections.Generic;
+using System.Reflection;
+using MahApps.Metro.Controls.Helper;
+#endif
 
 namespace MahApps.Metro.Controls
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Reflection;
-    using System.Security.Policy;
-    using System.Windows.Data;
-    using MahApps.Metro.Controls.Helper;
 
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
