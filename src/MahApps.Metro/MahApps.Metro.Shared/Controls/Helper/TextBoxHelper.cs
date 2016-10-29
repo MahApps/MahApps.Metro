@@ -10,6 +10,8 @@ using System.Windows.Media;
 namespace MahApps.Metro.Controls
 {
     using System.ComponentModel;
+    using System.Reflection;
+    using System.Windows.Data;
 
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
@@ -64,6 +66,50 @@ namespace MahApps.Metro.Controls
         public static void SetIsSpellCheckContextMenuEnabled(UIElement element, bool value)
         {
             element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
+        }
+
+        public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached(
+            "AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
+
+        public static void SetAutoWatermark(DependencyObject element, bool value)
+        {
+            element.SetValue(AutoWatermarkProperty, value);
+        }
+
+        public static bool GetAutoWatermark(DependencyObject element)
+        {
+            return (bool)element.GetValue(AutoWatermarkProperty);
+        }
+
+        private static void OnAutoWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FrameworkElement element = d as FrameworkElement;
+            if (element != null)
+            {
+                element.Loaded += OnLoaded;
+            }
+        }
+
+        private static void OnLoaded(object o, RoutedEventArgs routedEventArgs)
+        {
+            FrameworkElement obj = (FrameworkElement)o;
+            obj.Loaded -= OnLoaded;
+
+            var binding = obj.GetBindingExpression(TextBox.TextProperty);
+
+            if (binding != null)
+            {
+                var dataItem = binding.DataItem.GetType();
+                var property = dataItem.GetProperty(binding.ResolvedSourcePropertyName, BindingFlags.GetProperty | BindingFlags.Public| BindingFlags.Instance);
+                if (property != null)
+                {
+                    var attribute = property.GetCustomAttribute<DescriptionAttribute>();
+                    if (attribute != null)
+                    {
+                        obj.SetValue(WatermarkProperty, attribute.Description);
+                    }
+                }
+            }
         }
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -254,6 +254,7 @@ namespace MetroDemo
             }
         }
 
+        [Description("Test-Property")]
         public string Error { get { return string.Empty; } }
 
         private ICommand singleCloseTabCommand;
