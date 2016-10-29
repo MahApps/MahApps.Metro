@@ -177,7 +177,7 @@
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
                           Panel.ZIndex="4"
-                          Background="{DynamicResource BlackColorBrush}"
+                          Background="{TemplateBinding OverlayBrush}"
                           Opacity="0"
                           FocusVisualStyle="{x:Null}"
                           Focusable="False"
@@ -447,7 +447,7 @@
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
                           Panel.ZIndex="4"
-                          Background="{DynamicResource BlackColorBrush}"
+                          Background="{TemplateBinding OverlayBrush}"
                           Opacity="0"
                           FocusVisualStyle="{x:Null}"
                           Focusable="False"
@@ -582,6 +582,7 @@
         <Setter Property="WindowTitleBrush" Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource BlackColorBrush}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">

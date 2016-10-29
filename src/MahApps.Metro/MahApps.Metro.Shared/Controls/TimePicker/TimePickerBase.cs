@@ -10,6 +10,7 @@ namespace MahApps.Metro.Controls
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
+    using System.Windows.Input;
     using System.Windows.Markup;
 
     /// <summary>
@@ -178,6 +179,11 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
+        }
+
+        protected TimePickerBase()
+        {
+            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
         }
 
         /// <summary>
@@ -599,14 +605,34 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.ApplyCulture();
         }
 
+        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnIsKeyboardFocusWithinChanged(e);
+            // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
+            if (!(bool)e.NewValue)
+            {
+                this.IsDropDownOpen = false;
+            }
+        }
+
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
+        {
+            this.IsDropDownOpen = false;
+        }
+
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             TimePickerBase picker = (TimePickerBase)sender;
-            if (!e.Handled && (picker._textBox != null))
+            if (!e.Handled && picker.Focusable && (picker._textBox != null))
             {
                 if (Equals(e.OriginalSource, picker))
                 {
-                    picker._textBox.Focus();
+                    // MoveFocus takes a TraversalRequest as its argument.
+                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
+                    // Gets the element with keyboard focus.
+                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
+                    // Change keyboard focus.
+                    elementWithFocus?.MoveFocus(request);
                     e.Handled = true;
                 }
                 else if (Equals(e.OriginalSource, picker._textBox))

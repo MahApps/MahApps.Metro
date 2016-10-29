@@ -174,13 +174,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WSEX.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\ABEdge.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\ABMsg.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\APPBARDATA.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\Constants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\CREATESTRUCT.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\MARGINS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\MINMAXINFO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\MONITORINFO.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\POINT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Native\RECT.cs" />

@@ -86,6 +86,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
 
+        public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromScRgb(255, 0, 0, 0)))); // BlackColorBrush
+        public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
+
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
 
@@ -671,6 +674,24 @@ namespace MahApps.Metro.Controls
             set { SetValue(NonActiveWindowTitleBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the brush used for the dialog overlay.
+        /// </summary>
+        public Brush OverlayBrush
+        {
+            get { return (Brush)GetValue(OverlayBrushProperty); }
+            set { SetValue(OverlayBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the opacity used for the dialog overlay.
+        /// </summary>
+        public double OverlayOpacity
+        {
+            get { return (double)GetValue(OverlayOpacityProperty); }
+            set { SetValue(OverlayOpacityProperty, value); }
+        }
+
         [Obsolete("This property will be deleted in the next release.")]
         public string WindowTitle
         {
@@ -698,9 +719,8 @@ namespace MahApps.Metro.Controls
 
             overlayBox.Visibility = Visibility.Visible;
 
-            var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeIn"];
-
-            sb = sb.Clone();
+            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeIn"]).Clone();
+            ((DoubleAnimation)sb.Children[0]).To = this.OverlayOpacity;
 
             EventHandler completionHandler = null;
             completionHandler = (sender, args) =>
@@ -742,9 +762,8 @@ namespace MahApps.Metro.Controls
 
             Dispatcher.VerifyAccess();
 
-            var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeOut"];
-
-            sb = sb.Clone();
+            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeOut"]).Clone();
+            ((DoubleAnimation)sb.Children[0]).To = 0d;
 
             EventHandler completionHandler = null;
             completionHandler = (sender, args) =>
@@ -772,17 +791,15 @@ namespace MahApps.Metro.Controls
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
-            return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= 0.7;
+            return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= this.OverlayOpacity;
         }
         public void ShowOverlay()
         {
             overlayBox.Visibility = Visibility.Visible;
-            //overlayBox.Opacity = 0.7;
-            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.7);
+            overlayBox.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
         }
         public void HideOverlay()
         {
-            //overlayBox.Opacity = 0.0;
             overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
             overlayBox.Visibility = System.Windows.Visibility.Hidden;
         }
