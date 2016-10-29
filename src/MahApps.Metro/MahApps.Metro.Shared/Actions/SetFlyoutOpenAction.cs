@@ -8,7 +8,7 @@ namespace MahApps.Metro.Actions
     [Obsolete(@"This TargetedTriggerAction will be deleted in the next release.")]
     public class SetFlyoutOpenAction : TargetedTriggerAction<FrameworkElement>
     {
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(bool), typeof(SetFlyoutOpenAction), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(bool), typeof(SetFlyoutOpenAction), new PropertyMetadata(default(bool)));
 
         public bool Value
         {

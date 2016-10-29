@@ -6,8 +6,8 @@ namespace MahApps.Metro.Actions
 {
     public class CloseTabItemAction : TriggerAction<DependencyObject>
     {
-        public static readonly DependencyProperty TabControlProperty = DependencyProperty.Register("TabControl", typeof(TabControl), typeof(CloseTabItemAction), new PropertyMetadata(default(TabControl)));
-        public static readonly DependencyProperty TabItemProperty = DependencyProperty.Register("TabItem", typeof(TabItem), typeof(CloseTabItemAction), new PropertyMetadata(default(TabItem)));
+        public static readonly DependencyProperty TabControlProperty = DependencyProperty.Register(nameof(TabControl), typeof(TabControl), typeof(CloseTabItemAction), new PropertyMetadata(default(TabControl)));
+        public static readonly DependencyProperty TabItemProperty = DependencyProperty.Register(nameof(TabItem), typeof(TabItem), typeof(CloseTabItemAction), new PropertyMetadata(default(TabItem)));
 
         public TabControl TabControl
         {

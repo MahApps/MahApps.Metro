@@ -36,11 +36,11 @@ namespace MahApps.Metro.Controls
         {
             if (null == propertySource)
             {
-                throw new ArgumentNullException("propertySource");
+                throw new ArgumentNullException(nameof(propertySource));
             }
             if (null == property)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
             this._propertySource = new WeakReference(propertySource);
             var binding = new Binding();

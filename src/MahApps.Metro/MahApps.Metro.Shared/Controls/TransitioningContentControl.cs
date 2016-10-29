@@ -252,7 +252,7 @@ namespace MahApps.Metro.Controls
                 // revert to default
                 this.Transition = DefaultTransitionState;
 
-                throw new ArgumentException(string.Format("'{0}' Transition could not be found!", invalidTransition), "Transition");
+                throw new ArgumentException($"'{invalidTransition}' Transition could not be found!", "Transition");
             }
             VisualStateManager.GoToState(this, NormalState, false);
         }
