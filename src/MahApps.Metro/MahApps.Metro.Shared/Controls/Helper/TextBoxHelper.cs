@@ -14,6 +14,7 @@ namespace MahApps.Metro.Controls
     using System.Reflection;
     using System.Security.Policy;
     using System.Windows.Data;
+    using MahApps.Metro.Controls.Helper;
 
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
@@ -136,10 +137,10 @@ namespace MahApps.Metro.Controls
                 var property = dataItem.GetProperty(binding.ResolvedSourcePropertyName, BindingFlags.GetProperty | BindingFlags.Public| BindingFlags.Instance);
                 if (property != null)
                 {
-                    var attribute = property.GetCustomAttribute<DescriptionAttribute>();
+                    var attribute = property.GetCustomAttribute<WatermarkAttribute>();
                     if (attribute != null)
                     {
-                        obj.SetValue(WatermarkProperty, attribute.Description);
+                        obj.SetValue(WatermarkProperty, attribute.Caption);
                     }
                 }
             }

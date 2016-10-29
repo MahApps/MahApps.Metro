@@ -77,6 +77,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\VisibilityHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\WatermarkAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HotKeyBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IMetroThumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\LayoutInvalidationCatcher.cs" />
