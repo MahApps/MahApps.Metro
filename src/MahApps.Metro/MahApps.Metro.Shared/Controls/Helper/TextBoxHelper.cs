@@ -70,14 +70,28 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
         }
 
+
         public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached(
             "AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static void SetAutoWatermark(DependencyObject element, bool value)
         {
             element.SetValue(AutoWatermarkProperty, value);
         }
 
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static bool GetAutoWatermark(DependencyObject element)
         {
             return (bool)element.GetValue(AutoWatermarkProperty);
