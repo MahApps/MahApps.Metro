@@ -27,7 +27,7 @@ namespace MahApps.Metro
 
         public AppTheme(string name, Uri resourceAddress)
         {
-            if (name == null) throw new ArgumentException(nameof(name));
+            if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
             this.Name = name;

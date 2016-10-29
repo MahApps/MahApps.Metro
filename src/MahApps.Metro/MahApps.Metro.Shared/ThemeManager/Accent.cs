@@ -32,7 +32,7 @@ namespace MahApps.Metro
         /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>
         public Accent(string name, Uri resourceAddress)
         {
-            if (name == null) throw new ArgumentException(nameof(name));
+            if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
             Name = name;
