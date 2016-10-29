@@ -9,8 +9,10 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Reflection;
+    using System.Security.Policy;
     using System.Windows.Data;
 
     /// <summary>
@@ -90,12 +92,29 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static Dictionary<Type, DependencyProperty> _controlMainPropertyMapping = new Dictionary<Type, DependencyProperty>()
+                                                                                          {
+                                                                                              { typeof(TextBox), TextBox.TextProperty },
+                                                                                              { typeof(ComboBox), Selector.SelectedItemProperty },
+                                                                                              { typeof(NumericUpDown), NumericUpDown.ValueProperty },
+                                                                                              { typeof(DatePicker), DatePicker.SelectedDateProperty},
+                                                                                              { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
+                                                                                              { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty },
+                                                                                          };
+
         private static void OnLoaded(object o, RoutedEventArgs routedEventArgs)
         {
             FrameworkElement obj = (FrameworkElement)o;
             obj.Loaded -= OnLoaded;
 
-            var binding = obj.GetBindingExpression(TextBox.TextProperty);
+            DependencyProperty dependencyProperty;
+
+            if (!_controlMainPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
+            {
+                throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
+            }
+
+            var binding = obj.GetBindingExpression(dependencyProperty);
 
             if (binding != null)
             {
