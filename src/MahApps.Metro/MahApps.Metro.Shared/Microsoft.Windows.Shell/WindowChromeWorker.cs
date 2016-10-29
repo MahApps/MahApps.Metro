@@ -11,6 +11,7 @@ namespace Microsoft.Windows.Shell
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Security.Permissions;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Interop;
     using System.Windows.Media;

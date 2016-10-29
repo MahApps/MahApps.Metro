@@ -1,5 +1,6 @@
 ﻿namespace Standard
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Media;
