@@ -169,63 +169,63 @@ namespace MahApps.Metro.Controls
         #region Dependency properties
 
         public static readonly DependencyProperty UpperValueProperty =
-            DependencyProperty.Register("UpperValue", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(UpperValue), typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceUpperValue));
 
         public static readonly DependencyProperty LowerValueProperty =
-            DependencyProperty.Register("LowerValue", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(LowerValue), typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceLowerValue));
 
         public static readonly DependencyProperty MinRangeProperty =
-            DependencyProperty.Register("MinRange", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(MinRange), typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata((Double)0, MinRangeChanged, CoerceMinRange), IsValidMinRange);
 
         public static readonly DependencyProperty MinRangeWidthProperty =
-            DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(MinRangeWidth), typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(30.0, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
 
         public static readonly DependencyProperty MoveWholeRangeProperty =
-            DependencyProperty.Register("MoveWholeRange", typeof(Boolean), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(MoveWholeRange), typeof(Boolean), typeof(RangeSlider),
                                         new PropertyMetadata(false));
 
         public static readonly DependencyProperty ExtendedModeProperty =
-            DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(ExtendedMode), typeof(Boolean), typeof(RangeSlider),
                                         new PropertyMetadata(false));
 
         public static readonly DependencyProperty IsSnapToTickEnabledProperty =
-            DependencyProperty.Register("IsSnapToTickEnabled", typeof(Boolean), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(IsSnapToTickEnabled), typeof(Boolean), typeof(RangeSlider),
                                         new PropertyMetadata(false));
 
         public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(Orientation.Horizontal));
 
         public static readonly DependencyProperty TickFrequencyProperty =
-            DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(TickFrequency), typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(1.0), IsValidTickFrequency);
 
         public static readonly DependencyProperty IsMoveToPointEnabledProperty =
-            DependencyProperty.Register("IsMoveToPointEnabled", typeof(Boolean), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(IsMoveToPointEnabled), typeof(Boolean), typeof(RangeSlider),
                                         new PropertyMetadata(false));
 
         public static readonly DependencyProperty TickPlacementProperty =
-            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(TickPlacement), typeof(TickPlacement), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(TickPlacement.None));
 
         public static readonly DependencyProperty AutoToolTipPlacementProperty =
-            DependencyProperty.Register("AutoToolTipPlacement", typeof(AutoToolTipPlacement), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(AutoToolTipPlacement), typeof(AutoToolTipPlacement), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(AutoToolTipPlacement.None));
 
         public static readonly DependencyProperty AutoToolTipPrecisionProperty =
-            DependencyProperty.Register("AutoToolTipPrecision", typeof(Int32), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(AutoToolTipPrecision), typeof(Int32), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(0), IsValidPrecision);
 
         public static readonly DependencyProperty AutoToolTipTextConverterProperty =
-            DependencyProperty.Register("AutoToolTipTextConverter", typeof(IValueConverter), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(AutoToolTipTextConverter), typeof(IValueConverter), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(null));
 
         public static readonly DependencyProperty IntervalProperty =
-            DependencyProperty.Register("Interval", typeof(Int32), typeof(RangeSlider),
+            DependencyProperty.Register(nameof(Interval), typeof(Int32), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(100, IntervalChangedCallback), IsValidPrecision);
 
         /// <summary>

@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =
-            DependencyProperty.Register("CloseButtonEnabled",
+            DependencyProperty.Register(nameof(CloseButtonEnabled),
                                         typeof(bool),
                                         typeof(MetroTabItem),
                                         new FrameworkPropertyMetadata(false,
@@ -87,7 +87,7 @@ namespace MahApps.Metro.Controls
         }
 
         internal static readonly DependencyProperty InternalCloseTabCommandProperty =
-            DependencyProperty.Register("InternalCloseTabCommand",
+            DependencyProperty.Register(nameof(InternalCloseTabCommand),
                                         typeof(ICommand),
                                         typeof(MetroTabItem));
 
@@ -101,7 +101,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand",
+            DependencyProperty.Register(nameof(CloseTabCommand),
                                         typeof(ICommand),
                                         typeof(MetroTabItem));
 
@@ -115,7 +115,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
-            DependencyProperty.Register("CloseTabCommandParameter",
+            DependencyProperty.Register(nameof(CloseTabCommandParameter),
                                         typeof(object),
                                         typeof(MetroTabItem),
                                         new PropertyMetadata(null));

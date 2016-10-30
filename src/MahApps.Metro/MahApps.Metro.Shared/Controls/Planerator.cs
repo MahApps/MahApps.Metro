@@ -15,19 +15,19 @@ namespace MahApps.Metro.Controls
     public class Planerator : FrameworkElement
     {
         public static readonly DependencyProperty RotationXProperty =
-            DependencyProperty.Register("RotationX", typeof(double), typeof(Planerator),
+            DependencyProperty.Register(nameof(RotationX), typeof(double), typeof(Planerator),
                                         new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
 
         public static readonly DependencyProperty RotationYProperty =
-            DependencyProperty.Register("RotationY", typeof(double), typeof(Planerator),
+            DependencyProperty.Register(nameof(RotationY), typeof(double), typeof(Planerator),
                                         new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
 
         public static readonly DependencyProperty RotationZProperty =
-            DependencyProperty.Register("RotationZ", typeof(double), typeof(Planerator),
+            DependencyProperty.Register(nameof(RotationZ), typeof(double), typeof(Planerator),
                                         new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
 
         public static readonly DependencyProperty FieldOfViewProperty =
-            DependencyProperty.Register("FieldOfView", typeof(double), typeof(Planerator),
+            DependencyProperty.Register(nameof(FieldOfView), typeof(double), typeof(Planerator),
                                         new UIPropertyMetadata(45.0, (d, args) => ((Planerator)d).Update3D(),
                                                                (d, val) => Math.Min(Math.Max((double)val, 0.5), 179.9)));
         // clamp to a meaningful range

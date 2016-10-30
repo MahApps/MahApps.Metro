@@ -13,19 +13,19 @@ namespace MahApps.Metro.Controls
     [TemplateVisualState(Name = "Active", GroupName = "ActiveStates")]
     public class ProgressRing : Control
     {
-        public static readonly DependencyProperty BindableWidthProperty = DependencyProperty.Register("BindableWidth", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double), BindableWidthCallback));
+        public static readonly DependencyProperty BindableWidthProperty = DependencyProperty.Register(nameof(BindableWidth), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double), BindableWidthCallback));
 
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChanged));
+        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(nameof(IsActive), typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChanged));
 
-        public static readonly DependencyProperty IsLargeProperty = DependencyProperty.Register("IsLarge", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsLargeChangedCallback));
+        public static readonly DependencyProperty IsLargeProperty = DependencyProperty.Register(nameof(IsLarge), typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsLargeChangedCallback));
 
-        public static readonly DependencyProperty MaxSideLengthProperty = DependencyProperty.Register("MaxSideLength", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty MaxSideLengthProperty = DependencyProperty.Register(nameof(MaxSideLength), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
 
-        public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register(nameof(EllipseDiameter), typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
 
-        public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
+        public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register(nameof(EllipseOffset), typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
 
-        public static readonly DependencyProperty EllipseDiameterScaleProperty = DependencyProperty.Register("EllipseDiameterScale", typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
+        public static readonly DependencyProperty EllipseDiameterScaleProperty = DependencyProperty.Register(nameof(EllipseDiameterScale), typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
 
         private List<Action> _deferredActions = new List<Action>();
 

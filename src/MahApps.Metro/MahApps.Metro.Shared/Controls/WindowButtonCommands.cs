@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
         public static readonly DependencyProperty LightMinButtonStyleProperty =
-            DependencyProperty.Register("LightMinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(LightMinButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty LightMaxButtonStyleProperty =
-            DependencyProperty.Register("LightMaxButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(LightMaxButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty LightCloseButtonStyleProperty =
-            DependencyProperty.Register("LightCloseButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(LightCloseButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty DarkMinButtonStyleProperty =
-            DependencyProperty.Register("DarkMinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(DarkMinButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty DarkMaxButtonStyleProperty =
-            DependencyProperty.Register("DarkMaxButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(DarkMaxButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty DarkCloseButtonStyleProperty =
-            DependencyProperty.Register("DarkCloseButtonStyle", typeof(Style), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(DarkCloseButtonStyle), typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
         
         /// <summary>
@@ -95,7 +95,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ThemeProperty =
-            DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(Theme), typeof(Theme), typeof(WindowButtonCommands),
                                         new PropertyMetadata(Theme.Light, OnThemeChanged));
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty MinimizeProperty =
-            DependencyProperty.Register("Minimize", typeof(string), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(Minimize), typeof(string), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty MaximizeProperty =
-            DependencyProperty.Register("Maximize", typeof(string), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(Maximize), typeof(string), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseProperty =
-            DependencyProperty.Register("Close", typeof(string), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(Close), typeof(string), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty RestoreProperty =
-            DependencyProperty.Register("Restore", typeof(string), typeof(WindowButtonCommands),
+            DependencyProperty.Register(nameof(Restore), typeof(string), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>

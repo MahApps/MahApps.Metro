@@ -338,20 +338,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
-        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
-        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
-        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
+        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register(nameof(UpTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
+        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register(nameof(DownTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
+        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register(nameof(LeftTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
+        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register(nameof(RightTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
         [Obsolete(@"This property will be deleted in the next release. You should use now MouseHoverBorderEnabled instead.")]
-        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (o, e) => ((FlipView)o).MouseHoverBorderEnabled = (bool)e.NewValue));
-        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
-        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
-        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
-        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
-        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
-        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register("IsNavigationEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsNavigationEnabledPropertyChangedCallback));
+        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register(nameof(MouseOverGlowEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(true, (o, e) => ((FlipView)o).MouseHoverBorderEnabled = (bool)e.NewValue));
+        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register(nameof(MouseHoverBorderEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register(nameof(MouseHoverBorderBrush), typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
+        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register(nameof(MouseHoverBorderThickness), typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
+        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register(nameof(IsBannerEnabled), typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
+        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register(nameof(BannerText), typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register(nameof(CircularNavigation), typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register(nameof(IsNavigationEnabled), typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsNavigationEnabledPropertyChangedCallback));
 
         public TransitionType UpTransition
         {

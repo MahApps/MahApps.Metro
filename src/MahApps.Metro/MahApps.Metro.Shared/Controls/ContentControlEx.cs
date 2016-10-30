@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
         /// Default Value: CharacterCasing.Normal
         /// </summary>
         public static readonly DependencyProperty ContentCharacterCasingProperty =
-            DependencyProperty.Register("ContentCharacterCasing",
+            DependencyProperty.Register(nameof(ContentCharacterCasing),
                                         typeof(CharacterCasing),
                                         typeof(ContentControlEx),
                                         new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
         /// Default Value: false 
         /// </summary> 
         public static readonly DependencyProperty RecognizesAccessKeyProperty =
-            DependencyProperty.Register("RecognizesAccessKey",
+            DependencyProperty.Register(nameof(RecognizesAccessKey),
                                         typeof(bool),
                                         typeof(ContentControlEx),
                                         new FrameworkPropertyMetadata(false));

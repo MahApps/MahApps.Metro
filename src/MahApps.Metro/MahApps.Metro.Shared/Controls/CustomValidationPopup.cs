@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
-        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty = DependencyProperty.Register("CloseOnMouseLeftButtonDown", typeof(bool), typeof(CustomValidationPopup), new PropertyMetadata(true));
+        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown), typeof(bool), typeof(CustomValidationPopup), new PropertyMetadata(true));
 
         private Window hostWindow;
 

@@ -12,10 +12,10 @@ namespace MahApps.Metro.Behaviours
     public class TiltBehavior : Behavior<FrameworkElement>
     {
         public static readonly DependencyProperty KeepDraggingProperty =
-            DependencyProperty.Register("KeepDragging", typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
+            DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TiltFactorProperty =
-            DependencyProperty.Register("TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
+            DependencyProperty.Register(nameof(TiltFactor), typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
 
         private bool isPressed;
         private Thickness originalMargin;
