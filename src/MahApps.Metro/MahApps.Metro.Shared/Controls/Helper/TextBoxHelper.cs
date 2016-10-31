@@ -7,11 +7,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.ComponentModel;
-#if NET4_5
 using System.Collections.Generic;
 using System.Reflection;
 using MahApps.Metro.Controls.Helper;
-#endif
 
 namespace MahApps.Metro.Controls
 {
@@ -55,7 +53,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
-#if NET4_5
         public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached("AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
 
         private static readonly Dictionary<Type, DependencyProperty> AutoWatermarkPropertyMapping = new Dictionary<Type, DependencyProperty>
@@ -67,7 +64,6 @@ namespace MahApps.Metro.Controls
                                                                                                         { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
                                                                                                         { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty }
                                                                                                     };
-#endif
 
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
@@ -85,7 +81,6 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
         }
 
-#if NET4_5
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
@@ -127,18 +122,31 @@ namespace MahApps.Metro.Controls
             if (binding != null)
             {
                 var dataItem = binding.DataItem.GetType();
-                var property = dataItem.GetProperty(binding.ResolvedSourcePropertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
-                if (property != null)
+
+#if NET4
+                var propertyName = binding.ParentBinding?.Path?.Path;
+#else 
+                var propertyName = binding.ResolvedSourcePropertyName;
+#endif
+                if (propertyName != null)
                 {
-                    var attribute = property.GetCustomAttribute<WatermarkAttribute>();
-                    if (attribute != null)
+                    var property = dataItem.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
+                    if (property != null)
                     {
-                        obj.SetValue(WatermarkProperty, attribute.Caption);
+#if NET4
+                        var attribute = property.GetCustomAttributes(typeof(WatermarkAttribute), false).FirstOrDefault() as WatermarkAttribute;
+#else
+                        var attribute = property.GetCustomAttribute<WatermarkAttribute>();
+#endif
+
+                        if (attribute != null)
+                        {
+                            obj.SetValue(WatermarkProperty, attribute.Caption);
+                        }
                     }
                 }
             }
         }
-#endif
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

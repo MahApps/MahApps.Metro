@@ -39,13 +39,12 @@
                     HorizontalAlignment="Center"
                     IsEnabled="False" />
                 <DatePicker
-                    x:Name="AutoWatermark"
                     Width="200"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Center"
+                    Controls:TextBoxHelper.AutoWatermark="True"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
-                    SelectedDate="{Binding Path=DatePickerDate}"
-                    Visibility="Collapsed" />
+                    SelectedDate="{Binding Path=DatePickerDate}" />
                 <DatePicker
                     Width="300"
                     Margin="0,10,0,0"
