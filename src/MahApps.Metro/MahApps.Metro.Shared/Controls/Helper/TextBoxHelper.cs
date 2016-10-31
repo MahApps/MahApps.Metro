@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,8 +13,6 @@ using System.Reflection;
 
 namespace MahApps.Metro.Controls
 {
-    using System.ComponentModel.DataAnnotations;
-
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
