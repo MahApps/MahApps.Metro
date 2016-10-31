@@ -141,8 +141,6 @@ namespace MahApps.Metro.Controls
 
             if (binding != null)
             {
-                var dataItem = binding.ResolvedSource.GetType();
-
 #if NET4
                 var propertyName = binding.ParentBinding?.Path?.Path;
 #else 
@@ -150,13 +148,17 @@ namespace MahApps.Metro.Controls
 #endif
                 if (propertyName != null)
                 {
+                    if (propertyName.Contains('[') || propertyName.Contains(']'))
+                    {
+                        throw new NotSupportedException("Using indexer is not supported");
+                    }
 #if NET4
                     if (propertyName.Contains('.'))
                     {
                         propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
                     }
 #endif
-
+                    var dataItem = binding.ResolvedSource.GetType();
                     var property = dataItem.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
                     {

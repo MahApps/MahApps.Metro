@@ -38,7 +38,7 @@
                 <DatePicker Width="200"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
-                            SelectedDate="{Binding T.TT}"
+                            SelectedDate="{Binding DatePickerDate}"
                             Controls:TextBoxHelper.AutoWatermark="True" />
                 <DatePicker Width="300"
                             Margin="0, 10, 0, 0"
