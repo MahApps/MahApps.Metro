@@ -105,9 +105,24 @@ namespace MahApps.Metro.Controls
         private static void OnAutoWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement element = d as FrameworkElement;
+            bool? enable = e.NewValue as bool?;
             if (element != null)
             {
-                element.Loaded += OnControlWithAutoWatermarkSupportLoaded;
+                if (enable.GetValueOrDefault())
+                {
+                    if (element.IsLoaded)
+                    {
+                        OnControlWithAutoWatermarkSupportLoaded(element, new RoutedEventArgs());
+                    }
+                    else
+                    {
+                        element.Loaded += OnControlWithAutoWatermarkSupportLoaded;
+                    }
+                }
+                else
+                {
+                    element.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
+                }
             }
         }
 
