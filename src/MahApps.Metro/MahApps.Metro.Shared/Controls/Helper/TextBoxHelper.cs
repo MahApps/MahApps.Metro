@@ -52,6 +52,12 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
+        /// <summary>
+        /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property to true will uses reflection.
+        /// </remarks>
         public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached("AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
 
         private static readonly Dictionary<Type, DependencyProperty> AutoWatermarkPropertyMapping = new Dictionary<Type, DependencyProperty>
