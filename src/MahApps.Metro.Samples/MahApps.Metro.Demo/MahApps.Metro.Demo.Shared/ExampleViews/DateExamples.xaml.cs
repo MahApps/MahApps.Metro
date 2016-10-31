@@ -2,9 +2,6 @@
 
 namespace MetroDemo.ExampleViews
 {
-    using System.Windows;
-    using MahApps.Metro.Controls;
-
     /// <summary>
     /// Interaction logic for DateExamples.xaml
     /// </summary>

@@ -20,7 +20,6 @@ using NHotkey.Wpf;
 
 namespace MetroDemo
 {
-
     public class AccentColorMenuData
     {
         public string Name { get; set; }
