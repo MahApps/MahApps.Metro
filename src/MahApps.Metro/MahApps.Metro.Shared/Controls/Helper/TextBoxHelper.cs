@@ -141,7 +141,7 @@ namespace MahApps.Metro.Controls
 
                         if (attribute != null)
                         {
-                            obj.SetValue(WatermarkProperty, attribute.Description);
+                            obj.SetValue(WatermarkProperty, attribute.GetDescription());
                         }
                     }
                 }
