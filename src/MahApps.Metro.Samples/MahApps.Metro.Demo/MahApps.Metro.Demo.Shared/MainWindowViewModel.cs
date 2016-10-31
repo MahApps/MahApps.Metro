@@ -127,6 +127,14 @@ namespace MetroDemo
 
         DateTime? _datePickerDate;
 
+        public Test T { get; } = new Test();
+
+        public class Test
+        {
+            [Display(Description = "hahah")]
+            public DateTime? TT { get; set; }
+        }
+
         [Display(Description = "Auto resolved Watermark")]
         public DateTime? DatePickerDate
         {

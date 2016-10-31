@@ -141,7 +141,7 @@ namespace MahApps.Metro.Controls
 
             if (binding != null)
             {
-                var dataItem = binding.DataItem.GetType();
+                var dataItem = binding.ResolvedSource.GetType();
 
 #if NET4
                 var propertyName = binding.ParentBinding?.Path?.Path;
@@ -150,6 +150,13 @@ namespace MahApps.Metro.Controls
 #endif
                 if (propertyName != null)
                 {
+#if NET4
+                    if (propertyName.Contains('.'))
+                    {
+                        propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
+                    }
+#endif
+
                     var property = dataItem.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
                     {
