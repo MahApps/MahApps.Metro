@@ -9,10 +9,10 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
-using MahApps.Metro.Controls.Helper;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
@@ -134,14 +134,14 @@ namespace MahApps.Metro.Controls
                     if (property != null)
                     {
 #if NET4
-                        var attribute = property.GetCustomAttributes(typeof(WatermarkAttribute), false).FirstOrDefault() as WatermarkAttribute;
+                        var attribute = property.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
 #else
-                        var attribute = property.GetCustomAttribute<WatermarkAttribute>();
+                        var attribute = property.GetCustomAttribute<DisplayAttribute>();
 #endif
 
                         if (attribute != null)
                         {
-                            obj.SetValue(WatermarkProperty, attribute.Caption);
+                            obj.SetValue(WatermarkProperty, attribute.Description);
                         }
                     }
                 }

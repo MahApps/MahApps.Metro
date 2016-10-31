@@ -16,12 +16,11 @@ using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
-#if NET4_5
-    using MahApps.Metro.Controls.Helper;
-#endif
 
 namespace MetroDemo
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class AccentColorMenuData
     {
         public string Name { get; set; }
@@ -129,9 +128,7 @@ namespace MetroDemo
 
         DateTime? _datePickerDate;
 
-#if NET4_5
-        [Watermark("Auto resolved Watermark")]
-#endif
+        [Display(Description = "Auto resolved Watermark")]
         public DateTime? DatePickerDate
         {
             get { return this._datePickerDate; }
