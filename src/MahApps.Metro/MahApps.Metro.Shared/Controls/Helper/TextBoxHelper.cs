@@ -144,7 +144,7 @@ namespace MahApps.Metro.Controls
                     propertyName = propertyName.Substring(0, indexOf);
                 }
 
-                var property = type.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance)?.PropertyType;
+                var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance)?.PropertyType;
                 if (property != null)
                 {
                     var remainingPath = paths.Skip(1).ToArray();
@@ -194,7 +194,7 @@ namespace MahApps.Metro.Controls
 #endif
                 if (dataItem != null)
                 {
-                    var property = dataItem.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
+                    var property = dataItem.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
                     {
 #if NET4
