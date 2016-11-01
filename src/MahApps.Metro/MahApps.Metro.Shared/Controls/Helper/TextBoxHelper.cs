@@ -13,6 +13,8 @@ using System.Reflection;
 
 namespace MahApps.Metro.Controls
 {
+    using JetBrains.Annotations;
+
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -126,6 +128,30 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#if NET4
+        [CanBeNull]
+        private static Type ResolveBinding(Type type, string[] paths)
+        {
+            if (type != null && paths != null)
+            {
+                if (paths.Length == 1)
+                {
+                    return type;
+                }
+                var property = type.GetProperty(paths[0], BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
+                if (property != null)
+                {
+                    var propertyType = property.PropertyType;
+                    if (propertyType != null)
+                    {
+                        return ResolveBinding(propertyType, paths.Skip(1).ToArray());
+                    }
+                }
+            }
+            return null;
+        }
+#endif
+
         private static void OnControlWithAutoWatermarkSupportLoaded(object o, RoutedEventArgs routedEventArgs)
         {
             FrameworkElement obj = (FrameworkElement)o;
@@ -137,28 +163,30 @@ namespace MahApps.Metro.Controls
             {
                 throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
             }
-            var binding = obj.GetBindingExpression(dependencyProperty);
 
-            if (binding != null)
-            {
+            var binding = obj.GetBindingExpression(dependencyProperty);
 #if NET4
-                var propertyName = binding.ParentBinding?.Path?.Path;
+            var propertyName = binding?.ParentBinding?.Path?.Path;
 #else 
-                var propertyName = binding.ResolvedSourcePropertyName;
+            var propertyName = binding?.ResolvedSourcePropertyName;
 #endif
-                if (propertyName != null)
+            if (propertyName != null)
+            {
+                if (propertyName.Contains('[') || propertyName.Contains(']'))
                 {
-                    if (propertyName.Contains('[') || propertyName.Contains(']'))
-                    {
-                        throw new NotSupportedException("Using indexer is not supported");
-                    }
+                    throw new NotSupportedException("Using indexer is not supported");
+                }
 #if NET4
-                    if (propertyName.Contains('.'))
-                    {
-                        propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
-                    }
+                if (propertyName.Contains('.'))
+                {
+                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
+                }
+                var dataItem = ResolveBinding(binding.DataItem.GetType(), binding.ParentBinding?.Path?.Path.Split('.'));
+#else
+                var dataItem = binding.ResolvedSource?.GetType();
 #endif
-                    var dataItem = binding.ResolvedSource.GetType();
+                if (dataItem != null)
+                {
                     var property = dataItem.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
                     {
@@ -167,7 +195,6 @@ namespace MahApps.Metro.Controls
 #else
                         var attribute = property.GetCustomAttribute<DisplayAttribute>();
 #endif
-
                         if (attribute != null)
                         {
                             obj.SetValue(WatermarkProperty, attribute.GetDescription());
