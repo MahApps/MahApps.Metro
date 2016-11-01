@@ -322,7 +322,17 @@ namespace MahApps.Metro.Behaviours
                     var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
                     if (this.handle != IntPtr.Zero)
                     {
-                        this.windowChrome.ResizeBorderThickness = new Thickness(0);
+                        double rightResizeBorderThickness = 0;
+                        double bottomResizeBorderThickness = 0;
+                        if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width && this.savedResizeBorderThickness.HasValue)
+                        {
+                            rightResizeBorderThickness = this.savedResizeBorderThickness.Value.Right;
+                        }
+                        if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Height && this.savedResizeBorderThickness.HasValue)
+                        {
+                            bottomResizeBorderThickness = this.savedResizeBorderThickness.Value.Bottom;
+                        }
+                        this.windowChrome.ResizeBorderThickness = new Thickness(0, 0, rightResizeBorderThickness, bottomResizeBorderThickness);
 
                         // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
                         // so set the window pos/size twice
