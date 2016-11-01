@@ -64,6 +64,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepBorderOnMaximizeProperty = DependencyProperty.Register("KeepBorderOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
@@ -526,6 +527,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowSystemMenuOnRightClickProperty); }
             set { SetValue(ShowSystemMenuOnRightClickProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets if the the system menu should popup on right click.
+        /// </summary>
+        public bool KeepBorderOnMaximize
+        {
+            get { return (bool)GetValue(KeepBorderOnMaximizeProperty); }
+            set { SetValue(KeepBorderOnMaximizeProperty, value); }
         }
 
         /// <summary>

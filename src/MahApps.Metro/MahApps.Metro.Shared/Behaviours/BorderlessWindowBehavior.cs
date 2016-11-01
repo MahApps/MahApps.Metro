@@ -305,17 +305,19 @@ namespace MahApps.Metro.Behaviours
 
                     double rightBorderThickness = 0;
                     double bottomBorderThickness = 0;
-                    // If the maximized window will have a width less than the monitor size, show the right border.
-                    if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
+                    if (AssociatedObject is MetroWindow && ((MetroWindow)AssociatedObject).KeepBorderOnMaximize)
                     {
-                        rightBorderThickness = this.savedBorderThickness.Value.Right;
+                        // If the maximized window will have a width less than the monitor size, show the right border.
+                        if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
+                        {
+                            rightBorderThickness = this.savedBorderThickness.Value.Right;
+                        }
+                        // If the maximized window will have a height less than the monitor size, show the bottom border.
+                        if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
+                        {
+                            bottomBorderThickness = this.savedBorderThickness.Value.Bottom;
+                        }
                     }
-                    // If the maximized window will have a height less than the monitor size, show the bottom border.
-                    if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
-                    {
-                        bottomBorderThickness = this.savedBorderThickness.Value.Bottom;
-                    }
-
                     // set window border, so we can move the window from top monitor position
                     this.AssociatedObject.BorderThickness = new Thickness(0, 0, rightBorderThickness, bottomBorderThickness);
 
