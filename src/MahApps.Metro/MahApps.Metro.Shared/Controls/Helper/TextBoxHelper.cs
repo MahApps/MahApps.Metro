@@ -13,8 +13,6 @@ using System.Reflection;
 
 namespace MahApps.Metro.Controls
 {
-    using JetBrains.Annotations;
-
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -129,7 +127,7 @@ namespace MahApps.Metro.Controls
         }
 
 #if NET4
-        [CanBeNull]
+        [JetBrains.Annotations.CanBeNull]
         private static Type ResolveBinding(Type type, string[] paths)
         {
             if (type != null && paths != null)
@@ -138,14 +136,23 @@ namespace MahApps.Metro.Controls
                 {
                     return type;
                 }
-                var property = type.GetProperty(paths[0], BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance);
+                var propertyName = paths[0];
+
+                if (propertyName.Contains('[') && propertyName.EndsWith("]"))
+                {
+                    var indexOf = propertyName.IndexOf('[');
+                    propertyName = propertyName.Substring(0, indexOf);
+                }
+
+                var property = type.GetProperty(propertyName, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance)?.PropertyType;
                 if (property != null)
                 {
-                    var propertyType = property.PropertyType;
-                    if (propertyType != null)
+                    var remainingPath = paths.Skip(1).ToArray();
+                    if (property.IsArray)
                     {
-                        return ResolveBinding(propertyType, paths.Skip(1).ToArray());
+                        return ResolveBinding(property.GetElementType(), remainingPath);
                     }
+                    return ResolveBinding(property, remainingPath);
                 }
             }
             return null;
@@ -172,9 +179,9 @@ namespace MahApps.Metro.Controls
 #endif
             if (propertyName != null)
             {
-                if (propertyName.Contains('[') || propertyName.Contains(']'))
+                if (propertyName.EndsWith("]"))
                 {
-                    throw new NotSupportedException("Using indexer is not supported");
+                    throw new NotSupportedException("Auto-resolving watermark does not work with binding to an element of a collection. Consider binding to the collectsion itself or a subproperty of an element of that collection (i.e. Collection[0].Property).");
                 }
 #if NET4
                 if (propertyName.Contains('.'))
