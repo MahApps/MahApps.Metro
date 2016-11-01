@@ -341,36 +341,33 @@ namespace MahApps.Metro.Behaviours
 
                         // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
                         // so set the window pos/size twice
-                        if (monitor != IntPtr.Zero)
+                        if (ignoreTaskBar)
                         {
-                            if (ignoreTaskBar)
-                            {
-                                var x = monitorInfo.rcMonitor.left;
-                                var y = monitorInfo.rcMonitor.top;
-                                var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                                var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+                            var x = monitorInfo.rcMonitor.left;
+                            var y = monitorInfo.rcMonitor.top;
+                            var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
+                            var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
 
-                                var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
-                                if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
-                                {
-                                    UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
-                                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
-                                }
-                                else
-                                {
-                                    UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
-                                }
+                            var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+                            if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
+                            {
+                                UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
+                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
                             }
                             else
                             {
-                                var x = monitorInfo.rcWork.left;
-                                var y = monitorInfo.rcWork.top;
-                                var cx = Math.Abs(monitorInfo.rcWork.right - x);
-                                var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
-
                                 UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                             }
+                        }
+                        else
+                        {
+                            var x = monitorInfo.rcWork.left;
+                            var y = monitorInfo.rcWork.top;
+                            var cx = Math.Abs(monitorInfo.rcWork.right - x);
+                            var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
+
+                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                         }
                     }
                 }
