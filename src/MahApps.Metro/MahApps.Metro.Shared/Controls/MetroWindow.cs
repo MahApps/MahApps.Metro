@@ -521,7 +521,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the the system menu should popup on right click.
+        /// Gets/sets if the system menu should popup on right click.
         /// </summary>
         public bool ShowSystemMenuOnRightClick
         {
@@ -530,7 +530,8 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the the system menu should popup on right click.
+        /// Gets/sets if the border thickness value should be kept on maximize
+        /// if the MaxHeight/MaxWidth of the window is less than the monitor resolution.
         /// </summary>
         public bool KeepBorderOnMaximize
         {
