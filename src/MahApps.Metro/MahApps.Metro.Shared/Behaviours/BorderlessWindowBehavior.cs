@@ -378,6 +378,7 @@ namespace MahApps.Metro.Behaviours
                 {
                     // Can't get monitor info, so just remove all border thickness
                     this.AssociatedObject.BorderThickness = new Thickness(0);
+                    this.windowChrome.ResizeBorderThickness = new Thickness(0);
                 }
             }
             else
