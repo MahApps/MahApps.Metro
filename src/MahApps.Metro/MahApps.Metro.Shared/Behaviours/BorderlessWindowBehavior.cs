@@ -311,7 +311,7 @@ namespace MahApps.Metro.Behaviours
                         rightBorderThickness = this.savedBorderThickness.Value.Right;
                     }
                     // If the maximized window will have a height less than the monitor size, show the bottom border.
-                    if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Height && this.savedBorderThickness.HasValue)
+                    if (this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height && this.savedBorderThickness.HasValue)
                     {
                         bottomBorderThickness = this.savedBorderThickness.Value.Bottom;
                     }
@@ -328,7 +328,7 @@ namespace MahApps.Metro.Behaviours
                         {
                             rightResizeBorderThickness = this.savedResizeBorderThickness.Value.Right;
                         }
-                        if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Height && this.savedResizeBorderThickness.HasValue)
+                        if (this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height && this.savedResizeBorderThickness.HasValue)
                         {
                             bottomResizeBorderThickness = this.savedResizeBorderThickness.Value.Bottom;
                         }
