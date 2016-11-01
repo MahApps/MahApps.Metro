@@ -297,51 +297,72 @@ namespace MahApps.Metro.Behaviours
 
             if (this.AssociatedObject.WindowState == WindowState.Maximized)
             {
-                // remove window border, so we can move the window from top monitor position
-                this.AssociatedObject.BorderThickness = new Thickness(0);
-
-                var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-                if (this.handle != IntPtr.Zero)
+                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
+                if (monitor != IntPtr.Zero)
                 {
-                    this.windowChrome.ResizeBorderThickness = new Thickness(0);
+                    var monitorInfo = new MONITORINFO();
+                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                    // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
-                    // so set the window pos/size twice
-                    IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
-                    if (monitor != IntPtr.Zero)
+                    double rightBorderThickness = 0;
+                    double bottomBorderThickness = 0;
+                    // If the maximized window will have a width less than the monitor size, show the right border.
+                    if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width && this.savedBorderThickness.HasValue)
                     {
-                        var monitorInfo = new MONITORINFO();
-                        UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                        rightBorderThickness = this.savedBorderThickness.Value.Right;
+                    }
+                    // If the maximized window will have a height less than the monitor size, show the bottom border.
+                    if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Height && this.savedBorderThickness.HasValue)
+                    {
+                        bottomBorderThickness = this.savedBorderThickness.Value.Bottom;
+                    }
 
-                        if (ignoreTaskBar)
+                    // set window border, so we can move the window from top monitor position
+                    this.AssociatedObject.BorderThickness = new Thickness(0, 0, rightBorderThickness, bottomBorderThickness);
+
+                    var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+                    if (this.handle != IntPtr.Zero)
+                    {
+                        this.windowChrome.ResizeBorderThickness = new Thickness(0);
+
+                        // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
+                        // so set the window pos/size twice
+                        if (monitor != IntPtr.Zero)
                         {
-                            var x = monitorInfo.rcMonitor.left;
-                            var y = monitorInfo.rcMonitor.top;
-                            var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                            var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
-
-                            var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
-                            if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
+                            if (ignoreTaskBar)
                             {
-                                UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
+                                var x = monitorInfo.rcMonitor.left;
+                                var y = monitorInfo.rcMonitor.top;
+                                var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
+                                var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+
+                                var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+                                if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
+                                {
+                                    UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
+                                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
+                                    Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
+                                }
+                                else
+                                {
+                                    UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                                }
                             }
                             else
                             {
+                                var x = monitorInfo.rcWork.left;
+                                var y = monitorInfo.rcWork.top;
+                                var cx = Math.Abs(monitorInfo.rcWork.right - x);
+                                var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
+
                                 UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                             }
                         }
-                        else
-                        {
-                            var x = monitorInfo.rcWork.left;
-                            var y = monitorInfo.rcWork.top;
-                            var cx = Math.Abs(monitorInfo.rcWork.right - x);
-                            var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
-
-                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
-                        }
                     }
+                }
+                else
+                {
+                    // Can't get monitor info, so just remove all border thickness
+                    this.AssociatedObject.BorderThickness = new Thickness(0);
                 }
             }
             else
