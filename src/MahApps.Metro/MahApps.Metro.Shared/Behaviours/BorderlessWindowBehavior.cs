@@ -306,12 +306,12 @@ namespace MahApps.Metro.Behaviours
                     double rightBorderThickness = 0;
                     double bottomBorderThickness = 0;
                     // If the maximized window will have a width less than the monitor size, show the right border.
-                    if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width && this.savedBorderThickness.HasValue)
+                    if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
                     {
                         rightBorderThickness = this.savedBorderThickness.Value.Right;
                     }
                     // If the maximized window will have a height less than the monitor size, show the bottom border.
-                    if (this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height && this.savedBorderThickness.HasValue)
+                    if (this.savedBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
                     {
                         bottomBorderThickness = this.savedBorderThickness.Value.Bottom;
                     }
@@ -324,11 +324,11 @@ namespace MahApps.Metro.Behaviours
                     {
                         double rightResizeBorderThickness = 0;
                         double bottomResizeBorderThickness = 0;
-                        if (this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width && this.savedResizeBorderThickness.HasValue)
+                        if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
                         {
                             rightResizeBorderThickness = this.savedResizeBorderThickness.Value.Right;
                         }
-                        if (this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height && this.savedResizeBorderThickness.HasValue)
+                        if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
                         {
                             bottomResizeBorderThickness = this.savedResizeBorderThickness.Value.Bottom;
                         }
