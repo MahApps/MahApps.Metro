@@ -326,13 +326,16 @@ namespace MahApps.Metro.Behaviours
                     {
                         double rightResizeBorderThickness = 0;
                         double bottomResizeBorderThickness = 0;
-                        if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
+                        if (AssociatedObject is MetroWindow && ((MetroWindow)AssociatedObject).KeepBorderOnMaximize)
                         {
-                            rightResizeBorderThickness = this.savedResizeBorderThickness.Value.Right;
-                        }
-                        if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
-                        {
-                            bottomResizeBorderThickness = this.savedResizeBorderThickness.Value.Bottom;
+                            if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxWidth < monitorInfo.rcMonitor.Width)
+                            {
+                                rightResizeBorderThickness = this.savedResizeBorderThickness.Value.Right;
+                            }
+                            if (this.savedResizeBorderThickness.HasValue && this.AssociatedObject.MaxHeight < monitorInfo.rcMonitor.Height)
+                            {
+                                bottomResizeBorderThickness = this.savedResizeBorderThickness.Value.Bottom;
+                            }
                         }
                         this.windowChrome.ResizeBorderThickness = new Thickness(0, 0, rightResizeBorderThickness, bottomResizeBorderThickness);
 
