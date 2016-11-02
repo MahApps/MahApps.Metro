@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Windows.Data;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
@@ -126,8 +128,70 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static void OnControlWithAutoWatermarkSupportLoaded(object o, RoutedEventArgs routedEventArgs)
+        {
+            FrameworkElement obj = (FrameworkElement)o;
+            obj.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
+
+            DependencyProperty dependencyProperty;
+
+            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
+            {
+                throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
+            }
+
+            var resolvedProperty = ResolvePropertyFromBindingExpression(obj.GetBindingExpression(dependencyProperty));
+            if (resolvedProperty != null)
+            {
 #if NET4
-        [JetBrains.Annotations.CanBeNull]
+                var attribute = resolvedProperty.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+#else
+                var attribute = resolvedProperty.GetCustomAttribute<DisplayAttribute>();
+#endif
+                if (attribute != null)
+                {
+                    obj.SetValue(WatermarkProperty, attribute.GetDescription());
+                }
+            }
+        }
+
+        [CanBeNull]
+        private static PropertyInfo ResolvePropertyFromBindingExpression(BindingExpression bindingExpression)
+        {
+            if (bindingExpression != null)
+            {
+                if (bindingExpression.Status == BindingStatus.PathError)
+                {
+                    return null;
+                }
+#if NET4
+                var propertyName = bindingExpression.ParentBinding.Path.Path;
+                if (propertyName != null && propertyName.Contains('.'))
+                {
+                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
+                }
+#else
+                var propertyName = bindingExpression.ResolvedSourcePropertyName;
+#endif
+                if (!string.IsNullOrEmpty(propertyName))
+                {
+#if NET4
+                    var resolvedType = ResolveBinding(bindingExpression.DataItem.GetType(), bindingExpression.ParentBinding.Path.Path.Split('.'));
+#elif NET4_5
+                    var resolvedType = bindingExpression.ResolvedSource?.GetType();
+#endif
+                    if (resolvedType != null)
+                    {
+                        return resolvedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                    }
+                }
+
+            }
+            return null;
+        }
+
+#if NET4
+        [CanBeNull]
         private static Type ResolveBinding(Type type, string[] paths)
         {
             if (type != null && paths != null)
@@ -158,58 +222,6 @@ namespace MahApps.Metro.Controls
             return null;
         }
 #endif
-
-        private static void OnControlWithAutoWatermarkSupportLoaded(object o, RoutedEventArgs routedEventArgs)
-        {
-            FrameworkElement obj = (FrameworkElement)o;
-            obj.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
-
-            DependencyProperty dependencyProperty;
-
-            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
-            {
-                throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
-            }
-
-            var binding = obj.GetBindingExpression(dependencyProperty);
-#if NET4
-            var propertyName = binding?.ParentBinding?.Path?.Path;
-#else 
-            var propertyName = binding?.ResolvedSourcePropertyName;
-#endif
-            if (propertyName != null)
-            {
-                if (propertyName.EndsWith("]"))
-                {
-                    throw new NotSupportedException("Auto-resolving watermark does not work with binding to an element of a collection. Consider binding to the collectsion itself or a subproperty of an element of that collection (i.e. Collection[0].Property).");
-                }
-#if NET4
-                if (propertyName.Contains('.'))
-                {
-                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
-                }
-                var dataItem = ResolveBinding(binding.DataItem.GetType(), binding.ParentBinding?.Path?.Path.Split('.'));
-#else
-                var dataItem = binding.ResolvedSource?.GetType();
-#endif
-                if (dataItem != null)
-                {
-                    var property = dataItem.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-                    if (property != null)
-                    {
-#if NET4
-                        var attribute = property.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
-#else
-                        var attribute = property.GetCustomAttribute<DisplayAttribute>();
-#endif
-                        if (attribute != null)
-                        {
-                            obj.SetValue(WatermarkProperty, attribute.GetDescription());
-                        }
-                    }
-                }
-            }
-        }
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
