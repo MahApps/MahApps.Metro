@@ -99,6 +99,18 @@ namespace MahApps.Metro.Controls
             return (bool)element.GetValue(AutoWatermarkProperty);
         }
 
+        ///  <summary>
+        ///  Indicates if the watermark is automatically retrieved by using the <see cref="DisplayAttribute"/> of the bound property.
+        ///  </summary>
+        /// <remarks>This attached property uses reflection; thus it might reduce the performance of the application.
+        /// The auto-watermak does work for the following controls:
+        /// In the following case no custom watermark is shown
+        /// <list type="bullet">
+        /// <item>There is no binding</item>
+        /// <item>Binding path errors</item>
+        /// <item>Binding to a element of a collection without using a property of that element <c>Binding Path=Collection[0]</c> use: <c>Binding Path=Collection[0].SubProperty</c></item>
+        /// <item>The bound property does not have a <see cref="DisplayAttribute"/></item>
+        /// </list></remarks>
         public static void SetAutoWatermark(DependencyObject element, bool value)
         {
             element.SetValue(AutoWatermarkProperty, value);
