@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mx="clr-namespace:MetroDemo.Markup"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -20,7 +21,7 @@
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
             </Style>
-            
+
             <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
                 <Image Stretch="Fill" Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
             </DataTemplate>
@@ -110,9 +111,11 @@
             <Grid Grid.IsSharedSizeScope="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Group1" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -139,6 +142,10 @@
                           Margin="5 2"
                           Content="Show NaviButtons"
                           IsChecked="True" />
+                <ComboBox x:Name="Orientation"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
+                          SelectedIndex="0"
+                          Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
             </Grid>
             <Controls:FlipView Height="200"
                                Margin="0 0 5 0"
@@ -146,6 +153,7 @@
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
                                IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
@@ -181,6 +189,7 @@
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
                                IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
                                ItemTemplate="{StaticResource ImageDataTemplate}"
                                ItemsSource="{Binding FlipViewImages, Mode=OneWay}" />
         </StackPanel>

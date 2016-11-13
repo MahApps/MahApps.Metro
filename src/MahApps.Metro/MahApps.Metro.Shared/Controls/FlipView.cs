@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -55,7 +56,7 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
         }
-        
+
         public FlipView()
         {
             this.Loaded += FlipView_Loaded;
@@ -90,20 +91,68 @@ namespace MahApps.Metro.Controls
             DetectControlButtonsStatus();
         }
 
+        /// <summary>
+        /// Gets the navigation buttons.
+        /// </summary>
+        /// <param name="prevButton">Previous button.</param>
+        /// <param name="nextButton">Next button.</param>
+        /// <param name="inactiveButtons">Inactive buttons.</param>
+        private void GetNavigationButtons(out Button prevButton, out Button nextButton, out IEnumerable<Button> inactiveButtons)
+        {
+            if (Orientation == Orientation.Horizontal)
+            {
+                prevButton = backButton;
+                nextButton = forwardButton;
+                inactiveButtons = new Button[] { upButton, downButton };
+            }
+            else
+            {
+                prevButton = upButton;
+                nextButton = downButton;
+                inactiveButtons = new Button[] { backButton, forwardButton };
+            }
+        }
+
+        /// <summary>
+        /// Applies actions to navigation buttons.
+        /// </summary>
+        /// <param name="prevButtonApply">Action applied to the previous button.</param>
+        /// <param name="nextButtonApply">Action applied to the next button.</param>
+        /// <param name="inactiveButtonsApply">Action applied to the inactive buttons.</param>
+        /// <exception cref="ArgumentNullException">Any action is null.</exception>
+        private void ApplyToNavigationButtons(Action<Button> prevButtonApply, Action<Button> nextButtonApply, Action<Button> inactiveButtonsApply)
+        {
+            if (Object.Equals(prevButtonApply, null))
+                throw new ArgumentNullException(nameof(prevButtonApply));
+            if (Object.Equals(nextButtonApply, null))
+                throw new ArgumentNullException(nameof(nextButtonApply));
+            if (Object.Equals(inactiveButtonsApply, null))
+                throw new ArgumentNullException(nameof(inactiveButtonsApply));
+
+            Button prevButton = null;
+            Button nextButton = null;
+            IEnumerable<Button> inactiveButtons = null;
+            GetNavigationButtons(out prevButton, out nextButton, out inactiveButtons);
+
+            foreach (var item in inactiveButtons)
+                if (!Object.Equals(item, null))
+                    inactiveButtonsApply(item);
+
+            if (!Object.Equals(prevButton, null))
+                prevButtonApply(prevButton);
+
+            if (!Object.Equals(nextButton, null))
+                nextButtonApply(nextButton);
+        }
+
         private void DetectControlButtonsStatus()
         {
             if (controlsVisibilityOverride) return;
 
-            var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
-            var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
-
-            if (prevButton == null || nextButton == null)
-            {
-                return;
-            }
-
-            prevButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-            nextButton.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
+            ApplyToNavigationButtons(
+                prev => prev.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible,
+                next => next.Visibility = this.Items.Count <= 0 || !this.CircularNavigation && this.SelectedIndex == (this.Items.Count - 1) ? Visibility.Hidden : Visibility.Visible,
+                inactive => inactive.Visibility = Visibility.Hidden);
         }
 
         void FlipView_Loaded(object sender, RoutedEventArgs e)
@@ -275,15 +324,15 @@ namespace MahApps.Metro.Controls
         {
             controlsVisibilityOverride = false;
             ExecuteWhenLoaded(this, () =>
+            {
+                var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                if (prevButton != null && nextButton != null)
                 {
-                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
-                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
-                    if (prevButton != null && nextButton != null)
-                    {
-                        prevButton.Visibility = Visibility.Visible;
-                        nextButton.Visibility = Visibility.Visible;
-                    }
-                });
+                    prevButton.Visibility = Visibility.Visible;
+                    nextButton.Visibility = Visibility.Visible;
+                }
+            });
         }
         /// <summary>
         /// Removes the control buttons (next/previous) from view.
@@ -292,15 +341,15 @@ namespace MahApps.Metro.Controls
         {
             controlsVisibilityOverride = true;
             ExecuteWhenLoaded(this, () =>
+            {
+                var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
+                var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
+                if (prevButton != null && nextButton != null)
                 {
-                    var prevButton = Orientation == Orientation.Horizontal ? backButton : upButton;
-                    var nextButton = Orientation == Orientation.Horizontal ? forwardButton : downButton;
-                    if (prevButton != null && nextButton != null)
-                    {
-                        prevButton.Visibility = Visibility.Hidden;
-                        nextButton.Visibility = Visibility.Hidden;
-                    }
-                });
+                    prevButton.Visibility = Visibility.Hidden;
+                    nextButton.Visibility = Visibility.Hidden;
+                }
+            });
         }
 
         private void ShowBanner()
@@ -329,7 +378,8 @@ namespace MahApps.Metro.Controls
             else
             {
                 RoutedEventHandler handler = null;
-                handler = (o, a) => {
+                handler = (o, a) =>
+                {
                     flipview.Loaded -= handler;
                     System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
                 };
@@ -347,7 +397,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
         public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
         public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
         public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
@@ -469,7 +519,8 @@ namespace MahApps.Metro.Controls
                     hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
                 }
 
-                hideControlStoryboardCompletedHandler = (sender, e) => {
+                hideControlStoryboardCompletedHandler = (sender, e) =>
+                {
                     try
                     {
                         hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
@@ -491,7 +542,8 @@ namespace MahApps.Metro.Controls
 
             else
             {
-                ExecuteWhenLoaded(this, () => {
+                ExecuteWhenLoaded(this, () =>
+                {
                     bannerLabel.Content = value ?? BannerText;
                 });
             }
@@ -504,7 +556,8 @@ namespace MahApps.Metro.Controls
             if (!flipview.IsLoaded)
             {
                 //wait to be loaded?
-                ExecuteWhenLoaded(flipview, () => {
+                ExecuteWhenLoaded(flipview, () =>
+                {
                     flipview.ApplyTemplate();
 
                     if ((bool)e.NewValue)
@@ -539,7 +592,8 @@ namespace MahApps.Metro.Controls
             if (!flipview.IsLoaded)
             {
                 //wait to be loaded?
-                ExecuteWhenLoaded(flipview, () => {
+                ExecuteWhenLoaded(flipview, () =>
+                {
                     flipview.ApplyTemplate();
 
                     if ((bool)e.NewValue)
