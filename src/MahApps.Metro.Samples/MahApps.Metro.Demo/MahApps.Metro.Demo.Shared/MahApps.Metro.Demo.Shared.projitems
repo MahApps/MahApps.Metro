@@ -82,6 +82,7 @@
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueConverter\Int32IndexToNumberConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">

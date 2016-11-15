@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -54,12 +55,56 @@ namespace MahApps.Metro.Controls
         static FlipView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
+
+            var previousSelectedIndexPropertyMetadata = SelectedIndexProperty.GetMetadata(typeof(FlipView));
+            SelectedIndexProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata
+            {
+                CoerceValueCallback = (d, value) =>
+                {
+                    /* Chain coercions. */
+                    if (!Object.Equals(previousSelectedIndexPropertyMetadata.CoerceValueCallback, null))
+                        foreach (var item in previousSelectedIndexPropertyMetadata.CoerceValueCallback.GetInvocationList())
+                            value = ((CoerceValueCallback)item)(d, value);
+                    return CoerceSelectedIndexProperty(d, value);
+                }
+            });
         }
 
         public FlipView()
         {
             this.Loaded += FlipView_Loaded;
             this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
+        }
+
+        /// <summary>
+        /// Coerce SelectedIndexProperty's value.
+        /// </summary>
+        /// <param name="d">The object that the property exists on.</param>
+        /// <param name="value">The new value of the property, prior to any coercion attempt.</param>
+        /// <returns>The coerced value (with appropriate type). </returns>
+        private static object CoerceSelectedIndexProperty(DependencyObject d, object value)
+        {
+            var flipView = d as FlipView;
+            if (!Object.Equals(flipView, null))
+                flipView.ComputeTransition(flipView.SelectedIndex, value is int ? (int)value : flipView.SelectedIndex);
+            return value;
+        }
+
+        /// <summary>
+        /// Computes the transition when changing selected index.
+        /// </summary>
+        /// <param name="fromIndex">Previous selected index.</param>
+        /// <param name="toIndex">New selected index.</param>
+        private void ComputeTransition(int fromIndex, int toIndex)
+        {
+            if (!Object.Equals(presenter, null))
+            {
+                if (fromIndex < toIndex)
+                    presenter.Transition = Orientation == Orientation.Horizontal ? LeftTransition : DownTransition;
+                else if (fromIndex > toIndex)
+                    presenter.Transition = Orientation == Orientation.Horizontal ? RightTransition : UpTransition;
+                else presenter.Transition = TransitionType.Default;
+            }
         }
 
         void FlipView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -290,7 +335,6 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex > 0)
             {
-                presenter.Transition = Orientation == Orientation.Horizontal ? RightTransition : UpTransition;
                 SelectedIndex--;
             }
             else
@@ -309,7 +353,6 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex < Items.Count - 1)
             {
-                presenter.Transition = Orientation == Orientation.Horizontal ? LeftTransition : DownTransition;
                 SelectedIndex++;
             }
             else
