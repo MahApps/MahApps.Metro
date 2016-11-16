@@ -127,7 +127,7 @@ namespace MetroDemo
 
         DateTime? _datePickerDate;
 
-        [Display(Description = "Auto resolved Watermark")]
+        [Display(Prompt = "Auto resolved Watermark")]
         public DateTime? DatePickerDate
         {
             get { return this._datePickerDate; }
