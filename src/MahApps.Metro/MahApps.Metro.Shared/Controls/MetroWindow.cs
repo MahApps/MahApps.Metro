@@ -980,7 +980,6 @@ namespace MahApps.Metro.Controls
                 foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
-                    e.Handled = true;
                 }
             }
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
@@ -988,7 +987,6 @@ namespace MahApps.Metro.Controls
                 foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
-                    e.Handled = true;
                 }
             }
         }
