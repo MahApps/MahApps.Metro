@@ -12,6 +12,12 @@
                      EasingMode="EaseInOut"
                      Exponent="2" />
 
+    <DropShadowEffect x:Key="WaitingForDataEffect"
+                      Opacity="0"
+                      BlurRadius="10"
+                      ShadowDepth="0"
+                      Color="{DynamicResource BlackColor}" />
+
     <Storyboard x:Key="WaitingForDataStoryboard" po:Freeze="True">
         <DoubleAnimation AutoReverse="True"
                          Duration="00:00:02"
