@@ -61,13 +61,14 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <AdornerDecorator>
+                        <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
                             <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <BitmapCache EnableClearType="True"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
@@ -227,20 +228,15 @@
                                 <Condition Property="IsVisible" Value="True" />
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Opacity="0"
-                                                      BlurRadius="10"
-                                                      ShadowDepth="0"
-                                                      Color="{DynamicResource BlackColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
+                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
+                                <BeginStoryboard Storyboard="{DynamicResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
+                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -284,13 +280,15 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <AdornerDecorator>
+                        <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator"
+                                          Visibility="Collapsed">
                             <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <BitmapCache EnableClearType="True"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
@@ -429,20 +427,15 @@
                                 <Condition Property="IsVisible" Value="True" />
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect Opacity="0"
-                                                      BlurRadius="10"
-                                                      ShadowDepth="0"
-                                                      Color="{DynamicResource BlackColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
+                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
+                                <BeginStoryboard Storyboard="{DynamicResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
+                            <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

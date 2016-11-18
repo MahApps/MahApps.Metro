@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -979,7 +980,6 @@ namespace MahApps.Metro.Controls
                 foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
-                    e.Handled = true;
                 }
             }
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
@@ -987,7 +987,6 @@ namespace MahApps.Metro.Controls
                 foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
-                    e.Handled = true;
                 }
             }
         }
@@ -1009,6 +1008,32 @@ namespace MahApps.Metro.Controls
             if (newChild != null)
             {
                 window.AddLogicalChild(newChild);
+            }
+        }
+
+        protected override IEnumerator LogicalChildren
+        {
+            get
+            {
+                // cheat, make a list with all logical content and return the enumerator
+                ArrayList children = new ArrayList { this.Content };
+                if (this.LeftWindowCommands != null)
+                {
+                    children.Add(this.LeftWindowCommands);
+                }
+                if (this.RightWindowCommands != null)
+                {
+                    children.Add(this.RightWindowCommands);
+                }
+                if (this.WindowButtonCommands != null)
+                {
+                    children.Add(this.WindowButtonCommands);
+                }
+                if (this.Flyouts != null)
+                {
+                    children.Add(this.Flyouts);
+                }
+                return children.GetEnumerator();
             }
         }
 
