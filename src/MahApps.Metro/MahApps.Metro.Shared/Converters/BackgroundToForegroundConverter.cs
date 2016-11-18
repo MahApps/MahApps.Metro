@@ -34,7 +34,7 @@ namespace MahApps.Metro.Converters
         /// <returns></returns>
         private Color IdealTextColor(Color bg)
         {
-            const int nThreshold = 105;
+            const int nThreshold = 86;//105;
             var bgDelta = System.Convert.ToInt32((bg.R * 0.299) + (bg.G * 0.587) + (bg.B * 0.114));
             var foreColor = (255 - bgDelta < nThreshold) ? Colors.Black : Colors.White;
             return foreColor;

@@ -405,9 +405,13 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
-                        <Trigger Property="IsReadOnly" Value="True">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsReadOnly" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                        </Trigger>
+                        </MultiTrigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
