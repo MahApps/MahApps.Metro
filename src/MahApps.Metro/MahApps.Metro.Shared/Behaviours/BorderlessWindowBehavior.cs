@@ -286,7 +286,7 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize()
         {
-            this.borderThicknessChangeNotifier.ValueChanged -= this.BorderThicknessChangeNotifierOnValueChanged;
+            this.borderThicknessChangeNotifier.RaiseValueChanged = false;
             var raiseValueChanged = this.topMostChangeNotifier.RaiseValueChanged;
             this.topMostChangeNotifier.RaiseValueChanged = false;
 
@@ -394,7 +394,7 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.Topmost = false;
             this.AssociatedObject.Topmost = this.AssociatedObject.WindowState == WindowState.Minimized || this.savedTopMost;
 
-            this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
+            this.borderThicknessChangeNotifier.RaiseValueChanged = true;
             this.topMostChangeNotifier.RaiseValueChanged = raiseValueChanged;
         }
 
