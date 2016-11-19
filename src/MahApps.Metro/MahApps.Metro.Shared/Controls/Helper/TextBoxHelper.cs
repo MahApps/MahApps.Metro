@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,11 +7,14 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Windows.Data;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
-    using System.ComponentModel;
-
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -51,6 +55,24 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
         /// <summary>
+        /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property to true will uses reflection.
+        /// </remarks>
+        public static readonly DependencyProperty AutoWatermarkProperty = DependencyProperty.RegisterAttached("AutoWatermark", typeof(bool), typeof(TextBoxHelper), new PropertyMetadata(default(bool), OnAutoWatermarkChanged));
+
+        private static readonly Dictionary<Type, DependencyProperty> AutoWatermarkPropertyMapping = new Dictionary<Type, DependencyProperty>
+                                                                                                    {
+                                                                                                        { typeof(TextBox), TextBox.TextProperty },
+                                                                                                        { typeof(ComboBox), Selector.SelectedItemProperty },
+                                                                                                        { typeof(NumericUpDown), NumericUpDown.ValueProperty },
+                                                                                                        { typeof(DatePicker), DatePicker.SelectedDateProperty },
+                                                                                                        { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
+                                                                                                        { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty }
+                                                                                                    };
+
+        /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
         [Category(AppName.MahApps)]
@@ -65,6 +87,153 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
         }
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static bool GetAutoWatermark(DependencyObject element)
+        {
+            return (bool)element.GetValue(AutoWatermarkProperty);
+        }
+
+        ///  <summary>
+        ///  Indicates if the watermark is automatically retrieved by using the <see cref="DisplayAttribute"/> of the bound property.
+        ///  </summary>
+        /// <remarks>This attached property uses reflection; thus it might reduce the performance of the application.
+        /// The auto-watermak does work for the following controls:
+        /// In the following case no custom watermark is shown
+        /// <list type="bullet">
+        /// <item>There is no binding</item>
+        /// <item>Binding path errors</item>
+        /// <item>Binding to a element of a collection without using a property of that element <c>Binding Path=Collection[0]</c> use: <c>Binding Path=Collection[0].SubProperty</c></item>
+        /// <item>The bound property does not have a <see cref="DisplayAttribute"/></item>
+        /// </list></remarks>
+        public static void SetAutoWatermark(DependencyObject element, bool value)
+        {
+            element.SetValue(AutoWatermarkProperty, value);
+        }
+
+        private static void OnAutoWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            FrameworkElement element = d as FrameworkElement;
+            bool? enable = e.NewValue as bool?;
+            if (element != null)
+            {
+                if (enable.GetValueOrDefault())
+                {
+                    if (element.IsLoaded)
+                    {
+                        OnControlWithAutoWatermarkSupportLoaded(element, new RoutedEventArgs());
+                    }
+                    else
+                    {
+                        element.Loaded += OnControlWithAutoWatermarkSupportLoaded;
+                    }
+                }
+                else
+                {
+                    element.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
+                }
+            }
+        }
+
+        private static void OnControlWithAutoWatermarkSupportLoaded(object o, RoutedEventArgs routedEventArgs)
+        {
+            FrameworkElement obj = (FrameworkElement)o;
+            obj.Loaded -= OnControlWithAutoWatermarkSupportLoaded;
+
+            DependencyProperty dependencyProperty;
+
+            if (!AutoWatermarkPropertyMapping.TryGetValue(obj.GetType(), out dependencyProperty))
+            {
+                throw new NotSupportedException($"{nameof(AutoWatermarkProperty)} is not supported for {obj.GetType()}");
+            }
+
+            var resolvedProperty = ResolvePropertyFromBindingExpression(obj.GetBindingExpression(dependencyProperty));
+            if (resolvedProperty != null)
+            {
+#if NET4
+                var attribute = resolvedProperty.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
+#else
+                var attribute = resolvedProperty.GetCustomAttribute<DisplayAttribute>();
+#endif
+                if (attribute != null)
+                {
+                    obj.SetValue(WatermarkProperty, attribute.GetPrompt());
+                }
+            }
+        }
+
+        [CanBeNull]
+        private static PropertyInfo ResolvePropertyFromBindingExpression(BindingExpression bindingExpression)
+        {
+            if (bindingExpression != null)
+            {
+                if (bindingExpression.Status == BindingStatus.PathError)
+                {
+                    return null;
+                }
+#if NET4
+                var propertyName = bindingExpression.ParentBinding.Path.Path;
+                if (propertyName != null && propertyName.Contains('.'))
+                {
+                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
+                }
+#else
+                var propertyName = bindingExpression.ResolvedSourcePropertyName;
+#endif
+                if (!string.IsNullOrEmpty(propertyName))
+                {
+#if NET4
+                    var resolvedType = ResolveBinding(bindingExpression.DataItem.GetType(), bindingExpression.ParentBinding.Path.Path.Split('.'));
+#elif NET4_5
+                    var resolvedType = bindingExpression.ResolvedSource?.GetType();
+#endif
+                    if (resolvedType != null)
+                    {
+                        return resolvedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+                    }
+                }
+
+            }
+            return null;
+        }
+
+#if NET4
+        [CanBeNull]
+        private static Type ResolveBinding(Type type, string[] paths)
+        {
+            if (type != null && paths != null)
+            {
+                if (paths.Length == 1)
+                {
+                    return type;
+                }
+                var propertyName = paths[0];
+
+                if (propertyName.Contains('[') && propertyName.EndsWith("]"))
+                {
+                    var indexOf = propertyName.IndexOf('[');
+                    propertyName = propertyName.Substring(0, indexOf);
+                }
+
+                var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance)?.PropertyType;
+                if (property != null)
+                {
+                    var remainingPath = paths.Skip(1).ToArray();
+                    if (property.IsArray)
+                    {
+                        return ResolveBinding(property.GetElementType(), remainingPath);
+                    }
+                    return ResolveBinding(property, remainingPath);
+                }
+            }
+            return null;
+        }
+#endif
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -212,7 +381,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
-
+        
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
@@ -310,7 +479,7 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-
+        
         private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
         {
             if (sender != null)
@@ -318,7 +487,7 @@ namespace MahApps.Metro.Controls
                 var value = funcTextLength(sender);
                 sender.SetValue(TextLengthProperty, value);
                 sender.SetValue(HasTextProperty, value >= 1);
-        }
+            }
         }
 
         private static void TextChanged(object sender, RoutedEventArgs e)
