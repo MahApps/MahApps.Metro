@@ -35,6 +35,11 @@
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
                             IsEnabled="False" />
+                <DatePicker Width="200"
+                            Margin="0, 10, 0, 0"
+                            HorizontalAlignment="Center"
+                            SelectedDate="{Binding DatePickerDate}"
+                            Controls:TextBoxHelper.AutoWatermark="True" />
                 <DatePicker Width="300"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
@@ -177,7 +182,7 @@
                                     <i:Interaction.Behaviors>
                                         <behaviors:DateTimeNowBehavior />
                                     </i:Interaction.Behaviors>
-                                </Controls:DateTimePicker>  
+                                </Controls:DateTimePicker>
                                 <Controls:TimePicker SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}"
                                                      Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
