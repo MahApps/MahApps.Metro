@@ -56,15 +56,31 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
 
+            /* Hook SelectedIndexProperty's coercion.
+             * Coercion is called whenever the value of the DependencyProperty is being re-evaluated or coercion is specifically requested.
+             * Coercion has access to current and proposed value to enforce compliance.
+             * It is called after ValidateCallback.
+             * So one can ultimately use this callback like a value is changing event.
+             * As this control doesn't implement System.ComponentModel.INotifyPropertyChanging,
+             * it's the only way to determine from/to index and ensure Transition consistency in any use case of the control.
+             */
             var previousSelectedIndexPropertyMetadata = SelectedIndexProperty.GetMetadata(typeof(FlipView));
             SelectedIndexProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata
             {
+                /* Coercion being behavior critical, we don't want to replace inherited or added callbacks.
+                 * They must be called before ours and most of all : their result must be our input.
+                 * But since delegates are multicast (meaning they can have more than on target), each target would sequentially be executed with the same original input
+                 * thus not chaining invocations' inputs/outputs. So the caller would retrieve the sole last target's return value, ignoring previous computations.
+                 * Hence, we chain coerions inputs/outputs until our callback to preserve the behavior of the control
+                 * and be sure the value won't change anymore before being actually set.
+                 */
                 CoerceValueCallback = (d, value) =>
                 {
-                    /* Chain coercions. */
+                    /* Chain actual coercions... */
                     if (!Object.Equals(previousSelectedIndexPropertyMetadata.CoerceValueCallback, null))
                         foreach (var item in previousSelectedIndexPropertyMetadata.CoerceValueCallback.GetInvocationList())
                             value = ((CoerceValueCallback)item)(d, value);
+                    /* ...'til our new one. */
                     return CoerceSelectedIndexProperty(d, value);
                 }
             });
