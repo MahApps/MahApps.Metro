@@ -107,18 +107,19 @@ namespace MahApps.Metro.Behaviours
                 this.windowChrome.ResizeBorderThickness = new Thickness(0);
             }
 
-            var lostFocus = new Action(() =>
+            var topmostHack = new Action(() =>
                                            {
                                                if (this.AssociatedObject.Topmost)
                                                {
-                                                   this.topMostChangeNotifier.ValueChanged -= this.TopMostChangeNotifierOnValueChanged;
+                                                   var raiseValueChanged = this.topMostChangeNotifier.RaiseValueChanged;
+                                                   this.topMostChangeNotifier.RaiseValueChanged = false;
                                                    this.AssociatedObject.Topmost = false;
                                                    this.AssociatedObject.Topmost = true;
-                                                   this.topMostChangeNotifier.ValueChanged += this.TopMostChangeNotifierOnValueChanged;
+                                                   this.topMostChangeNotifier.RaiseValueChanged = raiseValueChanged;
                                                }
                                            });
-            this.AssociatedObject.LostFocus += (sender, args) => { lostFocus(); };
-            this.AssociatedObject.Deactivated += (sender, args) => { lostFocus(); };
+            this.AssociatedObject.LostFocus += (sender, args) => { topmostHack(); };
+            this.AssociatedObject.Deactivated += (sender, args) => { topmostHack(); };
 
             this.AssociatedObject.Loaded += this.AssociatedObject_Loaded;
             this.AssociatedObject.Unloaded += this.AssociatedObject_Unloaded;
@@ -286,7 +287,8 @@ namespace MahApps.Metro.Behaviours
         private void HandleMaximize()
         {
             this.borderThicknessChangeNotifier.ValueChanged -= this.BorderThicknessChangeNotifierOnValueChanged;
-            this.topMostChangeNotifier.ValueChanged -= this.TopMostChangeNotifierOnValueChanged;
+            var raiseValueChanged = this.topMostChangeNotifier.RaiseValueChanged;
+            this.topMostChangeNotifier.RaiseValueChanged = false;
 
             var metroWindow = this.AssociatedObject as MetroWindow;
             var enableDWMDropShadow = this.EnableDWMDropShadow;
@@ -355,6 +357,24 @@ namespace MahApps.Metro.Behaviours
                 {
                     this.windowChrome.ResizeBorderThickness = resizeBorderThickness;
                 }
+
+                // #2694 make sure the window is not on top after restoring window
+                // this issue was introduced after fixing the windows 10 bug with the taskbar and a maximized window that ignores the taskbar
+                RECT rect;
+                if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                {
+                    var left = rect.left;
+                    var top = rect.top;
+                    var width = rect.Width;
+                    var height = rect.Height;
+
+                    // Z-Order would only get refreshed/reflected if clicking the
+                    // the titlebar (as opposed to other parts of the external
+                    // window) unless I first set the window to HWND_BOTTOM then HWND_TOP before HWND_NOTOPMOST
+                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_BOTTOM, left, top, width, height, Constants.TOPMOST_FLAGS);
+                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_TOP, left, top, width, height, Constants.TOPMOST_FLAGS);
+                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_NOTOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
+                }
             }
 
             // fix nasty TopMost bug
@@ -375,7 +395,7 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.Topmost = this.AssociatedObject.WindowState == WindowState.Minimized || this.savedTopMost;
 
             this.borderThicknessChangeNotifier.ValueChanged += this.BorderThicknessChangeNotifierOnValueChanged;
-            this.topMostChangeNotifier.ValueChanged += this.TopMostChangeNotifierOnValueChanged;
+            this.topMostChangeNotifier.RaiseValueChanged = raiseValueChanged;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
