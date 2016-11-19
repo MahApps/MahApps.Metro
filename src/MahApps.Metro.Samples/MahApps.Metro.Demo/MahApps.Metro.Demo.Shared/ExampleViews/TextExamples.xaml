@@ -25,7 +25,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0"
@@ -96,6 +96,9 @@
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.SelectAllOnFocus="True"
+                         Text="Select all on focus" />
+                <TextBox Margin="{StaticResource ControlMargin}"
                          IsEnabled="False"
                          Text="Disabled" />
                 <TextBox Margin="{StaticResource ControlMargin}"
@@ -114,9 +117,6 @@
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                <TextBox Margin="{StaticResource ControlMargin}"
-                         Controls:TextBoxHelper.SelectAllOnFocus="True"
-                         Text="Select all on focus" />
             </StackPanel>
 
             <StackPanel Grid.Row="0"
@@ -343,4 +343,3 @@
     </AdornerDecorator>
 
 </UserControl>
-
