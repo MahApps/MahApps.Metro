@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.ComponentModel;
 using System.Globalization;
@@ -125,6 +126,8 @@ namespace MetroDemo
         }
 
         DateTime? _datePickerDate;
+
+        [Display(Prompt = "Auto resolved Watermark")]
         public DateTime? DatePickerDate
         {
             get { return this._datePickerDate; }
@@ -254,6 +257,7 @@ namespace MetroDemo
             }
         }
 
+        [Description("Test-Property")]
         public string Error { get { return string.Empty; } }
 
         private ICommand singleCloseTabCommand;
