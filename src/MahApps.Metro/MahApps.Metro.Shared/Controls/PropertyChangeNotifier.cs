@@ -36,11 +36,11 @@ namespace MahApps.Metro.Controls
         {
             if (null == propertySource)
             {
-                throw new ArgumentNullException("propertySource");
+                throw new ArgumentNullException(nameof(propertySource));
             }
             if (null == property)
             {
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
             }
             this._propertySource = new WeakReference(propertySource);
             var binding = new Binding();
@@ -93,13 +93,15 @@ namespace MahApps.Metro.Controls
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var notifier = (PropertyChangeNotifier)d;
-            if (null != notifier.ValueChanged)
+            if (notifier.RaiseValueChanged)
             {
-                notifier.ValueChanged(notifier.PropertySource, EventArgs.Empty);
+                notifier.ValueChanged?.Invoke(notifier.PropertySource, EventArgs.Empty);
             }
         }
 
         public event EventHandler ValueChanged;
+
+        public bool RaiseValueChanged { get; set; } = true;
 
         public void Dispose()
         {
