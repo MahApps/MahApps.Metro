@@ -445,14 +445,21 @@ namespace MahApps.Metro.Controls
                 // if UseNoneWindowStyle = true no title bar should be shown
                 var useNoneWindowStyle = (bool)e.NewValue;
                 var window = (MetroWindow)d;
-                window.ToggleNoneWindowStyle(useNoneWindowStyle);
+                window.ToggleNoneWindowStyle(useNoneWindowStyle, window.ShowTitleBar);
             }
         }
 
-        private void ToggleNoneWindowStyle(bool useNoneWindowStyle)
+        private void ToggleNoneWindowStyle(bool useNoneWindowStyle, bool isTitleBarVisible)
         {
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
-            ShowTitleBar = !useNoneWindowStyle;
+            if (useNoneWindowStyle)
+            {
+                ShowTitleBar = false;
+            }
+            else
+            {
+                ShowTitleBar = isTitleBarVisible;
+            }
             if (LeftWindowCommandsPresenter != null)
             {
                 LeftWindowCommandsPresenter.Visibility = useNoneWindowStyle ? Visibility.Collapsed : Visibility.Visible;
@@ -881,7 +888,7 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
 
-            this.ToggleNoneWindowStyle(this.UseNoneWindowStyle);
+            this.ToggleNoneWindowStyle(this.UseNoneWindowStyle, this.ShowTitleBar);
 
             if (this.Flyouts == null)
             {
