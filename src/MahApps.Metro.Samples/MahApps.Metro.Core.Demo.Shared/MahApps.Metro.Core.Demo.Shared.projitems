@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>3085c6e4-041b-4b84-9e6e-1db70716a744</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>MetroDemo</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Album.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Artist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CustomDialogExampleContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Genre.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SimpleCommand.cs" />
+  </ItemGroup>
+</Project>

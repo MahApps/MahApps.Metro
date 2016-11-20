@@ -1,7 +1,0 @@
-JetBrains.Annotations
-MahApps.Metro.IconPacks
-Microsoft.Bcl redirects: on
-Microsoft.Bcl.Async
-Microsoft.Bcl.Build import_targets: true
-NHotkey
-NHotkey.Wpf

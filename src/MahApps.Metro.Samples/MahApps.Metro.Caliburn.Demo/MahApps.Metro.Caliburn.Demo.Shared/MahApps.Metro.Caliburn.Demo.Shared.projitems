@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>7da8a2a9-492c-4886-a8ab-a207d2549922</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Caliburn.Metro.Demo</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AppBootstrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\IThemeManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\IViewLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\StartupTasks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ThemeManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ViewLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IShell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\MefServiceLocator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\FlyoutBaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\Flyout1ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\Flyout2ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\Flyout3ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\FlyoutBottomViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\FlyoutLeftViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\FlyoutSettingsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Flyouts\FlyoutTopViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\Theme1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\Flyout1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\Flyout2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\Flyout3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\FlyoutBottomView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\FlyoutLeftView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\FlyoutSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\Flyouts\FlyoutTopView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

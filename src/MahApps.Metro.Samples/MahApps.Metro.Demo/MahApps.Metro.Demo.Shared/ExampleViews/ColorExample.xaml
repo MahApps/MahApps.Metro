@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.ColorExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <ScrollViewer>
+        <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding BrushResources}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid MinHeight="40"
+                          Margin="5"
+                          ToolTip="{Binding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="color" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Ellipse Grid.Row="0"
+                                 Width="80"
+                                 Height="80"
+                                 Stroke="#bdbdbd">
+                            <i:Interaction.Behaviors>
+                                <behaviours:BindableResourceBehavior ResourceName="{Binding}" Property="{x:Static Shape.FillProperty}" />
+                            </i:Interaction.Behaviors>
+                        </Ellipse>
+                        <TextBlock Grid.Row="1"
+                                   Margin="4,2,4,10"
+                                   FontSize="{DynamicResource NormalFontSize}"
+                                   Text="{Binding}"
+                                   TextAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+
+</UserControl>

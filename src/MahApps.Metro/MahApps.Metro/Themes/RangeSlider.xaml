@@ -1,0 +1,167 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ControlTemplate x:Key="RangeSliderHorizontal" TargetType="controls:RangeSlider">
+        <StackPanel Name="PART_Container"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+            <TickBar Name="PART_TopTick"
+                     Height="4"
+                     Margin="5 0 5 2"
+                     Fill="{TemplateBinding Foreground}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Top"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Visibility="Collapsed" />
+            <StackPanel Name="PART_RangeSliderContainer"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        Orientation="Horizontal">
+                <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
+                <Thumb Name="PART_LeftThumb"
+                       Width="{DynamicResource HorizontalThumbWidth}"
+                       Height="{DynamicResource HorizontalThumbHeight}"
+                       Style="{DynamicResource HorizontalSliderThumb}"
+                       Cursor="Arrow" />
+                <Thumb Name="PART_MiddleThumb"
+                       MinWidth="{TemplateBinding MinRangeWidth}"
+                       Cursor="Hand">
+                    <Thumb.Style>
+                        <Style TargetType="Thumb">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Rectangle Height="5"
+                                                   Margin="0 1 0 0"
+                                                   Fill="{DynamicResource AccentColorBrush}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Thumb.Style>
+                </Thumb>
+                <Thumb Name="PART_RightThumb"
+                       Width="{DynamicResource HorizontalThumbWidth}"
+                       Height="{DynamicResource HorizontalThumbHeight}"
+                       Style="{DynamicResource HorizontalSliderThumb}"
+                       Cursor="Arrow" />
+                <RepeatButton Name="PART_RightEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
+            </StackPanel>
+            <TickBar Name="PART_BottomTick"
+                     Height="4"
+                     Margin="5 2 5 0"
+                     Fill="{TemplateBinding Foreground}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Top"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Visibility="Collapsed" />
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RangeSliderVertical" TargetType="controls:RangeSlider">
+        <StackPanel Name="PART_Container"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Stretch"
+                    Orientation="Horizontal">
+            <TickBar Name="PART_TopTick"
+                     Width="4"
+                     Margin="0 5 2 5"
+                     Fill="{TemplateBinding Foreground}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Left"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Visibility="Collapsed" />
+            <StackPanel Name="PART_RangeSliderContainer"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Background="Transparent"
+                        Orientation="Vertical">
+                <RepeatButton Name="PART_RightEdge"
+                              VerticalAlignment="Stretch"
+                              Style="{DynamicResource VerticalTrackLargeDecrease}" />
+                <Thumb Name="PART_RightThumb"
+                       Width="{DynamicResource VerticalThumbWidth}"
+                       Height="{DynamicResource VerticalThumbHeight}"
+                       Style="{DynamicResource VerticalSliderThumb}"
+                       Cursor="Arrow" />
+
+                <Thumb Name="PART_MiddleThumb"
+                       MinHeight="{TemplateBinding MinRangeWidth}"
+                       Cursor="Hand">
+                    <Thumb.Style>
+                        <Style TargetType="Thumb">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Rectangle Width="5"
+                                                   Margin="0 0 0 0"
+                                                   Fill="{DynamicResource AccentColorBrush}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Thumb.Style>
+                </Thumb>
+
+                <Thumb Name="PART_LeftThumb"
+                       Width="{DynamicResource VerticalThumbWidth}"
+                       Height="{DynamicResource VerticalThumbHeight}"
+                       Style="{DynamicResource VerticalSliderThumb}"
+                       Cursor="Arrow" />
+                <RepeatButton Name="PART_LeftEdge"
+                              VerticalAlignment="Stretch"
+                              Style="{DynamicResource VerticalTrackLargeDecrease}" />
+            </StackPanel>
+            <TickBar Name="PART_BottomTick"
+                     Width="4"
+                     Margin="2 5 0 5"
+                     Fill="{TemplateBinding Foreground}"
+                     Maximum="{TemplateBinding Maximum}"
+                     Minimum="{TemplateBinding Minimum}"
+                     Placement="Right"
+                     TickFrequency="{TemplateBinding TickFrequency}"
+                     Visibility="Collapsed" />
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="PART_BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type controls:RangeSlider}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template" Value="{StaticResource RangeSliderHorizontal}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource RangeSliderVertical}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,22 @@
+﻿<controls:MetroWindow x:Class="MahApps.Metro.Tests.AutoWatermarkTestWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                      d:DataContext="{d:DesignInstance tests:AutoWatermarkTestModel}"
+                      d:DesignHeight="300"
+                      d:DesignWidth="300"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.DataContext>
+        <tests:AutoWatermarkTestModel />
+    </controls:MetroWindow.DataContext>
+    <StackPanel>
+        <TextBox x:Name="TestTextBox" Text="{Binding TextBoxText}" controls:TextBoxHelper.AutoWatermark="True" />
+        <TextBox x:Name="TestTextBoxSubModel" Text="{Binding SubModel.TextBoxText}" controls:TextBoxHelper.AutoWatermark="True" />
+        <ComboBox x:Name="TestComboBox" SelectedItem="{Binding ComboBoxSelectedObject}" controls:TextBoxHelper.AutoWatermark="True" />
+        <controls:NumericUpDown x:Name="TestNumericUpDown" Value="{Binding NumericUpDownValue}" controls:TextBoxHelper.AutoWatermark="True" />
+        <DatePicker x:Name="TestDatePicker" SelectedDate="{Binding DatePickerDate}" controls:TextBoxHelper.AutoWatermark="True" />
+    </StackPanel>
+</controls:MetroWindow>

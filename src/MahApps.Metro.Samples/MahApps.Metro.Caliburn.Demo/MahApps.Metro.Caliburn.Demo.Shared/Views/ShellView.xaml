@@ -1,0 +1,78 @@
+<Controls:MetroWindow x:Class="Caliburn.Metro.Demo.Views.ShellView"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:cal="http://www.caliburnproject.org"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Title="Flyouts Demo"
+                      Width="800"
+                      Height="600"
+                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderThickness="1"
+                      SaveWindowPosition="True"
+                      WindowStartupLocation="CenterScreen"
+                      mc:Ignorable="d">
+    
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="CustomFlyoutStyle" BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
+            <Setter Property="Header" Value="{Binding Header}" />
+            <Setter Property="IsOpen" Value="{Binding IsOpen}" />
+            <Setter Property="Position" Value="{Binding Position}" />
+            <Setter Property="Theme" Value="{Binding Theme}" />
+        </Style>
+    </Controls:MetroWindow.Resources>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl x:Name="FlyoutViewModels" ItemContainerStyle="{StaticResource CustomFlyoutStyle}" />
+    </Controls:MetroWindow.Flyouts>
+
+    <Grid>
+        <StackPanel Margin="10" HorizontalAlignment="Left">
+            <TextBlock Margin="10"
+                       FontSize="30"
+                       Text="Some Flyout Tests..." />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show 1"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(0)]" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show 2"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(1)]" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show 3"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(2)]" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Settings"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]" />
+            <Button x:Name="Close"
+                    MinWidth="90"
+                    Margin="2"
+                    Content="Close" />
+        </StackPanel>
+
+        <StackPanel Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show Top"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(5)]" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show Bottom"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(6)]" />
+        </StackPanel>
+
+        <StackPanel Margin="10" HorizontalAlignment="Right">
+            <Button MinWidth="90"
+                    Margin="2"
+                    Content="Show Left"
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(4)]" />
+        </StackPanel>
+    </Grid>
+
+</Controls:MetroWindow>

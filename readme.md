@@ -25,18 +25,25 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ![maindemowindow01](./docs/main_demo_window.png)
 
-![iconpacks](https://cloud.githubusercontent.com/assets/658431/16098473/6a88963a-3353-11e6-8b97-71c07700c17c.gif)
+![maindemowindow02](./docs/main_demo_text.png)
 
-![maindemowindow03](./docs/main_demo_window.gif)
+![maindemowindow03](./docs/main_demo_flyout1.png)
+
+![maindemowindow03](./docs/main_demo_flyout2.png)
+
+![maindemowindow04](./docs/main_demo_window.gif)
 
 ## Release Notes
 
-- current [v1.2.4](./docs/release-notes/1.2.4.md)
+- [v1.3.0](./docs/release-notes/1.3.0.md)
+- [v1.2.4](./docs/release-notes/1.2.4.md)
 - all [other](./docs/release-notes/)
 
 ## Icons
 
 MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
+
+![iconbrowserfinal](https://cloud.githubusercontent.com/assets/658431/18764958/ec20dd3e-8113-11e6-8793-b012eaec2302.gif)
 
 ```xaml
 <iconPacks:PackIconMaterial Kind="EmoticonCool" />
@@ -58,7 +65,7 @@ MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/M
 ```
 ![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
 
-It's still possible to use the old Xaml icon resources via this [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources) (but you should use the new one for easier usage).
+It's still possible to use the old Xaml icon resources available [here](https://github.com/MahApps/MahApps.Metro.Resources) (but you should use the new one for easier usage).
 
 ## Contributing to this project
 
@@ -170,25 +177,4 @@ Now you can choose the templates at the `New Project` dialog.
 
 ## Licence
 
-Microsoft Public License (Ms-PL)
-
-This license governs use of the accompanying software. If you use the software, you
-accept this license. If you do not accept the license, do not use the software.
-
-1. Definitions
-The terms "reproduce," "reproduction," "derivative works," and "distribution" have the
-same meaning here as under U.S. copyright law.
-A "contribution" is the original software, or any additions or changes to the software.
-A "contributor" is any person that distributes its contribution under this license.
-"Licensed patents" are a contributor's patent claims that read directly on its contribution.
-
-2. Grant of Rights
-(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
-(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
-
-3. Conditions and Limitations
-(A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
-(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
-(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
-(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
-(E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
+[MIT License (MIT)](./LICENSE)
