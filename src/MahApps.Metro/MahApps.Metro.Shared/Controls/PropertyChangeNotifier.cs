@@ -93,13 +93,15 @@ namespace MahApps.Metro.Controls
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var notifier = (PropertyChangeNotifier)d;
-            if (null != notifier.ValueChanged)
+            if (notifier.RaiseValueChanged)
             {
-                notifier.ValueChanged(notifier.PropertySource, EventArgs.Empty);
+                notifier.ValueChanged?.Invoke(notifier.PropertySource, EventArgs.Empty);
             }
         }
 
         public event EventHandler ValueChanged;
+
+        public bool RaiseValueChanged { get; set; } = true;
 
         public void Dispose()
         {

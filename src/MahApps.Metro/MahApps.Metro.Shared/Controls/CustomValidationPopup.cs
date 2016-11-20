@@ -136,10 +136,6 @@ namespace MahApps.Metro.Controls
         }
 
         private bool? appliedTopMost;
-        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
-        static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
-        static readonly IntPtr HWND_TOP = new IntPtr(0);
-        static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
 
         private void SetTopmostState(bool isTop)
         {
@@ -175,7 +171,7 @@ namespace MahApps.Metro.Controls
             var height = rect.Height;
             if (isTop)
             {
-                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_TOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, Constants.HWND_TOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
             }
             else
             {
@@ -183,9 +179,9 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_BOTTOM, left, top, width, height, Constants.TOPMOST_FLAGS);
-                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_TOP, left, top, width, height, Constants.TOPMOST_FLAGS);
-                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_NOTOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, Constants.HWND_BOTTOM, left, top, width, height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, Constants.HWND_TOP, left, top, width, height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, Constants.HWND_NOTOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
             }
 
             this.appliedTopMost = isTop;

@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\TestHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\WindowHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tests\AnimatedTabControlTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\AutoWatermarkTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tests\ButtonTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tests\CleanWindowTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tests\CustomDialogTest.cs" />
@@ -28,6 +29,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Tests\TileTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AnimatedTabControlWindow.xaml.cs">
       <DependentUpon>AnimatedTabControlWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AutoWatermarkTestWindow.xaml.cs">
+      <DependentUpon>AutoWatermarkTestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ButtonWindow.xaml.cs">
       <DependentUpon>ButtonWindow.xaml</DependentUpon>
@@ -53,6 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)TestApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AutoWatermarkTestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
