@@ -79,7 +79,7 @@ namespace MahApps.Metro.Controls
                     {
                         ex = ex.InnerException as ConfigurationErrorsException;
                     }
-                    throw new MahAppsException(string.Format("The settings file '{0}' seems to be corrupted", filename ?? "<unknown>"), ex);
+                    throw new MahAppsException($"The settings file '{filename ?? "<unknown>"}' seems to be corrupted", ex);
                 }
                 return true;
             }

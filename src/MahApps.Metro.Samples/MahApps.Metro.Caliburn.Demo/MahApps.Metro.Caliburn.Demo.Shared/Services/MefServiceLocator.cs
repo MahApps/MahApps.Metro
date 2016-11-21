@@ -23,7 +23,7 @@ namespace Caliburn.Metro.Demo.Services
                 return instance;
             }
 
-            throw new Exception(string.Format("Could not locate any instances of contract {0}.", typeof(T)));
+            throw new Exception($"Could not locate any instances of contract {typeof(T)}.");
         }
     }
 }

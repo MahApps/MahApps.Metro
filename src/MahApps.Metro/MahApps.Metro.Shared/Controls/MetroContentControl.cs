@@ -8,7 +8,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class MetroContentControl : ContentControl
     {
-        public static readonly DependencyProperty ReverseTransitionProperty = DependencyProperty.Register("ReverseTransition", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty ReverseTransitionProperty = DependencyProperty.Register(nameof(ReverseTransition), typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
 
         public bool ReverseTransition
         {
@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(ReverseTransitionProperty, value); }
         }
 
-        public static readonly DependencyProperty TransitionsEnabledProperty = DependencyProperty.Register("TransitionsEnabled", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty TransitionsEnabledProperty = DependencyProperty.Register(nameof(TransitionsEnabled), typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(true));
 
         public bool TransitionsEnabled
         {
@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(TransitionsEnabledProperty, value); }
         }
 
-        public static readonly DependencyProperty OnlyLoadTransitionProperty = DependencyProperty.Register("OnlyLoadTransition", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty OnlyLoadTransitionProperty = DependencyProperty.Register(nameof(OnlyLoadTransition), typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
 
         public bool OnlyLoadTransition
         {

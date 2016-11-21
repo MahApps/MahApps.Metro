@@ -15,11 +15,11 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
     {
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
-        public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
-        public static readonly DependencyProperty DialogTitleFontSizeProperty = DependencyProperty.Register("DialogTitleFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(26D));
-        public static readonly DependencyProperty DialogMessageFontSizeProperty = DependencyProperty.Register("DialogMessageFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(15D));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register(nameof(DialogTop), typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register(nameof(DialogBottom), typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogTitleFontSizeProperty = DependencyProperty.Register(nameof(DialogTitleFontSize), typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(26D));
+        public static readonly DependencyProperty DialogMessageFontSizeProperty = DependencyProperty.Register(nameof(DialogMessageFontSize), typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(15D));
 
         public MetroDialogSettings DialogSettings { get; private set; }
 

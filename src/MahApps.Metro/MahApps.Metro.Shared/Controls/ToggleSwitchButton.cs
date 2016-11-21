@@ -34,13 +34,13 @@ namespace MahApps.Metro.Controls
         private readonly PropertyChangeNotifier isCheckedPropertyChangeNotifier;
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
-        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
-        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register(nameof(SwitchForeground), typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register(nameof(OnSwitchBrush), typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register(nameof(OffSwitchBrush), typeof(Brush), typeof(ToggleSwitchButton), null);
 
-        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
-        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
-        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register(nameof(ThumbIndicatorBrush), typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register(nameof(ThumbIndicatorDisabledBrush), typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register(nameof(ThumbIndicatorWidth), typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
 
         /// <summary>
         /// Gets/sets the brush used for the control's foreground.

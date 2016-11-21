@@ -30,33 +30,33 @@ namespace MahApps.Metro.Controls
 
         private ToggleButton _toggleButton;
 
-        public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(ToggleSwitch), new PropertyMetadata(SystemFonts.MessageFontFamily));
+        public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register(nameof(HeaderFontFamily), typeof(FontFamily), typeof(ToggleSwitch), new PropertyMetadata(SystemFonts.MessageFontFamily));
 
-        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
-        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
+        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register(nameof(OnLabel), typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
+        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register(nameof(OffLabel), typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
-        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
-        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register(nameof(SwitchForeground), typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register(nameof(OnSwitchBrush), typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register(nameof(OffSwitchBrush), typeof(Brush), typeof(ToggleSwitch), null);
 
-        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitch), null);
-        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitch), null);
-        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register(nameof(ThumbIndicatorBrush), typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register(nameof(ThumbIndicatorDisabledBrush), typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register(nameof(ThumbIndicatorWidth), typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
 
-        public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
+        public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register(nameof(IsChecked), typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
 
-        public static readonly DependencyProperty CheckChangedCommandProperty = DependencyProperty.Register("CheckChangedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty UnCheckedCommandProperty = DependencyProperty.Register("UnCheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckChangedCommandProperty = DependencyProperty.Register(nameof(CheckChangedCommand), typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register(nameof(CheckedCommand), typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandProperty = DependencyProperty.Register(nameof(UnCheckedCommand), typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty CheckChangedCommandParameterProperty = DependencyProperty.Register("CheckChangedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty CheckedCommandParameterProperty = DependencyProperty.Register("CheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty UnCheckedCommandParameterProperty = DependencyProperty.Register("UnCheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckChangedCommandParameterProperty = DependencyProperty.Register(nameof(CheckChangedCommandParameter), typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckedCommandParameterProperty = DependencyProperty.Register(nameof(CheckedCommandParameter), typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandParameterProperty = DependencyProperty.Register(nameof(UnCheckedCommandParameter), typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         // LeftToRight means content left and button right and RightToLeft vise versa
-        public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
-        public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register(nameof(ContentDirection), typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
+        public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register(nameof(ToggleSwitchButtonStyle), typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;

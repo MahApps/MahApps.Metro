@@ -509,7 +509,7 @@ namespace MahApps.Metro.Controls
                 _repeatDown == null ||
                 _valueTextBox == null)
             {
-                throw new InvalidOperationException(string.Format("You have missed to specify {0}, {1} or {2} in your template", ElementNumericUp, ElementNumericDown, ElementTextBox));
+                throw new InvalidOperationException($"You have missed to specify {ElementNumericUp}, {ElementNumericDown} or {ElementTextBox} in your template");
             }
 
             this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);

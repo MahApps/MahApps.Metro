@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
     public class WindowCommands : ItemsControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ThemeProperty =
-            DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(Theme), typeof(Theme), typeof(WindowCommands),
                                         new PropertyMetadata(Theme.Light, OnThemeChanged));
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty LightTemplateProperty =
-            DependencyProperty.Register("LightTemplate", typeof(ControlTemplate), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(LightTemplate), typeof(ControlTemplate), typeof(WindowCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty DarkTemplateProperty =
-            DependencyProperty.Register("DarkTemplate", typeof(ControlTemplate), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(DarkTemplate), typeof(ControlTemplate), typeof(WindowCommands),
                                         new PropertyMetadata(null));
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ShowSeparatorsProperty =
-            DependencyProperty.Register("ShowSeparators", typeof(bool), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(ShowSeparators), typeof(bool), typeof(WindowCommands),
                                         new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                                                       OnShowSeparatorsChanged));
 
@@ -66,7 +66,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty ShowLastSeparatorProperty =
-            DependencyProperty.Register("ShowLastSeparator", typeof(bool), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(ShowLastSeparator), typeof(bool), typeof(WindowCommands),
                                         new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                                                       OnShowLastSeparatorChanged));
         
@@ -80,7 +80,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty SeparatorHeightProperty =
-            DependencyProperty.Register("SeparatorHeight", typeof(int), typeof(WindowCommands),
+            DependencyProperty.Register(nameof(SeparatorHeight), typeof(int), typeof(WindowCommands),
                                         new FrameworkPropertyMetadata(15, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace MahApps.Metro.Controls
         internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
 
         public static readonly DependencyProperty IsSeparatorVisibleProperty =
-            DependencyProperty.Register("IsSeparatorVisible", typeof(bool), typeof(WindowCommandsItem),
+            DependencyProperty.Register(nameof(IsSeparatorVisible), typeof(bool), typeof(WindowCommandsItem),
                                         new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits|FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>

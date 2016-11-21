@@ -41,7 +41,7 @@ namespace MetroDemo
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
-            DependencyProperty.Register("ToggleFullScreen",
+            DependencyProperty.Register(nameof(ToggleFullScreen),
                                         typeof(bool),
                                         typeof(MainWindow),
                                         new PropertyMetadata(default(bool), ToggleFullScreenPropertyChangedCallback));
@@ -75,7 +75,7 @@ namespace MetroDemo
         }
 
         public static readonly DependencyProperty UseAccentForDialogsProperty =
-            DependencyProperty.Register("UseAccentForDialogs",
+            DependencyProperty.Register(nameof(UseAccentForDialogs),
                                         typeof(bool),
                                         typeof(MainWindow),
                                         new PropertyMetadata(default(bool), ToggleUseAccentForDialogsPropertyChangedCallback));
@@ -249,7 +249,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -262,7 +262,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Password: {result.Password}");
             }
         }
 
@@ -275,7 +275,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}\nShouldRemember: {result.ShouldRemember}");
             }
         }
 
@@ -341,7 +341,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -456,7 +456,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 

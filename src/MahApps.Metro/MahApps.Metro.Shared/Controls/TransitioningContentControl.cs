@@ -76,11 +76,11 @@ namespace MahApps.Metro.Controls
 
         public const TransitionType DefaultTransitionState = TransitionType.Default;
 
-        public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
-        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
-        public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
-        public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register("CustomVisualStatesName", typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
+        public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register(nameof(IsTransitioning), typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
+        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register(nameof(Transition), typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
+        public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register(nameof(RestartTransitionOnContentChange), typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
+        public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register(nameof(CustomVisualStates), typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register(nameof(CustomVisualStatesName), typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
 
         public ObservableCollection<VisualState> CustomVisualStates
         {
@@ -252,7 +252,7 @@ namespace MahApps.Metro.Controls
                 // revert to default
                 this.Transition = DefaultTransitionState;
 
-                throw new ArgumentException(string.Format("'{0}' Transition could not be found!", invalidTransition), "Transition");
+                throw new ArgumentException($"'{invalidTransition}' Transition could not be found!", "Transition");
             }
             VisualStateManager.GoToState(this, NormalState, false);
         }

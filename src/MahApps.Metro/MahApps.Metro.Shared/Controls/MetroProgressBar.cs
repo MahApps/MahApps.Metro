@@ -13,11 +13,11 @@ namespace MahApps.Metro.Controls
     public class MetroProgressBar : ProgressBar
     {
         public static readonly DependencyProperty EllipseDiameterProperty =
-            DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(MetroProgressBar),
+            DependencyProperty.Register(nameof(EllipseDiameter), typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty EllipseOffsetProperty =
-            DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
+            DependencyProperty.Register(nameof(EllipseOffset), typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
         private readonly object lockme = new object();

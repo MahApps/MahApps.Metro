@@ -188,11 +188,11 @@ namespace MetroDemo
                         }
                         else if (x is TextBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", $"Text: {((TextBox)x).Text}");
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", $"Password: {((PasswordBox)x).Password}");
                         }
                     }
                 });
@@ -213,7 +213,7 @@ namespace MetroDemo
                         if (x is String)
                         {
                             await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
-                                                                                                  string.Format("Parameter: {0}", x));
+                                                                                                  $"Parameter: {x}");
                         }
                     }
                 });
@@ -271,7 +271,7 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = async x =>
                     {
-                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
+                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", $"You are now closing the '{x}' tab");
                     }
                 });
             }
