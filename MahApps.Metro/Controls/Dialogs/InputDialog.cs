@@ -23,6 +23,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 this.Focus();
                 PART_TextBox.Focus();
+                PART_TextBox.SelectAll();
             }));
 
             var tcs = new TaskCompletionSource<string>();
