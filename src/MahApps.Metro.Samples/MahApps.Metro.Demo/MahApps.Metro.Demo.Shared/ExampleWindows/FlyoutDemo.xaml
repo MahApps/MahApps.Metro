@@ -88,8 +88,7 @@
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
                              Controls:ControlsHelper.ContentCharacterCasing="Upper"
-                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:FlyoutsControl}, Path=ActualWidth}"
-                             Margin="200 0 0 0"
+                             Margin="200 30 0 0"
                              AreAnimationsEnabled="False"
                              FocusedElement="{Binding ElementName=firstTB}"
                              Header="Settings"
@@ -131,10 +130,10 @@
                 </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:FlyoutsControl}, Path=ActualWidth, Mode=OneWay}"
-                             AnimateOpacity="True"
+            <Controls:Flyout AnimateOpacity="True"
                              CloseButtonIsCancel="True"
                              Header="New Goodness"
+                             HorizontalContentAlignment="Stretch"
                              Position="Right">
                 <StackPanel Margin="10" Orientation="Vertical">
                     <Button Content="create" />

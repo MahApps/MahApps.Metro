@@ -67,7 +67,6 @@
 
     <ControlTemplate x:Key="FlyoutTemplate" TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="PART_Root"
-              Margin="{TemplateBinding Margin}"
               Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
@@ -234,7 +233,7 @@
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
         <Setter Property="Template" Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
         <Style.Triggers>
             <Trigger Property="Position" Value="Right">
