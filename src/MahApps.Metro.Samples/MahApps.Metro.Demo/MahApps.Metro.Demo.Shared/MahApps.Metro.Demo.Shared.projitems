@@ -74,6 +74,7 @@
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainWindowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Markup\EnumBindingSourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Navigation\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -81,6 +82,7 @@
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ValueConverter\Int32IndexToNumberConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">

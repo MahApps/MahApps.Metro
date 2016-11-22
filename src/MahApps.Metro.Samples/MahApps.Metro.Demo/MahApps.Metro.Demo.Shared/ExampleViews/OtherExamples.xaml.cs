@@ -28,7 +28,8 @@ namespace MetroDemo.ExampleViews
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = ((FlipView)sender);
-            switch (flipview.SelectedIndex) {
+            switch (flipview.SelectedIndex)
+            {
                 case 0:
                     flipview.BannerText = "Cupcakes!";
                     break;
