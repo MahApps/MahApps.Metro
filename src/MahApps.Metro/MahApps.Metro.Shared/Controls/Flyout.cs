@@ -819,30 +819,30 @@ namespace MahApps.Metro.Controls
             switch (position)
             {
                 default:
-                    this.HorizontalAlignment = HorizontalAlignment.Left;
+                    this.HorizontalAlignment = this.Margin.Right <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Left;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
-                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(-this.flyoutRoot.ActualWidth, 0);
                     break;
                 case Position.Right:
-                    this.HorizontalAlignment = HorizontalAlignment.Right;
+                    this.HorizontalAlignment = this.Margin.Left <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Right;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
-                    this.hideFrame.Value = this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(this.flyoutRoot.ActualWidth, 0);
                     break;
                 case Position.Top:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = VerticalAlignment.Top;
-                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1;
+                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Top;
+                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, -this.flyoutRoot.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = VerticalAlignment.Bottom;
-                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight;
+                    this.VerticalAlignment = this.Margin.Top <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Bottom;
+                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, this.flyoutRoot.ActualHeight);
                     break;
@@ -866,16 +866,16 @@ namespace MahApps.Metro.Controls
             switch (this.Position)
             {
                 default:
-                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     break;
                 case Position.Right:
-                    this.hideFrame.Value = this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     break;
                 case Position.Top:
-                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1;
+                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     break;
                 case Position.Bottom:
-                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight;
+                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     break;
             }
         }
