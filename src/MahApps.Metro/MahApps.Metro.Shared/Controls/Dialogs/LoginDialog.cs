@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -50,7 +51,24 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         public string Username { get; internal set; }
 
-        public string Password { get; internal set; }
+        public string Password
+        {
+            [SecurityCritical]
+            get
+            {
+                IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(this.SecurePassword);
+                try
+                {
+                    return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ptr);
+                }
+                finally
+                {
+                    System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ptr);
+                }
+            }
+        }
+
+        public SecureString SecurePassword { get; internal set; }
 
         public bool ShouldRemember { get; internal set; }
     }
@@ -155,7 +173,12 @@ namespace MahApps.Metro.Controls.Dialogs
                     if (e.Key == Key.Enter)
                     {
                         cleanUpHandlers();
-                        tcs.TrySetResult(new LoginDialogData { Username = this.Username, Password = this.PART_TextBox2.Password, ShouldRemember = this.RememberCheckBoxChecked });
+                        tcs.TrySetResult(new LoginDialogData
+                                         {
+                                             Username = this.Username,
+                                             SecurePassword = this.PART_TextBox2.SecurePassword,
+                                             ShouldRemember = this.RememberCheckBoxChecked
+                                         });
                     }
                 };
 
@@ -172,7 +195,12 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     cleanUpHandlers();
 
-                    tcs.TrySetResult(new LoginDialogData { Username = this.Username, Password = this.PART_TextBox2.Password, ShouldRemember = this.RememberCheckBoxChecked });
+                    tcs.TrySetResult(new LoginDialogData
+                                     {
+                                         Username = this.Username,
+                                         SecurePassword = this.PART_TextBox2.SecurePassword,
+                                         ShouldRemember = this.RememberCheckBoxChecked
+                                     });
 
                     e.Handled = true;
                 };
