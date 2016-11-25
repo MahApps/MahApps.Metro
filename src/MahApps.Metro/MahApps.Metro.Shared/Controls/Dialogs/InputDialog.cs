@@ -7,23 +7,29 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public partial class InputDialog : BaseMetroDialog
     {
+        internal InputDialog()
+            : this(null)
+        {
+        }
+
         internal InputDialog(MetroWindow parentWindow)
             : this(parentWindow, null)
         {
         }
+
         internal InputDialog(MetroWindow parentWindow, MetroDialogSettings settings)
             : base(parentWindow, settings)
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal Task<string> WaitForButtonPressAsync()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                this.Focus();
-                PART_TextBox.Focus();
-            }));
+            this.Dispatcher.BeginInvoke(new Action(() =>
+                                                       {
+                                                           this.Focus();
+                                                           this.PART_TextBox.Focus();
+                                                       }));
 
             var tcs = new TaskCompletionSource<string>();
 
@@ -37,84 +43,84 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Action cleanUpHandlers = null;
 
-            var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
-            {
-                cleanUpHandlers();
-                tcs.TrySetResult(null);
-            });
+            var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
+                                                                                                   {
+                                                                                                       cleanUpHandlers();
+                                                                                                       tcs.TrySetResult(null);
+                                                                                                   });
 
             cleanUpHandlers = () =>
-            {
-                PART_TextBox.KeyDown -= affirmativeKeyHandler;
+                {
+                    this.PART_TextBox.KeyDown -= affirmativeKeyHandler;
 
-                this.KeyDown -= escapeKeyHandler;
+                    this.KeyDown -= escapeKeyHandler;
 
-                PART_NegativeButton.Click -= negativeHandler;
-                PART_AffirmativeButton.Click -= affirmativeHandler;
+                    this.PART_NegativeButton.Click -= negativeHandler;
+                    this.PART_AffirmativeButton.Click -= affirmativeHandler;
 
-                PART_NegativeButton.KeyDown -= negativeKeyHandler;
-                PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
+                    this.PART_NegativeButton.KeyDown -= negativeKeyHandler;
+                    this.PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
 
-                cancellationTokenRegistration.Dispose();
-            };
+                    cancellationTokenRegistration.Dispose();
+                };
 
             escapeKeyHandler = (sender, e) =>
-            {
-                if (e.Key == Key.Escape)
                 {
-                    cleanUpHandlers();
+                    if (e.Key == Key.Escape)
+                    {
+                        cleanUpHandlers();
 
-                    tcs.TrySetResult(null);
-                }
-            };
+                        tcs.TrySetResult(null);
+                    }
+                };
 
             negativeKeyHandler = (sender, e) =>
-            {
-                if (e.Key == Key.Enter)
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        cleanUpHandlers();
+
+                        tcs.TrySetResult(null);
+                    }
+                };
+
+            affirmativeKeyHandler = (sender, e) =>
+                {
+                    if (e.Key == Key.Enter)
+                    {
+                        cleanUpHandlers();
+
+                        tcs.TrySetResult(this.Input);
+                    }
+                };
+
+            negativeHandler = (sender, e) =>
                 {
                     cleanUpHandlers();
 
                     tcs.TrySetResult(null);
-                }
-            };
 
-            affirmativeKeyHandler = (sender, e) =>
-            {
-                if (e.Key == Key.Enter)
+                    e.Handled = true;
+                };
+
+            affirmativeHandler = (sender, e) =>
                 {
                     cleanUpHandlers();
 
-                    tcs.TrySetResult(Input);
-                }
-            };
+                    tcs.TrySetResult(this.Input);
 
-            negativeHandler = (sender, e) =>
-            {
-                cleanUpHandlers();
+                    e.Handled = true;
+                };
 
-                tcs.TrySetResult(null);
+            this.PART_NegativeButton.KeyDown += negativeKeyHandler;
+            this.PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
 
-                e.Handled = true;
-            };
-
-            affirmativeHandler = (sender, e) =>
-            {
-                cleanUpHandlers();
-
-                tcs.TrySetResult(Input);
-
-                e.Handled = true;
-            };
-
-            PART_NegativeButton.KeyDown += negativeKeyHandler;
-            PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
-
-            PART_TextBox.KeyDown += affirmativeKeyHandler;
+            this.PART_TextBox.KeyDown += affirmativeKeyHandler;
 
             this.KeyDown += escapeKeyHandler;
 
-            PART_NegativeButton.Click += negativeHandler;
-            PART_AffirmativeButton.Click += affirmativeHandler;
+            this.PART_NegativeButton.Click += negativeHandler;
+            this.PART_AffirmativeButton.Click += affirmativeHandler;
 
             return tcs.Task;
         }
@@ -128,8 +134,8 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 case MetroDialogColorScheme.Accented:
                     this.PART_NegativeButton.Style = this.FindResource("AccentedDialogHighlightedSquareButton") as Style;
-                    PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "TextBoxFocusBorderBrush");
+                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                    this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "TextBoxFocusBorderBrush");
                     break;
             }
         }
@@ -141,26 +147,26 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string Message
         {
-            get { return (string)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
         }
 
         public string Input
         {
-            get { return (string)GetValue(InputProperty); }
-            set { SetValue(InputProperty, value); }
+            get { return (string)this.GetValue(InputProperty); }
+            set { this.SetValue(InputProperty, value); }
         }
 
         public string AffirmativeButtonText
         {
-            get { return (string)GetValue(AffirmativeButtonTextProperty); }
-            set { SetValue(AffirmativeButtonTextProperty, value); }
+            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
+            set { this.SetValue(AffirmativeButtonTextProperty, value); }
         }
 
         public string NegativeButtonText
         {
-            get { return (string)GetValue(NegativeButtonTextProperty); }
-            set { SetValue(NegativeButtonTextProperty, value); }
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
         }
     }
 }
