@@ -182,7 +182,6 @@ namespace MetroDemo
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
-
         }
 
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
