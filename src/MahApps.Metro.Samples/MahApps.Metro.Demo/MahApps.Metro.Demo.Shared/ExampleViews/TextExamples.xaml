@@ -99,6 +99,10 @@
                          Controls:TextBoxHelper.SelectAllOnFocus="True"
                          Text="Select all on focus" />
                 <TextBox Margin="{StaticResource ControlMargin}"
+                         Text="Custom Menu Items"
+                         Controls:TextBoxHelper.IsCutCopyPasteInContextMenu="False"
+                         Controls:TextBoxHelper.ExtraContextMenuItems="{Binding ExtraMenuItems, Mode=OneWay}"/>
+                <TextBox Margin="{StaticResource ControlMargin}"
                          IsEnabled="False"
                          Text="Disabled" />
                 <TextBox Margin="{StaticResource ControlMargin}"

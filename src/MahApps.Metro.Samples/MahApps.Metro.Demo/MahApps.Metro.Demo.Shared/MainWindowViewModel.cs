@@ -220,6 +220,23 @@ namespace MetroDemo
             }
         }
 
+        private List<MenuItem> extraMenuItems;
+
+        public List<MenuItem> ExtraMenuItems
+        {
+            get
+            {
+                if (extraMenuItems != null)
+                    return extraMenuItems;
+                extraMenuItems = new List<MenuItem>()
+                {
+                    new MenuItem() { Header = "Sample Custom Menu Item" },
+                    new MenuItem() { Header = "Another Sample Item" },
+                };
+                return extraMenuItems;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

@@ -15,6 +15,9 @@ using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -53,6 +56,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof (bool), typeof (TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+        public static readonly DependencyProperty IsCutCopyPasteInContextMenuProperty = DependencyProperty.RegisterAttached("IsCutCopyPasteInContextMenu", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(true, IsCutCopyPasteInContextMenuChanged));
+        public static readonly DependencyProperty ExtraContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExtraContextMenuItems", typeof(List<MenuItem>), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ExtraContextMenuItemsChanged));
 
         /// <summary>
         /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
@@ -247,14 +252,50 @@ namespace MahApps.Metro.Controls
                 // set the spell check to true
                 tb.SetValue(SpellCheck.IsEnabledProperty, true);
                 // override pre defined context menu
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
                 tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
             }
             else
             {
                 tb.SetValue(SpellCheck.IsEnabledProperty, false);
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
                 tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+            }
+        }
+
+        private static void IsCutCopyPasteInContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = d as TextBoxBase;
+            if (null == tb)
+            {
+                throw new InvalidOperationException("The property 'IsCutCopyPasteInContextMenuChanged' may only be set on TextBoxBase elements.");
+            }
+
+            tb.SetValue(IsCutCopyPasteInContextMenuProperty, e.NewValue);
+            tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
+            AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
+            if (!(bool)e.NewValue && tb.ContextMenu.Items.Count == 0)
+            {
+                AddNoItemsAvailToContextMenu(tb);
+            }
+        }
+
+        private static void ExtraContextMenuItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = d as TextBoxBase;
+            if (null == tb)
+            {
+                throw new InvalidOperationException("The property 'ExtraContextMenuItemsChanged' may only be set on TextBoxBase elements.");
+            }
+            else
+            {
+                tb.SetValue(ExtraContextMenuItemsProperty, e.NewValue);
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
+                AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
+                if (tb.ContextMenu.Items.Count == 0)
+                {
+                    AddNoItemsAvailToContextMenu(tb);
+                }
             }
         }
 
@@ -264,7 +305,7 @@ namespace MahApps.Metro.Controls
             var textBox = tbBase as TextBox;
             var richTextBox = tbBase as RichTextBox;
 
-            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu(tbBase);
 
             var cmdIndex = 0;
             var spellingError = textBox != null
@@ -301,23 +342,60 @@ namespace MahApps.Metro.Controls
                 var separatorMenuItem2 = new Separator();
                 tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
             }
+            AddExtraItemsToContextMenu(tbBase, true);
+            if (tbBase.ContextMenu.Items.Count == 0)
+            {
+                AddNoItemsAvailToContextMenu(tbBase);
+            }
+        }
+
+        private static void AddExtraItemsToContextMenu(TextBoxBase tbBase, bool shouldAddSeparator = false)
+        {
+            List<MenuItem> extraMenuItems = (List<MenuItem>)tbBase.GetValue(ExtraContextMenuItemsProperty);
+            if (extraMenuItems != null && extraMenuItems.Count > 0)
+            {
+                // Add separator if necessary, then extra items to menu
+                if (shouldAddSeparator)
+                {
+                    var separatorMenuItem = new Separator();
+                    tbBase.ContextMenu.Items.Add(separatorMenuItem);
+                }
+                foreach (MenuItem item in extraMenuItems)
+                {
+                    item.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                    tbBase.ContextMenu.Items.Add(item);
+                }
+            }
+        }
+
+        private static void AddNoItemsAvailToContextMenu(TextBoxBase tbBase)
+        {
+            var mi = new MenuItem();
+            mi.Header = "No menu items available";
+            mi.FontStyle = FontStyles.Italic;
+            mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            tbBase.ContextMenu.Items.Add(mi);
         }
 
         // Gets a fresh context menu. 
-        private static ContextMenu GetDefaultTextBoxBaseContextMenu()
+        private static ContextMenu GetDefaultTextBoxBaseContextMenu(TextBoxBase textBox)
         {
             var defaultMenu = new ContextMenu();
 
-            var m1 = new MenuItem { Command = ApplicationCommands.Cut };
-            m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-            var m2 = new MenuItem { Command = ApplicationCommands.Copy };
-            m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-            var m3 = new MenuItem { Command = ApplicationCommands.Paste };
-            m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            bool shouldAddCutCopyPaste = (bool)textBox.GetValue(IsCutCopyPasteInContextMenuProperty);
+            if (shouldAddCutCopyPaste)
+            {
+                var m1 = new MenuItem { Command = ApplicationCommands.Cut };
+                m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                var m2 = new MenuItem { Command = ApplicationCommands.Copy };
+                m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                var m3 = new MenuItem { Command = ApplicationCommands.Paste };
+                m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
 
-            defaultMenu.Items.Add(m1);
-            defaultMenu.Items.Add(m2);
-            defaultMenu.Items.Add(m3);
+                defaultMenu.Items.Add(m1);
+                defaultMenu.Items.Add(m2);
+                defaultMenu.Items.Add(m3);
+            }
 
             return defaultMenu;
         }
@@ -700,6 +778,28 @@ namespace MahApps.Metro.Controls
         public static void SetButtonFontSize(DependencyObject obj, double value)
         {
             obj.SetValue(ButtonFontSizeProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static bool GetIsCutCopyPasteInContextMenu(DependencyObject d)
+        {
+            return (bool)d.GetValue(IsCutCopyPasteInContextMenuProperty);
+        }
+
+        public static void SetIsCutCopyPasteInContextMenu(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsCutCopyPasteInContextMenuProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static List<MenuItem> GetExtraContextMenuItems(DependencyObject d)
+        {
+            return (List<MenuItem>)d.GetValue(ExtraContextMenuItemsProperty);
+        }
+
+        public static void SetExtraContextMenuItems(DependencyObject obj, List<MenuItem> value)
+        {
+            obj.SetValue(ExtraContextMenuItemsProperty, value);
         }
 
         private static void IsClearTextButtonBehaviorEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
