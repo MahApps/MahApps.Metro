@@ -57,7 +57,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
         public static readonly DependencyProperty IsCutCopyPasteInContextMenuProperty = DependencyProperty.RegisterAttached("IsCutCopyPasteInContextMenu", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(true, IsCutCopyPasteInContextMenuChanged));
-        public static readonly DependencyProperty ExtraContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExtraContextMenuItems", typeof(List<MenuItem>), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ExtraContextMenuItemsChanged));
+        public static readonly DependencyProperty ExtraContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExtraContextMenuItems", typeof(List<FrameworkElement>), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ExtraContextMenuItemsChanged));
 
         /// <summary>
         /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
@@ -273,7 +273,7 @@ namespace MahApps.Metro.Controls
 
             tb.SetValue(IsCutCopyPasteInContextMenuProperty, e.NewValue);
             tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-            AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
+            AddExtraItemsToContextMenu(tb);
             tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
@@ -288,7 +288,7 @@ namespace MahApps.Metro.Controls
             {
                 tb.SetValue(ExtraContextMenuItemsProperty, e.NewValue);
                 tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-                AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
+                AddExtraItemsToContextMenu(tb);
                 tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
             }
         }
@@ -336,24 +336,21 @@ namespace MahApps.Metro.Controls
                 var separatorMenuItem2 = new Separator();
                 tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
             }
-            AddExtraItemsToContextMenu(tbBase, true);
+            AddExtraItemsToContextMenu(tbBase);
             tbBase.ContextMenu.Visibility = tbBase.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
-        private static void AddExtraItemsToContextMenu(TextBoxBase tbBase, bool shouldAddSeparator = false)
+        private static void AddExtraItemsToContextMenu(TextBoxBase tbBase)
         {
-            List<MenuItem> extraMenuItems = (List<MenuItem>)tbBase.GetValue(ExtraContextMenuItemsProperty);
+            var extraMenuItems = (List<FrameworkElement>)tbBase.GetValue(ExtraContextMenuItemsProperty);
             if (extraMenuItems != null && extraMenuItems.Count > 0)
             {
-                // Add separator if necessary, then extra items to menu
-                if (shouldAddSeparator)
+                foreach (FrameworkElement item in extraMenuItems)
                 {
-                    var separatorMenuItem = new Separator();
-                    tbBase.ContextMenu.Items.Add(separatorMenuItem);
-                }
-                foreach (MenuItem item in extraMenuItems)
-                {
-                    item.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                    if (item is MenuItem)
+                    {
+                        item.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                    }
                     tbBase.ContextMenu.Items.Add(item);
                 }
             }

@@ -220,17 +220,18 @@ namespace MetroDemo
             }
         }
 
-        private List<MenuItem> extraMenuItems;
+        private List<FrameworkElement> extraMenuItems;
 
-        public List<MenuItem> ExtraMenuItems
+        public List<FrameworkElement> ExtraMenuItems
         {
             get
             {
                 if (extraMenuItems != null)
                     return extraMenuItems;
-                extraMenuItems = new List<MenuItem>()
+                extraMenuItems = new List<FrameworkElement>()
                 {
                     new MenuItem() { Header = "Sample Custom Menu Item" },
+                    new Separator(),
                     new MenuItem() { Header = "Another Sample Item" },
                 };
                 return extraMenuItems;
