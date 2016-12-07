@@ -26,13 +26,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Rectangle x:Name="Border" SnapsToDevicePixels="True">
-                            <Rectangle.Resources>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush7}" />
-                                </Style>
-                            </Rectangle.Resources>
-                        </Rectangle>
+                        <Rectangle x:Name="Border"
+                                   Fill="{DynamicResource GrayBrush7}" />
                         <Polygon x:Name="Arrow"
                                  Margin="8 8 3 3"
                                  HorizontalAlignment="Right"
@@ -58,14 +53,15 @@
     <Style x:Key="MetroColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Cursor" Value="SizeWE" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
-                        <Rectangle Width="1"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   Fill="{TemplateBinding Background}" />
-                    </Border>
+                    <Border Margin="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding Background}"
+                            BorderThickness="0 0 1 0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -76,14 +72,15 @@
         <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Cursor" Value="SizeNS" />
         <Setter Property="Height" Value="6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
-                        <Rectangle Height="1"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Fill="{TemplateBinding Background}" />
-                    </Border>
+                    <Border Margin="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            Background="Transparent"
+                            BorderBrush="{TemplateBinding Background}"
+                            BorderThickness="0 0 0 1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -143,14 +140,12 @@
 
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left"
-                               HorizontalContentAlignment="Left"
                                Style="{StaticResource MetroColumnHeaderGripperStyle}"
                                Background="Transparent" />
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
                                HorizontalAlignment="Right"
-                               HorizontalContentAlignment="Right"
                                Style="{StaticResource MetroColumnHeaderGripperStyle}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -212,12 +207,10 @@
                         </Border>
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalAlignment="Top"
-                               VerticalContentAlignment="Top"
                                Style="{StaticResource MetroRowHeaderGripperStyle}"
                                Background="Transparent" />
                         <Thumb x:Name="PART_BottomHeaderGripper"
                                VerticalAlignment="Bottom"
-                               VerticalContentAlignment="Bottom"
                                Style="{StaticResource MetroRowHeaderGripperStyle}" />
                     </Grid>
                 </ControlTemplate>
