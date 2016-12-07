@@ -228,11 +228,14 @@ namespace MetroDemo
             {
                 if (extraMenuItems != null)
                     return extraMenuItems;
+                var submenu = new MenuItem() { Header = "Submenu" };
+                submenu.Items.Add(new MenuItem() { Header = "Sample inside submenu" });
                 extraMenuItems = new List<FrameworkElement>()
                 {
                     new MenuItem() { Header = "Sample Custom Menu Item" },
                     new Separator(),
                     new MenuItem() { Header = "Another Sample Item" },
+                    submenu
                 };
                 return extraMenuItems;
             }

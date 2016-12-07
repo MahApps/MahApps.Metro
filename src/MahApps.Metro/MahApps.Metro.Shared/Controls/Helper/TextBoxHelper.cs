@@ -351,6 +351,11 @@ namespace MahApps.Metro.Controls
                     {
                         item.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
                     }
+                    if (item.Parent != null && item.Parent is ContextMenu && item.Parent != tbBase.ContextMenu)
+                    {
+                        var parent = item.Parent as ContextMenu;
+                        parent.Items.Remove(item);
+                    }
                     tbBase.ContextMenu.Items.Add(item);
                 }
             }
