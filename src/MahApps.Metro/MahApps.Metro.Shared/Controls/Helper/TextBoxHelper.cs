@@ -274,10 +274,7 @@ namespace MahApps.Metro.Controls
             tb.SetValue(IsCutCopyPasteInContextMenuProperty, e.NewValue);
             tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
             AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
-            if (!(bool)e.NewValue && tb.ContextMenu.Items.Count == 0)
-            {
-                AddNoItemsAvailToContextMenu(tb);
-            }
+            tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private static void ExtraContextMenuItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -292,10 +289,7 @@ namespace MahApps.Metro.Controls
                 tb.SetValue(ExtraContextMenuItemsProperty, e.NewValue);
                 tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
                 AddExtraItemsToContextMenu(tb, tb.ContextMenu.Items.Count > 0);
-                if (tb.ContextMenu.Items.Count == 0)
-                {
-                    AddNoItemsAvailToContextMenu(tb);
-                }
+                tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -343,10 +337,7 @@ namespace MahApps.Metro.Controls
                 tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
             }
             AddExtraItemsToContextMenu(tbBase, true);
-            if (tbBase.ContextMenu.Items.Count == 0)
-            {
-                AddNoItemsAvailToContextMenu(tbBase);
-            }
+            tbBase.ContextMenu.Visibility = tbBase.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         private static void AddExtraItemsToContextMenu(TextBoxBase tbBase, bool shouldAddSeparator = false)
@@ -366,15 +357,6 @@ namespace MahApps.Metro.Controls
                     tbBase.ContextMenu.Items.Add(item);
                 }
             }
-        }
-
-        private static void AddNoItemsAvailToContextMenu(TextBoxBase tbBase)
-        {
-            var mi = new MenuItem();
-            mi.Header = "No menu items available";
-            mi.FontStyle = FontStyles.Italic;
-            mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-            tbBase.ContextMenu.Items.Add(mi);
         }
 
         // Gets a fresh context menu. 
