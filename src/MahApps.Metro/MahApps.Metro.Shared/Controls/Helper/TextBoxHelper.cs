@@ -776,12 +776,12 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
-        public static List<MenuItem> GetExtraContextMenuItems(DependencyObject d)
+        public static List<FrameworkElement> GetExtraContextMenuItems(DependencyObject d)
         {
-            return (List<MenuItem>)d.GetValue(ExtraContextMenuItemsProperty);
+            return (List<FrameworkElement>)d.GetValue(ExtraContextMenuItemsProperty);
         }
 
-        public static void SetExtraContextMenuItems(DependencyObject obj, List<MenuItem> value)
+        public static void SetExtraContextMenuItems(DependencyObject obj, List<FrameworkElement> value)
         {
             obj.SetValue(ExtraContextMenuItemsProperty, value);
         }
