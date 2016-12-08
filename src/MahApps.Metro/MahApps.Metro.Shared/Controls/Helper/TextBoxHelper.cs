@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof (bool), typeof (TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
-        public static readonly DependencyProperty IsCutCopyPasteInContextMenuProperty = DependencyProperty.RegisterAttached("IsCutCopyPasteInContextMenu", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(true, IsCutCopyPasteInContextMenuChanged));
+        public static readonly DependencyProperty ExcludeDefaultContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExcludeDefaultContextMenuItems", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ExcludeDefaultContextMenuItemsChanged));
         public static readonly DependencyProperty ExtraContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExtraContextMenuItems", typeof(List<FrameworkElement>), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ExtraContextMenuItemsChanged));
 
         /// <summary>
@@ -263,15 +263,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void IsCutCopyPasteInContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ExcludeDefaultContextMenuItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var tb = d as TextBoxBase;
             if (null == tb)
             {
-                throw new InvalidOperationException("The property 'IsCutCopyPasteInContextMenuChanged' may only be set on TextBoxBase elements.");
+                throw new InvalidOperationException("The property 'ExcludeDefaultContextMenuItems' may only be set on TextBoxBase elements.");
             }
 
-            tb.SetValue(IsCutCopyPasteInContextMenuProperty, e.NewValue);
             tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
             AddExtraItemsToContextMenu(tb);
             tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
@@ -282,11 +281,10 @@ namespace MahApps.Metro.Controls
             var tb = d as TextBoxBase;
             if (null == tb)
             {
-                throw new InvalidOperationException("The property 'ExtraContextMenuItemsChanged' may only be set on TextBoxBase elements.");
+                throw new InvalidOperationException("The property 'ExtraContextMenuItems' may only be set on TextBoxBase elements.");
             }
             else
             {
-                tb.SetValue(ExtraContextMenuItemsProperty, e.NewValue);
                 tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
                 AddExtraItemsToContextMenu(tb);
                 tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
@@ -366,8 +364,8 @@ namespace MahApps.Metro.Controls
         {
             var defaultMenu = new ContextMenu();
 
-            bool shouldAddCutCopyPaste = (bool)textBox.GetValue(IsCutCopyPasteInContextMenuProperty);
-            if (shouldAddCutCopyPaste)
+            bool shouldExcludeDefaultItems = (bool)textBox.GetValue(ExcludeDefaultContextMenuItemsProperty);
+            if (!shouldExcludeDefaultItems)
             {
                 var m1 = new MenuItem { Command = ApplicationCommands.Cut };
                 m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
@@ -765,14 +763,14 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
-        public static bool GetIsCutCopyPasteInContextMenu(DependencyObject d)
+        public static bool GetExcludeDefaultContextMenuItems(DependencyObject d)
         {
-            return (bool)d.GetValue(IsCutCopyPasteInContextMenuProperty);
+            return (bool)d.GetValue(ExcludeDefaultContextMenuItemsProperty);
         }
 
-        public static void SetIsCutCopyPasteInContextMenu(DependencyObject obj, bool value)
+        public static void SetExcludeDefaultContextMenuItems(DependencyObject obj, bool value)
         {
-            obj.SetValue(IsCutCopyPasteInContextMenuProperty, value);
+            obj.SetValue(ExcludeDefaultContextMenuItemsProperty, value);
         }
 
         [Category(AppName.MahApps)]

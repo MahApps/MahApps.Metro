@@ -101,7 +101,7 @@
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Text="Custom Menu Items"
                          Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
-                         Controls:TextBoxHelper.IsCutCopyPasteInContextMenu="False"
+                         Controls:TextBoxHelper.ExcludeDefaultContextMenuItems="True"
                          Controls:TextBoxHelper.ExtraContextMenuItems="{Binding ExtraMenuItems, Mode=OneWay}"/>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          IsEnabled="False"
