@@ -15,6 +15,22 @@ using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
+    public interface ISpellCheckMenuItem
+    {
+    }
+
+    public class SpellCheckMenuItem : MenuItem, ISpellCheckMenuItem
+    {
+        public SpellCheckMenuItem()
+        {
+            this.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+        }
+    }
+
+    public class SpellCheckSeparator : Separator, ISpellCheckMenuItem
+    {
+    }
+
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -243,18 +259,24 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
             }
 
-            if ((bool)e.NewValue) {
-                // set the spell check to true
-                tb.SetValue(SpellCheck.IsEnabledProperty, true);
-                // override pre defined context menu
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
-                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
-            }
-            else
+            if (e.OldValue != e.NewValue)
             {
-                tb.SetValue(SpellCheck.IsEnabledProperty, false);
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
-                tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+                if ((bool)e.NewValue)
+                {
+                    // set the spell check to true
+                    tb.SetValue(SpellCheck.IsEnabledProperty, true);
+                    // override pre defined context menu
+                    //tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                    tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+                    //tb.ContextMenuClosing += TextBoxBaseContextMenuClosing;
+                }
+                else
+                {
+                    tb.SetValue(SpellCheck.IsEnabledProperty, false);
+                    //tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                    tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+                    //tb.ContextMenuClosing -= TextBoxBaseContextMenuClosing;
+                }
             }
         }
 
@@ -264,7 +286,18 @@ namespace MahApps.Metro.Controls
             var textBox = tbBase as TextBox;
             var richTextBox = tbBase as RichTextBox;
 
-            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+            var spellCheckItems = tbBase.ContextMenu.Items.OfType<ISpellCheckMenuItem>().ToList();
+            foreach (var item in spellCheckItems)
+            {
+                tbBase.ContextMenu.Items.Remove(item);
+            }
+            var contextMenu = new ContextMenu();
+            foreach (var item in tbBase.ContextMenu.Items.OfType<object>().ToList())
+            {
+                tbBase.ContextMenu.Items.Remove(item);
+                contextMenu.Items.Add(item);
+            }
+            tbBase.ContextMenu = contextMenu;
 
             var cmdIndex = 0;
             var spellingError = textBox != null
@@ -276,30 +309,51 @@ namespace MahApps.Metro.Controls
                 var suggestions = spellingError.Suggestions;
                 if (suggestions.Any()) {
                     foreach (var suggestion in suggestions) {
-                        var mi = new MenuItem();
+                        var mi = new SpellCheckMenuItem();
                         mi.Header = suggestion;
                         mi.FontWeight = FontWeights.Bold;
                         mi.Command = EditingCommands.CorrectSpellingError;
                         mi.CommandParameter = suggestion;
                         mi.CommandTarget = tbBase;
-                        mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                        //mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
                         tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
                         cmdIndex++;
                     }
                     // add a separator
-                    tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
+                    tbBase.ContextMenu.Items.Insert(cmdIndex, new SpellCheckSeparator());
                     cmdIndex++;
                 }
-                var ignoreAllMI = new MenuItem();
+                var ignoreAllMI = new SpellCheckMenuItem();
                 ignoreAllMI.Header = "Ignore All";
                 ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
                 ignoreAllMI.CommandTarget = tbBase;
-                ignoreAllMI.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                //ignoreAllMI.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
                 tbBase.ContextMenu.Items.Insert(cmdIndex, ignoreAllMI);
                 cmdIndex++;
                 // add another separator
-                var separatorMenuItem2 = new Separator();
-                tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
+                tbBase.ContextMenu.Items.Insert(cmdIndex, new SpellCheckSeparator());
+            }
+        }
+
+        private static void ContextMenu_Closed(object sender, RoutedEventArgs e)
+        {
+            var contextMenu = (ContextMenu)sender;
+
+            var spellCheckItems = contextMenu.Items.OfType<ISpellCheckMenuItem>().ToList();
+            foreach (var item in spellCheckItems)
+            {
+                contextMenu.Items.Remove(item);
+            }
+        }
+
+        private static void TextBoxBaseContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            var tbBase = (TextBoxBase)sender;
+
+            var spellCheckItems = tbBase.ContextMenu.Items.OfType<ISpellCheckMenuItem>().ToList();
+            foreach (var item in spellCheckItems)
+            {
+                tbBase.ContextMenu.Items.Remove(item);
             }
         }
 
