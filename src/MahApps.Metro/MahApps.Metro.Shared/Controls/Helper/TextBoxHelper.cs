@@ -58,6 +58,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
         public static readonly DependencyProperty ExcludeDefaultContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExcludeDefaultContextMenuItems", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ExcludeDefaultContextMenuItemsChanged));
         public static readonly DependencyProperty ExtraContextMenuItemsProperty = DependencyProperty.RegisterAttached("ExtraContextMenuItems", typeof(List<FrameworkElement>), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ExtraContextMenuItemsChanged));
+        private static readonly DependencyProperty IsMonitoringMenuOpenProperty = DependencyProperty.RegisterAttached("IsMonitoringMenuOpen", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false));
 
         /// <summary>
         /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
@@ -247,19 +248,11 @@ namespace MahApps.Metro.Controls
             {
                 throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
             }
-
-            if ((bool)e.NewValue) {
-                // set the spell check to true
-                tb.SetValue(SpellCheck.IsEnabledProperty, true);
-                // override pre defined context menu
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
-            }
-            else
+            tb.SetValue(SpellCheck.IsEnabledProperty, e.NewValue);
+            if (!GetIsMonitoringMenuOpen(tb))
             {
-                tb.SetValue(SpellCheck.IsEnabledProperty, false);
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-                tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+                SetIsMonitoringMenuOpen(tb, true);
             }
         }
 
@@ -270,10 +263,11 @@ namespace MahApps.Metro.Controls
             {
                 throw new InvalidOperationException("The property 'ExcludeDefaultContextMenuItems' may only be set on TextBoxBase elements.");
             }
-
-            tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-            AddExtraItemsToContextMenu(tb);
-            tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+            if (!GetIsMonitoringMenuOpen(tb))
+            {
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+                SetIsMonitoringMenuOpen(tb, true);
+            }
         }
 
         private static void ExtraContextMenuItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -283,17 +277,21 @@ namespace MahApps.Metro.Controls
             {
                 throw new InvalidOperationException("The property 'ExtraContextMenuItems' may only be set on TextBoxBase elements.");
             }
-            else
+            if (!GetIsMonitoringMenuOpen(tb))
             {
-                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu(tb);
-                AddExtraItemsToContextMenu(tb);
-                tb.ContextMenu.Visibility = tb.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+                SetIsMonitoringMenuOpen(tb, true);
             }
         }
 
         private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             var tbBase = (TextBoxBase)sender;
+            SetupContextMenu(tbBase);
+        }
+
+        private static void SetupContextMenu(TextBoxBase tbBase)
+        {
             var textBox = tbBase as TextBox;
             var richTextBox = tbBase as RichTextBox;
 
@@ -305,10 +303,13 @@ namespace MahApps.Metro.Controls
                 : (richTextBox != null
                     ? richTextBox.GetSpellingError(richTextBox.CaretPosition)
                     : null);
-            if (spellingError != null) {
+            if (spellingError != null)
+            {
                 var suggestions = spellingError.Suggestions;
-                if (suggestions.Any()) {
-                    foreach (var suggestion in suggestions) {
+                if (suggestions.Any())
+                {
+                    foreach (var suggestion in suggestions)
+                    {
                         var mi = new MenuItem();
                         mi.Header = suggestion;
                         mi.FontWeight = FontWeights.Bold;
@@ -334,12 +335,7 @@ namespace MahApps.Metro.Controls
                 var separatorMenuItem2 = new Separator();
                 tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
             }
-            AddExtraItemsToContextMenu(tbBase);
-            tbBase.ContextMenu.Visibility = tbBase.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        private static void AddExtraItemsToContextMenu(TextBoxBase tbBase)
-        {
+            // Add extra menu items
             var extraMenuItems = (List<FrameworkElement>)tbBase.GetValue(ExtraContextMenuItemsProperty);
             if (extraMenuItems != null && extraMenuItems.Count > 0)
             {
@@ -357,6 +353,8 @@ namespace MahApps.Metro.Controls
                     tbBase.ContextMenu.Items.Add(item);
                 }
             }
+            // If nothing was ever added, hide the context menu
+            tbBase.ContextMenu.Visibility = tbBase.ContextMenu.Items.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         }
 
         // Gets a fresh context menu. 
@@ -782,6 +780,17 @@ namespace MahApps.Metro.Controls
         public static void SetExtraContextMenuItems(DependencyObject obj, List<FrameworkElement> value)
         {
             obj.SetValue(ExtraContextMenuItemsProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        public static bool GetIsMonitoringMenuOpen(DependencyObject d)
+        {
+            return (bool)d.GetValue(IsMonitoringMenuOpenProperty);
+        }
+
+        public static void SetIsMonitoringMenuOpen(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsMonitoringMenuOpenProperty, value);
         }
 
         private static void IsClearTextButtonBehaviorEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
