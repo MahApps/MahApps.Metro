@@ -183,7 +183,7 @@
                                         <behaviors:DateTimeNowBehavior />
                                     </i:Interaction.Behaviors>
                                 </Controls:DateTimePicker>
-                                <Controls:TimePicker SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}"
+                                <Controls:TimePicker SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
                                                      Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
