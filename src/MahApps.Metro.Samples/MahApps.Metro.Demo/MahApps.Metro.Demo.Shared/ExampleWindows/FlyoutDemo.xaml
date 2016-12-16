@@ -27,9 +27,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-            </ResourceDictionary.MergedDictionaries>
 
             <x:Array x:Key="WindowCommandsOverlayBehaviorArray" Type="Controls:WindowCommandsOverlayBehavior">
                 <Controls:WindowCommandsOverlayBehavior>Always</Controls:WindowCommandsOverlayBehavior>
@@ -60,7 +57,7 @@
                            FontSize="{DynamicResource WindowTitleFontSize}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
-                <Button Content="Click Me..." Margin="1" Click="ClickMeOnClick" />
+                <Button Content="Click Me..." Margin="1" Click="ClickMeOnClick" Style="{StaticResource MetroFlatButton}" />
             </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
@@ -136,8 +133,12 @@
                              HorizontalContentAlignment="Stretch"
                              Position="Right">
                 <StackPanel Margin="10" Orientation="Vertical">
-                    <Button Content="create" />
-                    <Button Content="cancel" />
+                    <Button Content="create"
+                            Margin="2"
+                            Style="{StaticResource MetroFlatButton}" />
+                    <Button Content="cancel"
+                            Margin="2"
+                            Style="{StaticResource MetroFlatButton}" />
                 </StackPanel>
             </Controls:Flyout>
 
@@ -152,6 +153,8 @@
                         <GroupBox Height="250"
                                   Margin="10"
                                   Header="Flyout Group Box" />
+                        <Button Margin="10" Content="Button" />
+                        <ToggleButton Margin="10" Content="Toggle Button" />
                     </StackPanel>
                 </Grid>
             </Controls:Flyout>
@@ -193,6 +196,7 @@
                               Margin="0,5,5,5"
                               VerticalAlignment="Center" />
                     <Button x:Name="flyoutSettingsButtonSave"
+                            Style="{StaticResource MetroFlatButton}"
                             Grid.Row="1"
                             Grid.Column="1"
                             Width="75"
@@ -325,6 +329,10 @@
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
+        
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}" />
+        </Grid.Resources>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
