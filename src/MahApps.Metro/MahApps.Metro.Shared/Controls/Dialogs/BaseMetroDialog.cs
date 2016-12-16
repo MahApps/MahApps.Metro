@@ -88,7 +88,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">The settings for the message dialog.</param>
         protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
-            this.DialogSettings = settings ?? owningWindow.MetroDialogOptions;
+            this.DialogSettings = settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
 
             this.OwningWindow = owningWindow;
 
