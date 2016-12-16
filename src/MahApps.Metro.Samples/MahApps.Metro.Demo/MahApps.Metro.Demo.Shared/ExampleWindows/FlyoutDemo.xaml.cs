@@ -110,24 +110,29 @@ namespace MetroDemo.ExampleWindows
             this.ToggleFlyout(7);
         }
 
-        private void ShowTop(object sender, RoutedEventArgs e)
+        private void ShowCustomTop(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(8);
         }
 
-        private void ShowBottom(object sender, RoutedEventArgs e)
+        private void ShowTop(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(9);
         }
 
-        private void ShowModal(object sender, RoutedEventArgs e)
+        private void ShowBottom(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(10);
         }
 
-        private void ShowAppBar(object sender, RoutedEventArgs e)
+        private void ShowModal(object sender, RoutedEventArgs e)
         {
             this.ToggleFlyout(11);
+        }
+
+        private void ShowAppBar(object sender, RoutedEventArgs e)
+        {
+            this.ToggleFlyout(12);
         }
 
         private void CloseMe(object sender, RoutedEventArgs e)

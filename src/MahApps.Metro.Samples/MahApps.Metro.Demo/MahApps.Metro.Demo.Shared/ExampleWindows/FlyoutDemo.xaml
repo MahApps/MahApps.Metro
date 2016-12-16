@@ -251,6 +251,22 @@
                 </Grid>
             </Controls:Flyout>
 
+            <Controls:Flyout Header="Top"
+                             Position="Top"
+                             Height="150">
+                <StackPanel Height="80"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                    <Button Width="36"
+                            Height="36"
+                            Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                        <iconPacks:PackIconModern Kind="Alert" />
+                    </Button>
+                </StackPanel>
+            </Controls:Flyout>
+
             <Controls:Flyout Header="Bottom" Position="Bottom">
                 <StackPanel Height="80"
                             Margin="5,5,5,5"
@@ -265,6 +281,7 @@
                     </Button>
                 </StackPanel>
             </Controls:Flyout>
+
             <Controls:Flyout Header="Modal"
                              IsModal="True"
                              Position="Right">
@@ -457,6 +474,9 @@
             <Button Margin="2,10,2,2"
                     Click="ShowLeft"
                     Content="Show Left" />
+            <Button Margin="2"
+                    Click="ShowCustomTop"
+                    Content="Show Custom Top" />
             <Button Margin="2"
                     Click="ShowTop"
                     Content="Show Top" />

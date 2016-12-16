@@ -9,9 +9,9 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class ProgressDialogController
     {
-        private ProgressDialog WrappedDialog { get; set; }
+        private ProgressDialog WrappedDialog { get; }
 
-        private Func<Task> CloseCallback { get; set; }
+        private Func<Task> CloseCallback { get; }
 
         /// <summary>
         /// This event is raised when the associated <see cref="ProgressDialog"/> was closed programmatically.
@@ -35,14 +35,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
-            WrappedDialog = dialog;
-            CloseCallback = closeCallBack;
+            this.WrappedDialog = dialog;
+            this.CloseCallback = closeCallBack;
 
-            IsOpen = dialog.IsVisible;
+            this.IsOpen = dialog.IsVisible;
 
-            WrappedDialog.Invoke(() => { WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click; });
+            this.WrappedDialog.Invoke(() => { this.WrappedDialog.PART_NegativeButton.Click += this.PART_NegativeButton_Click; });
 
-            dialog.CancellationToken.Register(() => { PART_NegativeButton_Click(null, new RoutedEventArgs()); });
+            dialog.CancellationToken.Register(() => { this.PART_NegativeButton_Click(null, new RoutedEventArgs()); });
         }
 
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
@@ -53,7 +53,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.Canceled?.Invoke(this, EventArgs.Empty);
                     this.WrappedDialog.PART_NegativeButton.IsEnabled = false;
                 };
-            WrappedDialog.Invoke(action);
+            this.WrappedDialog.Invoke(action);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public void SetIndeterminate()
         {
-            WrappedDialog.Invoke(() => WrappedDialog.SetIndeterminate());
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.SetIndeterminate());
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value"></param>
         public void SetCancelable(bool value)
         {
-            WrappedDialog.Invoke(() => WrappedDialog.IsCancelable = value);
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.IsCancelable = value);
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Action action = () =>
                 {
-                    if (value < WrappedDialog.Minimum || value > WrappedDialog.Maximum)
+                    if (value < this.WrappedDialog.Minimum || value > this.WrappedDialog.Maximum)
                     {
                         throw new ArgumentOutOfRangeException(nameof(value));
                     }
-                    WrappedDialog.ProgressValue = value;
+                    this.WrappedDialog.ProgressValue = value;
                 };
-            WrappedDialog.Invoke(action);
+            this.WrappedDialog.Invoke(action);
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Minimum
         {
-            get { return WrappedDialog.Invoke(() => WrappedDialog.Minimum); }
-            set { WrappedDialog.Invoke(() => WrappedDialog.Minimum = value); }
+            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum); }
+            set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Minimum = value); }
         }
 
         /// <summary>
@@ -104,8 +104,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Maximum
         {
-            get { return WrappedDialog.Invoke(() => WrappedDialog.Maximum); }
-            set { WrappedDialog.Invoke(() => WrappedDialog.Maximum = value); }
+            get { return this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum); }
+            set { this.WrappedDialog.Invoke(() => this.WrappedDialog.Maximum = value); }
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message to be set.</param>
         public void SetMessage(string message)
         {
-            WrappedDialog.Invoke(() => WrappedDialog.Message = message);
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.Message = message);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title to be set.</param>
         public void SetTitle(string title)
         {
-            WrappedDialog.Invoke(() => WrappedDialog.Title = title);
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.Title = title);
         }
 
         /// <summary>
@@ -134,21 +134,22 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Action action = () =>
                 {
-                    if (!WrappedDialog.IsVisible)
+                    if (!this.WrappedDialog.IsVisible)
                     {
                         throw new InvalidOperationException("Dialog isn't visible to close");
                     }
-                    WrappedDialog.Dispatcher.VerifyAccess();
-                    WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
+                    this.WrappedDialog.Dispatcher.VerifyAccess();
+                    this.WrappedDialog.PART_NegativeButton.Click -= this.PART_NegativeButton_Click;
                 };
 
-            WrappedDialog.Invoke(action);
+            this.WrappedDialog.Invoke(action);
 
-            return this.CloseCallback().ContinueWith(_ => this.WrappedDialog.Invoke(() =>
-                {
-                    this.IsOpen = false;
-                    this.Closed?.Invoke(this, EventArgs.Empty);
-                }));
+            return this.CloseCallback()
+                       .ContinueWith(_ => this.WrappedDialog.Invoke(() =>
+                                                                        {
+                                                                            this.IsOpen = false;
+                                                                            this.Closed?.Invoke(this, EventArgs.Empty);
+                                                                        }));
         }
     }
 }

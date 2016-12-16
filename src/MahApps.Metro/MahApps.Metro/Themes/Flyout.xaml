@@ -84,14 +84,7 @@
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    <Grid x:Name="PART_TitleThumbContent" DockPanel.Dock="Bottom">
-                        <ContentPresenter x:Name="PART_Content" />
-                        <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
-                                             Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                             VerticalAlignment="Top"
-                                             Style="{StaticResource WindowTitleThumbStyle}"
-                                             Visibility="Collapsed" />
-                    </Grid>
+                    <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
             <VisualStateManager.VisualStateGroups>
@@ -195,14 +188,12 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Position" Value="Top">
-                <Setter TargetName="PART_TitleThumbContent" Property="DockPanel.Dock" Value="Right" />
+                <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
-                <Setter TargetName="PART_WindowTitleThumb" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="Position" Value="Bottom">
-                <Setter TargetName="PART_TitleThumbContent" Property="DockPanel.Dock" Value="Right" />
+                <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_Header" Property="DockPanel.Dock" Value="Left" />
-                <Setter TargetName="PART_WindowTitleThumb" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>

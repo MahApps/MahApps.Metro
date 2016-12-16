@@ -7,7 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter" />
 
     <Style BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type Controls:MetroTabItem}">
@@ -27,6 +26,8 @@
                                                            Margin="0 2 2 0"
                                                            Padding="{TemplateBinding Padding}"
                                                            Foreground="{TemplateBinding Foreground}"
+                                                           FontStyle="{TemplateBinding FontStyle}"
+                                                           FontFamily="{TemplateBinding FontFamily}"
                                                            FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                            FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                            FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"

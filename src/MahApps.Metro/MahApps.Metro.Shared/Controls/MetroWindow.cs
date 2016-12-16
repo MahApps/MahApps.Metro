@@ -881,6 +881,8 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            // MahApps add these controls to the window with AddLogicalChild method.
+            // This has the side effect that the DataContext doesn't update, so do this now here.
             if (this.LeftWindowCommands != null) this.LeftWindowCommands.DataContext = this.DataContext;
             if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
             if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
@@ -1023,6 +1025,20 @@ namespace MahApps.Metro.Controls
             if (newChild != null)
             {
                 window.AddLogicalChild(newChild);
+                // Yes, that's crazy. But we must do this to enable all possible scenarios for setting DataContext
+                // in a Window. Without set the DataContext at this point it can happen that e.g. a Flyout
+                // doesn't get the same DataContext.
+                // So now we can type
+                //
+                // this.InitializeComponent();
+                // this.DataContext = new MainViewModel();
+                //
+                // or
+                //
+                // this.DataContext = new MainViewModel();
+                // this.InitializeComponent();
+                //
+                newChild.DataContext = window.DataContext;
             }
         }
 

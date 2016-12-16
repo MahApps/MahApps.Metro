@@ -94,6 +94,9 @@
     <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
+    <!--  obsolete  -->
+    <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{DynamicResource Gray4}" />
+    <SolidColorBrush x:Key="ComboBoxPopupBorderBrush" Color="{DynamicResource Gray4}" />
 
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{DynamicResource Gray6}" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{DynamicResource Gray2}" />
@@ -102,11 +105,10 @@
         <GradientStop Color="{DynamicResource WhiteColor}" Offset="1"/>
     </LinearGradientBrush>
 
+    <!--  obsolete  -->
     <SolidColorBrush x:Key="MenuItemDisabledBrush" Color="{DynamicResource Gray3}" />
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{DynamicResource Gray5}" />
-
-    <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{DynamicResource Gray4}" />
 
     <LinearGradientBrush x:Key="ProgressBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
         <GradientStop Color="{DynamicResource HighlightColor}" Offset="0"/>
@@ -168,6 +170,9 @@
     <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" options:Freeze="True" />
 
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource BlackColor}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="CheckmarkFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="RightArrowFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
 
     <Color x:Key="MenuShadowColor">#FF000000</Color>
 
