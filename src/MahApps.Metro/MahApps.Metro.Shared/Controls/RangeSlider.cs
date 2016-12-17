@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Windows.Documents;
 
 namespace MahApps.Metro.Controls
 {
@@ -220,13 +221,13 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("AutoToolTipPrecision", typeof(Int32), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(0), IsValidPrecision);
 
-        public static readonly DependencyProperty AutoToolTipTextConverterProperty =
-            DependencyProperty.Register("AutoToolTipTextConverter", typeof(IValueConverter), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(null));
-
         public static readonly DependencyProperty IntervalProperty =
             DependencyProperty.Register("Interval", typeof(Int32), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(100, IntervalChangedCallback), IsValidPrecision);
+
+        public static readonly DependencyProperty AutoToolTipContentTemplateProperty =
+            DependencyProperty.Register("AutoToolTipContentTemplate", typeof(DataTemplate), typeof(RangeSlider),
+                                        new PropertyMetadata(default(DataTemplate)));
 
         /// <summary>
         /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
@@ -246,16 +247,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (Int32)GetValue(AutoToolTipPrecisionProperty); }
             set { SetValue(AutoToolTipPrecisionProperty, value); }
-        }
-
-        /// <summary>
-        /// Get/sets the converter for the tooltip text
-        /// </summary>
-        [Bindable(true), Category("Behavior")]
-        public IValueConverter AutoToolTipTextConverter
-        {
-            get { return (IValueConverter)GetValue(AutoToolTipTextConverterProperty); }
-            set { SetValue(AutoToolTipTextConverterProperty, value); }
         }
 
         /// <summary>
@@ -378,6 +369,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(MinRangeProperty, value); }
         }
 
+        /// <summary>
+        /// Get/sets the content template for the tooltip value.
+        /// </summary>
+        [Bindable(true), Category("Behavior")]
+        public DataTemplate AutoToolTipContentTemplate
+        {
+            get { return (DataTemplate)GetValue(AutoToolTipContentTemplateProperty); }
+            set { SetValue(AutoToolTipContentTemplateProperty, value); }
+        }
+
         #endregion
 
         #region Variables
@@ -394,6 +395,7 @@ namespace MahApps.Metro.Controls
         private StackPanel _container;
         private Double _movableWidth;
         private readonly DispatcherTimer _timer;
+        private Lazy<FormatNumberConverter> _formatNumberConverter;
 
         private uint _tickCount;
         private Double _currentpoint;
@@ -436,6 +438,8 @@ namespace MahApps.Metro.Controls
             _timer = new DispatcherTimer();
             _timer.Tick += MoveToNextValue;
             _timer.Interval = TimeSpan.FromMilliseconds(Interval);
+
+            this._formatNumberConverter = new Lazy<FormatNumberConverter>(() => new FormatNumberConverter(() => this.AutoToolTipPrecision));
         }
 
         static RangeSlider()
@@ -1175,13 +1179,9 @@ namespace MahApps.Metro.Controls
             _isMoved = true;
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (_autoToolTip == null)
-                {
-                    _autoToolTip = new ToolTip();
-                    _autoToolTip.Placement = PlacementMode.Custom;
-                    _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
-                }
-                _autoToolTip.Content = GetLowerToolTipNumber();
+                InitializeToolTip(true);
+
+                _autoToolTip.Content = LowerValue;
                 _autoToolTip.PlacementTarget = _leftThumb;
                 _autoToolTip.IsOpen = true;
             }
@@ -1222,7 +1222,7 @@ namespace MahApps.Metro.Controls
             _basePoint = Mouse.GetPosition(_container);
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                _autoToolTip.Content = GetLowerToolTipNumber();
+                _autoToolTip.Content = LowerValue;
                 RelocateAutoToolTip();
             }
 
@@ -1235,7 +1235,6 @@ namespace MahApps.Metro.Controls
             if (_autoToolTip != null)
             {
                 _autoToolTip.IsOpen = false;
-                _autoToolTip = null;
             }
             e.RoutedEvent = LowerThumbDragCompletedEvent;
             RaiseEvent(e);
@@ -1246,13 +1245,9 @@ namespace MahApps.Metro.Controls
             _isMoved = true;
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (_autoToolTip == null)
-                {
-                    _autoToolTip = new ToolTip();
-                    _autoToolTip.Placement = PlacementMode.Custom;
-                    _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
-                }
-                _autoToolTip.Content = GetUpperToolTipNumber();
+                InitializeToolTip(true);
+
+                _autoToolTip.Content = UpperValue;
                 _autoToolTip.PlacementTarget = _rightThumb;
                 _autoToolTip.IsOpen = true;
             }
@@ -1294,7 +1289,7 @@ namespace MahApps.Metro.Controls
             }
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                _autoToolTip.Content = GetUpperToolTipNumber();
+                _autoToolTip.Content = UpperValue;
                 RelocateAutoToolTip();
             }
             e.RoutedEvent = UpperThumbDragDeltaEvent;
@@ -1306,7 +1301,6 @@ namespace MahApps.Metro.Controls
             if (_autoToolTip != null)
             {
                 _autoToolTip.IsOpen = false;
-                _autoToolTip = null;
             }
             e.RoutedEvent = UpperThumbDragCompletedEvent;
             RaiseEvent(e);
@@ -1317,14 +1311,8 @@ namespace MahApps.Metro.Controls
             _isMoved = true;
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
-                if (_autoToolTip == null)
-                {
-                    _autoToolTip = new ToolTip {
-                        Placement = PlacementMode.Custom,
-                        CustomPopupPlacementCallback = PopupPlacementCallback
-                    };
-                }
-                _autoToolTip.Content = GetLowerToolTipNumber() + " ; " + GetUpperToolTipNumber();
+                InitializeToolTip(false);
+
                 _autoToolTip.PlacementTarget = _centerThumb;
                 _autoToolTip.IsOpen = true;
             }
@@ -1366,10 +1354,7 @@ namespace MahApps.Metro.Controls
                 }
                 _basePoint = Mouse.GetPosition(_container);
                 if (AutoToolTipPlacement != AutoToolTipPlacement.None)
-                {
-                    _autoToolTip.Content = GetLowerToolTipNumber() + " ; " + GetUpperToolTipNumber();
                     RelocateAutoToolTip();
-                }
             }
 
             e.RoutedEvent = CentralThumbDragDeltaEvent;
@@ -1381,7 +1366,6 @@ namespace MahApps.Metro.Controls
             if (_autoToolTip != null)
             {
                 _autoToolTip.IsOpen = false;
-                _autoToolTip = null;
             }
             e.RoutedEvent = CentralThumbDragCompletedEvent;
             RaiseEvent(e);
@@ -1741,35 +1725,89 @@ namespace MahApps.Metro.Controls
             return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
         }
 
-        //Get lower value for autotooltip
-        private String GetLowerToolTipNumber()
+        private void InitializeToolTip(bool oneValue)
         {
-            var lowerValue = this.LowerValue;
-            return this.GetToolTipNumber(lowerValue);
-        }
-
-        //Get upper value for autotooltip
-        private String GetUpperToolTipNumber()
-        {
-            var upperValue = this.UpperValue;
-            return this.GetToolTipNumber(upperValue);
-        }
-
-        private string GetToolTipNumber(double value)
-        {
-            var converter = this.AutoToolTipTextConverter;
-            if (converter != null)
+            if (_autoToolTip != null)
             {
-                var convertedValue = converter.Convert(value, typeof(string), null, CultureInfo.InvariantCulture);
-                if (convertedValue != null)
-                {
-                    return convertedValue.ToString();
-                }
+                _autoToolTip.ClearValue(ContentControl.ContentTemplateProperty);
+                BindingOperations.ClearBinding(_autoToolTip, ContentControl.ContentTemplateProperty);
             }
+            else
+                _autoToolTip = new ToolTip
+                          {
+                              Placement = PlacementMode.Custom,
+                              CustomPopupPlacementCallback = this.PopupPlacementCallback
+                          };
 
-            var format = (NumberFormatInfo)(NumberFormatInfo.CurrentInfo.Clone());
-            format.NumberDecimalDigits = this.AutoToolTipPrecision;
-            return value.ToString("N", format);
+            if (oneValue)
+                _autoToolTip.SetBinding(ContentControl.ContentTemplateProperty,
+                                        new Binding { Source = this, Path = new PropertyPath(nameof(AutoToolTipContentTemplate)), TargetNullValue = GetDefaultToolTipContentTemplate() });
+            else
+                _autoToolTip.SetValue(ContentControl.ContentTemplateProperty, AutoToolTipContentTemplate == null ?
+                    GetDefaultUpperLowerToolTipContentTemplate() :
+                    GetCustomUpperLowerToolTipContentTemplate());
+        }
+
+        //Get default template for autotooltip (just the formatted numbers)
+        private DataTemplate GetDefaultToolTipContentTemplate()
+        {
+            var customDataTemplate = new DataTemplate {DataType = typeof(double)};
+            var ctFactory = new FrameworkElementFactory(typeof(ContentControl));
+            ctFactory.SetBinding(ContentControl.ContentProperty, new Binding(".") { Converter = this._formatNumberConverter.Value });
+
+            customDataTemplate.VisualTree = ctFactory;
+            return customDataTemplate;
+        }
+
+        //Get custom template for autotooltip with two values
+        private DataTemplate GetCustomUpperLowerToolTipContentTemplate()
+        {
+            var customDataTemplate = new DataTemplate();
+            var spFactory = new FrameworkElementFactory(typeof(StackPanel));
+            spFactory.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+
+            var ctFactory1 = new FrameworkElementFactory(typeof(ContentControl));
+            ctFactory1.SetBinding(ContentControl.ContentTemplateProperty, new Binding(nameof(this.AutoToolTipContentTemplate)) {Source = this});
+            ctFactory1.SetBinding(ContentControl.ContentProperty, new Binding(nameof(LowerValue)) { Source = this });
+
+            var ctFactory2 = new FrameworkElementFactory(typeof(ContentControl));
+            ctFactory2.SetBinding(ContentControl.ContentTemplateProperty, new Binding(nameof(this.AutoToolTipContentTemplate)) { Source = this });
+            ctFactory2.SetBinding(ContentControl.ContentProperty, new Binding(nameof(UpperValue)) { Source = this });
+
+            var txFactory = new FrameworkElementFactory(typeof(TextBlock));
+            txFactory.SetValue(TextBlock.TextProperty, " ; ");
+
+            spFactory.AppendChild(ctFactory1);
+            spFactory.AppendChild(txFactory);
+            spFactory.AppendChild(ctFactory2);
+
+            customDataTemplate.VisualTree = spFactory;
+            return customDataTemplate;
+        }
+
+        //Get default template for autotooltip with two values
+        private DataTemplate GetDefaultUpperLowerToolTipContentTemplate()
+        {
+            var customDataTemplate = new DataTemplate();
+            var txFactory = new FrameworkElementFactory(typeof(TextBlock));
+
+            var rnFactory1 = new FrameworkElementFactory(typeof(Run));
+            rnFactory1.SetBinding(Run.TextProperty, new Binding(nameof(LowerValue))
+                                                    { Source = this, Mode = BindingMode.OneWay, Converter = this._formatNumberConverter.Value });
+
+            var rnFactory2 = new FrameworkElementFactory(typeof(Run));
+            rnFactory2.SetBinding(Run.TextProperty, new Binding(nameof(UpperValue))
+                                                    { Source = this, Mode = BindingMode.OneWay, Converter = this._formatNumberConverter.Value });
+
+            var rnFactory3 = new FrameworkElementFactory(typeof(Run));
+            rnFactory3.SetValue(Run.TextProperty, " ; ");
+
+            txFactory.AppendChild(rnFactory1);
+            txFactory.AppendChild(rnFactory3);
+            txFactory.AppendChild(rnFactory2);
+
+            customDataTemplate.VisualTree = txFactory;
+            return customDataTemplate;
         }
 
         //CustomPopupPlacement callback for placing autotooltip int TopLeft or BottomRight position
@@ -2024,6 +2062,29 @@ namespace MahApps.Metro.Controls
         {
             Increase,
             Decrease
+        }
+
+        [ValueConversion(typeof(double), typeof(string))]
+        private class FormatNumberConverter : IValueConverter
+        {
+            private readonly Func<int> autoToolTipPrecisionDigits;
+
+            public FormatNumberConverter(Func<int> autoToolTipPrecisionDigits)
+            {
+                this.autoToolTipPrecisionDigits = autoToolTipPrecisionDigits;
+            }
+
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var format = (NumberFormatInfo)(NumberFormatInfo.CurrentInfo.Clone());
+                format.NumberDecimalDigits = autoToolTipPrecisionDigits();
+                return ((double)value).ToString("N", format);
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return Binding.DoNothing;
+            }
         }
     }
 }
