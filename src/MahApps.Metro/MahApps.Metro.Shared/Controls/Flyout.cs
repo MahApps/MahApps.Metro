@@ -16,7 +16,6 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
-    [TemplatePart(Name = "PART_WindowTitleThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Root", Type = typeof(Grid))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
@@ -636,7 +635,6 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame fadeOutFrame;
         FrameworkElement flyoutHeader;
         FrameworkElement flyoutContent;
-        Thumb windowTitleThumb;
 
         public override void OnApplyTemplate()
         {
@@ -651,28 +649,6 @@ namespace MahApps.Metro.Controls
             this.flyoutHeader = this.GetTemplateChild("PART_Header") as FrameworkElement;
             this.flyoutHeader?.ApplyTemplate();
             this.flyoutContent = this.GetTemplateChild("PART_Content") as FrameworkElement;
-
-            this.windowTitleThumb = this.GetTemplateChild("PART_WindowTitleThumb") as Thumb;
-            if (this.windowTitleThumb != null)
-            {
-                this.windowTitleThumb.DragStarted -= this.WindowTitleThumbOnDragStarted;
-                this.windowTitleThumb.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
-                this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
-                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
-
-                var flyoutsControl = this.TryFindParent<FlyoutsControl>();
-                if (flyoutsControl != null)
-                {
-                    this.windowTitleThumb.DragStarted += this.WindowTitleThumbOnDragStarted;
-                    this.windowTitleThumb.DragCompleted += this.WindowTitleThumbOnDragCompleted;
-                    this.windowTitleThumb.PreviewMouseLeftButtonUp += this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                    this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
-                    this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                    this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
-                }
-            }
 
             var thumbContentControl = this.flyoutHeader as IMetroThumb;
             if (thumbContentControl != null)
@@ -733,15 +709,6 @@ namespace MahApps.Metro.Controls
 
         protected internal void CleanUp(FlyoutsControl flyoutsControl)
         {
-            if (this.windowTitleThumb != null)
-            {
-                this.windowTitleThumb.DragStarted -= this.WindowTitleThumbOnDragStarted;
-                this.windowTitleThumb.DragCompleted -= this.WindowTitleThumbOnDragCompleted;
-                this.windowTitleThumb.PreviewMouseLeftButtonUp -= this.WindowTitleThumbOnPreviewMouseLeftButtonUp;
-                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
-                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
-                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
-            }
             var thumbContentControl = this.flyoutHeader as IMetroThumb;
             if (thumbContentControl != null)
             {
@@ -768,7 +735,9 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
+            //if (window != null && this.Position != Position.Bottom && (this.Position == Position.Top || (this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)))
+            //if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
+            if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, window, dragDeltaEventArgs);
             }
@@ -819,30 +788,30 @@ namespace MahApps.Metro.Controls
             switch (position)
             {
                 default:
-                    this.HorizontalAlignment = HorizontalAlignment.Left;
+                    this.HorizontalAlignment = this.Margin.Right <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Left : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Left;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
-                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(-this.flyoutRoot.ActualWidth, 0);
                     break;
                 case Position.Right:
-                    this.HorizontalAlignment = HorizontalAlignment.Right;
+                    this.HorizontalAlignment = this.Margin.Left <= 0 ? (this.HorizontalContentAlignment != HorizontalAlignment.Stretch ? HorizontalAlignment.Right : this.HorizontalContentAlignment) : HorizontalAlignment.Stretch;//HorizontalAlignment.Right;
                     this.VerticalAlignment = VerticalAlignment.Stretch;
-                    this.hideFrame.Value = this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(this.flyoutRoot.ActualWidth, 0);
                     break;
                 case Position.Top:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = VerticalAlignment.Top;
-                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1;
+                    this.VerticalAlignment = this.Margin.Bottom <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Top : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Top;
+                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, -this.flyoutRoot.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     this.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    this.VerticalAlignment = VerticalAlignment.Bottom;
-                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight;
+                    this.VerticalAlignment = this.Margin.Top <= 0 ? (this.VerticalContentAlignment != VerticalAlignment.Stretch ? VerticalAlignment.Bottom : this.VerticalContentAlignment) : VerticalAlignment.Stretch;//VerticalAlignment.Bottom;
+                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     if (resetShowFrame)
                         this.flyoutRoot.RenderTransform = new TranslateTransform(0, this.flyoutRoot.ActualHeight);
                     break;
@@ -866,16 +835,16 @@ namespace MahApps.Metro.Controls
             switch (this.Position)
             {
                 default:
-                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = -this.flyoutRoot.ActualWidth - this.Margin.Left;
                     break;
                 case Position.Right:
-                    this.hideFrame.Value = this.flyoutRoot.ActualWidth;
+                    this.hideFrame.Value = this.flyoutRoot.ActualWidth + this.Margin.Right;
                     break;
                 case Position.Top:
-                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1;
+                    this.hideFrameY.Value = -this.flyoutRoot.ActualHeight - 1 - this.Margin.Top;
                     break;
                 case Position.Bottom:
-                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight;
+                    this.hideFrameY.Value = this.flyoutRoot.ActualHeight + this.Margin.Bottom;
                     break;
             }
         }

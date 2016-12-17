@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <Style x:Key="MetroTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
@@ -101,12 +103,11 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <DockPanel.Resources>
-                                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-                            </DockPanel.Resources>
                             <Controls:ContentControlEx x:Name="ContentSite"
                                                        Padding="{TemplateBinding Padding}"
                                                        Foreground="{TemplateBinding Foreground}"
+                                                       FontStyle="{TemplateBinding FontStyle}"
+                                                       FontFamily="{TemplateBinding FontFamily}"
                                                        FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                        FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                        FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"

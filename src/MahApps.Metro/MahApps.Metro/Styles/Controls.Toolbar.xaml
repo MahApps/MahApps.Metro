@@ -50,7 +50,7 @@
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource MenuItemDisabledBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

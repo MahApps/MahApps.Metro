@@ -9,9 +9,9 @@ namespace MahApps.Metro.Controls.Dialogs
         private static readonly IDictionary<object, DependencyObject> ContextRegistrationIndex = new Dictionary<object, DependencyObject>();
 
         public static readonly DependencyProperty RegisterProperty = DependencyProperty.RegisterAttached(
-            "Register", 
-            typeof(object), 
-            typeof(DialogParticipation), 
+            "Register",
+            typeof(object),
+            typeof(DialogParticipation),
             new PropertyMetadata(default(object), RegisterPropertyChangedCallback));
 
         private static void RegisterPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
