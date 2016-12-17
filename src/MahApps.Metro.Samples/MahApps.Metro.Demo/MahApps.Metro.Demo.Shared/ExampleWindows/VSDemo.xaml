@@ -62,7 +62,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
-            <TabControl Margin="0,10,0,0">
+            <TabControl Margin="0,10,0,0" TabStripPlacement="Top">
                 <TabItem Header="Start">
                     <Grid Margin="50">
                         <Grid.RowDefinitions>
