@@ -186,6 +186,9 @@
                 <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
+                <MenuItem Header="ShowTitleBar"
+                            IsCheckable="True"
+                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowTitleBar}" />
                 <MenuItem Header="ShowInTaskbar"
                             IsCheckable="True"
                             IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />

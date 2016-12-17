@@ -1,7 +1,5 @@
-﻿
-namespace Standard
+﻿namespace Standard
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>

@@ -154,6 +154,7 @@
                                                    FontSize="{TemplateBinding FontSize}"
                                                    controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                    CaretBrush="{DynamicResource BlackBrush}"
+                                                   SelectionBrush="{DynamicResource HighlightBrush}"
                                                    ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                    Focusable="{TemplateBinding Focusable}">
                                     <i:Interaction.Behaviors>

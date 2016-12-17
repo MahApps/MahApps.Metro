@@ -9,6 +9,11 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class ProgressDialog : BaseMetroDialog
     {
+        internal ProgressDialog()
+            : this(null)
+        {
+        }
+
         internal ProgressDialog(MetroWindow parentWindow)
             : this(parentWindow, null)
         {
@@ -28,67 +33,61 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) =>
-            {
-                ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
-            }));
+        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
 
         public string Message
         {
-            get { return (string)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
         }
 
         public bool IsCancelable
         {
-            get { return (bool)GetValue(IsCancelableProperty); }
-            set { SetValue(IsCancelableProperty, value); }
+            get { return (bool)this.GetValue(IsCancelableProperty); }
+            set { this.SetValue(IsCancelableProperty, value); }
         }
 
         public string NegativeButtonText
         {
-            get { return (string)GetValue(NegativeButtonTextProperty); }
-            set { SetValue(NegativeButtonTextProperty, value); }
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
         }
 
         public Brush ProgressBarForeground
         {
-            get { return (Brush)GetValue(ProgressBarForegroundProperty); }
-            set { SetValue(ProgressBarForegroundProperty, value); }
+            get { return (Brush)this.GetValue(ProgressBarForegroundProperty); }
+            set { this.SetValue(ProgressBarForegroundProperty, value); }
         }
 
-        internal CancellationToken CancellationToken
-        {
-            get { return DialogSettings.CancellationToken; }
-        }
+        internal CancellationToken CancellationToken => this.DialogSettings.CancellationToken;
 
         internal double Minimum
         {
-            get { return PART_ProgressBar.Minimum; }
-            set { PART_ProgressBar.Minimum = value; }
+            get { return this.PART_ProgressBar.Minimum; }
+            set { this.PART_ProgressBar.Minimum = value; }
         }
 
         internal double Maximum
         {
-            get { return PART_ProgressBar.Maximum; }
-            set { PART_ProgressBar.Maximum = value; }
+            get { return this.PART_ProgressBar.Maximum; }
+            set { this.PART_ProgressBar.Maximum = value; }
         }
 
         internal double ProgressValue
         {
-            get { return PART_ProgressBar.Value; }
+            get { return this.PART_ProgressBar.Value; }
             set
             {
-                PART_ProgressBar.IsIndeterminate = false;
-                PART_ProgressBar.Value = value;
-                PART_ProgressBar.ApplyTemplate();
+                this.PART_ProgressBar.IsIndeterminate = false;
+                this.PART_ProgressBar.Value = value;
+                this.PART_ProgressBar.ApplyTemplate();
             }
         }
 
         internal void SetIndeterminate()
         {
-            PART_ProgressBar.IsIndeterminate = true;
+            this.PART_ProgressBar.IsIndeterminate = true;
         }
     }
 }

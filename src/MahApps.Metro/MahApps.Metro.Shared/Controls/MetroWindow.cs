@@ -445,14 +445,21 @@ namespace MahApps.Metro.Controls
                 // if UseNoneWindowStyle = true no title bar should be shown
                 var useNoneWindowStyle = (bool)e.NewValue;
                 var window = (MetroWindow)d;
-                window.ToggleNoneWindowStyle(useNoneWindowStyle);
+                window.ToggleNoneWindowStyle(useNoneWindowStyle, window.ShowTitleBar);
             }
         }
 
-        private void ToggleNoneWindowStyle(bool useNoneWindowStyle)
+        private void ToggleNoneWindowStyle(bool useNoneWindowStyle, bool isTitleBarVisible)
         {
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
-            ShowTitleBar = !useNoneWindowStyle;
+            if (useNoneWindowStyle)
+            {
+                ShowTitleBar = false;
+            }
+            else
+            {
+                ShowTitleBar = isTitleBarVisible;
+            }
             if (LeftWindowCommandsPresenter != null)
             {
                 LeftWindowCommandsPresenter.Visibility = useNoneWindowStyle ? Visibility.Collapsed : Visibility.Visible;
@@ -863,6 +870,8 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            // MahApps add these controls to the window with AddLogicalChild method.
+            // This has the side effect that the DataContext doesn't update, so do this now here.
             if (this.LeftWindowCommands != null) this.LeftWindowCommands.DataContext = this.DataContext;
             if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
             if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
@@ -881,7 +890,7 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
 
-            this.ToggleNoneWindowStyle(this.UseNoneWindowStyle);
+            this.ToggleNoneWindowStyle(this.UseNoneWindowStyle, this.ShowTitleBar);
 
             if (this.Flyouts == null)
             {
@@ -1005,6 +1014,20 @@ namespace MahApps.Metro.Controls
             if (newChild != null)
             {
                 window.AddLogicalChild(newChild);
+                // Yes, that's crazy. But we must do this to enable all possible scenarios for setting DataContext
+                // in a Window. Without set the DataContext at this point it can happen that e.g. a Flyout
+                // doesn't get the same DataContext.
+                // So now we can type
+                //
+                // this.InitializeComponent();
+                // this.DataContext = new MainViewModel();
+                //
+                // or
+                //
+                // this.DataContext = new MainViewModel();
+                // this.InitializeComponent();
+                //
+                newChild.DataContext = window.DataContext;
             }
         }
 
@@ -1344,39 +1367,19 @@ namespace MahApps.Metro.Controls
 
                 // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
                 //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's.
-                if (icon != null)
-                {
-                    icon.SetValue(Panel.ZIndexProperty,
-                        this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                }
-
-                if (LeftWindowCommandsPresenter != null)
-                {
-                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
-                        this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                }
-
-                if (RightWindowCommandsPresenter != null)
-                {
-                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
-                        this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                }
-
-                if (WindowButtonCommandsPresenter != null)
-                {
-                    WindowButtonCommandsPresenter.SetValue(Panel.ZIndexProperty,
-                        this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                }
-
+                this.icon?.SetValue(Panel.ZIndexProperty, this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
+                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
+                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
+                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
 
-            flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
-
-            RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this)
+            if (this.flyoutModal != null)
             {
-                ChangedFlyout = flyout
-            });
+                this.flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
+            }
+
+            RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this) { ChangedFlyout = flyout });
         }
 
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
