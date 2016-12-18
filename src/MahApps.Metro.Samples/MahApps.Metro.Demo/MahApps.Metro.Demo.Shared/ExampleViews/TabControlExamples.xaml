@@ -12,7 +12,7 @@
 
     <ScrollViewer>
         <StackPanel Margin="5, 10, 5, 0">
-            <GroupBox Margin="0" Header="_Default TabControl">
+            <Expander Margin="0" Header="_Default TabControl">
                 <StackPanel Margin="15, 5, 15, 5">
                     <Label Content="Default TabControl normal style" Style="{DynamicResource DescriptionHeaderStyle}" />
                     <TabControl>
@@ -138,8 +138,8 @@
                                     </TabControl>
                     -->
                 </StackPanel>
-            </GroupBox>
-            <GroupBox Margin="0, 10, 0, 0" Header="_Generic theme TabControls">
+            </Expander>
+            <Expander Margin="0, 10, 0, 0" Header="_Generic theme TabControls">
                 <StackPanel Margin="15, 5, 15, 5">
                     <Label Content="MetroAnimatedTabControl" Style="{DynamicResource DescriptionHeaderStyle}" />
                     <Grid>
@@ -275,7 +275,7 @@
                         </Controls:MetroTabItem>
                     </Controls:MetroTabControl>
                 </StackPanel>
-            </GroupBox>
+            </Expander>
         </StackPanel>
 
     </ScrollViewer>
