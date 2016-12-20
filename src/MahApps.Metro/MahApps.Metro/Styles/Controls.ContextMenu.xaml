@@ -139,7 +139,7 @@
         </Style.Triggers>
     </Style>
 
-    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MetroContextMenu}" x:Shared="False">
+    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MetroContextMenu}">
         <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Cut" />
         <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Copy" />
         <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Paste" />
