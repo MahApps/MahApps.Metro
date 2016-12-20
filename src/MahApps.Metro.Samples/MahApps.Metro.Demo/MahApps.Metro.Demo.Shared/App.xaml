@@ -23,6 +23,18 @@
             <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
                 <Setter Property="CloseOnMouseLeftButtonDown" Value="False" />
             </Style>
+
+            <!--  quick change of the collapse storyboard duration  -->
+            <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+                <DoubleAnimation Duration="0:0:0.1"
+                                 Storyboard.TargetName="ExpandSite"
+                                 Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 To="0" />
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

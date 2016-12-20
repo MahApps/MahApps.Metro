@@ -349,12 +349,6 @@ namespace MahApps.Metro.Controls
             this.bannerLabel.Opacity = this.IsBannerEnabled ? 1.0 : 0.0;
         }
 
-        protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
-        {
-            base.OnItemsSourceChanged(oldValue, newValue);
-            this.SelectedIndex = 0;
-        }
-
         protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
