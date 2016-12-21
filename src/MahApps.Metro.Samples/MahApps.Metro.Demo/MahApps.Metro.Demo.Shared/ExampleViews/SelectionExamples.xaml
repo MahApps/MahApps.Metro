@@ -133,6 +133,11 @@
                           Controls:TextBoxHelper.ClearTextButton="True"
                           Controls:TextBoxHelper.Watermark="Please select an item..."
                           SelectedIndex="0">
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Test" />
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
                     <ComboBoxItem Content="Item 1" />
                     <ComboBoxItem Content="Item 2" />
                     <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
@@ -145,6 +150,10 @@
                           Controls:TextBoxHelper.UseFloatingWatermark="True"
                           IsEditable="True"
                           SelectedIndex="0">
+                    <ComboBox.ContextMenu>
+                        <ContextMenu IsEnabled="False"
+                                     Visibility="Collapsed" />
+                    </ComboBox.ContextMenu>
                     <ComboBoxItem Content="Item 1" />
                     <ComboBoxItem Content="Item 2" />
                     <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
