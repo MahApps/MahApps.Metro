@@ -105,7 +105,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        protected virtual MetroDialogSettings OnGetDialogSettings(MetroDialogSettings settings)
+        protected virtual MetroDialogSettings ConfigureSettings(MetroDialogSettings settings)
         {
             return settings;
         }
@@ -113,7 +113,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private void Initialize([CanBeNull] MetroWindow owningWindow, [CanBeNull] MetroDialogSettings settings)
         {
             this.OwningWindow = owningWindow;
-            this.DialogSettings = this.OnGetDialogSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
+            this.DialogSettings = this.ConfigureSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
 
             if (this.DialogSettings != null && !this.DialogSettings.SuppressDefaultResources)
             {
