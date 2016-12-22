@@ -410,10 +410,10 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MetroExpanderExpandStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}"/>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{DynamicResource MetroExpanderCollapseStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">
