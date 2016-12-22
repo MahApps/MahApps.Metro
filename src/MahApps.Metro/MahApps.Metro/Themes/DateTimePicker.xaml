@@ -1,0 +1,403 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" 
+                                     TotalParts="60" />
+    <converters:ClockDegreeConverter x:Key="HourDegreeConverter" 
+                                     TotalParts="12" />
+    <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
+
+    <DataTemplate x:Key="FiveMinuteIndicator">
+        <StackPanel Height="57"
+                    Orientation="Horizontal"
+                    RenderTransformOrigin=".5,1">
+            <StackPanel.RenderTransform>
+                <RotateTransform Angle="{Binding Converter={StaticResource ClockDegreeConverter}, Mode=OneTime}" />
+            </StackPanel.RenderTransform>
+            <Rectangle Width="2"
+                       Height="10"
+                       Margin="0 -49 0 0"
+                       Fill="{DynamicResource AccentColorBrush3}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MinuteIndicator">
+        <StackPanel Height="57"
+                    Orientation="Horizontal"
+                    RenderTransformOrigin=".5,1">
+            <StackPanel.RenderTransform>
+                <RotateTransform Angle="{Binding Converter={StaticResource ClockDegreeConverter}, Mode=OneTime}" />
+            </StackPanel.RenderTransform>
+            <Rectangle Width="1"
+                       Height="5"
+                       Margin="0 -49.75 0 0"
+                       Fill="{DynamicResource AccentColorBrush4}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <x:Array x:Key="FiveMinuteKeys" Type="system:Int32">
+        <system:Int32>0</system:Int32>
+        <system:Int32>5</system:Int32>
+        <system:Int32>10</system:Int32>
+        <system:Int32>15</system:Int32>
+        <system:Int32>20</system:Int32>
+        <system:Int32>25</system:Int32>
+        <system:Int32>30</system:Int32>
+        <system:Int32>35</system:Int32>
+        <system:Int32>40</system:Int32>
+        <system:Int32>45</system:Int32>
+        <system:Int32>50</system:Int32>
+        <system:Int32>55</system:Int32>
+    </x:Array>
+
+    <x:Array x:Key="MinuteKeys" Type="system:Int32">
+        <system:Int32>1</system:Int32>
+        <system:Int32>2</system:Int32>
+        <system:Int32>3</system:Int32>
+        <system:Int32>4</system:Int32>
+        <system:Int32>6</system:Int32>
+        <system:Int32>7</system:Int32>
+        <system:Int32>8</system:Int32>
+        <system:Int32>9</system:Int32>
+        <system:Int32>11</system:Int32>
+        <system:Int32>12</system:Int32>
+        <system:Int32>13</system:Int32>
+        <system:Int32>14</system:Int32>
+        <system:Int32>16</system:Int32>
+        <system:Int32>17</system:Int32>
+        <system:Int32>18</system:Int32>
+        <system:Int32>19</system:Int32>
+        <system:Int32>21</system:Int32>
+        <system:Int32>22</system:Int32>
+        <system:Int32>23</system:Int32>
+        <system:Int32>24</system:Int32>
+        <system:Int32>26</system:Int32>
+        <system:Int32>27</system:Int32>
+        <system:Int32>28</system:Int32>
+        <system:Int32>29</system:Int32>
+        <system:Int32>31</system:Int32>
+        <system:Int32>32</system:Int32>
+        <system:Int32>33</system:Int32>
+        <system:Int32>34</system:Int32>
+        <system:Int32>36</system:Int32>
+        <system:Int32>37</system:Int32>
+        <system:Int32>38</system:Int32>
+        <system:Int32>39</system:Int32>
+        <system:Int32>41</system:Int32>
+        <system:Int32>42</system:Int32>
+        <system:Int32>43</system:Int32>
+        <system:Int32>44</system:Int32>
+        <system:Int32>46</system:Int32>
+        <system:Int32>47</system:Int32>
+        <system:Int32>48</system:Int32>
+        <system:Int32>49</system:Int32>
+        <system:Int32>51</system:Int32>
+        <system:Int32>52</system:Int32>
+        <system:Int32>53</system:Int32>
+        <system:Int32>54</system:Int32>
+        <system:Int32>56</system:Int32>
+        <system:Int32>57</system:Int32>
+        <system:Int32>58</system:Int32>
+        <system:Int32>59</system:Int32>
+    </x:Array>
+
+    <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePickerBase}">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="HandVisibility" Value="HourMinute" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="PickerVisibility" Value="HourMinute" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
+        <Setter Property="controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="controls:TextBoxHelper.ButtonWidth" Value="22" />
+        <Setter Property="controls:TextBoxHelper.IsMonitoring" Value="True" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="Base"
+                                BorderBrush="{DynamicResource ControlBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid x:Name="PART_InnerGrid" Margin="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition x:Name="ButtonRow" Height="*" />
+                                </Grid.RowDefinitions>
+                                <DatePickerTextBox VerticalAlignment="Center"
+                                                   x:Name="PART_TextBox"
+                                                   Grid.Row="1"
+                                                   IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                                   CaretBrush="{DynamicResource BlackBrush}"
+                                                   SelectionBrush="{DynamicResource HighlightBrush}"
+                                                   ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
+                                                   Focusable="{TemplateBinding Focusable}">
+                                    <i:Interaction.Behaviors>
+                                        <behaviours:DatePickerTextBoxBehavior />
+                                    </i:Interaction.Behaviors>
+                                </DatePickerTextBox>
+                                <ContentControl x:Name="PART_FloatingMessageContainer"
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            Grid.ColumnSpan="2"
+                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                    <TextBlock x:Name="PART_FloatingMessage"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
+                                </ContentControl>
+                                <Button x:Name="PART_Button"
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Style="{DynamicResource ChromelessButtonStyle}"
+                                        IsTabStop="False">
+                                    <!-- PackIconModern - Calendar14 -->
+                                    <ContentControl x:Name="PART_ButtonIcon"
+                                                    Style="{DynamicResource PathIconContentControlStyle}"
+                                                    Content="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
+                                                    Padding="2"
+                                                    Width="{TemplateBinding controls:TextBoxHelper.ButtonWidth}"
+                                                    Height="{TemplateBinding controls:TextBoxHelper.ButtonWidth}" />
+                                </Button>
+                                <Border x:Name="DisabledVisualElement"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Background="{DynamicResource ControlsDisabledBrush}"
+                                        BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Opacity="0"
+                                        IsHitTestVisible="False"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <Popup x:Name="PART_Popup"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Grid.Row="1"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       Placement="Bottom"
+                                       PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       PopupAnimation="Fade"
+                                       StaysOpen="False">
+                                    <Border x:Name="PART_PopupContainer"
+                                            BorderBrush="{DynamicResource ControlBorderBrush}"
+                                            BorderThickness="1">
+                                        <StackPanel Background="{DynamicResource ControlBackgroundBrush}" x:Name="StackPanel">
+                                            <Calendar x:Name="PART_Calendar"
+                                                      Margin="2 0"
+                                                      Visibility="Collapsed"
+                                                      BorderBrush="Transparent"
+                                                      SelectionMode="SingleDate" />
+                                            <Grid VerticalAlignment="Center">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Border x:Name="PART_Clock"
+                                                        Grid.Row="0"
+                                                        Width="120"
+                                                        Height="120"
+                                                        Margin="0 5 5 0"
+                                                        HorizontalAlignment="Center"
+                                                        BorderBrush="{DynamicResource AccentColorBrush}"
+                                                        BorderThickness="2"
+                                                        CornerRadius="75">
+                                                    <Canvas HorizontalAlignment="Center">
+                                                        <ItemsControl ItemTemplate="{StaticResource FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <Canvas IsItemsHost="True" />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                        </ItemsControl>
+                                                        <ItemsControl ItemTemplate="{StaticResource MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <Canvas IsItemsHost="True" />
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                        </ItemsControl>
+                                                        <Rectangle x:Name="PART_MinuteHand"
+                                                                   Canvas.Top="6"
+                                                                   Width="2"
+                                                                   Height="51"
+                                                                   HorizontalAlignment="Center"
+                                                                   Fill="{DynamicResource BlackColorBrush}"
+                                                                   RenderTransformOrigin=".5,1">
+                                                            <Rectangle.RenderTransform>
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
+                                                            </Rectangle.RenderTransform>
+                                                        </Rectangle>
+
+                                                        <Rectangle x:Name="PART_HourHand"
+                                                                   Canvas.Top="27"
+                                                                   Width="2"
+                                                                   Height="30"
+                                                                   HorizontalAlignment="Center"
+                                                                   Fill="{DynamicResource BlackColorBrush}"
+                                                                   RenderTransformOrigin=".5,1">
+                                                            <Rectangle.RenderTransform>
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
+                                                            </Rectangle.RenderTransform>
+                                                        </Rectangle>
+                                                        <Ellipse Canvas.Left="-2"
+                                                                 Canvas.Top="54"
+                                                                 Width="6"
+                                                                 Height="6"
+                                                                 Fill="{DynamicResource BlackColorBrush}" />
+                                                        <Rectangle x:Name="PART_SecondHand"
+                                                                   Canvas.Left="0.75"
+                                                                   Canvas.Top="6"
+                                                                   Width="1"
+                                                                   Height="61"
+                                                                   Margin="0 5 0 0"
+                                                                   HorizontalAlignment="Center"
+                                                                   Fill="{DynamicResource BlackColorBrush}"
+                                                                   Opacity=".25"
+                                                                   RenderTransformOrigin=".5,.75">
+                                                            <Rectangle.RenderTransform>
+                                                                <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='s', Mode=OneWay}" />
+                                                            </Rectangle.RenderTransform>
+                                                        </Rectangle>
+                                                    </Canvas>
+                                                </Border>
+                                                <Grid x:Name="PART_ClockPartSelectorsHolder"
+                                                      Grid.Row="1"
+                                                      Margin="5"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <ComboBox x:Name="PART_HourPicker"
+                                                              Grid.Column="0"
+                                                              ItemsSource="{TemplateBinding SourceHours}" />
+                                                    <Label Grid.Column="1"
+                                                           Content=":"
+                                                           Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}" />
+                                                    <ComboBox x:Name="PART_MinutePicker"
+                                                              Grid.Column="2"
+                                                              ItemsSource="{TemplateBinding SourceMinutes}" />
+                                                    <Label Grid.Column="3"
+                                                           Content=":"
+                                                           Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}" />
+                                                    <ComboBox x:Name="PART_SecondPicker"
+                                                              Grid.Column="4"
+                                                              ItemsSource="{TemplateBinding SourceSeconds}" />
+                                                    <ComboBox x:Name="PART_AmPmSwitcher" 
+                                                              Grid.Column="5" />
+                                                </Grid>
+                                            </Grid>
+                                        </StackPanel>
+
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox">
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
+                        </Trigger>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter TargetName="PART_Calendar" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="PART_ClockPartSelectorsHolder" Property="IsHitTestVisible" Value="False" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsClockVisible" Value="False">
+                            <Setter TargetName="PART_Clock" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsDatePickerVisible" Value="True">
+                            <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="StackPanel" Property="Orientation" Value="{Binding Path=Orientation, RelativeSource={RelativeSource TemplatedParent}}" />
+                            <!--<Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />-->
+                        </Trigger>
+                        <Trigger Property="IsDatePickerVisible"
+                                 Value="False">
+                            <!-- PackIconMaterial - Clock -->
+                            <Setter TargetName="PART_ButtonIcon"
+                                    Property="Content"
+                                    Value="M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z" />
+                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type controls:DateTimePicker}"
+           BasedOn="{StaticResource TimePartPickerBase}">
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="controls:TextBoxHelper.Watermark" Value="Select a date" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:TimePicker}" 
+           BasedOn="{StaticResource TimePartPickerBase}">
+        <Setter Property="controls:TextBoxHelper.Watermark" Value="Select a time" />
+    </Style>
+</ResourceDictionary>

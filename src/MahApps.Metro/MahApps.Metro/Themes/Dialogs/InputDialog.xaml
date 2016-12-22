@@ -1,0 +1,45 @@
+﻿<Dialogs:BaseMetroDialog x:Class="MahApps.Metro.Controls.Dialogs.InputDialog"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                         xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+    <Grid Margin="0 10 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Margin="0 5 0 0"
+                   FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   TextWrapping="Wrap" />
+        <TextBox x:Name="PART_TextBox"
+                 Grid.Row="1"
+                 Margin="0 5 0 0"
+                 FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 TextWrapping="Wrap"
+                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:TextBoxHelper.SelectAllOnFocus="True" />
+
+        <StackPanel Grid.Row="2"
+                    Height="85"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button x:Name="PART_AffirmativeButton"
+                    Height="35"
+                    MinWidth="80"
+                    Margin="0 0 5 0"
+                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource AccentedDialogSquareButton}" />
+            <Button x:Name="PART_NegativeButton"
+                    Height="35"
+                    MinWidth="80"
+                    Margin="5 0 5 0"
+                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+    </Grid>
+</Dialogs:BaseMetroDialog>

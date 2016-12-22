@@ -1,0 +1,117 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{5FEFAEC4-5A45-480B-903A-9E0B5F5B913D}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro", "MahApps.Metro", "{51372046-0912-4AD0-916A-13FC6C278CFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Samples", "MahApps.Metro.Samples", "{79FFABBA-E8B4-400E-B0DE-3C3A96FCC1C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Tests", "MahApps.Metro.Tests", "{DE4C3C8F-2D5A-4BD2-BAFF-8AD7542A0F05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Demo", "MahApps.Metro.Demo", "{2C8A3F60-5E55-4A94-9171-D38224988345}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Caliburn.Demo", "MahApps.Metro.Caliburn.Demo", "{4E620130-FDBD-4072-9CD3-237BBA25DDD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Demo.NET40", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.NET40\MahApps.Metro.Demo.NET40.csproj", "{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Demo.NET45", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.NET45\MahApps.Metro.Demo.NET45.csproj", "{CC00392E-55A8-41EE-BE27-A7D166F032FA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MahApps.Metro.Demo.Shared", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.shproj", "{D25FB32F-945F-416B-9625-6D38ACEA6355}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.NET40", "MahApps.Metro\MahApps.Metro\MahApps.Metro.NET40.csproj", "{73D442CA-0217-4D9A-AA14-B3E8B95B8500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.NET45", "MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj", "{579D4FA7-0946-4592-AE9B-A73D2D1262C6}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MahApps.Metro.Shared", "MahApps.Metro\MahApps.Metro.Shared\MahApps.Metro.Shared.shproj", "{2843F39D-AAC1-44B2-B26C-02DEE5D85666}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Caliburn.Demo.NET40", "MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.NET40\MahApps.Metro.Caliburn.Demo.NET40.csproj", "{C524AADA-6317-407C-8CAC-D95A5B59FD87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Caliburn.Demo.NET45", "MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.NET45\MahApps.Metro.Caliburn.Demo.NET45.csproj", "{D3062FD0-F0BE-4CBC-AF49-27C120438C97}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MahApps.Metro.Caliburn.Demo.Shared", "MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.shproj", "{7DA8A2A9-492C-4886-A8AB-A207D2549922}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MahApps.Metro.Core.Demo.Shared", "MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.shproj", "{3085C6E4-041B-4B84-9E6E-1DB70716A744}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahapps.Metro.Tests.NET40", "Mahapps.Metro.Tests\Mahapps.Metro.Tests.NET40\Mahapps.Metro.Tests.NET40.csproj", "{0973798E-7446-4A7B-B9A7-681AEF643765}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Mahapps.Metro.Tests.Shared", "Mahapps.Metro.Tests\Mahapps.Metro.Tests.Shared\Mahapps.Metro.Tests.Shared.shproj", "{CF13BE1B-9C23-46B3-8426-5EB15FE509A8}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems*{03fffab9-003e-4b0f-9688-a45aa54e98e4}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.projitems*{03fffab9-003e-4b0f-9688-a45aa54e98e4}*SharedItemsImports = 4
+		Mahapps.Metro.Tests\Mahapps.Metro.Tests.Shared\Mahapps.Metro.Tests.Shared.projitems*{0973798e-7446-4a7b-b9a7-681aef643765}*SharedItemsImports = 4
+		MahApps.Metro\MahApps.Metro.Shared\MahApps.Metro.Shared.projitems*{2843f39d-aac1-44b2-b26c-02dee5d85666}*SharedItemsImports = 13
+		MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems*{3085c6e4-041b-4b84-9e6e-1db70716a744}*SharedItemsImports = 13
+		MahApps.Metro\MahApps.Metro.Shared\MahApps.Metro.Shared.projitems*{579d4fa7-0946-4592-ae9b-a73d2d1262c6}*SharedItemsImports = 4
+		MahApps.Metro\MahApps.Metro.Shared\MahApps.Metro.Shared.projitems*{73d442ca-0217-4d9a-aa14-b3e8b95b8500}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems*{7da8a2a9-492c-4886-a8ab-a207d2549922}*SharedItemsImports = 13
+		MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems*{c524aada-6317-407c-8cac-d95a5b59fd87}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems*{c524aada-6317-407c-8cac-d95a5b59fd87}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems*{cc00392e-55a8-41ee-be27-a7d166f032fa}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.projitems*{cc00392e-55a8-41ee-be27-a7d166f032fa}*SharedItemsImports = 4
+		Mahapps.Metro.Tests\Mahapps.Metro.Tests.Shared\Mahapps.Metro.Tests.Shared.projitems*{cf13be1b-9c23-46b3-8426-5eb15fe509a8}*SharedItemsImports = 13
+		MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.projitems*{d25fb32f-945f-416b-9625-6d38acea6355}*SharedItemsImports = 13
+		MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems*{d3062fd0-f0be-4cbc-af49-27c120438c97}*SharedItemsImports = 4
+		MahApps.Metro.Samples\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems*{d3062fd0-f0be-4cbc-af49-27c120438c97}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC00392E-55A8-41EE-BE27-A7D166F032FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC00392E-55A8-41EE-BE27-A7D166F032FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC00392E-55A8-41EE-BE27-A7D166F032FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC00392E-55A8-41EE-BE27-A7D166F032FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C524AADA-6317-407C-8CAC-D95A5B59FD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C524AADA-6317-407C-8CAC-D95A5B59FD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C524AADA-6317-407C-8CAC-D95A5B59FD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C524AADA-6317-407C-8CAC-D95A5B59FD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3062FD0-F0BE-4CBC-AF49-27C120438C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3062FD0-F0BE-4CBC-AF49-27C120438C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3062FD0-F0BE-4CBC-AF49-27C120438C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3062FD0-F0BE-4CBC-AF49-27C120438C97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0973798E-7446-4A7B-B9A7-681AEF643765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0973798E-7446-4A7B-B9A7-681AEF643765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0973798E-7446-4A7B-B9A7-681AEF643765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0973798E-7446-4A7B-B9A7-681AEF643765}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C8A3F60-5E55-4A94-9171-D38224988345} = {79FFABBA-E8B4-400E-B0DE-3C3A96FCC1C7}
+		{4E620130-FDBD-4072-9CD3-237BBA25DDD5} = {79FFABBA-E8B4-400E-B0DE-3C3A96FCC1C7}
+		{03FFFAB9-003E-4B0F-9688-A45AA54E98E4} = {2C8A3F60-5E55-4A94-9171-D38224988345}
+		{CC00392E-55A8-41EE-BE27-A7D166F032FA} = {2C8A3F60-5E55-4A94-9171-D38224988345}
+		{D25FB32F-945F-416B-9625-6D38ACEA6355} = {2C8A3F60-5E55-4A94-9171-D38224988345}
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500} = {51372046-0912-4AD0-916A-13FC6C278CFF}
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6} = {51372046-0912-4AD0-916A-13FC6C278CFF}
+		{2843F39D-AAC1-44B2-B26C-02DEE5D85666} = {51372046-0912-4AD0-916A-13FC6C278CFF}
+		{C524AADA-6317-407C-8CAC-D95A5B59FD87} = {4E620130-FDBD-4072-9CD3-237BBA25DDD5}
+		{D3062FD0-F0BE-4CBC-AF49-27C120438C97} = {4E620130-FDBD-4072-9CD3-237BBA25DDD5}
+		{7DA8A2A9-492C-4886-A8AB-A207D2549922} = {4E620130-FDBD-4072-9CD3-237BBA25DDD5}
+		{3085C6E4-041B-4B84-9E6E-1DB70716A744} = {2C8A3F60-5E55-4A94-9171-D38224988345}
+		{0973798E-7446-4A7B-B9A7-681AEF643765} = {DE4C3C8F-2D5A-4BD2-BAFF-8AD7542A0F05}
+		{CF13BE1B-9C23-46B3-8426-5EB15FE509A8} = {DE4C3C8F-2D5A-4BD2-BAFF-8AD7542A0F05}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Window.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource StandardButton}" TargetType="Button" />
+    <Style BasedOn="{StaticResource StandardListBox}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource StandardMenuItem}" TargetType="MenuItem" />
+    <Style BasedOn="{StaticResource StandardMenu}" TargetType="Menu" />
+    <Style BasedOn="{StaticResource StandardScrollBar}" TargetType="ScrollBar" />
+    <Style BasedOn="{StaticResource StandardTabItem}" TargetType="TabItem" />
+    <Style BasedOn="{StaticResource StandardTabControl}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource StandardTextBox}" TargetType="TextBox" />
+
+</ResourceDictionary>

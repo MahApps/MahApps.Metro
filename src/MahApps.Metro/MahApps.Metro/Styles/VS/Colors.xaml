@@ -1,0 +1,90 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    mc:Ignorable="options">
+
+    <!--  Background  -->
+    <SolidColorBrush x:Key="Background" Color="#1C1C1C" />
+    <SolidColorBrush x:Key="LightBackground" Color="#2D2D30" />
+    <Color x:Key="AccentColor">#2D2D30</Color>
+    <Color x:Key="BlackColor">#FFFFFFFF</Color>
+    <Color x:Key="WhiteColor">#2D2D30</Color>
+
+    <!--  re-set brushes too  -->
+    <SolidColorBrush x:Key="HighlightBrush" options:Freeze="True" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush" options:Freeze="True" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush2" options:Freeze="True" Color="{StaticResource AccentColor2}" />
+    <SolidColorBrush x:Key="AccentColorBrush3" options:Freeze="True" Color="{StaticResource AccentColor3}" />
+    <SolidColorBrush x:Key="AccentColorBrush4" options:Freeze="True" Color="{StaticResource AccentColor4}" />
+
+    <SolidColorBrush x:Key="WindowTitleColorBrush" options:Freeze="True" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="NonActiveWindowTitleColorBrush" Color="#808080" options:Freeze="True" />
+    <SolidColorBrush x:Key="NonActiveBorderColorBrush" Color="#808080" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="BlackBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="LabelTextBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="BlackColorBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxFocusBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush" options:Freeze="True" Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="ControlBackgroundBrush" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteBrush" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteColorBrush" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="DisabledWhiteBrush" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" options:Freeze="True" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" options:Freeze="True" Color="{StaticResource BlackColor}" />
+
+    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" options:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="{StaticResource Gray7}" />
+        <GradientStop Offset="1" Color="{StaticResource WhiteColor}" />
+    </LinearGradientBrush>
+
+    <!--  Foreground  -->
+    <SolidColorBrush x:Key="Foreground" options:Freeze="True" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="WindowTitleForeground" options:Freeze="True" Color="#999988" />
+
+    <!--  General  -->
+    <SolidColorBrush x:Key="BackgroundHighlighted" options:Freeze="True" Color="#54545C" />
+    <SolidColorBrush x:Key="BorderBrushHighlighted" options:Freeze="True" Color="#6A6A75" />
+    <SolidColorBrush x:Key="BackgroundSelected" options:Freeze="True" Color="#007ACC" />
+    <SolidColorBrush x:Key="BorderBrushSelected" options:Freeze="True" Color="#1C97EA" />
+    <SolidColorBrush x:Key="BackgroundNormal" options:Freeze="True" Color="#3F3F46" />
+    <SolidColorBrush x:Key="BorderBrushNormal" options:Freeze="True" Color="#54545C" />
+    <SolidColorBrush x:Key="WindowGlowBrush" options:Freeze="True" Color="#017ACC" />
+
+    <!--  Text Box  -->
+    <SolidColorBrush x:Key="TextBoxBackground" options:Freeze="True" Color="#333337" />
+    <SolidColorBrush x:Key="TextBoxBackgroundSelected" options:Freeze="True" Color="#3F3F46" />
+
+    <!--  Search Text Box  -->
+    <SolidColorBrush x:Key="SearchTextForeground" options:Freeze="True" Color="#999999" />
+
+    <!--  Link Button  -->
+    <SolidColorBrush x:Key="LinkButtonForeground" options:Freeze="True" Color="#1297FB" />
+    <SolidColorBrush x:Key="LinkButtonForegroundHighlighted" options:Freeze="True" Color="#55AAFF" />
+
+    <!--  Close Button  -->
+    <SolidColorBrush x:Key="CloseButtonBackgroundHighlighted" options:Freeze="True" Color="#39ADFB" />
+    <SolidColorBrush x:Key="CloseButtonBackgroundPressed" options:Freeze="True" Color="#084E7D" />
+    <SolidColorBrush x:Key="CloseButtonStroke" options:Freeze="True" Color="#AAFFFFFF" />
+    <SolidColorBrush x:Key="CloseButtonStrokeHighlighted" options:Freeze="True" Color="#FFFFFF" />
+
+    <!--  Menu  -->
+    <SolidColorBrush x:Key="MenuSeparatorBorderBrush" options:Freeze="True" Color="#333337" />
+    <SolidColorBrush x:Key="MenuItemHighlightedBackground" options:Freeze="True" Color="#3E3E40" />
+    <SolidColorBrush x:Key="SubmenuItemBackground" options:Freeze="True" Color="#1B1B1C" />
+    <SolidColorBrush x:Key="SubmenuItemBackgroundHighlighted" options:Freeze="True" Color="#333334" />
+    <SolidColorBrush x:Key="MenuDisabledForeground" options:Freeze="True" Color="#656565" />
+
+    <!--  Scroll Bar  -->
+    <SolidColorBrush x:Key="ScrollBarPageButtonBackgroundHighlighted" options:Freeze="True" Color="#05FFFFFF" />
+
+</ResourceDictionary>

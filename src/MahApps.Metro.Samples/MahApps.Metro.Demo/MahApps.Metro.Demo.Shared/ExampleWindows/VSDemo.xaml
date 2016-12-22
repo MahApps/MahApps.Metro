@@ -1,0 +1,410 @@
+﻿<Controls:MetroWindow x:Class="MetroDemo.ExampleWindows.VSDemo"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:System="clr-namespace:System;assembly=mscorlib"
+                      Title="Visual Studio 2012 Style Demo"
+                      Width="1000"
+                      Height="800"
+                      Style="{DynamicResource VSWindowStyleKey}"
+                      WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu Margin="2,0,0,0"
+              DockPanel.Dock="Top"
+              SnapsToDevicePixels="True">
+            <MenuItem Header="ROCKETS">
+                <MenuItem Header="Rocket slot 1">
+                    <MenuItem Header="Fire slot" />
+                    <Separator />
+                    <MenuItem Header="Relaod slot" />
+                    <MenuItem Header="Report damage to control room" />
+                </MenuItem>
+                <MenuItem Header="Rocket slot 2">
+                    <MenuItem Header="damaged .. being repaired" IsEnabled="False" />
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="NAVIGATION">
+                <MenuItem Header="Left engine">
+                    <MenuItem Header="Full speed ahead" />
+                    <MenuItem Header="2/3 speed" />
+                    <MenuItem Header="1/3 speed" />
+                    <MenuItem Header="Stop engine" />
+                </MenuItem>
+                <MenuItem Header="Right engine">
+                    <MenuItem Header="Full speed ahead" />
+                    <MenuItem Header="2/3 speed" />
+                    <MenuItem Header="1/3 speed" />
+                    <MenuItem Header="Stop engine" />
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <TextBlock Margin="5"
+                   VerticalAlignment="Center"
+                   DockPanel.Dock="Left"
+                   Foreground="{StaticResource Foreground}">
+            <TextBlock.LayoutTransform>
+                <RotateTransform Angle="90" />
+            </TextBlock.LayoutTransform>
+            Starship ENTERPRISE
+        </TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+            <TabControl Margin="0,10,0,0" TabStripPlacement="Top">
+                <TabItem Header="Start">
+                    <Grid Margin="50">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="15" />
+                            <RowDefinition Height="25" />
+                            <RowDefinition Height="25" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   FontSize="30"
+                                   Foreground="{StaticResource Foreground}">
+                            Space Commander - Starship Enterprise
+                        </TextBlock>
+                        <TextBlock Grid.Row="1"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            You are logged in as:
+                        </TextBlock>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}"
+                                   Text="{x:Static System:Environment.UserName}" />
+                        <TextBlock Grid.Row="2"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Ship state
+                        </TextBlock>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   FontSize="16"
+                                   Foreground="{StaticResource BackgroundSelected}">
+                            IO
+                        </TextBlock>
+                        <Separator Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Margin="5" />
+                        <TextBlock Grid.Row="4"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Ship commander
+                        </TextBlock>
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Captain James T. Kirk
+                        </TextBlock>
+                        <TextBlock Grid.Row="5"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Ship name
+                        </TextBlock>
+                        <TextBlock Grid.Row="5"
+                                   Grid.Column="1"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Enterprise (NCC-1701)
+                        </TextBlock>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Manage Rockets">
+                    <DockPanel>
+                        <Button Width="200"
+                                Height="30"
+                                Margin="50"
+                                DockPanel.Dock="Bottom">
+                            Add rocket
+                        </Button>
+                        <ListBox Margin="50" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBoxItem>
+                                <StackPanel>
+                                    <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Rocket 1</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Status: IO</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Fire rate: 2ms</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Ammo: 455/455</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <StackPanel>
+                                    <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Rocket 2</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Status: Damaged</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Fire rate: 100ms</TextBlock>
+                                    <TextBlock FontSize="16" Foreground="{StaticResource Foreground}">Ammo: 50/156</TextBlock>
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="Communication">
+                    <Grid Margin="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Receiver
+                        </TextBlock>
+                        <TextBox Grid.Column="1"
+                                 Margin="5"
+                                 FontSize="16">
+                            captain.kirk@enterprise.com
+                        </TextBox>
+                        <TextBlock Grid.Row="1"
+                                   Margin="5"
+                                   FontSize="16"
+                                   Foreground="{StaticResource Foreground}">
+                            Search for messages
+                        </TextBlock>
+                        <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Margin="5"
+                                 FontSize="16"
+                                 Style="{StaticResource SearchTextBox}" />
+                        <TextBox Grid.Row="2"
+                                 Grid.ColumnSpan="2"
+                                 Margin="5"
+                                 AcceptsReturn="True"
+                                 FontSize="16"
+                                 Text="Good morning captain&#x0a;How are you?"
+                                 TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto" />
+                        <StackPanel Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Orientation="Horizontal">
+                            <Button Width="200"
+                                    Height="30"
+                                    Margin="5">
+                                Send
+                            </Button>
+                            <Button Width="200"
+                                    Height="30"
+                                    Margin="5">
+                                Save as draft
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Crew">
+                    <ListBox Margin="50">
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="60" Foreground="{StaticResource Foreground}">James T. Kirk</TextBlock>
+                                <TextBlock FontSize="35" Foreground="{StaticResource Foreground}">Rank: Captain</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Commanding Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="50" Foreground="{StaticResource Foreground}">Spock</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Rank: Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Executive (First)</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="40" Foreground="{StaticResource Foreground}">Leonard McCoy</TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource Foreground}">Rank: Lt. Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Chief Medical Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="40" Foreground="{StaticResource Foreground}">Montgomery Scott</TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource Foreground}">Rank: Lt. Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Chief Engineer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Hikaru Sulu</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Lieutenant</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Helm Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Nyota Uhura</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Lieutenant</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Communications Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Pavel Chekov</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Ensign</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Navigator</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Christine Chapel</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Enlisted Nurse</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Nurse</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Janice Rand</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Enlisted Yeoman</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Yeoman</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </TabItem>
+                <TabItem Header="Crew Horizontal">
+                    <ListBox Margin="50" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="60" Foreground="{StaticResource Foreground}">James T. Kirk</TextBlock>
+                                <TextBlock FontSize="35" Foreground="{StaticResource Foreground}">Rank: Captain</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Commanding Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="50" Foreground="{StaticResource Foreground}">Spock</TextBlock>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Rank: Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Executive (First)</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="40" Foreground="{StaticResource Foreground}">Leonard McCoy</TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource Foreground}">Rank: Lt. Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Chief Medical Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="40" Foreground="{StaticResource Foreground}">Montgomery Scott</TextBlock>
+                                <TextBlock FontSize="22" Foreground="{StaticResource Foreground}">Rank: Lt. Commander</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Chief Engineer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#FFAAAA">Current action: Out for duty</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Hikaru Sulu</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Lieutenant</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Helm Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Nyota Uhura</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Lieutenant</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Communications Officer</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Pavel Chekov</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Ensign</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Navigator</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Christine Chapel</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Enlisted Nurse</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Nurse</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel>
+                                <TextBlock FontSize="30" Foreground="{StaticResource Foreground}">Janice Rand</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Rank: Enlisted Yeoman</TextBlock>
+                                <TextBlock FontSize="18" Foreground="{StaticResource Foreground}">Position: Yeoman</TextBlock>
+                                <TextBlock FontSize="18" Foreground="#AAAAAA">Current action: Sleeping</TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </TabItem>
+            </TabControl>
+            <StackPanel Grid.Column="1" Margin="50,25,25,0">
+                <TextBlock Margin="0,10,0,10"
+                           FontSize="18"
+                           Foreground="{StaticResource Foreground}"
+                           Text="Actions" />
+                <Separator Background="#11FFFFFF" />
+                <Button Margin="0,10,0,3"
+                        Content="Fire rocket..."
+                        FontSize="14"
+                        Style="{StaticResource LinkButton}" />
+                <Button Margin="0,3,0,10"
+                        Content="Throw something over board..."
+                        FontSize="14"
+                        Style="{StaticResource LinkButton}" />
+                <Separator Background="#11FFFFFF" />
+                <TextBlock Margin="0,10,0,10"
+                           FontSize="18"
+                           Foreground="{StaticResource Foreground}"
+                           Text="Recent" />
+                <Separator Background="#11FFFFFF" />
+                <Button Margin="0,10,0,3"
+                        Content="blastallenemies.cmd"
+                        FontSize="14"
+                        Style="{StaticResource LinkButton}" />
+                <Button Margin="0,3,0,3"
+                        Content="verysecretmessage.txt"
+                        FontSize="14"
+                        Style="{StaticResource LinkButton}" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+
+</Controls:MetroWindow>

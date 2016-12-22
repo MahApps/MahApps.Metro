@@ -1,0 +1,253 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.OtherExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mx="clr-namespace:MetroDemo.Markup"
+             xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <!--  better results for this examples  -->
+            <Style BasedOn="{StaticResource {x:Type Controls:TransitioningContentControl}}" TargetType="{x:Type Controls:TransitioningContentControl}">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+            </Style>
+
+            <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
+                <Image Stretch="Fill" Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Transitions" />
+            <Controls:TransitioningContentControl x:Name="transitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0 10 0 0"
+                                                  Transition="Down" />
+            <Controls:TransitioningContentControl x:Name="customTransitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0 10 0 0"
+                                                  Transition="Custom">
+                <Controls:TransitioningContentControl.CustomVisualStates>
+                    <VisualState x:Name="CustomTransition">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </Controls:TransitioningContentControl.CustomVisualStates>
+            </Controls:TransitioningContentControl>
+            <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0 10 0 0"
+                                                  CustomVisualStatesName="SecondCustomTransition"
+                                                  Transition="Custom">
+                <Controls:TransitioningContentControl.CustomVisualStates>
+                    <VisualState x:Name="SecondCustomTransition">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="1">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <SineEase />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </Controls:TransitioningContentControl.CustomVisualStates>
+            </Controls:TransitioningContentControl>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="FlipView" />
+            <Grid Grid.IsSharedSizeScope="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Group1" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <CheckBox x:Name="ShowBannerCheckBox"
+                          Grid.Column="0"
+                          Grid.Row="0"
+                          Margin="5 2"
+                          Content="Banner" />
+                <CheckBox x:Name="ShowMouseOverCheckBox"
+                          Grid.Column="1"
+                          Grid.Row="0"
+                          Margin="5 2"
+                          Content="MouseOver Glow"
+                          IsChecked="True" />
+                <CheckBox x:Name="CircularNaviCheckBox"
+                          Grid.Column="0"
+                          Grid.Row="1"
+                          Margin="5 2"
+                          Content="Circular Navi"
+                          IsChecked="False" />
+                <CheckBox x:Name="ShowNaviCheckBox"
+                          Grid.Column="1"
+                          Grid.Row="1"
+                          Margin="5 2"
+                          Content="Show NaviButtons"
+                          IsChecked="True" />
+                <ComboBox x:Name="Orientation"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
+                          SelectedIndex="0"
+                          Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+            </Grid>
+            <Controls:FlipView x:Name="FlipView1st"
+                               Height="200"
+                               Margin="0 0 5 0"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
+                               SelectionChanged="FlipView_SelectionChanged">
+                <Controls:FlipView.Items>
+                    <Grid Background="#2E8DEF">
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="Cupcake" />
+                    </Grid>
+                    <Grid Background="#00A600">
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="Xbox" />
+                    </Grid>
+                    <Grid Background="#BF1E4B">
+                        <iconPacks:PackIconModern Width="60"
+                                                 Height="60"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 Kind="ChessHorse" />
+                    </Grid>
+                </Controls:FlipView.Items>
+            </Controls:FlipView>
+            <StackPanel Orientation="Horizontal" DataContext="{Binding ElementName=FlipView1st, Mode=OneWay}" HorizontalAlignment="Center">
+                <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
+                                        ButtonsAlignment="Left"
+                                        Interval="1"
+                                        Minimum="1"
+                                        Maximum="{Binding Path=Items.Count, Mode=OneWay}"
+                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}"/>
+                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0">
+                    <Run Text="/" />
+                    <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
+                </TextBlock>
+            </StackPanel>
+
+            <Separator Margin="0 5" />
+            <Controls:FlipView x:Name="FlipView2nd" Height="200"
+                               Margin="0 0 5 0"
+                               BannerText="Databound Items"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
+                               ItemTemplate="{StaticResource ImageDataTemplate}"
+                               ItemsSource="{Binding FlipViewImages, Mode=OneWay}" />
+            <StackPanel Orientation="Horizontal" DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}" HorizontalAlignment="Center">
+                <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
+                                        ButtonsAlignment="Left"
+                                        Interval="1"
+                                        Minimum="1"
+                                        Maximum="{Binding Path=Items.Count, Mode=OneWay}"
+                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}"/>
+                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0">
+                    <Run Text="/" />
+                    <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              Grid.Column="0">
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Context menu" />
+            <Label HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   Content="Right click here to open a context menu">
+                <Label.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Menu 1">
+                            <MenuItem Header="Submenu 1" IsChecked="True" />
+                            <MenuItem Header="Submenu 1"
+                                      IsChecked="True"
+                                      IsEnabled="False" />
+                            <MenuItem Header="Submenu 2" />
+                            <MenuItem Header="Submenu 3" IsEnabled="False" />
+                        </MenuItem>
+                        <MenuItem Header="Menu 2" />
+                        <MenuItem Header="Menu 3" IsChecked="True" />
+                        <MenuItem Header="Menu 4"
+                                  IsChecked="True"
+                                  IsEnabled="False" />
+                        <MenuItem Header="Menu 5" />
+                        <MenuItem Header="Menu 6" IsEnabled="False" />
+                    </ContextMenu>
+                </Label.ContextMenu>
+            </Label>
+        </Grid>
+    </Grid>
+
+</UserControl>

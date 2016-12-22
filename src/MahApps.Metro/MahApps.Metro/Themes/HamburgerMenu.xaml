@@ -1,0 +1,165 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="HamburgerButtonStyle"
+           BasedOn="{StaticResource ChromelessButtonStyle}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid Background="Transparent">
+                        <Grid x:Name="PART_Background" Background="{TemplateBinding Background}" Opacity="0" />
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Opacity="0.75"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Background" Property="Opacity" Value="0.3" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="PART_Background" Property="Opacity" Value="0" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.75" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="HamburgerListBoxStyle"
+           BasedOn="{StaticResource MetroListBox}"
+           TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:HamburgerMenu}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HamburgerMenuTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--  PackIconMaterial - Menu  -->
+                    <ContentControl Width="22"
+                                    Height="22"
+                                    Content="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"
+                                    Style="{DynamicResource PathIconContentControlStyle}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:HamburgerMenu}">
+                    <Grid>
+                        <controls:SplitView x:Name="MainSplitView"
+                                            CompactPaneLength="{TemplateBinding CompactPaneLength}"
+                                            DisplayMode="{TemplateBinding DisplayMode}"
+                                            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                            OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                                            PaneBackground="{TemplateBinding PaneBackground}"
+                                            PanePlacement="{TemplateBinding PanePlacement}">
+                            <controls:SplitView.Pane>
+                                <Grid x:Name="PaneGrid">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" />
+                                    <ListBox Name="ButtonsListView"
+                                             Grid.Row="1"
+                                             Width="{TemplateBinding OpenPaneLength}"
+                                             AutomationProperties.Name="Menu items"
+                                             ItemTemplate="{TemplateBinding ItemTemplate}"
+                                             ItemsSource="{TemplateBinding ItemsSource}"
+                                             SelectionMode="Single"
+                                             Style="{StaticResource HamburgerListBoxStyle}"
+                                             TabIndex="1" />
+
+                                    <Grid Grid.Row="2" Visibility="{TemplateBinding OptionsVisibility}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <ListBox Name="OptionsListView"
+                                                 Grid.Row="1"
+                                                 Width="{TemplateBinding OpenPaneLength}"
+                                                 VerticalAlignment="Bottom"
+                                                 AutomationProperties.Name="Option items"
+                                                 ItemTemplate="{TemplateBinding OptionsItemTemplate}"
+                                                 ItemsSource="{TemplateBinding OptionsItemsSource}"
+                                                 Style="{StaticResource HamburgerListBoxStyle}"
+                                                 TabIndex="2" />
+                                    </Grid>
+
+                                </Grid>
+                            </controls:SplitView.Pane>
+                            <controls:TransitioningContentControl HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  AutomationProperties.Name="Content"
+                                                                  Content="{TemplateBinding Content}"
+                                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                                  Padding="{TemplateBinding Padding}"
+                                                                  RestartTransitionOnContentChange="True"
+                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                  Transition="{TemplateBinding ContentTransition}" />
+                        </controls:SplitView>
+                        <Button x:Name="HamburgerButton"
+                                Width="{TemplateBinding HamburgerWidth}"
+                                Height="{TemplateBinding HamburgerHeight}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                AutomationProperties.Name="Main button"
+                                Style="{StaticResource HamburgerButtonStyle}"
+                                TabIndex="0">
+                            <ContentControl Margin="{TemplateBinding HamburgerMargin}"
+                                            ContentTemplate="{TemplateBinding HamburgerMenuTemplate}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            IsTabStop="False" />
+                        </Button>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+</ResourceDictionary>
+
+
+

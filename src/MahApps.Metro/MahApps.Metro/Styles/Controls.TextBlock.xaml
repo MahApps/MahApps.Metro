@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  never ever make a default style for TextBlock in App.xaml !!!  -->
+    <Style x:Key="MetroTextBlock" TargetType="{x:Type TextBlock}" />
+
+    <Style x:Key="MetroAutoCollapsingTextBlock"
+           BasedOn="{StaticResource MetroTextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource FloatingWatermarkFontSize}" />
+        <Setter Property="Opacity" Value="0.6" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

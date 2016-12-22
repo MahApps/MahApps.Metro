@@ -1,0 +1,17 @@
+source https://nuget.org/api/v2
+framework >= net40
+
+nuget JetBrains.Annotations
+nuget Costura.Fody
+nuget Caliburn.Micro ~> 3.0
+nuget ExposedObject ~> 1.2
+nuget MahApps.Metro.IconPacks
+nuget Microsoft.Bcl framework: = net40
+nuget Microsoft.Bcl.Async framework: = net40
+nuget Microsoft.Bcl.Build framework: = net40
+nuget NHotkey 1.2.1
+nuget NHotkey.Wpf 1.2.1
+nuget xunit ~> 1.9
+nuget xunit.extensions ~> 1.9
+
+github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/KeyboardNavigationEx.cs

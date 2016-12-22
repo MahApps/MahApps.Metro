@@ -1,0 +1,283 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.TabControlExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <ScrollViewer>
+        <StackPanel Margin="5, 10, 5, 0">
+            <Expander Margin="0" Header="_Default TabControl">
+                <StackPanel Margin="15, 5, 15, 5">
+                    <Label Content="Default TabControl normal style" Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <TabControl>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _1">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _2">
+                            <TextBlock FontSize="30" Text="More content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _3">
+                            <TextBlock FontSize="30" Text="More more content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _4">
+                            <TextBlock FontSize="30" Text="So much content!" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _5">
+                            <TextBlock FontSize="30" Text="Content!" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _6">
+                            <TextBlock FontSize="30" Text="This is not content (it is)" />
+                        </TabItem>
+                    </TabControl>
+                    <Label Content="Default _TabControl with underline" Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True">
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 1">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 2">
+                            <TextBlock FontSize="30" Text="More content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 3">
+                            <TextBlock FontSize="30" Text="More more content" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 4">
+                            <TextBlock FontSize="30" Text="So much content!" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 5">
+                            <TextBlock FontSize="30" Text="Content!" />
+                        </TabItem>
+                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item 6">
+                            <TextBlock FontSize="30" Text="This is not content (it is)" />
+                        </TabItem>
+                    </TabControl>
+                    <Label Margin="0, 5, 0, 0"
+                           Content="Default TabControl with _AnimatedTabControl style"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+                        </Grid.Resources>
+                        <TabControl>
+                            <Controls:MetroTabItem Header="this tabcontrol">
+                                <TextBlock FontSize="30" Text="Cool transition" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="animates its content">
+                                <TextBlock FontSize="30" Text="More cool transition" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="with a transition">
+                                <TextBlock FontSize="30" Text="Animate everything!" />
+                            </Controls:MetroTabItem>
+                        </TabControl>
+                    </Grid>
+                    <Label Margin="0, 5, 0, 0"
+                           Content="Default TabControl with Animated_SingleRowTabControl style"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                        </Grid.Resources>
+                        <TabControl>
+                            <TabItem Header="this tabcontrols tabs">
+                                <TextBlock FontSize="30" Text="Content" />
+                            </TabItem>
+                            <TabItem Header="appear only on a single line">
+                                <TextBlock FontSize="30" Text="Content" />
+                            </TabItem>
+                            <TabItem Header="if they are overflowing">
+                                <TextBlock FontSize="30" Text="Content" />
+                            </TabItem>
+                            <TabItem Header="instead of wrapping them">
+                                <TextBlock FontSize="30" Text="Content" />
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                    <Label Margin="0, 5, 0, 0"
+                           Content="Default TabControl _left style"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Grid>
+                        <Grid.Resources>
+                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                        </Grid.Resources>
+                        <TabControl Height="100"
+                                    Margin="0, 10, 0, 0"
+                                    TabStripPlacement="Left">
+                            <TabItem Header="LeftItem0">
+                                <TextBlock FontSize="30" Text="This is left content 0" />
+                            </TabItem>
+                            <TabItem Header="LeftItem1">
+                                <TextBlock FontSize="30" Text="This is left content 1" />
+                            </TabItem>
+                            <TabItem Header="LeftItem2">
+                                <TextBlock FontSize="30" Text="This is left content 2" />
+                            </TabItem>
+                            <TabItem Header="LeftItem3">
+                                <TextBlock FontSize="30" Text="This is left content 3" />
+                            </TabItem>
+                            <TabItem Header="LeftItem4">
+                                <TextBlock FontSize="30" Text="This is left content 4" />
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                    <!--
+                                    Right & Bottom are both work, no need to show them all
+                                    <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
+                                        <TabItem Header="RightItem0" Content="This is Right content 0" />
+                                        <TabItem Header="RightItem1" Content="This is Right content 1" />
+                                        <TabItem Header="RightItem2" Content="This is Right content 2" />
+                                    </TabControl>
+                                    <TabControl TabStripPlacement="Bottom" Style="{DynamicResource MetroTabControl}">
+                                        <TabItem Header="BottomItem0" Content="This is Bottom content 0" />
+                                        <TabItem Header="BottomItem1" Content="This is Bottom content 1" />
+                                        <TabItem Header="BottomItem2" Content="This is Bottom content 2" />
+                                    </TabControl>
+                    -->
+                </StackPanel>
+            </Expander>
+            <Expander Margin="0, 10, 0, 0" Header="_Generic theme TabControls">
+                <StackPanel Margin="15, 5, 15, 5">
+                    <Label Content="MetroAnimatedTabControl" Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Controls:MetroAnimatedSingleRowTabControl Height="100" TabStripPlacement="Left">
+                            <TabControl.Resources>
+                                <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="{x:Type TabItem}">
+                                    <Setter Property="HeaderTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <ContentPresenter Content="{TemplateBinding Content}">
+                                                    <ContentPresenter.LayoutTransform>
+                                                        <RotateTransform Angle="270" />
+                                                    </ContentPresenter.LayoutTransform>
+                                                </ContentPresenter>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+                            <TabItem Header="Test1">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Left Test 1" />
+                            </TabItem>
+                            <TabItem Header="Test2">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Left Test 2" />
+                            </TabItem>
+                            <TabItem Header="Test3">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Left Test 3" />
+                            </TabItem>
+                        </Controls:MetroAnimatedSingleRowTabControl>
+                        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="1"
+                                                                   Height="100"
+                                                                   TabStripPlacement="Right">
+                            <TabControl.Resources>
+                                <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="{x:Type TabItem}">
+                                    <Setter Property="HeaderTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <ContentPresenter Content="{TemplateBinding Content}">
+                                                    <ContentPresenter.LayoutTransform>
+                                                        <RotateTransform Angle="90" />
+                                                    </ContentPresenter.LayoutTransform>
+                                                </ContentPresenter>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TabControl.Resources>
+                            <TabItem Header="Test1">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Right Test 1" />
+                            </TabItem>
+                            <TabItem Header="Test2">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Right Test 2" />
+                            </TabItem>
+                            <TabItem Header="Test3">
+                                <TextBlock FontSize="12" Text="TabStripPlacement Right Test 3" />
+                            </TabItem>
+                        </Controls:MetroAnimatedSingleRowTabControl>
+                    </Grid>
+                    <Controls:MetroAnimatedTabControl>
+                        <TabItem Header="this tabcontrol">
+                            <TextBlock FontSize="30" Text="Cool transition" />
+                        </TabItem>
+                        <TabItem Header="animates its content">
+                            <TextBlock FontSize="30" Text="More cool transition" />
+                        </TabItem>
+                        <TabItem Header="with a transition">
+                            <TextBlock FontSize="30" Text="Animate everything!" />
+                        </TabItem>
+                    </Controls:MetroAnimatedTabControl>
+                    <Label Margin="0, 5, 0, 0"
+                           Content="MetroAnimatedSingleRowTabControl"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Controls:MetroAnimatedSingleRowTabControl>
+                        <TabItem Header="this tabcontrols tabs">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="appear only on a single line">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="if they are overflowing">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="instead of wrapping them">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                    </Controls:MetroAnimatedSingleRowTabControl>
+                    <Label Margin="0 5 0 0"
+                           Content="TabControl w/ Closable Items"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               CloseTabCommand="{Binding SingleCloseTabCommand}"
+                                               CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
+                                               Controls:ControlsHelper.HeaderFontSize="20"
+                                               Header="headers">
+                            <TextBlock FontSize="30" Text="you can bind to a command" />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               CloseTabCommand="{Binding NeverCloseTabCommand}"
+                                               CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
+                                               Controls:ControlsHelper.HeaderFontSize="22"
+                                               Header="can">
+                            <TextBlock FontSize="30" Text="and ensure the command never closes" />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               Controls:ControlsHelper.HeaderFontSize="24"
+                                               Header="have">
+                            <TextBlock FontSize="30" Text="More more content" />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               Controls:ControlsHelper.HeaderFontSize="26"
+                                               Header="different">
+                            <TextBlock FontSize="30" Text="So much content!" />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               Controls:ControlsHelper.HeaderFontSize="28"
+                                               Header="font">
+                            <TextBlock FontSize="30" Text="Content!" />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               Controls:ControlsHelper.HeaderFontSize="30"
+                                               Header="sizes">
+                            <TextBlock FontSize="30" Text="This is not content (it is). This one won't close." />
+                        </Controls:MetroTabItem>
+                        <Controls:MetroTabItem CloseButtonEnabled="True"
+                                               Controls:ControlsHelper.HeaderFontSize="36"
+                                               Header="close button">
+                            <TextBlock FontSize="24" Text="The size of close button will be changed proportionately considering its header size." />
+                        </Controls:MetroTabItem>
+                    </Controls:MetroTabControl>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+
+    </ScrollViewer>
+
+</UserControl>

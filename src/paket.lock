@@ -1,0 +1,26 @@
+FRAMEWORK: >= NET40
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Caliburn.Micro (3.0.1)
+      Caliburn.Micro.Core (3.0.1)
+    Caliburn.Micro.Core (3.0.1)
+    Costura.Fody (1.3.3)
+      Fody (>= 1.26.1)
+    ExposedObject (1.2)
+    Fody (1.29.4)
+    JetBrains.Annotations (10.2.1)
+    MahApps.Metro.IconPacks (1.6)
+    Microsoft.Bcl (1.1.10)
+      Microsoft.Bcl.Build (>= 1.0.14)
+    Microsoft.Bcl.Async (1.0.168) - framework: net40
+      Microsoft.Bcl (>= 1.1.8)
+    Microsoft.Bcl.Build (1.0.21) - import_targets: false
+    NHotkey (1.2.1)
+    NHotkey.Wpf (1.2.1)
+      NHotkey (>= 1.2.1)
+    xunit (1.9.2)
+    xunit.extensions (1.9.2)
+      xunit (1.9.2)
+GITHUB
+  remote: ControlzEx/ControlzEx
+    src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
