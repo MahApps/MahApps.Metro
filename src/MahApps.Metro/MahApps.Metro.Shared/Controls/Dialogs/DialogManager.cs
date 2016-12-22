@@ -406,7 +406,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     window.RemoveDialog(dialog);
 
-                    settings = settings ?? dialog.DialogSettings;
+                    settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
                     return HandleOverlayOnHide(settings, window);
                 }));
             }).Unwrap();
