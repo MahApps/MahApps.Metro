@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -88,25 +89,32 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">The settings for the message dialog.</param>
         protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
-            this.DialogSettings = settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings());
-
-            this.OwningWindow = owningWindow;
-
-            this.Initialize();
+            this.Initialize(owningWindow, settings);
         }
 
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
         protected BaseMetroDialog()
+            : this(null, new MetroDialogSettings())
         {
-            this.DialogSettings = new MetroDialogSettings();
-
-            this.Initialize();
         }
 
-        private void Initialize()
+        /// <summary>
+        /// With this method it's possible to return your own settings in a custom dialog.
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        protected virtual MetroDialogSettings OnGetDialogSettings(MetroDialogSettings settings)
         {
+            return settings;
+        }
+
+        private void Initialize([CanBeNull] MetroWindow owningWindow, [CanBeNull] MetroDialogSettings settings)
+        {
+            this.OwningWindow = owningWindow;
+            this.DialogSettings = this.OnGetDialogSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
+
             if (this.DialogSettings != null && !this.DialogSettings.SuppressDefaultResources)
             {
                 this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });

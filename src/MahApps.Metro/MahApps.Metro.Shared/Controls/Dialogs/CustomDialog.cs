@@ -6,6 +6,7 @@
     public class CustomDialog : BaseMetroDialog
     {
         public CustomDialog()
+            : this(null, null)
         {
         }
 
