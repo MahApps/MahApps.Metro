@@ -297,6 +297,26 @@
         </Setter>
     </Style>
 
+    <Storyboard x:Key="MetroExpanderExpandStoryboard">
+        <DoubleAnimation Duration="0:0:0.25"
+                         Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         To="1" />
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+        <DoubleAnimation Duration="0:0:0.25"
+                         Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         To="0" />
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}" />
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+
     <Style x:Key="MetroExpander" TargetType="{x:Type Expander}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
@@ -389,26 +409,11 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
-                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.25"
-                                                         Storyboard.TargetName="ExpandSite"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
+                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}"/>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.25"
-                                                         Storyboard.TargetName="ExpandSite"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="0" />
-                                    </Storyboard>
-                                </BeginStoryboard>
+                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">

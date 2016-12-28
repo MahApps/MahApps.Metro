@@ -11,11 +11,11 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls")]
 
 [assembly: AssemblyTitle("MahApps.Metro")]
-[assembly: AssemblyCopyright("Copyright © MahApps.Metro 2011-2016")]
-[assembly: AssemblyDescription("Toolkit for creating Metro styled WPF apps")]
+[assembly: AssemblyCopyright("Copyright © MahApps.Metro 2011-2017")]
+[assembly: AssemblyDescription("A toolkit for creating Metro / Modern UI styled WPF apps.")]
 [assembly: AssemblyCompany("MahApps")]
 
-[assembly: AssemblyVersion("1.4.0.0")]
-[assembly: AssemblyFileVersion("1.4.0.0")]
-[assembly: AssemblyInformationalVersion("1.4.0.0")]
+[assembly: AssemblyVersion("1.4.0.42")]
+[assembly: AssemblyFileVersion("1.4.0.42")]
+[assembly: AssemblyInformationalVersion("1.4.0.42")]
 [assembly: AssemblyProduct("MahApps.Metro 1.4.0")]
