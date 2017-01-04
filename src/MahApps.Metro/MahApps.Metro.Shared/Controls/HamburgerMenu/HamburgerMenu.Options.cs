@@ -25,6 +25,16 @@
         public static readonly DependencyProperty OptionsVisibilityProperty = DependencyProperty.Register(nameof(OptionsVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
+        /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedOptionsItem"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedOptionsItemProperty = DependencyProperty.Register(nameof(SelectedOptionsItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        /// <summary>
         ///     Gets or sets an object source used to generate the content of the options.
         /// </summary>
         public object OptionsItemsSource
@@ -75,8 +85,8 @@
         /// </summary>
         public object SelectedOptionsItem
         {
-            get { return _optionsListView.SelectedItem; }
-            set { _optionsListView.SelectedItem = value; }
+            get { return (object)GetValue(SelectedOptionsItemProperty); }
+            set { SetValue(SelectedOptionsItemProperty, value); }
         }
 
         /// <summary>
@@ -84,8 +94,8 @@
         /// </summary>
         public int SelectedOptionsIndex
         {
-            get { return _optionsListView.SelectedIndex; }
-            set { _optionsListView.SelectedIndex = value; }
+            get { return (int)GetValue(SelectedOptionsIndexProperty); }
+            set { SetValue(SelectedOptionsIndexProperty, value); }
         }
     }
 }

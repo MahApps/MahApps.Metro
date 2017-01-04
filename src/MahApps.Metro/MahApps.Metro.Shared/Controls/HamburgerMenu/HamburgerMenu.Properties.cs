@@ -50,7 +50,20 @@
         /// </summary>
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register("ContentTransition", typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+        /// <summary>
+        /// Identifies the <see cref="ContentTransition"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register(nameof(ContentTransition), typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedIndex"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedItem"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
@@ -148,8 +161,8 @@
         /// </summary>
         public object SelectedItem
         {
-            get { return _buttonsListView.SelectedItem; }
-            set { _buttonsListView.SelectedItem = value; }
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary>
@@ -157,8 +170,8 @@
         /// </summary>
         public int SelectedIndex
         {
-            get { return _buttonsListView.SelectedIndex; }
-            set { _buttonsListView.SelectedIndex = value; }
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
         }
 
         public TransitionType ContentTransition
