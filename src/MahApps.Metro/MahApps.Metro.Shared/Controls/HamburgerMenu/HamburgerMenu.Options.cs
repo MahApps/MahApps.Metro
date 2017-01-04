@@ -20,19 +20,24 @@
         public static readonly DependencyProperty OptionsItemTemplateProperty = DependencyProperty.Register(nameof(OptionsItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="OptionsItemTemplateSelector"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemTemplateSelectorProperty = DependencyProperty.Register(nameof(OptionsItemTemplateSelector), typeof(DataTemplateSelector), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="OptionsVisibility"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty OptionsVisibilityProperty = DependencyProperty.Register(nameof(OptionsVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
-        /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
-
-        /// <summary>
         /// Identifies the <see cref="SelectedOptionsItem"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SelectedOptionsItemProperty = DependencyProperty.Register(nameof(SelectedOptionsItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
 
         /// <summary>
         ///     Gets or sets an object source used to generate the content of the options.
@@ -50,6 +55,15 @@
         {
             get { return (DataTemplate)GetValue(OptionsItemTemplateProperty); }
             set { SetValue(OptionsItemTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the DataTemplateSelector used to display each item in the options.
+        /// </summary>
+        public DataTemplateSelector OptionsItemTemplateSelector
+        {
+            get { return (DataTemplateSelector)GetValue(OptionsItemTemplateSelectorProperty); }
+            set { SetValue(OptionsItemTemplateSelectorProperty, value); }
         }
 
         /// <summary>
@@ -85,7 +99,7 @@
         /// </summary>
         public object SelectedOptionsItem
         {
-            get { return (object)GetValue(SelectedOptionsItemProperty); }
+            get { return GetValue(SelectedOptionsItemProperty); }
             set { SetValue(SelectedOptionsItemProperty, value); }
         }
 
