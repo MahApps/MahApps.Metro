@@ -62,7 +62,15 @@
                 _optionsListView.MouseUp += OptionsListView_ItemClick;
             }
 
+            this.Loaded -= HamburgerMenu_Loaded;
+            this.Loaded += HamburgerMenu_Loaded;
+
             base.OnApplyTemplate();
+        }
+
+        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Content = _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem;
         }
     }
 }
