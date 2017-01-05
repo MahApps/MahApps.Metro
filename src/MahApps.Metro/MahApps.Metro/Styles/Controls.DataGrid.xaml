@@ -17,6 +17,7 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="True">
                 <Setter Property="IsHitTestVisible" Value="False" />
+                <Setter Property="Focusable" Value="False" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
