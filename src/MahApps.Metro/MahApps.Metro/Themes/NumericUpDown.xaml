@@ -45,22 +45,7 @@
                                 <ColumnDefinition x:Name="PART_NumericUpColumn" Width="Auto" />
                                 <ColumnDefinition x:Name="PART_NumericDownColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ContentControl x:Name="PART_FloatingMessageContainer"
-                                            Grid.Column="0"
-                                            Style="{DynamicResource FloatingMessageContainerStyle}">
-                                <TextBlock x:Name="PART_FloatingMessage"
-                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                           Foreground="{TemplateBinding Foreground}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
-                            </ContentControl>
                             <TextBox x:Name="PART_TextBox"
-                                     Grid.Row="1"
                                      Grid.Column="0"
                                      Margin="0 0 -2 0"
                                      MinWidth="20"
@@ -83,6 +68,8 @@
                                      Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
                                      Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                     Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
+                                     Controls:TextBoxHelper.HasText="{TemplateBinding Controls:TextBoxHelper.HasText}"
                                      FocusVisualStyle="{x:Null}"
                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
@@ -92,7 +79,6 @@
                                      TabIndex="{TemplateBinding TabIndex}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                             <RepeatButton x:Name="PART_NumericUp"
-                                          Grid.RowSpan="2"
                                           Grid.Column="1"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 0 2"
@@ -108,7 +94,6 @@
                                       Stretch="Fill" />
                             </RepeatButton>
                             <RepeatButton x:Name="PART_NumericDown"
-                                          Grid.RowSpan="2"
                                           Grid.Column="2"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 2 2"
@@ -135,19 +120,6 @@
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
-                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </MultiDataTrigger.EnterActions>
-                            <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </MultiDataTrigger.ExitActions>
-                        </MultiDataTrigger>
-
                         <Trigger Property="ButtonsAlignment" Value="Left">
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_NumericDown" Property="Margin" Value="0 2 0 2" />
@@ -190,8 +162,6 @@
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="true">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
 
                         <Trigger Property="HideUpDownButtons" Value="True">
