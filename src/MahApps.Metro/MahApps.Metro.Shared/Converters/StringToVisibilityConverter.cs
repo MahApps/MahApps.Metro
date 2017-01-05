@@ -56,13 +56,13 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string && targetType == typeof (Visibility))
+            if ((value == null || value is string) && targetType == typeof (Visibility))
             {
                 if (OppositeStringValue)
                 {
-                    return (((string) value).ToLower().Equals(String.Empty)) ? Visibility.Visible : FalseEquivalent;
+                    return string.IsNullOrEmpty((string)value) ? Visibility.Visible : FalseEquivalent;
                 }
-                return (((string) value).ToLower().Equals(String.Empty)) ? FalseEquivalent : Visibility.Visible;
+                return string.IsNullOrEmpty((string)value) ? FalseEquivalent : Visibility.Visible;
             }
             return value;
         }
