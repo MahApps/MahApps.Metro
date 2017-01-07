@@ -5,15 +5,18 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="StandardTextBox" TargetType="TextBox">
+    <Style x:Key="StandardTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
         <Setter Property="CaretBrush" Value="{StaticResource Foreground}" />
         <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <ScrollViewer x:Name="PART_ContentHost" Margin="1" />
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -28,21 +31,20 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SearchTextBox" TargetType="TextBox">
-        <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
-        <Setter Property="CaretBrush" Value="{StaticResource Foreground}" />
-        <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+    <Style x:Key="SearchTextBox"
+           TargetType="{x:Type TextBox}"
+           BasedOn="{StaticResource StandardTextBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <TextBlock Name="search"
                                    Margin="5 0 0 0"
                                    VerticalAlignment="Center"
                                    Foreground="{StaticResource SearchTextForeground}"
                                    Text="Search ..."
                                    Visibility="Hidden" />
-                        <ScrollViewer x:Name="PART_ContentHost" Margin="1" />
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TextBox.Text" Value="">

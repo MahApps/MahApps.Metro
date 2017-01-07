@@ -103,11 +103,15 @@
                                              Grid.Row="1"
                                              Width="{TemplateBinding OpenPaneLength}"
                                              AutomationProperties.Name="Menu items"
+                                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
+                                             SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
+                                             SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
                                              SelectionMode="Single"
                                              Style="{StaticResource HamburgerListBoxStyle}"
-                                             TabIndex="1" />
+                                             TabIndex="1">
+                                    </ListBox>
 
                                     <Grid Grid.Row="2" Visibility="{TemplateBinding OptionsVisibility}">
                                         <Grid.RowDefinitions>
@@ -120,8 +124,11 @@
                                                  Width="{TemplateBinding OpenPaneLength}"
                                                  VerticalAlignment="Bottom"
                                                  AutomationProperties.Name="Option items"
+                                                 ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                                  ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                                  ItemsSource="{TemplateBinding OptionsItemsSource}"
+                                                 SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
+                                                 SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
                                                  Style="{StaticResource HamburgerListBoxStyle}"
                                                  TabIndex="2" />
                                     </Grid>

@@ -51,6 +51,7 @@
 
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                SelectedIndex="1"
                                 Margin="20"
                                 Foreground="White"
                                 HamburgerWidth="48"

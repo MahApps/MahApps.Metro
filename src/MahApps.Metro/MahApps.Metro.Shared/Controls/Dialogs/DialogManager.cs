@@ -6,6 +6,8 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
+    using JetBrains.Annotations;
+
     public static class DialogManager
     {
         /// <summary>
@@ -303,7 +305,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
-        /// If you want to wait until the user has closed the dialog, use <see cref="ShowMetroDialogAsyncAwaitable"/>
+        /// If you want to wait until the user has closed the dialog, use <see cref="BaseMetroDialog.WaitUntilUnloadedAsync"/>
         /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
@@ -311,19 +313,28 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
-        public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null)
+        public static Task ShowMetroDialogAsync([NotNull] this MetroWindow window, [NotNull] BaseMetroDialog dialog, [CanBeNull] MetroDialogSettings settings = null)
         {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
             window.Dispatcher.VerifyAccess();
+            if (dialog == null)
+            {
+                throw new ArgumentNullException(nameof(dialog));
+            }
             if (window.metroActiveDialogContainer.Children.Contains(dialog) || window.metroInactiveDialogContainer.Children.Contains(dialog))
+            {
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
+            }
+
+            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                 {
-                    settings = settings ?? window.MetroDialogOptions;
-
                     SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
@@ -343,6 +354,46 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
+        /// Adds a Metro Dialog instance of the given type to the specified window and makes it visible asynchronously.
+        /// If you want to wait until the user has closed the dialog, use <see cref="BaseMetroDialog.WaitUntilUnloadedAsync"/>
+        /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
+        /// </summary>
+        /// <param name="window">The owning window of the dialog.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <returns>A task with the dialog representing the operation.</returns>
+        public static Task<TDialog> ShowMetroDialogAsync<TDialog>([NotNull] this MetroWindow window, [CanBeNull] MetroDialogSettings settings = null) where TDialog : BaseMetroDialog
+        {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+            window.Dispatcher.VerifyAccess();
+
+            var dialog = (TDialog)Activator.CreateInstance(typeof(TDialog), window, settings);
+
+            return HandleOverlayOnShow(dialog.DialogSettings, window).ContinueWith(z =>
+            {
+                return (Task<TDialog>)window.Dispatcher.Invoke(new Func<Task<TDialog>>(() =>
+                {
+                    SetDialogFontSizes(dialog.DialogSettings, dialog);
+
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                    dialog.SizeChangedHandler = sizeHandler;
+
+                    return dialog.WaitForLoadAsync().ContinueWith(x =>
+                    {
+                        dialog.OnShown();
+
+                        if (DialogOpened != null)
+                        {
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                        }
+                    }).ContinueWith(x => dialog);
+                }));
+            }).Unwrap();
+        }
+
+        /// <summary>
         /// Hides a visible Metro Dialog instance.
         /// </summary>
         /// <param name="window">The window with the dialog that is visible.</param>
@@ -357,7 +408,9 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             window.Dispatcher.VerifyAccess();
             if (!window.metroActiveDialogContainer.Children.Contains(dialog) && !window.metroInactiveDialogContainer.Children.Contains(dialog))
+            {
                 throw new InvalidOperationException("The provided dialog is not visible in the specified window.");
+            }
 
             window.SizeChanged -= dialog.SizeChangedHandler;
 
@@ -375,7 +428,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     window.RemoveDialog(dialog);
 
-                    return HandleOverlayOnHide(settings,window);
+                    settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+                    return HandleOverlayOnHide(settings, window);
                 }));
             }).Unwrap();
         }

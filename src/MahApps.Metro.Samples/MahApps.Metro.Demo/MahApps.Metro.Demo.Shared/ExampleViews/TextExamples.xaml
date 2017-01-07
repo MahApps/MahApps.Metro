@@ -35,16 +35,34 @@
                 <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="TextBox" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
-                         Text="Enabled" />
+                         Text="Enabled">
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="This is only a Test-Item" />
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
-                         ToolTip="Default alignment" />
+                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                         ToolTip="Default alignment">
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Custom Item" />
+                            <Separator />
+                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Cut" />
+                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Copy" />
+                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Paste" />
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                         Text="Clear button">
+                         ContextMenu="{x:Null}"
+                         Text="Clear button and no ContextMenu">
                     <TextBox.Style>
                         <Style BasedOn="{StaticResource MetroTextBox}" TargetType="{x:Type TextBox}">
                             <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
