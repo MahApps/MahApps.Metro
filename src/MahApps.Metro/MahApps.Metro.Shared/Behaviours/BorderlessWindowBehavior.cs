@@ -368,12 +368,15 @@ namespace MahApps.Metro.Behaviours
                     var width = rect.Width;
                     var height = rect.Height;
 
-                    // Z-Order would only get refreshed/reflected if clicking the
-                    // the titlebar (as opposed to other parts of the external
-                    // window) unless I first set the window to HWND_BOTTOM then HWND_TOP before HWND_NOTOPMOST
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_BOTTOM, left, top, width, height, Constants.TOPMOST_FLAGS);
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_TOP, left, top, width, height, Constants.TOPMOST_FLAGS);
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_NOTOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
+                    // #2780 Don't blindly set the Z-Order to HWWND_NOTOPMOST. If this window has an owner, set
+                    // the Z-Order to be after the owner. This keeps external dialogs appearing correctly above
+                    // their owner window even when owner window is maximized and ignoring taskbar.
+                    IntPtr hwndInsAfter = Constants.HWND_NOTOPMOST;
+                    if (this.AssociatedObject.Owner != null)
+                    {
+                        hwndInsAfter = new WindowInteropHelper(this.AssociatedObject.Owner).Handle;
+                    }
+                    UnsafeNativeMethods.SetWindowPos(this.handle, hwndInsAfter, left, top, width, height, 0x0040);
                 }
             }
 
