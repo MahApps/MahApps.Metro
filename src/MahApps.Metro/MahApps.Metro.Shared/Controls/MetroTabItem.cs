@@ -59,7 +59,7 @@ namespace MahApps.Metro.Controls
             closeButton = closeButton ?? GetTemplateChild("PART_CloseButton") as Button;
             if (closeButton != null)
             {
-                closeButton.Margin = newButtonMargin;
+                closeButton.Margin = CloseButtonMargin;
             }
         }
 
@@ -127,6 +127,23 @@ namespace MahApps.Metro.Controls
         {
             get { return GetValue(CloseTabCommandParameterProperty); }
             set { SetValue(CloseTabCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseButtonMarginProperty =
+            DependencyProperty.Register("CloseButtonMargin",
+                                        typeof(Thickness),
+                                        typeof(MetroTabItem),
+                                        new FrameworkPropertyMetadata(new Thickness(0,0,2,0),
+                                                                      FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits,
+                                                                      OnCloseButtonEnabledPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets/sets the Close Button Margin.
+        /// </summary>
+        public Thickness CloseButtonMargin
+        {
+            get { return (Thickness)GetValue(CloseButtonMarginProperty); }
+            set { SetValue(CloseButtonEnabledProperty, value); }
         }
     }
 }
