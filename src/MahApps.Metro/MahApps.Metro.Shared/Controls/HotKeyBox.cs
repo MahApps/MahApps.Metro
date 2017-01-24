@@ -263,6 +263,11 @@ namespace MahApps.Metro.Controls {
 
         private static string GetLocalizedKeyStringUnsafe(Key key)
         {
+            if (key >= Key.BrowserBack && key <= Key.LaunchApplication2)
+            {
+                return key.ToString();
+            }
+
             var vkey = KeyInterop.VirtualKeyFromKey(key);
             return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
         }
