@@ -255,9 +255,9 @@ namespace MahApps.Metro.Controls {
             }
             if ((_modifierKeys & ModifierKeys.Windows) == ModifierKeys.Windows)
             {
-                sb.Append("WINDOWS+");
+                sb.Append("Windows+");
             }
-            sb.Append(GetLocalizedKeyStringUnsafe(_key).ToUpper());
+            sb.Append(GetLocalizedKeyStringUnsafe(_key));
             return sb.ToString();
         }
 
