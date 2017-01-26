@@ -257,11 +257,11 @@ namespace MahApps.Metro.Controls {
             {
                 sb.Append("Windows+");
             }
-            sb.Append(GetLocalizedKeyStringUnsafe(_key));
+            sb.Append(GetLocalizedKeyString(_key));
             return sb.ToString();
         }
 
-        private static string GetLocalizedKeyStringUnsafe(Key key)
+        private static string GetLocalizedKeyString(Key key)
         {
             if (key >= Key.BrowserBack && key <= Key.LaunchApplication2)
             {
