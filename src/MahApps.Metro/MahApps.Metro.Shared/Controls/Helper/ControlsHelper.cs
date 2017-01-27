@@ -171,17 +171,27 @@ namespace MahApps.Metro.Controls
         [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static readonly DependencyProperty ButtonWidthProperty =
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(
+                                                    22d,
+                                                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits,
+                                                    (o, e) =>
+                                                        {
+                                                            var element = o as UIElement;
+                                                            if (element != null && e.OldValue != e.NewValue && e.NewValue is double)
+                                                            {
+                                                                TextBoxHelper.SetButtonWidth(element, (double)e.NewValue);
+                                                            }
+                                                        }));
 
         [Category(AppName.MahApps)]
         public static double GetButtonWidth(DependencyObject obj)
         {
-            return TextBoxHelper.GetButtonWidth(obj);
+            return (double)obj.GetValue(ButtonWidthProperty);
         }
 
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
-            TextBoxHelper.SetButtonWidth(obj, value);
+            obj.SetValue(ButtonWidthProperty, value);
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
