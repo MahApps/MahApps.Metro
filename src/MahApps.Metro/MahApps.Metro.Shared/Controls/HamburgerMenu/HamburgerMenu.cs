@@ -70,7 +70,7 @@
 
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Content = _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem;
+            this.SetCurrentValue(ContentProperty, _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem);
         }
     }
 }
