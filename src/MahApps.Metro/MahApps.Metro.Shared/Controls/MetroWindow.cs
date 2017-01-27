@@ -1278,11 +1278,23 @@ namespace MahApps.Metro.Controls
             }
 
             var criticalHandle = window.CriticalHandle;
-            // DragMove works too
-            // window.DragMove();
-            // instead this 2 lines
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+
+            if (window.IsWindowDraggable) {
+                var mPoint = Mouse.GetPosition(window);
+
+                UnsafeNativeMethods.ReleaseCapture();
+                var wpfPoint = window.PointToScreen(mPoint);
+                var x = (int)wpfPoint.X;
+                var y = (int)wpfPoint.Y;
+                var lParam = (int)(int)x | (y << 16);
+                Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.NCLBUTTONDOWN, (IntPtr)Standard.HT.CAPTION, new IntPtr(lParam));
+
+            }
+            //DragMove works too
+            //window.DragMove();
+            //instead this 2 lines
+            //Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
+            //Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
