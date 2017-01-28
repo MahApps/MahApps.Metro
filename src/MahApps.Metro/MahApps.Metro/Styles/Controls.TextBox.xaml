@@ -132,6 +132,7 @@
                                     Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
+                                    Focusable="False"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
@@ -352,6 +353,7 @@
                                     Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
+                                    Focusable="False"
                                     Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.TextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
