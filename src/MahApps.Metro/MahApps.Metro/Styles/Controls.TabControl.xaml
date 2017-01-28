@@ -102,8 +102,18 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="PART_ContentLeftCol" Width="Auto" />
+                                <ColumnDefinition x:Name="PART_ContentRightCol" Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="PART_ContentTopRow" Height="Auto" />
+                                <RowDefinition x:Name="PART_ContentBottomRow" Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Controls:ContentControlEx x:Name="ContentSite"
+                                                       Grid.Column="0"
+                                                       Grid.Row="0"
                                                        Padding="{TemplateBinding Padding}"
                                                        Foreground="{TemplateBinding Foreground}"
                                                        FontStyle="{TemplateBinding FontStyle}"
@@ -116,43 +126,67 @@
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       DockPanel.Dock="Top"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Rectangle x:Name="Underline"
+                                       Grid.Column="0"
+                                       Grid.Row="1"
                                        Height="2"
+                                       Width="Auto"
                                        Margin="0 1 0 0"
                                        HorizontalAlignment="Stretch"
-                                       DockPanel.Dock="Bottom"
                                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        </DockPanel>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Left" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
                             <Setter TargetName="Underline" Property="Margin" Value="1 0 0 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Top" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
                             <Setter TargetName="Underline" Property="Height" Value="2" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 1 0 0" />
                             <Setter TargetName="Underline" Property="Width" Value="Auto" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Right" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Left" />
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="Auto" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 0 1 0" />
                             <Setter TargetName="Underline" Property="Width" Value="2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
-                            <Setter TargetName="ContentSite" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="DockPanel.Dock" Value="Top" />
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="*" />
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Height" Value="2" />
                             <Setter TargetName="Underline" Property="Margin" Value="0 0 0 1" />
                             <Setter TargetName="Underline" Property="Width" Value="Auto" />
