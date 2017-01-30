@@ -270,7 +270,7 @@
             if (dateTime != null)
             {
                 DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-                if (SelectedDate != DisplayDate || (Popup != null && Popup.IsOpen))
+                if ((SelectedDate != DisplayDate && SelectedDate != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
                 {
                     SelectedDate = DisplayDate;
                 }

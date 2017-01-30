@@ -346,7 +346,6 @@
                         Margin="{StaticResource ColumnMargin}">
                 <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="HotKeyBox" />
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
-                                    Controls:ControlsHelper.ContentCharacterCasing="Upper"
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                     HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                                     Watermark="Enter hot key" />
