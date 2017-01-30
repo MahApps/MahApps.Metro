@@ -299,7 +299,7 @@ namespace MahApps.Metro.Controls
                 case WM.LBUTTONDOWN:
                     if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                     {
-                        var pt = this.GetRelativeMousePosition();
+                        var pt = WinApiHelper.GetRelativeMousePosition(this.handle);
                         NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
                     }
                     break;
@@ -313,7 +313,7 @@ namespace MahApps.Metro.Controls
                     {
                         if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                         {
-                            var pt = this.GetRelativeMousePosition();
+                            var pt = WinApiHelper.GetRelativeMousePosition(this.handle);
                             cursor = this.getCursor(pt, rect);
                         }
                     }
@@ -324,17 +324,6 @@ namespace MahApps.Metro.Controls
                     break;
             }
             return IntPtr.Zero;
-        }
-
-        private Point GetRelativeMousePosition()
-        {
-            if (this.handle == IntPtr.Zero)
-            {
-                return new Point();
-            }
-            var point = Standard.NativeMethods.GetCursorPos();
-            Standard.NativeMethods.ScreenToClient(this.handle, ref point);
-            return new Point(point.x, point.y);
         }
     }
 }
