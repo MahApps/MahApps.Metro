@@ -1246,7 +1246,7 @@ namespace MahApps.Metro.Controls
             // tage from DragMove internal code
             window.VerifyAccess();
 
-            var cursorPos = Standard.NativeMethods.GetCursorPos();
+            var cursorPos = WinApiHelper.GetPhysicalCursorPos();
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;

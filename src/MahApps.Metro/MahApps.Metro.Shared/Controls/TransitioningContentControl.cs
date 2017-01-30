@@ -329,8 +329,12 @@ namespace MahApps.Metro.Controls
 
         private void OnTransitionCompleted(object sender, EventArgs e)
         {
+            var clockGroup = sender as ClockGroup;
             this.AbortTransition();
-            this.TransitionCompleted?.Invoke(this, new RoutedEventArgs());
+            if (clockGroup == null || clockGroup.CurrentState == ClockState.Stopped)
+            {
+                this.TransitionCompleted?.Invoke(this, new RoutedEventArgs());
+            }
         }
 
         public void AbortTransition()

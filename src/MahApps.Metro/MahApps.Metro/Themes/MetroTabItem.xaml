@@ -20,9 +20,25 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                            <StackPanel Margin="{TemplateBinding Padding}" Orientation="Horizontal">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="PART_ContentLeftCol" Width="Auto" />
+                                <ColumnDefinition x:Name="PART_ContentRightCol" Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="PART_ContentTopRow" Height="Auto" />
+                                <RowDefinition x:Name="PART_ContentBottomRow" Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="PART_ContentSite"
+                                  Grid.Column="0"
+                                  Grid.Row="0"
+                                  Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <Controls:ContentControlEx x:Name="ContentSite"
+                                                           Grid.Column="0"
                                                            Margin="0 2 2 0"
                                                            Padding="{TemplateBinding Padding}"
                                                            Foreground="{TemplateBinding Foreground}"
@@ -39,12 +55,12 @@
                                                            RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Button x:Name="PART_CloseButton"
+                                        Grid.Column="1"
                                         Command="{TemplateBinding InternalCloseTabCommand}"
                                         CommandParameter="{TemplateBinding CloseTabCommandParameter}"
                                         Width="{TemplateBinding Controls:ControlsHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
                                         Margin="0 0 2 0"
-                                        HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         Background="{DynamicResource GrayNormalBrush}"
@@ -68,15 +84,70 @@
                                         <VisualBrush Stretch="Uniform" Visual="{StaticResource tabitem_close}" />
                                     </Button.OpacityMask>
                                 </Button>
-                            </StackPanel>
+                            </Grid>
                             <Rectangle x:Name="Underline"
+                                       Grid.Column="0"
+                                       Grid.Row="1"
                                        Height="2"
+                                       Width="Auto"
                                        Margin="0 1 0 0"
                                        HorizontalAlignment="Stretch"
                                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        </StackPanel>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Height" Value="Auto" />
+                            <Setter TargetName="Underline" Property="Margin" Value="1 0 0 0" />
+                            <Setter TargetName="Underline" Property="Width" Value="2" />
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Top">
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="Height" Value="2" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0 1 0 0" />
+                            <Setter TargetName="Underline" Property="Width" Value="Auto" />
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Height" Value="Auto" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0 0 1 0" />
+                            <Setter TargetName="Underline" Property="Width" Value="2" />
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
+                            <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_ContentTopRow" Property="Height" Value="Auto" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="*" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="Height" Value="2" />
+                            <Setter TargetName="Underline" Property="Margin" Value="0 0 0 1" />
+                            <Setter TargetName="Underline" Property="Width" Value="Auto" />
+                        </Trigger>
                         <Trigger Property="CloseButtonEnabled" Value="True">
                             <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Hidden" />
                         </Trigger>

@@ -103,6 +103,7 @@
                                     Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
+                                    Focusable="False"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                     </Grid>
@@ -210,6 +211,7 @@
                                     Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     IsTabStop="False"
+                                    Focusable="False"
                                     Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <Grid x:Name="BtnArrowBackground"
                                   Grid.Column="2"

@@ -128,6 +128,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TransitioningContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TreeHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\VisualStates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\WinApiHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtonCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommandsOverlayBehavior.cs" />

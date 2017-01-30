@@ -100,6 +100,7 @@
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Padding" Value="0 0 2 0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
@@ -133,7 +134,7 @@
                                             ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                             IsTabStop="False" />
                             <ContentControl x:Name="Content"
-                                            Margin="0 0 2 0"
+                                            Margin="{TemplateBinding Padding}"
                                             Grid.Row="1"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -212,7 +213,7 @@
                             <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <Trigger Property="ContentDirection" Value="RightToLeft">
-                            <Setter TargetName="Content" Property="Margin" Value="2 0 0 0" />
+                            <Setter Property="Padding" Value="2 0 0 0" />
                             <Setter TargetName="Content" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
                             <Setter TargetName="firstCol" Property="Width" Value="Auto" />
