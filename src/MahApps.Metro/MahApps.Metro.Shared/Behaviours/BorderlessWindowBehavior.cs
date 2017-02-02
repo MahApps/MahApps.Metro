@@ -327,10 +327,11 @@ namespace MahApps.Metro.Behaviours
                         var monitorInfo = new MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                        var x = monitorInfo.rcMonitor.left;
-                        var y = monitorInfo.rcMonitor.top;
-                        var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                        var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+                        var desktopRect = ignoreTaskBar ? monitorInfo.rcMonitor :  monitorInfo.rcWork;
+                        var x = desktopRect.left;
+                        var y = desktopRect.top;
+                        var cx = Math.Abs(desktopRect.right - x);
+                        var cy = Math.Abs(desktopRect.bottom - y);
 
                         if (ignoreTaskBar && this.isWindwos10OrHigher)
                         {
