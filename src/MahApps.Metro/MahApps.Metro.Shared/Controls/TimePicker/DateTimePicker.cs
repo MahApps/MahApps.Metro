@@ -156,7 +156,7 @@
                 _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
-                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateProperty));
+                _calendar.SelectedDatesChanged += OnCalendarSelectedDateChanged;
             }
         }
 
@@ -207,6 +207,19 @@
             if (!_deactivateWriteValueToTextBox)
             {
                 base.WriteValueToTextBox();
+            }
+        }
+
+        private void OnCalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var dt = (DateTime)e.AddedItems[0];
+
+                var timeOfDay = SelectedDate.GetValueOrDefault().TimeOfDay;
+
+                dt += timeOfDay;
+                SelectedDate = dt;
             }
         }
 
