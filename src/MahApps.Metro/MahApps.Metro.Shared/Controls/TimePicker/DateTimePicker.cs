@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -175,6 +176,15 @@
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
             return valueForTextBox;
+        }
+
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseUp(e);
+            if (Mouse.Captured is CalendarItem)
+            {
+                Mouse.Capture(null);
+            }
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
