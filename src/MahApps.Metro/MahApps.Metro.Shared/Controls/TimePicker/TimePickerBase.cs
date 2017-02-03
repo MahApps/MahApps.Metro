@@ -168,7 +168,7 @@ namespace MahApps.Metro.Controls
         private Selector _hourInput;
         private UIElement _minuteHand;
         private Selector _minuteInput;
-        protected Popup _popup;
+        private Popup _popup;
         private UIElement _secondHand;
         private Selector _secondInput;
         protected DatePickerTextBox _textBox;
