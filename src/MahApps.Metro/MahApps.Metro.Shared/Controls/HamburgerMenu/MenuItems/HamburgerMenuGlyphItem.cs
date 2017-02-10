@@ -1,7 +1,7 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenuGlyphItem provides a glyph based implementation for HamburgerMenu entries.
     /// </summary>

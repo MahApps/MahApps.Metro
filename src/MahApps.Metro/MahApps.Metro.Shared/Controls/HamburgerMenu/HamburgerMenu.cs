@@ -1,8 +1,8 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
-    using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>

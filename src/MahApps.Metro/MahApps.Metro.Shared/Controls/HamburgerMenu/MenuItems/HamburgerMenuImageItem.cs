@@ -1,8 +1,8 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
-    using System.Windows.Media.Imaging;
+﻿using System.Windows;
+using System.Windows.Media.Imaging;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenuImageItem provides an image based implementation for HamburgerMenu entries.
     /// </summary>

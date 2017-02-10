@@ -1,7 +1,7 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenuIconItem provides an icon based implementation for HamburgerMenu entries.
     /// </summary>

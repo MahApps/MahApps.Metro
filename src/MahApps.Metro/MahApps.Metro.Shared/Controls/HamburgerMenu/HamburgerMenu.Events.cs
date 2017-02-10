@@ -1,8 +1,8 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
-    using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 
+namespace MahApps.Metro.Controls
+{
     public sealed class ItemClickEventArgs : RoutedEventArgs
     {
         public ItemClickEventArgs(object clickedObject)

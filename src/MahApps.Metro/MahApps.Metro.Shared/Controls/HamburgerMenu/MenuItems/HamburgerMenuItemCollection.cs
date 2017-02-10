@@ -1,6 +1,7 @@
-﻿namespace MahApps.Metro.Controls
+﻿using System.Collections.ObjectModel;
+
+namespace MahApps.Metro.Controls
 {
-    using System.Collections.ObjectModel;
     /// <summary>
     /// The HamburgerMenuItemCollection provides typed collection of HamburgerMenuItem.
     /// </summary>
