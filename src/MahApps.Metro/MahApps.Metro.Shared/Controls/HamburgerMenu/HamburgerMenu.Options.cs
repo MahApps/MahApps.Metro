@@ -40,7 +40,7 @@
         public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
 
         /// <summary>
-        ///     Gets or sets an object source used to generate the content of the options.
+        /// Gets or sets an object source used to generate the content of the options.
         /// </summary>
         public object OptionsItemsSource
         {
@@ -86,7 +86,7 @@
         }
 
         /// <summary>
-        /// Gets or sets options' visibility.
+        /// Gets or sets the visibility of the options menu.
         /// </summary>
         public Visibility OptionsVisibility
         {
