@@ -141,7 +141,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-       
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -281,12 +281,10 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
             }
-            else
-            {
-                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-                tcs.SetResult(null);
-                return tcs.Task;
-            }
+
+            var tcs = new TaskCompletionSource<object>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
@@ -295,12 +293,10 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
             }
-            else
-            {
-                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-                tcs.SetResult(null);
-                return tcs.Task;
-            }
+
+            var tcs = new TaskCompletionSource<object>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
         /// <summary>
@@ -329,7 +325,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
             }
 
-            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+            settings = settings ?? dialog.DialogSettings;
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
@@ -428,7 +424,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     window.RemoveDialog(dialog);
 
-                    settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+                    settings = settings ?? dialog.DialogSettings;
                     return HandleOverlayOnHide(settings, window);
                 }));
             }).Unwrap();
@@ -558,7 +554,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
                 win.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
@@ -591,7 +590,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
-            
+
             return win;
         }
 
@@ -617,7 +616,7 @@ namespace MahApps.Metro.Controls.Dialogs
             };
 
             SetDialogFontSizes(settings, dialog);
-            
+
             win.Content = dialog;
 
             LoginDialogData result = null;
