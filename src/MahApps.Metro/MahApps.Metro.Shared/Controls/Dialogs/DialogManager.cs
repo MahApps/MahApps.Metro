@@ -325,7 +325,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
             }
 
-            settings = settings ?? dialog.DialogSettings;
+            settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
@@ -424,7 +424,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     window.RemoveDialog(dialog);
 
-                    settings = settings ?? dialog.DialogSettings;
+                    settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
                     return HandleOverlayOnHide(settings, window);
                 }));
             }).Unwrap();
