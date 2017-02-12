@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
@@ -35,7 +36,7 @@ namespace MahApps.Metro.Controls
             IsPaneOpen = !IsPaneOpen;
         }
 
-        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        private void OnItemClick()
         {
             if (_optionsListView != null)
             {
@@ -45,7 +46,7 @@ namespace MahApps.Metro.Controls
             ItemClick?.Invoke(this, new ItemClickEventArgs(_buttonsListView.SelectedItem));
         }
 
-        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        private void OnOptionsItemClick()
         {
             if (_buttonsListView != null)
             {
@@ -53,6 +54,46 @@ namespace MahApps.Metro.Controls
             }
 
             OptionsItemClick?.Invoke(this, new ItemClickEventArgs(_optionsListView.SelectedItem));
+        }
+
+        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        {
+            OnItemClick();
+        }
+
+        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        {
+            OnOptionsItemClick();
+        }
+
+        private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                if (Keyboard.IsKeyToggled(Key.Space) ||
+                    Keyboard.IsKeyToggled(Key.Up) ||
+                    Keyboard.IsKeyToggled(Key.PageUp) ||
+                    Keyboard.IsKeyToggled(Key.Down) ||
+                    Keyboard.IsKeyToggled(Key.PageDown))
+                {
+                    OnItemClick();
+                }
+            }
+        }
+
+        private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                if (Keyboard.IsKeyToggled(Key.Space) ||
+                    Keyboard.IsKeyToggled(Key.Up) ||
+                    Keyboard.IsKeyToggled(Key.PageUp) ||
+                    Keyboard.IsKeyToggled(Key.Down) ||
+                    Keyboard.IsKeyToggled(Key.PageDown))
+                {
+                    OnOptionsItemClick();
+                }
+            }
         }
     }
 }

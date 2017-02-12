@@ -60,6 +60,12 @@
                     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     <Setter Property="Margin" Value="0" />
                     <Setter Property="Padding" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -80,6 +86,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:HamburgerMenu}">
@@ -87,6 +94,7 @@
                         <controls:SplitView x:Name="MainSplitView"
                                             CompactPaneLength="{TemplateBinding CompactPaneLength}"
                                             DisplayMode="{TemplateBinding DisplayMode}"
+                                            IsTabStop="False"
                                             IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                             OpenPaneLength="{TemplateBinding OpenPaneLength}"
                                             PaneBackground="{TemplateBinding PaneBackground}"

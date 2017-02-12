@@ -432,6 +432,8 @@
                               Grid.ColumnSpan="2">
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Focusable="False"
                                             Content="{TemplateBinding Content}" />
                             <Rectangle x:Name="LightDismissLayer"
                                        Fill="Transparent"
@@ -458,6 +460,8 @@
                             </Grid.Clip>
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Focusable="False"
                                             Content="{TemplateBinding Pane}" />
                             <Rectangle x:Name="HCPaneBorder"
                                        Width="1"
