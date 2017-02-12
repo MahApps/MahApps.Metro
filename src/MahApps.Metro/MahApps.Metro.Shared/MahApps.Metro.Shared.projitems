@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\TiltBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AutomationPeers\BaseMetroDialogAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\AutomationPeers\MetroWindowAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ButtonsAlignment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CloseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />

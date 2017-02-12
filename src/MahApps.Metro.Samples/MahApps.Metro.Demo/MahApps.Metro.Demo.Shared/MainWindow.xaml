@@ -90,6 +90,22 @@
 
             </Dialog:CustomDialog>
 
+            <Dialog:CustomDialog x:Key="CustomStackedDialogTest"
+                                 x:Name="CustomStackedDialogTest"
+                                 Title="Custom Dialog which is awaitable"
+                                 AutomationProperties.AutomationId="CustomAwaitableDialog"
+                                 Background="{DynamicResource AccentColorBrush4}">
+                <StackPanel>
+                    <TextBlock Height="250"
+                               Foreground="{DynamicResource ControlTextBrushKey}"
+                               Text="This dialog shows how dialogs can be stacked. The content has more height to show that this dialog is still visible after showing the log in dialog."
+                               TextWrapping="Wrap" />
+                    <Button Click="ShowLoginDialog" Content="Show Login Dialog" />
+                    <Button Click="CloseNestedDialog" Content="Close Me!" />
+                </StackPanel>
+
+            </Dialog:CustomDialog>
+
         </ResourceDictionary>
     </Window.Resources>
 
@@ -170,6 +186,7 @@
                 <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                 <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
                 <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                <MenuItem Click="ShowNestedDialog"  Header="Show nested dialogs" />
                 <Separator />
                 <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
                 <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />

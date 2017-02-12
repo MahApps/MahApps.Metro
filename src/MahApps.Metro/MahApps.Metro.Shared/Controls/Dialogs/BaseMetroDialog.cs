@@ -321,11 +321,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
         /// </summary>
+        [CanBeNull]
         protected internal Window ParentDialogWindow { get; internal set; }
 
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
         /// </summary>
+        [CanBeNull]
         protected internal MetroWindow OwningWindow { get; internal set; }
 
         /// <summary>
