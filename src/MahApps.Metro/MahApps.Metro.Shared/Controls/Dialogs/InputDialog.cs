@@ -23,6 +23,11 @@ namespace MahApps.Metro.Controls.Dialogs
             this.InitializeComponent();
         }
 
+        internal override Task WaitForButtonPressAndSetResultAsync()
+        {
+            return this.WaitForButtonPressAsync();
+        }
+
         internal Task<string> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -43,10 +48,17 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Action cleanUpHandlers = null;
 
+            Action<TaskCompletionSource<string>, string> cleanUpAndSetResult = (t, r) =>
+                {
+                    cleanUpHandlers?.Invoke();
+                    var result = r;
+                    this.Result = result;
+                    t.TrySetResult(result);
+                };
+
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
                                                                                                    {
-                                                                                                       cleanUpHandlers();
-                                                                                                       tcs.TrySetResult(null);
+                                                                                                       cleanUpAndSetResult(tcs, null);
                                                                                                    });
 
             cleanUpHandlers = () =>
@@ -68,9 +80,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Escape)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(null);
+                        cleanUpAndSetResult(tcs, null);
                     }
                 };
 
@@ -78,9 +88,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(null);
+                        cleanUpAndSetResult(tcs, null);
                     }
                 };
 
@@ -88,26 +96,20 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(this.Input);
+                        cleanUpAndSetResult(tcs, this.Input);
                     }
                 };
 
             negativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(null);
+                    cleanUpAndSetResult(tcs, null);
 
                     e.Handled = true;
                 };
 
             affirmativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(this.Input);
+                    cleanUpAndSetResult(tcs, this.Input);
 
                     e.Handled = true;
                 };

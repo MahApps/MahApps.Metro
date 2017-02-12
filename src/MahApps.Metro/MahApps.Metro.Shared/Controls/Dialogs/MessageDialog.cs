@@ -29,6 +29,11 @@ namespace MahApps.Metro.Controls.Dialogs
             this.PART_MessageScrollViewer.Height = this.DialogSettings.MaximumBodyHeight;
         }
 
+        internal override Task WaitForButtonPressAndSetResultAsync()
+        {
+            return WaitForButtonPressAsync();
+        }
+
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -85,10 +90,18 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Action cleanUpHandlers = null;
 
+            Action<TaskCompletionSource<MessageDialogResult>, MessageDialogResult> cleanUpAndSetResult = (t, r) =>
+                {
+                    cleanUpHandlers?.Invoke();
+                    var result = r;
+                    this.Result = result;
+                    t.TrySetResult(result);
+                };
+
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
                                                                                                    {
-                                                                                                       cleanUpHandlers?.Invoke();
-                                                                                                       tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                                                                                                       var result = this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+                                                                                                       cleanUpAndSetResult(tcs, result);
                                                                                                    });
 
             cleanUpHandlers = () =>
@@ -112,9 +125,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Negative);
+                        cleanUpAndSetResult(tcs, MessageDialogResult.Negative);
                     }
                 };
 
@@ -122,9 +133,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Affirmative);
+                        cleanUpAndSetResult(tcs, MessageDialogResult.Affirmative);
                     }
                 };
 
@@ -132,9 +141,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
+                        cleanUpAndSetResult(tcs, MessageDialogResult.FirstAuxiliary);
                     }
                 };
 
@@ -142,44 +149,34 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
+                        cleanUpAndSetResult(tcs, MessageDialogResult.SecondAuxiliary);
                     }
                 };
 
             negativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.Negative);
+                    cleanUpAndSetResult(tcs, MessageDialogResult.Negative);
 
                     e.Handled = true;
                 };
 
             affirmativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.Affirmative);
+                    cleanUpAndSetResult(tcs, MessageDialogResult.Affirmative);
 
                     e.Handled = true;
                 };
 
             firstAuxHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.FirstAuxiliary);
+                    cleanUpAndSetResult(tcs, MessageDialogResult.FirstAuxiliary);
 
                     e.Handled = true;
                 };
 
             secondAuxHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(MessageDialogResult.SecondAuxiliary);
+                    cleanUpAndSetResult(tcs, MessageDialogResult.SecondAuxiliary);
 
                     e.Handled = true;
                 };
@@ -188,15 +185,12 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Escape)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                        var result = this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative;
+                        cleanUpAndSetResult(tcs, result);
                     }
                     else if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(MessageDialogResult.Affirmative);
+                        cleanUpAndSetResult(tcs, MessageDialogResult.Affirmative);
                     }
                 };
 

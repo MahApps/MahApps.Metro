@@ -3,11 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    using JetBrains.Annotations;
-
     public static class DialogManager
     {
         /// <summary>
@@ -141,7 +140,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-       
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -208,7 +207,6 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
         /// </summary>
@@ -367,6 +365,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new ArgumentNullException(nameof(window));
             }
+
             window.Dispatcher.VerifyAccess();
 
             var dialog = (TDialog)Activator.CreateInstance(typeof(TDialog), window, settings);
@@ -511,24 +510,34 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog)
+        public static BaseMetroDialog ShowDialogExternally([NotNull] this BaseMetroDialog dialog)
         {
-            Window win = SetupExternalDialogWindow(dialog);
+            if (dialog == null)
+            {
+                throw new ArgumentNullException(nameof(dialog));
+            }
 
-            dialog.OnShown();
-            win.Show();
-
+            dialog.ShowModalDialogExternally(win => win.Show());
             return dialog;
         }
 
-        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog)
+        public static BaseMetroDialog ShowModalDialogExternally([NotNull] this BaseMetroDialog dialog)
+        {
+            if (dialog == null)
+            {
+                throw new ArgumentNullException(nameof(dialog));
+            }
+
+            dialog.ShowModalDialogExternally(win => win.ShowDialog());
+            return dialog;
+        }
+
+        private static void ShowModalDialogExternally([NotNull] this BaseMetroDialog dialog, [NotNull] Action<Window> action)
         {
             Window win = SetupExternalDialogWindow(dialog);
 
             dialog.OnShown();
-            win.ShowDialog();
-
-            return dialog;
+            action(win);
         }
 
         private static Window CreateExternalWindow()
@@ -558,7 +567,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
                 win.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
@@ -591,7 +603,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
-            
+
             return win;
         }
 
@@ -603,9 +615,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static LoginDialogData ShowModalLoginExternal(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
+        public static LoginDialogData ShowModalLoginExternal([NotNull] this MetroWindow window, [CanBeNull] string title, [CanBeNull] string message, [CanBeNull] LoginDialogSettings settings = null)
         {
-            var win = CreateModalExternalWindow(window);
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
 
             settings = settings ?? new LoginDialogSettings();
 
@@ -617,19 +632,9 @@ namespace MahApps.Metro.Controls.Dialogs
             };
 
             SetDialogFontSizes(settings, dialog);
-            
-            win.Content = dialog;
 
-            LoginDialogData result = null;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
-
-            HandleOverlayOnShow(settings, window);
-            win.ShowDialog();
-            HandleOverlayOnHide(settings, window);
+            Func<object, LoginDialogData> converter = o => (LoginDialogData)o;
+            var result = ShowModalDialogExternal(window, dialog, converter);
             return result;
         }
 
@@ -641,9 +646,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static string ShowModalInputExternal(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
+        public static string ShowModalInputExternal([NotNull] this MetroWindow window, [CanBeNull] string title, [CanBeNull] string message, [CanBeNull] MetroDialogSettings settings = null)
         {
-            var win = CreateModalExternalWindow(window);
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
 
             settings = settings ?? window.MetroDialogOptions;
 
@@ -657,18 +665,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
             SetDialogFontSizes(settings, dialog);
 
-            win.Content = dialog;
+            Func<object, string> converter = o => (string)o;
 
-            string result = null;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
-
-            HandleOverlayOnShow(settings, window);
-            win.ShowDialog();
-            HandleOverlayOnHide(settings, window);
+            var result = ShowModalDialogExternal(window, dialog, converter);
             return result;
         }
 
@@ -681,9 +680,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static MessageDialogResult ShowModalMessageExternal(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public static MessageDialogResult ShowModalMessageExternal([NotNull] this MetroWindow window, [CanBeNull] string title, [CanBeNull] string message, [CanBeNull] MessageDialogStyle style = MessageDialogStyle.Affirmative, [CanBeNull] MetroDialogSettings settings = null)
         {
-            var win = CreateModalExternalWindow(window);
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
 
             settings = settings ?? window.MetroDialogOptions;
 
@@ -697,22 +699,32 @@ namespace MahApps.Metro.Controls.Dialogs
 
             SetDialogFontSizes(settings, dialog);
 
-            win.Content = dialog;
+            Func<object, MessageDialogResult> converter = o => (MessageDialogResult)o;
 
-            MessageDialogResult result = MessageDialogResult.Affirmative;
-            dialog.WaitForButtonPressAsync().ContinueWith(task =>
-            {
-                result = task.Result;
-                win.Invoke(win.Close);
-            });
-
-            HandleOverlayOnShow(settings, window);
-            win.ShowDialog();
-            HandleOverlayOnHide(settings, window);
+            var result = ShowModalDialogExternal(window, dialog, converter);
             return result;
         }
 
-        private static void SetDialogFontSizes(MetroDialogSettings settings, BaseMetroDialog dialog)
+        private static TResult ShowModalDialogExternal<TResult>([NotNull] MetroWindow window, [NotNull] BaseMetroDialog dialog, [NotNull] Func<object, TResult> converter)
+        {
+            var win = CreateModalExternalWindow(window);
+            win.Content = dialog;
+
+            TResult result = default(TResult);
+            dialog.WaitForButtonPressAndSetResultAsync().ContinueWith(task =>
+            {
+                result = converter(dialog.Result);
+                win.Invoke(win.Close);
+            });
+
+            HandleOverlayOnShow(dialog.DialogSettings, window);
+            win.ShowDialog();
+            HandleOverlayOnHide(dialog.DialogSettings, window);
+
+            return result;
+        }
+
+        private static void SetDialogFontSizes([CanBeNull] MetroDialogSettings settings, [NotNull] BaseMetroDialog dialog)
         {
             if (settings == null)
             {
