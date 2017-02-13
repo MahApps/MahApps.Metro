@@ -6,15 +6,15 @@ namespace MahApps.Metro.Tests.TestHelpers
     using System.Diagnostics;
 
     /// <summary>
-    /// This class is the ultimate hack to work around that we can't 
+    /// This class is the ultimate hack to work around that we can't
     /// create more than one application in the same AppDomain
-    /// 
-    /// It is initialized once at startup and is never properly cleaned up, 
+    ///
+    /// It is initialized once at startup and is never properly cleaned up,
     /// this means the AppDomain will throw an exception when xUnit unloads it.
-    /// 
+    ///
     /// Your test runner will inevitably hate you and hang endlessly after every test has run.
     /// The Resharper runner will also throw an exception message in your face.
-    /// 
+    ///
     /// Better than no unit tests.
     /// </summary>
     public class TestHost
@@ -38,7 +38,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             appThread = new Thread(StartDispatcher);
             appThread.SetApartmentState(ApartmentState.STA);
             appThread.Start();
-            
+
             gate.WaitOne();
         }
 

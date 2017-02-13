@@ -214,12 +214,12 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register("FirstAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register("SecondAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, new PropertyChangedCallback((s, e) =>
-                                                                                                                                                                                                                                                           {
-                                                                                                                                                                                                                                                               MessageDialog md = (MessageDialog)s;
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, (s, e) =>
+            {
+                MessageDialog md = (MessageDialog)s;
 
-                                                                                                                                                                                                                                                               SetButtonState(md);
-                                                                                                                                                                                                                                                           })));
+                SetButtonState(md);
+            }));
 
         private static void SetButtonState(MessageDialog md)
         {
