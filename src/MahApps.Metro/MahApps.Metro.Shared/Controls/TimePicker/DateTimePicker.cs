@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -156,7 +157,7 @@
                 _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
-                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateProperty));
+                _calendar.SelectedDatesChanged += OnCalendarSelectedDateChanged;
             }
         }
 
@@ -175,6 +176,15 @@
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
             return valueForTextBox;
+        }
+
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseUp(e);
+            if (Mouse.Captured is CalendarItem)
+            {
+                Mouse.Capture(null);
+            }
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
@@ -207,6 +217,19 @@
             if (!_deactivateWriteValueToTextBox)
             {
                 base.WriteValueToTextBox();
+            }
+        }
+
+        private void OnCalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var dt = (DateTime)e.AddedItems[0];
+
+                var timeOfDay = SelectedDate.GetValueOrDefault().TimeOfDay;
+
+                dt += timeOfDay;
+                SelectedDate = dt;
             }
         }
 
