@@ -55,7 +55,6 @@
                                 Margin="20"
                                 Foreground="White"
                                 HamburgerWidth="48"
-                                Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
                                 ItemClick="HamburgerMenu_OnItemClick"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemClick="HamburgerMenu_OnOptionsItemClick"

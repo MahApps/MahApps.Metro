@@ -56,14 +56,34 @@ namespace MahApps.Metro.Controls
             OptionsItemClick?.Invoke(this, new ItemClickEventArgs(_optionsListView.SelectedItem));
         }
 
+        private ListBoxItem GetClickedListBoxItem(ItemsControl itemsControl, DependencyObject dependencyObject)
+        {
+            if (itemsControl == null || dependencyObject == null)
+            {
+                return null;
+            }
+            var item = ItemsControl.ContainerFromElement(itemsControl, dependencyObject) as ListBoxItem;
+            return item;
+        }
+
         private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
         {
-            OnItemClick();
+            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
+            if (item != null)
+            {
+                // ListBox item clicked - do some cool things here
+                OnItemClick();
+            }
         }
 
         private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
         {
-            OnOptionsItemClick();
+            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
+            if (item != null)
+            {
+                // ListBox item clicked - do some cool things here
+                OnOptionsItemClick();
+            }
         }
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
