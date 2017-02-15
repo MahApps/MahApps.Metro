@@ -43,6 +43,9 @@ namespace MahApps.Metro.Controls
                 _optionsListView.SelectedIndex = -1;
             }
 
+            (_buttonsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            RaiseItemCommand();
+
             ItemClick?.Invoke(this, new ItemClickEventArgs(_buttonsListView.SelectedItem));
         }
 
@@ -52,6 +55,9 @@ namespace MahApps.Metro.Controls
             {
                 _buttonsListView.SelectedIndex = -1;
             }
+
+            (_optionsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            RaiseOptionsItemCommand();
 
             OptionsItemClick?.Invoke(this, new ItemClickEventArgs(_optionsListView.SelectedItem));
         }

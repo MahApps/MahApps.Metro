@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
@@ -38,6 +39,16 @@ namespace MahApps.Metro.Controls
         /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+
+        /// <summary>
+        /// Identifies the <see cref="OptionsItemCommand"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register("OptionsItemCommand", typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register("OptionsItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets an object source used to generate the content of the options.
@@ -110,6 +121,37 @@ namespace MahApps.Metro.Controls
         {
             get { return (int)GetValue(SelectedOptionsIndexProperty); }
             set { SetValue(SelectedOptionsIndexProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a command which will be executed if an options item is clicked by the user.
+        /// </summary>
+        public ICommand OptionsItemCommand
+        {
+            get { return (ICommand)GetValue(OptionsItemCommandProperty); }
+            set { SetValue(OptionsItemCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the command parameter which will be passed by the OptionsItemCommand.
+        /// </summary>
+        public object OptionsItemCommandParameter
+        {
+            get { return (object)GetValue(OptionsItemCommandParameterProperty); }
+            set { SetValue(OptionsItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Executes the options item command which can be set by the user.
+        /// </summary>
+        public void RaiseOptionsItemCommand()
+        {
+            var command = OptionsItemCommand;
+            var commandParameter = OptionsItemCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
         }
     }
 }

@@ -27,5 +27,10 @@ namespace MahApps.Metro.Controls
                 SetValue(IconProperty, value);
             }
         }
+
+        protected override Freezable CreateInstanceCore()
+        {
+            return new HamburgerMenuIconItem();
+        }
     }
 }

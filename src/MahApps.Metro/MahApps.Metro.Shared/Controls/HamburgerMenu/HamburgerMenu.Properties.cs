@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -69,6 +70,16 @@ namespace MahApps.Metro.Controls
         /// Identifies the <see cref="ContentTransition"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register(nameof(ContentTransition), typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemCommand"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemCommandProperty = DependencyProperty.Register("ItemCommand", typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemCommandParameter"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register("ItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
@@ -192,6 +203,37 @@ namespace MahApps.Metro.Controls
         {
             get { return (TransitionType)this.GetValue(ContentTransitionProperty); }
             set { this.SetValue(ContentTransitionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a command which will be executed if an item is clicked by the user.
+        /// </summary>
+        public ICommand ItemCommand
+        {
+            get { return (ICommand)GetValue(ItemCommandProperty); }
+            set { SetValue(ItemCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the command parameter which will be passed by the ItemCommand.
+        /// </summary>
+        public object ItemCommandParameter
+        {
+            get { return (object)GetValue(ItemCommandParameterProperty); }
+            set { SetValue(ItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Executes the item command which can be set by the user.
+        /// </summary>
+        public void RaiseItemCommand()
+        {
+            var command = ItemCommand;
+            var commandParameter = ItemCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
         }
     }
 }
