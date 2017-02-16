@@ -115,6 +115,7 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type Controls:WindowCommandsItem}">
+                    <Setter Property="IsTabStop" Value="False"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
