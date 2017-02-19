@@ -1246,7 +1246,7 @@ namespace MahApps.Metro.Controls
             // tage from DragMove internal code
             window.VerifyAccess();
 
-            var cursorPos = WinApiHelper.GetPhysicalCursorPos();
+            //var cursorPos = WinApiHelper.GetPhysicalCursorPos();
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
@@ -1261,7 +1261,7 @@ namespace MahApps.Metro.Controls
 
             if (windowIsMaximized)
             {
-                var cursorXPos = cursorPos.x;
+                //var cursorXPos = cursorPos.x;
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
@@ -1296,13 +1296,13 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    if (window.WindowState == WindowState.Maximized)
+                    if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
                     mouseButtonEventArgs.Handled = true;
                 }

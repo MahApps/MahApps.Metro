@@ -15,7 +15,7 @@
         {
             // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
             // we can do this
-            //HamburgerMenuControl.Content = e.ClickedItem;
+            HamburgerMenuControl.Content = e.ClickedItem;
 
             // close the menu if a item was selected
             if (this.HamburgerMenuControl.IsPaneOpen)

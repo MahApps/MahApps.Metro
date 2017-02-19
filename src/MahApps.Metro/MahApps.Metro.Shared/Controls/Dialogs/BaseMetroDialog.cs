@@ -208,7 +208,7 @@ namespace MahApps.Metro.Controls.Dialogs
             // nothing here
         }
 
-        private static Tuple<AppTheme, Accent> DetectTheme(DependencyObject dialog)
+        private static Tuple<AppTheme, Accent> DetectTheme(BaseMetroDialog dialog)
         {
             if (dialog == null)
             {
@@ -216,7 +216,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             // first look for owner
-            var window = dialog.TryFindParent<MetroWindow>();
+            var window = dialog.OwningWindow ?? dialog.TryFindParent<MetroWindow>();
             var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
             if (theme?.Item2 != null)
             {
