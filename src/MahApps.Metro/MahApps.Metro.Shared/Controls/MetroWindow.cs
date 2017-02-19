@@ -1308,13 +1308,13 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    if (window.WindowState == WindowState.Maximized)
+                    if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
                     mouseButtonEventArgs.Handled = true;
                 }
