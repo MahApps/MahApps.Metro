@@ -1,7 +1,7 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -28,7 +28,7 @@
         public static readonly DependencyProperty HamburgerMenuTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the hamburger icon.
+        /// Gets or sets a template for the hamburger icon.
         /// </summary>
         public DataTemplate HamburgerMenuTemplate
         {
@@ -37,7 +37,7 @@
         }
 
         /// <summary>
-        /// Gets or sets main button's width
+        /// Gets or sets main button's width.
         /// </summary>
         public double HamburgerWidth
         {
@@ -46,7 +46,7 @@
         }
 
         /// <summary>
-        /// Gets or sets main button's height
+        /// Gets or sets main button's height.
         /// </summary>
         public double HamburgerHeight
         {
@@ -55,7 +55,7 @@
         }
 
         /// <summary>
-        /// Gets or sets main button's margin
+        /// Gets or sets main button's margin.
         /// </summary>
         public Thickness HamburgerMargin
         {
