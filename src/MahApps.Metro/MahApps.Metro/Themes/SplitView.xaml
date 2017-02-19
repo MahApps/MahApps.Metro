@@ -6,6 +6,7 @@
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="OpenPaneLength" Value="320" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
@@ -432,6 +433,8 @@
                               Grid.ColumnSpan="2">
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Focusable="False"
                                             Content="{TemplateBinding Content}" />
                             <Rectangle x:Name="LightDismissLayer"
                                        Fill="Transparent"
@@ -458,6 +461,9 @@
                             </Grid.Clip>
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            IsTabStop="False"
+                                            Focusable="False"
+                                            Foreground="{TemplateBinding PaneForeground}"
                                             Content="{TemplateBinding Pane}" />
                             <Rectangle x:Name="HCPaneBorder"
                                        Width="1"
