@@ -58,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Properties.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuGlyphItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuIconItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuImageItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\MenuItems\HamburgerMenuItemCollection.cs" />
