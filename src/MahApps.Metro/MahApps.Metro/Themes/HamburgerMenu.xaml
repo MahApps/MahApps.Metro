@@ -56,6 +56,7 @@
             <Setter.Value>
                 <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
                     <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     <Setter Property="Margin" Value="0" />
@@ -73,6 +74,8 @@
     </Style>
 
     <Style TargetType="{x:Type controls:HamburgerMenu}">
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
@@ -98,6 +101,7 @@
                                             IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                             OpenPaneLength="{TemplateBinding OpenPaneLength}"
                                             PaneBackground="{TemplateBinding PaneBackground}"
+                                            PaneForeground="{TemplateBinding PaneForeground}"
                                             PanePlacement="{TemplateBinding PanePlacement}">
                             <controls:SplitView.Pane>
                                 <Grid x:Name="PaneGrid">
@@ -109,6 +113,7 @@
                                     <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" />
                                     <ListBox Name="ButtonsListView"
                                              Grid.Row="1"
+                                             Foreground="{TemplateBinding PaneForeground}"
                                              Width="{TemplateBinding OpenPaneLength}"
                                              AutomationProperties.Name="Menu items"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
@@ -129,6 +134,7 @@
 
                                         <ListBox Name="OptionsListView"
                                                  Grid.Row="1"
+                                                 Foreground="{TemplateBinding PaneForeground}"
                                                  Width="{TemplateBinding OpenPaneLength}"
                                                  VerticalAlignment="Bottom"
                                                  AutomationProperties.Name="Option items"
@@ -156,6 +162,7 @@
                                                                   Transition="{TemplateBinding ContentTransition}" />
                         </controls:SplitView>
                         <Button x:Name="HamburgerButton"
+                                Foreground="{TemplateBinding PaneForeground}"
                                 Width="{TemplateBinding HamburgerWidth}"
                                 Height="{TemplateBinding HamburgerHeight}"
                                 HorizontalAlignment="Left"
@@ -165,7 +172,6 @@
                                 TabIndex="0">
                             <ContentControl Margin="{TemplateBinding HamburgerMargin}"
                                             ContentTemplate="{TemplateBinding HamburgerMenuTemplate}"
-                                            Foreground="{TemplateBinding Foreground}"
                                             IsTabStop="False" />
                         </Button>
                     </Grid>

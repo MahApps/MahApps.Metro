@@ -37,6 +37,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PaneBackgroundProperty = DependencyProperty.Register(nameof(PaneBackground), typeof(Brush), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="PaneForeground"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty PaneForegroundProperty = DependencyProperty.Register(nameof(PaneForeground), typeof(Brush), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="IsPaneOpen"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
@@ -124,6 +129,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(PaneBackgroundProperty); }
             set { SetValue(PaneBackgroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Brush to apply to the foreground of the Pane area of the control.
+        /// </summary>
+        public Brush PaneForeground
+        {
+            get { return (Brush)GetValue(PaneForegroundProperty); }
+            set { SetValue(PaneForegroundProperty, value); }
         }
 
         /// <summary>
