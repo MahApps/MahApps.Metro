@@ -51,12 +51,10 @@
 
     <Style x:Key="WindowCommandsControlStyle" TargetType="{x:Type Control}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="1" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="8 0 8 0" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource GrayBrush4}" />
@@ -108,7 +106,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="LightTemplate" Value="{StaticResource LightWindowCommandsTemplate}" />
         <Setter Property="Template" Value="{StaticResource LightWindowCommandsTemplate}" />
         <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
@@ -123,7 +122,7 @@
                                             VerticalAlignment="{Binding VerticalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                                             Orientation="Horizontal">
                                     <ContentPresenter x:Name="PART_ContentPresenter"
-                                                      Margin="8 0 8 0"
+                                                      Margin="1 0"
                                                       Content="{TemplateBinding Content}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
