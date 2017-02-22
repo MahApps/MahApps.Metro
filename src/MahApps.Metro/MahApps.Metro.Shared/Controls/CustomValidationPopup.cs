@@ -40,7 +40,7 @@ namespace MahApps.Metro.Controls
         {
             if (CloseOnMouseLeftButtonDown)
             {
-                this.IsOpen = false;
+                this.SetCurrentValue(Popup.IsOpenProperty, false);
             }
         }
 
