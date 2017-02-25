@@ -60,7 +60,7 @@
                                         CommandParameter="{TemplateBinding CloseTabCommandParameter}"
                                         Width="{TemplateBinding Controls:ControlsHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
-                                        Margin="{DynamicResource CloseButtonMargin}"
+                                        Margin="{TemplateBinding CloseButtonMargin}"
                                         VerticalAlignment="Top"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         Background="{DynamicResource GrayNormalBrush}"
