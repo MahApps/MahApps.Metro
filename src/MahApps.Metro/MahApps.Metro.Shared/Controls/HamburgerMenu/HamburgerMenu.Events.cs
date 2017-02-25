@@ -1,8 +1,9 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
-    using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
+namespace MahApps.Metro.Controls
+{
     public sealed class ItemClickEventArgs : RoutedEventArgs
     {
         public ItemClickEventArgs(object clickedObject)
@@ -35,24 +36,90 @@
             IsPaneOpen = !IsPaneOpen;
         }
 
-        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        private void OnItemClick()
         {
             if (_optionsListView != null)
             {
                 _optionsListView.SelectedIndex = -1;
             }
 
+            (_buttonsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            RaiseItemCommand();
+
             ItemClick?.Invoke(this, new ItemClickEventArgs(_buttonsListView.SelectedItem));
         }
 
-        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        private void OnOptionsItemClick()
         {
             if (_buttonsListView != null)
             {
                 _buttonsListView.SelectedIndex = -1;
             }
 
+            (_optionsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            RaiseOptionsItemCommand();
+
             OptionsItemClick?.Invoke(this, new ItemClickEventArgs(_optionsListView.SelectedItem));
+        }
+
+        private ListBoxItem GetClickedListBoxItem(ItemsControl itemsControl, DependencyObject dependencyObject)
+        {
+            if (itemsControl == null || dependencyObject == null)
+            {
+                return null;
+            }
+            var item = ItemsControl.ContainerFromElement(itemsControl, dependencyObject) as ListBoxItem;
+            return item;
+        }
+
+        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
+            if (item != null)
+            {
+                // ListBox item clicked - do some cool things here
+                OnItemClick();
+            }
+        }
+
+        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
+            if (item != null)
+            {
+                // ListBox item clicked - do some cool things here
+                OnOptionsItemClick();
+            }
+        }
+
+        private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                if (Keyboard.IsKeyToggled(Key.Space) ||
+                    Keyboard.IsKeyToggled(Key.Up) ||
+                    Keyboard.IsKeyToggled(Key.PageUp) ||
+                    Keyboard.IsKeyToggled(Key.Down) ||
+                    Keyboard.IsKeyToggled(Key.PageDown))
+                {
+                    OnItemClick();
+                }
+            }
+        }
+
+        private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            {
+                if (Keyboard.IsKeyToggled(Key.Space) ||
+                    Keyboard.IsKeyToggled(Key.Up) ||
+                    Keyboard.IsKeyToggled(Key.PageUp) ||
+                    Keyboard.IsKeyToggled(Key.Down) ||
+                    Keyboard.IsKeyToggled(Key.PageDown))
+                {
+                    OnOptionsItemClick();
+                }
+            }
         }
     }
 }

@@ -201,7 +201,7 @@ namespace MahApps.Metro.Controls {
         private readonly Key _key;
         private readonly ModifierKeys _modifierKeys;
 
-        public HotKey(Key key, ModifierKeys modifierKeys)
+        public HotKey(Key key, ModifierKeys modifierKeys = ModifierKeys.None)
         {
             _key = key;
             _modifierKeys = modifierKeys;
@@ -255,10 +255,21 @@ namespace MahApps.Metro.Controls {
             }
             if ((_modifierKeys & ModifierKeys.Windows) == ModifierKeys.Windows)
             {
-                sb.Append("WINDOWS+");
+                sb.Append("Windows+");
             }
-            sb.Append(GetLocalizedKeyStringUnsafe(KeyInterop.VirtualKeyFromKey(_key)).ToUpper());
+            sb.Append(GetLocalizedKeyString(_key));
             return sb.ToString();
+        }
+
+        private static string GetLocalizedKeyString(Key key)
+        {
+            if (key >= Key.BrowserBack && key <= Key.LaunchApplication2)
+            {
+                return key.ToString();
+            }
+
+            var vkey = KeyInterop.VirtualKeyFromKey(key);
+            return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
         }
 
         private static string GetLocalizedKeyStringUnsafe(int key)
@@ -281,8 +292,8 @@ namespace MahApps.Metro.Controls {
                 scanCode |= 0x1000000;
             }
 
-            UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
-            return sb.ToString();
+            var resultLength = UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
+            return resultLength > 0 ? sb.ToString() : null;
         }
 
     }

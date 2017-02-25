@@ -185,7 +185,7 @@ namespace MetroDemo.ExampleWindows
 
         private void ShowAutoCloseFlyout(object sender, RoutedEventArgs e)
         {
-            this.ToggleFlyout(12);
+            this.ToggleFlyout(13);
         }
 
         private async void ClickMeOnClick(object sender, RoutedEventArgs e)

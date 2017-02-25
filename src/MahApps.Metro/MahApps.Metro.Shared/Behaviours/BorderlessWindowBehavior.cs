@@ -122,7 +122,8 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.Deactivated += (sender, args) => { topmostHack(); };
 
             this.AssociatedObject.Loaded += this.AssociatedObject_Loaded;
-            this.AssociatedObject.Unloaded += this.AssociatedObject_Unloaded;
+            this.AssociatedObject.Unloaded += this.AssociatedObjectUnloaded;
+            this.AssociatedObject.Closed += this.AssociatedObjectClosed;
             this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
             this.AssociatedObject.StateChanged += this.OnAssociatedObjectHandleMaximize;
 
@@ -229,6 +230,11 @@ namespace MahApps.Metro.Behaviours
             {
                 this.isCleanedUp = true;
 
+                if (GetHandleTaskbar(this.AssociatedObject) && this.isWindwos10OrHigher)
+                {
+                    this.DeactivateTaskbarFix();
+                }
+
                 // clean up events
                 if (this.AssociatedObject is MetroWindow)
                 {
@@ -238,7 +244,8 @@ namespace MahApps.Metro.Behaviours
                           .RemoveValueChanged(this.AssociatedObject, this.UseNoneWindowStylePropertyChangedCallback);
                 }
                 this.AssociatedObject.Loaded -= this.AssociatedObject_Loaded;
-                this.AssociatedObject.Unloaded -= this.AssociatedObject_Unloaded;
+                this.AssociatedObject.Unloaded -= this.AssociatedObjectUnloaded;
+                this.AssociatedObject.Closed -= this.AssociatedObjectClosed;
                 this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
                 this.AssociatedObject.StateChanged -= this.OnAssociatedObjectHandleMaximize;
                 if (this.hwndSource != null)
@@ -255,7 +262,12 @@ namespace MahApps.Metro.Behaviours
             base.OnDetaching();
         }
 
-        private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
+        private void AssociatedObjectUnloaded(object sender, RoutedEventArgs e)
+        {
+            this.Cleanup();
+        }
+
+        private void AssociatedObjectClosed(object sender, EventArgs e)
         {
             this.Cleanup();
         }
@@ -315,34 +327,18 @@ namespace MahApps.Metro.Behaviours
                         var monitorInfo = new MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                        if (ignoreTaskBar)
-                        {
-                            var x = monitorInfo.rcMonitor.left;
-                            var y = monitorInfo.rcMonitor.top;
-                            var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                            var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+                        var desktopRect = ignoreTaskBar ? monitorInfo.rcMonitor :  monitorInfo.rcWork;
+                        var x = desktopRect.left;
+                        var y = desktopRect.top;
+                        var cx = Math.Abs(desktopRect.right - x);
+                        var cy = Math.Abs(desktopRect.bottom - y);
 
-                            var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
-                            if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
-                            {
-                                UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
-                            }
-                            else
-                            {
-                                UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
-                            }
-                        }
-                        else
+                        if (ignoreTaskBar && this.isWindwos10OrHigher)
                         {
-                            var x = monitorInfo.rcWork.left;
-                            var y = monitorInfo.rcWork.top;
-                            var cx = Math.Abs(monitorInfo.rcWork.right - x);
-                            var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
-
-                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                            this.ActivateTaskbarFix();
                         }
+
+                        UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                     }
                 }
             }
@@ -360,23 +356,9 @@ namespace MahApps.Metro.Behaviours
 
                 // #2694 make sure the window is not on top after restoring window
                 // this issue was introduced after fixing the windows 10 bug with the taskbar and a maximized window that ignores the taskbar
-                RECT rect;
-                if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                if (GetHandleTaskbar(this.AssociatedObject) && this.isWindwos10OrHigher)
                 {
-                    var left = rect.left;
-                    var top = rect.top;
-                    var width = rect.Width;
-                    var height = rect.Height;
-
-                    // #2780 Don't blindly set the Z-Order to HWWND_NOTOPMOST. If this window has an owner, set
-                    // the Z-Order to be after the owner. This keeps external dialogs appearing correctly above
-                    // their owner window even when owner window is maximized and ignoring taskbar.
-                    IntPtr hwndInsAfter = Constants.HWND_NOTOPMOST;
-                    if (this.AssociatedObject.Owner != null)
-                    {
-                        hwndInsAfter = new WindowInteropHelper(this.AssociatedObject.Owner).Handle;
-                    }
-                    UnsafeNativeMethods.SetWindowPos(this.handle, hwndInsAfter, left, top, width, height, 0x0040);
+                    this.DeactivateTaskbarFix();
                 }
             }
 
@@ -399,6 +381,46 @@ namespace MahApps.Metro.Behaviours
 
             this.borderThicknessChangeNotifier.RaiseValueChanged = true;
             this.topMostChangeNotifier.RaiseValueChanged = raiseValueChanged;
+        }
+
+        private void ActivateTaskbarFix()
+        {
+            var trayWndHandle = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+            if (trayWndHandle != IntPtr.Zero)
+            {
+                SetHandleTaskbar(this.AssociatedObject, true);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_BOTTOM, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOP, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_NOTOPMOST, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+            }
+        }
+
+        private void DeactivateTaskbarFix()
+        {
+            var trayWndHandle = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+            if (trayWndHandle != IntPtr.Zero)
+            {
+                SetHandleTaskbar(this.AssociatedObject, false);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_BOTTOM, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOP, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOPMOST, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+            }
+        }
+
+        private static readonly DependencyProperty HandleTaskbarProperty
+            = DependencyProperty.RegisterAttached(
+                "HandleTaskbar",
+                typeof(bool),
+                typeof(BorderlessWindowBehavior), new FrameworkPropertyMetadata(false));
+
+        private static bool GetHandleTaskbar(UIElement element)
+        {
+            return (bool)element.GetValue(HandleTaskbarProperty);
+        }
+
+        private static void SetHandleTaskbar(UIElement element, bool value)
+        {
+            element.SetValue(HandleTaskbarProperty, value);
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)

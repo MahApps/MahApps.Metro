@@ -201,4 +201,9 @@
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10" Color="#FFFFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10" Color="#FF999999" options:Freeze="True" />
     
+    <!-- HamburgerMenu -->
+    
+    <SolidColorBrush x:Key="MahApps.Metro.HamburgerMenu.PaneBackgroundBrush" Color="#FF444444" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.HamburgerMenu.PaneForegroundBrush" Color="#FFFFFFFF" options:Freeze="True" />
+    
 </ResourceDictionary>

@@ -13,7 +13,15 @@
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
         {
+            // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
+            // we can do this
             HamburgerMenuControl.Content = e.ClickedItem;
+
+            // close the menu if a item was selected
+            if (this.HamburgerMenuControl.IsPaneOpen)
+            {
+                this.HamburgerMenuControl.IsPaneOpen = false;
+            }
         }
 
         private async void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)
