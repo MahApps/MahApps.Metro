@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\TiltBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Badged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ButtonsAlignment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CloseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />

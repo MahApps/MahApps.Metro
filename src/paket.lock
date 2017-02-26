@@ -23,4 +23,5 @@ NUGET
       xunit (1.9.2)
 GITHUB
   remote: ControlzEx/ControlzEx
-    src/ControlzEx/KeyboardNavigationEx.cs (72aa238cd565ef63e8d52c29982a587e039d04ec)
+    src/ControlzEx/BadgedEx.cs (1f4d66092fb101f3ece1dc88b36c20d815f88b2b)
+    src/ControlzEx/KeyboardNavigationEx.cs (1f4d66092fb101f3ece1dc88b36c20d815f88b2b)

@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MahApps.Metro"
              mc:Ignorable="d"
              d:DesignHeight="737.288"
              d:DesignWidth="800"
@@ -30,6 +31,17 @@
 
         <StackPanel Grid.Column="0">
             <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <wpf:Badged Width="100"
+                        Margin="{StaticResource ControlMargin}"
+                        Badge="3">
+                <Button Content="Mail" />
+            </wpf:Badged>
+            <wpf:Badged x:Name="CountingBadge"
+                        Width="100"
+                        Margin="{StaticResource ControlMargin}">
+                <Button Content="Click Me"
+                        Click="CountingButton_OnClick" />
+            </wpf:Badged>
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled" />
