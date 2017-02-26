@@ -1,11 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf">
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <SineEase x:Key="BadgeEase" EasingMode="EaseOut" />
 
-    <Style TargetType="{x:Type wpf:Badged}">
+    <Style TargetType="{x:Type controls:Badged}">
         <Setter Property="BadgeBackground" Value="{DynamicResource AccentBaseColorBrush}" />
         <Setter Property="BadgeForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
@@ -14,7 +14,7 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type wpf:Badged}">
+                <ControlTemplate TargetType="{x:Type controls:Badged}">
                     <Grid>
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"

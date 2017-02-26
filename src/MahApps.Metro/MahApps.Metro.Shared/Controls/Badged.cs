@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using ControlzEx;
 
-namespace MaterialDesignThemes.Wpf
+namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = BadgeContainerPartName, Type = typeof(UIElement))]
     public class Badged : BadgedEx
