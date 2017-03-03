@@ -454,11 +454,11 @@ namespace MahApps.Metro.Controls
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
             if (useNoneWindowStyle)
             {
-                ShowTitleBar = false;
+                this.SetCurrentValue(ShowTitleBarProperty, false);
             }
             else
             {
-                ShowTitleBar = isTitleBarVisible;
+                this.SetCurrentValue(ShowTitleBarProperty, isTitleBarVisible);
             }
             if (LeftWindowCommandsPresenter != null)
             {
