@@ -1,18 +1,18 @@
 ﻿using System;
+using System.Linq;
+using System.Management;
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
 using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Behaviours
 {
-    using System.Linq;
-    using System.Management;
-
     /// <summary>
     /// With this class we can make custom window styles.
     /// </summary>
@@ -248,10 +248,7 @@ namespace MahApps.Metro.Behaviours
                 this.AssociatedObject.Closed -= this.AssociatedObjectClosed;
                 this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
                 this.AssociatedObject.StateChanged -= this.OnAssociatedObjectHandleMaximize;
-                if (this.hwndSource != null)
-                {
-                    this.hwndSource.RemoveHook(this.WindowProc);
-                }
+                this.hwndSource?.RemoveHook(this.WindowProc);
                 this.windowChrome = null;
             }
         }
@@ -431,9 +428,12 @@ namespace MahApps.Metro.Behaviours
                 throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
             }
             this.hwndSource = HwndSource.FromHwnd(this.handle);
-            if (this.hwndSource != null)
+            this.hwndSource?.AddHook(this.WindowProc);
+
+            var compositionTarget = this.hwndSource?.CompositionTarget;
+            if (compositionTarget != null)
             {
-                this.hwndSource.AddHook(this.WindowProc);
+                compositionTarget.BackgroundColor = this.AssociatedObject.AllowsTransparency ? Colors.Transparent : SystemColors.WindowColor;
             }
 
             if (this.AssociatedObject.ResizeMode != ResizeMode.NoResize)
