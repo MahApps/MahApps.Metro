@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
 using Microsoft.Windows.Shell;
@@ -422,6 +421,13 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
+            if (this.AssociatedObject.SizeToContent != SizeToContent.Manual && this.AssociatedObject.WindowState == WindowState.Normal)
+            {
+                // Another try to fix SizeToContent
+                // without this we get nasty glitches at the borders
+                this.AssociatedObject.Invoke(() => { this.AssociatedObject.InvalidateMeasure(); });
+            }
+
             this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
             if (IntPtr.Zero == this.handle)
             {
@@ -429,25 +435,6 @@ namespace MahApps.Metro.Behaviours
             }
             this.hwndSource = HwndSource.FromHwnd(this.handle);
             this.hwndSource?.AddHook(this.WindowProc);
-
-            var compositionTarget = this.hwndSource?.CompositionTarget;
-            if (compositionTarget != null)
-            {
-                compositionTarget.BackgroundColor = this.AssociatedObject.AllowsTransparency ? Colors.Transparent : SystemColors.WindowColor;
-            }
-
-            if (this.AssociatedObject.ResizeMode != ResizeMode.NoResize)
-            {
-                // handle size to content (thanks @lynnx).
-                // This is necessary when ResizeMode != NoResize. Without this workaround,
-                // black bars appear at the right and bottom edge of the window.
-                var sizeToContent = this.AssociatedObject.SizeToContent;
-                var snapsToDevicePixels = this.AssociatedObject.SnapsToDevicePixels;
-                this.AssociatedObject.SnapsToDevicePixels = true;
-                this.AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
-                this.AssociatedObject.SizeToContent = sizeToContent;
-                this.AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
-            }
 
             // handle the maximized state here too (to handle the border in a correct way)
             this.HandleMaximize();
