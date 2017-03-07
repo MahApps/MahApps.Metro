@@ -175,9 +175,9 @@ namespace MahApps.Metro.Controls
 
         private void UseDropShadow()
         {
-            this.BorderThickness = new Thickness(0);
-            this.BorderBrush = null;
-            this.GlowBrush = Brushes.Black;
+            this.SetCurrentValue(BorderThicknessProperty, new Thickness(0));
+            this.SetCurrentValue(BorderBrushProperty, null);
+            this.SetCurrentValue(GlowBrushProperty, Brushes.Black);
         }
 
         public bool IsWindowDraggable

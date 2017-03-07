@@ -25,7 +25,6 @@ namespace MahApps.Metro.Behaviours
         private Thickness? savedResizeBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
-
         private bool isWindwos10OrHigher;
 
         private static bool IsWindows10OrHigher()
@@ -421,18 +420,27 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
-            if (this.AssociatedObject.SizeToContent != SizeToContent.Manual && this.AssociatedObject.WindowState == WindowState.Normal)
-            {
-                // Another try to fix SizeToContent
-                // without this we get nasty glitches at the borders
-                this.AssociatedObject.Invoke(() => { this.AssociatedObject.InvalidateMeasure(); });
-            }
-
             this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
             if (IntPtr.Zero == this.handle)
             {
                 throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
             }
+
+            if (this.AssociatedObject.SizeToContent != SizeToContent.Manual && this.AssociatedObject.WindowState == WindowState.Normal)
+            {
+                // Another try to fix SizeToContent
+                // without this we get nasty glitches at the borders
+                this.AssociatedObject.Invoke(() =>
+                    {
+                        this.AssociatedObject.InvalidateMeasure();
+                        RECT rect;
+                        if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                        {
+                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), rect.left, rect.top, rect.Width, rect.Height, 0x0040);
+                        }
+                    });
+            }
+
             this.hwndSource = HwndSource.FromHwnd(this.handle);
             this.hwndSource?.AddHook(this.WindowProc);
 
