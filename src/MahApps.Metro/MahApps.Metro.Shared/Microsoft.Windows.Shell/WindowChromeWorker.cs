@@ -347,8 +347,11 @@ namespace Microsoft.Windows.Shell
                 _isHooked = true;
             }
 
-            // allow animation
-            _ModifyStyle(0, WS.CAPTION);
+            if (_MinimizeAnimation)
+            {
+                // allow animation
+                _ModifyStyle(0, WS.CAPTION);
+            }
 
             _FixupTemplateIssues();
 
@@ -608,6 +611,13 @@ namespace Microsoft.Windows.Shell
             // Only expecting messages for our cached HWND.
             Assert.AreEqual(hwnd, _hwnd);
 
+            // Check if window has a RootVisual to workaround issue #13 (Win32Exception on closing window).
+            // RootVisual gets cleared when the window is closing. This happens in CloseWindowFromWmClose of the Window class.
+            if (_hwndSource?.RootVisual == null)
+            {
+                return IntPtr.Zero;
+            }
+
             var message = (WM)msg;
             foreach (var handlePair in _messageTable)
             {
@@ -686,7 +696,6 @@ namespace Microsoft.Windows.Shell
                 {
                     modified = _ModifyStyle(0, WS.SYSMENU);
                 }
-                
                 handled = true;
                 return lRet;
             }
@@ -1130,7 +1139,7 @@ namespace Microsoft.Windows.Shell
         [SecurityCritical]
         private IntPtr _HandleEnterSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            if (_MinimizeAnimation && _GetHwndState() == WindowState.Maximized)
+            if (_MinimizeAnimation)// && _GetHwndState() != WindowState.Minimized)
             {
                 /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
                  * to prevent nasty drawing
@@ -1139,7 +1148,7 @@ namespace Microsoft.Windows.Shell
                  * will call this method, resulting in a 2px black border on the side
                  * when maximized.
                  */
-                _ModifyStyle(WS.DLGFRAME, 0);
+                _ModifyStyle(WS.CAPTION, 0);
             }
             handled = false;
             return IntPtr.Zero;
@@ -1198,9 +1207,10 @@ namespace Microsoft.Windows.Shell
             if (_MinimizeAnimation)
             {
                 // restore DLGFRAME
-                if (_ModifyStyle(0, WS.DLGFRAME))
+                if (_ModifyStyle(0, WS.CAPTION))
                 {
-                    _UpdateFrameState(true);
+                    //_UpdateFrameState(true);
+                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
                 }
             }
 
