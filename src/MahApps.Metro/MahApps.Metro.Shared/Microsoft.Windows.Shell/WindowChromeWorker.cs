@@ -611,6 +611,13 @@ namespace Microsoft.Windows.Shell
             // Only expecting messages for our cached HWND.
             Assert.AreEqual(hwnd, _hwnd);
 
+            // Check if window has a RootVisual to workaround issue #13 (Win32Exception on closing window).
+            // RootVisual gets cleared when the window is closing. This happens in CloseWindowFromWmClose of the Window class.
+            if (_hwndSource?.RootVisual == null)
+            {
+                return IntPtr.Zero;
+            }
+
             var message = (WM)msg;
             foreach (var handlePair in _messageTable)
             {
