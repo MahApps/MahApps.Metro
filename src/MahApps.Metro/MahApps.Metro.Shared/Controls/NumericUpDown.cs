@@ -893,7 +893,11 @@ namespace MahApps.Metro.Controls
             {
                 nud.InternalSetText(nud.Value);
             }
-            nud.HasDecimals = !RegexStringFormatHexadecimal.IsMatch((string)e.NewValue);
+
+            if (!nud.HasDecimals && RegexStringFormatHexadecimal.IsMatch((string)e.NewValue))
+            {
+                nud.HasDecimals = true;
+            }
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
