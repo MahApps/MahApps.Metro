@@ -281,6 +281,44 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
+                case (int)Standard.WM.WINDOWPOSCHANGING:
+                    {
+                        var pos = (Standard.WINDOWPOS)System.Runtime.InteropServices.Marshal.PtrToStructure(lParam, typeof(Standard.WINDOWPOS));
+                        if ((pos.flags & (int)Standard.SWP.NOMOVE) != 0)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        var wnd = this.AssociatedObject;
+                        if (wnd == null || this.hwndSource?.CompositionTarget == null)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        bool changedPos = false;
+
+                        // Convert the original to original size based on DPI setting. Need for x% screen DPI.
+                        var matrix = this.hwndSource.CompositionTarget.TransformToDevice;
+
+                        var minWidth = wnd.MinWidth * matrix.M11;
+                        var minHeight = wnd.MinHeight * matrix.M22;
+                        if (pos.cx < minWidth) { pos.cx = (int)minWidth; changedPos = true; }
+                        if (pos.cy < minHeight) { pos.cy = (int)minHeight; changedPos = true; }
+
+                        var maxWidth = wnd.MaxWidth * matrix.M11;
+                        var maxHeight = wnd.MaxHeight * matrix.M22;
+                        if (pos.cx > maxWidth && maxWidth > 0) { pos.cx = (int)Math.Round(maxWidth); changedPos = true; }
+                        if (pos.cy > maxHeight && maxHeight > 0) { pos.cy = (int)Math.Round(maxHeight); changedPos = true; }
+
+                        if (!changedPos)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        System.Runtime.InteropServices.Marshal.StructureToPtr(pos, lParam, true);
+                        handled = true;
+                    }
+                    break;
             }
 
             return returnval;
@@ -319,7 +357,7 @@ namespace MahApps.Metro.Behaviours
                     IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
                     if (monitor != IntPtr.Zero)
                     {
-                        var monitorInfo = new MONITORINFO();
+                        var monitorInfo = new Native.MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
                         var desktopRect = ignoreTaskBar ? monitorInfo.rcMonitor :  monitorInfo.rcWork;
@@ -433,7 +471,7 @@ namespace MahApps.Metro.Behaviours
                 this.AssociatedObject.Invoke(() =>
                     {
                         this.AssociatedObject.InvalidateMeasure();
-                        RECT rect;
+                        Native.RECT rect;
                         if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
                         {
                             UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), rect.left, rect.top, rect.Width, rect.Height, 0x0040);
