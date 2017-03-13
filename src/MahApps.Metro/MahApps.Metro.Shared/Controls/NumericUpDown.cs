@@ -896,7 +896,7 @@ namespace MahApps.Metro.Controls
 
             if (!nud.HasDecimals && RegexStringFormatHexadecimal.IsMatch((string)e.NewValue))
             {
-                nud.HasDecimals = true;
+                nud.SetCurrentValue(HasDecimalsProperty, true);
             }
         }
 
