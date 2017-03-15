@@ -175,9 +175,9 @@ namespace MahApps.Metro.Controls
 
         private void UseDropShadow()
         {
-            this.BorderThickness = new Thickness(0);
-            this.BorderBrush = null;
-            this.GlowBrush = Brushes.Black;
+            this.SetCurrentValue(BorderThicknessProperty, new Thickness(0));
+            this.SetCurrentValue(BorderBrushProperty, null);
+            this.SetCurrentValue(GlowBrushProperty, Brushes.Black);
         }
 
         public bool IsWindowDraggable
@@ -454,11 +454,11 @@ namespace MahApps.Metro.Controls
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
             if (useNoneWindowStyle)
             {
-                ShowTitleBar = false;
+                this.SetCurrentValue(ShowTitleBarProperty, false);
             }
             else
             {
-                ShowTitleBar = isTitleBarVisible;
+                this.SetCurrentValue(ShowTitleBarProperty, isTitleBarVisible);
             }
             if (LeftWindowCommandsPresenter != null)
             {
@@ -853,17 +853,27 @@ namespace MahApps.Metro.Controls
 #if NET4_5
         protected override async void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #else
         protected override void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #endif

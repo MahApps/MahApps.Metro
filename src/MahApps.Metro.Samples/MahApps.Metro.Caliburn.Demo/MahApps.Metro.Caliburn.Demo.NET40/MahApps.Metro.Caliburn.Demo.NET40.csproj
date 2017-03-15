@@ -126,13 +126,13 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="Caliburn.Micro.Platform.Core">
-          <HintPath>..\..\..\packages\Caliburn.Micro\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
+        <Reference Include="Caliburn.Micro.Platform">
+          <HintPath>..\..\..\packages\Caliburn.Micro\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Caliburn.Micro.Platform">
-          <HintPath>..\..\..\packages\Caliburn.Micro\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+        <Reference Include="Caliburn.Micro.Platform.Core">
+          <HintPath>..\..\..\packages\Caliburn.Micro\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -231,8 +231,8 @@
         <Reference Include="System.Net">
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
-          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+        <Reference Include="Microsoft.Threading.Tasks">
+          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -241,8 +241,8 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Microsoft.Threading.Tasks">
-          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

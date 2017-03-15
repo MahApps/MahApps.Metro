@@ -171,6 +171,18 @@ namespace MetroDemo
             }
         }
 
+        private bool showMyTitleBar = true;
+        public bool ShowMyTitleBar
+        {
+            get { return showMyTitleBar; }
+            set
+            {
+                if (value.Equals(showMyTitleBar)) return;
+                showMyTitleBar = value;
+                RaisePropertyChanged("ShowMyTitleBar");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd

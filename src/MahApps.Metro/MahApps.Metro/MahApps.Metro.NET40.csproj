@@ -56,6 +56,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\BadgedEx.cs">
+      <Paket>True</Paket>
+      <Link>ControlzEx/BadgedEx.cs</Link>
+    </Compile>
     <Compile Include="..\..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\KeyboardNavigationEx.cs">
       <Paket>True</Paket>
       <Link>ControlzEx/KeyboardNavigationEx.cs</Link>
@@ -393,6 +397,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\VS\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Badged.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
