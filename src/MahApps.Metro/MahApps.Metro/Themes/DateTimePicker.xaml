@@ -131,7 +131,22 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="Base"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ContentControl x:Name="PART_ExteriorFloatingMessageContainer"
+                                        Grid.Row="0"
+                                        Margin="0,0,0,1"
+                                        Style="{DynamicResource FloatingMessageContainerStyle}">
+                            <TextBlock x:Name="PART_ExteriorFloatingMessage"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                       Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
+                        </ContentControl>
+                        <Border x:Name="Base" Grid.Row="1"
                                 BorderBrush="{DynamicResource ControlBorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -161,12 +176,12 @@
                                         <behaviours:DatePickerTextBoxBehavior />
                                     </i:Interaction.Behaviors>
                                 </DatePickerTextBox>
-                                <ContentControl x:Name="PART_FloatingMessageContainer"
+                                <ContentControl x:Name="PART_InteriorFloatingMessageContainer"
                                             Grid.Column="0"
                                             Grid.Row="0"
                                             Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
-                                    <TextBlock x:Name="PART_FloatingMessage"
+                                    <TextBlock x:Name="PART_InteriorFloatingMessage"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
@@ -335,8 +350,18 @@
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage"
+                                    Property="Opacity"
+                                    Value="1" />
+                            <Setter TargetName="PART_InteriorFloatingMessage"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_InteriorFloatingMessage"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.FocusBorderBrush)}" />
@@ -376,12 +401,33 @@
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.FloatingWatermarkLocation), RelativeSource={RelativeSource Self}}"
+                                           Value="Exterior" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource ShowExteriorFloatingMessageStoryboard}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource HideExteriorFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(controls:TextBoxHelper.FloatingWatermarkLocation), RelativeSource={RelativeSource Self}}"
+                                           Value="Interior" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowInteriorFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideInteriorFloatingMessageStoryboard}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 

@@ -34,6 +34,12 @@
                 <DatePicker Width="200"
                             Margin="0, 10, 0, 0"
                             HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.UseFloatingWatermark="True"
+                            Controls:TextBoxHelper.Watermark="Exterior Floating Watermark"
+                            Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"/>
+                <DatePicker Width="200"
+                            Margin="0, 10, 0, 0"
+                            HorizontalAlignment="Center"
                             IsEnabled="False" />
                 <DatePicker Width="200"
                             Margin="0, 10, 0, 0"
@@ -169,6 +175,15 @@
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" 
                                                  Controls:TextBoxHelper.UseFloatingWatermark="True"/>
+                        <Controls:DateTimePicker Margin="0,5" Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                 HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                 IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                 IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                 Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                                 Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"/>
                         <GroupBox Header="Current time">
                             <StackPanel>
                                 <Controls:DateTimePicker x:Name="DateTimePicker"

@@ -124,12 +124,14 @@
                                         <ScrollViewer.Style>
                                             <Style>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=HamburgerMenuScrollViewer}"
+                                                    <DataTrigger Binding="{Binding IsMouseOver,
+                                                                                   ElementName=HamburgerMenuScrollViewer}"
                                                                  Value="True">
                                                         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
                                                         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=HamburgerMenuScrollViewer}"
+                                                    <DataTrigger Binding="{Binding IsMouseOver,
+                                                                                   ElementName=HamburgerMenuScrollViewer}"
                                                                  Value="False">
                                                         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                                                         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
