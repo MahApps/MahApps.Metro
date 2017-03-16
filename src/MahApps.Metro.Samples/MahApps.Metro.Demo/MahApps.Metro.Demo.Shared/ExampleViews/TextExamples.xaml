@@ -263,6 +263,13 @@
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd,
+                                                                            Mode=OneWay}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                             Controls:TextBoxHelper.Watermark="Exterior Floating Watermark" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd,
                                                                             Mode=OneWay}"
@@ -352,6 +359,17 @@
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.UseFloatingWatermark="True"
                                         Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
+                                        Delay="1000"
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox,
+                                                              Path=IsChecked,
+                                                              Mode=TwoWay}"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck,
+                                                             Path=IsChecked,
+                                                             Mode=TwoWay}"
+                                        Speedup="true" />
+                <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                        Controls:TextBoxHelper.Watermark="Exterior Floating Watermark"
                                         Delay="1000"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox,
                                                               Path=IsChecked,
