@@ -31,6 +31,8 @@ namespace MahApps.Metro.Controls
     {
     }
 
+    public enum FloatingWatermarkLocations { Interior, Exterior };
+
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -42,6 +44,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty FloatingWatermarkLocation = DependencyProperty.RegisterAttached("FloatingWatermarkLocation", typeof(FloatingWatermarkLocations), typeof(TextBoxHelper), new FrameworkPropertyMetadata(FloatingWatermarkLocations.Interior, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextButtonProperty = DependencyProperty.RegisterAttached("TextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
@@ -424,7 +427,22 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
-        
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static string GetFloatingWatermarkLocation(DependencyObject obj)
+        {
+            return obj.GetValue(FloatingWatermarkLocation).ToString();
+        }
+
+        public static void SetFloatingWatermarkLocation(DependencyObject obj, FloatingWatermarkLocations value)
+        {
+            obj.SetValue(FloatingWatermarkLocation, value);
+        }
+
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
