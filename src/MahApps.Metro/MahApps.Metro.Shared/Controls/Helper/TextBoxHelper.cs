@@ -32,7 +32,6 @@ namespace MahApps.Metro.Controls
     }
 
     public enum FloatingWatermarkLocations { Interior, Exterior };
-    public enum WatermarkTrimmingValues { CharacterEllipsis, None, WordEllipsis };
 
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
@@ -46,7 +45,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty FloatingWatermarkLocationProperty = DependencyProperty.RegisterAttached("FloatingWatermarkLocation", typeof(FloatingWatermarkLocations), typeof(TextBoxHelper), new FrameworkPropertyMetadata(FloatingWatermarkLocations.Interior, ButtonCommandOrClearTextChanged));
-        public static readonly DependencyProperty WatermarkTrimmingProperty = DependencyProperty.RegisterAttached("WatermarkTrimming", typeof(WatermarkTrimmingValues), typeof(TextBoxHelper), new FrameworkPropertyMetadata(WatermarkTrimmingValues.CharacterEllipsis));
+        public static readonly DependencyProperty WatermarkTrimmingProperty = DependencyProperty.RegisterAttached("WatermarkTrimming", typeof(TextTrimming), typeof(TextBoxHelper), new FrameworkPropertyMetadata(TextTrimming.CharacterEllipsis));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextButtonProperty = DependencyProperty.RegisterAttached("TextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
@@ -461,7 +460,7 @@ namespace MahApps.Metro.Controls
             return obj.GetValue(WatermarkTrimmingProperty).ToString();
         }
 
-        public static void SetWatermarkTrimming(DependencyObject obj, WatermarkTrimmingValues value)
+        public static void SetWatermarkTrimming(DependencyObject obj, TextTrimming value)
         {
             obj.SetValue(WatermarkTrimmingProperty, value);
         }
