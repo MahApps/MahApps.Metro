@@ -59,7 +59,8 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                         </ContentControl>
                         <Border
                             x:Name="Base"
@@ -108,7 +109,8 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Foreground="{TemplateBinding Foreground}"
                                     Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
 
                             <DatePickerTextBox
@@ -294,7 +296,9 @@
                             Foreground="{TemplateBinding Foreground}"
                             IsHitTestVisible="False"
                             Opacity="0.6"
-                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                            TextWrapping="{TemplateBinding TextWrapping}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>

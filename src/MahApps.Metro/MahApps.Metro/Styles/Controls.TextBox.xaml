@@ -81,7 +81,7 @@
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                 Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                TextTrimming="CharacterEllipsis" />
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                         </ContentControl>
                         <AdornerDecorator
                             x:Name="PART_WaitingForDataEffectAdornerDecorator"
@@ -139,7 +139,7 @@
                                     Foreground="{TemplateBinding Foreground}"
                                     Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                     Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                    TextTrimming="CharacterEllipsis" />
+                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
                             <Button
                                 x:Name="PART_ClearText"
@@ -370,7 +370,8 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                         </ContentControl>
                         <AdornerDecorator
                             x:Name="PART_WaitingForDataEffectAdornerDecorator"
@@ -417,7 +418,8 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Foreground="{TemplateBinding Foreground}"
                                     Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
                             <Button
                                 x:Name="PART_ClearText"

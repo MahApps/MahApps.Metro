@@ -114,6 +114,8 @@
                                 IsHitTestVisible="False"
                                 Opacity="0.6"
                                 Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                TextWrapping="{TemplateBinding TextWrapping}"
                                 Visibility="Collapsed" />
                         </Grid>
                     </Grid>
@@ -351,7 +353,8 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                         </ContentControl>
 
                         <Border
@@ -451,7 +454,8 @@
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Foreground="{TemplateBinding Foreground}"
                                     Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
 
                             <TextBox
@@ -497,6 +501,7 @@
                                 IsHitTestVisible="False"
                                 Opacity="0.6"
                                 Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                 Visibility="Collapsed" />
                             <Grid
                                 x:Name="ContentSite"

@@ -56,8 +56,7 @@
                     Controls:TextBoxHelper.IsWaitingForData="True"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Testing to see if the watermark auto wraps... So this has to be super long..."
-                    Controls:TextBoxHelper.WatermarkTrimming="WordEllipsis"
-                    TextWrapping="Wrap"
+                    Controls:TextBoxHelper.WatermarkTrimming="CharacterEllipsis"
                     ToolTip="Default alignment">
                     <TextBox.ContextMenu>
                         <ContextMenu>
@@ -185,6 +184,8 @@
                 Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox
+                    Controls:TextBoxHelper.Watermark="RichTextBox watermark"
+                    Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
                     Margin="{StaticResource ControlMargin}"
                     Padding="5"
                     Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"

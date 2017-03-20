@@ -144,7 +144,8 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
+                                Text="{TemplateBinding controls:TextBoxHelper.Watermark}"
+                                TextTrimming="{TemplateBinding controls:TextBoxHelper.WatermarkTrimming}" />
                         </ContentControl>
                         <Border
                             x:Name="Base"
@@ -173,7 +174,8 @@
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                         Foreground="{TemplateBinding Foreground}"
                                         Style="{DynamicResource MetroAutoCollapsingTextBlock}"
-                                        Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
+                                        Text="{TemplateBinding controls:TextBoxHelper.Watermark}"
+                                        TextTrimming="{TemplateBinding controls:TextBoxHelper.WatermarkTrimming}" />
                                 </ContentControl>
                                 <Border
                                     x:Name="DisabledVisualElement"
@@ -210,6 +212,7 @@
                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                     controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                    controls:TextBoxHelper.WatermarkTrimming="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.WatermarkTrimming), Mode=OneWay}"
                                     CaretBrush="{DynamicResource BlackBrush}"
                                     ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                     Focusable="{TemplateBinding Focusable}"

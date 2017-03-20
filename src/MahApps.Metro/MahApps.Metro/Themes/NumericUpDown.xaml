@@ -67,6 +67,7 @@
                                 Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
                                 Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                                 Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                 Background="{x:Null}"
                                 BorderThickness="0"
                                 FocusVisualStyle="{x:Null}"
