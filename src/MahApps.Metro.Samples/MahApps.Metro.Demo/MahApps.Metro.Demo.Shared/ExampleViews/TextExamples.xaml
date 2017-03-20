@@ -52,10 +52,11 @@
                 <TextBox
                     Margin="{StaticResource ControlMargin}"
                     Controls:TextBoxHelper.ClearTextButton="True"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Email Address"
                     Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                     Controls:TextBoxHelper.IsWaitingForData="True"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
-                    Controls:TextBoxHelper.Watermark="Testing to see if the watermark auto wraps... So this has to be super long..."
+                    Controls:TextBoxHelper.Watermark="Please enter your email address here"
                     Controls:TextBoxHelper.WatermarkTrimming="CharacterEllipsis"
                     ToolTip="Default alignment">
                     <TextBox.ContextMenu>
@@ -72,6 +73,7 @@
                     Margin="{StaticResource ControlMargin}"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Exterior Example"
                     Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                     Controls:TextBoxHelper.IsWaitingForData="True"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
@@ -184,11 +186,11 @@
                 Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox
-                    Controls:TextBoxHelper.Watermark="RichTextBox watermark"
-                    Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
                     Margin="{StaticResource ControlMargin}"
                     Padding="5"
+                    Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
                     Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                    Controls:TextBoxHelper.Watermark="RichTextBox watermark"
                     IsDocumentEnabled="True">
                     <FlowDocument>
                         <Paragraph>

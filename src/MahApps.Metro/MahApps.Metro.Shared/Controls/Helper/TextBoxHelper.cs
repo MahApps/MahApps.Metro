@@ -45,6 +45,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty FloatingWatermarkLocationProperty = DependencyProperty.RegisterAttached("FloatingWatermarkLocation", typeof(FloatingWatermark), typeof(TextBoxHelper), new FrameworkPropertyMetadata(FloatingWatermark.Interior, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty FloatingWatermarkOverrideTextProperty = DependencyProperty.RegisterAttached("FloatingWatermarkOverrideText", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty WatermarkTrimmingProperty = DependencyProperty.RegisterAttached("WatermarkTrimming", typeof(TextTrimming), typeof(TextBoxHelper), new FrameworkPropertyMetadata(TextTrimming.CharacterEllipsis));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
@@ -446,6 +447,23 @@ namespace MahApps.Metro.Controls
         public static void SetFloatingWatermarkLocation(DependencyObject obj, FloatingWatermark value)
         {
             obj.SetValue(FloatingWatermarkLocationProperty, value);
+        }
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static string GetFloatingWatermarkOverrideText(DependencyObject obj)
+        {
+            return (string)obj.GetValue(FloatingWatermarkOverrideTextProperty);
+        }
+
+        public static void SetFloatingWatermarkOverrideText(DependencyObject obj, string value)
+        {
+            obj.SetValue(FloatingWatermarkOverrideTextProperty, value);
         }
 
         [Category(AppName.MahApps)]
