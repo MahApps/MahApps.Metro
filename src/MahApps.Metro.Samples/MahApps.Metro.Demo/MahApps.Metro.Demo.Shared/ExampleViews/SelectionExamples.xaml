@@ -159,6 +159,7 @@
                     Margin="0,10,0,0"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Exterior"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Exterior Floating..."
                     SelectedIndex="0">
@@ -176,6 +177,7 @@
                     Width="200"
                     Margin="0,10,0,0"
                     Controls:TextBoxHelper.ClearTextButton="True"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Text"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Editable..."
                     IsEditable="True"

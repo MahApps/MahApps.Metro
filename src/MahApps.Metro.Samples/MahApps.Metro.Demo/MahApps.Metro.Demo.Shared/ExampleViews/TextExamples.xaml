@@ -261,6 +261,7 @@
                     Margin="{StaticResource ControlMargin}"
                     Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                     Controls:TextBoxHelper.ClearTextButton="True"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Interior"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Password"
                     Password="Password" />
@@ -269,6 +270,7 @@
                     Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Exterior"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Exterior Floating Watermark" />
                 <PasswordBox
@@ -357,8 +359,10 @@
                     Speedup="false" />
                 <Controls:NumericUpDown
                     Margin="{StaticResource ControlMargin}"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Interior"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
+                    Controls:TextBoxHelper.WatermarkTrimming="WordEllipsis"
                     Delay="1000"
                     HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                     IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
@@ -366,6 +370,7 @@
                 <Controls:NumericUpDown
                     Margin="{StaticResource ControlMargin}"
                     Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                    Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Exterior"
                     Controls:TextBoxHelper.UseFloatingWatermark="True"
                     Controls:TextBoxHelper.Watermark="Exterior Floating Watermark"
                     Delay="1000"

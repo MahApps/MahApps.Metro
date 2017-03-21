@@ -187,6 +187,7 @@
                                 ItemsSource="{Binding CultureInfos, Mode=OneWay}" />
                         </Grid>
                         <Controls:DateTimePicker
+                            Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Watermark"
                             Controls:TextBoxHelper.UseFloatingWatermark="True"
                             Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                             HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
@@ -198,6 +199,7 @@
                         <Controls:DateTimePicker
                             Margin="0,5"
                             Controls:TextBoxHelper.FloatingWatermarkLocation="Exterior"
+                            Controls:TextBoxHelper.FloatingWatermarkOverrideText="Different Watermark"
                             Controls:TextBoxHelper.UseFloatingWatermark="True"
                             Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                             HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
