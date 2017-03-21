@@ -247,10 +247,14 @@
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
                         </Trigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ExteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
                             <Setter TargetName="PART_InteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
-                        </DataTrigger>
+                        </MultiDataTrigger>
 
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
@@ -537,10 +541,14 @@
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ExteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
                             <Setter TargetName="PART_InteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
-                        </DataTrigger>
+                        </MultiDataTrigger>
 
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />

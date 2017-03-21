@@ -63,6 +63,7 @@
                                 Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
                                 Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
                                 Controls:TextBoxHelper.FloatingWatermarkLocation="{TemplateBinding Controls:TextBoxHelper.FloatingWatermarkLocation}"
+                                Controls:TextBoxHelper.FloatingWatermarkOverrideText="{TemplateBinding Controls:TextBoxHelper.FloatingWatermarkOverrideText}"
                                 Controls:TextBoxHelper.HasText="{TemplateBinding Controls:TextBoxHelper.HasText}"
                                 Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
                                 Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"

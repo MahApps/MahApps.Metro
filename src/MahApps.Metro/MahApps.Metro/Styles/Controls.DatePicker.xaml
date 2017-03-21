@@ -14,6 +14,7 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
+    <Converters:FloatingWatermarkOverrideTextLengthToBooleanConverter x:Key="FloatingWatermarkOverrideTextToBooleanConverter" />
 
     <Style x:Key="MetroDatePicker" TargetType="{x:Type DatePicker}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
@@ -167,6 +168,15 @@
                             <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource BlackBrush}" />
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
+                            <Setter TargetName="PART_InteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
+                        </MultiDataTrigger>
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
