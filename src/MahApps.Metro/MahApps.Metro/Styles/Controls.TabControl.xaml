@@ -127,30 +127,23 @@
                                             Padding="0 0 0 1"
                                             LineThickness="2">
                             <Controls:ContentControlEx x:Name="ContentSite"
-                                                        Padding="{TemplateBinding Padding}"
-                                                        Foreground="{TemplateBinding Foreground}"
-                                                        FontStyle="{TemplateBinding FontStyle}"
-                                                        FontFamily="{TemplateBinding FontFamily}"
-                                                        FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                        FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                        FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                        Content="{TemplateBinding Header}"
-                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                        RecognizesAccessKey="True"
-                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                       Padding="{TemplateBinding Padding}"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       FontStyle="{TemplateBinding FontStyle}"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       Content="{TemplateBinding Header}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Controls:Underline>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="None">
-                            <Setter TargetName="Underline" Property="LineThickness" Value="0" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel">
-                            <Setter TargetName="Underline" Property="LineThickness" Value="1" />
-                        </DataTrigger>
-
                         <Trigger Property="TabStripPlacement" Value="Left">
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
                             <Setter TargetName="Underline" Property="Padding" Value="0 0 1 0" />
@@ -168,6 +161,17 @@
                             <Setter TargetName="Underline" Property="Padding" Value="1 0 0 0" />
                         </Trigger>
 
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="None">
+                            <Setter TargetName="Underline" Property="LineThickness" Value="0" />
+                            <Setter TargetName="Underline" Property="Padding" Value="0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem">
+                            <Setter TargetName="Underline" Property="LineThickness" Value="0" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel">
+                            <Setter TargetName="Underline" Property="LineThickness" Value="1" />
+                        </DataTrigger>
+
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
@@ -180,11 +184,19 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="LineThickness" Value="3" />
                         </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
+                        </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayHoverBrush}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
@@ -193,6 +205,15 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="LineThickness" Value="2" />
                         </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
+                                <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Underline" Property="LineThickness" Value="2" />
+                        </MultiDataTrigger>
+                        
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />

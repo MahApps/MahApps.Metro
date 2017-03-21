@@ -12,7 +12,8 @@ namespace MahApps.Metro.Controls
     public enum UnderlinedType
     {
         None,
-        TabItem,
+        TabItems,
+        SelectedTabItem,
         TabPanel
     }
 
@@ -32,7 +33,7 @@ namespace MahApps.Metro.Controls
                                                                              var element = o as UIElement;
                                                                              if (element != null && e.OldValue != e.NewValue && e.NewValue is bool)
                                                                              {
-                                                                                 TabControlHelper.SetUnderlined(element, (bool)e.NewValue ? UnderlinedType.TabItem : UnderlinedType.None);
+                                                                                 TabControlHelper.SetUnderlined(element, (bool)e.NewValue ? UnderlinedType.TabItems : UnderlinedType.None);
                                                                              }
                                                                          }));
 
