@@ -101,9 +101,9 @@
                         <TabControl Height="150"
                                     Controls:TabControlHelper.Underlined="{Binding ElementName=AnimatedTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     TabStripPlacement="{Binding ElementName=AnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <Controls:MetroTabItem Header="this tabcontrol">
+                            <TabItem Header="this tabcontrol">
                                 <TextBlock FontSize="30" Text="Cool transition" />
-                            </Controls:MetroTabItem>
+                            </TabItem>
                             <Controls:MetroTabItem Header="animates its content">
                                 <TextBlock FontSize="30" Text="More cool transition" />
                             </Controls:MetroTabItem>
@@ -142,6 +142,55 @@
             <Expander Margin="0, 10, 0, 0" IsExpanded="True" Header="_Generic theme TabControls">
                 <StackPanel Margin="15, 5, 15, 5">
                     <Label Content="MetroAnimatedTabControl" Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Underlined type" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="MetroAnimatedTabControlUnderlinedComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource UnderlinedEnumValues}}"
+                                  SelectedIndex="0" />
+                        <TextBlock Text="TabStripPlacement" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="MetroAnimatedTabControlTabStripPlacementComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource TabStripPlacementEnumValues}}"
+                                  SelectedItem="{x:Static Dock.Top}" />
+                    </StackPanel>
+                    <Controls:MetroAnimatedTabControl Height="150"
+                                                      Controls:TabControlHelper.Underlined="{Binding ElementName=MetroAnimatedTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      TabStripPlacement="{Binding ElementName=MetroAnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TabItem Header="this tabcontrol">
+                                <TextBlock FontSize="30" Text="Cool transition" />
+                            </TabItem>
+                            <Controls:MetroTabItem Header="animates its content">
+                                <TextBlock FontSize="30" Text="More cool transition" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="with a transition">
+                                <TextBlock FontSize="30" Text="Animate everything!" />
+                            </Controls:MetroTabItem>
+                    </Controls:MetroAnimatedTabControl>
+
+                    <Label Margin="0, 5, 0, 0"
+                           Content="MetroAnimatedSingleRowTabControl"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <Controls:MetroAnimatedSingleRowTabControl>
+                        <TabItem Header="this tabcontrols tabs">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="appear only on a single line">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="if they are overflowing">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                        <TabItem Header="instead of wrapping them">
+                            <TextBlock FontSize="30" Text="Content" />
+                        </TabItem>
+                    </Controls:MetroAnimatedSingleRowTabControl>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -202,35 +251,6 @@
                             </TabItem>
                         </Controls:MetroAnimatedSingleRowTabControl>
                     </Grid>
-                    <Controls:MetroAnimatedTabControl>
-                        <TabItem Header="this tabcontrol">
-                            <TextBlock FontSize="30" Text="Cool transition" />
-                        </TabItem>
-                        <TabItem Header="animates its content">
-                            <TextBlock FontSize="30" Text="More cool transition" />
-                        </TabItem>
-                        <TabItem Header="with a transition">
-                            <TextBlock FontSize="30" Text="Animate everything!" />
-                        </TabItem>
-                    </Controls:MetroAnimatedTabControl>
-
-                    <Label Margin="0, 5, 0, 0"
-                           Content="MetroAnimatedSingleRowTabControl"
-                           Style="{DynamicResource DescriptionHeaderStyle}" />
-                    <Controls:MetroAnimatedSingleRowTabControl>
-                        <TabItem Header="this tabcontrols tabs">
-                            <TextBlock FontSize="30" Text="Content" />
-                        </TabItem>
-                        <TabItem Header="appear only on a single line">
-                            <TextBlock FontSize="30" Text="Content" />
-                        </TabItem>
-                        <TabItem Header="if they are overflowing">
-                            <TextBlock FontSize="30" Text="Content" />
-                        </TabItem>
-                        <TabItem Header="instead of wrapping them">
-                            <TextBlock FontSize="30" Text="Content" />
-                        </TabItem>
-                    </Controls:MetroAnimatedSingleRowTabControl>
 
                     <Label Margin="0 5 0 0"
                            Content="MetroTabControl w/ Closable Items"
