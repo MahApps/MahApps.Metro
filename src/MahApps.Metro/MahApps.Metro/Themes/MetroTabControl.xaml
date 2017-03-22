@@ -26,7 +26,7 @@
                               Panel.ZIndex="1">
                             <Controls:Underline x:Name="Underline"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                Background="{TemplateBinding Background}"
+                                                Background="Transparent"
                                                 BorderBrush="{DynamicResource GrayNormalBrush}"
                                                 Placement="Bottom"
                                                 LineThickness="1"

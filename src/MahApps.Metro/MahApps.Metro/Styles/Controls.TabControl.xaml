@@ -26,7 +26,7 @@
                               Panel.ZIndex="1">
                             <Controls:Underline x:Name="Underline"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                Background="{TemplateBinding Background}"
+                                                Background="Transparent"
                                                 BorderBrush="{DynamicResource GrayNormalBrush}"
                                                 Placement="Bottom"
                                                 LineThickness="1"
@@ -95,7 +95,7 @@
 
     <Style x:Key="MetroTabItem" TargetType="TabItem">
         <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <!--  special property for header font size  -->
