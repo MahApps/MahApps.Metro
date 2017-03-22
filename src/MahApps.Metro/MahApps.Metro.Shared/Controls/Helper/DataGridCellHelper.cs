@@ -52,11 +52,13 @@ namespace MahApps.Metro.Controls
         /// Save the DataGrid.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        [Obsolete(@"This property will be deleted in the next release.")]
         public static bool GetSaveDataGrid(UIElement element)
         {
             return (bool)element.GetValue(SaveDataGridProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release.")]
         public static void SetSaveDataGrid(UIElement element, bool value)
         {
             element.SetValue(SaveDataGridProperty, value);
@@ -73,11 +75,13 @@ namespace MahApps.Metro.Controls
         /// Get the DataGrid.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        [Obsolete(@"This property will be deleted in the next release.")]
         public static DataGrid GetDataGrid(UIElement element)
         {
             return (DataGrid)element.GetValue(DataGridProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release.")]
         public static void SetDataGrid(UIElement element, DataGrid value)
         {
             element.SetValue(DataGridProperty, value);
