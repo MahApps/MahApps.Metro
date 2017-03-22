@@ -27,7 +27,7 @@
                             <Controls:Underline x:Name="Underline"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Background="Transparent"
-                                                BorderBrush="{DynamicResource GrayNormalBrush}"
+                                                BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
                                                 Placement="Bottom"
                                                 LineThickness="1"
                                                 Visibility="Collapsed" />

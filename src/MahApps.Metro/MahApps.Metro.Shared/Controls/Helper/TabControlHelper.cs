@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -70,6 +71,90 @@ namespace MahApps.Metro.Controls
         public static void SetUnderlined(UIElement element, UnderlinedType value)
         {
             element.SetValue(UnderlinedProperty, value);
+        }
+
+        /// <summary>
+        /// Defines the underline brush below the <see cref="TabItem"/> or <see cref="TabPanel"/>.
+        /// </summary>
+        public static readonly DependencyProperty UnderlineBrushProperty =
+            DependencyProperty.RegisterAttached("UnderlineBrush",
+                                                typeof(Brush),
+                                                typeof(TabControlHelper),
+                                                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush GetUnderlineBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(UnderlineBrushProperty);
+        }
+
+        public static void SetUnderlineBrush(UIElement element, Brush value)
+        {
+            element.SetValue(UnderlineBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Defines the underline brush below the <see cref="TabItem"/> or <see cref="TabPanel"/> of an selected item.
+        /// </summary>
+        public static readonly DependencyProperty UnderlineSelectedBrushProperty =
+            DependencyProperty.RegisterAttached("UnderlineSelectedBrush",
+                                                typeof(Brush),
+                                                typeof(TabControlHelper),
+                                                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush GetUnderlineSelectedBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(UnderlineSelectedBrushProperty);
+        }
+
+        public static void SetUnderlineSelectedBrush(UIElement element, Brush value)
+        {
+            element.SetValue(UnderlineSelectedBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Defines the underline brush below the <see cref="TabItem"/> or <see cref="TabPanel"/> if the mouse is over an item.
+        /// </summary>
+        public static readonly DependencyProperty UnderlineMouseOverBrushProperty =
+            DependencyProperty.RegisterAttached("UnderlineMouseOverBrush",
+                                                typeof(Brush),
+                                                typeof(TabControlHelper),
+                                                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush GetUnderlineMouseOverBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(UnderlineMouseOverBrushProperty);
+        }
+
+        public static void SetUnderlineMouseOverBrush(UIElement element, Brush value)
+        {
+            element.SetValue(UnderlineMouseOverBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Defines the underline brush below the <see cref="TabItem"/> or <see cref="TabPanel"/> if the mouse is over a selected item.
+        /// </summary>
+        public static readonly DependencyProperty UnderlineMouseOverSelectedBrushProperty =
+            DependencyProperty.RegisterAttached("UnderlineMouseOverSelectedBrush",
+                                                typeof(Brush),
+                                                typeof(TabControlHelper),
+                                                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Brush GetUnderlineMouseOverSelectedBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(UnderlineMouseOverSelectedBrushProperty);
+        }
+
+        public static void SetUnderlineMouseOverSelectedBrush(UIElement element, Brush value)
+        {
+            element.SetValue(UnderlineMouseOverSelectedBrushProperty, value);
         }
 
         /// <summary>
