@@ -283,13 +283,13 @@
                         <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _1">
                             <TextBlock FontSize="30" Text="Content" />
                         </Controls:MetroTabItem>
-                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _2">
+                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _2 more">
                             <TextBlock FontSize="30" Text="More content" />
                         </Controls:MetroTabItem>
-                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _3">
+                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _3 header here">
                             <TextBlock FontSize="30" Text="More more content" />
                         </Controls:MetroTabItem>
-                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _4">
+                        <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _4 ">
                             <TextBlock FontSize="30" Text="So much content!" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _5" CloseButtonEnabled="True">
