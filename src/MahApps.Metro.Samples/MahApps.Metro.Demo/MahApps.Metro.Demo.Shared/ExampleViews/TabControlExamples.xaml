@@ -76,11 +76,31 @@
                     <Label Margin="0, 5, 0, 0"
                            Content="Default TabControl with _AnimatedTabControl style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Underlined type" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="AnimatedTabControlUnderlinedComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource UnderlinedEnumValues}}"
+                                  SelectedIndex="0" />
+                        <TextBlock Text="TabStripPlacement" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="AnimatedTabControlTabStripPlacementComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource TabStripPlacementEnumValues}}"
+                                  SelectedItem="{x:Static Dock.Top}" />
+                    </StackPanel>
                     <Grid>
                         <Grid.Resources>
                             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                         </Grid.Resources>
-                        <TabControl>
+                        <TabControl Height="150"
+                                    Controls:TabControlHelper.Underlined="{Binding ElementName=AnimatedTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    TabStripPlacement="{Binding ElementName=AnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <Controls:MetroTabItem Header="this tabcontrol">
                                 <TextBlock FontSize="30" Text="Cool transition" />
                             </Controls:MetroTabItem>
