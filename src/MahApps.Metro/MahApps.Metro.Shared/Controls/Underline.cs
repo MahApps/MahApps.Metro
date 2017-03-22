@@ -34,6 +34,18 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(LineThicknessProperty, value); }
         }
 
+        public static readonly DependencyProperty LineExtentProperty =
+            DependencyProperty.Register(nameof(LineExtent),
+                                        typeof(double),
+                                        typeof(Underline),
+                                        new PropertyMetadata(Double.NaN, (o, e) => { (o as Underline)?.ApplyBorderProperties(); }));
+
+        public double LineExtent
+        {
+            get { return (double)this.GetValue(LineExtentProperty); }
+            set { this.SetValue(LineExtentProperty, value); }
+        }
+
         static Underline()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Underline), new FrameworkPropertyMetadata(typeof(Underline)));
@@ -54,25 +66,31 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+            this._underlineBorder.Height = Double.NaN;
+            this._underlineBorder.Width = Double.NaN;
             this._underlineBorder.BorderThickness = new Thickness();
             switch (this.Placement)
             {
                 case Dock.Left:
+                    this._underlineBorder.Width = this.LineExtent;
                     this._underlineBorder.BorderThickness = new Thickness(this.LineThickness, 0d, 0d, 0d);
                     break;
                 case Dock.Top:
+                    this._underlineBorder.Height = this.LineExtent;
                     this._underlineBorder.BorderThickness = new Thickness(0d, this.LineThickness, 0d, 0d);
                     break;
                 case Dock.Right:
+                    this._underlineBorder.Width = this.LineExtent;
                     this._underlineBorder.BorderThickness = new Thickness(0d, 0d, this.LineThickness, 0d);
                     break;
                 case Dock.Bottom:
+                    this._underlineBorder.Height = this.LineExtent;
                     this._underlineBorder.BorderThickness = new Thickness(0d, 0d, 0d, this.LineThickness);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            this._underlineBorder.InvalidateVisual();
+            this.InvalidateVisual();
         }
     }
 }

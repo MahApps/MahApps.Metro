@@ -18,11 +18,14 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            UseLayoutRounding="True"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <controls:ClipBorder Background="{TemplateBinding Background}"
                                              BorderThickness="0"
                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <ContentPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              UseLayoutRounding="False" />
                         </controls:ClipBorder>
                     </Border>
                 </ControlTemplate>
