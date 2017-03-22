@@ -116,22 +116,42 @@
                     <Label Margin="0, 5, 0, 0"
                            Content="Default TabControl with Animated_SingleRowTabControl style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Underlined type" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="AnimatedSingleRowTabControlUnderlinedComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource UnderlinedEnumValues}}"
+                                  SelectedIndex="0" />
+                        <TextBlock Text="TabStripPlacement" Margin="5 5" VerticalAlignment="Center" />
+                        <ComboBox x:Name="AnimatedSingleRowTabControlTabStripPlacementComboBox"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="5 5"
+                                  Width="100"
+                                  ItemsSource="{Binding Source={StaticResource TabStripPlacementEnumValues}}"
+                                  SelectedItem="{x:Static Dock.Top}" />
+                    </StackPanel>
                     <Grid>
                         <Grid.Resources>
                             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                         </Grid.Resources>
-                        <TabControl>
-                            <TabItem Header="this tabcontrols tabs">
-                                <TextBlock FontSize="30" Text="Content" />
+                        <TabControl Height="150"
+                                    Controls:TabControlHelper.Underlined="{Binding ElementName=AnimatedSingleRowTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    TabStripPlacement="{Binding ElementName=AnimatedSingleRowTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TabItem Header="these tabs">
+                                <TextBlock FontSize="30" Text="first content" />
                             </TabItem>
-                            <TabItem Header="appear only on a single line">
-                                <TextBlock FontSize="30" Text="Content" />
-                            </TabItem>
-                            <TabItem Header="if they are overflowing">
-                                <TextBlock FontSize="30" Text="Content" />
-                            </TabItem>
+                            <Controls:MetroTabItem Header="appear only on a single line">
+                                <TextBlock FontSize="30" Text="second one" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="if they are overflowing">
+                                <TextBlock FontSize="30" Text="3" />
+                            </Controls:MetroTabItem>
                             <TabItem Header="instead of wrapping them">
-                                <TextBlock FontSize="30" Text="Content" />
+                                <TextBlock FontSize="30" Text="last of them" />
                             </TabItem>
                         </TabControl>
                     </Grid>
