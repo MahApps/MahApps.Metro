@@ -30,11 +30,13 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        [Obsolete(@"This property will be deleted in the next release. You should use ContentCharacterCasing attached property located in ControlsHelper.")]
         public static bool GetPreserveTextCase(UIElement element)
         {
             return (bool)element.GetValue(PreserveTextCaseProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release. You should use ContentCharacterCasing attached property located in ControlsHelper.")]
         public static void SetPreserveTextCase(UIElement element, bool value)
         {
             element.SetValue(PreserveTextCaseProperty, value);
@@ -67,11 +69,13 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        [Obsolete(@"This property will be deleted in the next release. You should use CornerRadius attached property located in ControlsHelper.")]
         public static CornerRadius GetCornerRadius(UIElement element)
         {
             return (CornerRadius)element.GetValue(CornerRadiusProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release. You should use CornerRadius attached property located in ControlsHelper.")]
         public static void SetCornerRadius(UIElement element, CornerRadius value)
         {
             element.SetValue(CornerRadiusProperty, value);
