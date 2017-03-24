@@ -348,10 +348,12 @@ namespace MahApps.Metro.Controls
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                    ThemeManager.OverrideFlyoutResources(this.Resources, "HighlightColor");
                     break;
 
                 case FlyoutTheme.Adapt:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -362,14 +364,17 @@ namespace MahApps.Metro.Controls
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
+                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
                     break;
 
                 case FlyoutTheme.Dark:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
+                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
                     break;
 
                 case FlyoutTheme.Light:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
+                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
                     break;
             }
         }

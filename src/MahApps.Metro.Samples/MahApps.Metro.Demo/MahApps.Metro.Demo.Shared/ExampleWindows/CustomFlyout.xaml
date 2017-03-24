@@ -17,34 +17,22 @@
     <controls:Flyout.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <!--  for testing  -->
-            <SolidColorBrush x:Key="ListViewBackground" Color="White" />
-
-            <Style x:Key="CustomListViewItemStyle"
-                   BasedOn="{StaticResource MetroListViewItem}"
-                   TargetType="{x:Type ListViewItem}">
-                <Setter Property="Foreground" Value="Black" />
-            </Style>
-            <Style x:Key="CustomGridViewColumnHeader"
-                   BasedOn="{StaticResource MetroGridViewColumnHeader}"
-                   TargetType="{x:Type GridViewColumnHeader}">
-                <Style.Resources>
-                    <SolidColorBrush x:Key="GrayBrush8" Color="#FFE0E0E0" />
-                </Style.Resources>
-                <Setter Property="Foreground" Value="Black" />
-            </Style>
         </ResourceDictionary>
     </controls:Flyout.Resources>
 
-    <StackPanel Margin="10" Orientation="Vertical">
+    <StackPanel Margin="10"
+                Orientation="Vertical">
 
         <CheckBox Margin="5"
                   Content="CanCloseFlyout"
                   IsChecked="{Binding ElementName=customFlyout, Path=CanCloseFlyout}" />
+        <controls:ToggleSwitch Margin="5"
+                               Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                               OnLabel="Can Close"
+                               OffLabel="Closing disabled"
+                               IsChecked="{Binding ElementName=customFlyout, Path=CanCloseFlyout}" />
 
         <Slider Margin="5"
                 Style="{StaticResource FlatSlider}"
@@ -64,21 +52,13 @@
             </ListView.View>
         </ListView>
 
-        <ListView Height="200"
-                  Margin="0, 10, 0, 0"
-                  Background="{StaticResource ListViewBackground}"
-                  BorderThickness="0"
-                  ItemContainerStyle="{StaticResource CustomListViewItemStyle}"
-                  ItemsSource="{Binding ElementName=customFlyout, Path=Artists}"
-                  SelectedIndex="0"
-                  Style="{StaticResource VirtualisedMetroListView}">
-            <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource CustomGridViewColumnHeader}">
-                    <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <ListBox Height="200"
+                 Margin="0, 10, 0, 0"
+                 BorderThickness="0"
+                 DisplayMemberPath="Name"
+                 ItemsSource="{Binding ElementName=customFlyout, Path=Artists}"
+                 SelectedIndex="0"
+                 Style="{StaticResource VirtualisedMetroListBox}" />
 
     </StackPanel>
 

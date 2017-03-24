@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 
 namespace MahApps.Metro
 {
@@ -437,6 +438,32 @@ namespace MahApps.Metro
             }
 
             oldRd.EndInit();
+        }
+
+        internal static void OverrideFlyoutResources(ResourceDictionary resources, string fromColorKey)
+        {
+            if (!resources.Contains(fromColorKey) || !(resources[fromColorKey] is Color))
+            {
+                return;
+            }
+
+            resources.BeginInit();
+
+            var fromColor = (Color)resources[fromColorKey];
+            resources["WhiteColor"] = fromColor;
+            resources["FlyoutColor"] = fromColor;
+
+            var newBrush = new SolidColorBrush(fromColor);
+            newBrush.Freeze();
+            resources["FlyoutBackgroundBrush"] = newBrush;
+            resources["ControlBackgroundBrush"] = newBrush;
+            resources["WhiteBrush"] = newBrush;
+            resources["WhiteColorBrush"] = newBrush;
+            resources["DisabledWhiteBrush"] = newBrush;
+            resources["WindowBackgroundBrush"] = newBrush;
+            resources[SystemColors.WindowBrushKey] = newBrush;
+
+            resources.EndInit();
         }
 
         /// <summary>
