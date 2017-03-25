@@ -147,14 +147,14 @@
                 </StackPanel>
             </Controls:Flyout>
 
-            <exampleWindows:CustomFlyout />
+            <exampleWindows:ShowcaseFlyout DataContext="{Binding}" />
 
             <Controls:Flyout Header="Accented"
                              Position="Right"
                              Theme="Accent">
                 <Grid Width="400" Margin="10">
                     <StackPanel>
-                        <TextBlock Foreground="{DynamicResource IdealForegroundColorBrush}" Text="This flyout adapts its theme to the current accent" />
+                        <TextBlock Text="This flyout adapts its theme to the current accent" />
                         <GroupBox Height="250"
                                   Margin="10"
                                   Header="Flyout Group Box" />

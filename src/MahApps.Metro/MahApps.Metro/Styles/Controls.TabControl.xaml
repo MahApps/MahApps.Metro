@@ -98,7 +98,7 @@
     </Style>
 
     <Style x:Key="MetroTabItem" TargetType="TabItem">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />

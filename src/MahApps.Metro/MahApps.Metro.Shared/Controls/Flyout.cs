@@ -346,14 +346,12 @@ namespace MahApps.Metro.Controls
             {
                 case FlyoutTheme.Accent:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
-                    this.SetResourceReference(BackgroundProperty, "HighlightBrush");
-                    this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
-                    ThemeManager.OverrideFlyoutResources(this.Resources, "HighlightColor");
+                    this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
-                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -364,19 +362,58 @@ namespace MahApps.Metro.Controls
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
-                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
-                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
-                    ThemeManager.OverrideFlyoutResources(this.Resources, "FlyoutColor");
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
             }
+        }
+
+        private void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
+        {
+            var fromColorKey = accent ? "HighlightColor" : "FlyoutColor";
+
+            resources.BeginInit();
+
+            var fromColor = (Color)resources[fromColorKey];
+            resources["WhiteColor"] = fromColor;
+            resources["FlyoutColor"] = fromColor;
+
+            var newBrush = new SolidColorBrush(fromColor);
+            newBrush.Freeze();
+            resources["FlyoutBackgroundBrush"] = newBrush;
+            resources["ControlBackgroundBrush"] = newBrush;
+            resources["WhiteBrush"] = newBrush;
+            resources["WhiteColorBrush"] = newBrush;
+            resources["DisabledWhiteBrush"] = newBrush;
+            resources["WindowBackgroundBrush"] = newBrush;
+            resources[SystemColors.WindowBrushKey] = newBrush;
+
+            if (accent)
+            {
+                fromColor = (Color)resources["IdealForegroundColor"];
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["FlyoutForegroundBrush"] = newBrush;
+                resources["TextBrush"] = newBrush;
+                resources["LabelTextBrush"] = newBrush;
+
+                fromColor = (Color)resources["AccentBaseColor"];
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["HighlightColor"] = fromColor;
+                resources["HighlightBrush"] = newBrush;
+            }
+
+            resources.EndInit();
         }
 
         private static Tuple<AppTheme, Accent> DetectTheme(Flyout flyout)
