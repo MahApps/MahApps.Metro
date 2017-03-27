@@ -402,7 +402,7 @@
 
     <!--  style for default button  -->
     <Style x:Key="MahApps.Metro.Styles.MetroButton" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -518,7 +518,7 @@
     </Style>
 
     <Style x:Key="SquareButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -805,7 +805,7 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.MetroToggleButton" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -1170,8 +1170,8 @@
     </Style>
 
     <Style x:Key="ButtonDropDownStyle" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

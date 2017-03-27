@@ -175,9 +175,9 @@ namespace MahApps.Metro.Controls
 
         private void UseDropShadow()
         {
-            this.BorderThickness = new Thickness(0);
-            this.BorderBrush = null;
-            this.GlowBrush = Brushes.Black;
+            this.SetCurrentValue(BorderThicknessProperty, new Thickness(0));
+            this.SetCurrentValue(BorderBrushProperty, null);
+            this.SetCurrentValue(GlowBrushProperty, Brushes.Black);
         }
 
         public bool IsWindowDraggable
@@ -454,11 +454,11 @@ namespace MahApps.Metro.Controls
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
             if (useNoneWindowStyle)
             {
-                ShowTitleBar = false;
+                this.SetCurrentValue(ShowTitleBarProperty, false);
             }
             else
             {
-                ShowTitleBar = isTitleBarVisible;
+                this.SetCurrentValue(ShowTitleBarProperty, isTitleBarVisible);
             }
             if (LeftWindowCommandsPresenter != null)
             {
@@ -1367,20 +1367,20 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
 
-        internal void HandleFlyoutStatusChange(Flyout flyout, IEnumerable<Flyout> visibleFlyouts)
+        internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {
             //checks a recently opened flyout's position.
-            if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
+            //if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
                 // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
                 //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's.
-                this.icon?.SetValue(Panel.ZIndexProperty, this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
+                this.icon?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
 

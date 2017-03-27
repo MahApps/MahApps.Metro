@@ -17,8 +17,8 @@
                       Icon="mahapps.metro.logo2.ico"
                       NonActiveGlowBrush="#CDFF0000"
                       ShowIconOnTitleBar="True"
-                      ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
+                      ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
@@ -187,8 +187,7 @@
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowTitleBar}" />
+                            IsCheckable="True" IsChecked="{Binding Path=ShowMyTitleBar, UpdateSourceTrigger=PropertyChanged}" />
                 <MenuItem Header="ShowInTaskbar"
                             IsCheckable="True"
                             IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />

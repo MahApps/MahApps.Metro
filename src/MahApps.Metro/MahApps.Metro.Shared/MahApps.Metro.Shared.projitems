@@ -22,7 +22,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\TiltBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Badged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ButtonsAlignment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ClipBorder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ClipBorder.Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CloseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControlEx.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleSwitchButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TransitioningContentControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TreeHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Underline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\VisualStates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WinApiHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowButtonCommands.cs" />

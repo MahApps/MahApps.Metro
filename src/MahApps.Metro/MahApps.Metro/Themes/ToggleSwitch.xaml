@@ -91,7 +91,7 @@
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
