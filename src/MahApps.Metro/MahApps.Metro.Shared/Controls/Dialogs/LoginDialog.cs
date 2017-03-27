@@ -2,6 +2,7 @@
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -10,21 +11,18 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         private const string DefaultUsernameWatermark = "Username...";
         private const string DefaultPasswordWatermark = "Password...";
-        private const Visibility DefaultNegativeButtonVisibility = Visibility.Collapsed;
-        private const bool DefaultShouldHideUsername = false;
-        private const bool DefaultEnablePasswordPreview = false;
-        private const Visibility DefaultRememberCheckBoxVisibility = Visibility.Collapsed;
         private const string DefaultRememberCheckBoxText = "Remember";
 
         public LoginDialogSettings()
         {
             this.UsernameWatermark = DefaultUsernameWatermark;
+            this.UsernameCharacterCasing = CharacterCasing.Normal;
             this.PasswordWatermark = DefaultPasswordWatermark;
-            this.NegativeButtonVisibility = DefaultNegativeButtonVisibility;
-            this.ShouldHideUsername = DefaultShouldHideUsername;
+            this.NegativeButtonVisibility = Visibility.Collapsed;
+            this.ShouldHideUsername = false;
             this.AffirmativeButtonText = "Login";
-            this.EnablePasswordPreview = DefaultEnablePasswordPreview;
-            this.RememberCheckBoxVisibility = DefaultRememberCheckBoxVisibility;
+            this.EnablePasswordPreview = false;
+            this.RememberCheckBoxVisibility = Visibility.Collapsed;
             this.RememberCheckBoxText = DefaultRememberCheckBoxText;
         }
 
@@ -33,6 +31,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public string InitialPassword { get; set; }
 
         public string UsernameWatermark { get; set; }
+
+        public CharacterCasing UsernameCharacterCasing { get; set; }
 
         public bool ShouldHideUsername { get; set; }
 
@@ -91,6 +91,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.InitializeComponent();
             this.Username = settings.InitialUsername;
             this.Password = settings.InitialPassword;
+            this.UsernameCharacterCasing = settings.UsernameCharacterCasing;
             this.UsernameWatermark = settings.UsernameWatermark;
             this.PasswordWatermark = settings.PasswordWatermark;
             this.NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
@@ -247,6 +248,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty UsernameWatermarkProperty = DependencyProperty.Register("UsernameWatermark", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty UsernameCharacterCasingProperty = DependencyProperty.Register("UsernameCharacterCasing", typeof(CharacterCasing), typeof(LoginDialog), new PropertyMetadata(default(CharacterCasing)));
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PasswordWatermarkProperty = DependencyProperty.Register("PasswordWatermark", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
@@ -279,6 +281,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)this.GetValue(UsernameWatermarkProperty); }
             set { this.SetValue(UsernameWatermarkProperty, value); }
+        }
+
+        public CharacterCasing UsernameCharacterCasing
+        {
+            get { return (CharacterCasing)this.GetValue(UsernameCharacterCasingProperty); }
+            set { this.SetValue(UsernameCharacterCasingProperty, value); }
         }
 
         public string PasswordWatermark
