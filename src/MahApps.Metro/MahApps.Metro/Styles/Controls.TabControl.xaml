@@ -98,7 +98,7 @@
     </Style>
 
     <Style x:Key="MetroTabItem" TargetType="TabItem">
-        <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -221,6 +221,9 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="false">
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         
                         <MultiDataTrigger>
