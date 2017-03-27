@@ -18,10 +18,10 @@
                     <Grid Margin="0 6 0 4" SnapsToDevicePixels="true">
                         <Rectangle Height="1"
                                    Margin="20 0 1 1"
-                                   Fill="#E0E0E0" />
+                                   Fill="{DynamicResource GrayBrush7}" />
                         <Rectangle Height="1"
                                    Margin="20 1 1 0"
-                                   Fill="White" />
+                                   Fill="{DynamicResource WhiteBrush}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

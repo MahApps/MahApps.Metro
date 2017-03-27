@@ -269,6 +269,7 @@
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MetroComboBoxItem}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -443,13 +444,10 @@
                                         Effect="{DynamicResource DropShadowBrush}" />
                                 <ScrollViewer x:Name="DropDownScrollViewer"
                                               Background="{DynamicResource WhiteBrush}"
-                                              Margin="2"
+                                              Margin="{TemplateBinding BorderThickness}"
                                               Padding="1"
                                               BorderThickness="0">
-                                    <Grid Background="{DynamicResource WhiteBrush}"
-                                          RenderOptions.ClearTypeHint="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=(RenderOptions.ClearTypeHint), Mode=OneWay}">
-                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </Grid>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Grid>
                         </Popup>
@@ -603,45 +601,43 @@
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="22" />
         <Setter Property="Padding" Value="2" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=(RenderOptions.ClearTypeHint)}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">
-                    <Grid Margin="0 0.5" Background="{TemplateBinding Background}">
-                        <Border x:Name="ItemBackground"
+                    <Grid Background="{TemplateBinding Background}"
+                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                IsHitTestVisible="False"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          TextElement.Foreground="{TemplateBinding Foreground}" />
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="Opacity">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value=".55" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="ItemBackground" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBackground" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -650,3 +646,4 @@
     </Style>
 
 </ResourceDictionary>
+

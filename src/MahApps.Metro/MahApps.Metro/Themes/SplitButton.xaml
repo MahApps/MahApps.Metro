@@ -90,6 +90,7 @@
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
                          Margin="0"
+                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                          Style="{TemplateBinding ListBoxStyle}"
                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                          BorderBrush="{TemplateBinding BorderBrush}"
@@ -209,6 +210,7 @@
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
                          Margin="0"
+                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                          Style="{TemplateBinding ListBoxStyle}"
                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                          BorderBrush="{TemplateBinding BorderBrush}"
@@ -272,6 +274,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ListBoxStyle" Value="{DynamicResource VirtualisedMetroListBox}" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource SplitButtonHorizontal}" />
         <Style.Triggers>
