@@ -297,6 +297,7 @@
                                 Foreground="{TemplateBinding PaneForeground}"
                                 Width="{TemplateBinding HamburgerWidth}"
                                 Height="{TemplateBinding HamburgerHeight}"
+                                Visibility="{TemplateBinding HamburgerVisibility}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 AutomationProperties.Name="Main button"
