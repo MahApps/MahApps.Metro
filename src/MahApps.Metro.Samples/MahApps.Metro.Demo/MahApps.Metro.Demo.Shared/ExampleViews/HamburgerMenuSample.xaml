@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.HamburgerMenuSample"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="300"
-             d:DesignWidth="400"
+﻿<UserControl x:Class="MetroDemo.ExampleViews.HamburgerMenuSample" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             d:DesignHeight="300" 
+             d:DesignWidth="400" 
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -16,14 +16,8 @@
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ContentControl Grid.Column="0"
-                                Content="{Binding Tag}"
-                                Focusable="False"
-                                IsTabStop="False" />
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Text="{Binding Label}" />
+                <ContentControl Grid.Column="0" Content="{Binding Tag}" Focusable="False" IsTabStop="False" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16" Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
 
@@ -33,28 +27,14 @@
                     <ColumnDefinition Width="48" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Margin="12"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Source="{Binding Glyph}"
-                       Stretch="UniformToFill" />
-                <TextBlock Grid.Column="1"
-                           VerticalAlignment="Center"
-                           FontSize="16"
-                           Text="{Binding Label}" />
+                <Image Margin="12" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Glyph}" Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="16" Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
-        <controls:HamburgerMenu x:Name="HamburgerMenuControl"
-                                SelectedIndex="1"
-                                Margin="20"
-                                HamburgerWidth="48"
-                                ItemClick="HamburgerMenu_OnItemClick"
-                                ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
+        <controls:HamburgerMenu x:Name="HamburgerMenuControl" Margin="20" HamburgerWidth="48" ItemClick="HamburgerMenu_OnItemClick" ItemTemplate="{StaticResource HamburgerMenuImageItem}" OptionsItemClick="HamburgerMenu_OnOptionsItemClick" OptionsItemTemplate="{StaticResource HamburgerMenuItem}" SelectedIndex="1">
             <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
@@ -70,11 +50,7 @@
                 <controls:HamburgerMenuItemCollection>
                     <controls:HamburgerMenuGlyphItem Label="About">
                         <controls:HamburgerMenuGlyphItem.Tag>
-                            <iconPacks:PackIconMaterial Width="22"
-                                                        Height="22"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Kind="Help" />
+                            <iconPacks:PackIconMaterial Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="Help" />
                         </controls:HamburgerMenuGlyphItem.Tag>
                     </controls:HamburgerMenuGlyphItem>
                 </controls:HamburgerMenuItemCollection>
@@ -89,17 +65,9 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" Background="#7A7A7A">
-                            <TextBlock x:Name="Header"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="24"
-                                       Foreground="White"
-                                       Text="{Binding Label}" />
+                            <TextBlock x:Name="Header" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Foreground="White" Text="{Binding Label}" />
                         </Border>
-                        <controls:TransitioningContentControl Grid.Row="1"
-                                                              Content="{Binding Glyph}"
-                                                              RestartTransitionOnContentChange="True"
-                                                              Transition="Default">
+                        <controls:TransitioningContentControl Grid.Row="1" Content="{Binding Glyph}" RestartTransitionOnContentChange="True" Transition="Default">
                             <controls:TransitioningContentControl.ContentTemplate>
                                 <DataTemplate>
                                     <Image Source="{Binding}" />
