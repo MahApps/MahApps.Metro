@@ -59,6 +59,7 @@ namespace MetroDemo
 
         public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
+            this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
