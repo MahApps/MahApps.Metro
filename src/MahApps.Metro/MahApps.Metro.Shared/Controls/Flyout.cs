@@ -19,7 +19,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Root", Type = typeof(Grid))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
-    public class Flyout : ContentControl
+    public class Flyout : HeaderedContentControl
     {
         /// <summary>
         /// An event that is raised when IsOpen changes.
@@ -47,14 +47,12 @@ namespace MahApps.Metro.Controls
             remove { this.RemoveHandler(ClosingFinishedEvent, value); }
         }
 
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register("AnimateOpacity", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
@@ -136,15 +134,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// A DataTemplate for the flyout's header.
-        /// </summary>
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)this.GetValue(HeaderTemplateProperty); }
-            set { this.SetValue(HeaderTemplateProperty, value); }
-        }
-
-        /// <summary>
         /// Gets/sets whether this flyout is visible.
         /// </summary>
         public bool IsOpen
@@ -205,15 +194,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (Position)this.GetValue(PositionProperty); }
             set { this.SetValue(PositionProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the flyout's header.
-        /// </summary>
-        public string Header
-        {
-            get { return (string)this.GetValue(HeaderProperty); }
-            set { this.SetValue(HeaderProperty, value); }
         }
 
         /// <summary>
