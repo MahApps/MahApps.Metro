@@ -87,6 +87,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register("ItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="VerticalScrollBarOnLeftSide"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register("VerticalScrollBarOnLeftSide", typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
         /// </summary>
         public double OpenPaneLength
@@ -235,6 +240,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(ItemCommandParameterProperty); }
             set { SetValue(ItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets wheather the ScrollBar of the HamburgerMenu is on the left side or on the right side.
+        /// </summary>
+        public bool VerticalScrollBarOnLeftSide
+        {
+            get { return (bool)GetValue(VerticalScrollBarOnLeftSideProperty); }
+            set { SetValue(VerticalScrollBarOnLeftSideProperty, value); }
         }
 
         /// <summary>
