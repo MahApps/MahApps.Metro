@@ -74,7 +74,11 @@ namespace MahApps.Metro.Controls
 
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            SetCurrentValue(ContentProperty, _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem);
+            var selectedItem = this._buttonsListView?.SelectedItem ?? this._optionsListView?.SelectedItem;
+            if (selectedItem != null)
+            {
+                this.SetCurrentValue(ContentProperty, selectedItem);
+            }
         }
     }
 }
