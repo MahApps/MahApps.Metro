@@ -29,7 +29,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LayoutStates">
                                 <VisualState x:Name="AfterLoaded">
-                                    <Storyboard>
+                                    <Storyboard x:Name="AfterLoadedStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -49,7 +49,7 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="AfterLoadedReverse">
-                                    <Storyboard>
+                                    <Storyboard x:Name="AfterLoadedReverseStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
