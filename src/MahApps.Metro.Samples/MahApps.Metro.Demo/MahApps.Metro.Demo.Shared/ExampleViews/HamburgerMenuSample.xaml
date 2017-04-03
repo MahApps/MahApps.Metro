@@ -19,12 +19,10 @@
                 <ContentControl Grid.Column="0"
                                 Content="{Binding Tag}"
                                 Focusable="False"
-                                Foreground="White"
                                 IsTabStop="False" />
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
-                           Foreground="White"
                            Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
@@ -43,7 +41,6 @@
                 <TextBlock Grid.Column="1"
                            VerticalAlignment="Center"
                            FontSize="16"
-                           Foreground="White"
                            Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
@@ -51,16 +48,14 @@
 
     <Grid>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                VerticalScrollBarOnLeftSide="False"
                                 SelectedIndex="1"
                                 Margin="20"
-                                Foreground="White"
                                 HamburgerWidth="48"
-                                Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
                                 ItemClick="HamburgerMenu_OnItemClick"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
-                                PaneBackground="#FF444444">
+                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>

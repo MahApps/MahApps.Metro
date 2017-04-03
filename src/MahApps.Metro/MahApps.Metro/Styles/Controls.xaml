@@ -93,7 +93,6 @@
     <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MetroComboBox}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MetroComboBoxItem}" TargetType="ComboBoxItem" />
-    <!--    <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />-->
     <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MetroMenu}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MetroContextMenu}" TargetType="ContextMenu" />

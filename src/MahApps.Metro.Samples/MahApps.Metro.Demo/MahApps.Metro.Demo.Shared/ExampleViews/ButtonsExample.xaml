@@ -30,6 +30,17 @@
 
         <StackPanel Grid.Column="0">
             <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:Badged Width="100"
+                             Margin="{StaticResource ControlMargin}"
+                             Badge="3">
+                <Button Content="Mail" />
+            </Controls:Badged>
+            <Controls:Badged x:Name="CountingBadge"
+                             Width="100"
+                             Margin="{StaticResource ControlMargin}">
+                <Button Content="Click Me"
+                        Click="CountingButton_OnClick" />
+            </Controls:Badged>
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled" />
@@ -305,12 +316,13 @@
 
             <Controls:SplitButton Name="SplitButton0"
                                   Width="130"
+                                  SelectionChanged="SplitButton_OnSelectionChanged"
+                                  SelectedIndex="2"
                                   Margin="{StaticResource ControlMargin}"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Left"
                                   DisplayMemberPath="Title"
-                                  ItemsSource="{Binding Albums}"
-                                  SelectedIndex="2">
+                                  ItemsSource="{Binding Albums}">
                 <Controls:SplitButton.Icon>
                     <iconPacks:PackIconModern Kind="Alert" Margin="6" />
                 </Controls:SplitButton.Icon>

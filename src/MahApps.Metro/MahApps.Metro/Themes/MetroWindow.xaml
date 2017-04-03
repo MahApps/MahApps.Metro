@@ -123,7 +123,8 @@
                                       UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
-                    <Controls:MetroContentControl Grid.Row="1"
+                    <Controls:MetroContentControl x:Name="PART_Content"
+                                                  Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   FocusVisualStyle="{x:Null}"
@@ -393,7 +394,8 @@
                                       UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
-                    <Controls:MetroContentControl Grid.Row="1"
+                    <Controls:MetroContentControl x:Name="PART_Content"
+                                                  Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   FocusVisualStyle="{x:Null}"

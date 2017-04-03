@@ -13,7 +13,7 @@
     <TabControl Margin="10" TabStripPlacement="Left">
         <TabItem Header="List/GridView">
             <UniformGrid Rows="2" Columns="2">
-                <ListView Margin="5"
+                <ListView Margin="1"
                           BorderThickness="0"
                           SelectedIndex="0"
                           Style="{StaticResource VirtualisedMetroListView}">
@@ -22,7 +22,7 @@
                     <ListViewItem>Test 3</ListViewItem>
                     <ListViewItem>Test 4</ListViewItem>
                 </ListView>
-                <ListView Margin="5"
+                <ListView Margin="1"
                           BorderThickness="0"
                           IsEnabled="False"
                           SelectedIndex="0"
@@ -32,8 +32,8 @@
                     <ListViewItem>Test 3</ListViewItem>
                     <ListViewItem>Test 4</ListViewItem>
                 </ListView>
-                <ListView Margin="5"
-                          BorderThickness="0"
+                <ListView Margin="1"
+                          BorderThickness="1"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0"
                           Style="{StaticResource VirtualisedMetroListView}">
@@ -44,8 +44,8 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Margin="5"
-                          BorderThickness="0"
+                <ListView Margin="1"
+                          BorderThickness="1"
                           IsEnabled="False"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0"

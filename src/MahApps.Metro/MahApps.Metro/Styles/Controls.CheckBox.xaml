@@ -16,6 +16,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="6 0 0 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -31,7 +32,8 @@
                                     Height="18"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Path x:Name="checkBox"
                                   Width="12"
                                   Height="10"
@@ -50,7 +52,8 @@
                                     Height="18"
                                     Background="{DynamicResource SemiTransparentWhiteBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    Opacity="0" />
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <ContentPresenter x:Name="contentPresenter"
                                           Grid.Column="1"
