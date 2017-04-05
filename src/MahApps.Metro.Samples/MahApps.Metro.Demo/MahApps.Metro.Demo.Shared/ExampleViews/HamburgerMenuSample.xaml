@@ -56,6 +56,15 @@
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
                                 OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
+            <!-- Header -->
+            <controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Grid.Column="1"
+                             VerticalAlignment="Center"
+                             FontSize="16"
+                             Foreground="White"
+                </DataTemplate>
+            </controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
             <!--  Items  -->
             <controls:HamburgerMenu.ItemsSource>
                 <controls:HamburgerMenuItemCollection>
