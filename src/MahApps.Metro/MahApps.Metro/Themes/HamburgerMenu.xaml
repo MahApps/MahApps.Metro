@@ -240,10 +240,10 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <Grid Width="{TemplateBinding HamburgerWidth}" HorizontalAlignment="Left" />
+                                        <Grid Grid.Column="0" Width="{TemplateBinding HamburgerWidth}" />
                                         <ContentControl  Grid.Column="1"
-                                                ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
-                                                IsTabStop="False" />
+                                                         ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
+                                                         IsTabStop="False" />
                                     </Grid>
                                     <ScrollViewer x:Name="PaneScrollViewer"
                                                   Grid.Row="1"
