@@ -407,7 +407,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
-        <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
+        <Setter Property="Controls:ButtonHelper.CornerRadius" Value="3" />
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
         <Setter Property="FontSize" Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontWeight" Value="Bold" />
@@ -421,12 +421,12 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}"
                                 IsHitTestVisible="False"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
