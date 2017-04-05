@@ -61,8 +61,10 @@
                 <DataTemplate>
                     <TextBlock Grid.Column="1"
                              VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
                              FontSize="16"
                              Foreground="White"
+                             Text="Pictures" />
                 </DataTemplate>
             </controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
             <!--  Items  -->
