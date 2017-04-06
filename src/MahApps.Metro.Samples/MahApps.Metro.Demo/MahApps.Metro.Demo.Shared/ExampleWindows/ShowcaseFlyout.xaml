@@ -5,6 +5,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:metroDemo="clr-namespace:MetroDemo"
+                 xmlns:system="clr-namespace:System;assembly=mscorlib"
                  mc:Ignorable="d"
                  d:DesignHeight="300"
                  d:DesignWidth="400"
@@ -209,6 +210,17 @@
                                  controls:TextBoxHelper.Watermark="TextBox 01" />
                         <TextBox Margin="2"
                                  controls:TextBoxHelper.Watermark="TextBox 02" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Calendar">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox x:Name="IsTodayHighlightedCheckBox"
+                                  Content="IsTodayHighlighted"
+                                  IsChecked="True" />
+                        <Calendar Margin="5"
+                                  SelectionMode="MultipleRange"
+                                  DisplayDateStart="{x:Static system:DateTime.Now}"
+                                  IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </TabItem>
             </controls:MetroAnimatedTabControl>
