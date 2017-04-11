@@ -29,6 +29,8 @@
                              BorderThickness="{TemplateBinding BorderThickness}"
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
+                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                              IsTabStop="{TemplateBinding IsTabStop}"
                              Focusable="{TemplateBinding Focusable}"
                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
