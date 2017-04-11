@@ -152,6 +152,7 @@
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                    Foreground="{TemplateBinding Foreground}"
                                                    FontSize="{TemplateBinding FontSize}"
+                                                   controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
                                                    controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                    CaretBrush="{DynamicResource BlackBrush}"
                                                    SelectionBrush="{DynamicResource HighlightBrush}"
@@ -171,6 +172,7 @@
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Foreground="{TemplateBinding Foreground}"
+                                           TextAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
                                            Text="{TemplateBinding controls:TextBoxHelper.Watermark}" />
                                 </ContentControl>
                                 <Button x:Name="PART_Button"
