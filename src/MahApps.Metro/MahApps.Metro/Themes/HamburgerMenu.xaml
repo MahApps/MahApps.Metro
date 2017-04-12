@@ -235,7 +235,16 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" />
+                                    <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" HorizontalAlignment="Stretch"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" Width="{TemplateBinding HamburgerWidth}" />
+                                        <ContentControl  Grid.Column="1"
+                                                         ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
+                                                         IsTabStop="False" />
+                                    </Grid>
                                     <ScrollViewer x:Name="PaneScrollViewer"
                                                   Grid.Row="1"
                                                   Style="{StaticResource HamburgerScrollViewerStyle}"

@@ -42,6 +42,19 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Identifies the <see cref="HamburgerMenuHeaderTemplate"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HamburgerMenuHeaderTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuHeaderTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a template for the hamburger icon.
+        /// </summary>
+        public DataTemplate HamburgerMenuHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HamburgerMenuHeaderTemplateProperty); }
+            set { SetValue(HamburgerMenuHeaderTemplateProperty, value); }
+        }
+        /// <summary>
         /// Gets or sets main button's width.
         /// </summary>
         public double HamburgerWidth

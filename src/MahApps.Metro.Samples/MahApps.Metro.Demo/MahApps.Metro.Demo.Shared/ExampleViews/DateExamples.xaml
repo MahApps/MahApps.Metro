@@ -63,8 +63,12 @@
                         VerticalAlignment="Top">
                 <Label Content="Calendar" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <Calendar Margin="5" />
-                <Calendar Margin="5" IsEnabled="False" />
+                <CheckBox x:Name="IsTodayHighlightedCheckBox" Content="IsTodayHighlighted" IsChecked="True" />
+                <Calendar Margin="5"
+                          SelectionMode="MultipleRange" 
+                          DisplayDateStart="{x:Static system:DateTime.Now}"
+                          IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Calendar Margin="5" IsEnabled="False" HorizontalAlignment="Center" />
             </StackPanel>
 
             <StackPanel Grid.Row="0"

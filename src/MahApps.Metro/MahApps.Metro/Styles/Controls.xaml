@@ -61,11 +61,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                    <Viewbox Margin="{TemplateBinding Padding}">
+                    <Viewbox Margin="{TemplateBinding Padding}" UseLayoutRounding="True">
                         <Path Fill="{TemplateBinding Foreground}"
                               Stretch="Uniform"
                               Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
-                              SnapsToDevicePixels="False"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               UseLayoutRounding="False" />
                     </Viewbox>
                 </ControlTemplate>
