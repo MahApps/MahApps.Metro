@@ -118,7 +118,21 @@ namespace MahApps.Metro.Controls
                 numericUpDown = new NumericUpDown();
             }
 
-            SyncProperties(numericUpDown);
+            SyncColumnProperty(this, numericUpDown, FontFamilyProperty, NumericUpDown.FontFamilyProperty);
+            SyncColumnProperty(this, numericUpDown, FontSizeProperty, NumericUpDown.FontSizeProperty);
+            SyncColumnProperty(this, numericUpDown, FontStyleProperty, NumericUpDown.FontStyleProperty);
+            SyncColumnProperty(this, numericUpDown, FontWeightProperty, NumericUpDown.FontWeightProperty);
+            if (isEditing)
+            {
+                SyncColumnProperty(this, numericUpDown, ForegroundProperty, NumericUpDown.ForegroundProperty);
+            }
+            else
+            {
+                if (!SyncColumnProperty(this, numericUpDown, ForegroundProperty, NumericUpDown.ForegroundProperty))
+                {
+                    ApplyBinding(new Binding(Control.ForegroundProperty.Name) { Source = cell, Mode = BindingMode.OneWay }, numericUpDown, NumericUpDown.ForegroundProperty);
+                }
+            }
 
             ApplyStyle(isEditing, true, numericUpDown);
             ApplyBinding(Binding, numericUpDown, NumericUpDown.ValueProperty);
@@ -134,46 +148,6 @@ namespace MahApps.Metro.Controls
             numericUpDown.UpDownButtonsWidth = UpDownButtonsWidth;
 
             return numericUpDown;
-        }
-
-        private void SyncProperties(FrameworkElement e)
-        {
-            SyncColumnProperty(this, e, TextElement.FontFamilyProperty, FontFamilyProperty);
-            SyncColumnProperty(this, e, TextElement.FontSizeProperty, FontSizeProperty);
-            SyncColumnProperty(this, e, TextElement.FontStyleProperty, FontStyleProperty);
-            SyncColumnProperty(this, e, TextElement.FontWeightProperty, FontWeightProperty);
-            SyncColumnProperty(this, e, TextElement.ForegroundProperty, ForegroundProperty);
-        }
-
-        protected override void RefreshCellContent(FrameworkElement element, string propertyName)
-        {
-            var cell = element as DataGridCell;
-            if (cell != null)
-            {
-                var numericUpDown = cell.Content as FrameworkElement;
-                if (numericUpDown != null)
-                {
-                    switch (propertyName)
-                    {
-                        case "FontFamily":
-                            SyncColumnProperty(this, numericUpDown, TextElement.FontFamilyProperty, FontFamilyProperty);
-                            break;
-                        case "FontSize":
-                            SyncColumnProperty(this, numericUpDown, TextElement.FontSizeProperty, FontSizeProperty);
-                            break;
-                        case "FontStyle":
-                            SyncColumnProperty(this, numericUpDown, TextElement.FontStyleProperty, FontStyleProperty);
-                            break;
-                        case "FontWeight":
-                            SyncColumnProperty(this, numericUpDown, TextElement.FontWeightProperty, FontWeightProperty);
-                            break;
-                        case "Foreground":
-                            SyncColumnProperty(this, numericUpDown, TextElement.ForegroundProperty, ForegroundProperty);
-                            break;
-                    }
-                }
-            }
-            base.RefreshCellContent(element, propertyName);
         }
 
         /// <summary>
@@ -197,15 +171,17 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Synchronizes the column property. Taken from Helper code for DataGrid.
         /// </summary>
-        private static void SyncColumnProperty(DependencyObject column, DependencyObject content, DependencyProperty contentProperty, DependencyProperty columnProperty)
+        private static bool SyncColumnProperty(DependencyObject column, NumericUpDown control, DependencyProperty columnProperty, DependencyProperty controlProperty)
         {
             if (IsDefaultValue(column, columnProperty))
             {
-                content.ClearValue(contentProperty);
+                control.ClearValue(controlProperty);
+                return false;
             }
             else
             {
-                content.SetValue(contentProperty, column.GetValue(columnProperty));
+                control.SetValue(controlProperty, column.GetValue(columnProperty));
+                return true;
             }
         }
 

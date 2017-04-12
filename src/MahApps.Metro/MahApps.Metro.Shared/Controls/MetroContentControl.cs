@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
@@ -32,6 +33,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(OnlyLoadTransitionProperty, value); }
         }
 
+        public static readonly RoutedEvent TransitionCompletedEvent = EventManager.RegisterRoutedEvent("TransitionCompleted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroContentControl));
+
+        public event RoutedEventHandler TransitionCompleted
+        {
+            add { this.AddHandler(TransitionCompletedEvent, value); }
+            remove { this.RemoveHandler(TransitionCompletedEvent, value); }
+        }
+
+        private Storyboard afterLoadedStoryboard;
+        private Storyboard afterLoadedReverseStoryboard;
         private bool transitionLoaded;
 
         public MetroContentControl()
@@ -57,6 +68,7 @@ namespace MahApps.Metro.Controls
         {
             if (TransitionsEnabled)
             {
+                this.UnsetStoryboardEvents();
                 if (transitionLoaded)
                     VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
                 IsVisibleChanged -= MetroContentControlIsVisibleChanged;
@@ -69,6 +81,7 @@ namespace MahApps.Metro.Controls
             {
                 if (!transitionLoaded)
                 {
+                    this.SetStoryboardEvents();
                     transitionLoaded = this.OnlyLoadTransition;
                     VisualStateManager.GoToState(this, ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
                 }
@@ -111,6 +124,48 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
 
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            afterLoadedStoryboard = this.GetTemplateChild("AfterLoadedStoryboard") as Storyboard;
+            afterLoadedReverseStoryboard = this.GetTemplateChild("AfterLoadedReverseStoryboard") as Storyboard;
+        }
+
+        private void AfterLoadedStoryboardCompleted(object sender, System.EventArgs e)
+        {
+            if (transitionLoaded)
+            {
+                this.UnsetStoryboardEvents();
+            }
+            this.InvalidateVisual();
+            this.RaiseEvent(new RoutedEventArgs(TransitionCompletedEvent));
+        }
+
+        private void SetStoryboardEvents()
+        {
+            if (this.afterLoadedStoryboard != null)
+            {
+                this.afterLoadedStoryboard.Completed += this.AfterLoadedStoryboardCompleted;
+            }
+            if (this.afterLoadedReverseStoryboard != null)
+            {
+                this.afterLoadedReverseStoryboard.Completed += this.AfterLoadedStoryboardCompleted;
+            }
+        }
+
+        private void UnsetStoryboardEvents()
+        {
+            if (this.afterLoadedStoryboard != null)
+            {
+                this.afterLoadedStoryboard.Completed -= this.AfterLoadedStoryboardCompleted;
+            }
+            if (this.afterLoadedReverseStoryboard != null)
+            {
+                this.afterLoadedReverseStoryboard.Completed -= this.AfterLoadedStoryboardCompleted;
+            }
         }
     }
 }

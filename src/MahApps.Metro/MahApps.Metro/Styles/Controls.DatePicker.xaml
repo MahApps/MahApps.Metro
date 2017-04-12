@@ -72,6 +72,7 @@
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Foreground="{TemplateBinding Foreground}"
                                                FontSize="{TemplateBinding FontSize}"
+                                               Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
                                                SelectionBrush="{DynamicResource HighlightBrush}"
@@ -91,6 +92,7 @@
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Foreground="{TemplateBinding Foreground}"
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
                             </ContentControl>
 
@@ -228,11 +230,12 @@
                         <TextBlock x:Name="PART_Message"
                                    Margin="4 0 0 0"
                                    Padding="2"
-                                   HorizontalAlignment="Left"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
                                    Opacity="0.6"
                                    IsHitTestVisible="False"
+                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
                     </Grid>
                     <ControlTemplate.Triggers>
