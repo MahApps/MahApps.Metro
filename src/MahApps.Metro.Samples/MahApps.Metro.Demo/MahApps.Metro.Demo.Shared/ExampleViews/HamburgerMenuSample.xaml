@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:metroDemo="clr-namespace:MetroDemo"
+             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
              d:DesignHeight="300"
              d:DesignWidth="400"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
@@ -47,14 +50,21 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20 5">
+            <CheckBox VerticalAlignment="Center" Content="Allow About Hamburger MenuItem" IsChecked="{Binding CanShowHamburgerAboutCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                Grid.Row="1"
                                 VerticalScrollBarOnLeftSide="False"
                                 SelectedIndex="1"
-                                Margin="20"
+                                Margin="20 0 20 20"
                                 HamburgerWidth="48"
                                 ItemClick="HamburgerMenu_OnItemClick"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
                                 OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
             <!-- Header -->
             <controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
@@ -80,7 +90,8 @@
             <!--  Options  -->
             <controls:HamburgerMenu.OptionsItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Label="About">
+                    <controls:HamburgerMenuGlyphItem Label="About"
+                                                     Command="{x:Static exampleViews:ShowAboutCommand.Command}">
                         <controls:HamburgerMenuGlyphItem.Tag>
                             <iconPacks:PackIconMaterial Width="22"
                                                         Height="22"

@@ -47,4 +47,6 @@
 
     <Style TargetType="{x:Type controls:WindowButtonCommands}" BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" />
 
+    <Style TargetType="{x:Type controls:HamburgerMenu}" BasedOn="{StaticResource MahApps.Metro.Styles.HamburgerMenu}" />
+
 </ResourceDictionary>
