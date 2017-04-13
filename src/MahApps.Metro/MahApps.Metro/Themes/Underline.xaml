@@ -4,13 +4,12 @@
 
     <Style TargetType="{x:Type controls:Underline}">
         <Setter Property="BorderBrush" Value="{DynamicResource GrayNormalBrush}" />
-        <Setter Property="Placement" Value="Bottom" />
-        <Setter Property="LineThickness" Value="1" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Focusable" Value="False" />
+        <Setter Property="LineThickness" Value="1" />
+        <Setter Property="Placement" Value="Bottom" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:Underline}">
@@ -19,8 +18,8 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="{TemplateBinding UseLayoutRounding}">
                         <controls:ClipBorder Background="{TemplateBinding Background}"
                                              BorderThickness="0"
                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -32,6 +31,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 

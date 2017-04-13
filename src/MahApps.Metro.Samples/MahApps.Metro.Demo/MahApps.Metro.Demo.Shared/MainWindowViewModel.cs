@@ -214,6 +214,22 @@ namespace MetroDemo
             }
         }
 
+        private bool canShowHamburgerAboutCommand = true;
+
+        public bool CanShowHamburgerAboutCommand
+        {
+            get { return this.canShowHamburgerAboutCommand; }
+            set
+            {
+                if (Equals(value, this.canShowHamburgerAboutCommand))
+                {
+                    return;
+                }
+                this.canShowHamburgerAboutCommand = value;
+                this.RaisePropertyChanged("CanShowHamburgerAboutCommand");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd

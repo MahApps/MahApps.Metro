@@ -7,21 +7,24 @@
     <Storyboard x:Key="BadgeChangedStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
             <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
-            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}" KeyTime="0:0:0.3" Value="1" />
+            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
+                                  KeyTime="0:0:0.3"
+                                  Value="1" />
         </DoubleAnimationUsingKeyFrames>
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
             <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
-            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}" KeyTime="0:0:0.3" Value="1" />
+            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
+                                  KeyTime="0:0:0.3"
+                                  Value="1" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Style TargetType="{x:Type controls:Badged}">
-        <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
         <Setter Property="BadgeBackground" Value="{DynamicResource AccentBaseColorBrush}" />
+        <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
         <Setter Property="BadgeForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -42,11 +45,11 @@
                         <Border x:Name="PART_BadgeContainer"
                                 MinWidth="18"
                                 MinHeight="18"
+                                Padding="2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Background="{TemplateBinding BadgeBackground}"
                                 CornerRadius="9"
-                                Padding="2"
                                 RenderTransformOrigin=".5,.5"
                                 TextElement.FontSize="11"
                                 TextElement.FontWeight="DemiBold"
@@ -101,6 +104,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>

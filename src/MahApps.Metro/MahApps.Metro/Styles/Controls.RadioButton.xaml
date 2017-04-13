@@ -6,7 +6,6 @@
     <!--  ********************************** RadioButton Style **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
     <Style x:Key="MetroRadioButton" TargetType="RadioButton">
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -14,8 +13,8 @@
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource CheckBoxMouseOverBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="6 0 0 0" />
         <Setter Property="Template">
             <Setter.Value>
@@ -26,7 +25,7 @@
                             <ColumnDefinition x:Name="RightCol" Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_CHECKBOX">
-                            <Rectangle Margin="-6,0" Fill="{DynamicResource TransparentWhiteBrush}" />
+                            <Rectangle Margin="-6 0" Fill="{DynamicResource TransparentWhiteBrush}" />
                             <Ellipse x:Name="normal"
                                      Width="18"
                                      Height="18"
@@ -42,8 +41,8 @@
                                      Width="18"
                                      Height="18"
                                      Fill="{DynamicResource SemiTransparentWhiteBrush}"
-                                     StrokeThickness="{TemplateBinding BorderThickness}"
-                                     Opacity="0" />
+                                     Opacity="0"
+                                     StrokeThickness="{TemplateBinding BorderThickness}" />
                         </Grid>
                         <ContentPresenter x:Name="contentPresenter"
                                           Grid.Column="1"
@@ -58,24 +57,24 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="contentPresenter"
+                                        <DoubleAnimation Storyboard.TargetName="contentPresenter"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To=".55" />
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="disabled"
+                                                         To=".55"
+                                                         Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="disabled"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
+                                                         To="1"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="Checked1"
+                                        <DoubleAnimation Storyboard.TargetName="Checked1"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
+                                                         To="1"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
@@ -104,6 +103,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
 </ResourceDictionary>

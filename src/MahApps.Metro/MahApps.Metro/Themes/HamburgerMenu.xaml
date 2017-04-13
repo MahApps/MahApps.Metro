@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:pOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    mc:Ignorable="pOptions"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:pOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    mc:Ignorable="pOptions">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
@@ -22,7 +22,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid Background="Transparent">
-                        <Grid x:Name="PART_Background" Background="{TemplateBinding Background}" Opacity="0" />
+                        <Grid x:Name="PART_Background"
+                              Background="{TemplateBinding Background}"
+                              Opacity="0" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -50,12 +52,31 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="HamburgerListBoxItemStyle"
+           BasedOn="{StaticResource MetroListBoxItem}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="HamburgerListBoxStyle"
            BasedOn="{StaticResource MetroListBox}"
            TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
@@ -67,24 +88,6 @@
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                    <Style.Triggers>
-                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
             </Setter.Value>
         </Setter>
     </Style>
@@ -161,34 +164,34 @@
                             <TriggerBase.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_VerticalScrollBar"
+                                        <DoubleAnimation EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         Storyboard.TargetName="PART_VerticalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="1"
-                                                         Duration="0:0:0.2"
-                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}" />
-                                        <DoubleAnimation Storyboard.TargetName="PART_HorizontalScrollBar"
+                                                         Duration="0:0:0.2" />
+                                        <DoubleAnimation EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         Storyboard.TargetName="PART_HorizontalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="1"
-                                                         Duration="0:0:0.2"
-                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}" />
+                                                         Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </TriggerBase.EnterActions>
                             <TriggerBase.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PART_VerticalScrollBar"
+                                        <DoubleAnimation BeginTime="0:0:2"
+                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         Storyboard.TargetName="PART_VerticalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0"
-                                                         BeginTime="0:0:2"
-                                                         Duration="0:0:1"
-                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}" />
-                                        <DoubleAnimation Storyboard.TargetName="PART_HorizontalScrollBar"
+                                                         Duration="0:0:1" />
+                                        <DoubleAnimation BeginTime="0:0:2"
+                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}"
+                                                         Storyboard.TargetName="PART_HorizontalScrollBar"
                                                          Storyboard.TargetProperty="Opacity"
                                                          To="0"
-                                                         BeginTime="0:0:2"
-                                                         Duration="0:0:1"
-                                                         EasingFunction="{StaticResource ScrollBarEaseInOut}" />
+                                                         Duration="0:0:1" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </TriggerBase.ExitActions>
@@ -199,9 +202,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type controls:HamburgerMenu}">
-        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
-        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
+    <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type controls:HamburgerMenu}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
@@ -216,6 +217,8 @@
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:HamburgerMenu}">
@@ -223,8 +226,8 @@
                         <controls:SplitView x:Name="MainSplitView"
                                             CompactPaneLength="{TemplateBinding CompactPaneLength}"
                                             DisplayMode="{TemplateBinding DisplayMode}"
-                                            IsTabStop="False"
                                             IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                            IsTabStop="False"
                                             OpenPaneLength="{TemplateBinding OpenPaneLength}"
                                             PaneBackground="{TemplateBinding PaneBackground}"
                                             PaneForeground="{TemplateBinding PaneForeground}"
@@ -235,23 +238,25 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Height="{TemplateBinding HamburgerHeight}" HorizontalAlignment="Stretch"  >
+                                    <Grid Grid.Row="0"
+                                          Height="{TemplateBinding HamburgerHeight}"
+                                          HorizontalAlignment="Stretch">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" Width="{TemplateBinding HamburgerWidth}" />
-                                        <ContentControl  Grid.Column="1"
-                                                         ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
-                                                         IsTabStop="False" />
+                                        <ContentControl Grid.Column="1"
+                                                        ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
+                                                        IsTabStop="False" />
                                     </Grid>
                                     <ScrollViewer x:Name="PaneScrollViewer"
                                                   Grid.Row="1"
-                                                  Style="{StaticResource HamburgerScrollViewerStyle}"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Stretch"
                                                   controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
                                                   HorizontalScrollBarVisibility="Disabled"
+                                                  Style="{StaticResource HamburgerScrollViewerStyle}"
                                                   VerticalScrollBarVisibility="Auto">
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -261,26 +266,25 @@
                                             </Grid.RowDefinitions>
                                             <ListBox Name="ButtonsListView"
                                                      Grid.Row="0"
-                                                     Foreground="{TemplateBinding PaneForeground}"
                                                      Width="{TemplateBinding OpenPaneLength}"
                                                      AutomationProperties.Name="Menu items"
-                                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                     Foreground="{TemplateBinding PaneForeground}"
                                                      ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                      ItemsSource="{TemplateBinding ItemsSource}"
                                                      SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
                                                      SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
                                                      SelectionMode="Single"
                                                      Style="{StaticResource HamburgerListBoxStyle}"
-                                                     TabIndex="1">
-                                            </ListBox>
+                                                     TabIndex="1" />
                                             <ListBox Name="OptionsListView"
                                                      Grid.Row="2"
-                                                     Foreground="{TemplateBinding PaneForeground}"
                                                      Width="{TemplateBinding OpenPaneLength}"
                                                      VerticalAlignment="Bottom"
                                                      AutomationProperties.Name="Option items"
-                                                     ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
+                                                     Foreground="{TemplateBinding PaneForeground}"
                                                      ItemTemplate="{TemplateBinding OptionsItemTemplate}"
+                                                     ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                                      ItemsSource="{TemplateBinding OptionsItemsSource}"
                                                      SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
                                                      SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
@@ -290,28 +294,28 @@
                                     </ScrollViewer>
                                 </Grid>
                             </controls:SplitView.Pane>
-                            <controls:TransitioningContentControl HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            <controls:TransitioningContentControl Padding="{TemplateBinding Padding}"
+                                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                   AutomationProperties.Name="Content"
                                                                   Content="{TemplateBinding Content}"
                                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                                  Padding="{TemplateBinding Padding}"
                                                                   RestartTransitionOnContentChange="True"
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                   Transition="{TemplateBinding ContentTransition}" />
                         </controls:SplitView>
                         <Button x:Name="HamburgerButton"
-                                Foreground="{TemplateBinding PaneForeground}"
                                 Width="{TemplateBinding HamburgerWidth}"
                                 Height="{TemplateBinding HamburgerHeight}"
-                                Visibility="{TemplateBinding HamburgerVisibility}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 AutomationProperties.Name="Main button"
+                                Foreground="{TemplateBinding PaneForeground}"
                                 Style="{StaticResource HamburgerButtonStyle}"
-                                TabIndex="0">
+                                TabIndex="0"
+                                Visibility="{TemplateBinding HamburgerVisibility}">
                             <ContentControl Margin="{TemplateBinding HamburgerMargin}"
                                             ContentTemplate="{TemplateBinding HamburgerMenuTemplate}"
                                             IsTabStop="False" />

@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClipBorder.Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CloseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\CommandHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControlEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomValidationPopup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGridNumericUpDownColumn.cs" />
