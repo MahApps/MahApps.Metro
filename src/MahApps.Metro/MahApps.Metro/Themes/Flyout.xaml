@@ -20,8 +20,6 @@
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
                     DockPanel.Dock="Left"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}"
                     Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"

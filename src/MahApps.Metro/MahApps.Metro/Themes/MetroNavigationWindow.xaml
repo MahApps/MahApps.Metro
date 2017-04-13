@@ -16,8 +16,6 @@
                     Height="34"
                     Margin="4 2 2 2"
                     VerticalAlignment="Center"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16"
                     Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                 <ContentControl Width="20"
                                 Height="20"
@@ -29,8 +27,6 @@
                     Height="34"
                     Margin="2 2 4 2"
                     VerticalAlignment="Center"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16"
                     IsEnabled="False"
                     Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                 <ContentControl Width="20"
