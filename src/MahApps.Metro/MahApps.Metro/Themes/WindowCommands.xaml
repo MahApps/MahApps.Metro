@@ -8,12 +8,12 @@
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Opacity="0.5"
                                        Content="{TemplateBinding Content}"
                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                       Opacity="0.5"
                                        RecognizesAccessKey="True"
                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
@@ -30,12 +30,12 @@
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Opacity="0.5"
                                        Content="{TemplateBinding Content}"
                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                       Opacity="0.5"
                                        RecognizesAccessKey="True"
                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
@@ -53,8 +53,8 @@
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground" Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="8 0 8 0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource GrayBrush4}" />
@@ -103,18 +103,15 @@
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="LightTemplate" Value="{StaticResource LightWindowCommandsTemplate}" />
-        <Setter Property="Template" Value="{StaticResource LightWindowCommandsTemplate}" />
-        <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type Controls:WindowCommandsItem}">
-                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="IsTabStop" Value="False" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
@@ -130,8 +127,8 @@
                                                Width="1"
                                                Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                                                Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                               Opacity="0.25"
                                                IsHitTestVisible="False"
+                                               Opacity="0.25"
                                                SnapsToDevicePixels="True"
                                                UseLayoutRounding="True" />
                                 </StackPanel>
@@ -153,6 +150,9 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="LightTemplate" Value="{StaticResource LightWindowCommandsTemplate}" />
+        <Setter Property="Template" Value="{StaticResource LightWindowCommandsTemplate}" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />

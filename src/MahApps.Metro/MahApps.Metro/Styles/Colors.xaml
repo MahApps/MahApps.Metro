@@ -1,26 +1,26 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     mc:Ignorable="options">
 
-    <!-- *************COLORS START************* -->
+    <!--  *************COLORS START*************  -->
 
-    <!-- Theme Base Colors -->
+    <!--  Theme Base Colors  -->
 
-    <!--ACCENT COLORS-->
+    <!--  ACCENT COLORS  -->
     <Color x:Key="HighlightColor">#FF086F9E</Color>
     <Color x:Key="AccentBaseColor">#FF119EDA</Color>
-    <!--80%-->
+    <!--  80%  -->
     <Color x:Key="AccentColor">#CC119EDA</Color>
-    <!--60%-->
+    <!--  60%  -->
     <Color x:Key="AccentColor2">#99119EDA</Color>
-    <!--40%-->
+    <!--  40%  -->
     <Color x:Key="AccentColor3">#66119EDA</Color>
-    <!--20%-->
+    <!--  20%  -->
     <Color x:Key="AccentColor4">#33119EDA</Color>
 
-    <!--BASE COLORS-->
+    <!--  BASE COLORS  -->
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
     <Color x:Key="Gray1">#FF333333</Color>
@@ -34,16 +34,16 @@
     <Color x:Key="Gray9">#5EC9C9C9</Color>
     <Color x:Key="Gray10">#FFF7F7F7</Color>
 
-    <!-- CORE CONTROL COLORS-->
+    <!--  CORE CONTROL COLORS  -->
     <Color x:Key="ProgressIndeterminateColor1">#33878787</Color>
     <Color x:Key="ProgressIndeterminateColor2">#33959595</Color>
     <Color x:Key="ProgressIndeterminateColor3">#4C000000</Color>
     <Color x:Key="ProgressIndeterminateColor4">#4C000000</Color>
 
-    <!-- *************BRUSHES START************* -->
-    <!--PROJECT TEMPLATE BRUSHES -->
+    <!--  *************BRUSHES START*************  -->
+    <!--  PROJECT TEMPLATE BRUSHES  -->
 
-    <!-- UNIVERSAL CONTROL BRUSHES -->
+    <!--  UNIVERSAL CONTROL BRUSHES  -->
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
@@ -97,9 +97,9 @@
 
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource Gray6}" options:Freeze="True" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{StaticResource Gray2}" options:Freeze="True" />
-    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="{StaticResource Gray7}" Offset="0" />
-        <GradientStop Color="{StaticResource WhiteColor}" Offset="1" />
+    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="{StaticResource Gray7}" />
+        <GradientStop Offset="1" Color="{StaticResource WhiteColor}" />
     </LinearGradientBrush>
 
     <!--  obsolete  -->
@@ -107,9 +107,9 @@
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{StaticResource Gray5}" options:Freeze="True" />
 
-    <LinearGradientBrush x:Key="ProgressBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
-        <GradientStop Color="{StaticResource HighlightColor}" Offset="0" />
-        <GradientStop Color="{StaticResource AccentColor3}" Offset="1" />
+    <LinearGradientBrush x:Key="ProgressBrush" StartPoint="1.002,0.5" EndPoint="0.001,0.5">
+        <GradientStop Offset="0" Color="{StaticResource HighlightColor}" />
+        <GradientStop Offset="1" Color="{StaticResource AccentColor3}" />
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
@@ -124,14 +124,14 @@
     <SolidColorBrush x:Key="CleanWindowCloseButtonBackgroundBrush" Color="#EB2F2F" options:Freeze="True" />
     <SolidColorBrush x:Key="CleanWindowCloseButtonPressedBackgroundBrush" Color="#7C0000" options:Freeze="True" />
 
-    <!-- CONTROL VALIDATION BRUSHES -->
+    <!--  CONTROL VALIDATION BRUSHES  -->
     <SolidColorBrush x:Key="ControlsValidationBrush" Color="#FFDB000C" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush1" Color="#052A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush2" Color="#152A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush3" Color="#252A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush4" Color="#352A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush5" Color="#FFDC000C" options:Freeze="True" />
-    <!-- unused -->
+    <!--  unused  -->
     <SolidColorBrush x:Key="ValidationSummaryColor1" Color="#FFDC020D" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationSummaryColor2" Color="#FFCA000C" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationSummaryColor3" Color="#FFFF9298" options:Freeze="True" />
@@ -139,14 +139,14 @@
     <SolidColorBrush x:Key="ValidationSummaryColor5" Color="#DDD43940" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationSummaryFillColor1" Color="#59F7D8DB" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationSummaryFillColor2" Color="#FFF7D8DB" options:Freeze="True" />
-    <!-- validation text foreground always white -->
+    <!--  validation text foreground always white  -->
     <SolidColorBrush x:Key="ValidationTextBrush" Color="White" options:Freeze="True" />
 
-    <!-- WPF default colors -->
+    <!--  WPF default colors  -->
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{StaticResource BlackColor}" options:Freeze="True" />
 
-    <!-- menu default colors -->
+    <!--  menu default colors  -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
@@ -162,7 +162,7 @@
     <SolidColorBrush x:Key="TopMenuItemPressedStroke" Color="#E0717070" options:Freeze="True" />
     <SolidColorBrush x:Key="TopMenuItemSelectionStroke" Color="#90717070" options:Freeze="True" />
 
-    <!-- original #FF9A9A9A" -->
+    <!--  original #FF9A9A9A"  -->
     <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource Gray2}" options:Freeze="True" />
     <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" options:Freeze="True" />
 
@@ -175,7 +175,7 @@
 
     <Color x:Key="IdealForegroundColor">Black</Color>
 
-    <!-- DataGrid brushes -->
+    <!--  DataGrid brushes  -->
 
     <SolidColorBrush x:Key="MetroDataGrid.HighlightBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
@@ -199,7 +199,7 @@
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10" Color="#FFFFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10" Color="#FF999999" options:Freeze="True" />
 
-    <!-- HamburgerMenu -->
+    <!--  HamburgerMenu  -->
 
     <SolidColorBrush x:Key="MahApps.Metro.HamburgerMenu.PaneBackgroundBrush" Color="#FF444444" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.HamburgerMenu.PaneForegroundBrush" Color="#FFFFFFFF" options:Freeze="True" />

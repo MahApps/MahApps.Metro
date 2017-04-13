@@ -5,10 +5,10 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -32,46 +32,48 @@
         <StackPanel Grid.Column="0">
             <Label Content="Horizontal Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Slider x:Name="horizSlider"
-                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                    Controls:SliderHelper.ChangeValueBy="LargeChange"
                     Width="200"
-                    Margin="0, 10, 0, 0"
+                    Margin="0 10 0 0"
+                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
                     LargeChange="10"
                     Maximum="100"
                     Minimum="0"
                     SmallChange="1"
                     Value="20" />
             <Slider Width="200"
-                    Margin="0, 10, 0, 0"
+                    Margin="0 10 0 0"
                     Style="{DynamicResource FlatSlider}"
                     Value="50" />
             <Slider Width="200"
-                    Margin="0, 10, 0, 0"
+                    Margin="0 10 0 0"
                     IsEnabled="False" />
             <Slider Width="200"
-                    Margin="0, 10, 0, 0"
+                    Margin="0 10 0 0"
                     IsEnabled="False"
                     Style="{DynamicResource FlatSlider}"
                     Value="50" />
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1">
             <Label Content="Vertical Slider" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <StackPanel Height="200" HorizontalAlignment="Center" Orientation="Horizontal">
+            <StackPanel Height="200"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
                 <Slider Controls:SliderHelper.EnableMouseWheel="MouseHover"
-                        Orientation="Vertical"
                         LargeChange="10"
                         Maximum="100"
                         Minimum="0"
+                        Orientation="Vertical"
                         SmallChange="1"
-                        Value="20"/>
-                <Slider Margin="10, 0, 0, 0"
+                        Value="20" />
+                <Slider Margin="10 0 0 0"
                         Orientation="Vertical"
                         Style="{DynamicResource FlatSlider}"
                         Value="50" />
-                <Slider Margin="10, 0, 0, 0"
+                <Slider Margin="10 0 0 0"
                         IsEnabled="False"
                         Orientation="Vertical" />
-                <Slider Margin="10, 0, 0, 0"
+                <Slider Margin="10 0 0 0"
                         IsEnabled="False"
                         Orientation="Vertical"
                         Style="{DynamicResource FlatSlider}"
@@ -81,6 +83,7 @@
         <StackPanel Grid.Row="0" Grid.Column="2">
             <Label Content="RangeSlider" Style="{DynamicResource DescriptionHeaderStyle}" />
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
                 <Controls:RangeSlider x:Name="RangeSlider"
                                       AutoToolTipPlacement="BottomRight"
                                       AutoToolTipPrecision="2"
@@ -103,11 +106,23 @@
                                       UpperValue="60"
                                       UpperValueChanged="RangeSlider_OnUpperValueChanged" />
                 <StackPanel Width="228"
-                            Margin="5, 0, 0, 0"
+                            Margin="5 0 0 0"
                             Orientation="Vertical">
 
+                    <Controls:RangeSlider Margin="20"
+                                          AutoToolTipPlacement="BottomRight"
+                                          IsSnapToTickEnabled="True"
+                                          LowerValue="20"
+                                          Maximum="100"
+                                          MinRange="0"
+                                          MinRangeWidth="0"
+                                          Minimum="0"
+                                          TickFrequency="5"
+                                          TickPlacement="BottomRight"
+                                          UpperValue="80" />
+
                     <Controls:RangeSlider x:Name="RangeSlider1"
-                                          Margin="0,0,0,20"
+                                          Margin="0 0 0 20"
                                           AutoToolTipPlacement="BottomRight"
                                           AutoToolTipPrecision="2"
                                           CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
@@ -137,18 +152,18 @@
                                           UpperValueChanged="RangeSlider_OnUpperValueChanged" />
 
                     <Controls:RangeSlider Name="RangeSlider2"
-                                          Margin="0,0,0,20"
+                                          Margin="0 0 0 20"
                                           AutoToolTipPlacement="TopLeft"
                                           LowerValue="20"
                                           Maximum="610"
                                           TickPlacement="Both"
                                           UpperValue="360" />
 
-                    <Controls:RangeSlider Margin="0,0,0,20"
+                    <Controls:RangeSlider Margin="0 0 0 20"
                                           IsEnabled="False"
                                           TickPlacement="Both" />
                     <Controls:RangeSlider Height="20"
-                                          Margin="0,0,0,20"
+                                          Margin="0 0 0 20"
                                           IsEnabled="False"
                                           LowerValue="20"
                                           UpperValue="60" />
@@ -160,33 +175,33 @@
         <StackPanel Grid.Row="1" Grid.Column="0">
             <Label Content="ProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
             <ProgressBar Width="200"
-                         Margin="0, 10, 0, 0"
+                         Margin="0 10 0 0"
                          Maximum="100"
                          Minimum="0"
                          Value="{Binding ElementName=horizSlider, Path=Value}" />
             <ProgressBar Width="200"
-                         Margin="0, 10, 0, 0"
+                         Margin="0 10 0 0"
                          Value="50" />
             <ProgressBar Width="200"
-                         Margin="0, 10, 0, 0"
+                         Margin="0 10 0 0"
                          IsIndeterminate="True"
                          Value="100" />
 
             <Label Content="MetroProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:MetroProgressBar Width="200"
-                                       Margin="0, 10, 0, 0"
+                                       Margin="0 10 0 0"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        Maximum="100"
                                        Minimum="0"
                                        Value="{Binding ElementName=horizSlider, Path=Value}" />
             <CheckBox Width="200"
-                      Margin="0, 10, 0, 0"
+                      Margin="0 10 0 0"
                       Content="IsIndeterminate"
                       IsChecked="{Binding ElementName=IsIndeterminatePB, Path=IsIndeterminate, UpdateSourceTrigger=PropertyChanged}"
                       Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
             <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
                                        Width="200"
-                                       Margin="0, 10, 0, 0"
+                                       Margin="0 10 0 0"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        IsIndeterminate="True"
                                        Maximum="100"
@@ -196,7 +211,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Label Content="ProgressRing" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Grid Margin="20, 0, 20, 0">
+            <Grid Margin="20 0 20 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -216,7 +231,7 @@
                    Content="Sliders TickPlacement"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <Slider Width="132"
-                    Margin="122,39,0,0"
+                    Margin="122 39 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     IsSnapToTickEnabled="True"
@@ -224,21 +239,21 @@
                     TickFrequency="25"
                     TickPlacement="Both" />
             <Slider Width="132"
-                    Margin="122,112,0,0"
+                    Margin="122 112 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     TickFrequency="25"
                     TickPlacement="BottomRight"
                     Value="50" />
             <Slider Width="132"
-                    Margin="122,207,0,0"
+                    Margin="122 207 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     TickFrequency="25"
                     TickPlacement="TopLeft"
                     Value="50" />
             <Slider Height="113"
-                    Margin="10,44,0,0"
+                    Margin="10 44 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     Orientation="Vertical"
@@ -247,7 +262,7 @@
                     TickPlacement="Both"
                     Value="50" />
             <Slider Height="113"
-                    Margin="27,44,0,0"
+                    Margin="27 44 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     Orientation="Vertical"
@@ -255,7 +270,7 @@
                     TickPlacement="BottomRight"
                     Value="50" />
             <Slider Height="113"
-                    Margin="70,44,0,0"
+                    Margin="70 44 0 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="top"
                     Orientation="Vertical"

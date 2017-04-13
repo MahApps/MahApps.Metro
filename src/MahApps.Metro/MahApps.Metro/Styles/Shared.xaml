@@ -13,55 +13,55 @@
                      Exponent="2" />
 
     <DropShadowEffect x:Key="WaitingForDataEffect"
-                      Opacity="0"
                       BlurRadius="10"
+                      Opacity="0"
                       ShadowDepth="0"
                       Color="{DynamicResource BlackColor}" />
 
     <Storyboard x:Key="WaitingForDataStoryboard" po:Freeze="True">
         <DoubleAnimation AutoReverse="True"
-                         Duration="00:00:02"
-                         From="0"
                          RepeatBehavior="Forever"
+                         Timeline.DesiredFrameRate="30"
                          Storyboard.TargetName="PART_WaitingForDataEffectGrid"
                          Storyboard.TargetProperty="(Effect).Opacity"
-                         Timeline.DesiredFrameRate="30"
-                         To="1" />
+                         From="0"
+                         To="1"
+                         Duration="00:00:02" />
     </Storyboard>
 
     <Storyboard x:Key="HideFloatingMessageStoryboard">
-        <DoubleAnimation Duration="0:0:.2"
-                         From="15"
-                         EasingFunction="{StaticResource ExpoEaseInOut}"
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="MaxHeight"
-                         To="0" />
-        <DoubleAnimation Duration="0:0:.2"
-                         Storyboard.TargetName="PART_FloatingMessageContainer"
+                         From="15"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="Opacity"
-                         To="0" />
-        <DoubleAnimation Duration="0:0:.2"
-                         EasingFunction="{StaticResource ExpoEaseIn}"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseIn}"
                          Storyboard.TargetName="PART_FloatingMessage"
                          Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                         To="20" />
+                         To="20"
+                         Duration="0:0:.2" />
     </Storyboard>
 
     <Storyboard x:Key="ShowFloatingMessageStoryboard">
-        <DoubleAnimation Duration="0:0:.2"
-                         From="0"
-                         EasingFunction="{StaticResource ExpoEaseInOut}"
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="MaxHeight"
-                         To="15" />
-        <DoubleAnimation Duration="0:0:.2"
-                         Storyboard.TargetName="PART_FloatingMessageContainer"
-                         Storyboard.TargetProperty="Opacity" />
-        <DoubleAnimation Duration="0:0:.2"
-                         EasingFunction="{StaticResource ExpoEaseOut}"
+                         From="0"
+                         To="15"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_FloatingMessageContainer"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseOut}"
                          Storyboard.TargetName="PART_FloatingMessage"
                          Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                         To="0" />
+                         To="0"
+                         Duration="0:0:.2" />
     </Storyboard>
 
 </ResourceDictionary>

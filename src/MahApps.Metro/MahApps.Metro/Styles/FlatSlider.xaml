@@ -62,31 +62,31 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
-                     Style="{StaticResource SliderTickBarStyle}"
-                     Placement="Top" />
+                     Placement="Top"
+                     Style="{StaticResource SliderTickBarStyle}" />
             <Track x:Name="PART_Track" Grid.Row="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Style="{StaticResource SliderButtonStyle}"
                                   Background="{TemplateBinding Slider.Foreground}"
-                                  Command="Slider.DecreaseLarge" />
+                                  Command="Slider.DecreaseLarge"
+                                  Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Width="{TemplateBinding Slider.Height}"
                                          Height="{TemplateBinding Slider.Height}"
-                                         Style="{StaticResource SliderThumbStyle}"
-                                         Background="{TemplateBinding Slider.BorderBrush}" />
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Style="{StaticResource SliderButtonStyle}"
                                   Background="{TemplateBinding Slider.Background}"
-                                  Command="Slider.IncreaseLarge" />
+                                  Command="Slider.IncreaseLarge"
+                                  Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <TickBar x:Name="BottomTick"
-                     Style="{StaticResource SliderTickBarStyle}"
-                     Placement="Bottom" />
+                     Placement="Bottom"
+                     Style="{StaticResource SliderTickBarStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
@@ -110,31 +110,31 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
-                     Style="{StaticResource SliderTickBarStyle}"
-                     Placement="Left" />
+                     Placement="Left"
+                     Style="{StaticResource SliderTickBarStyle}" />
             <Track x:Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Style="{StaticResource SliderButtonStyle}"
                                   Background="{TemplateBinding Slider.Foreground}"
-                                  Command="Slider.DecreaseLarge" />
+                                  Command="Slider.DecreaseLarge"
+                                  Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Width="{TemplateBinding Slider.Width}"
                                          Height="{TemplateBinding Slider.Width}"
-                                         Style="{StaticResource SliderThumbStyle}"
-                                         Background="{TemplateBinding Slider.BorderBrush}" />
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Style="{StaticResource SliderButtonStyle}"
                                   Background="{TemplateBinding Slider.Background}"
-                                  Command="Slider.IncreaseLarge" />
+                                  Command="Slider.IncreaseLarge"
+                                  Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <TickBar x:Name="BottomTick"
-                     Style="{StaticResource SliderTickBarStyle}"
-                     Placement="Right" />
+                     Placement="Right"
+                     Style="{StaticResource SliderTickBarStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
@@ -151,9 +151,9 @@
     </ControlTemplate>
 
     <Style x:Key="FlatSlider" TargetType="{x:Type Slider}">
-        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Orientation" Value="Horizontal" />

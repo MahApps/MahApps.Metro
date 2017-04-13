@@ -19,7 +19,6 @@
            BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -52,10 +51,10 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false" />
+                                      SnapsToDevicePixels="false"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
                                                        Margin="0 4 0 0"
@@ -88,13 +87,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
     <Style x:Key="ExpanderUpHeaderStyle"
            BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -126,10 +125,10 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false" />
+                                      SnapsToDevicePixels="false"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Column="1"
                                                        Margin="4 0 0 0"
@@ -162,6 +161,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="ExpanderLeftHeaderStyle"
@@ -198,10 +198,10 @@
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
-                                      Stroke="{TemplateBinding Foreground}"
-                                      StrokeThickness="2"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                      SnapsToDevicePixels="false" />
+                                      SnapsToDevicePixels="false"
+                                      Stroke="{TemplateBinding Foreground}"
+                                      StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
                                                        Margin="0 4 0 0"
@@ -260,10 +260,10 @@
                             <Path x:Name="Arrow"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Stroke="{TemplateBinding Foreground}"
-                                  StrokeThickness="2"
                                   Data="M 1,1.5 L 4.5,5 L 8,1.5"
-                                  SnapsToDevicePixels="false" />
+                                  SnapsToDevicePixels="false"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="2" />
                             <Controls:ContentControlEx Grid.Column="1"
                                                        Margin="4 0 0 0"
                                                        Padding="{TemplateBinding Padding}"
@@ -298,27 +298,26 @@
     </Style>
 
     <Storyboard x:Key="MetroExpanderExpandStoryboard">
-        <DoubleAnimation Duration="0:0:0.25"
-                         Storyboard.TargetName="ExpandSite"
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                         To="1" />
+                         To="1"
+                         Duration="0:0:0.25" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MetroExpanderCollapseStoryboard">
-        <DoubleAnimation Duration="0:0:0.25"
-                         Storyboard.TargetName="ExpandSite"
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                         To="0" />
+                         To="0"
+                         Duration="0:0:0.25" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
     <Style x:Key="MetroExpander" TargetType="{x:Type Expander}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -329,6 +328,7 @@
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource ExpanderRightHeaderStyle}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource ExpanderUpHeaderStyle}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -337,8 +337,8 @@
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   Opacity="0"
-                                   IsHitTestVisible="false" />
+                                   IsHitTestVisible="false"
+                                   Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
                             <Border x:Name="HeaderSite"
                                     Background="{TemplateBinding Background}"
@@ -348,25 +348,25 @@
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True">
                                 <ToggleButton x:Name="ToggleSite"
-                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}"
-                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                               Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                               Content="{TemplateBinding Header}"
                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                               IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}"
                                               UseLayoutRounding="False">
                                     <ToggleButton.Foreground>
                                         <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                            <Binding Mode="OneWay"
                                                      Path="Background"
-                                                     Mode="OneWay" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Mode="OneWay"
                                                      Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                                     Mode="OneWay" />
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ToggleButton.Foreground>
                                 </ToggleButton>
@@ -377,9 +377,9 @@
                                     Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Top}}"
-                                    Opacity="0"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
+                                    Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True"
                                     Visibility="Collapsed">
@@ -410,7 +410,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />

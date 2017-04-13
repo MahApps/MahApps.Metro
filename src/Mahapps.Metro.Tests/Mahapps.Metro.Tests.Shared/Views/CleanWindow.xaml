@@ -4,11 +4,11 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      d:DesignHeight="300"
+                      d:DesignWidth="300"
                       ResizeMode="CanResizeWithGrip"
                       Style="{DynamicResource CleanWindowStyleKey}"
-                      mc:Ignorable="d"
-                      d:DesignHeight="300"
-                      d:DesignWidth="300">
+                      mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

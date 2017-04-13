@@ -5,9 +5,9 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      mc:Ignorable="d"
                       d:DesignHeight="300"
-                      d:DesignWidth="300">
+                      d:DesignWidth="300"
+                      mc:Ignorable="d">
     <controls:MetroWindow.Resources>
         <dialogs:CustomDialog x:Key="CustomDialog">
             <TextBlock x:Name="TheDialogBody" Text="{Binding Path=Text}" />
