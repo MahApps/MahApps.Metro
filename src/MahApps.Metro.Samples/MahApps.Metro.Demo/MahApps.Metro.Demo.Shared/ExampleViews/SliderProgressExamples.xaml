@@ -83,6 +83,7 @@
         <StackPanel Grid.Row="0" Grid.Column="2">
             <Label Content="RangeSlider" Style="{DynamicResource DescriptionHeaderStyle}" />
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
                 <Controls:RangeSlider x:Name="RangeSlider"
                                       AutoToolTipPlacement="BottomRight"
                                       AutoToolTipPrecision="2"
@@ -107,6 +108,18 @@
                 <StackPanel Width="228"
                             Margin="5 0 0 0"
                             Orientation="Vertical">
+
+                    <Controls:RangeSlider Margin="20"
+                                          AutoToolTipPlacement="BottomRight"
+                                          IsSnapToTickEnabled="True"
+                                          LowerValue="20"
+                                          Maximum="100"
+                                          MinRange="0"
+                                          MinRangeWidth="0"
+                                          Minimum="0"
+                                          TickFrequency="5"
+                                          TickPlacement="BottomRight"
+                                          UpperValue="80" />
 
                     <Controls:RangeSlider x:Name="RangeSlider1"
                                           Margin="0 0 0 20"
