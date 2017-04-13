@@ -15,7 +15,7 @@ using System.Windows.Markup;
 [assembly: AssemblyDescription("A toolkit for creating Metro / Modern UI styled WPF apps.")]
 [assembly: AssemblyCompany("MahApps")]
 
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
-[assembly: AssemblyInformationalVersion("1.5.0.0")]
+[assembly: AssemblyVersion("1.5.0.23")]
+[assembly: AssemblyFileVersion("1.5.0.23")]
+[assembly: AssemblyInformationalVersion("1.5.0.23")]
 [assembly: AssemblyProduct("MahApps.Metro 1.5.0")]
