@@ -34,7 +34,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.StatusBar.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToggleSwitch.xaml" />
-        
+
         <!--  Theme styles with keys  -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -49,28 +49,28 @@
     </Style>
 
     <Style x:Key="PathIconContentControlStyle" TargetType="{x:Type ContentControl}">
-        <Setter Property="Height" Value="16" />
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Padding" Value="0" />
         <Setter Property="FlowDirection" Value="LeftToRight" />
+        <Setter Property="Height" Value="16" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="False" />
-        <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                    <Viewbox Margin="{TemplateBinding Padding}">
-                        <Path Fill="{TemplateBinding Foreground}"
+                    <Viewbox Margin="{TemplateBinding Padding}" UseLayoutRounding="True">
+                        <Path Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                              Fill="{TemplateBinding Foreground}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               Stretch="Uniform"
-                              Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
-                              SnapsToDevicePixels="False"
                               UseLayoutRounding="False" />
                     </Viewbox>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Width" Value="16" />
     </Style>
 
     <!--  note: default style for textblock is now in MetroWindow !!!  -->
@@ -93,7 +93,6 @@
     <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MetroComboBox}" TargetType="ComboBox" />
     <Style BasedOn="{StaticResource MetroComboBoxItem}" TargetType="ComboBoxItem" />
-    <!--    <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />-->
     <Style BasedOn="{StaticResource MetroMenuItem}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MetroMenu}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MetroContextMenu}" TargetType="ContextMenu" />

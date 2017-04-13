@@ -13,23 +13,22 @@
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="PART_BackButton"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
                     Width="34"
                     Height="34"
                     Margin="2 4 2 2"
                     VerticalAlignment="Bottom"
-                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
-                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
                     DockPanel.Dock="Left"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}"
+                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}">
-                <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
+                <ContentControl Width="20"
+                                Height="20"
                                 Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                                Width="20"
-                                Height="20" />
+                                FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=FlowDirection}"
+                                Style="{DynamicResource PathIconContentControlStyle}" />
             </Button>
             <TextBlock x:Name="PART_BackHeaderText"
                        Margin="15 0 0 0"
@@ -39,14 +38,14 @@
         </DockPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Left">
-                <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
-                <Setter TargetName="PART_BackHeaderText" Property="TextAlignment" Value="Right" />
                 <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
                     <Setter.Value>
                         <ScaleTransform ScaleX="-1" />
                     </Setter.Value>
                 </Setter>
+                <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
+                <Setter TargetName="PART_BackHeaderText" Property="TextAlignment" Value="Right" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Top">
                 <Setter TargetName="PART_BackButton" Property="LayoutTransform">
@@ -66,22 +65,26 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="FlyoutTemplate" TargetType="{x:Type Controls:Flyout}">
-        <Grid x:Name="PART_Root"
-              Background="{TemplateBinding Background}">
-            <Grid.RenderTransform>
+        <Border x:Name="PART_Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Border.RenderTransform>
                 <TranslateTransform />
-            </Grid.RenderTransform>
+            </Border.RenderTransform>
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
                     <Controls:MetroThumbContentControl x:Name="PART_Header"
-                                                       DockPanel.Dock="Top"
                                                        Padding="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                        Content="{TemplateBinding Header}"
-                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       DockPanel.Dock="Top"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
@@ -185,7 +188,7 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-        </Grid>
+        </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="Position" Value="Top">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
@@ -213,18 +216,19 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
-        <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource FlyoutHeaderFontSize}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
         <Setter Property="Template" Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
         <Style.Triggers>
             <Trigger Property="Position" Value="Right">

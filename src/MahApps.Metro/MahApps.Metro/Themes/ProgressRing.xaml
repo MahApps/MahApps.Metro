@@ -6,12 +6,10 @@
         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MinHeight" Value="20" />
         <Setter Property="MinWidth" Value="20" />
-        <Setter Property="Width" Value="60" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:ProgressRing">
@@ -41,8 +39,8 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                             <Canvas RenderTransformOrigin=".5,.5">
                                 <Canvas.RenderTransform>
@@ -52,8 +50,8 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                             <Canvas RenderTransformOrigin=".5,.5">
                                 <Canvas.RenderTransform>
@@ -63,8 +61,8 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                             <Canvas RenderTransformOrigin=".5,.5">
                                 <Canvas.RenderTransform>
@@ -74,8 +72,8 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                             <Canvas RenderTransformOrigin=".5,.5">
                                 <Canvas.RenderTransform>
@@ -85,8 +83,8 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                             <Canvas x:Name="SixthCircle"
                                     RenderTransformOrigin=".5,.5"
@@ -98,17 +96,17 @@
                                          Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                          Margin="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Style="{StaticResource ProgressRingEllipseStyle}"
-                                         Fill="{TemplateBinding Foreground}" />
+                                         Fill="{TemplateBinding Foreground}"
+                                         Style="{StaticResource ProgressRingEllipseStyle}" />
                             </Canvas>
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SizeStates">
                                 <VisualState x:Name="Large">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0"
-                                                                       Storyboard.TargetName="SixthCircle"
-                                                                       Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SixthCircle"
+                                                                       Storyboard.TargetProperty="Visibility"
+                                                                       Duration="0">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
@@ -123,9 +121,9 @@
                                 <VisualState x:Name="Inactive" />
                                 <VisualState x:Name="Active">
                                     <Storyboard RepeatBehavior="Forever">
-                                        <ObjectAnimationUsingKeyFrames Duration="0"
-                                                                       Storyboard.TargetName="Ring"
-                                                                       Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Ring"
+                                                                       Storyboard.TargetProperty="Visibility"
+                                                                       Duration="0">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
@@ -314,5 +312,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Width" Value="60" />
     </Style>
 </ResourceDictionary>

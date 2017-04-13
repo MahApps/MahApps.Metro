@@ -19,7 +19,7 @@
     </Window.Resources>
 
     <DockPanel>
-        <Menu Margin="2,0,0,0"
+        <Menu Margin="2 0 0 0"
               DockPanel.Dock="Top"
               SnapsToDevicePixels="True">
             <MenuItem Header="ROCKETS">
@@ -62,7 +62,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
-            <TabControl Margin="0,10,0,0" TabStripPlacement="Top">
+            <TabControl Margin="0 10 0 0" TabStripPlacement="Top">
                 <TabItem Header="Start">
                     <Grid Margin="50">
                         <Grid.RowDefinitions>
@@ -375,31 +375,31 @@
                     </ListBox>
                 </TabItem>
             </TabControl>
-            <StackPanel Grid.Column="1" Margin="50,25,25,0">
-                <TextBlock Margin="0,10,0,10"
+            <StackPanel Grid.Column="1" Margin="50 25 25 0">
+                <TextBlock Margin="0 10 0 10"
                            FontSize="18"
                            Foreground="{StaticResource Foreground}"
                            Text="Actions" />
                 <Separator Background="#11FFFFFF" />
-                <Button Margin="0,10,0,3"
+                <Button Margin="0 10 0 3"
                         Content="Fire rocket..."
                         FontSize="14"
                         Style="{StaticResource LinkButton}" />
-                <Button Margin="0,3,0,10"
+                <Button Margin="0 3 0 10"
                         Content="Throw something over board..."
                         FontSize="14"
                         Style="{StaticResource LinkButton}" />
                 <Separator Background="#11FFFFFF" />
-                <TextBlock Margin="0,10,0,10"
+                <TextBlock Margin="0 10 0 10"
                            FontSize="18"
                            Foreground="{StaticResource Foreground}"
                            Text="Recent" />
                 <Separator Background="#11FFFFFF" />
-                <Button Margin="0,10,0,3"
+                <Button Margin="0 10 0 3"
                         Content="blastallenemies.cmd"
                         FontSize="14"
                         Style="{StaticResource LinkButton}" />
-                <Button Margin="0,3,0,3"
+                <Button Margin="0 3 0 3"
                         Content="verysecretmessage.txt"
                         FontSize="14"
                         Style="{StaticResource LinkButton}" />

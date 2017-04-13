@@ -41,8 +41,8 @@
                                   Height="256"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Fill="{DynamicResource GrayBrush3}"
                                   Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=OneWay}"
+                                  Fill="{DynamicResource GrayBrush3}"
                                   Stretch="Uniform" />
                         </Viewbox>
                     </Grid>
@@ -92,18 +92,18 @@
                     <Grid x:Name="ThumbVisual">
                         <Rectangle x:Name="Background"
                                    Fill="{TemplateBinding Background}"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="MouseOverRectangle"
                                    Fill="{DynamicResource BlackBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
                                    Opacity="0"
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="PressedRectangle"
                                    Fill="{DynamicResource BlackBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
                                    Opacity="0"
-                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -133,31 +133,31 @@
             </Grid.ColumnDefinitions>
             <RepeatButton x:Name="HorizontalSmallDecrease"
                           Grid.Column="0"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineLeftCommand"
-                          Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z" />
+                          Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z"
+                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
             <Track x:Name="PART_Track"
                    Grid.Column="1"
                    IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeDecrease"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}"
-                                  Command="ScrollBar.PageLeftCommand" />
+                                  Command="ScrollBar.PageLeftCommand"
+                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MetroScrollBarThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeIncrease"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}"
-                                  Command="ScrollBar.PageRightCommand" />
+                                  Command="ScrollBar.PageRightCommand"
+                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="HorizontalSmallIncrease"
                           Grid.Column="2"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineRightCommand"
-                          Content="M192,79.875L352,239.875 192,399.875 192,79.875z" />
+                          Content="M192,79.875L352,239.875 192,399.875 192,79.875z"
+                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -175,9 +175,9 @@
             </Grid.RowDefinitions>
             <RepeatButton x:Name="VerticalSmallDecrease"
                           Grid.Row="0"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineUpCommand"
-                          Content="M240.125,160L400.125,320 80.125,320 240.125,160z" />
+                          Content="M240.125,160L400.125,320 80.125,320 240.125,160z"
+                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="True">
@@ -186,23 +186,23 @@
                 </Track.Resources>
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeDecrease"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}"
-                                  Command="ScrollBar.PageUpCommand" />
+                                  Command="ScrollBar.PageUpCommand"
+                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MetroScrollBarThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeIncrease"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}"
-                                  Command="ScrollBar.PageDownCommand" />
+                                  Command="ScrollBar.PageDownCommand"
+                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="VerticalSmallIncrease"
                           Grid.Row="2"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineDownCommand"
-                          Content="M80.125,192L400.125,192 240.125,352 80.125,192z" />
+                          Content="M80.125,192L400.125,192 240.125,352 80.125,192z"
+                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">

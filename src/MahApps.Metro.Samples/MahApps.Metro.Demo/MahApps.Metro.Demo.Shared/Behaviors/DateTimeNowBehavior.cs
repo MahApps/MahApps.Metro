@@ -5,7 +5,7 @@
     using System.Windows.Threading;
     using MahApps.Metro.Controls;
 
-    internal class DateTimeNowBehavior : Behavior<DateTimePicker>
+    public class DateTimeNowBehavior : Behavior<DateTimePicker>
     {
         private DispatcherTimer _dispatcherTimer;
 

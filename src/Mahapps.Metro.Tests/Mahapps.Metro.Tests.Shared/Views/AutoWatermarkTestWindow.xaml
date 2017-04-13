@@ -13,10 +13,20 @@
         <tests:AutoWatermarkTestModel />
     </controls:MetroWindow.DataContext>
     <StackPanel>
-        <TextBox x:Name="TestTextBox" Text="{Binding TextBoxText}" controls:TextBoxHelper.AutoWatermark="True" />
-        <TextBox x:Name="TestTextBoxSubModel" Text="{Binding SubModel.TextBoxText}" controls:TextBoxHelper.AutoWatermark="True" />
-        <ComboBox x:Name="TestComboBox" SelectedItem="{Binding ComboBoxSelectedObject}" controls:TextBoxHelper.AutoWatermark="True" />
-        <controls:NumericUpDown x:Name="TestNumericUpDown" Value="{Binding NumericUpDownValue}" controls:TextBoxHelper.AutoWatermark="True" />
-        <DatePicker x:Name="TestDatePicker" SelectedDate="{Binding DatePickerDate}" controls:TextBoxHelper.AutoWatermark="True" />
+        <TextBox x:Name="TestTextBox"
+                 controls:TextBoxHelper.AutoWatermark="True"
+                 Text="{Binding TextBoxText}" />
+        <TextBox x:Name="TestTextBoxSubModel"
+                 controls:TextBoxHelper.AutoWatermark="True"
+                 Text="{Binding SubModel.TextBoxText}" />
+        <ComboBox x:Name="TestComboBox"
+                  controls:TextBoxHelper.AutoWatermark="True"
+                  SelectedItem="{Binding ComboBoxSelectedObject}" />
+        <controls:NumericUpDown x:Name="TestNumericUpDown"
+                                controls:TextBoxHelper.AutoWatermark="True"
+                                Value="{Binding NumericUpDownValue}" />
+        <DatePicker x:Name="TestDatePicker"
+                    controls:TextBoxHelper.AutoWatermark="True"
+                    SelectedDate="{Binding DatePickerDate}" />
     </StackPanel>
 </controls:MetroWindow>

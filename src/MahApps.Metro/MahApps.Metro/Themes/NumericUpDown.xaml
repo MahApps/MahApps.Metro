@@ -10,26 +10,24 @@
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <Style TargetType="{x:Type Controls:NumericUpDown}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="UpDownButtonsWidth" Value="22" />
-        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
-        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource ClearTextButtonFontSize}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource ClearTextButtonFontSize}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Right" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="MinWidth" Value="62" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
@@ -47,34 +45,35 @@
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Column="0"
-                                     Margin="0 0 -2 0"
                                      MinWidth="20"
                                      MinHeight="{TemplateBinding MinHeight}"
+                                     Margin="0 0 -2 0"
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                     Background="{x:Null}"
-                                     Foreground="{TemplateBinding Foreground}"
-                                     BorderThickness="0"
-                                     FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
-                                     Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                      Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                      Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                      Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
                                      Controls:TextBoxHelper.ButtonFontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
+                                     Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                      Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
                                      Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
-                                     Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
-                                     Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                     Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                                      Controls:TextBoxHelper.HasText="{TemplateBinding Controls:TextBoxHelper.HasText}"
+                                     Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
+                                     Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
+                                     Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                     Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                     Background="{x:Null}"
+                                     BorderThickness="0"
                                      FocusVisualStyle="{x:Null}"
+                                     Focusable="{TemplateBinding Focusable}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     Foreground="{TemplateBinding Foreground}"
                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      IsTabStop="{TemplateBinding IsTabStop}"
-                                     Focusable="{TemplateBinding Focusable}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      TabIndex="{TemplateBinding TabIndex}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
@@ -82,15 +81,15 @@
                                           Grid.Column="1"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 0 2"
-                                          Style="{DynamicResource ChromelessButtonStyle}"
-                                          Foreground="{TemplateBinding Foreground}"
                                           Delay="{TemplateBinding Delay}"
-                                          IsTabStop="False">
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsTabStop="False"
+                                          Style="{DynamicResource ChromelessButtonStyle}">
                                 <Path x:Name="PolygonUp"
                                       Width="14"
                                       Height="14"
-                                      Fill="{DynamicResource GrayBrush1}"
                                       Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "
+                                      Fill="{DynamicResource GrayBrush1}"
                                       Stretch="Fill" />
                             </RepeatButton>
                             <RepeatButton x:Name="PART_NumericDown"
@@ -98,15 +97,15 @@
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 2 2"
                                           VerticalContentAlignment="Center"
-                                          Style="{DynamicResource ChromelessButtonStyle}"
-                                          Foreground="{TemplateBinding Foreground}"
                                           Delay="{TemplateBinding Delay}"
-                                          IsTabStop="False">
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsTabStop="False"
+                                          Style="{DynamicResource ChromelessButtonStyle}">
                                 <Path x:Name="PolygonDown"
                                       Width="14"
                                       Height="3"
-                                      Fill="{DynamicResource GrayBrush1}"
                                       Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "
+                                      Fill="{DynamicResource GrayBrush1}"
                                       Stretch="Fill" />
                             </RepeatButton>
                         </Grid>
@@ -114,8 +113,8 @@
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Opacity="0"
                                 IsHitTestVisible="False"
+                                Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                     </Grid>
@@ -174,5 +173,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="UpDownButtonsWidth" Value="22" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
     </Style>
 </ResourceDictionary>

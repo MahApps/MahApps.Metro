@@ -12,12 +12,16 @@
            BasedOn="{StaticResource MetroCheckBox}"
            TargetType="CheckBox">
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="True">
-                <Setter Property="IsHitTestVisible" Value="False" />
                 <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsEditing, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="False">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -27,8 +31,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Rectangle x:Name="Border"
-                                   Fill="{DynamicResource GrayBrush7}" />
+                        <Rectangle x:Name="Border" Fill="{DynamicResource GrayBrush7}" />
                         <Polygon x:Name="Arrow"
                                  Margin="8 8 3 3"
                                  HorizontalAlignment="Right"
@@ -59,10 +62,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border Margin="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Background="Transparent"
                             BorderBrush="{TemplateBinding Background}"
-                            BorderThickness="0 0 1 0" />
+                            BorderThickness="0 0 1 0"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -78,25 +81,24 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border Margin="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Background="Transparent"
                             BorderBrush="{TemplateBinding Background}"
-                            BorderThickness="0 0 0 1" />
+                            BorderThickness="0 0 0 1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style x:Key="MetroDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="MinWidth" Value="0" />
@@ -141,8 +143,8 @@
 
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left"
-                               Style="{StaticResource MetroColumnHeaderGripperStyle}"
-                               Background="Transparent" />
+                               Background="Transparent"
+                               Style="{StaticResource MetroColumnHeaderGripperStyle}" />
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
@@ -166,6 +168,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -199,23 +202,23 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   RecognizesAccessKey="True"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Control Grid.Column="1"
-                                         SnapsToDevicePixels="False"
                                          Focusable="False"
+                                         SnapsToDevicePixels="False"
                                          Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
                                          Visibility="{Binding (Validation.HasError), Converter={StaticResource bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
                             </Grid>
                         </Border>
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalAlignment="Top"
-                               Style="{StaticResource MetroRowHeaderGripperStyle}"
-                               Background="Transparent" />
+                               Background="Transparent"
+                               Style="{StaticResource MetroRowHeaderGripperStyle}" />
                         <Thumb x:Name="PART_BottomHeaderGripper"
                                VerticalAlignment="Bottom"
                                Style="{StaticResource MetroRowHeaderGripperStyle}" />
@@ -233,11 +236,10 @@
 
     <!--  ____________________ Metro CellStyle ____________________  -->
     <Style x:Key="MetroDataGridCell" TargetType="{x:Type DataGridCell}">
-        <Setter Property="Controls:DataGridCellHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Controls:DataGridCellHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -258,6 +260,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <!--  IsSelected  -->
             <Trigger Property="IsSelected" Value="True">
@@ -342,15 +345,15 @@
               ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.ErrorContent}">
             <Path Width="20"
                   Height="20"
-                  Fill="{DynamicResource ControlsValidationBrush}"
                   Data="m 31.630585,39.233818 24.6309,-24.6308 c 0.6183,-0.6184 1.6208,-0.6184 2.2392,0 l 24.6308,24.6308 c 0.6184,0.6184 0.6184,1.6209 0,2.2392 l -24.6308,24.6309 c -0.6183,0.6183 -1.6209,0.6183 -2.2392,0 l -24.6309,-24.6309 c -0.6183,-0.6183 -0.6183,-1.6208 0,-2.2392 z"
+                  Fill="{DynamicResource ControlsValidationBrush}"
                   Stretch="Uniform" />
             <Path Width="10"
                   Height="10"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Fill="{DynamicResource ValidationTextBrush}"
                   Data="m 53.781741,31.196677 c -2.237724,0 -4.0625,1.824776 -4.0625,4.0625 0,2.237724 1.824776,4.0625 4.0625,4.0625 2.237724,0 4.0625,-1.824776 4.0625,-4.0625 0,-2.237724 -1.824776,-4.0625 -4.0625,-4.0625 z m -4.09375,-21.375 0.03125,0.53125 1.21875,19.46875 5.6875,0 1.25,-20 -8.1875,0 z"
+                  Fill="{DynamicResource ValidationTextBrush}"
                   Stretch="Uniform" />
         </Grid>
     </ControlTemplate>
@@ -446,7 +449,6 @@
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="HeadersVisibility" Value="Column" />
         <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource GrayBrush7}" />
-        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource GrayBrush7}" />
         <Setter Property="MinRowHeight" Value="25" />
         <Setter Property="RowHeaderStyle" Value="{StaticResource MetroDataGridRowHeader}" />
         <Setter Property="RowStyle" Value="{StaticResource MetroDataGridRow}" />
@@ -473,9 +475,10 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <Button Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-                                                Style="{DynamicResource {ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}"
                                                 Command="{x:Static DataGrid.SelectAllCommand}"
                                                 Focusable="False"
+                                                Style="{DynamicResource {ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle,
+                                                                                              TypeInTargetAssembly={x:Type DataGrid}}}"
                                                 Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
                                         <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
                                                                         Grid.Column="1"
@@ -515,6 +518,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource GrayBrush7}" />
         <Style.Triggers>
             <Trigger Property="IsGrouping" Value="True">
                 <Setter Property="ScrollViewer.CanContentScroll" Value="False" />

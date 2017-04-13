@@ -860,7 +860,6 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -869,9 +868,8 @@ namespace MahApps.Metro.Controls
         {
             var numericUpDown = (NumericUpDown)d;
 
-            numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.CoerceValue(MaximumProperty);
-            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
+            numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -893,7 +891,11 @@ namespace MahApps.Metro.Controls
             {
                 nud.InternalSetText(nud.Value);
             }
-            nud.HasDecimals = !RegexStringFormatHexadecimal.IsMatch((string)e.NewValue);
+
+            if (!nud.HasDecimals && RegexStringFormatHexadecimal.IsMatch((string)e.NewValue))
+            {
+                nud.SetCurrentValue(HasDecimalsProperty, true);
+            }
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
 
             this.ReorderZIndices(flyout);
 
-            var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex);
+            var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex).ToList();
             parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
         }
 
