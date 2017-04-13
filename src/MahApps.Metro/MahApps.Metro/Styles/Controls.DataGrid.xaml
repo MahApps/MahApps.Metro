@@ -19,6 +19,10 @@
                 <Setter Property="Focusable" Value="False" />
                 <Setter Property="IsHitTestVisible" Value="False" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsEditing, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="False">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
