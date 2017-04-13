@@ -8,7 +8,7 @@
     <System:Double x:Key="HorizontalThumbWidth">10</System:Double>
     <System:Double x:Key="VerticalThumbWidth">16</System:Double>
     <System:Double x:Key="VerticalThumbHeight">10</System:Double>
-    
+
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" />
 
     <!--  HorizontalSliderThumb  -->
@@ -21,14 +21,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Rectangle Fill="{TemplateBinding Background}"
+                        <Rectangle Margin="{TemplateBinding BorderThickness}"
+                                   Fill="{TemplateBinding Background}"
                                    RadiusX="2"
-                                   RadiusY="2"
-                                   Margin="{TemplateBinding BorderThickness}" />
+                                   RadiusY="2" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource DisabledWhiteBrush}"
-                                   Opacity="0"
-                                   IsHitTestVisible="False" />
+                                   IsHitTestVisible="False"
+                                   Opacity="0" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -69,7 +69,7 @@
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Grid x:Name="Root" Margin="0 -1 0 0">
                         <Rectangle Height="3"
-                                   Margin="0,1,0,0"
+                                   Margin="0 1 0 0"
                                    Fill="{DynamicResource GrayBrush3}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -93,7 +93,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Grid x:Name="Root" Margin="0 -1 0 0">
-                        <Rectangle Height="5" Margin="0,1,0,0">
+                        <Rectangle Height="5" Margin="0 1 0 0">
                             <Rectangle.Fill>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
@@ -137,20 +137,19 @@
                          Fill="{TemplateBinding Foreground}"
                          Placement="Bottom"
                          Visibility="Collapsed" />
-                <Track x:Name="PART_Track"
-                       Grid.Row="1">
+                <Track x:Name="PART_Track" Grid.Row="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource HorizontalTrackValue}" Command="{x:Static Slider.DecreaseLarge}" />
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource HorizontalTrackValue}" />
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource HorizontalTrackLargeDecrease}" Command="{x:Static Slider.IncreaseLarge}" />
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource HorizontalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <controls:MetroThumb x:Name="HorizontalThumb"
                                              Width="{DynamicResource HorizontalThumbWidth}"
                                              Height="{DynamicResource HorizontalThumbHeight}"
-                                             Style="{StaticResource HorizontalSliderThumb}"
-                                             IsTabStop="True" />
+                                             IsTabStop="True"
+                                             Style="{StaticResource HorizontalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>
@@ -181,7 +180,9 @@
     </ControlTemplate>
 
     <!--  VerticalSliderThumb  -->
-    <Style x:Key="VerticalSliderThumb" BasedOn="{StaticResource HorizontalSliderThumb}" TargetType="Thumb">
+    <Style x:Key="VerticalSliderThumb"
+           BasedOn="{StaticResource HorizontalSliderThumb}"
+           TargetType="Thumb">
         <Setter Property="BorderThickness" Value="0 1" />
     </Style>
 
@@ -194,7 +195,7 @@
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Grid x:Name="Root" Margin="-1 0 0 0">
                         <Rectangle Width="3"
-                                   Margin="1,0,0,0"
+                                   Margin="1 0 0 0"
                                    Fill="{DynamicResource GrayBrush3}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -218,7 +219,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Grid x:Name="Root" Margin="-1 0 0 0">
-                        <Rectangle Width="5" Margin="1,0,0,0">
+                        <Rectangle Width="5" Margin="1 0 0 0">
                             <Rectangle.Fill>
                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                     <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
@@ -262,20 +263,19 @@
                          Fill="{TemplateBinding Foreground}"
                          Placement="Right"
                          Visibility="Collapsed" />
-                <Track x:Name="PART_Track"
-                       Grid.Column="1">
+                <Track x:Name="PART_Track" Grid.Column="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource VerticalTrackValue}" Command="{x:Static Slider.DecreaseLarge}" />
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource VerticalTrackValue}" />
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource VerticalTrackLargeDecrease}" Command="{x:Static Slider.IncreaseLarge}" />
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource VerticalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <controls:MetroThumb x:Name="VerticalThumb"
                                              Width="{DynamicResource VerticalThumbWidth}"
                                              Height="{DynamicResource VerticalThumbHeight}"
-                                             Style="{StaticResource VerticalSliderThumb}"
-                                             IsTabStop="True" />
+                                             IsTabStop="True"
+                                             Style="{StaticResource VerticalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>
@@ -307,9 +307,9 @@
 
     <!--  Slider Style  -->
     <Style x:Key="MetroSlider" TargetType="Slider">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />

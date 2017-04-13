@@ -5,12 +5,12 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <Style x:Key="MetroTabControl" TargetType="{x:Type TabControl}">
-        <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource GrayNormalBrush}" />
-        <Setter Property="Controls:TabControlHelper.UnderlineSelectedBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource GrayHoverBrush}" />
-        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource GrayNormalBrush}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource GrayHoverBrush}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineSelectedBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -29,11 +29,11 @@
                               Grid.Column="0"
                               Panel.ZIndex="1">
                             <Controls:Underline x:Name="Underline"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Background="Transparent"
                                                 BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                                Placement="Bottom"
                                                 LineThickness="1"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Visibility="Collapsed" />
                             <TabPanel x:Name="HeaderPanel"
                                       IsItemsHost="true"
@@ -98,15 +98,14 @@
     </Style>
 
     <Style x:Key="MetroTabItem" TargetType="TabItem">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <!--  special property for header font size  -->
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MinHeight" Value="5" />
         <Setter Property="MinWidth" Value="5" />
@@ -121,7 +120,9 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseLayoutRounding="True">
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              UseLayoutRounding="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="PART_ContentLeftCol" Width="Auto" />
                                 <ColumnDefinition x:Name="PART_ContentRightCol" Width="Auto" />
@@ -131,77 +132,77 @@
                                 <RowDefinition x:Name="PART_ContentBottomRow" Height="Auto" />
                             </Grid.RowDefinitions>
                             <Controls:ContentControlEx x:Name="ContentSite"
-                                                       Grid.Column="0"
                                                        Grid.Row="0"
+                                                       Grid.Column="0"
                                                        Padding="{TemplateBinding Padding}"
-                                                       Foreground="{TemplateBinding Foreground}"
-                                                       FontStyle="{TemplateBinding FontStyle}"
-                                                       FontFamily="{TemplateBinding FontFamily}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontStyle="{TemplateBinding FontStyle}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       Foreground="{TemplateBinding Foreground}"
                                                        RecognizesAccessKey="True"
-                                                       UseLayoutRounding="False"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       UseLayoutRounding="False" />
                             <Controls:Underline x:Name="Underline"
-                                                Grid.Column="0"
                                                 Grid.Row="1"
+                                                Grid.Column="0"
                                                 HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Background="{TemplateBinding Background}"
                                                 BorderBrush="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineBrush), Mode=OneWay}"
-                                                Placement="Bottom"
                                                 LineExtent="3"
-                                                LineThickness="2" />
+                                                LineThickness="2"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
                             <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
                             <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
-                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
-                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Top">
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
                             <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
                             <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
-                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
-                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
                             <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
                             <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_ContentRightCol" Property="Width" Value="*" />
                             <Setter TargetName="PART_ContentTopRow" Property="Height" Value="*" />
-                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="Auto" />
-                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Placement" Value="Left" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="*" />
                             <Setter TargetName="PART_ContentLeftCol" Property="Width" Value="*" />
                             <Setter TargetName="PART_ContentRightCol" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_ContentTopRow" Property="Height" Value="Auto" />
-                            <Setter TargetName="PART_ContentBottomRow" Property="Height" Value="*" />
-                            <Setter TargetName="ContentSite" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentSite" Property="Grid.Row" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
@@ -225,7 +226,7 @@
                         <Trigger Property="IsSelected" Value="false">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
-                        
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
@@ -262,7 +263,7 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="LineThickness" Value="2" />
                         </MultiDataTrigger>
-                        
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
@@ -275,5 +276,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>

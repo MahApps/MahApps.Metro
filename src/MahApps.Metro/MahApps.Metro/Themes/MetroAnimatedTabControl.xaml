@@ -7,7 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Controls:MetroAnimatedTabControl}" BasedOn="{StaticResource MetroTabControl}">
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroAnimatedTabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
@@ -27,11 +27,11 @@
                               Margin="{TemplateBinding TabStripMargin}"
                               Panel.ZIndex="1">
                             <Controls:Underline x:Name="Underline"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Background="Transparent"
                                                 BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                                Placement="Bottom"
                                                 LineThickness="1"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Visibility="Collapsed" />
                             <TabPanel x:Name="HeaderPanel"
                                       IsItemsHost="true"
@@ -40,23 +40,23 @@
                         <Border x:Name="ContentPanel"
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                ClipToBounds="{TemplateBinding ClipToBounds}"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                ClipToBounds="{TemplateBinding ClipToBounds}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Controls:TransitioningContentControl UseLayoutRounding="True"
-                                                                  Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                            <Controls:TransitioningContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                                   RestartTransitionOnContentChange="True"
-                                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                                  UseLayoutRounding="True">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                                  UseLayoutRounding="False"
                                                   Margin="{TemplateBinding Padding}"
                                                   ContentSource="SelectedContent"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  UseLayoutRounding="False" />
                             </Controls:TransitioningContentControl>
                         </Border>
                     </Grid>

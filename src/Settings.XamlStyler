@@ -18,11 +18,11 @@
         "Width, Height, MinWidth, MinHeight, MaxWidth, MaxHeight",
         "Margin, Padding, HorizontalAlignment, VerticalAlignment, HorizontalContentAlignment, VerticalContentAlignment, Panel.ZIndex",
         "*:*, *",
-        "PageSource, PageIndex, Offset, Color, Opacity, TargetName, Property, Value, StartPoint, EndPoint",
+        "PageSource, PageIndex, Offset, Color, TargetName, Property, Value, StartPoint, EndPoint",
         "options:Freeze, op:Freeze, o:Freeze, mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText",
         "Storyboard.*, From, To, Duration"
     ],
-    "FirstLineAttributes": "", // for Colors use: x:Key, Color, Opacity, options:Freeze, op:Freeze, o:Freeze
+    "FirstLineAttributes": "", // for Colors use: x:Key, Opacity, Color, options:Freeze, op:Freeze, o:Freeze
     "OrderAttributesByName": true,
     "PutEndingBracketOnNewLine": false,
     "RemoveEndingTagOfEmptyElement": true,

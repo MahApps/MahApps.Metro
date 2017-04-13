@@ -9,9 +9,9 @@
 
     <Style x:Key="ScrollBarRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="0" />
@@ -19,16 +19,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid Background="{TemplateBinding Background}"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
+                    <Grid HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Background="{TemplateBinding Background}">
                         <ContentControl x:Name="PART_Arrow"
-                                        Style="{DynamicResource PathIconContentControlStyle}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Content="{TemplateBinding Content}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Width="12"
-                                        Height="12" />
+                                        Height="12"
+                                        Content="{TemplateBinding Content}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Style="{DynamicResource PathIconContentControlStyle}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -55,13 +55,13 @@
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
-                          Content="M6 2L0 8l6 6z"
                           Command="ScrollBar.PageLeftCommand"
+                          Content="M6 2L0 8l6 6z"
                           Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
             <RepeatButton Grid.Column="2"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
-                          Content="M0 14l6-6-6-6z"
                           Command="ScrollBar.PageRightCommand"
+                          Content="M0 14l6-6-6-6z"
                           Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
         </Grid>
     </ControlTemplate>
@@ -75,13 +75,13 @@
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
-                          Content="M12 11L6 5l-6 6z"
                           Command="ScrollBar.PageUpCommand"
+                          Content="M12 11L6 5l-6 6z"
                           Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
             <RepeatButton Grid.Row="2"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
-                          Content="M0 5l6 6 6-6z"
                           Command="ScrollBar.PageDownCommand"
+                          Content="M0 5l6 6 6-6z"
                           Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
         </Grid>
     </ControlTemplate>
@@ -122,34 +122,34 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Column="1"
-                      Grid.Row="0"
+                <Grid Grid.Row="0"
+                      Grid.Column="1"
                       Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
-                <Grid Grid.Column="0"
-                      Grid.Row="1"
+                <Grid Grid.Row="1"
+                      Grid.Column="0"
                       Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
                 <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                        Grid.Column="1"
                                         Grid.Row="1"
+                                        Grid.Column="1"
                                         CanContentScroll="{TemplateBinding CanContentScroll}"
                                         CanHorizontallyScroll="False"
                                         CanVerticallyScroll="False"
                                         Content="{TemplateBinding Content}"
                                         ContentTemplate="{TemplateBinding ContentTemplate}" />
-                <Grid Grid.Column="2"
-                      Grid.Row="1"
+                <Grid Grid.Row="1"
+                      Grid.Column="2"
                       Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
-                <Grid Grid.Column="1"
-                      Grid.Row="2"
+                <Grid Grid.Row="2"
+                      Grid.Column="1"
                       Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
             </Grid>
         </Grid>
     </ControlTemplate>
-    
+
     <!--  obsolete  -->
     <ControlTemplate x:Key="VerticalScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid>
@@ -195,17 +195,17 @@
             </Grid.RowDefinitions>
             <ScrollViewer x:Name="HeaderPanelScroll"
                           Grid.Row="0"
-                          Template="{StaticResource ScrollViewerTemplate}"
+                          Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled"
-                          Panel.ZIndex="1">
+                          Template="{StaticResource ScrollViewerTemplate}"
+                          VerticalScrollBarVisibility="Disabled">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Background="Transparent"
                                         BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        Placement="Bottom"
                                         LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
@@ -213,16 +213,16 @@
                 </Grid>
             </ScrollViewer>
             <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  UseLayoutRounding="True"
                                                   Grid.Row="1"
                                                   Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                   RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                  UseLayoutRounding="False"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
             </Controls:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
@@ -256,17 +256,17 @@
             </Grid.ColumnDefinitions>
             <ScrollViewer x:Name="HeaderPanelScroll"
                           Grid.Column="1"
-                          Template="{StaticResource ScrollViewerTemplate}"
+                          Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto"
-                          Panel.ZIndex="1">
+                          Template="{StaticResource ScrollViewerTemplate}"
+                          VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Background="Transparent"
                                         BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        Placement="Bottom"
                                         LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
@@ -274,16 +274,16 @@
                 </Grid>
             </ScrollViewer>
             <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  UseLayoutRounding="True"
                                                   Grid.Column="0"
                                                   Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                   RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                  UseLayoutRounding="False"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
             </Controls:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
@@ -309,7 +309,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource MetroTabControl}">
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
         <Style.Triggers>

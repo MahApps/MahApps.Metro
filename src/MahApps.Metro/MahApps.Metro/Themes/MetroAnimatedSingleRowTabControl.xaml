@@ -18,17 +18,17 @@
             <ScrollViewer x:Name="HeaderPanelScroll"
                           Grid.Row="0"
                           Margin="{TemplateBinding TabStripMargin}"
-                          Style="{DynamicResource MetroScrollViewer}"
+                          Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled"
-                          Panel.ZIndex="1">
+                          Style="{DynamicResource MetroScrollViewer}"
+                          VerticalScrollBarVisibility="Disabled">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Background="Transparent"
                                         BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        Placement="Bottom"
                                         LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
@@ -36,16 +36,16 @@
                 </Grid>
             </ScrollViewer>
             <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  UseLayoutRounding="True"
                                                   Grid.Row="1"
                                                   Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                   RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                  UseLayoutRounding="False"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
             </Controls:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
@@ -78,17 +78,17 @@
             <ScrollViewer x:Name="HeaderPanelScroll"
                           Grid.Column="1"
                           Margin="{TemplateBinding TabStripMargin}"
-                          Style="{DynamicResource MetroScrollViewer}"
+                          Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto"
-                          Panel.ZIndex="1">
+                          Style="{DynamicResource MetroScrollViewer}"
+                          VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Background="Transparent"
                                         BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        Placement="Bottom"
                                         LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
@@ -96,16 +96,16 @@
                 </Grid>
             </ScrollViewer>
             <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  UseLayoutRounding="True"
                                                   Grid.Column="0"
                                                   Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                   RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                  UseLayoutRounding="False"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
-                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
             </Controls:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
@@ -129,7 +129,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}" BasedOn="{StaticResource MetroTabControl}">
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
         <Style.Triggers>

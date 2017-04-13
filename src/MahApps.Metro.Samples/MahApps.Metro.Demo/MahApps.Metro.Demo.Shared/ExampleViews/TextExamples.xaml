@@ -5,10 +5,10 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
@@ -32,7 +32,7 @@
                         Grid.RowSpan="2"
                         Grid.Column="0"
                         Margin="{StaticResource ColumnMargin}">
-                <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="TextBox" />
+                <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Text="Enabled">
@@ -44,18 +44,18 @@
                 </TextBox>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
+                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
-                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          ToolTip="Default alignment">
                     <TextBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Custom Item" />
                             <Separator />
-                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Cut" />
-                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Copy" />
-                            <MenuItem Style="{DynamicResource MetroMenuItem}" Command="ApplicationCommands.Paste" />
+                            <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MetroMenuItem}" />
+                            <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MetroMenuItem}" />
+                            <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MetroMenuItem}" />
                         </ContextMenu>
                     </TextBox.ContextMenu>
                 </TextBox>
@@ -101,15 +101,15 @@
                 </TextBox>
                 <TextBox Name="test2"
                          Margin="{StaticResource ControlMargin}"
-                         Style="{DynamicResource SearchMetroTextBox}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
-                         Controls:TextBoxHelper.Watermark="Enter parameter" />
+                         Controls:TextBoxHelper.Watermark="Enter parameter"
+                         Style="{DynamicResource SearchMetroTextBox}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
-                         Style="{DynamicResource MetroButtonTextBox}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonContent="s"
-                         Controls:TextBoxHelper.Watermark="Custom icon style" />
+                         Controls:TextBoxHelper.Watermark="Custom icon style"
+                         Style="{DynamicResource MetroButtonTextBox}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
@@ -128,9 +128,9 @@
                          IsEnabled="False"
                          Text="Clear button" />
                 <TextBox Margin="{StaticResource ControlMargin}"
-                         Style="{DynamicResource SearchMetroTextBox}"
                          Controls:TextBoxHelper.Watermark="Search style"
-                         IsEnabled="False" />
+                         IsEnabled="False"
+                         Style="{DynamicResource SearchMetroTextBox}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
@@ -140,7 +140,7 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="1"
                         Margin="{StaticResource ColumnMargin}">
-                <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="RichTextBox" />
+                <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              Padding="5"
                              Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
@@ -189,21 +189,21 @@
                         Grid.RowSpan="2"
                         Grid.Column="2"
                         Margin="{StaticResource ColumnMargin}">
-                <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="PasswordBox" />
+                <Label Content="PasswordBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             Style="{StaticResource Win8MetroPasswordBox}"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Win8"
-                             Password="Win8" />
+                             Password="Win8"
+                             Style="{StaticResource Win8MetroPasswordBox}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             Style="{StaticResource MetroButtonRevealedPasswordBox}"
                              Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
                              Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Revealed PasswordBox" />
+                             Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
+                             Style="{StaticResource MetroButtonRevealedPasswordBox}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"
@@ -211,12 +211,12 @@
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             Style="{DynamicResource MetroButtonPasswordBox}"
                              Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ButtonContent="4"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Custom icon style">
+                             Controls:TextBoxHelper.Watermark="Custom icon style"
+                             Style="{DynamicResource MetroButtonPasswordBox}">
                     <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
@@ -247,7 +247,7 @@
                         Grid.Column="3"
                         Margin="{StaticResource ColumnMargin}"
                         Grid.IsSharedSizeScope="True">
-                <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="NumericUpDown" />
+                <Label Content="NumericUpDown" Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <UniformGrid Columns="2">
                     <CheckBox x:Name="ReadOnlyCheck"
@@ -344,7 +344,7 @@
             <StackPanel Grid.Row="1"
                         Grid.Column="1"
                         Margin="{StaticResource ColumnMargin}">
-                <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="HotKeyBox" />
+                <Label Content="HotKeyBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                     HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"

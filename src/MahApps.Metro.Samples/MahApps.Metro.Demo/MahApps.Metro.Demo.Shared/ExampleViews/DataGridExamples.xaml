@@ -6,12 +6,12 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             TextOptions.TextFormattingMode="Display"
-             TextOptions.TextRenderingMode="ClearType"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,7 +34,7 @@
             </x:Array>
 
             <ControlTemplate x:Key="ConfigDataTemplate">
-                <Grid Grid.IsSharedSizeScope="True" d:DataContext="{d:DesignInstance DataGrid}">
+                <Grid d:DataContext="{d:DesignInstance DataGrid}" Grid.IsSharedSizeScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="labels" />
                         <ColumnDefinition Width="*" />
@@ -108,8 +108,8 @@
                                             Width="100"
                                             Margin="2"
                                             VerticalAlignment="Center"
-                                            Minimum="0"
                                             Maximum="40"
+                                            Minimum="0"
                                             Value="{Binding RowHeaderWidth, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </ControlTemplate>
@@ -139,17 +139,17 @@
 
         <ContentControl Grid.Row="1"
                         Grid.Column="0"
-                        Margin="10,5,5,5"
+                        Margin="10 5 5 5"
                         DataContext="{Binding ElementName=MetroDataGrid}"
                         Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="MetroDataGrid"
                   Grid.Row="1"
                   Grid.Column="1"
                   Margin="5"
-                  RowHeaderWidth="20"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
+                  RowHeaderWidth="20"
                   SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
@@ -201,16 +201,16 @@
 
         <ContentControl Grid.Row="3"
                         Grid.Column="0"
-                        Margin="10,5,5,5"
+                        Margin="10 5 5 5"
                         DataContext="{Binding ElementName=AzureDataGrid}"
                         Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="AzureDataGrid"
                   Grid.Row="3"
                   Grid.Column="1"
                   Margin="5"
-                  RowHeaderWidth="0"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
+                  RowHeaderWidth="0"
                   Style="{DynamicResource AzureDataGrid}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />

@@ -6,7 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Controls:MetroTabControl}" BasedOn="{StaticResource MetroTabControl}">
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroTabControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabControl}">
@@ -25,11 +25,11 @@
                               Margin="{TemplateBinding TabStripMargin}"
                               Panel.ZIndex="1">
                             <Controls:Underline x:Name="Underline"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Background="Transparent"
                                                 BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                                Placement="Bottom"
                                                 LineThickness="1"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                 Visibility="Collapsed" />
                             <TabPanel x:Name="HeaderPanel"
                                       IsItemsHost="true"

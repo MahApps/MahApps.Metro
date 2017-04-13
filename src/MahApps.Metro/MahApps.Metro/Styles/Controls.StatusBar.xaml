@@ -5,7 +5,6 @@
     <Style x:Key="MetroStatusBarItem" TargetType="{x:Type StatusBarItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
@@ -27,6 +26,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="MetroStatusBarSeparator" TargetType="{x:Type Separator}">
@@ -46,12 +46,12 @@
     </Style>
 
     <Style x:Key="MetroStatusBar" TargetType="{x:Type StatusBar}">
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Background" Value="{Binding Path=WindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource StatusBarFontSize}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource MetroStatusBarItem}" />
         <Setter Property="Template">
             <Setter.Value>

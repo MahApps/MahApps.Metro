@@ -4,12 +4,18 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      mc:Ignorable="d"
                       d:DesignHeight="300"
-                      d:DesignWidth="300">
+                      d:DesignWidth="300"
+                      mc:Ignorable="d">
     <StackPanel>
-        <controls:DateTimePicker x:Name="TheDateTimePicker" Culture="pt-BR" SelectedDate="08/31/2016 14:00:01" />
-        <controls:TimePicker x:Name="TheTimePickerDe" Culture="de-de" SelectedTime="14:00:01" />
-        <controls:TimePicker x:Name="TheTimePickerUs" Culture="en-us" SelectedTime="14:00:01" />
+        <controls:DateTimePicker x:Name="TheDateTimePicker"
+                                 Culture="pt-BR"
+                                 SelectedDate="08/31/2016 14:00:01" />
+        <controls:TimePicker x:Name="TheTimePickerDe"
+                             Culture="de-de"
+                             SelectedTime="14:00:01" />
+        <controls:TimePicker x:Name="TheTimePickerUs"
+                             Culture="en-us"
+                             SelectedTime="14:00:01" />
     </StackPanel>
 </controls:MetroWindow>

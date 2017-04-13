@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     mc:Ignorable="options">
 
     <Color x:Key="BlackColor">#FF000000</Color>
@@ -18,7 +18,7 @@
 
     <Color x:Key="FlyoutColor">#FFFFFFFF</Color>
 
-    <!-- re-set brushes too -->
+    <!--  re-set brushes too  -->
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="LabelTextBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
@@ -59,7 +59,7 @@
 
     <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222" options:Freeze="True" />
 
-    <!-- menu brushes -->
+    <!--  menu brushes  -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="{StaticResource WhiteColor}" options:Freeze="True" />
@@ -75,7 +75,7 @@
     <SolidColorBrush x:Key="TopMenuItemPressedStroke" Color="#E0717070" options:Freeze="True" />
     <SolidColorBrush x:Key="TopMenuItemSelectionStroke" Color="#90717070" options:Freeze="True" />
 
-    <!-- original #FF9A9A9A" -->
+    <!--  original #FF9A9A9A"  -->
     <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource Gray2}" options:Freeze="True" />
     <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" options:Freeze="True" />
 
@@ -83,9 +83,9 @@
 
     <Color x:Key="MenuShadowColor">#FF000000</Color>
 
-    <!-- DataGrid brushes -->
+    <!--  DataGrid brushes  -->
     <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
-    
+
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10" Color="#FF666666" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10" Color="#FF333333" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffMouseOverBorderBrush.Win10" Color="#FF000000" options:Freeze="True" />

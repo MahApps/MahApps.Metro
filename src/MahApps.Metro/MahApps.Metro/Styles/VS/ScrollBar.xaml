@@ -19,8 +19,8 @@
                             BorderThickness="1">
                         <Path HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              Fill="{StaticResource Foreground}"
-                              Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                              Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
+                              Fill="{StaticResource Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -89,24 +89,24 @@
                 <ColumnDefinition Width="18" />
             </Grid.ColumnDefinitions>
             <RepeatButton Grid.Column="0"
-                          Style="{StaticResource ScrollBarLineButton}"
                           Command="ScrollBar.LineLeftCommand"
-                          Content="M 0 4 L 4 8 L 4 0 Z" />
+                          Content="M 0 4 L 4 8 L 4 0 Z"
+                          Style="{StaticResource ScrollBarLineButton}" />
             <Track Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButton}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButton}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Column="2"
-                          Style="{StaticResource ScrollBarLineButton}"
                           Command="ScrollBar.LineRightCommand"
-                          Content="M 0 0 L 0 8 L 4 4 Z" />
+                          Content="M 0 0 L 0 8 L 4 4 Z"
+                          Style="{StaticResource ScrollBarLineButton}" />
         </Grid>
     </ControlTemplate>
 
@@ -118,26 +118,26 @@
                 <RowDefinition Height="18" />
             </Grid.RowDefinitions>
             <RepeatButton Grid.Row="0"
-                          Style="{StaticResource ScrollBarLineButton}"
                           Command="ScrollBar.LineUpCommand"
-                          Content="M 0 4 L 8 4 L 4 0 Z" />
+                          Content="M 0 4 L 8 4 L 4 0 Z"
+                          Style="{StaticResource ScrollBarLineButton}" />
             <Track Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="true">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButton}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButton}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Row="2"
-                          Style="{StaticResource ScrollBarLineButton}"
                           Command="ScrollBar.LineDownCommand"
-                          Content="M 0 0 L 4 4 L 8 0 Z" />
+                          Content="M 0 0 L 4 4 L 8 0 Z"
+                          Style="{StaticResource ScrollBarLineButton}" />
         </Grid>
     </ControlTemplate>
 

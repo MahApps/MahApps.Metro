@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metroDemo="clr-namespace:MetroDemo"
-             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
+             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
              d:DesignHeight="300"
              d:DesignWidth="400"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type controls:HamburgerMenuItem}">
@@ -54,27 +54,31 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="20 5">
-            <CheckBox VerticalAlignment="Center" Content="Allow About Hamburger MenuItem" IsChecked="{Binding CanShowHamburgerAboutCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Grid.Row="0"
+                    Margin="20 5"
+                    Orientation="Horizontal">
+            <CheckBox VerticalAlignment="Center"
+                      Content="Allow About Hamburger MenuItem"
+                      IsChecked="{Binding CanShowHamburgerAboutCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
                                 Grid.Row="1"
-                                VerticalScrollBarOnLeftSide="False"
-                                SelectedIndex="1"
                                 Margin="20 0 20 20"
                                 HamburgerWidth="48"
                                 ItemClick="HamburgerMenu_OnItemClick"
                                 ItemTemplate="{StaticResource HamburgerMenuImageItem}"
-                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}">
-            <!-- Header -->
+                                OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+                                SelectedIndex="1"
+                                VerticalScrollBarOnLeftSide="False">
+            <!--  Header  -->
             <controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
                 <DataTemplate>
                     <TextBlock Grid.Column="1"
-                             VerticalAlignment="Center"
-                             HorizontalAlignment="Left"
-                             FontSize="16"
-                             Foreground="White"
-                             Text="Pictures" />
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Foreground="White"
+                               Text="Pictures" />
                 </DataTemplate>
             </controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
             <!--  Items  -->
@@ -90,8 +94,7 @@
             <!--  Options  -->
             <controls:HamburgerMenu.OptionsItemsSource>
                 <controls:HamburgerMenuItemCollection>
-                    <controls:HamburgerMenuGlyphItem Label="About"
-                                                     Command="{x:Static exampleViews:ShowAboutCommand.Command}">
+                    <controls:HamburgerMenuGlyphItem Command="{x:Static exampleViews:ShowAboutCommand.Command}" Label="About">
                         <controls:HamburgerMenuGlyphItem.Tag>
                             <iconPacks:PackIconMaterial Width="22"
                                                         Height="22"

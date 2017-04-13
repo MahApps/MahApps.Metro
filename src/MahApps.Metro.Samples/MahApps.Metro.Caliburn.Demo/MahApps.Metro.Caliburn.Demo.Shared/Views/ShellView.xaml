@@ -13,9 +13,11 @@
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
-    
+
     <Controls:MetroWindow.Resources>
-        <Style x:Key="CustomFlyoutStyle" BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
+        <Style x:Key="CustomFlyoutStyle"
+               BasedOn="{StaticResource {x:Type Controls:Flyout}}"
+               TargetType="{x:Type Controls:Flyout}">
             <Setter Property="Header" Value="{Binding Header}" />
             <Setter Property="IsOpen" Value="{Binding IsOpen}" />
             <Setter Property="Position" Value="{Binding Position}" />
@@ -34,20 +36,20 @@
                        Text="Some Flyout Tests..." />
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show 1"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(0)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(0)]"
+                    Content="Show 1" />
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show 2"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(1)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(1)]"
+                    Content="Show 2" />
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show 3"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(2)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(2)]"
+                    Content="Show 3" />
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Settings"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]"
+                    Content="Settings" />
             <Button x:Name="Close"
                     MinWidth="90"
                     Margin="2"
@@ -59,19 +61,19 @@
                     VerticalAlignment="Center">
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show Top"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(5)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(5)]"
+                    Content="Show Top" />
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show Bottom"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(6)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(6)]"
+                    Content="Show Bottom" />
         </StackPanel>
 
         <StackPanel Margin="10" HorizontalAlignment="Right">
             <Button MinWidth="90"
                     Margin="2"
-                    Content="Show Left"
-                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(4)]" />
+                    cal:Message.Attach="[Event Click] = [Action ToggleFlyout(4)]"
+                    Content="Show Left" />
         </StackPanel>
     </Grid>
 

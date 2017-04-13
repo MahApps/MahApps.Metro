@@ -25,8 +25,8 @@
                 <Thumb Name="PART_LeftThumb"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Height="{DynamicResource HorizontalThumbHeight}"
-                       Style="{DynamicResource HorizontalSliderThumb}"
-                       Cursor="Arrow" />
+                       Cursor="Arrow"
+                       Style="{DynamicResource HorizontalSliderThumb}" />
                 <Thumb Name="PART_MiddleThumb"
                        MinWidth="{TemplateBinding MinRangeWidth}"
                        Cursor="Hand">
@@ -47,8 +47,8 @@
                 <Thumb Name="PART_RightThumb"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Height="{DynamicResource HorizontalThumbHeight}"
-                       Style="{DynamicResource HorizontalSliderThumb}"
-                       Cursor="Arrow" />
+                       Cursor="Arrow"
+                       Style="{DynamicResource HorizontalSliderThumb}" />
                 <RepeatButton Name="PART_RightEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
             </StackPanel>
             <TickBar Name="PART_BottomTick"
@@ -100,8 +100,8 @@
                 <Thumb Name="PART_RightThumb"
                        Width="{DynamicResource VerticalThumbWidth}"
                        Height="{DynamicResource VerticalThumbHeight}"
-                       Style="{DynamicResource VerticalSliderThumb}"
-                       Cursor="Arrow" />
+                       Cursor="Arrow"
+                       Style="{DynamicResource VerticalSliderThumb}" />
 
                 <Thumb Name="PART_MiddleThumb"
                        MinHeight="{TemplateBinding MinRangeWidth}"
@@ -124,8 +124,8 @@
                 <Thumb Name="PART_LeftThumb"
                        Width="{DynamicResource VerticalThumbWidth}"
                        Height="{DynamicResource VerticalThumbHeight}"
-                       Style="{DynamicResource VerticalSliderThumb}"
-                       Cursor="Arrow" />
+                       Cursor="Arrow"
+                       Style="{DynamicResource VerticalSliderThumb}" />
                 <RepeatButton Name="PART_LeftEdge"
                               VerticalAlignment="Stretch"
                               Style="{DynamicResource VerticalTrackLargeDecrease}" />
