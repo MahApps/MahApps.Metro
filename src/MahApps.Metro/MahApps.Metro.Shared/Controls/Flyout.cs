@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
-    [TemplatePart(Name = "PART_Root", Type = typeof(Grid))]
+    [TemplatePart(Name = "PART_Root", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
     public class Flyout : HeaderedContentControl
@@ -648,7 +648,7 @@ namespace MahApps.Metro.Controls
         }
 
         DispatcherTimer autoCloseTimer;
-        Grid flyoutRoot;
+        FrameworkElement flyoutRoot;
         Storyboard hideStoryboard;
         SplineDoubleKeyFrame hideFrame;
         SplineDoubleKeyFrame hideFrameY;
@@ -662,7 +662,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this.flyoutRoot = this.GetTemplateChild("PART_Root") as Grid;
+            this.flyoutRoot = this.GetTemplateChild("PART_Root") as FrameworkElement;
             if (this.flyoutRoot == null)
             {
                 return;

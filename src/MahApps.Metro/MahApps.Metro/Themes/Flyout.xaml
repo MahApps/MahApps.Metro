@@ -65,10 +65,13 @@
     </DataTemplate>
 
     <ControlTemplate x:Key="FlyoutTemplate" TargetType="{x:Type Controls:Flyout}">
-        <Grid x:Name="PART_Root" Background="{TemplateBinding Background}">
-            <Grid.RenderTransform>
+        <Border x:Name="PART_Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Border.RenderTransform>
                 <TranslateTransform />
-            </Grid.RenderTransform>
+            </Border.RenderTransform>
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
                     <Controls:MetroThumbContentControl x:Name="PART_Header"
@@ -185,7 +188,7 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-        </Grid>
+        </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="Position" Value="Top">
                 <Setter TargetName="PART_Content" Property="DockPanel.Dock" Value="Right" />
@@ -214,6 +217,7 @@
 
     <Style TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Background" Value="{DynamicResource FlyoutBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource FlyoutHeaderFontSize}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
