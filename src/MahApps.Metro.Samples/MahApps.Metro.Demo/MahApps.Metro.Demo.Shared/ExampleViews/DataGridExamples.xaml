@@ -45,6 +45,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0"
@@ -63,8 +64,20 @@
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
+                               Text="CellEditAssist" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="2"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding Path=(controls:DataGridHelper.EnableCellEditAssist)}" />
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Margin="2"
+                               VerticalAlignment="Center"
                                Text="SelectionUnit" />
-                    <ComboBox Grid.Row="1"
+                    <ComboBox Grid.Row="2"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -72,12 +85,12 @@
                               ItemsSource="{StaticResource DataGridSelectionUnitArray}"
                               SelectedValue="{Binding SelectionUnit}" />
 
-                    <TextBlock Grid.Row="2"
+                    <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="GridLines" />
-                    <ComboBox Grid.Row="2"
+                    <ComboBox Grid.Row="3"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -85,12 +98,12 @@
                               ItemsSource="{StaticResource DataGridGridLinesVisibilityArray}"
                               SelectedValue="{Binding GridLinesVisibility}" />
 
-                    <TextBlock Grid.Row="3"
+                    <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="Headers" />
-                    <ComboBox Grid.Row="3"
+                    <ComboBox Grid.Row="4"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -98,12 +111,12 @@
                               ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
                               SelectedValue="{Binding HeadersVisibility}" />
 
-                    <TextBlock Grid.Row="4"
+                    <TextBlock Grid.Row="5"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="RowHeaderWidth" />
-                    <controls:NumericUpDown Grid.Row="4"
+                    <controls:NumericUpDown Grid.Row="5"
                                             Grid.Column="1"
                                             Width="100"
                                             Margin="2"
@@ -155,7 +168,11 @@
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        Header="IsSelected" />
+                                        Header="Row Selected" />
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="Album Selected" />
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                 <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
@@ -174,7 +191,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True">
                             <Setter Property="Background" Value="#FF8B8B" />
-                            <Setter Property="Foreground" Value="Red" />
+                            <Setter Property="Foreground" Value="DarkRed" />
                         </DataTrigger>
                         <!--  IsMouseOver  -->
                         <MultiDataTrigger>

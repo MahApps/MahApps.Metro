@@ -230,6 +230,22 @@ namespace MetroDemo
             }
         }
 
+        private bool isHamburgerMenuPaneOpen;
+
+        public bool IsHamburgerMenuPaneOpen
+        {
+            get { return this.isHamburgerMenuPaneOpen; }
+            set
+            {
+                if (Equals(value, this.isHamburgerMenuPaneOpen))
+                {
+                    return;
+                }
+                this.isHamburgerMenuPaneOpen = value;
+                this.RaisePropertyChanged("IsHamburgerMenuPaneOpen");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd

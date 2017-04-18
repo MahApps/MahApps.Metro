@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="IsPaneOpen"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Identifies the <see cref="ItemsSource"/> dependency property.
@@ -146,7 +146,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether gets or sets a value that specifies whether the pane is expanded to its full width.
+        /// Gets or sets a value indicating whether the pane is expanded to its full width.
         /// </summary>
         public bool IsPaneOpen
         {
