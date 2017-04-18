@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>cf13be1b-9c23-46b3-8426-5eb15fe509a8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Mahapps.Metro.Tests</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)TestApp.xaml.cs">
+      <DependentUpon>TestApp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\AutomationTestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\SwitchContextToUiThreadAwaiter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\TestHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelpers\WindowHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\AnimatedTabControlTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\AutoWatermarkTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\ButtonTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\CleanWindowTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\CustomDialogTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\DateTimePickerTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\FlyoutTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\MetroWindowTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\TextBoxHelperTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\ThemeManagerTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Tests\TileTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AnimatedTabControlWindow.xaml.cs">
+      <DependentUpon>AnimatedTabControlWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AutoWatermarkTestWindow.xaml.cs">
+      <DependentUpon>AutoWatermarkTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ButtonWindow.xaml.cs">
+      <DependentUpon>ButtonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CleanWindow.xaml.cs">
+      <DependentUpon>CleanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DateAndTimePickerWindow.xaml.cs">
+      <DependentUpon>DateAndTimePickerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\FlyoutWindow.xaml.cs">
+      <DependentUpon>FlyoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\HiddenMinMaxCloseButtonsWindow.xaml.cs">
+      <DependentUpon>HiddenMinMaxCloseButtonsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\TextBoxHelperTestWindow.xaml.cs">
+      <DependentUpon>TextBoxHelperTestWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)TestApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AutoWatermarkTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\AnimatedTabControlWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ButtonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\CleanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DateAndTimePickerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\FlyoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\HiddenMinMaxCloseButtonsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\TextBoxHelperTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

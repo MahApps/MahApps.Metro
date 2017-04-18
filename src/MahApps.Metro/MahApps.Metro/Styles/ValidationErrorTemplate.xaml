@@ -1,0 +1,131 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <Style x:Key="MetroValidationPopup" TargetType="{x:Type Controls:CustomValidationPopup}">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="HorizontalOffset" Value="0" />
+        <Setter Property="Placement" Value="Right" />
+        <Setter Property="PopupAnimation" Value="Fade" />
+        <Setter Property="VerticalOffset" Value="0" />
+    </Style>
+
+    <ControlTemplate x:Key="ValidationErrorTemplate">
+        <AdornedElementPlaceholder x:Name="placeholder">
+            <Grid SnapsToDevicePixels="True">
+                <Rectangle x:Name="PopupTargetElement"
+                           Margin="-5 0 -5 0"
+                           DataContext="{Binding ElementName=placeholder}"
+                           StrokeThickness="0" />
+                <Border x:Name="ValidationErrorElement"
+                        BorderBrush="{DynamicResource ControlsValidationBrush}"
+                        BorderThickness="1"
+                        DataContext="{Binding ElementName=placeholder}">
+
+                    <Grid Width="12"
+                          Height="12"
+                          Margin="1 -4 -4 0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          Background="Transparent">
+                        <Path Margin="1 3 0 0"
+                              Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z"
+                              Fill="{DynamicResource ValidationBrush5}" />
+                        <Path Margin="1 3 0 0"
+                              Data="M 0,0 L2,0 L 8,6 L8,8"
+                              Fill="{DynamicResource WhiteColorBrush}" />
+                    </Grid>
+                </Border>
+
+                <Controls:CustomValidationPopup x:Name="ValidationPopup"
+                                                AllowsTransparency="True"
+                                                IsOpen="False"
+                                                PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}">
+                    <Grid x:Name="Root" Margin="4">
+                        <Grid.Resources>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver, Mode=OneWay}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                     To="0.15"
+                                                                     Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <Border Margin="4 4 -4 -4"
+                                Background="{DynamicResource ValidationBrush1}"
+                                CornerRadius="5" />
+                        <Border Margin="3 3 -3 -3"
+                                Background="{DynamicResource ValidationBrush2}"
+                                CornerRadius="4" />
+                        <Border Margin="2 2 -2 -2"
+                                Background="{DynamicResource ValidationBrush3}"
+                                CornerRadius="3" />
+                        <Border Margin="1 1 -1 -1"
+                                Background="{DynamicResource ValidationBrush4}"
+                                CornerRadius="2" />
+                        <Border Background="{DynamicResource ValidationBrush5}" CornerRadius="2">
+                            <!--
+                                from Josh Smith
+
+                                Binding to (Validation.Errors)[0] without Creating Debug Spew
+
+                                http://joshsmithonwpf.wordpress.com/2008/10/08/binding-to-validationerrors0-without-creating-debug-spew/
+
+                                The trick is to bind a ContentPresenter’s Content to the CurrentItem of Validation.Errors for the target element.
+                                Binding to the CurrentItem means that we’re  binding to the CurrentItem property of the default ICollectionView
+                                that wraps the ReadOnlyObservableCollection<ValidationError> returned by the attached Errors property.
+                                When the current item is non-null, that means there is a validation error; when it is null, there are no validation errors.
+                                We can rely on ICollectionView to safely access the validation error, or not return anything if there are no errors.
+                                That is what prevents the debug spew from pouring out.
+
+                                The DataTemplate declared in the StackPanel’s Resources knows how to render a ValidationError object.
+                                If the ContentPresenter has a null value, the template is not used to render anything.
+
+                                Issue #707
+                            -->
+                            <Border.Resources>
+                                <DataTemplate DataType="{x:Type ValidationError}">
+                                    <TextBlock MaxWidth="250"
+                                               Margin="8 4 8 4"
+                                               Foreground="{DynamicResource ValidationTextBrush}"
+                                               Text="{Binding ErrorContent}"
+                                               TextWrapping="Wrap"
+                                               UseLayoutRounding="False" />
+                                </DataTemplate>
+                            </Border.Resources>
+                            <ItemsControl ItemsSource="{Binding}" />
+                        </Border>
+                    </Grid>
+                </Controls:CustomValidationPopup>
+            </Grid>
+        </AdornedElementPlaceholder>
+
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>

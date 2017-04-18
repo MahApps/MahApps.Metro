@@ -1,44 +1,102 @@
-## MahApps.Metro
+# MahApps.Metro
 
 A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
 
-[![Build status](https://img.shields.io/appveyor/ci/flagbug/mahapps-metro/master.svg?style=flat-square)](https://ci.appveyor.com/project/flagbug/mahapps-metro/branch/master)
+[![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
+
+[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg)](http://stackoverflow.com/questions/tagged/mahapps.metro)
+
 [![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
-[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
+[![NuGet](https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
+[![NuGetPre](https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![main demo window](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.png)
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroDevelopAlpha.svg?style=flat-square&&label=TeamCity%20dev)](http://builds.brendanforster.com/viewType.html?buildTypeId=MahApps_MahAppsMetroDevelopAlpha)
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)](http://builds.brendanforster.com/viewType.html?buildTypeId=MahApps_MahAppsMetroPullRequests)
 
-### Documentation
+## Want to say thanks?
 
-Read it here: [http://mahapps.com](http://mahapps.com)
+This framework is free and can be used for free, open source and commercial applications. It's tested and contributed by many people... So mainly hit the :star: button, that's all... thx :squirrel: (:dollar:, :euro:, :beer: or some other gifts are also being accepted...).
 
-You can help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+## Documentation
 
-### Icons
+You can read the documentation on the web site: [http://mahapps.com](http://mahapps.com)  
+You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
-MahApps.Metro has also an icon package used from [WindowsIcons](https://github.com/Templarian/WindowsIcons) by [Templarian](https://github.com/Templarian)
+![maindemowindow01](./docs/main_demo_window.png)
 
-You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
+![maindemowindow04](./docs/mahapps_main.gif)
 
-### Styles
+![maindemowindow02](./docs/main_demo_text.png)
 
-`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+![maindemowindow03](./docs/main_demo_flyout1.png)
 
-### Ran into an bug?
+![maindemowindow03](./docs/main_demo_flyout2.png)
+
+![maindemowindow04](./docs/main_demo_window.gif)
+
+## Release Notes
+
+- [v1.4.0](./docs/release-notes/1.4.0.md)
+- [v1.3.0](./docs/release-notes/1.3.0.md)
+- all [other](./docs/release-notes/)
+
+## Icons
+
+MahApps.Metro can use the [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) to use some awesome stylish and handmade icons for better cool applications.
+
+![iconbrowserfinal](https://cloud.githubusercontent.com/assets/658431/18764958/ec20dd3e-8113-11e6-8793-b012eaec2302.gif)
+
+```xaml
+<iconPacks:PackIconMaterial Kind="EmoticonCool" />
+```
+![2016-07-26_02h28_22](https://cloud.githubusercontent.com/assets/658431/17122168/71270be8-52d9-11e6-89a2-d670bd72aabb.png)
+
+```xaml
+<iconPacks:PackIconModern Kind="ThumbsUp" />
+```
+![2016-07-26_02h28_37](https://cloud.githubusercontent.com/assets/658431/17122171/729eb156-52d9-11e6-8baf-12345ddb9262.png)
+
+```xaml
+<iconPacks:PackIconFontAwesome Kind="FontAwesome" />
+```
+![2016-07-26_02h29_35](https://cloud.githubusercontent.com/assets/658431/17122172/73fe79f0-52d9-11e6-821e-204d1ee99fc3.png)
+
+```xaml
+<iconPacks:PackIconEntypo Kind="EmojiHappy" />
+```
+![2016-07-26_02h30_11](https://cloud.githubusercontent.com/assets/658431/17122173/7573d3ca-52d9-11e6-9a2e-8ecadad254e4.png)
+
+It's still possible to use the old Xaml icon resources available [here](https://github.com/MahApps/MahApps.Metro.Resources) (but you should use the new one for easier usage).
+
+## Contributing to this project
 
 Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
 
-#### Bug Reports
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute.
 
-Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
+Please take a moment to review the [guidelines for contributing](.github/CONTRIBUTING.md).
 
-### Breaking Changes
+* [Bug reports](.github/CONTRIBUTING.md#bugs)
+* [Feature requests](.github/CONTRIBUTING.md#features)
+* [Pull requests](.github/CONTRIBUTING.md#pull-requests)
 
-* For version [0.11.3.1](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
-* For version [0.14 to 1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
+You need [Visual Studio 2015 Community Edition](<https://www.visualstudio.com/>) to build the solution (comes with [#2330](https://github.com/MahApps/MahApps.Metro/pull/2330)), so we can use the new C# 6 features. You can use the [dev-vc2013](<https://github.com/MahApps/MahApps.Metro/tree/dev-vc2013>) branch if you still have the Visual Studio 2013, but no new feature or fix will be added in this branch by me™.
 
-### A short How To
+## Styles
+
+`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+
+## Missing a control?
+
+If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
+
+- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
+- [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
+- [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
+- [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
+
+## A short How To
 
 Or, how to create a simple `MahApps.Metro` Application and a Window...
 
@@ -70,8 +128,9 @@ Or, how to create a simple `MahApps.Metro` Application and a Window...
                       Height="600"
                       Width="800">
   <Grid>
-    <!-- now your content -->
-  
+
+    <!-- your content -->
+
   </Grid>
 </controls:MetroWindow>
 ```
@@ -89,61 +148,35 @@ namespace WpfApplication
 }
 ```
 
-### Visual Studio Templates
+## Awesome tools which MahApps can use
 
-Yes we did it! We have now 4 simple templates to start with the awesome MahApps.Metro library.
+[![TeamCity](./docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
+[![Resharper](./docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
+
+## Visual Studio Templates
+
+MahApps.Metro have 4 simple templates to start with the awesome MahApps.Metro library.
 
 * WPF MahApps.Metro Application (.NET4)
 * WPF MahApps.Metro Application (.NET45)
 * Visual Basic WPF MahApps.Metro Application (.NET45)
 * Window MahApps.Metro (WPF)
 
-Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
+Download this [Templates.zip](./Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
 
 ```
-c:\Users\<USER>\Documents\Visual Studio 2013\
+c:\Users\<USER>\Documents\Visual Studio 201x\
 ```
 
 Now you can choose the templates at the `New Project` dialog.
 
 ![](./docs/new_project_dialog.png)
 
-### Contributions
+## Breaking Changes
 
-If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
+* For version [0.11.3.1](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
+* For version [0.14 to 1.0.0](./docs/v1.0-Migration-Guide.md)
 
-### Chatroom
+## Licence
 
-Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or discuss something with the team.
-
-### Missing a control?
-
-If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
-
-- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
-- [Dragablz - TabControl with Chrome style tearing, and docking/tool window/MDI support](https://github.com/ButchersBoy/Dragablz)
-
-### Licence
-
-Microsoft Public License (Ms-PL)
-
-This license governs use of the accompanying software. If you use the software, you
-accept this license. If you do not accept the license, do not use the software.
-
-1. Definitions
-The terms "reproduce," "reproduction," "derivative works," and "distribution" have the
-same meaning here as under U.S. copyright law.
-A "contribution" is the original software, or any additions or changes to the software.
-A "contributor" is any person that distributes its contribution under this license.
-"Licensed patents" are a contributor's patent claims that read directly on its contribution.
-
-2. Grant of Rights
-(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
-(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
-
-3. Conditions and Limitations
-(A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
-(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
-(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
-(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
-(E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
+[MIT License (MIT)](./LICENSE)
