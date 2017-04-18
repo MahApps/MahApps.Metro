@@ -177,7 +177,6 @@
                     <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
                 </MenuItem>
                 <Separator />
-                <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
