@@ -161,38 +161,24 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
-                <MenuItem Header="Change Dialog Icon" >
-                    <MenuItem IsHitTestVisible="False"
-                                                                Background="{DynamicResource AccentColorBrush}">
-                        
+                <MenuItem Header="Change Dialog Icon">
+                    <MenuItem Background="{DynamicResource AccentColorBrush}" IsHitTestVisible="False">
                         <MenuItem.Header>
-                            
-                            <TextBlock Width="200" 
-                                                                                  TextWrapping="Wrap"
-                                                                                 Text="Select the icon type that is shown on opening dialogs" />
-                                                        </MenuItem.Header>
+                            <TextBlock Width="200"
+                                       Text="Select the icon type that is shown on opening dialogs"
+                                       TextWrapping="Wrap" />
+                        </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Click="SetDialogIcon"
-                                                                Header="{x:Static Dialog:MessageDialogIcon.None}" />
-                    
-                    <MenuItem Click="SetDialogIcon" 
-                                                                Header="{x:Static Dialog:MessageDialogIcon.Error}" />
-                    
-                    <MenuItem Click="SetDialogIcon" 
-                                                                Header="{x:Static Dialog:MessageDialogIcon.Hand}" />
-                    
-                    <MenuItem Click="SetDialogIcon" 
-                                                                Header="{x:Static Dialog:MessageDialogIcon.Information}" />
-                    
-                    <MenuItem Click="SetDialogIcon" 
-                                                                Header="{x:Static Dialog:MessageDialogIcon.Question}" />
-                    
-                    <MenuItem Click="SetDialogIcon" 
-                                                                Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
-                    </MenuItem>
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.None}" />
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Error}" />
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Hand}" />
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Information}" />
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Question}" />
+                    <MenuItem Click="SetDialogIcon" Header="{x:Static Dialog:MessageDialogIcon.Warning}" />
+                </MenuItem>
                 <Separator />
                 <Separator />
-                                        <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
+                <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
                 <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
