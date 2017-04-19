@@ -16,27 +16,23 @@
                     Height="34"
                     Margin="4 2 2 2"
                     VerticalAlignment="Center"
-                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16">
-                <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
+                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                <ContentControl Width="20"
+                                Height="20"
                                 Content="M57,42V34H32.25L42.25,24H31.75L17.75,38L31.75,52H42.25L32.25,42H57Z"
-                                Width="20"
-                                Height="20" />
+                                Style="{DynamicResource PathIconContentControlStyle}" />
             </Button>
             <Button x:Name="PART_ForwardButton"
                     Width="34"
                     Height="34"
                     Margin="2 2 4 2"
                     VerticalAlignment="Center"
-                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
-                    FontFamily="Segoe UI Symbol"
-                    FontSize="16"
-                    IsEnabled="False">
-                <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
+                    IsEnabled="False"
+                    Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                <ContentControl Width="20"
+                                Height="20"
                                 Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
-                                Width="20"
-                                Height="20" />
+                                Style="{DynamicResource PathIconContentControlStyle}" />
             </Button>
             <Label x:Name="PART_Title"
                    VerticalAlignment="Center"
@@ -45,8 +41,7 @@
 
         <Grid Grid.Row="1">
             <ContentPresenter Panel.ZIndex="1" Content="{Binding OverlayContent, RelativeSource={RelativeSource AncestorType=Controls:MetroNavigationWindow, Mode=FindAncestor}}" />
-            <Frame x:Name="PART_Frame"
-                   NavigationUIVisibility="Hidden" />
+            <Frame x:Name="PART_Frame" NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>
 </Controls:MetroWindow>

@@ -1,13 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
-    using System.ComponentModel;
-    using System.Windows.Controls.Primitives;
-
     /// <summary>
     /// A helper class that provides various controls.
     /// </summary>
@@ -68,41 +67,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, HeaderFontSizePropertyChangedCallback){ Inherits = true});
-
-        private static void HeaderFontSizePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue is double)
-            {
-                // close button only for MetroTabItem
-                var metroTabItem = dependencyObject as MetroTabItem;
-                if (metroTabItem == null)
-                {
-                    return;
-                }
-
-                if (metroTabItem.closeButton == null)
-                {
-                    metroTabItem.ApplyTemplate();
-                }
-
-                if (metroTabItem.closeButton != null && metroTabItem.contentSite != null)
-                {
-                    // punker76: i don't like this! i think this must be done with xaml.
-                    var fontDpiSize = (double)e.NewValue;
-                    var fontHeight = Math.Ceiling(fontDpiSize * metroTabItem.FontFamily.LineSpacing);
-                    var newMargin = (Math.Round(fontHeight) / 2.8)
-                                    - metroTabItem.Padding.Top - metroTabItem.Padding.Bottom
-                                    - metroTabItem.contentSite.Margin.Top - metroTabItem.contentSite.Margin.Bottom;
-
-                    var previousMargin = metroTabItem.closeButton.Margin;
-                    metroTabItem.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
-                    metroTabItem.closeButton.Margin = metroTabItem.newButtonMargin;
-
-                    metroTabItem.closeButton.UpdateLayout();
-                }
-            }
-        }
+            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize){ Inherits = true});
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -171,17 +136,29 @@ namespace MahApps.Metro.Controls
         [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static readonly DependencyProperty ButtonWidthProperty =
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(
+                                                    22d,
+                                                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits,
+                                                    (o, e) =>
+                                                        {
+                                                            var element = o as UIElement;
+                                                            if (element != null && e.OldValue != e.NewValue && e.NewValue is double)
+                                                            {
+                                                                TextBoxHelper.SetButtonWidth(element, (double)e.NewValue);
+                                                            }
+                                                        }));
 
         [Category(AppName.MahApps)]
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static double GetButtonWidth(DependencyObject obj)
         {
-            return TextBoxHelper.GetButtonWidth(obj);
+            return (double)obj.GetValue(ButtonWidthProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
-            TextBoxHelper.SetButtonWidth(obj, value);
+            obj.SetValue(ButtonWidthProperty, value);
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));

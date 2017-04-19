@@ -52,6 +52,19 @@ namespace MetroDemo.Models
             }
         }
 
+        private bool isSelected;
+
+        public bool IsSelected
+        {
+            get { return this.isSelected; }
+            set
+            {
+                if (value == this.isSelected) return;
+                this.isSelected = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public string Title
         {
             get { return _title; }

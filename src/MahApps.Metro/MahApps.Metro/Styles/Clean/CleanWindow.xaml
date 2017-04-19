@@ -3,11 +3,11 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="CleanWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="OverrideDefaultWindowCommandsBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="TitleAlignment" Value="Center" />
         <Setter Property="TitleForeground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="WindowTitleBrush" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="OverrideDefaultWindowCommandsBrush" Value="{DynamicResource BlackBrush}" />
     </Style>
 
 </ResourceDictionary>

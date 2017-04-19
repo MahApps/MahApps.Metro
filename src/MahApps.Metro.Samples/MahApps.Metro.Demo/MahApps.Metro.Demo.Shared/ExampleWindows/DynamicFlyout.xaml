@@ -4,36 +4,48 @@
                  xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 Header="Dynamic Flyout"
-                 mc:Ignorable="d"
+                 Width="300"
                  d:DesignHeight="400"
                  d:DesignWidth="300"
-                 Width="300">
+                 Header="Dynamic Flyout"
+                 mc:Ignorable="d">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Margin="0 5 0 5" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et." />
+        <TextBlock Margin="0 5 0 5"
+                   Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et."
+                   TextWrapping="Wrap" />
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
                 <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="Test watermark..." />
                 <PasswordBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="And a Password..." />
-                <Slider x:Name="TheSlider" Margin="0 5 0 0" LargeChange="10" Maximum="100" Minimum="0" SmallChange="1" Value="20" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                <TextBlock Margin="10" HorizontalAlignment="Center" Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat={}{0:N0}}" FontSize="48" />
+                <Slider x:Name="TheSlider"
+                        Margin="0 5 0 0"
+                        Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                        LargeChange="10"
+                        Maximum="100"
+                        Minimum="0"
+                        SmallChange="1"
+                        Value="20" />
+                <TextBlock Margin="10"
+                           HorizontalAlignment="Center"
+                           FontSize="48"
+                           Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat={}{0:N0}}" />
             </StackPanel>
         </ScrollViewer>
         <UniformGrid Grid.Row="2"
                      Margin="10"
                      Columns="2">
             <Button Margin="10"
-                    Content="OK"
                     Click="CloseFlyoutClick"
+                    Content="OK"
                     Style="{DynamicResource SquareButtonStyle}" />
             <Button Margin="10"
-                    Content="Cancel"
                     Click="CloseFlyoutClick"
+                    Content="Cancel"
                     Style="{DynamicResource SquareButtonStyle}" />
         </UniformGrid>
     </Grid>

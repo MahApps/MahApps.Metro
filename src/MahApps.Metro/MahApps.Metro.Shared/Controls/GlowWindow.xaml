@@ -17,10 +17,10 @@
         <!--  use this storyboard for a smoother visibility  -->
         <Storyboard x:Key="OpacityStoryboard">
             <DoubleAnimation BeginTime="00:00:.2"
-                             Duration="00:00:.3"
                              Storyboard.TargetName="glowWindow"
                              Storyboard.TargetProperty="(UIElement.Opacity)"
-                             To="1" />
+                             To="1"
+                             Duration="00:00:.3" />
         </Storyboard>
     </Window.Resources>
 

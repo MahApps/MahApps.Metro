@@ -11,8 +11,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollViewer x:Name="PART_MessageScrollViewer"
-                      Focusable="False"
                       FocusVisualStyle="{x:Null}"
+                      Focusable="False"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="PART_MessageTextBlock"

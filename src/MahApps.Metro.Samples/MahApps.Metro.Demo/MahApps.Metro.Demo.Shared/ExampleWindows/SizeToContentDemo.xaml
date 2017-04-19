@@ -20,4 +20,17 @@
                                   Foreground="White"
                                   Kind="SmileyHappy" />
     </Grid>
+
+    <!--    <StackPanel Orientation="Vertical">-->
+    <!--        <ComboBox Margin="4" controls:TextBoxHelper.Watermark="Authentication Type" controls:TextBoxHelper.UseFloatingWatermark="True" SelectedIndex="1">-->
+    <!--            <ComboBoxItem>Test 001</ComboBoxItem>-->
+    <!--            <ComboBoxItem>Test 002 long text could... be a long long long text</ComboBoxItem>-->
+    <!--            <ComboBoxItem>Test 003</ComboBoxItem>-->
+    <!--        </ComboBox>-->
+    <!--        <TextBox  Margin="4" controls:TextBoxHelper.Watermark="Connection Name" controls:TextBoxHelper.UseFloatingWatermark="True">local</TextBox>-->
+    <!--        <TextBox  Margin="4" controls:TextBoxHelper.Watermark="Portal Url" controls:TextBoxHelper.UseFloatingWatermark="True">http://jkarger.de</TextBox>-->
+    <!--        <TextBox  Margin="4" controls:TextBoxHelper.Watermark="User Name" controls:TextBoxHelper.UseFloatingWatermark="True"></TextBox>-->
+    <!--        <PasswordBox  Margin="4" controls:TextBoxHelper.Watermark="Password" controls:TextBoxHelper.UseFloatingWatermark="True"></PasswordBox>-->
+    <!--    </StackPanel>-->
+
 </controls:MetroWindow>

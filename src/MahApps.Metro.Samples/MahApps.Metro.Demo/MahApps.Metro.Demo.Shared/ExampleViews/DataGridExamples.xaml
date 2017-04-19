@@ -6,12 +6,12 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             TextOptions.TextFormattingMode="Display"
-             TextOptions.TextRenderingMode="ClearType"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -34,12 +34,13 @@
             </x:Array>
 
             <ControlTemplate x:Key="ConfigDataTemplate">
-                <Grid Grid.IsSharedSizeScope="True" d:DataContext="{d:DesignInstance DataGrid}">
+                <Grid d:DataContext="{d:DesignInstance DataGrid}" Grid.IsSharedSizeScope="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="labels" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -63,8 +64,20 @@
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
+                               Text="CellEditAssist" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="1"
+                              Margin="2"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding Path=(controls:DataGridHelper.EnableCellEditAssist)}" />
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Margin="2"
+                               VerticalAlignment="Center"
                                Text="SelectionUnit" />
-                    <ComboBox Grid.Row="1"
+                    <ComboBox Grid.Row="2"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -72,12 +85,12 @@
                               ItemsSource="{StaticResource DataGridSelectionUnitArray}"
                               SelectedValue="{Binding SelectionUnit}" />
 
-                    <TextBlock Grid.Row="2"
+                    <TextBlock Grid.Row="3"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="GridLines" />
-                    <ComboBox Grid.Row="2"
+                    <ComboBox Grid.Row="3"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -85,12 +98,12 @@
                               ItemsSource="{StaticResource DataGridGridLinesVisibilityArray}"
                               SelectedValue="{Binding GridLinesVisibility}" />
 
-                    <TextBlock Grid.Row="3"
+                    <TextBlock Grid.Row="4"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="Headers" />
-                    <ComboBox Grid.Row="3"
+                    <ComboBox Grid.Row="4"
                               Grid.Column="1"
                               Width="100"
                               Margin="2"
@@ -98,18 +111,18 @@
                               ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
                               SelectedValue="{Binding HeadersVisibility}" />
 
-                    <TextBlock Grid.Row="4"
+                    <TextBlock Grid.Row="5"
                                Grid.Column="0"
                                Margin="2"
                                VerticalAlignment="Center"
                                Text="RowHeaderWidth" />
-                    <controls:NumericUpDown Grid.Row="4"
+                    <controls:NumericUpDown Grid.Row="5"
                                             Grid.Column="1"
                                             Width="100"
                                             Margin="2"
                                             VerticalAlignment="Center"
-                                            Minimum="0"
                                             Maximum="40"
+                                            Minimum="0"
                                             Value="{Binding RowHeaderWidth, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </ControlTemplate>
@@ -139,23 +152,27 @@
 
         <ContentControl Grid.Row="1"
                         Grid.Column="0"
-                        Margin="10,5,5,5"
+                        Margin="10 5 5 5"
                         DataContext="{Binding ElementName=MetroDataGrid}"
                         Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="MetroDataGrid"
                   Grid.Row="1"
                   Grid.Column="1"
                   Margin="5"
-                  RowHeaderWidth="20"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
+                  RowHeaderWidth="20"
                   SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         ElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        Header="IsSelected" />
+                                        Header="Row Selected" />
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="Album Selected" />
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                 <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
@@ -174,7 +191,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True">
                             <Setter Property="Background" Value="#FF8B8B" />
-                            <Setter Property="Foreground" Value="Red" />
+                            <Setter Property="Foreground" Value="DarkRed" />
                         </DataTrigger>
                         <!--  IsMouseOver  -->
                         <MultiDataTrigger>
@@ -201,16 +218,16 @@
 
         <ContentControl Grid.Row="3"
                         Grid.Column="0"
-                        Margin="10,5,5,5"
+                        Margin="10 5 5 5"
                         DataContext="{Binding ElementName=AzureDataGrid}"
                         Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="AzureDataGrid"
                   Grid.Row="3"
                   Grid.Column="1"
                   Margin="5"
-                  RowHeaderWidth="0"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
+                  RowHeaderWidth="0"
                   Style="{DynamicResource AzureDataGrid}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />

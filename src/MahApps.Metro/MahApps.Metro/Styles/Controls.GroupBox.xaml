@@ -6,13 +6,13 @@
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
     <Style x:Key="MetroGroupBox" TargetType="{x:Type GroupBox}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="Padding" Value="5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -33,25 +33,25 @@
                                 UseLayoutRounding="True">
                             <Controls:ContentControlEx x:Name="HeaderContent"
                                                        Padding="{TemplateBinding Padding}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                        UseLayoutRounding="False">
                                 <TextElement.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                        <Binding Mode="OneWay"
                                                  Path="Background"
-                                                 Mode="OneWay" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
+                                        <Binding Mode="OneWay"
                                                  Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                                 Mode="OneWay" />
+                                                 RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </TextElement.Foreground>
                             </Controls:ContentControlEx>

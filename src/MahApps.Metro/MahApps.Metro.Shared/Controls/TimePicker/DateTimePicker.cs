@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -123,6 +124,7 @@
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
                 _calendar.SelectedDatesChanged += OnSelectedDateChanged;
+                _calendar.SelectedDatesChanged += OnCalendarSelectedDateChanged;
             }
         }
 
@@ -141,6 +143,15 @@
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
             return valueForTextBox;
+        }
+
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseUp(e);
+            if (Mouse.Captured is CalendarItem)
+            {
+                Mouse.Capture(null);
+            }
         }
 
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
@@ -173,6 +184,19 @@
             if (!_deactivateWriteValueToTextBox)
             {
                 base.WriteValueToTextBox();
+            }
+        }
+
+        private void OnCalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var dt = (DateTime)e.AddedItems[0];
+
+                var timeOfDay = SelectedDateTime.GetValueOrDefault().TimeOfDay;
+
+                dt += timeOfDay;
+                SelectedDateTime = dt;
             }
         }
 
@@ -235,7 +259,7 @@
             if (dateTime != null)
             {
                 DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-                if (this.SelectedDateTime != DisplayDate || (Popup != null && Popup.IsOpen))
+                if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
                 {
                     this.SelectedDateTime = DisplayDate;
                 }
