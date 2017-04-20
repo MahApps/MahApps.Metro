@@ -1,12 +1,12 @@
-﻿namespace MetroDemo.ExampleViews
-{
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using JetBrains.Annotations;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Controls.Dialogs;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using JetBrains.Annotations;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
+namespace MetroDemo.ExampleViews
+{
     public sealed partial class HamburgerMenuSample : UserControl
     {
         public HamburgerMenuSample()
