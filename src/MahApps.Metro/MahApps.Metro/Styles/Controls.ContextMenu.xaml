@@ -13,16 +13,21 @@
         <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="6 2 6 2" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <Grid Margin="0 6 0 4" SnapsToDevicePixels="True">
+                    <Grid Margin="0 6 0 4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Rectangle Height="1"
                                    Margin="20 0 1 1"
-                                   Fill="{DynamicResource GrayBrush7}" />
+                                   Fill="{DynamicResource GrayBrush7}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   UseLayoutRounding="True" />
                         <Rectangle Height="1"
                                    Margin="20 1 1 0"
-                                   Fill="{DynamicResource WhiteBrush}" />
+                                   Fill="{DynamicResource WhiteBrush}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   UseLayoutRounding="True" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
