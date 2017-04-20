@@ -280,12 +280,12 @@ namespace MahApps.Metro.Controls
 
         private static void TextBoxBaseLostFocus(object sender, RoutedEventArgs e)
         {
-            RemoveSpellCheckMenuItems(((FrameworkElement)sender).ContextMenu);
+            RemoveSpellCheckMenuItems((sender as FrameworkElement)?.ContextMenu);
         }
 
         private static void TextBoxBaseContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
-            RemoveSpellCheckMenuItems(((FrameworkElement)sender).ContextMenu);
+            RemoveSpellCheckMenuItems((sender as FrameworkElement)?.ContextMenu);
         }
 
         private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -304,12 +304,10 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var cmdIndex = 0;
+            var itemIndex = 0;
             var textBox = tbBase as TextBox;
             var richTextBox = tbBase as RichTextBox;
-            var spellingError = textBox != null
-                ? textBox.GetSpellingError(textBox.CaretIndex)
-                : richTextBox?.GetSpellingError(richTextBox.CaretPosition);
+            var spellingError = textBox != null ? textBox.GetSpellingError(textBox.CaretIndex) : richTextBox?.GetSpellingError(richTextBox.CaretPosition);
             if (spellingError != null)
             {
                 var spellingSuggestionStyle = contextMenu.TryFindResource(Spelling.SuggestionMenuItemStyleKey) as Style;
@@ -326,41 +324,41 @@ namespace MahApps.Metro.Controls
                                      Style = spellingSuggestionStyle,
                                      Tag = typeof(Spelling)
                                  };
-                        contextMenu.Items.Insert(cmdIndex++, mi);
+                        contextMenu.Items.Insert(itemIndex++, mi);
                     }
                 }
                 else
                 {
-                    contextMenu.Items.Insert(cmdIndex++, new MenuItem
-                                                         {
-                                                             Style = contextMenu.TryFindResource(Spelling.NoSuggestionsMenuItemStyleKey) as Style,
-                                                             Tag = typeof(Spelling)
-                                                         });
+                    contextMenu.Items.Insert(itemIndex++, new MenuItem
+                                                          {
+                                                              Style = contextMenu.TryFindResource(Spelling.NoSuggestionsMenuItemStyleKey) as Style,
+                                                              Tag = typeof(Spelling)
+                                                          });
                 }
 
                 // add a separator
-                contextMenu.Items.Insert(cmdIndex++, new Separator
-                                                     {
-                                                         Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
-                                                         Tag = typeof(Spelling)
-                                                     });
+                contextMenu.Items.Insert(itemIndex++, new Separator
+                                                      {
+                                                          Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
+                                                          Tag = typeof(Spelling)
+                                                      });
 
                 // ignore all
-                var ignoreAllMI = new MenuItem
+                var miIgnoreAll = new MenuItem
                                   {
                                       Command = EditingCommands.IgnoreSpellingError,
                                       CommandTarget = tbBase,
                                       Style = contextMenu.TryFindResource(Spelling.IgnoreAllMenuItemStyleKey) as Style,
                                       Tag = typeof(Spelling)
                                   };
-                contextMenu.Items.Insert(cmdIndex++, ignoreAllMI);
+                contextMenu.Items.Insert(itemIndex++, miIgnoreAll);
 
                 // add another separator
-                contextMenu.Items.Insert(cmdIndex, new Separator
-                                                   {
-                                                       Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
-                                                       Tag = typeof(Spelling)
-                                                   });
+                contextMenu.Items.Insert(itemIndex, new Separator
+                                                    {
+                                                        Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
+                                                        Tag = typeof(Spelling)
+                                                    });
             }
         }
 
