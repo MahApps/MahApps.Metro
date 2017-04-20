@@ -15,20 +15,20 @@ using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
-    public interface ISpellCheckMenuItem
+    internal enum SpellingResourceKeyId
     {
+        SuggestionMenuItemStyle,
+        IgnoreAllMenuItemStyle,
+        NoSuggestionsMenuItemStyle,
+        SeparatorStyle,
     }
 
-    public class SpellCheckMenuItem : MenuItem, ISpellCheckMenuItem
+    public static class Spelling
     {
-        public SpellCheckMenuItem()
-        {
-            this.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-        }
-    }
-
-    public class SpellCheckSeparator : Separator, ISpellCheckMenuItem
-    {
+        public static ResourceKey SuggestionMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SuggestionMenuItemStyle);
+        public static ResourceKey IgnoreAllMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.IgnoreAllMenuItemStyle);
+        public static ResourceKey NoSuggestionsMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.NoSuggestionsMenuItemStyle);
+        public static ResourceKey SeparatorStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SeparatorStyle);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof (bool), typeof (TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+        public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(default(bool), IsSpellCheckContextMenuEnabledChanged));
 
         /// <summary>
         /// This property can be used to retrieve the watermark using the <see cref="DisplayAttribute"/> of bound property.
@@ -252,7 +252,7 @@ namespace MahApps.Metro.Controls
         }
 #endif
 
-        private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void IsSpellCheckContextMenuEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var tb = d as TextBoxBase;
             if (null == tb)
@@ -262,16 +262,15 @@ namespace MahApps.Metro.Controls
 
             if (e.OldValue != e.NewValue)
             {
+                tb.SetValue(SpellCheck.IsEnabledProperty, (bool)e.NewValue);
                 if ((bool)e.NewValue)
                 {
-                    tb.SetValue(SpellCheck.IsEnabledProperty, true);
                     tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
                     tb.LostFocus += TextBoxBaseLostFocus;
                     tb.ContextMenuClosing += TextBoxBaseContextMenuClosing;
                 }
                 else
                 {
-                    tb.SetValue(SpellCheck.IsEnabledProperty, false);
                     tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
                     tb.LostFocus -= TextBoxBaseLostFocus;
                     tb.ContextMenuClosing -= TextBoxBaseContextMenuClosing;
@@ -281,70 +280,97 @@ namespace MahApps.Metro.Controls
 
         private static void TextBoxBaseLostFocus(object sender, RoutedEventArgs e)
         {
-            RemoveSpellCheckMenuItems((FrameworkElement)sender);
+            RemoveSpellCheckMenuItems((sender as FrameworkElement)?.ContextMenu);
         }
 
         private static void TextBoxBaseContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
-            RemoveSpellCheckMenuItems((FrameworkElement)sender);
+            RemoveSpellCheckMenuItems((sender as FrameworkElement)?.ContextMenu);
         }
 
         private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             var tbBase = (TextBoxBase)sender;
-            var textBox = tbBase as TextBox;
-            var richTextBox = tbBase as RichTextBox;
-
-            RemoveSpellCheckMenuItems((FrameworkElement)sender);
-
-            // the default item comes normally through the styles, so I think we don't need to do this
-            /*if (tbBase.ContextMenu == null)
-            {
-                tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
-            }*/
-
-            var cmdIndex = 0;
-            var spellingError = textBox != null
-                ? textBox.GetSpellingError(textBox.CaretIndex)
-                : richTextBox?.GetSpellingError(richTextBox.CaretPosition);
-            if (spellingError != null) {
-                var suggestions = spellingError.Suggestions.ToList();
-                if (suggestions.Any()) {
-                    foreach (var suggestion in suggestions) {
-                        var mi = new SpellCheckMenuItem();
-                        mi.Header = suggestion;
-                        mi.FontWeight = FontWeights.Bold;
-                        mi.Command = EditingCommands.CorrectSpellingError;
-                        mi.CommandParameter = suggestion;
-                        mi.CommandTarget = tbBase;
-                        tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
-                        cmdIndex++;
-                    }
-                    // add a separator
-                    tbBase.ContextMenu.Items.Insert(cmdIndex, new SpellCheckSeparator());
-                    cmdIndex++;
-                }
-                var ignoreAllMI = new SpellCheckMenuItem();
-                ignoreAllMI.Header = "Ignore All";
-                ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
-                ignoreAllMI.CommandTarget = tbBase;
-                tbBase.ContextMenu.Items.Insert(cmdIndex, ignoreAllMI);
-                cmdIndex++;
-                // add another separator
-                tbBase.ContextMenu.Items.Insert(cmdIndex, new SpellCheckSeparator());
-            }
-        }
-
-        private static void RemoveSpellCheckMenuItems([CanBeNull] FrameworkElement tbBase)
-        {
-            if (tbBase?.ContextMenu == null)
+            var contextMenu = tbBase.ContextMenu;
+            if (contextMenu == null)
             {
                 return;
             }
-            var spellCheckItems = tbBase.ContextMenu.Items.OfType<ISpellCheckMenuItem>().ToList();
-            foreach (var item in spellCheckItems)
+
+            RemoveSpellCheckMenuItems(contextMenu);
+
+            if (!SpellCheck.GetIsEnabled(tbBase))
             {
-                tbBase.ContextMenu.Items.Remove(item);
+                return;
+            }
+
+            var itemIndex = 0;
+            var textBox = tbBase as TextBox;
+            var richTextBox = tbBase as RichTextBox;
+            var spellingError = textBox != null ? textBox.GetSpellingError(textBox.CaretIndex) : richTextBox?.GetSpellingError(richTextBox.CaretPosition);
+            if (spellingError != null)
+            {
+                var spellingSuggestionStyle = contextMenu.TryFindResource(Spelling.SuggestionMenuItemStyleKey) as Style;
+                var suggestions = spellingError.Suggestions.ToList();
+                if (suggestions.Any())
+                {
+                    foreach (var suggestion in suggestions)
+                    {
+                        var mi = new MenuItem
+                                 {
+                                     Command = EditingCommands.CorrectSpellingError,
+                                     CommandParameter = suggestion,
+                                     CommandTarget = tbBase,
+                                     Style = spellingSuggestionStyle,
+                                     Tag = typeof(Spelling)
+                                 };
+                        contextMenu.Items.Insert(itemIndex++, mi);
+                    }
+                }
+                else
+                {
+                    contextMenu.Items.Insert(itemIndex++, new MenuItem
+                                                          {
+                                                              Style = contextMenu.TryFindResource(Spelling.NoSuggestionsMenuItemStyleKey) as Style,
+                                                              Tag = typeof(Spelling)
+                                                          });
+                }
+
+                // add a separator
+                contextMenu.Items.Insert(itemIndex++, new Separator
+                                                      {
+                                                          Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
+                                                          Tag = typeof(Spelling)
+                                                      });
+
+                // ignore all
+                var miIgnoreAll = new MenuItem
+                                  {
+                                      Command = EditingCommands.IgnoreSpellingError,
+                                      CommandTarget = tbBase,
+                                      Style = contextMenu.TryFindResource(Spelling.IgnoreAllMenuItemStyleKey) as Style,
+                                      Tag = typeof(Spelling)
+                                  };
+                contextMenu.Items.Insert(itemIndex++, miIgnoreAll);
+
+                // add another separator
+                contextMenu.Items.Insert(itemIndex, new Separator
+                                                    {
+                                                        Style = contextMenu.TryFindResource(Spelling.SeparatorStyleKey) as Style,
+                                                        Tag = typeof(Spelling)
+                                                    });
+            }
+        }
+
+        private static void RemoveSpellCheckMenuItems([CanBeNull] ContextMenu contextMenu)
+        {
+            if (contextMenu != null)
+            {
+                var spellCheckItems = contextMenu.Items.OfType<FrameworkElement>().Where(item => ReferenceEquals(item.Tag, typeof(Spelling))).ToList();
+                foreach (var item in spellCheckItems)
+                {
+                    contextMenu.Items.Remove(item);
+                }
             }
         }
 
