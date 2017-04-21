@@ -34,7 +34,7 @@
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
-                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                         SpellCheck.IsEnabled="True"
                          Text="Enabled">
                     <TextBox.ContextMenu>
                         <ContextMenu>
@@ -44,10 +44,10 @@
                 </TextBox>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
-                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
+                         SpellCheck.IsEnabled="True"
                          ToolTip="Default alignment">
                     <TextBox.ContextMenu>
                         <ContextMenu>
@@ -143,8 +143,8 @@
                 <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              Padding="5"
-                             Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
-                             IsDocumentEnabled="True">
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True">
                     <FlowDocument>
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
