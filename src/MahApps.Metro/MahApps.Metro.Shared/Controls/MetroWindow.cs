@@ -858,17 +858,27 @@ namespace MahApps.Metro.Controls
 #if NET4_5
         protected override async void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #else
         protected override void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #endif
@@ -1301,13 +1311,13 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    if (window.WindowState == WindowState.Maximized)
+                    if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
                     mouseButtonEventArgs.Handled = true;
                 }
