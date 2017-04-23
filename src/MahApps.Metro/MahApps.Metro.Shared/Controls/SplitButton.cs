@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -201,19 +202,18 @@ namespace MahApps.Metro.Controls
         {
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
         }
 
         private void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            e.RoutedEvent = SelectionChangedEvent;
-            this.RaiseEvent(e);
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
+            e.Handled = true;
         }
 
         private void ExpanderClick(object sender, RoutedEventArgs e)
         {
-            this.IsExpanded = !this.IsExpanded;
+            this.SetCurrentValue(IsExpandedProperty, !this.IsExpanded);
         }
 
         public override void OnApplyTemplate()
@@ -334,6 +334,18 @@ namespace MahApps.Metro.Controls
             this._listBox.PreviewMouseLeftButtonDown += this.ListBoxPreviewMouseLeftButtonDown;
             this._popup.Opened += this.PopupOpened;
             this._popup.Closed += this.PopupClosed;
+
+            BindingOperations.ClearBinding(this._listBox, ItemsSourceProperty);
+            this._listBox.SetBinding(ItemsSourceProperty, new Binding(ItemsSourceProperty.Name)
+                                                          {
+                                                              Mode = BindingMode.OneWay,
+                                                              RelativeSource = RelativeSource.TemplatedParent
+                                                          });
+        }
+
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            base.OnSelectionChanged(e);
         }
 
         //Make popup close even if no selectionchanged event fired (case when user select the same item as before)
@@ -345,14 +357,14 @@ namespace MahApps.Metro.Controls
                 var item = ContainerFromElement(this._listBox, source) as ListBoxItem;
                 if (item != null)
                 {
-                    this.IsExpanded = false;
+                    this.SetCurrentValue(IsExpandedProperty, false);
                 }
             }
         }
 
         private void PopupClosed(object sender, EventArgs e)
         {
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
             this.ReleaseMouseCapture();
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
             if (this.IsKeyboardFocusWithin)
@@ -394,7 +406,7 @@ namespace MahApps.Metro.Controls
             // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
             if (!(bool)e.NewValue)
             {
-                this.IsExpanded = false;
+                this.SetCurrentValue(IsExpandedProperty, false);
             }
         }
 

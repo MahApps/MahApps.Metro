@@ -4,49 +4,51 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="{x:Type Controls:HotKeyBox}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:HotKeyBox}">
                     <TextBox x:Name="PART_TextBox"
                              MinHeight="{TemplateBinding MinHeight}"
                              Padding="{TemplateBinding Padding}"
-                             Background="{TemplateBinding Background}"
-                             Foreground="{TemplateBinding Foreground}"
-                             BorderBrush="{TemplateBinding BorderBrush}"
-                             BorderThickness="{TemplateBinding BorderThickness}"
-                             FontFamily="{TemplateBinding FontFamily}"
-                             FontSize="{TemplateBinding FontSize}"
-                             IsTabStop="{TemplateBinding IsTabStop}"
-                             Focusable="{TemplateBinding Focusable}"
-                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                             Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}"
-                             Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                             Controls:ControlsHelper.FocusBorderBrush="{TemplateBinding Controls:ControlsHelper.FocusBorderBrush}"
+                             Controls:ControlsHelper.MouseOverBorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
                              Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                              Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                              Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
                              Controls:TextBoxHelper.ButtonFontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
+                             Controls:TextBoxHelper.ButtonWidth="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                              Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding Controls:TextBoxHelper.ButtonsAlignment}"
                              Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
                              Controls:TextBoxHelper.IsWaitingForData="{TemplateBinding Controls:TextBoxHelper.IsWaitingForData}"
                              Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
                              Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                              Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"
-                             Controls:ControlsHelper.FocusBorderBrush="{TemplateBinding Controls:ControlsHelper.FocusBorderBrush}"
-                             Controls:ControlsHelper.MouseOverBorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
-                             Text="{TemplateBinding Text}" />
+                             Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                             Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             Focusable="{TemplateBinding Focusable}"
+                             FontFamily="{TemplateBinding FontFamily}"
+                             FontSize="{TemplateBinding FontSize}"
+                             Foreground="{TemplateBinding Foreground}"
+                             IsTabStop="{TemplateBinding IsTabStop}"
+                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                             Text="{TemplateBinding Text}"
+                             Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">
                             <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Mode=OneWay}" />
@@ -61,5 +63,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
     </Style>
 </ResourceDictionary>

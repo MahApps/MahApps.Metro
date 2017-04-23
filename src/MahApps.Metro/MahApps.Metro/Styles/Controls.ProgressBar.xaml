@@ -1,12 +1,11 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  ProgressBar Style  -->
     <Style x:Key="MetroProgressBar" TargetType="ProgressBar">
-        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Height" Value="10" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
@@ -23,13 +22,13 @@
                                 <Rectangle x:Name="IndeterminateSolidFill"
                                            Margin="{TemplateBinding BorderThickness}"
                                            Fill="{DynamicResource ProgressBrush}"
-                                           StrokeThickness="0"
                                            Opacity="1"
-                                           RenderTransformOrigin="0.5,0.5" />
+                                           RenderTransformOrigin="0.5,0.5"
+                                           StrokeThickness="0" />
                                 <Rectangle x:Name="IndeterminateGradientFill"
                                            Margin="{TemplateBinding BorderThickness}"
-                                           StrokeThickness="1"
-                                           Opacity="0.7">
+                                           Opacity="0.7"
+                                           StrokeThickness="1">
                                     <Rectangle.Fill>
                                         <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="20,1" EndPoint="0,1">
                                             <LinearGradientBrush.Transform>
@@ -77,18 +76,18 @@
                                 <VisualState x:Name="Determinate" />
                                 <VisualState x:Name="Indeterminate">
                                     <Storyboard RepeatBehavior="Forever">
-                                        <ObjectAnimationUsingKeyFrames Duration="00:00:00"
-                                                                       Storyboard.TargetName="IndeterminateRoot"
-                                                                       Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateRoot"
+                                                                       Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                       Duration="00:00:00">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Duration="00:00:00"
-                                                                       Storyboard.TargetName="DeterminateRoot"
-                                                                       Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeterminateRoot"
+                                                                       Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                       Duration="00:00:00">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Collapsed</Visibility>

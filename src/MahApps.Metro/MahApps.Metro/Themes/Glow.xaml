@@ -9,18 +9,18 @@
     <system:Double x:Key="GlowOpacity">0.3</system:Double>
     <system:Double x:Key="ShadowOpacity">0.3</system:Double>
     <BlurEffect x:Key="GlowBlurEffect"
-                options:Freeze="True"
-                Radius="3" />
+                Radius="3"
+                options:Freeze="True" />
 
     <ControlTemplate x:Key="TopGlowTemplate">
         <Border x:Name="GlowBorder"
                 Background="{TemplateBinding Background}"
-                Opacity="{StaticResource GlowOpacity}"
                 CornerRadius="6 6 6 6"
                 Effect="{StaticResource GlowBlurEffect}"
+                Opacity="{StaticResource GlowOpacity}"
                 SnapsToDevicePixels="True">
             <Border.OpacityMask>
-                <LinearGradientBrush options:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1" options:Freeze="True">
                     <GradientStop Offset="0" Color="Transparent" />
                     <GradientStop Offset="1" Color="Black" />
                 </LinearGradientBrush>
@@ -36,12 +36,12 @@
     <ControlTemplate x:Key="BottomGlowTemplate">
         <Border x:Name="GlowBorder"
                 Background="{TemplateBinding Background}"
-                Opacity="{StaticResource GlowOpacity}"
                 CornerRadius="6 6 6 6"
                 Effect="{StaticResource GlowBlurEffect}"
+                Opacity="{StaticResource GlowOpacity}"
                 SnapsToDevicePixels="True">
             <Border.OpacityMask>
-                <LinearGradientBrush options:Freeze="True" StartPoint="0.5,0" EndPoint="0.5,1">
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1" options:Freeze="True">
                     <GradientStop Offset="0" Color="Black" />
                     <GradientStop Offset="1" Color="Transparent" />
                 </LinearGradientBrush>
@@ -57,12 +57,12 @@
     <ControlTemplate x:Key="LeftGlowTemplate">
         <Border x:Name="GlowBorder"
                 Background="{TemplateBinding Background}"
-                Opacity="{StaticResource GlowOpacity}"
                 CornerRadius="6 6 6 6"
                 Effect="{StaticResource GlowBlurEffect}"
+                Opacity="{StaticResource GlowOpacity}"
                 SnapsToDevicePixels="True">
             <Border.OpacityMask>
-                <LinearGradientBrush options:Freeze="True" StartPoint="0,0.5" EndPoint="1,0.5">
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5" options:Freeze="True">
                     <GradientStop Offset="0" Color="Transparent" />
                     <GradientStop Offset="1" Color="Black" />
                 </LinearGradientBrush>
@@ -78,12 +78,12 @@
     <ControlTemplate x:Key="RightGlowTemplate">
         <Border x:Name="GlowBorder"
                 Background="{TemplateBinding Background}"
-                Opacity="{StaticResource GlowOpacity}"
                 CornerRadius="6 6 6 6"
                 Effect="{StaticResource GlowBlurEffect}"
+                Opacity="{StaticResource GlowOpacity}"
                 SnapsToDevicePixels="True">
             <Border.OpacityMask>
-                <LinearGradientBrush options:Freeze="True" StartPoint="0,0.5" EndPoint="1,0.5">
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5" options:Freeze="True">
                     <GradientStop Offset="0" Color="Black" />
                     <GradientStop Offset="1" Color="Transparent" />
                 </LinearGradientBrush>
@@ -124,11 +124,11 @@
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=GlowBrush}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource TopGlowTemplate}" />
         <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="IsGlow" Value="False">
                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=NonActiveGlowBrush}" />

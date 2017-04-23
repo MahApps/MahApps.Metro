@@ -13,19 +13,19 @@
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowMinButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
@@ -34,23 +34,23 @@
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
                 <!--  normal state  -->
                 <Path x:Name="PART_MaxPath"
                       Width="10"
                       Height="10"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
@@ -60,16 +60,16 @@
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       SnapsToDevicePixels="True" />
             </Button>
         </StackPanel>
@@ -91,23 +91,23 @@
                     UseLayoutRounding="True">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MIN">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowMinButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
                 <Path Width="10"
                       Height="10"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       Data="M0,40 L96,40 96,48 0,48 0,40z"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       RenderOptions.EdgeMode="Aliased"
                       SnapsToDevicePixels="True"
                       Stretch="Uniform" />
@@ -120,15 +120,15 @@
                     UseLayoutRounding="True">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="MAX">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowMaxRestoreButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="ResizeMode"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
                 <!--  normal state  -->
@@ -137,8 +137,8 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                     <Path x:Name="PART_MaxPath"
-                          Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                           Data="M2,2 2,10 10,10 10,2 2,2Z M1,11 1,1 11,1 11,11 1,11Z"
+                          Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                           RenderOptions.EdgeMode="Aliased"
                           SnapsToDevicePixels="True"
                           Stretch="Uniform" />
@@ -152,23 +152,31 @@
                     UseLayoutRounding="True">
                 <Button.Visibility>
                     <MultiBinding Converter="{x:Static Converters:ResizeModeMinMaxButtonVisibilityConverter.Instance}" ConverterParameter="CLOSE">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                        <Binding Mode="OneWay"
                                  Path="ShowCloseButton"
-                                 Mode="OneWay" />
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}"
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
+                        <Binding Mode="OneWay"
                                  Path="UseNoneWindowStyle"
-                                 Mode="OneWay" />
+                                 RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
                 <Grid>
-                    <Line VerticalAlignment="Center" HorizontalAlignment="Center"
-                          X1="0" X2="10" Y1="0" Y2="10"
+                    <Line HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          SnapsToDevicePixels="True"
                           Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                          SnapsToDevicePixels="True" />
-                    <Line VerticalAlignment="Center" HorizontalAlignment="Center"
-                          X1="0" X2="10" Y1="10" Y2="0"
+                          X1="0"
+                          X2="10"
+                          Y1="0"
+                          Y2="10" />
+                    <Line HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          SnapsToDevicePixels="True"
                           Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                          SnapsToDevicePixels="True" />
+                          X1="0"
+                          X2="10"
+                          Y1="10"
+                          Y2="0" />
                 </Grid>
             </Button>
         </StackPanel>
@@ -200,7 +208,9 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}" BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}">
+    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands.Win10"
+           BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Template" Value="{StaticResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Style>
 

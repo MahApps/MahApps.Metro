@@ -4,14 +4,14 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mx="clr-namespace:MetroDemo.Markup"
              xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -24,7 +24,7 @@
             </Style>
 
             <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
-                <Image Stretch="Fill" Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                <Image Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" Stretch="Fill" />
             </DataTemplate>
 
         </ResourceDictionary>
@@ -42,7 +42,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Transitions" />
+            <Label Content="Transitions" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:TransitioningContentControl x:Name="transitioning"
                                                   Width="250"
                                                   Height="50"
@@ -108,7 +108,7 @@
                     Grid.RowSpan="2"
                     Grid.Column="1"
                     Grid.ColumnSpan="2">
-            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="FlipView" />
+            <Label Content="FlipView" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Grid Grid.IsSharedSizeScope="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Group1" />
@@ -121,107 +121,113 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <CheckBox x:Name="ShowBannerCheckBox"
-                          Grid.Column="0"
                           Grid.Row="0"
+                          Grid.Column="0"
                           Margin="5 2"
                           Content="Banner" />
                 <CheckBox x:Name="ShowMouseOverCheckBox"
-                          Grid.Column="1"
                           Grid.Row="0"
+                          Grid.Column="1"
                           Margin="5 2"
                           Content="MouseOver Glow"
                           IsChecked="True" />
                 <CheckBox x:Name="CircularNaviCheckBox"
-                          Grid.Column="0"
                           Grid.Row="1"
+                          Grid.Column="0"
                           Margin="5 2"
                           Content="Circular Navi"
                           IsChecked="False" />
                 <CheckBox x:Name="ShowNaviCheckBox"
-                          Grid.Column="1"
                           Grid.Row="1"
+                          Grid.Column="1"
                           Margin="5 2"
                           Content="Show NaviButtons"
                           IsChecked="True" />
                 <ComboBox x:Name="Orientation"
+                          Grid.Row="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
-                          SelectedIndex="0"
-                          Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+                          SelectedIndex="0" />
             </Grid>
             <Controls:FlipView x:Name="FlipView1st"
                                Height="200"
                                Margin="0 0 5 0"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
-                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
                                IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
                                Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">
                         <iconPacks:PackIconModern Width="60"
-                                                 Height="60"
-                                                 VerticalAlignment="Center"
-                                                 HorizontalAlignment="Center"
-                                                 Kind="Cupcake" />
+                                                  Height="60"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Kind="Cupcake" />
                     </Grid>
                     <Grid Background="#00A600">
                         <iconPacks:PackIconModern Width="60"
-                                                 Height="60"
-                                                 VerticalAlignment="Center"
-                                                 HorizontalAlignment="Center"
-                                                 Kind="Xbox" />
+                                                  Height="60"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Kind="Xbox" />
                     </Grid>
                     <Grid Background="#BF1E4B">
                         <iconPacks:PackIconModern Width="60"
-                                                 Height="60"
-                                                 VerticalAlignment="Center"
-                                                 HorizontalAlignment="Center"
-                                                 Kind="ChessHorse" />
+                                                  Height="60"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Kind="ChessHorse" />
                     </Grid>
                 </Controls:FlipView.Items>
             </Controls:FlipView>
-            <StackPanel Orientation="Horizontal" DataContext="{Binding ElementName=FlipView1st, Mode=OneWay}" HorizontalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center"
+                        DataContext="{Binding ElementName=FlipView1st, Mode=OneWay}"
+                        Orientation="Horizontal">
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
                                         Interval="1"
-                                        Minimum="1"
                                         Maximum="{Binding Path=Items.Count, Mode=OneWay}"
-                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}"/>
-                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0">
+                                        Minimum="1"
+                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
+                <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
                     <Run Text="/" />
                     <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
                 </TextBlock>
             </StackPanel>
 
             <Separator Margin="0 5" />
-            <Controls:FlipView x:Name="FlipView2nd" Height="200"
+            <Controls:FlipView x:Name="FlipView2nd"
+                               Height="200"
                                Margin="0 0 5 0"
                                BannerText="Databound Items"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
-                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
                                IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
                                ItemTemplate="{StaticResource ImageDataTemplate}"
-                               ItemsSource="{Binding FlipViewImages, Mode=OneWay}" />
-            <StackPanel Orientation="Horizontal" DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}" HorizontalAlignment="Center">
+                               ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
+            <StackPanel HorizontalAlignment="Center"
+                        DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
+                        Orientation="Horizontal">
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
                                         Interval="1"
-                                        Minimum="1"
                                         Maximum="{Binding Path=Items.Count, Mode=OneWay}"
-                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}"/>
-                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0">
+                                        Minimum="1"
+                                        Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
+                <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
                     <Run Text="/" />
                     <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
                 </TextBlock>
             </StackPanel>
         </StackPanel>
 
-        <Grid Grid.Row="1"
-              Grid.Column="0">
-            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Context menu" />
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Label Content="Context menu" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Label HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    HorizontalContentAlignment="Center"

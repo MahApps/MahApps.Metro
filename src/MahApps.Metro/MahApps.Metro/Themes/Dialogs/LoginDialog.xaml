@@ -24,6 +24,7 @@
                  Controls:TextBoxHelper.SelectAllOnFocus="True"
                  Controls:TextBoxHelper.Watermark="{Binding UsernameWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Controls:VisibilityHelper.IsCollapsed="{Binding ShouldHideUsername, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 CharacterCasing="{Binding UsernameCharacterCasing, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  FontSize="{DynamicResource DialogMessageFontSize}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"

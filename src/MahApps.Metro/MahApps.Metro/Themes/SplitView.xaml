@@ -4,11 +4,10 @@
 
     <Style TargetType="{x:Type local:SplitView}">
         <Setter Property="CompactPaneLength" Value="48" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OpenPaneLength" Value="320" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
         <Setter Property="PaneForeground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SplitView}">
@@ -252,10 +251,10 @@
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PaneRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="PaneClipRectangleTransform"
+                                <DoubleAnimation Storyboard.TargetName="PaneClipRectangleTransform"
                                                  Storyboard.TargetProperty="X"
-                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLengthMinusCompactLength}" />
+                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.NegativeOpenPaneLengthMinusCompactLength}"
+                                                 Duration="0:0:0" />
                             </Storyboard>
 
                             <Storyboard x:Key="ClosedCompactRightStoryboard">
@@ -279,10 +278,10 @@
                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PaneRoot" Storyboard.TargetProperty="HorizontalAlignment">
                                     <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static HorizontalAlignment.Right}" />
                                 </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation Duration="0:0:0"
-                                                 Storyboard.TargetName="PaneClipRectangleTransform"
+                                <DoubleAnimation Storyboard.TargetName="PaneClipRectangleTransform"
                                                  Storyboard.TargetProperty="X"
-                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLengthMinusCompactLength}" />
+                                                 To="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLengthMinusCompactLength}"
+                                                 Duration="0:0:0" />
                             </Storyboard>
 
                             <Storyboard x:Key="OpenOverlayLeftStoryboard">
@@ -423,8 +422,8 @@
                         <FrameworkElement x:Name="ProxyElement"
                                           Width="0"
                                           Height="0"
-                                          Focusable="False"
                                           DataContext="{Binding TemplateSettings, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          Focusable="False"
                                           Visibility="Collapsed" />
 
                         <!--  Content Area  -->
@@ -433,9 +432,9 @@
                               Grid.ColumnSpan="2">
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            IsTabStop="False"
+                                            Content="{TemplateBinding Content}"
                                             Focusable="False"
-                                            Content="{TemplateBinding Content}" />
+                                            IsTabStop="False" />
                             <Rectangle x:Name="LightDismissLayer"
                                        Fill="Transparent"
                                        Visibility="Collapsed" />
@@ -461,10 +460,10 @@
                             </Grid.Clip>
                             <ContentControl HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            IsTabStop="False"
+                                            Content="{TemplateBinding Pane}"
                                             Focusable="False"
                                             Foreground="{TemplateBinding PaneForeground}"
-                                            Content="{TemplateBinding Pane}" />
+                                            IsTabStop="False" />
                             <Rectangle x:Name="HCPaneBorder"
                                        Width="1"
                                        HorizontalAlignment="Right"
@@ -475,29 +474,29 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="DisplayModeStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition From="Closed"
-                                                      Storyboard="{StaticResource ClosedToOpenOverlayLeftStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource ClosedToOpenOverlayLeftStoryboard}"
+                                                      From="Closed"
                                                       To="OpenOverlayLeft" />
-                                    <VisualTransition From="Closed"
-                                                      Storyboard="{StaticResource ClosedToOpenOverlayRightStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource ClosedToOpenOverlayRightStoryboard}"
+                                                      From="Closed"
                                                       To="OpenOverlayRight" />
-                                    <VisualTransition From="ClosedCompactLeft"
-                                                      Storyboard="{StaticResource ClosedCompactLeftToOpenCompactOverlayLeftStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource ClosedCompactLeftToOpenCompactOverlayLeftStoryboard}"
+                                                      From="ClosedCompactLeft"
                                                       To="OpenCompactOverlayLeft" />
-                                    <VisualTransition From="ClosedCompactRight"
-                                                      Storyboard="{StaticResource ClosedCompactRightToOpenCompactOverlayRightStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource ClosedCompactRightToOpenCompactOverlayRightStoryboard}"
+                                                      From="ClosedCompactRight"
                                                       To="OpenCompactOverlayRight" />
-                                    <VisualTransition From="OpenOverlayLeft"
-                                                      Storyboard="{StaticResource OpenOverlayLeftToClosedStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource OpenOverlayLeftToClosedStoryboard}"
+                                                      From="OpenOverlayLeft"
                                                       To="Closed" />
-                                    <VisualTransition From="OpenOverlayRight"
-                                                      Storyboard="{StaticResource OpenOverlayRightToClosedStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource OpenOverlayRightToClosedStoryboard}"
+                                                      From="OpenOverlayRight"
                                                       To="Closed" />
-                                    <VisualTransition From="OpenCompactOverlayLeft"
-                                                      Storyboard="{StaticResource OpenCompactOverlayLeftToClosedCompactLeftStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource OpenCompactOverlayLeftToClosedCompactLeftStoryboard}"
+                                                      From="OpenCompactOverlayLeft"
                                                       To="ClosedCompactLeft" />
-                                    <VisualTransition From="OpenCompactOverlayRight"
-                                                      Storyboard="{StaticResource OpenCompactOverlayRightToClosedCompactRightStoryboard}"
+                                    <VisualTransition Storyboard="{StaticResource OpenCompactOverlayRightToClosedCompactRightStoryboard}"
+                                                      From="OpenCompactOverlayRight"
                                                       To="ClosedCompactRight" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed" />
@@ -515,5 +514,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>

@@ -5,7 +5,6 @@
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
     <Style x:Key="MetroCheckBox" TargetType="CheckBox">
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -13,9 +12,10 @@
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource CheckBoxMouseOverBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="6 0 0 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -25,19 +25,20 @@
                             <ColumnDefinition x:Name="RightCol" Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_CHECKBOX">
-                            <Rectangle Margin="-6, 0" Fill="{DynamicResource TransparentWhiteBrush}" />
+                            <Rectangle Margin="-6 0" Fill="{DynamicResource TransparentWhiteBrush}" />
                             <Border x:Name="normal"
                                     Width="18"
                                     Height="18"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Path x:Name="checkBox"
                                   Width="12"
                                   Height="10"
+                                  Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
                                   Fill="{DynamicResource HighlightBrush}"
                                   Opacity="0"
-                                  Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
                                   Stretch="Fill"
                                   UseLayoutRounding="False" />
                             <Rectangle x:Name="IndeterminateCheck"
@@ -50,7 +51,8 @@
                                     Height="18"
                                     Background="{DynamicResource SemiTransparentWhiteBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    Opacity="0" />
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <ContentPresenter x:Name="contentPresenter"
                                           Grid.Column="1"
@@ -65,33 +67,33 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="contentPresenter"
+                                        <DoubleAnimation Storyboard.TargetName="contentPresenter"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To=".55" />
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="disabled"
+                                                         To=".55"
+                                                         Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="disabled"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
+                                                         To="1"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="checkBox"
+                                        <DoubleAnimation Storyboard.TargetName="checkBox"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
+                                                         To="1"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
                                 <VisualState x:Name="Indeterminate">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="IndeterminateCheck"
+                                        <DoubleAnimation Storyboard.TargetName="IndeterminateCheck"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1" />
+                                                         To="1"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -125,5 +127,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 </ResourceDictionary>

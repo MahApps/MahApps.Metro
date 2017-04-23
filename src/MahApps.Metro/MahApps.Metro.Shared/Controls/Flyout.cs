@@ -16,10 +16,10 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
-    [TemplatePart(Name = "PART_Root", Type = typeof(Grid))]
+    [TemplatePart(Name = "PART_Root", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
-    public class Flyout : ContentControl
+    public class Flyout : HeaderedContentControl
     {
         /// <summary>
         /// An event that is raised when IsOpen changes.
@@ -47,14 +47,12 @@ namespace MahApps.Metro.Controls
             remove { this.RemoveHandler(ClosingFinishedEvent, value); }
         }
 
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register("AnimateOpacity", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
@@ -136,15 +134,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// A DataTemplate for the flyout's header.
-        /// </summary>
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)this.GetValue(HeaderTemplateProperty); }
-            set { this.SetValue(HeaderTemplateProperty, value); }
-        }
-
-        /// <summary>
         /// Gets/sets whether this flyout is visible.
         /// </summary>
         public bool IsOpen
@@ -205,15 +194,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (Position)this.GetValue(PositionProperty); }
             set { this.SetValue(PositionProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the flyout's header.
-        /// </summary>
-        public string Header
-        {
-            get { return (string)this.GetValue(HeaderProperty); }
-            set { this.SetValue(HeaderProperty, value); }
         }
 
         /// <summary>
@@ -346,12 +326,12 @@ namespace MahApps.Metro.Controls
             {
                 case FlyoutTheme.Accent:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
-                    this.SetResourceReference(BackgroundProperty, "HighlightBrush");
-                    this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                    this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -362,16 +342,58 @@ namespace MahApps.Metro.Controls
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
+                    this.OverrideFlyoutResources(this.Resources);
                     break;
             }
+        }
+
+        private void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
+        {
+            var fromColorKey = accent ? "HighlightColor" : "FlyoutColor";
+
+            resources.BeginInit();
+
+            var fromColor = (Color)resources[fromColorKey];
+            resources["WhiteColor"] = fromColor;
+            resources["FlyoutColor"] = fromColor;
+
+            var newBrush = new SolidColorBrush(fromColor);
+            newBrush.Freeze();
+            resources["FlyoutBackgroundBrush"] = newBrush;
+            resources["ControlBackgroundBrush"] = newBrush;
+            resources["WhiteBrush"] = newBrush;
+            resources["WhiteColorBrush"] = newBrush;
+            resources["DisabledWhiteBrush"] = newBrush;
+            resources["WindowBackgroundBrush"] = newBrush;
+            resources[SystemColors.WindowBrushKey] = newBrush;
+
+            if (accent)
+            {
+                fromColor = (Color)resources["IdealForegroundColor"];
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["FlyoutForegroundBrush"] = newBrush;
+                resources["TextBrush"] = newBrush;
+                resources["LabelTextBrush"] = newBrush;
+
+                fromColor = (Color)resources["AccentBaseColor"];
+                newBrush = new SolidColorBrush(fromColor);
+                newBrush.Freeze();
+                resources["HighlightColor"] = fromColor;
+                resources["HighlightBrush"] = newBrush;
+            }
+
+            resources.EndInit();
         }
 
         private static Tuple<AppTheme, Accent> DetectTheme(Flyout flyout)
@@ -626,7 +648,7 @@ namespace MahApps.Metro.Controls
         }
 
         DispatcherTimer autoCloseTimer;
-        Grid flyoutRoot;
+        FrameworkElement flyoutRoot;
         Storyboard hideStoryboard;
         SplineDoubleKeyFrame hideFrame;
         SplineDoubleKeyFrame hideFrameY;
@@ -640,7 +662,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this.flyoutRoot = this.GetTemplateChild("PART_Root") as Grid;
+            this.flyoutRoot = this.GetTemplateChild("PART_Root") as FrameworkElement;
             if (this.flyoutRoot == null)
             {
                 return;

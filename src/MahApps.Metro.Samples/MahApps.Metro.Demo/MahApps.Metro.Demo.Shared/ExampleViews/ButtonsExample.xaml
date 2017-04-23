@@ -4,12 +4,12 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="737.288"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
@@ -30,6 +30,16 @@
 
         <StackPanel Grid.Column="0">
             <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:Badged Width="100"
+                             Margin="{StaticResource ControlMargin}"
+                             Badge="3">
+                <Button Content="Mail" />
+            </Controls:Badged>
+            <Controls:Badged x:Name="CountingBadge"
+                             Width="100"
+                             Margin="{StaticResource ControlMargin}">
+                <Button Click="CountingButton_OnClick" Content="Click Me" />
+            </Controls:Badged>
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled" />
@@ -72,13 +82,13 @@
                           IsEnabled="False" />
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
-                          Style="{DynamicResource MetroFlatToggleButton}"
-                          Content="Enabled" />
+                          Content="Enabled"
+                          Style="{DynamicResource MetroFlatToggleButton}" />
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
-                          Style="{DynamicResource MetroFlatToggleButton}"
                           Content="Disabled"
-                          IsEnabled="False" />
+                          IsEnabled="False"
+                          Style="{DynamicResource MetroFlatToggleButton}" />
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
@@ -184,31 +194,31 @@
             </StackPanel.Resources>
             <Label Content="Enable / Visible" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch x:Name="enabledSwitch"
-                                   Header="Win10 Style"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
+                                   Header="Win10 Style"
                                    IsChecked="True"
                                    OffLabel="Disabled"
-                                   OnLabel="Enabled" />
+                                   OnLabel="Enabled"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="False"
                                    OffLabel="Collapsed"
-                                   OnLabel="Visible" />
-            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   OnLabel="Visible"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
-                                   Margin="{StaticResource ControlMargin}"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                    Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
 
-            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
-                                   Margin="{StaticResource ControlMargin}"
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"
-                                   IsEnabled="False" />
-            <Controls:ToggleSwitch Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
-                                   Margin="{StaticResource ControlMargin}"
+                                   IsEnabled="False"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="False"
-                                   IsEnabled="False" />
+                                   IsEnabled="False"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -296,7 +306,7 @@
                                          ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}"
                                          Orientation="Vertical">
                     <Controls:DropDownButton.Icon>
-                        <iconPacks:PackIconModern Kind="Journal" Margin="6" />
+                        <iconPacks:PackIconModern Margin="6" Kind="Journal" />
                     </Controls:DropDownButton.Icon>
                 </Controls:DropDownButton>
             </StackPanel>
@@ -310,9 +320,10 @@
                                   HorizontalContentAlignment="Left"
                                   DisplayMemberPath="Title"
                                   ItemsSource="{Binding Albums}"
-                                  SelectedIndex="2">
+                                  SelectedIndex="2"
+                                  SelectionChanged="SplitButton_OnSelectionChanged">
                 <Controls:SplitButton.Icon>
-                    <iconPacks:PackIconModern Kind="Alert" Margin="6" />
+                    <iconPacks:PackIconModern Margin="6" Kind="Alert" />
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
 
@@ -325,7 +336,7 @@
                                   Orientation="Vertical"
                                   SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}">
                 <Controls:SplitButton.Icon>
-                    <iconPacks:PackIconModern Kind="Book" Margin="6" />
+                    <iconPacks:PackIconModern Margin="6" Kind="Book" />
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
 
