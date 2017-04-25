@@ -32,7 +32,7 @@
             typeof(DateTimePicker));
 
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
-      
+
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
         private bool _deactivateWriteValueToTextBox;
@@ -171,7 +171,7 @@
         protected override string GetValueForTextBox()
         {
             var formatInfo = SpecificCultureInfo.DateTimeFormat;
-            var dateTimeFormat = string.Intern($"{formatInfo.ShortDatePattern} {formatInfo.LongTimePattern}");
+            var dateTimeFormat = string.Intern(DisplayFormat ?? $"{formatInfo.ShortDatePattern} {formatInfo.LongTimePattern}");
 
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
