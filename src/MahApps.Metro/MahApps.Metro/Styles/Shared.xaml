@@ -64,4 +64,74 @@
                          Duration="0:0:.2" />
     </Storyboard>
 
+    <Storyboard x:Key="HideInteriorFloatingMessageStoryboard">
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+                         Storyboard.TargetName="PART_InteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="MaxHeight"
+                         From="15"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_InteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="Opacity"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseIn}"
+                         Storyboard.TargetName="PART_InteriorFloatingMessage"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         To="20"
+                         Duration="0:0:.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="ShowInteriorFloatingMessageStoryboard">
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+                         Storyboard.TargetName="PART_InteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="MaxHeight"
+                         From="0"
+                         To="15"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_InteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseOut}"
+                         Storyboard.TargetName="PART_InteriorFloatingMessage"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         To="0"
+                         Duration="0:0:.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="HideExteriorFloatingMessageStoryboard">
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+                         Storyboard.TargetName="PART_ExteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="MaxHeight"
+                         From="15"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_ExteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="Opacity"
+                         To="0"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseIn}"
+                         Storyboard.TargetName="PART_ExteriorFloatingMessage"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         To="20"
+                         Duration="0:0:.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="ShowExteriorFloatingMessageStoryboard">
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+                         Storyboard.TargetName="PART_ExteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="MaxHeight"
+                         From="0"
+                         To="15"
+                         Duration="0:0:.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_ExteriorFloatingMessageContainer"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:.2" />
+        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseOut}"
+                         Storyboard.TargetName="PART_ExteriorFloatingMessage"
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         To="0"
+                         Duration="0:0:.2" />
+    </Storyboard>
+
 </ResourceDictionary>

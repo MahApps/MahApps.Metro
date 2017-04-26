@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
         <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+
     </UserControl.Resources>
 
     <AdornerDecorator>
@@ -32,6 +33,45 @@
                         Grid.RowSpan="2"
                         Grid.Column="0"
                         Margin="{StaticResource ColumnMargin}">
+                <Label Content="Enhanced TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <TextBox x:Name="WatermarkText"
+                         Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.Watermark="Watermark Text" />
+                <CheckBox x:Name="UseFloatingWatermark"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="Use Floating Watermark" />
+                <TextBox x:Name="OverrideText"
+                         Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.Watermark="Floating Watermark Override Text (Optional)" />
+                <ComboBox x:Name="FloatingWatermarkLocation"
+                          Margin="{StaticResource ControlMargin}"
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
+                          Controls:TextBoxHelper.Watermark="Floating Watermark Location"
+                          SelectedIndex="0">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="Interior (Default)" />
+                        <ComboBoxItem Content="Exterior" />
+                    </ComboBox.Items>
+                </ComboBox>
+                <ComboBox x:Name="WatermarkTrimming"
+                          Margin="{StaticResource ControlMargin}"
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
+                          Controls:TextBoxHelper.Watermark="Watermark Trimming"
+                          SelectedIndex="0">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="Word (Default)" Tag="WordEllipsis" />
+                        <ComboBoxItem Content="Character" Tag="CharacterEllipsis" />
+                        <ComboBoxItem Content="None" Tag="None" />
+                    </ComboBox.Items>
+                </ComboBox>
+                <TextBox Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
+                         Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
+                         Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
+                         Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
+                         Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          SpellCheck.IsEnabled="True"
