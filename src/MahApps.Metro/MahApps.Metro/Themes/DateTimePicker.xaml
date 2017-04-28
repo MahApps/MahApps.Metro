@@ -13,6 +13,7 @@
     <converters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
     <converters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
     <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
+    <converters:FloatingWatermarkOverrideTextLengthToBooleanConverter x:Key="FloatingWatermarkOverrideTextToBooleanConverter" />
 
     <DataTemplate x:Key="FiveMinuteIndicator">
         <StackPanel Height="57"
