@@ -130,6 +130,7 @@
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding TextWrapping}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_InteriorFloatingMessageContainer"
                                             Grid.Row="0"
