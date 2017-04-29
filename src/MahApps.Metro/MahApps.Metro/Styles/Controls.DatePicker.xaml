@@ -59,7 +59,9 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid x:Name="PART_InnerGrid" Margin="2">
+                        <Grid x:Name="PART_InnerGrid"
+                              Grid.Row="1"
+                              Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
@@ -124,6 +126,7 @@
                                    StaysOpen="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Grid.Row="1"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"

@@ -417,7 +417,7 @@
                             <Grid x:Name="ContentSite"
                                   Grid.Row="1"
                                   Grid.Column="0"
-                                  Margin="4 0 4 0">
+                                  Margin="4 2">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -431,6 +431,7 @@
                         </Grid>
 
                         <Border x:Name="FocusBorder"
+                                Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Background="{x:Null}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -439,6 +440,7 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Visibility="Collapsed" />
                         <Border x:Name="DisabledVisualElement"
+                                Grid.Row="1"
                                 Grid.ColumnSpan="3"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"

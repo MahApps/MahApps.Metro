@@ -162,6 +162,7 @@
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Grid.Row="1"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
