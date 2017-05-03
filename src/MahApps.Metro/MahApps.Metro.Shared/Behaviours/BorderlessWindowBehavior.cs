@@ -474,7 +474,12 @@ namespace MahApps.Metro.Behaviours
                         Native.RECT rect;
                         if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
                         {
-                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), rect.left, rect.top, rect.Width, rect.Height, 0x0040);
+                            uint flags = 0x0040;
+                            if (!this.AssociatedObject.ShowActivated)
+                            {
+                                flags |= (uint)Standard.SWP.NOACTIVATE;
+                            }
+                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), rect.left, rect.top, rect.Width, rect.Height, flags);
                         }
                     });
             }
