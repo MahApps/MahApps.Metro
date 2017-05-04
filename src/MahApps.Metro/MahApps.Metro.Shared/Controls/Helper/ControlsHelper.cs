@@ -149,11 +149,13 @@ namespace MahApps.Metro.Controls
                                                         }));
 
         [Category(AppName.MahApps)]
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static double GetButtonWidth(DependencyObject obj)
         {
             return (double)obj.GetValue(ButtonWidthProperty);
         }
 
+        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
             obj.SetValue(ButtonWidthProperty, value);

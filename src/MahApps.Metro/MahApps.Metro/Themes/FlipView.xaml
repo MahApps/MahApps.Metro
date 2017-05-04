@@ -21,8 +21,8 @@
                                   Canvas.Top="14.75"
                                   Width="16"
                                   Height="18"
-                                  Fill="{DynamicResource BlackBrush}"
                                   Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z "
+                                  Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
                         <Button x:Name="PART_ForwardButton"
@@ -33,8 +33,8 @@
                                   Canvas.Top="14.75"
                                   Width="16"
                                   Height="18"
-                                  Fill="{DynamicResource BlackBrush}"
                                   Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z "
+                                  Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
 
@@ -47,8 +47,8 @@
                                   Canvas.Top="14.75"
                                   Width="16"
                                   Height="18"
-                                  Fill="{DynamicResource BlackBrush}"
                                   Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
+                                  Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
                         <Button x:Name="PART_DownButton"
@@ -60,8 +60,8 @@
                                   Canvas.Top="14.75"
                                   Width="16"
                                   Height="18"
-                                  Fill="{DynamicResource BlackBrush}"
                                   Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                                  Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
                     </Grid>
@@ -73,9 +73,9 @@
                           Background="{DynamicResource BlackBrush}"
                           Opacity="0.85">
                         <Label x:Name="PART_BannerLabel"
-                               Foreground="{DynamicResource WhiteBrush}"
                                FontFamily="{TemplateBinding FontFamily}"
                                FontSize="{TemplateBinding FontSize}"
+                               Foreground="{DynamicResource WhiteBrush}"
                                IsTabStop="False" />
                     </Grid>
 
@@ -128,9 +128,9 @@
                                 <Grid Background="{TemplateBinding Background}">
                                     <Label HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Foreground="{TemplateBinding Foreground}"
                                            FontFamily="Marlett"
-                                           FontSize="17">
+                                           FontSize="17"
+                                           Foreground="{TemplateBinding Foreground}">
                                         <ContentPresenter ContentSource="Content" />
                                     </Label>
                                 </Grid>

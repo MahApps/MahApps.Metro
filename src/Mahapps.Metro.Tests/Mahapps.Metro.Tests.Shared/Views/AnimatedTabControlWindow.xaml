@@ -5,11 +5,11 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:tests="clr-namespace:MahApps.Metro.Tests"
-                      mc:Ignorable="d"
+                      Width="300"
+                      Height="600"
                       d:DesignHeight="300"
                       d:DesignWidth="300"
-                      Height="600"
-                      Width="300">
+                      mc:Ignorable="d">
 
     <controls:MetroWindow.Resources>
         <tests:TabControlContentTemplateSelector x:Key="TabControlContentTemplateSelector">
@@ -28,27 +28,27 @@
 
     <UniformGrid Rows="4">
         <controls:MetroAnimatedSingleRowTabControl x:Name="MetroTabControl"
-                                                   ItemsSource="{Binding Data.TestViewModels}"
-                                                   ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}" />
+                                                   ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                                                   ItemsSource="{Binding Data.TestViewModels}" />
         <Grid>
             <Grid.Resources>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             </Grid.Resources>
             <TabControl x:Name="NormalTabControl"
-                        ItemsSource="{Binding Data.TestViewModels}"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}" />
+                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                        ItemsSource="{Binding Data.TestViewModels}" />
         </Grid>
 
         <controls:MetroAnimatedTabControl x:Name="MetroTabControl2"
-                                          ItemsSource="{Binding Data.TestViewModels}"
-                                          ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}" />
+                                          ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                                          ItemsSource="{Binding Data.TestViewModels}" />
         <Grid>
             <Grid.Resources>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </Grid.Resources>
             <TabControl x:Name="NormalTabControl2"
-                        ItemsSource="{Binding Data.TestViewModels}"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}" />
+                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                        ItemsSource="{Binding Data.TestViewModels}" />
         </Grid>
     </UniformGrid>
 

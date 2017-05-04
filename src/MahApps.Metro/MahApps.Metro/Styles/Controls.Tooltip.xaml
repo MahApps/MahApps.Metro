@@ -26,20 +26,19 @@
                         </Border.Resources>
                         <controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Margin="{TemplateBinding Padding}"
-                                                   Foreground="{TemplateBinding Foreground}"
-                                                   FontSize="{TemplateBinding FontSize}"
                                                    Content="{TemplateBinding Content}"
                                                    ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        </controls:ContentControlEx>
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition From="Open"
-                                                      GeneratedDuration="0:0:0.3"
+                                    <VisualTransition GeneratedDuration="0:0:0.3"
+                                                      From="Open"
                                                       To="Closed" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">

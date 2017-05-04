@@ -3,27 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metroDemo="clr-namespace:MetroDemo"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
+             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="LargeTileStyle" TargetType="Controls:Tile">
                 <Setter Property="Height" Value="125" />
-                <Setter Property="TitleFontSize" Value="14" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="14" />
                 <Setter Property="Width" Value="300" />
             </Style>
 
             <Style x:Key="SmallTileStyle" TargetType="Controls:Tile">
                 <Setter Property="Height" Value="125" />
-                <Setter Property="TitleFontSize" Value="10" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="10" />
                 <Setter Property="Width" Value="147" />
             </Style>
         </ResourceDictionary>
@@ -42,10 +42,10 @@
 
             <TextBlock Grid.Column="1"
                        VerticalAlignment="Center"
-                       Foreground="{DynamicResource BlackBrush}"
                        FontFamily="Segoe UI"
                        FontSize="30"
                        FontWeight="Light"
+                       Foreground="{DynamicResource BlackBrush}"
                        Text="Only some Tiles in a WrapPanel" />
 
             <WrapPanel Grid.Row="1"
@@ -56,59 +56,59 @@
                        VerticalAlignment="Top">
                 <Controls:Tile Title="Mail"
                                Margin="3"
-                               Style="{StaticResource LargeTileStyle}"
-                               Background="Teal"
                                Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
-                               HorizontalTitleAlignment="Right">
+                               Background="Teal"
+                               HorizontalTitleAlignment="Right"
+                               Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconModern Width="40"
-                                             Height="40"
-                                             Kind="Email" />
+                                              Height="40"
+                                              Kind="Email" />
                 </Controls:Tile>
                 <Controls:Tile Title="Desktop"
                                Margin="3"
-                               Style="{StaticResource LargeTileStyle}"
-                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}">
+                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                               Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconFontAwesome Width="40"
-                                                  Height="40"
-                                                  Kind="Desktop" />
+                                                   Height="40"
+                                                   Kind="Desktop" />
                 </Controls:Tile>
                 <Controls:Tile Title="Finance"
-                               Style="{StaticResource LargeTileStyle}"
-                               Background="DimGray">
+                               Background="DimGray"
+                               Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconModern Width="40"
-                                             Height="40"
+                                              Height="40"
                                               Kind="Money" />
                 </Controls:Tile>
                 <Controls:Tile Title="People"
-                               Style="{StaticResource LargeTileStyle}"
                                Background="#D2691E"
-                               HorizontalTitleAlignment="Right">
+                               HorizontalTitleAlignment="Right"
+                               Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconModern Width="40"
-                                             Height="40"
-                                             Kind="PeopleMultiple" />
+                                              Height="40"
+                                              Kind="PeopleMultiple" />
                 </Controls:Tile>
                 <Controls:Tile Title="Count"
-                               TitleFontSize="16"
-                               HorizontalTitleAlignment="Center"
-                               VerticalTitleAlignment="Top"
+                               Background="#FF842D"
                                Count="28"
                                CountFontSize="42"
+                               HorizontalTitleAlignment="Center"
+                               IsEnabled="False"
                                Style="{StaticResource SmallTileStyle}"
-                               Background="#FF842D"
-                               IsEnabled="False" />
+                               TitleFontSize="16"
+                               VerticalTitleAlignment="Top" />
                 <Controls:Tile Title="Weather"
-                               Style="{StaticResource SmallTileStyle}"
-                               Background="#1E90FF">
+                               Background="#1E90FF"
+                               Style="{StaticResource SmallTileStyle}">
                     <iconPacks:PackIconMaterial Width="40"
-                                               Height="40"
-                                               Kind="WeatherCloudy" />
+                                                Height="40"
+                                                Kind="WeatherCloudy" />
                 </Controls:Tile>
                 <Controls:Tile Title="Store"
-                               Style="{StaticResource LargeTileStyle}"
-                               Background="Green">
+                               Background="Green"
+                               Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconEntypo Width="40"
-                                             Height="40"
-                                             Kind="WindowsStore" />
+                                              Height="40"
+                                              Kind="WindowsStore" />
                 </Controls:Tile>
             </WrapPanel>
         </Grid>

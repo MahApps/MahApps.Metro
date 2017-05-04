@@ -6,6 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Underline.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Badged.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/DateTimePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/DropDownButton.xaml" />
@@ -36,14 +37,16 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <!--  set up default styles for our custom controls  -->
-    <Style TargetType="{x:Type controls:ToggleSwitchButton}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" />
-    <Style TargetType="{x:Type controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" TargetType="{x:Type controls:ToggleSwitchButton}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" TargetType="{x:Type controls:ToggleSwitch}" />
 
-    <Style TargetType="{x:Type controls:ContentControlEx}" BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" />
-    <Style TargetType="{x:Type controls:MetroThumbContentControl}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" TargetType="{x:Type controls:ContentControlEx}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" TargetType="{x:Type controls:MetroThumbContentControl}" />
 
-    <Style TargetType="{x:Type controls:WindowButtonCommands}" BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" TargetType="{x:Type controls:WindowButtonCommands}" />
+
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.HamburgerMenu}" TargetType="{x:Type controls:HamburgerMenu}" />
 
 </ResourceDictionary>

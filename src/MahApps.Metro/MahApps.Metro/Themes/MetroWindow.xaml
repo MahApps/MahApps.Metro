@@ -37,10 +37,11 @@
                                Grid.ColumnSpan="5"
                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Fill="{TemplateBinding WindowTitleBrush}"
-                               StrokeThickness="0"
                                Focusable="False"
+                               StrokeThickness="0"
                                UseLayoutRounding="True"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               Visibility="{TemplateBinding ShowTitleBar,
+                                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -54,7 +55,8 @@
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar,
+                                                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
@@ -66,7 +68,8 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar,
+                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="0"
@@ -77,23 +80,24 @@
                     <Controls:MetroThumbContentControl x:Name="PART_TitleBar"
                                                        Grid.Row="0"
                                                        Grid.Column="2"
-                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                        HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                        HorizontalContentAlignment="Stretch"
                                                        VerticalContentAlignment="Stretch"
                                                        Content="{TemplateBinding Title}"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
                                                        Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Visibility="{TemplateBinding ShowTitleBar,
+                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
-                                         Path="Fill"
-                                         Mode="OneWay" />
-                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                         Mode="OneWay"
+                                         Path="Fill" />
+                                <Binding Mode="OneWay"
                                          Path="TitleForeground"
-                                         Mode="OneWay" />
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
                             </MultiBinding>
                         </ContentControl.Foreground>
                     </Controls:MetroThumbContentControl>
@@ -108,7 +112,8 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar,
+                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
@@ -123,7 +128,8 @@
                                       UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
-                    <Controls:MetroContentControl Grid.Row="1"
+                    <Controls:MetroContentControl x:Name="PART_Content"
+                                                  Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   FocusVisualStyle="{x:Null}"
@@ -178,9 +184,9 @@
                           Grid.ColumnSpan="5"
                           Panel.ZIndex="4"
                           Background="{TemplateBinding OverlayBrush}"
-                          Opacity="0"
                           FocusVisualStyle="{x:Null}"
                           Focusable="False"
+                          Opacity="0"
                           Visibility="Hidden" />
 
                     <!--  active dialog container  -->
@@ -228,18 +234,18 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
             </Trigger>
-            
+
             <Trigger Property="UseNoneWindowStyle" Value="True">
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">
@@ -306,10 +312,11 @@
                                Grid.ColumnSpan="5"
                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Fill="{TemplateBinding WindowTitleBrush}"
-                               StrokeThickness="0"
                                Focusable="False"
+                               StrokeThickness="0"
                                UseLayoutRounding="True"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               Visibility="{TemplateBinding ShowTitleBar,
+                                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -323,7 +330,8 @@
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar,
+                                                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
@@ -335,7 +343,8 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar,
+                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="0"
@@ -347,23 +356,24 @@
                                                        Grid.Row="0"
                                                        Grid.Column="0"
                                                        Grid.ColumnSpan="5"
-                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                                        HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                                        HorizontalContentAlignment="Center"
                                                        VerticalContentAlignment="Center"
                                                        Content="{TemplateBinding Title}"
+                                                       ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
                                                        Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Visibility="{TemplateBinding ShowTitleBar,
+                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
-                                         Path="Fill"
-                                         Mode="OneWay" />
-                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                         Mode="OneWay"
+                                         Path="Fill" />
+                                <Binding Mode="OneWay"
                                          Path="TitleForeground"
-                                         Mode="OneWay" />
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
                             </MultiBinding>
                         </ContentControl.Foreground>
                     </Controls:MetroThumbContentControl>
@@ -378,7 +388,8 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar,
+                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
@@ -393,7 +404,8 @@
                                       UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
-                    <Controls:MetroContentControl Grid.Row="1"
+                    <Controls:MetroContentControl x:Name="PART_Content"
+                                                  Grid.Row="1"
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   FocusVisualStyle="{x:Null}"
@@ -448,9 +460,9 @@
                           Grid.ColumnSpan="5"
                           Panel.ZIndex="4"
                           Background="{TemplateBinding OverlayBrush}"
-                          Opacity="0"
                           FocusVisualStyle="{x:Null}"
                           Focusable="False"
+                          Opacity="0"
                           Visibility="Hidden" />
 
                     <!--  active dialog container  -->
@@ -498,18 +510,18 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
             </Trigger>
 
             <Trigger Property="UseNoneWindowStyle" Value="True">
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <Trigger Property="ShowTitleBar" Value="False">
-                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
                 <Setter TargetName="PART_FlyoutModalDragMoveThumb" Property="Grid.RowSpan" Value="2" />
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!--  handle active/inactive state  -->
             <Trigger Property="IsActive" Value="False">
@@ -564,6 +576,9 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
         <Setter Property="TextElement.FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
@@ -580,9 +595,6 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowTitleBrush" Value="{DynamicResource WindowTitleColorBrush}" />
-        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
-        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
-        <Setter Property="OverlayBrush" Value="{DynamicResource BlackColorBrush}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False">
                 <Setter Property="IconTemplate">

@@ -3,19 +3,18 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours">
+                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
-    
+
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <Style x:Key="MetroDatePicker" TargetType="{x:Type DatePicker}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -26,12 +25,12 @@
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -54,15 +53,15 @@
                             <Button x:Name="PART_Button"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
-                                    Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
-                                    IsTabStop="False">
-                                <!-- PackIconModern - Calendar14 -->
-                                <ContentControl Style="{DynamicResource PathIconContentControlStyle}"
-                                                Content="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource ChromelessButtonStyle}">
+                                <!--  PackIconModern - Calendar14  -->
+                                <ContentControl Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                                                Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                                 Padding="2"
-                                                Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
-                                                Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}" />
+                                                Content="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
+                                                Style="{DynamicResource PathIconContentControlStyle}" />
                             </Button>
 
                             <DatePickerTextBox x:Name="PART_TextBox"
@@ -70,33 +69,35 @@
                                                Grid.Column="0"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontSize="{TemplateBinding FontSize}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                               Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}"
                                                ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
-                                               Focusable="{TemplateBinding Focusable}">
+                                               Focusable="{TemplateBinding Focusable}"
+                                               FontSize="{TemplateBinding FontSize}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               SelectionBrush="{DynamicResource HighlightBrush}">
                                 <i:Interaction.Behaviors>
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
                             </DatePickerTextBox>
                             <ContentControl x:Name="PART_FloatingMessageContainer"
-                                            Grid.Column="0"
                                             Grid.Row="0"
+                                            Grid.Column="0"
                                             Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
                                 <TextBlock x:Name="PART_FloatingMessage"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
                             </ContentControl>
 
                             <Popup x:Name="PART_Popup"
-                                   Grid.Column="0"
                                    Grid.Row="1"
+                                   Grid.Column="0"
                                    AllowsTransparency="True"
                                    Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=PART_Root}"
@@ -106,8 +107,8 @@
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Opacity="0"
                                 IsHitTestVisible="False"
+                                Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
 
@@ -115,7 +116,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox">
+                        <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
@@ -150,15 +151,16 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
     </Style>
 
     <Style x:Key="MetroDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
@@ -166,43 +168,43 @@
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="EnterGotFocus">
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Watermark"
+                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
                                              Storyboard.TargetProperty="Opacity"
-                                             To=".2" />
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Message"
+                                             To=".2"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Message"
                                              Storyboard.TargetProperty="Opacity"
-                                             To=".2" />
+                                             To=".2"
+                                             Duration="0:0:0.2" />
                         </Storyboard>
                         <Storyboard x:Key="ExitGotFocus">
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity" />
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Message"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Duration="0:0:0.2" />
                         </Storyboard>
 
                         <Storyboard x:Key="EnterHasText">
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             From=".2"
-                                             Storyboard.TargetName="PART_Watermark"
+                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
                                              Storyboard.TargetProperty="Opacity"
-                                             To="0" />
-                            <DoubleAnimation Duration="0:0:0.2"
                                              From=".2"
-                                             Storyboard.TargetName="PART_Message"
+                                             To="0"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Message"
                                              Storyboard.TargetProperty="Opacity"
-                                             To="0" />
+                                             From=".2"
+                                             To="0"
+                                             Duration="0:0:0.2" />
                         </Storyboard>
                         <Storyboard x:Key="ExitHasText">
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity" />
-                            <DoubleAnimation Duration="0:0:0.2"
-                                             Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="PART_Message"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Duration="0:0:0.2" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -220,20 +222,21 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         VerticalContentAlignment="Center"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Opacity="0.6"
                                         Focusable="False"
+                                        Foreground="{TemplateBinding Foreground}"
                                         IsHitTestVisible="False"
+                                        Opacity="0.6"
                                         Visibility="Hidden" />
                         <TextBlock x:Name="PART_Message"
                                    Margin="4 0 0 0"
                                    Padding="2"
-                                   HorizontalAlignment="Left"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   Opacity="0.6"
                                    IsHitTestVisible="False"
-                                   Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
+                                   Opacity="0.6"
+                                   Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>

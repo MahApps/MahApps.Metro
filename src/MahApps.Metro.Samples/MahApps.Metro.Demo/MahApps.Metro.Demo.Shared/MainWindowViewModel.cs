@@ -59,6 +59,7 @@ namespace MetroDemo
 
         public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
+            this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
@@ -180,6 +181,68 @@ namespace MetroDemo
                 if (value.Equals(showMyTitleBar)) return;
                 showMyTitleBar = value;
                 RaisePropertyChanged("ShowMyTitleBar");
+            }
+        }
+
+        private bool canCloseFlyout = true;
+
+        public bool CanCloseFlyout
+        {
+            get { return this.canCloseFlyout; }
+            set
+            {
+                if (Equals(value, this.canCloseFlyout))
+                {
+                    return;
+                }
+                this.canCloseFlyout = value;
+                this.RaisePropertyChanged("CanCloseFlyout");
+            }
+        }
+
+        private ICommand closeCmd;
+
+        public ICommand CloseCmd
+        {
+            get
+            {
+                return this.closeCmd ?? (this.closeCmd = new SimpleCommand
+                                                         {
+                                                             CanExecuteDelegate = x => this.CanCloseFlyout,
+                                                             ExecuteDelegate = x => ((Flyout)x).IsOpen = false
+                                                         });
+            }
+        }
+
+        private bool canShowHamburgerAboutCommand = true;
+
+        public bool CanShowHamburgerAboutCommand
+        {
+            get { return this.canShowHamburgerAboutCommand; }
+            set
+            {
+                if (Equals(value, this.canShowHamburgerAboutCommand))
+                {
+                    return;
+                }
+                this.canShowHamburgerAboutCommand = value;
+                this.RaisePropertyChanged("CanShowHamburgerAboutCommand");
+            }
+        }
+
+        private bool isHamburgerMenuPaneOpen;
+
+        public bool IsHamburgerMenuPaneOpen
+        {
+            get { return this.isHamburgerMenuPaneOpen; }
+            set
+            {
+                if (Equals(value, this.isHamburgerMenuPaneOpen))
+                {
+                    return;
+                }
+                this.isHamburgerMenuPaneOpen = value;
+                this.RaisePropertyChanged("IsHamburgerMenuPaneOpen");
             }
         }
 

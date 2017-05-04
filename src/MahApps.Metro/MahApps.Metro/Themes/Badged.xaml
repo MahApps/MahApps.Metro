@@ -4,13 +4,27 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <SineEase x:Key="BadgeEase" EasingMode="EaseOut" />
+    <Storyboard x:Key="BadgeChangedStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+            <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
+            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
+                                  KeyTime="0:0:0.3"
+                                  Value="1" />
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+            <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
+            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
+                                  KeyTime="0:0:0.3"
+                                  Value="1" />
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
 
     <Style TargetType="{x:Type controls:Badged}">
         <Setter Property="BadgeBackground" Value="{DynamicResource AccentBaseColorBrush}" />
+        <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
         <Setter Property="BadgeForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -31,20 +45,18 @@
                         <Border x:Name="PART_BadgeContainer"
                                 MinWidth="18"
                                 MinHeight="18"
+                                Padding="2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Background="{TemplateBinding BadgeBackground}"
                                 CornerRadius="9"
-                                Padding="2"
                                 RenderTransformOrigin=".5,.5"
                                 TextElement.FontSize="11"
                                 TextElement.FontWeight="DemiBold"
                                 Visibility="{TemplateBinding IsBadgeSet,
                                                              Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Border.RenderTransform>
-                                <ScaleTransform x:Name="BadgeScaleTransform"
-                                                ScaleX="1"
-                                                ScaleY="1" />
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
                             <ContentControl Margin="1 0 1 0"
                                             HorizontalAlignment="Center"
@@ -56,26 +68,6 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="BadgeChanged">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BadgeScaleTransform" Storyboard.TargetProperty="ScaleX">
-                                            <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
-                                            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
-                                                                  KeyTime="0:0:0.3"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BadgeScaleTransform" Storyboard.TargetProperty="ScaleY">
-                                            <EasingDoubleKeyFrame KeyTime="0" Value="1.4" />
-                                            <EasingDoubleKeyFrame EasingFunction="{StaticResource BadgeEase}"
-                                                                  KeyTime="0:0:0.3"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
                         <Trigger Property="BadgePlacementMode" Value="TopLeft">
                             <Setter TargetName="PART_BadgeContainer" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="PART_BadgeContainer" Property="VerticalAlignment" Value="Top" />
@@ -112,6 +104,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>

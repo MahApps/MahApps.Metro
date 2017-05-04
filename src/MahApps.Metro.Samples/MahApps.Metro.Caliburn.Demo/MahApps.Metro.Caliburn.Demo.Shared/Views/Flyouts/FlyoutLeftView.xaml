@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
              d:DesignHeight="300"
-             d:DesignWidth="300">
+             d:DesignWidth="300"
+             mc:Ignorable="d">
 
-    <StackPanel Width="150" Margin="5,5,5,5">
+    <StackPanel Width="150" Margin="5 5 5 5">
         <TextBlock Text="a test for left" />
         <CheckBox Content="a simple checkbox" />
         <RadioButton Content="a simple RadioButton" />

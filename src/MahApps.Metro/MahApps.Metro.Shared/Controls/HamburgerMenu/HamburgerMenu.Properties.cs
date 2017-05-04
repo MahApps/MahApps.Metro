@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="IsPaneOpen"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Identifies the <see cref="ItemsSource"/> dependency property.
@@ -85,6 +85,11 @@ namespace MahApps.Metro.Controls
         /// Identifies the <see cref="ItemCommandParameter"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register("ItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="VerticalScrollBarOnLeftSide"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register("VerticalScrollBarOnLeftSide", typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
@@ -141,7 +146,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether gets or sets a value that specifies whether the pane is expanded to its full width.
+        /// Gets or sets a value indicating whether the pane is expanded to its full width.
         /// </summary>
         public bool IsPaneOpen
         {
@@ -235,6 +240,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(ItemCommandParameterProperty); }
             set { SetValue(ItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets wheather the ScrollBar of the HamburgerMenu is on the left side or on the right side.
+        /// </summary>
+        public bool VerticalScrollBarOnLeftSide
+        {
+            get { return (bool)GetValue(VerticalScrollBarOnLeftSideProperty); }
+            set { SetValue(VerticalScrollBarOnLeftSideProperty, value); }
         }
 
         /// <summary>

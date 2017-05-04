@@ -3,10 +3,10 @@
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <DropShadowEffect x:Key="DropShadowBrush"
-                      Opacity="0.3"
                       po:Freeze="True"
                       BlurRadius="6"
                       Direction="330"
+                      Opacity="0.3"
                       ShadowDepth="0" />
 
 </ResourceDictionary>
