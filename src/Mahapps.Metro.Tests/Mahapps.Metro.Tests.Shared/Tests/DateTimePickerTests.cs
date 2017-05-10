@@ -17,7 +17,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheDateTimePicker.SelectedDate);
+                                  Assert.NotNull(window.TheDateTimePicker.SelectedDateTime);
                                   Assert.NotNull(window.TheDateTimePicker.Culture);
                                   Assert.Equal("pt-BR", window.TheDateTimePicker.Culture.IetfLanguageTag);
                                   Assert.Equal("31/08/2016 14:00:01", window.TheDateTimePicker.FindChild<DatePickerTextBox>(string.Empty).Text);
@@ -32,7 +32,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheTimePickerDe.SelectedTime);
+                                  Assert.NotNull(window.TheTimePickerDe.SelectedDateTime);
                                   Assert.NotNull(window.TheTimePickerDe.Culture);
                                   Assert.Equal("de-DE", window.TheTimePickerDe.Culture.IetfLanguageTag);
                                   Assert.Equal("14:00:01", window.TheTimePickerDe.FindChild<DatePickerTextBox>(string.Empty).Text);
@@ -47,7 +47,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheTimePickerUs.SelectedTime);
+                                  Assert.NotNull(window.TheTimePickerUs.SelectedDateTime);
                                   Assert.NotNull(window.TheTimePickerUs.Culture);
                                   Assert.Equal("en-US", window.TheTimePickerUs.Culture.IetfLanguageTag);
                                   Assert.Equal("2:00:01 PM", window.TheTimePickerUs.FindChild<DatePickerTextBox>(string.Empty).Text);

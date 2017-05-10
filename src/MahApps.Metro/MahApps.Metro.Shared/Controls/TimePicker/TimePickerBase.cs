@@ -77,17 +77,18 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
-        public static readonly RoutedEvent SelectedTimeChangedEvent = EventManager.RegisterRoutedEvent(
-            "SelectedTimeChanged", 
+        public static readonly RoutedEvent SelectedDateTimeChangedEvent = EventManager.RegisterRoutedEvent(
+            "SelectedDateTimeChanged", 
             RoutingStrategy.Direct,
-            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>>), 
+            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>), 
             typeof(TimePickerBase));
 
-        public static readonly DependencyProperty SelectedTimeProperty = DependencyProperty.Register(
-            "SelectedTime",
-            typeof(TimeSpan?),
+
+        public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register(
+            "SelectedDateTime",
+            typeof(DateTime?),
             typeof(TimePickerBase),
-            new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
+            new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedValueChanged));
 
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
@@ -112,16 +113,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsDatePickerVisibleProperty = IsDatePickerVisiblePropertyKey.DependencyProperty;
 
         #endregion
-
-        /// <summary>
-        /// Represents the time 00:00:00; 12:00:00 AM respectively
-        /// </summary>
-        private static readonly TimeSpan MinTimeOfDay = TimeSpan.Zero;
-
-        /// <summary>
-        /// Represents the time 23:59:59.9999999; 11:59:59.9999999 PM respectively
-        /// </summary>
-        private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
 
         /// <summary>
         /// This list contains values from 0 to 55 with an interval of 5. It can be used to bind to <see cref="SourceMinutes"/> and <see cref="SourceSeconds"/>.
@@ -187,12 +178,12 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Occurs when the <see cref="SelectedTime" /> property is changed.
+        ///     Occurs when the <see cref="SelectedDateTime" /> property is changed.
         /// </summary>
-        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<TimeSpan?>> SelectedTimeChanged
+        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>> SelectedDateTimeChanged
         {
-            add { AddHandler(SelectedTimeChangedEvent, value); }
-            remove { RemoveHandler(SelectedTimeChangedEvent, value); }
+            add { AddHandler(SelectedDateTimeChangedEvent, value); }
+            remove { RemoveHandler(SelectedDateTimeChangedEvent, value); }
         }
 
         /// <summary>
@@ -285,15 +276,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets the currently selected time.
+        ///     Gets or sets the currently selected date and time.
         /// </summary>
         /// <returns>
-        ///     The time currently selected. The default is null.
+        ///     The date and time that is currently selected. The default is null.
         /// </returns>
-        public TimeSpan? SelectedTime
+        public DateTime? SelectedDateTime
         {
-            get { return (TimeSpan?)GetValue(SelectedTimeProperty); }
-            set { SetValue(SelectedTimeProperty, value); }
+            get { return (DateTime?)GetValue(SelectedDateTimeProperty); }
+            set { SetValue(SelectedDateTimeProperty, value); }
         }
 
         /// <summary>
@@ -383,7 +374,7 @@ namespace MahApps.Metro.Controls
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
 
-            SetHourPartValues(SelectedTime.GetValueOrDefault());
+            SetHourPartValues(this.SelectedDateTime.GetValueOrDefault().TimeOfDay);
             WriteValueToTextBox();
 
             SetDefaultTimeOfDayValues();
@@ -422,9 +413,9 @@ namespace MahApps.Metro.Controls
 
             CoerceValue(SourceHoursProperty);
 
-            if (SelectedTime.HasValue)
+            if (this.SelectedDateTime.HasValue)
             {
-                SetHourPartValues(SelectedTime.Value);
+                SetHourPartValues(this.SelectedDateTime.Value.TimeOfDay);
             }
 
             SetDefaultTimeOfDayValues();
@@ -438,34 +429,18 @@ namespace MahApps.Metro.Controls
 
         protected virtual string GetValueForTextBox()
         {
-            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            var valueForTextBox = this.SelectedDateTime?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
             return valueForTextBox;
         }
 
-        protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-            TimeSpan ts;
-            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
-            {
-                SelectedTime = ts;
-            }
-            else
-            {
-                if (SelectedTime == null)
-                {
-                    // if already null, overwrite wrong data in textbox
-                    WriteValueToTextBox();
-                }
-                SelectedTime = null;
-            }
-        }
+        protected abstract void OnTextBoxLostFocus(object sender, RoutedEventArgs e);
 
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedTime = this.GetSelectedTimeFromGUI();
+            this.SelectedDateTime = this.SelectedDateTime.GetValueOrDefault().Date + this.GetSelectedTimeFromGUI();
         }
 
-        protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<TimeSpan?> e)
+        protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
         {
             RaiseEvent(e);
         }
@@ -508,14 +483,21 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected virtual void WriteValueToTextBox()
+
+        protected void WriteValueToTextBox(string value)
         {
+
             if (_textBox != null)
             {
                 _deactivateTextChangedEvent = true;
-                _textBox.Text = GetValueForTextBox();
+                _textBox.Text = value;
                 _deactivateTextChangedEvent = false;
             }
+        }
+
+        protected virtual void WriteValueToTextBox()
+        {
+            WriteValueToTextBox(GetValueForTextBox());
         }
 
         private static IList<int> CreateValueList(int interval)
@@ -523,22 +505,6 @@ namespace MahApps.Metro.Controls
             return Enumerable.Repeat(interval, 60 / interval)
                              .Select((value, index) => value * index)
                              .ToList();
-        }
-
-        private static object CoerceSelectedTime(DependencyObject d, object basevalue)
-        {
-            var timeOfDay = (TimeSpan?)basevalue;
-
-            if (timeOfDay < MinTimeOfDay)
-            {
-                return MinTimeOfDay;
-            }
-            else if (timeOfDay > MaxTimeOfDay)
-            {
-                return MaxTimeOfDay;
-            }
-
-            return timeOfDay;
         }
 
         private static object CoerceSource60(DependencyObject d, object basevalue)
@@ -653,7 +619,7 @@ namespace MahApps.Metro.Controls
             ((TimePickerBase)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
         }
 
-        private static void OnSelectedTimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var timePartPickerBase = (TimePickerBase)d;
 
@@ -662,9 +628,9 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            timePartPickerBase.SetHourPartValues((e.NewValue as TimeSpan?).GetValueOrDefault(TimeSpan.Zero));
+            timePartPickerBase.SetHourPartValues((e.NewValue as DateTime?).GetValueOrDefault().TimeOfDay);
 
-            timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<TimeSpan?>(SelectedTimeChangedEvent, (TimeSpan?)e.OldValue, (TimeSpan?)e.NewValue));
+            timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<DateTime?>(SelectedDateTimeChangedEvent, (DateTime?)e.OldValue, (DateTime?)e.NewValue));
 
             timePartPickerBase.WriteValueToTextBox();
         }
@@ -727,7 +693,7 @@ namespace MahApps.Metro.Controls
                     return new TimeSpan(hours, minutes, seconds);
                 }
 
-                return SelectedTime;
+                return this.SelectedDateTime.GetValueOrDefault().TimeOfDay;
             }
         }
 

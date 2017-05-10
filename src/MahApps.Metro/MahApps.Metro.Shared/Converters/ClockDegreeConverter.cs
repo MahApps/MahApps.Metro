@@ -18,18 +18,18 @@
             {
                 return 0;
             }
-            if (value is TimeSpan)
+            if (value is DateTime)
             {
-                var dateTime = (TimeSpan)value;
+                var dateTime = (DateTime)value;
 
                 switch ((string)parameter)
                 {
                     case "h":
-                        return 360.0 / 12 * dateTime.TotalHours;
+                        return 360.0 / 12 * dateTime.TimeOfDay.TotalHours;
                     case "m":
-                        return 360.0 / 60 * dateTime.TotalMinutes;
+                        return 360.0 / 60 * dateTime.TimeOfDay.TotalMinutes;
                     case "s":
-                        return 360.0 / 60 * dateTime.Seconds;
+                        return 360.0 / 60 * dateTime.TimeOfDay.Seconds;
                     default:
                         throw new ArgumentException("must be \"h\", \"m\", or \"s", nameof(parameter));
                 }
