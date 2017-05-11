@@ -209,6 +209,62 @@
                           Text="{Binding Path=Title, Mode=TwoWay}" />
             </StackPanel>
         </TabItem>
+        <TabItem Header="ComboDataGrid"
+                 VerticalAlignment="Bottom">
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                <Controls:ComboDataGrid ItemsSource="{Binding Artists}"
+                                        DisplayMemberPath="Name"
+                                        AutoGenerateColumns="False"
+                                        Margin="5"
+                                        Width="200"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        Controls:TextBoxHelper.Watermark="Please select an item...">
+                    <Controls:ComboDataGrid.Columns>
+                        <DataGridTextColumn Header="ID"
+                                            Binding="{Binding ArtistId}" />
+                        <DataGridTextColumn Header="Name"
+                                            Binding="{Binding Name}" />
+                    </Controls:ComboDataGrid.Columns>
+                </Controls:ComboDataGrid>
+                <Controls:ComboDataGrid ItemsSource="{Binding Artists}"
+                                        DisplayMemberPath="Name"
+                                        AutoGenerateColumns="True"
+                                        Margin="5"
+                                        Width="200" />
+
+                <Controls:ComboDataGrid ItemsSource="{Binding Artists}"
+                                        DisplayMemberPath="Name"
+                                        AutoGenerateColumns="False"
+                                        Margin="5"
+                                        Width="200"
+                                        IsEditable="True"
+                                        Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                        Controls:TextBoxHelper.Watermark="Please select an item...">
+                    <Controls:ComboDataGrid.Columns>
+                        <DataGridTextColumn Header="ID"
+                                            Binding="{Binding ArtistId}" />
+                        <DataGridTextColumn Header="Name"
+                                            Binding="{Binding Name}" />
+                    </Controls:ComboDataGrid.Columns>
+                </Controls:ComboDataGrid>
+                <Controls:ComboDataGrid ItemsSource="{Binding Artists}"
+                                        DisplayMemberPath="Name"
+                                        AutoGenerateColumns="False"
+                                        Margin="5"
+                                        Width="200"
+                                        IsEnabled="False"
+                                        Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                        SelectedIndex="0">
+                    <Controls:ComboDataGrid.Columns>
+                        <DataGridTextColumn Header="ID"
+                                            Binding="{Binding ArtistId}" />
+                        <DataGridTextColumn Header="Name"
+                                            Binding="{Binding Name}" />
+                    </Controls:ComboDataGrid.Columns>
+                </Controls:ComboDataGrid>
+            </StackPanel>
+        </TabItem>
     </TabControl>
 
 </UserControl>

@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ButtonsAlignment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CloseCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\ComboDataGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ContentControlEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CustomValidationPopup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGridNumericUpDownColumn.cs" />
