@@ -4,89 +4,147 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
         <!--  MetroScrollViewer  -->
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
-        <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
+    <ControlTemplate x:Key="HorizontalMetroAnimatedSingleRowTabControl" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+        <Grid KeyboardNavigation.TabNavigation="Local">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="RowDefinition0" Height="Auto" />
+                <RowDefinition x:Name="RowDefinition1" Height="*" />
+            </Grid.RowDefinitions>
+            <ScrollViewer x:Name="HeaderPanelScroll"
+                          Grid.Row="0"
+                          Margin="{TemplateBinding TabStripMargin}"
+                          Panel.ZIndex="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          Style="{DynamicResource MetroScrollViewer}"
+                          VerticalScrollBarVisibility="Disabled">
+                <Grid x:Name="HeaderPanelGrid">
+                    <Controls:Underline x:Name="Underline"
+                                        Background="Transparent"
+                                        BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
+                                        LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Visibility="Collapsed" />
+                    <TabPanel x:Name="HeaderPanel"
+                              IsItemsHost="true"
+                              KeyboardNavigation.TabIndex="1" />
+                </Grid>
+            </ScrollViewer>
+            <Controls:TransitioningContentControl x:Name="ContentPanel"
+                                                  Grid.Row="1"
+                                                  Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                                                  RestartTransitionOnContentChange="True"
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
+                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                  Margin="{TemplateBinding Padding}"
+                                  ContentSource="SelectedContent"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
+            </Controls:TransitioningContentControl>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+                <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Top">
+                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="1" />
+                <Setter TargetName="HeaderPanelScroll" Property="Grid.Row" Value="0" />
+                <Setter TargetName="RowDefinition0" Property="Height" Value="Auto" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="*" />
+                <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
+                <Setter TargetName="HeaderPanelScroll" Property="Grid.Row" Value="1" />
+                <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
+                <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
+                <Setter TargetName="Underline" Property="Placement" Value="Top" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="VerticalMetroAnimatedSingleRowTabControl" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+        <Grid KeyboardNavigation.TabNavigation="Local">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="ColumnDefinition0" Width="*" />
+                <ColumnDefinition x:Name="ColumnDefinition1" Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer x:Name="HeaderPanelScroll"
+                          Grid.Column="1"
+                          Margin="{TemplateBinding TabStripMargin}"
+                          Panel.ZIndex="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Style="{DynamicResource MetroScrollViewer}"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="HeaderPanelGrid">
+                    <Controls:Underline x:Name="Underline"
+                                        Background="Transparent"
+                                        BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
+                                        LineThickness="1"
+                                        Placement="Bottom"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Visibility="Collapsed" />
+                    <TabPanel x:Name="HeaderPanel"
+                              IsItemsHost="true"
+                              KeyboardNavigation.TabIndex="1" />
+                </Grid>
+            </ScrollViewer>
+            <Controls:TransitioningContentControl x:Name="ContentPanel"
+                                                  Grid.Column="0"
+                                                  Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                                                  RestartTransitionOnContentChange="True"
+                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                  UseLayoutRounding="True">
+                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                  Margin="{TemplateBinding Padding}"
+                                  ContentSource="SelectedContent"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                  UseLayoutRounding="False" />
+            </Controls:TransitioningContentControl>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+                <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
+                <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
+                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
+                <Setter TargetName="HeaderPanelScroll" Property="Grid.Column" Value="0" />
+                <Setter TargetName="Underline" Property="Placement" Value="Right" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
+                <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto" />
+                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
+                <Setter TargetName="HeaderPanelScroll" Property="Grid.Column" Value="1" />
+                <Setter TargetName="Underline" Property="Placement" Value="Left" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
-                    <Grid KeyboardNavigation.TabNavigation="Local">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition0" />
-                            <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition x:Name="RowDefinition0" Height="Auto" />
-                            <RowDefinition x:Name="RowDefinition1" Height="*" />
-                        </Grid.RowDefinitions>
-                        <ScrollViewer x:Name="HeaderPanelScroll"
-                                      Grid.Row="0"
-                                      Grid.Column="0"
-                                      Margin="{TemplateBinding TabStripMargin}"
-                                      Style="{DynamicResource MetroScrollViewer}"
-                                      HorizontalScrollBarVisibility="Auto"
-                                      VerticalScrollBarVisibility="Disabled">
-                            <TabPanel x:Name="HeaderPanel"
-                                      Panel.ZIndex="1"
-                                      IsItemsHost="True"
-                                      KeyboardNavigation.TabIndex="1" />
-                        </ScrollViewer>
-                        <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                              UseLayoutRounding="True"
-                                                              Grid.Row="1"
-                                                              Grid.Column="0"
-                                                              Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
-                                                              RestartTransitionOnContentChange="True"
-                                                              Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
-                            <ContentPresenter x:Name="PART_SelectedContentHost"
-                                              UseLayoutRounding="False"
-                                              Margin="{TemplateBinding Padding}"
-                                              ContentSource="SelectedContent"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Controls:TransitioningContentControl>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="TabStripPlacement" Value="Bottom">
-                            <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Grid.Row" Value="1" />
-                            <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
-                            <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
-                        </Trigger>
-                        <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter Property="Controls:TabControlHelper.Transition" Value="Right" />
-                            <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
-                            <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
-                            <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="HorizontalScrollBarVisibility" Value="Disabled" />
-                            <Setter TargetName="HeaderPanelScroll" Property="VerticalScrollBarVisibility" Value="Auto" />
-                            <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
-                            <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                        </Trigger>
-                        <Trigger Property="TabStripPlacement" Value="Right">
-                            <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
-                            <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto" />
-                            <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide" Value="True" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="HeaderPanelScroll" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanelScroll" Property="HorizontalScrollBarVisibility" Value="Disabled" />
-                            <Setter TargetName="HeaderPanelScroll" Property="VerticalScrollBarVisibility" Value="Auto" />
-                            <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
-                            <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+        <Style.Triggers>
+            <Trigger Property="TabStripPlacement" Value="Top">
+                <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Bottom">
+                <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="Template" Value="{StaticResource VerticalMetroAnimatedSingleRowTabControl}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="Template" Value="{StaticResource VerticalMetroAnimatedSingleRowTabControl}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

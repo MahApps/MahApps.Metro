@@ -8,8 +8,6 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -41,10 +39,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.MetroThumbContentControl"
-           TargetType="{x:Type controls:MetroThumbContentControl}"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" />
+           BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}"
+           TargetType="{x:Type controls:MetroThumbContentControl}" />
 
 </ResourceDictionary>

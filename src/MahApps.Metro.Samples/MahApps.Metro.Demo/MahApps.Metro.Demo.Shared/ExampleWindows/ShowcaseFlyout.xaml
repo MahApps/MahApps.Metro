@@ -1,0 +1,212 @@
+﻿<controls:Flyout x:Class="MetroDemo.ExampleWindows.ShowcaseFlyout"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:metroDemo="clr-namespace:MetroDemo"
+                 xmlns:system="clr-namespace:System;assembly=mscorlib"
+                 x:Name="ThisView"
+                 Width="500"
+                 d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+                 d:DesignHeight="300"
+                 d:DesignWidth="400"
+                 CloseCommand="{Binding CloseCmd}"
+                 Header="{Binding}"
+                 Position="Right"
+                 Theme="Dark"
+                 mc:Ignorable="d">
+
+    <controls:Flyout.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <ObjectDataProvider x:Key="FlyoutThemeEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type controls:FlyoutTheme}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="controls:FlyoutTheme" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
+    </controls:Flyout.Resources>
+
+    <controls:Flyout.HeaderTemplate>
+        <DataTemplate DataType="{x:Type metroDemo:MainWindowViewModel}">
+            <DockPanel x:Name="dpHeader"
+                       VerticalAlignment="Center"
+                       LastChildFill="True">
+                <Button x:Name="PART_BackButton"
+                        Width="34"
+                        Height="34"
+                        Margin="2 4 2 2"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=InternalCloseCommand, Mode=OneWay}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=CloseCommandParameter, Mode=OneWay}"
+                        DockPanel.Dock="Left"
+                        FontFamily="Segoe UI Symbol"
+                        FontSize="16"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=Foreground}"
+                        IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonIsCancel}"
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonVisibility}">
+                    <ContentControl Width="20"
+                                    Height="20"
+                                    Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
+                                    FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=FlowDirection}"
+                                    Style="{DynamicResource PathIconContentControlStyle}" />
+                </Button>
+                <TextBlock x:Name="PART_BackHeaderText"
+                           Margin="15 0 0 0"
+                           VerticalAlignment="Center"
+                           Text="{Binding Title, Mode=OneWay}"
+                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=TitleVisibility}" />
+            </DockPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Left">
+                    <Setter TargetName="PART_BackButton" Property="DockPanel.Dock" Value="Right" />
+                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="-1" />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="PART_BackHeaderText" Property="Margin" Value="0 0 15 0" />
+                    <Setter TargetName="PART_BackHeaderText" Property="TextAlignment" Value="Right" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Top">
+                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
+                        <Setter.Value>
+                            <RotateTransform Angle="-90" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}}" Value="Bottom">
+                    <Setter TargetName="PART_BackButton" Property="LayoutTransform">
+                        <Setter.Value>
+                            <RotateTransform Angle="90" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </controls:Flyout.HeaderTemplate>
+
+    <ScrollViewer>
+        <StackPanel Margin="2" Orientation="Vertical">
+            <Grid Margin="2" Grid.IsSharedSizeScope="True">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="LabelsColumn" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Margin="2"
+                           VerticalAlignment="Center"
+                           Text="Flyout Theme" />
+                <ComboBox Grid.Row="0"
+                          Grid.Column="1"
+                          Margin="2"
+                          ItemsSource="{Binding Source={StaticResource FlyoutThemeEnumValues}}"
+                          SelectedItem="{Binding ElementName=ThisView, Path=Theme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <CheckBox Grid.Row="1"
+                          Grid.Column="1"
+                          Margin="2"
+                          Content="Can close Flyout"
+                          IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <controls:ToggleSwitch Grid.Row="2"
+                                       Grid.Column="1"
+                                       Margin="2"
+                                       Header="Flyout closing"
+                                       IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       OffLabel="Disabled"
+                                       OnLabel="Allowed" />
+                <controls:ToggleSwitch Grid.Row="3"
+                                       Grid.Column="1"
+                                       Margin="2"
+                                       Header="Flyout closing"
+                                       IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       OffLabel="Disabled"
+                                       OnLabel="Allowed"
+                                       Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+
+            </Grid>
+
+            <controls:MetroAnimatedTabControl Height="300"
+                                              Margin="2"
+                                              controls:TabControlHelper.Underlined="TabPanel">
+                <TabItem Header="Artists">
+                    <ListView Margin="2"
+                              BorderThickness="0"
+                              ItemsSource="{Binding Artists, Mode=OneWay}"
+                              SelectedIndex="0"
+                              Style="{StaticResource VirtualisedMetroListView}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Header="Albums">
+                    <ListBox Margin="2"
+                             BorderThickness="0"
+                             DisplayMemberPath="Title"
+                             ItemsSource="{Binding Albums, Mode=OneWay}"
+                             SelectedIndex="0"
+                             Style="{StaticResource VirtualisedMetroListBox}" />
+                </TabItem>
+                <TabItem Header="Slider">
+                    <StackPanel Orientation="Vertical">
+                        <Slider x:Name="TheSlider"
+                                Margin="4"
+                                controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                LargeChange="10"
+                                Maximum="100"
+                                Minimum="0"
+                                SmallChange="1"
+                                Value="20" />
+                        <Slider Margin="4"
+                                LargeChange="10"
+                                Maximum="100"
+                                Minimum="0"
+                                SmallChange="1"
+                                Style="{StaticResource FlatSlider}"
+                                Value="{Binding ElementName=TheSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Margin="2"
+                                   HorizontalAlignment="Center"
+                                   FontSize="48"
+                                   Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat={}{0:N0}}" />
+                        <TextBox Margin="2"
+                                 controls:TextBoxHelper.Watermark="TextBox 01"
+                                 Text="{Binding ElementName=TheSlider, Path=Value, Mode=OneWay, StringFormat='{}Slider value is {0:N0}'}" />
+                        <TextBox Margin="2" controls:TextBoxHelper.Watermark="TextBox 02" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Calendar">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox x:Name="IsTodayHighlightedCheckBox"
+                                  Content="IsTodayHighlighted"
+                                  IsChecked="True" />
+                        <Calendar Margin="5"
+                                  DisplayDateStart="{x:Static system:DateTime.Now}"
+                                  IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectionMode="MultipleRange" />
+                    </StackPanel>
+                </TabItem>
+            </controls:MetroAnimatedTabControl>
+        </StackPanel>
+    </ScrollViewer>
+</controls:Flyout>
+

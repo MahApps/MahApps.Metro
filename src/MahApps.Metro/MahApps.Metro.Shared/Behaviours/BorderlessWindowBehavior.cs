@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Management;
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,9 +12,6 @@ using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Behaviours
 {
-    using System.Linq;
-    using System.Management;
-
     /// <summary>
     /// With this class we can make custom window styles.
     /// </summary>
@@ -26,7 +25,6 @@ namespace MahApps.Metro.Behaviours
         private Thickness? savedResizeBorderThickness;
         private PropertyChangeNotifier topMostChangeNotifier;
         private bool savedTopMost;
-
         private bool isWindwos10OrHigher;
 
         private static bool IsWindows10OrHigher()
@@ -122,7 +120,8 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.Deactivated += (sender, args) => { topmostHack(); };
 
             this.AssociatedObject.Loaded += this.AssociatedObject_Loaded;
-            this.AssociatedObject.Unloaded += this.AssociatedObject_Unloaded;
+            this.AssociatedObject.Unloaded += this.AssociatedObjectUnloaded;
+            this.AssociatedObject.Closed += this.AssociatedObjectClosed;
             this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
             this.AssociatedObject.StateChanged += this.OnAssociatedObjectHandleMaximize;
 
@@ -229,6 +228,11 @@ namespace MahApps.Metro.Behaviours
             {
                 this.isCleanedUp = true;
 
+                if (GetHandleTaskbar(this.AssociatedObject) && this.isWindwos10OrHigher)
+                {
+                    this.DeactivateTaskbarFix();
+                }
+
                 // clean up events
                 if (this.AssociatedObject is MetroWindow)
                 {
@@ -238,13 +242,11 @@ namespace MahApps.Metro.Behaviours
                           .RemoveValueChanged(this.AssociatedObject, this.UseNoneWindowStylePropertyChangedCallback);
                 }
                 this.AssociatedObject.Loaded -= this.AssociatedObject_Loaded;
-                this.AssociatedObject.Unloaded -= this.AssociatedObject_Unloaded;
+                this.AssociatedObject.Unloaded -= this.AssociatedObjectUnloaded;
+                this.AssociatedObject.Closed -= this.AssociatedObjectClosed;
                 this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
                 this.AssociatedObject.StateChanged -= this.OnAssociatedObjectHandleMaximize;
-                if (this.hwndSource != null)
-                {
-                    this.hwndSource.RemoveHook(this.WindowProc);
-                }
+                this.hwndSource?.RemoveHook(this.WindowProc);
                 this.windowChrome = null;
             }
         }
@@ -255,7 +257,12 @@ namespace MahApps.Metro.Behaviours
             base.OnDetaching();
         }
 
-        private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
+        private void AssociatedObjectUnloaded(object sender, RoutedEventArgs e)
+        {
+            this.Cleanup();
+        }
+
+        private void AssociatedObjectClosed(object sender, EventArgs e)
         {
             this.Cleanup();
         }
@@ -273,6 +280,44 @@ namespace MahApps.Metro.Behaviours
                     /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam "does not repaint the nonclient area to reflect the state change." */
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
+                    break;
+                case (int)Standard.WM.WINDOWPOSCHANGING:
+                    {
+                        var pos = (Standard.WINDOWPOS)System.Runtime.InteropServices.Marshal.PtrToStructure(lParam, typeof(Standard.WINDOWPOS));
+                        if ((pos.flags & (int)Standard.SWP.NOMOVE) != 0)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        var wnd = this.AssociatedObject;
+                        if (wnd == null || this.hwndSource?.CompositionTarget == null)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        bool changedPos = false;
+
+                        // Convert the original to original size based on DPI setting. Need for x% screen DPI.
+                        var matrix = this.hwndSource.CompositionTarget.TransformToDevice;
+
+                        var minWidth = wnd.MinWidth * matrix.M11;
+                        var minHeight = wnd.MinHeight * matrix.M22;
+                        if (pos.cx < minWidth) { pos.cx = (int)minWidth; changedPos = true; }
+                        if (pos.cy < minHeight) { pos.cy = (int)minHeight; changedPos = true; }
+
+                        var maxWidth = wnd.MaxWidth * matrix.M11;
+                        var maxHeight = wnd.MaxHeight * matrix.M22;
+                        if (pos.cx > maxWidth && maxWidth > 0) { pos.cx = (int)Math.Round(maxWidth); changedPos = true; }
+                        if (pos.cy > maxHeight && maxHeight > 0) { pos.cy = (int)Math.Round(maxHeight); changedPos = true; }
+
+                        if (!changedPos)
+                        {
+                            return IntPtr.Zero;
+                        }
+
+                        System.Runtime.InteropServices.Marshal.StructureToPtr(pos, lParam, true);
+                        handled = true;
+                    }
                     break;
             }
 
@@ -312,37 +357,21 @@ namespace MahApps.Metro.Behaviours
                     IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(this.handle, Constants.MONITOR_DEFAULTTONEAREST);
                     if (monitor != IntPtr.Zero)
                     {
-                        var monitorInfo = new MONITORINFO();
+                        var monitorInfo = new Native.MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                        if (ignoreTaskBar)
-                        {
-                            var x = monitorInfo.rcMonitor.left;
-                            var y = monitorInfo.rcMonitor.top;
-                            var cx = Math.Abs(monitorInfo.rcMonitor.right - x);
-                            var cy = Math.Abs(monitorInfo.rcMonitor.bottom - y);
+                        var desktopRect = ignoreTaskBar ? monitorInfo.rcMonitor :  monitorInfo.rcWork;
+                        var x = desktopRect.left;
+                        var y = desktopRect.top;
+                        var cx = Math.Abs(desktopRect.right - x);
+                        var cy = Math.Abs(desktopRect.bottom - y);
 
-                            var trayHWND = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
-                            if (this.isWindwos10OrHigher && trayHWND != IntPtr.Zero)
-                            {
-                                UnsafeNativeMethods.SetWindowPos(this.handle, trayHWND, x, y, cx, cy, 0x0040);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.HIDE);
-                                Standard.NativeMethods.ShowWindow(this.handle, Standard.SW.SHOW);
-                            }
-                            else
-                            {
-                                UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
-                            }
-                        }
-                        else
+                        if (ignoreTaskBar && this.isWindwos10OrHigher)
                         {
-                            var x = monitorInfo.rcWork.left;
-                            var y = monitorInfo.rcWork.top;
-                            var cx = Math.Abs(monitorInfo.rcWork.right - x);
-                            var cy = Math.Abs(monitorInfo.rcWork.bottom - y);
-
-                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                            this.ActivateTaskbarFix();
                         }
+
+                        UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                     }
                 }
             }
@@ -360,20 +389,9 @@ namespace MahApps.Metro.Behaviours
 
                 // #2694 make sure the window is not on top after restoring window
                 // this issue was introduced after fixing the windows 10 bug with the taskbar and a maximized window that ignores the taskbar
-                RECT rect;
-                if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                if (GetHandleTaskbar(this.AssociatedObject) && this.isWindwos10OrHigher)
                 {
-                    var left = rect.left;
-                    var top = rect.top;
-                    var width = rect.Width;
-                    var height = rect.Height;
-
-                    // Z-Order would only get refreshed/reflected if clicking the
-                    // the titlebar (as opposed to other parts of the external
-                    // window) unless I first set the window to HWND_BOTTOM then HWND_TOP before HWND_NOTOPMOST
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_BOTTOM, left, top, width, height, Constants.TOPMOST_FLAGS);
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_TOP, left, top, width, height, Constants.TOPMOST_FLAGS);
-                    UnsafeNativeMethods.SetWindowPos(this.handle, Constants.HWND_NOTOPMOST, left, top, width, height, Constants.TOPMOST_FLAGS);
+                    this.DeactivateTaskbarFix();
                 }
             }
 
@@ -398,6 +416,46 @@ namespace MahApps.Metro.Behaviours
             this.topMostChangeNotifier.RaiseValueChanged = raiseValueChanged;
         }
 
+        private void ActivateTaskbarFix()
+        {
+            var trayWndHandle = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+            if (trayWndHandle != IntPtr.Zero)
+            {
+                SetHandleTaskbar(this.AssociatedObject, true);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_BOTTOM, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOP, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_NOTOPMOST, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+            }
+        }
+
+        private void DeactivateTaskbarFix()
+        {
+            var trayWndHandle = Standard.NativeMethods.FindWindow("Shell_TrayWnd", null);
+            if (trayWndHandle != IntPtr.Zero)
+            {
+                SetHandleTaskbar(this.AssociatedObject, false);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_BOTTOM, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOP, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(trayWndHandle, Constants.HWND_TOPMOST, 0, 0, 0, 0, Constants.TOPMOST_FLAGS);
+            }
+        }
+
+        private static readonly DependencyProperty HandleTaskbarProperty
+            = DependencyProperty.RegisterAttached(
+                "HandleTaskbar",
+                typeof(bool),
+                typeof(BorderlessWindowBehavior), new FrameworkPropertyMetadata(false));
+
+        private static bool GetHandleTaskbar(UIElement element)
+        {
+            return (bool)element.GetValue(HandleTaskbarProperty);
+        }
+
+        private static void SetHandleTaskbar(UIElement element, bool value)
+        {
+            element.SetValue(HandleTaskbarProperty, value);
+        }
+
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
@@ -405,24 +463,29 @@ namespace MahApps.Metro.Behaviours
             {
                 throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
             }
-            this.hwndSource = HwndSource.FromHwnd(this.handle);
-            if (this.hwndSource != null)
+
+            if (this.AssociatedObject.SizeToContent != SizeToContent.Manual && this.AssociatedObject.WindowState == WindowState.Normal)
             {
-                this.hwndSource.AddHook(this.WindowProc);
+                // Another try to fix SizeToContent
+                // without this we get nasty glitches at the borders
+                this.AssociatedObject.Invoke(() =>
+                    {
+                        this.AssociatedObject.InvalidateMeasure();
+                        Native.RECT rect;
+                        if (UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                        {
+                            uint flags = 0x0040;
+                            if (!this.AssociatedObject.ShowActivated)
+                            {
+                                flags |= (uint)Standard.SWP.NOACTIVATE;
+                            }
+                            UnsafeNativeMethods.SetWindowPos(this.handle, new IntPtr(-2), rect.left, rect.top, rect.Width, rect.Height, flags);
+                        }
+                    });
             }
 
-            if (this.AssociatedObject.ResizeMode != ResizeMode.NoResize)
-            {
-                // handle size to content (thanks @lynnx).
-                // This is necessary when ResizeMode != NoResize. Without this workaround,
-                // black bars appear at the right and bottom edge of the window.
-                var sizeToContent = this.AssociatedObject.SizeToContent;
-                var snapsToDevicePixels = this.AssociatedObject.SnapsToDevicePixels;
-                this.AssociatedObject.SnapsToDevicePixels = true;
-                this.AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
-                this.AssociatedObject.SizeToContent = sizeToContent;
-                this.AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
-            }
+            this.hwndSource = HwndSource.FromHwnd(this.handle);
+            this.hwndSource?.AddHook(this.WindowProc);
 
             // handle the maximized state here too (to handle the border in a correct way)
             this.HandleMaximize();

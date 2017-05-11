@@ -5,15 +5,15 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <TabControl Margin="10" TabStripPlacement="Left">
         <TabItem Header="List/GridView">
-            <UniformGrid Rows="2" Columns="2">
-                <ListView Margin="5"
+            <UniformGrid Columns="2" Rows="2">
+                <ListView Margin="1"
                           BorderThickness="0"
                           SelectedIndex="0"
                           Style="{StaticResource VirtualisedMetroListView}">
@@ -22,7 +22,7 @@
                     <ListViewItem>Test 3</ListViewItem>
                     <ListViewItem>Test 4</ListViewItem>
                 </ListView>
-                <ListView Margin="5"
+                <ListView Margin="1"
                           BorderThickness="0"
                           IsEnabled="False"
                           SelectedIndex="0"
@@ -32,8 +32,8 @@
                     <ListViewItem>Test 3</ListViewItem>
                     <ListViewItem>Test 4</ListViewItem>
                 </ListView>
-                <ListView Margin="5"
-                          BorderThickness="0"
+                <ListView Margin="1"
+                          BorderThickness="1"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0"
                           Style="{StaticResource VirtualisedMetroListView}">
@@ -44,8 +44,8 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Margin="5"
-                          BorderThickness="0"
+                <ListView Margin="1"
+                          BorderThickness="1"
                           IsEnabled="False"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0"
@@ -129,7 +129,7 @@
         <TabItem Header="ComboBox">
             <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
                 <ComboBox Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           Controls:TextBoxHelper.ClearTextButton="True"
                           Controls:TextBoxHelper.Watermark="Please select an item..."
                           SelectedIndex="0">
@@ -144,15 +144,14 @@
                     <ComboBoxItem Content="Item 4" />
                 </ComboBox>
                 <ComboBox Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           Controls:TextBoxHelper.ClearTextButton="True"
-                          Controls:TextBoxHelper.Watermark="Editable..."
                           Controls:TextBoxHelper.UseFloatingWatermark="True"
+                          Controls:TextBoxHelper.Watermark="Editable..."
                           IsEditable="True"
                           SelectedIndex="0">
                     <ComboBox.ContextMenu>
-                        <ContextMenu IsEnabled="False"
-                                     Visibility="Collapsed" />
+                        <ContextMenu IsEnabled="False" Visibility="Collapsed" />
                     </ComboBox.ContextMenu>
                     <ComboBoxItem Content="Item 1" />
                     <ComboBoxItem Content="Item 2" />
@@ -160,7 +159,7 @@
                     <ComboBoxItem Content="Item 4" />
                 </ComboBox>
                 <ComboBox Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           Controls:TextBoxHelper.UseFloatingWatermark="True"
                           Controls:TextBoxHelper.Watermark="Autocompletion"
                           DisplayMemberPath="Title"
@@ -171,7 +170,7 @@
                           Text="{Binding Path=Title}" />
                 <ComboBox x:Name="groupingComboBox"
                           Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True"
                           Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
                           DisplayMemberPath="Title"
@@ -191,7 +190,7 @@
                     </ComboBox.GroupStyle>
                 </ComboBox>
                 <ComboBox Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           IsEnabled="False"
                           SelectedIndex="0">
                     <ComboBoxItem Content="Item 1" />
@@ -200,7 +199,7 @@
                     <ComboBoxItem Content="Item 4" />
                 </ComboBox>
                 <ComboBox Width="200"
-                          Margin="0, 10, 0, 0"
+                          Margin="0 10 0 0"
                           Controls:TextBoxHelper.Watermark="Autocompletion"
                           DisplayMemberPath="Title"
                           IsEditable="True"

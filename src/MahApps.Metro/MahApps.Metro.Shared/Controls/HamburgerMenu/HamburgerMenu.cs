@@ -1,8 +1,8 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System.Windows;
-    using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -36,11 +36,13 @@
             if (_buttonsListView != null)
             {
                 _buttonsListView.MouseUp -= ButtonsListView_ItemClick;
+                _buttonsListView.SelectionChanged -= ButtonsListView_SelectionChanged;
             }
 
             if (_optionsListView != null)
             {
                 _optionsListView.MouseUp -= OptionsListView_ItemClick;
+                _optionsListView.SelectionChanged -= OptionsListView_SelectionChanged;
             }
 
             _hamburgerButton = (Button)GetTemplateChild("HamburgerButton");
@@ -55,14 +57,28 @@
             if (_buttonsListView != null)
             {
                 _buttonsListView.MouseUp += ButtonsListView_ItemClick;
+                _buttonsListView.SelectionChanged += ButtonsListView_SelectionChanged;
             }
 
             if (_optionsListView != null)
             {
                 _optionsListView.MouseUp += OptionsListView_ItemClick;
+                _optionsListView.SelectionChanged += OptionsListView_SelectionChanged;
             }
 
+            Loaded -= HamburgerMenu_Loaded;
+            Loaded += HamburgerMenu_Loaded;
+
             base.OnApplyTemplate();
+        }
+
+        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = this._buttonsListView?.SelectedItem ?? this._optionsListView?.SelectedItem;
+            if (selectedItem != null)
+            {
+                this.SetCurrentValue(ContentProperty, selectedItem);
+            }
         }
     }
 }

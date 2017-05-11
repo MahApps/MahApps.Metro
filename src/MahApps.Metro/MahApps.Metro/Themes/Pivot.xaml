@@ -58,12 +58,12 @@
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView x:Name="PART_Headers"
                                   Grid.Row="1"
-                                  Style="{x:Null}"
                                   BorderBrush="{x:Null}"
                                   ItemContainerStyle="{StaticResource PivotListViewItem}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                  Style="{x:Null}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" />

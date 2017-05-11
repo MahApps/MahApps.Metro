@@ -3,18 +3,16 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:MetroAnimatedTabControl}">
-        <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="ClipToBounds" Value="True" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroAnimatedTabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroAnimatedTabControl}">
-                    <Grid ClipToBounds="{TemplateBinding ClipToBounds}"
-                          KeyboardNavigation.TabNavigation="Local"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="ColumnDefinition0" />
                             <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
@@ -23,61 +21,77 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto" />
                             <RowDefinition x:Name="RowDefinition1" Height="*" />
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="HeaderPanel"
-                                  Grid.Row="0"
-                                  Grid.Column="0"
-                                  Margin="{TemplateBinding TabStripMargin}"
-                                  Panel.ZIndex="1"
-                                  IsItemsHost="True"
-                                  KeyboardNavigation.TabIndex="1" />
+                        <Grid x:Name="HeaderPanelGrid"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding TabStripMargin}"
+                              Panel.ZIndex="1">
+                            <Controls:Underline x:Name="Underline"
+                                                Background="Transparent"
+                                                BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
+                                                LineThickness="1"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                Visibility="Collapsed" />
+                            <TabPanel x:Name="HeaderPanel"
+                                      IsItemsHost="true"
+                                      KeyboardNavigation.TabIndex="1" />
+                        </Grid>
                         <Border x:Name="ContentPanel"
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                ClipToBounds="{TemplateBinding ClipToBounds}"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
-                                KeyboardNavigation.TabNavigation="Local">
-                            <Controls:TransitioningContentControl UseLayoutRounding="True"
-                                                                  Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                                KeyboardNavigation.TabNavigation="Local"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Controls:TransitioningContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                                   RestartTransitionOnContentChange="True"
-                                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}">
+                                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
+                                                                  UseLayoutRounding="True">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
-                                                  UseLayoutRounding="False"
                                                   Margin="{TemplateBinding Padding}"
                                                   ContentSource="SelectedContent"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  UseLayoutRounding="False" />
                             </Controls:TransitioningContentControl>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+                            <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
+                        </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="1" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Top" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter Property="Controls:TabControlHelper.Transition" Value="Right" />
                             <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
                             <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
                             <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Right" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
                             <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
                             <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto" />
                             <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Left" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />

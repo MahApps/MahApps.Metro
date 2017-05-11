@@ -1,9 +1,10 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -20,12 +21,37 @@
         public static readonly DependencyProperty OptionsItemTemplateProperty = DependencyProperty.Register(nameof(OptionsItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="OptionsItemTemplateSelector"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemTemplateSelectorProperty = DependencyProperty.Register(nameof(OptionsItemTemplateSelector), typeof(DataTemplateSelector), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="OptionsVisibility"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty OptionsVisibilityProperty = DependencyProperty.Register(nameof(OptionsVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
-        ///     Gets or sets an object source used to generate the content of the options.
+        /// Identifies the <see cref="SelectedOptionsItem"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedOptionsItemProperty = DependencyProperty.Register(nameof(SelectedOptionsItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+
+        /// <summary>
+        /// Identifies the <see cref="OptionsItemCommand"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register(nameof(OptionsItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register(nameof(OptionsItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets an object source used to generate the content of the options.
         /// </summary>
         public object OptionsItemsSource
         {
@@ -40,6 +66,15 @@
         {
             get { return (DataTemplate)GetValue(OptionsItemTemplateProperty); }
             set { SetValue(OptionsItemTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the DataTemplateSelector used to display each item in the options.
+        /// </summary>
+        public DataTemplateSelector OptionsItemTemplateSelector
+        {
+            get { return (DataTemplateSelector)GetValue(OptionsItemTemplateSelectorProperty); }
+            set { SetValue(OptionsItemTemplateSelectorProperty, value); }
         }
 
         /// <summary>
@@ -62,7 +97,7 @@
         }
 
         /// <summary>
-        /// Gets or sets options' visibility.
+        /// Gets or sets the visibility of the options menu.
         /// </summary>
         public Visibility OptionsVisibility
         {
@@ -75,8 +110,8 @@
         /// </summary>
         public object SelectedOptionsItem
         {
-            get { return _optionsListView.SelectedItem; }
-            set { _optionsListView.SelectedItem = value; }
+            get { return GetValue(SelectedOptionsItemProperty); }
+            set { SetValue(SelectedOptionsItemProperty, value); }
         }
 
         /// <summary>
@@ -84,8 +119,39 @@
         /// </summary>
         public int SelectedOptionsIndex
         {
-            get { return _optionsListView.SelectedIndex; }
-            set { _optionsListView.SelectedIndex = value; }
+            get { return (int)GetValue(SelectedOptionsIndexProperty); }
+            set { SetValue(SelectedOptionsIndexProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a command which will be executed if an options item is clicked by the user.
+        /// </summary>
+        public ICommand OptionsItemCommand
+        {
+            get { return (ICommand)GetValue(OptionsItemCommandProperty); }
+            set { SetValue(OptionsItemCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the command parameter which will be passed by the OptionsItemCommand.
+        /// </summary>
+        public object OptionsItemCommandParameter
+        {
+            get { return (object)GetValue(OptionsItemCommandParameterProperty); }
+            set { SetValue(OptionsItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Executes the options item command which can be set by the user.
+        /// </summary>
+        public void RaiseOptionsItemCommand()
+        {
+            var command = OptionsItemCommand;
+            var commandParameter = OptionsItemCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
         }
     }
 }

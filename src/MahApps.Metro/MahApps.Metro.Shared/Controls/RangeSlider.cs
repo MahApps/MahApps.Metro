@@ -1611,7 +1611,7 @@ namespace MahApps.Metro.Controls
             if (!IsMoveToPointEnabled)
             {
                 //Check if current value is exactly Tick value or it situated between Ticks
-                var checkingValueChanged = checkingValuePos + distance;
+                var checkingValueChanged = checkingValuePos; // + distance; // <-- introduced by @drayde with #2006 but it breaks the left thumb movement #2880
                 var x = checkingValueChanged / TickFrequency;
                 if (!IsDoubleCloseToInt(x))
                 {

@@ -6,10 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <ScrollViewer>
         <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding BrushResources}">
@@ -39,7 +39,7 @@
                             </i:Interaction.Behaviors>
                         </Ellipse>
                         <TextBlock Grid.Row="1"
-                                   Margin="4,2,4,10"
+                                   Margin="4 2 4 10"
                                    FontSize="{DynamicResource NormalFontSize}"
                                    Text="{Binding}"
                                    TextAlignment="Center" />

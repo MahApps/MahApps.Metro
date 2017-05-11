@@ -10,23 +10,22 @@
     <SolidColorBrush x:Key="TransparentOutlineBrush">Transparent</SolidColorBrush>
 
     <Style TargetType="{x:Type Controls:MetroProgressBar}">
-        <Setter Property="Foreground" Value="{StaticResource ProgressBarFillBrush}" />
         <Setter Property="Background" Value="{StaticResource ProgressBarTrackBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource TransparentOutlineBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource OutlineBorderThickness}" />
+        <Setter Property="Foreground" Value="{StaticResource ProgressBarFillBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="MinHeight" Value="{StaticResource ProgressBarMinHeight}" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroProgressBar}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="IndeterminateStoryboard" RepeatBehavior="Forever">
                             <DoubleAnimation x:Name="MainDoubleAnim"
-                                             Duration="0:0:3.917"
                                              Storyboard.TargetName="EllipseGrid"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" />
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                             Duration="0:0:3.917" />
 
                             <DoubleAnimationUsingKeyFrames x:Name="E1Anim"
                                                            Storyboard.TargetName="E1"
@@ -104,15 +103,15 @@
                                 <EasingDoubleKeyFrame KeyTime="0:0:2.667" Value="0" />
                                 <EasingDoubleKeyFrame KeyTime="0:0:3.667" Value="100" />
                             </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimation Duration="0"
-                                             Storyboard.TargetName="EllipseGrid"
+                            <DoubleAnimation Storyboard.TargetName="EllipseGrid"
                                              Storyboard.TargetProperty="Opacity"
-                                             To="1" />
+                                             To="1"
+                                             Duration="0" />
 
-                            <DoubleAnimation Duration="0"
-                                             Storyboard.TargetName="DeterminateRoot"
+                            <DoubleAnimation Storyboard.TargetName="DeterminateRoot"
                                              Storyboard.TargetProperty="Opacity"
-                                             To="0" />
+                                             To="0"
+                                             Duration="0" />
                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="E1" Storyboard.TargetProperty="Opacity">
                                 <EasingDoubleKeyFrame KeyTime="0" Value="1" />
                                 <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
@@ -272,21 +271,22 @@
                             <Setter TargetName="DeterminateRoot" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="MinWidth" Value="{StaticResource ProgressBarMinHeight}" />
+                            <Setter Property="VerticalAlignment" Value="Stretch" />
+                            <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}" />
                             <Setter TargetName="ContainingGrid" Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="270" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="VerticalAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="MinHeight" Value="0" />
-                            <Setter Property="MinWidth" Value="{StaticResource ProgressBarMinHeight}" />
-                            <Setter TargetName="ContainingGrid" Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"/>
-                            <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
+                            <Setter TargetName="ContainingGrid" Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 </ResourceDictionary>

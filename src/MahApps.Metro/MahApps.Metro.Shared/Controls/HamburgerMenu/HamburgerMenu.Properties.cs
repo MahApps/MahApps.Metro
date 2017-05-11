@@ -1,10 +1,11 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -36,9 +37,14 @@
         public static readonly DependencyProperty PaneBackgroundProperty = DependencyProperty.Register(nameof(PaneBackground), typeof(Brush), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="PaneForeground"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty PaneForegroundProperty = DependencyProperty.Register(nameof(PaneForeground), typeof(Brush), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="IsPaneOpen"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         /// <summary>
         /// Identifies the <see cref="ItemsSource"/> dependency property.
@@ -50,7 +56,40 @@
         /// </summary>
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register("ContentTransition", typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+        /// <summary>
+        /// Identifies the <see cref="ItemTemplateSelector"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemTemplateSelectorProperty = DependencyProperty.Register(nameof(ItemTemplateSelector), typeof(DataTemplateSelector), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedItem"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(nameof(SelectedItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedIndex"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
+
+        /// <summary>
+        /// Identifies the <see cref="ContentTransition"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ContentTransitionProperty = DependencyProperty.Register(nameof(ContentTransition), typeof(TransitionType), typeof(HamburgerMenu), new FrameworkPropertyMetadata(TransitionType.Normal));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemCommand"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemCommandProperty = DependencyProperty.Register(nameof(ItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemCommandParameter"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register(nameof(ItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="VerticalScrollBarOnLeftSide"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register(nameof(VerticalScrollBarOnLeftSide), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
@@ -71,7 +110,7 @@
         }
 
         /// <summary>
-        /// Gets or sets gets of sets a value that specifies how the pane and content areas are shown.
+        /// Gets or sets a value that specifies how the pane and content areas are shown.
         /// </summary>
         public SplitViewDisplayMode DisplayMode
         {
@@ -98,7 +137,16 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether gets or sets a value that specifies whether the pane is expanded to its full width.
+        /// Gets or sets the Brush to apply to the foreground of the Pane area of the control.
+        /// </summary>
+        public Brush PaneForeground
+        {
+            get { return (Brush)GetValue(PaneForegroundProperty); }
+            set { SetValue(PaneForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the pane is expanded to its full width.
         /// </summary>
         public bool IsPaneOpen
         {
@@ -125,6 +173,15 @@
         }
 
         /// <summary>
+        /// Gets or sets the DataTemplateSelector used to display each item.
+        /// </summary>
+        public DataTemplateSelector ItemTemplateSelector
+        {
+            get { return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty); }
+            set { SetValue(ItemTemplateSelectorProperty, value); }
+        }
+
+        /// <summary>
         /// Gets the collection used to generate the content of the items list.
         /// </summary>
         /// <exception cref="Exception">
@@ -148,8 +205,8 @@
         /// </summary>
         public object SelectedItem
         {
-            get { return _buttonsListView.SelectedItem; }
-            set { _buttonsListView.SelectedItem = value; }
+            get { return GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         /// <summary>
@@ -157,14 +214,54 @@
         /// </summary>
         public int SelectedIndex
         {
-            get { return _buttonsListView.SelectedIndex; }
-            set { _buttonsListView.SelectedIndex = value; }
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
         }
 
         public TransitionType ContentTransition
         {
             get { return (TransitionType)this.GetValue(ContentTransitionProperty); }
             set { this.SetValue(ContentTransitionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a command which will be executed if an item is clicked by the user.
+        /// </summary>
+        public ICommand ItemCommand
+        {
+            get { return (ICommand)GetValue(ItemCommandProperty); }
+            set { SetValue(ItemCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the command parameter which will be passed by the ItemCommand.
+        /// </summary>
+        public object ItemCommandParameter
+        {
+            get { return (object)GetValue(ItemCommandParameterProperty); }
+            set { SetValue(ItemCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets wheather the ScrollBar of the HamburgerMenu is on the left side or on the right side.
+        /// </summary>
+        public bool VerticalScrollBarOnLeftSide
+        {
+            get { return (bool)GetValue(VerticalScrollBarOnLeftSideProperty); }
+            set { SetValue(VerticalScrollBarOnLeftSideProperty, value); }
+        }
+
+        /// <summary>
+        /// Executes the item command which can be set by the user.
+        /// </summary>
+        public void RaiseItemCommand()
+        {
+            var command = ItemCommand;
+            var commandParameter = ItemCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
         }
     }
 }

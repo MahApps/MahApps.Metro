@@ -26,17 +26,17 @@
     <Storyboard x:Key="DialogShownStoryboard">
         <DoubleAnimation AccelerationRatio=".9"
                          BeginTime="0:0:0"
-                         Duration="0:0:0.2"
                          Storyboard.TargetProperty="Opacity"
-                         To="1" />
+                         To="1"
+                         Duration="0:0:0.2" />
     </Storyboard>
 
     <Storyboard x:Key="DialogCloseStoryboard">
         <DoubleAnimation AccelerationRatio=".9"
                          BeginTime="0:0:0"
-                         Duration="0:0:0.2"
                          Storyboard.TargetProperty="Opacity"
-                         To="0" />
+                         To="0"
+                         Duration="0:0:0.2" />
     </Storyboard>
 
     <ControlTemplate x:Key="MetroDialogTemplate" TargetType="{x:Type Dialogs:BaseMetroDialog}">

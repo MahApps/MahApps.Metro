@@ -55,9 +55,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\CustomFlyout.xaml.cs">
-      <DependentUpon>CustomFlyout.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\DynamicFlyout.xaml.cs">
       <DependentUpon>DynamicFlyout.xaml</DependentUpon>
     </Compile>
@@ -66,6 +63,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\InteropDemo.xaml.cs">
       <DependentUpon>InteropDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\ShowcaseFlyout.xaml.cs">
+      <DependentUpon>ShowcaseFlyout.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\SizeToContentDemo.xaml.cs">
       <DependentUpon>SizeToContentDemo.xaml</DependentUpon>
@@ -145,10 +145,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)ExampleWindows\CustomFlyout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="$(MSBuildThisFileDirectory)ExampleWindows\DynamicFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)ExampleWindows\InteropDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleWindows\ShowcaseFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
