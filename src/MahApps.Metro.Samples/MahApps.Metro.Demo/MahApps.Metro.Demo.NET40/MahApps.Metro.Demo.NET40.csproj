@@ -143,7 +143,7 @@
   </Target>
   -->
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+    <Delete Files="@(ReferenceCopyLocalPaths-&gt;'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="..\..\..\.paket\paket.targets" />
   <Choose>
