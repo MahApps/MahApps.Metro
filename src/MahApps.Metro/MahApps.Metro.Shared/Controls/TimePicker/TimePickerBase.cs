@@ -89,6 +89,11 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
 
+        public static readonly DependencyProperty DisplayFormatProperty = DependencyProperty.Register(
+            "DisplayFormat",
+            typeof(string),
+            typeof(TimePickerBase));
+
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementHourHand = "PART_HourHand";
@@ -360,6 +365,18 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        ///     Gets or sets the currently used display format for the date time.
+        /// </summary>
+        /// <returns>
+        ///     The currently used display format for the date time.
+        /// </returns>
+        public string DisplayFormat
+        {
+            get { return (string)GetValue(DisplayFormatProperty); }
+            set { SetValue(DisplayFormatProperty, value); }
+        }
+
+        /// <summary>
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
         ///     <see cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
         /// </summary>
@@ -438,7 +455,7 @@ namespace MahApps.Metro.Controls
 
         protected virtual string GetValueForTextBox()
         {
-            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(DisplayFormat ?? SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
             return valueForTextBox;
         }
 
