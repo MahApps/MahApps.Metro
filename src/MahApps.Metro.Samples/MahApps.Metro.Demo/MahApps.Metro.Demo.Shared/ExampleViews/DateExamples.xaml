@@ -20,7 +20,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top">
@@ -105,6 +105,8 @@
                                 <RowDefinition />
                                 <RowDefinition />
                                 <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -160,9 +162,37 @@
                             </ComboBox>
                             <Label Grid.Row="3"
                                    Grid.Column="0"
+                                   Content="SelectedDateFormat" />
+                            <ComboBox Name="DateTimePickerDateFormat"
+                                      Grid.Row="3"
+                                      Grid.Column="1"
+                                      SelectedItem="{x:Static DatePickerFormat.Short}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="DatePickerFormat">
+                                        <DatePickerFormat>Long</DatePickerFormat>
+                                        <DatePickerFormat>Short</DatePickerFormat>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Grid.Row="4"
+                                   Grid.Column="0"
+                                   Content="SelectedTimeFormat" />
+                            <ComboBox Name="DateTimePickerTimeFormat"
+                                      Grid.Row="4"
+                                      Grid.Column="1"
+                                      SelectedItem="{x:Static Controls:TimePickerFormat.Long}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Controls:TimePickerFormat">
+                                        <Controls:TimePickerFormat>Long</Controls:TimePickerFormat>
+                                        <Controls:TimePickerFormat>Short</Controls:TimePickerFormat>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Grid.Row="5"
+                                   Grid.Column="0"
                                    Content="CultureInfo" />
                             <ComboBox Name="DateTimePickerCulture"
-                                      Grid.Row="3"
+                                      Grid.Row="5"
                                       Grid.Column="1"
                                       VerticalAlignment="Center"
                                       Controls:TextBoxHelper.ClearTextButton="True"
@@ -176,7 +206,9 @@
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                  IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}" />
+                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                 SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
+                                                 SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                         <GroupBox Header="Current time">
                             <StackPanel>
                                 <Controls:DateTimePicker x:Name="DateTimePicker"
@@ -186,7 +218,9 @@
                                                          IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                          IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                          Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
-                                                         PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}">
+                                                         PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                         SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
+                                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
                                     <i:Interaction.Behaviors>
                                         <behaviors:DateTimeNowBehavior />
                                     </i:Interaction.Behaviors>
@@ -196,7 +230,8 @@
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                      IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                      PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                     SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}" />
+                                                     SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}"
+                                                     SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
