@@ -79,17 +79,17 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="ItemCommand"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ItemCommandProperty = DependencyProperty.Register("ItemCommand", typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemCommandProperty = DependencyProperty.Register(nameof(ItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="ItemCommandParameter"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register("ItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemCommandParameterProperty = DependencyProperty.Register(nameof(ItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="VerticalScrollBarOnLeftSide"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register("VerticalScrollBarOnLeftSide", typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register(nameof(VerticalScrollBarOnLeftSide), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
