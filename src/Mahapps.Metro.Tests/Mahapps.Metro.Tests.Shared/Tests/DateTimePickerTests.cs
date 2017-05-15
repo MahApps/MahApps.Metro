@@ -1,6 +1,8 @@
 ﻿namespace MahApps.Metro.Tests
 {
+    using System;
     using System.Threading.Tasks;
+    using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Tests.TestHelpers;
@@ -52,6 +54,33 @@
                                   Assert.Equal("en-US", window.TheTimePickerUs.Culture.IetfLanguageTag);
                                   Assert.Equal("2:00:01 PM", window.TheTimePickerUs.FindChild<DatePickerTextBox>(string.Empty).Text);
                               });
+        }
+
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task TimePickerTimeFormat()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
+
+            window.Invoke(() =>
+                {
+                    Assert.Equal("it-IT", window.TheDateTimeFormatPicker.Culture.IetfLanguageTag);
+
+                    window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Short;
+                    Assert.Equal("31/08/2016 14:00", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+
+                    window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Long;
+                    Assert.Equal("31/08/2016 14:00:01", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+
+                    window.TheDateTimeFormatPicker.SelectedDateFormat = DatePickerFormat.Long;
+                    Assert.Equal("mercoledì 31 agosto 2016 14:00:01", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+
+
+                    window.TheDateTimeFormatPicker.SelectedTimeFormat = TimePickerFormat.Short;
+                    Assert.Equal("mercoledì 31 agosto 2016 14:00", window.TheDateTimeFormatPicker.FindChild<DatePickerTextBox>(string.Empty).Text);
+                });
         }
     }
 }
