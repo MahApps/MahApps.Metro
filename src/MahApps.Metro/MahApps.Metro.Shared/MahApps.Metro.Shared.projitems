@@ -130,6 +130,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePicker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleSwitch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleSwitchButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TransitioningContentControl.cs" />

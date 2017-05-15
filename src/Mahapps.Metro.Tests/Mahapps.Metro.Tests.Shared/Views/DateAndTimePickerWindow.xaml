@@ -11,6 +11,9 @@
         <controls:DateTimePicker x:Name="TheDateTimePicker"
                                  Culture="pt-BR"
                                  SelectedDate="08/31/2016 14:00:01" />
+        <controls:DateTimePicker x:Name="TheDateTimeFormatPicker"
+                                 Culture="it-it"
+                                 SelectedDate="08/31/2016 14:00:01" />
         <controls:TimePicker x:Name="TheTimePickerDe"
                              Culture="de-de"
                              SelectedTime="14:00:01" />
