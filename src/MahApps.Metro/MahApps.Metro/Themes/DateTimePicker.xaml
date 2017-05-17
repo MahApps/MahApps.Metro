@@ -147,6 +147,7 @@
                                                    CaretBrush="{DynamicResource BlackBrush}"
                                                    ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                    Focusable="{TemplateBinding Focusable}"
+                                                   FontFamily="{TemplateBinding FontFamily}"
                                                    FontSize="{TemplateBinding FontSize}"
                                                    Foreground="{TemplateBinding Foreground}"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
@@ -210,6 +211,8 @@
                                             <Calendar x:Name="PART_Calendar"
                                                       Margin="2 0"
                                                       BorderBrush="Transparent"
+                                                      FontFamily="{TemplateBinding FontFamily}"
+                                                      FontSize="{TemplateBinding FontSize}"
                                                       SelectionMode="SingleDate"
                                                       Visibility="Collapsed" />
                                             <Grid VerticalAlignment="Center">
@@ -300,20 +303,29 @@
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox x:Name="PART_HourPicker"
                                                               Grid.Column="0"
+                                                              FontFamily="{TemplateBinding FontFamily}"
+                                                              FontSize="{TemplateBinding FontSize}"
                                                               ItemsSource="{TemplateBinding SourceHours}" />
                                                     <Label Grid.Column="1"
                                                            Content=":"
                                                            Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}" />
                                                     <ComboBox x:Name="PART_MinutePicker"
                                                               Grid.Column="2"
+                                                              FontFamily="{TemplateBinding FontFamily}"
+                                                              FontSize="{TemplateBinding FontSize}"
                                                               ItemsSource="{TemplateBinding SourceMinutes}" />
                                                     <Label Grid.Column="3"
                                                            Content=":"
                                                            Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}" />
                                                     <ComboBox x:Name="PART_SecondPicker"
                                                               Grid.Column="4"
+                                                              FontFamily="{TemplateBinding FontFamily}"
+                                                              FontSize="{TemplateBinding FontSize}"
                                                               ItemsSource="{TemplateBinding SourceSeconds}" />
-                                                    <ComboBox x:Name="PART_AmPmSwitcher" Grid.Column="5" />
+                                                    <ComboBox x:Name="PART_AmPmSwitcher"
+                                                              Grid.Column="5"
+                                                              FontFamily="{TemplateBinding FontFamily}"
+                                                              FontSize="{TemplateBinding FontSize}" />
                                                 </Grid>
                                             </Grid>
                                         </StackPanel>
