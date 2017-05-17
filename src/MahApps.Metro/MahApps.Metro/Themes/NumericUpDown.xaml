@@ -43,7 +43,7 @@
                                         Margin="0 0 0 1"
                                         Style="{DynamicResource FloatingMessageContainerStyle}">
                             <TextBlock x:Name="PART_ExteriorFloatingMessage"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       HorizontalAlignment="Stretch"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MetroAutoCollapsingTextBlock}"
