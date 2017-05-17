@@ -453,8 +453,6 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(DatePickerTextBox))]
-        [AttachedPropertyBrowsableForType(typeof(DateTimePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static TextAlignment GetWatermarkAlignment(DependencyObject obj)
@@ -470,8 +468,6 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
-        [AttachedPropertyBrowsableForType(typeof(DatePickerTextBox))]
-        [AttachedPropertyBrowsableForType(typeof(DateTimePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static void SetWatermarkAlignment(DependencyObject obj, TextAlignment value)
