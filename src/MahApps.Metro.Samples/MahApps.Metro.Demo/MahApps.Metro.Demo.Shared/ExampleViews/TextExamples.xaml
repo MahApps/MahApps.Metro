@@ -102,19 +102,59 @@
                                         Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
                                         Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                                         Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
-                <ComboBox Margin="{StaticResource ControlMargin}"
-                          Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
-                          Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
-                          Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
-                          Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                          Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
-                          Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}">
-                    <ComboBox.Items>
-                        <ComboBoxItem Content="One" />
-                        <ComboBoxItem Content="Two" />
-                        <ComboBoxItem Content="Three" />
-                    </ComboBox.Items>
-                </ComboBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Width="{Binding ElementName=noneditable, Path=ActualWidth}"
+                           VerticalAlignment="Bottom">
+                        Editable:
+                    </Label>
+                    <ComboBox Grid.Column="1"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
+                              Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
+                              Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
+                              Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
+                              Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
+                              Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}"
+                              IsEditable="True">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="One" />
+                            <ComboBoxItem Content="Two" />
+                            <ComboBoxItem Content="Three" />
+                        </ComboBox.Items>
+                    </ComboBox>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="noneditable"
+                           Grid.Column="0"
+                           VerticalAlignment="Bottom">
+                        Non-Editable:
+                    </Label>
+                    <ComboBox Grid.Column="1"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
+                              Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
+                              Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
+                              Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
+                              Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
+                              Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}"
+                              IsEditable="False">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="One" />
+                            <ComboBoxItem Content="Two" />
+                            <ComboBoxItem Content="Three" />
+                        </ComboBox.Items>
+                    </ComboBox>
+                </Grid>
+
                 <DatePicker Margin="{StaticResource ControlMargin}"
                             Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
                             Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"

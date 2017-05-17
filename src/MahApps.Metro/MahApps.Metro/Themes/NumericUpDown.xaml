@@ -33,12 +33,31 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
                     <Grid Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ContentControl x:Name="PART_ExteriorFloatingMessageContainer"
+                                        Grid.Row="0"
+                                        Grid.ColumnSpan="3"
+                                        Margin="0 0 0 1"
+                                        Style="{DynamicResource FloatingMessageContainerStyle}">
+                            <TextBlock x:Name="PART_ExteriorFloatingMessage"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                       TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
+                        </ContentControl>
                         <Border x:Name="Base"
+                                Grid.Row="1"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid>
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="PART_TextBoxColumn" Width="*" />
                                 <ColumnDefinition x:Name="PART_NumericUpColumn" Width="Auto" />
@@ -114,6 +133,7 @@
                             </RepeatButton>
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Grid.Row="1"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -173,6 +193,40 @@
                             <Setter TargetName="PART_NumericUp" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_NumericUpColumn" Property="Width" Value="0" />
                         </Trigger>
+
+                        <Trigger Property="Controls:TextBoxHelper.FloatingWatermarkLocation" Value="Exterior">
+                            <Setter TargetName="PART_TextBox" Property="Controls:TextBoxHelper.UseFloatingWatermark" Value="False" />
+                        </Trigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.FloatingWatermarkLocation), RelativeSource={RelativeSource Self}}" Value="Exterior" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowExteriorFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideExteriorFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark), Converter={StaticResource FloatingWatermarkOverrideTextToBooleanConverter}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.FloatingWatermarkOverrideText)}" />
+                        </MultiDataTrigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Opacity" Value="1" />
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
