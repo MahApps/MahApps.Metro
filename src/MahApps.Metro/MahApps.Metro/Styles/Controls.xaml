@@ -107,7 +107,7 @@
     <Style BasedOn="{StaticResource MetroTreeViewItem}" TargetType="TreeViewItem" />
     <Style BasedOn="{StaticResource MetroDatePicker}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MetroDatePickerTextBox}" TargetType="DatePickerTextBox" />
-    <Style BasedOn="{StaticResource MetroCalendar}" TargetType="Calendar" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendar}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid" />
     <Style BasedOn="{StaticResource MetroStatusBar}" TargetType="StatusBar" />
     <Style BasedOn="{StaticResource MetroStatusBarItem}" TargetType="StatusBarItem" />
