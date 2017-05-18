@@ -3,6 +3,13 @@
     <!--  never ever make a default style for TextBlock in App.xaml !!!  -->
     <Style x:Key="MetroTextBlock" TargetType="{x:Type TextBlock}" />
 
+    <Style x:Key="MahApps.Metro.Styles.MetroWatermarkTextBlock"
+           BasedOn="{StaticResource MetroTextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Opacity" Value="0.6" />
+    </Style>
+
     <Style x:Key="MetroAutoCollapsingTextBlock"
            BasedOn="{StaticResource MetroTextBlock}"
            TargetType="{x:Type TextBlock}">
