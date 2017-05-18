@@ -74,8 +74,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0.6"
+                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        Visibility="Collapsed" />
@@ -374,11 +373,8 @@
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       FontFamily="{TemplateBinding FontFamily}"
-                                       FontSize="{TemplateBinding FontSize}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0.6"
+                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        Visibility="Collapsed" />
