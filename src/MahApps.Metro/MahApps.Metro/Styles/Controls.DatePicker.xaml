@@ -281,8 +281,7 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   IsHitTestVisible="False"
-                                   Opacity="0.6"
+                                   Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
                     </Grid>
