@@ -111,6 +111,51 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets the current shown dialog.
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
-        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;        
+        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;
+
+        /// <summary>
+        /// Occurs before showing the input dialog.
+        /// </summary>
+        EventHandler BeforeShowInputAsync { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the modal input dialog. 
+        /// </summary>
+        EventHandler BeforeShowModalInputExternal { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the login dialog.
+        /// </summary>
+        EventHandler BeforeShowLoginAsync { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the modal login dialog.
+        /// </summary>
+        EventHandler BeforeShowModalLoginExternal { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the message dialog.
+        /// </summary>
+        EventHandler BeforeShowMessageAsync { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the modal message dialog.
+        /// </summary>
+        EventHandler BeforeShowModalMessageExternal { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the progress dialog.
+        /// </summary>
+        EventHandler BeforeShowProgressAsync { get; set; }
+
+        /// <summary>
+        /// Occurs before showing the metro dialog.
+        /// </summary>
+        EventHandler BeforeShowMetroDialogAsync { get; set; }
+
+        /// <summary>
+        /// Occurs before hiding the metro dialog.
+        /// </summary>
+        EventHandler BeforeHideMetroDialogAsync { get; set; }
     }
 }
