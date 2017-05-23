@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:local="clr-namespace:MahApps.Metro.Styles"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:pOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     mc:Ignorable="pOptions">
