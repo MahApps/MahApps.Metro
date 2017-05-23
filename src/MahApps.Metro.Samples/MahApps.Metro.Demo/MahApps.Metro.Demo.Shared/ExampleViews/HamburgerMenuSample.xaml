@@ -67,6 +67,7 @@
                       IsChecked="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                Style="{DynamicResource CreatorsHamburgerMenu}"
                                 Grid.Row="1"
                                 Margin="20 0 20 20"
                                 HamburgerWidth="48"
@@ -83,7 +84,8 @@
                     <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                FontSize="16"
-                               Foreground="White"
+                               Background="{DynamicResource WindowBackgroundBrush}"
+                               Foreground="{DynamicResource LabelTextBrush}"
                                Text="Pictures" />
                 </DataTemplate>
             </controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
