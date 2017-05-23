@@ -227,6 +227,12 @@
                             <Setter TargetName="PART_ExteriorFloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
 
+                        <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Opacity" Value="1" />
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

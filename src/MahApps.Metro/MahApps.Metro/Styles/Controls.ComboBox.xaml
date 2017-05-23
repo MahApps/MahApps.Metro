@@ -630,6 +630,10 @@
                         <Trigger SourceName="PART_EditableTextBox" Property="IsFocused" Value="True">
                             <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_ExteriorFloatingMessage" Property="Opacity" Value="1" />
+                            <Setter TargetName="PART_InteriorFloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_InteriorFloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />

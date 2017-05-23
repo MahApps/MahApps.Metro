@@ -39,17 +39,6 @@
                          Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark Text" />
-                <ComboBox x:Name="WatermarkAlignment"
-                          Margin="{StaticResource ControlMargin}"
-                          Controls:TextBoxHelper.UseFloatingWatermark="True"
-                          Controls:TextBoxHelper.Watermark="Watermark Alignment"
-                          SelectedIndex="0">
-                    <ComboBox.Items>
-                        <ComboBoxItem Content="Left" />
-                        <ComboBoxItem Content="Center" />
-                        <ComboBoxItem Content="Right" />
-                    </ComboBox.Items>
-                </ComboBox>
                 <ComboBox x:Name="WatermarkTrimming"
                           Margin="{StaticResource ControlMargin}"
                           Controls:TextBoxHelper.UseFloatingWatermark="True"
@@ -86,21 +75,18 @@
                          Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                          Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                          Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                         Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                          Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
                              Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                              Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                              Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                             Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                              Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
                                         Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                                         Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                                         Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                                        Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                                         Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -118,7 +104,6 @@
                               Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                               Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                               Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                              Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                               Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}"
                               IsEditable="True">
                         <ComboBox.Items>
@@ -144,7 +129,6 @@
                               Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                               Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                               Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                              Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                               Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}"
                               IsEditable="False">
                         <ComboBox.Items>
@@ -160,14 +144,12 @@
                             Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                             Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                             Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                            Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                             Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <Controls:DateTimePicker Margin="{StaticResource ControlMargin}"
                                          Controls:TextBoxHelper.FloatingWatermarkLocation="{Binding SelectedItem.Content, ElementName=FloatingWatermarkLocation}"
                                          Controls:TextBoxHelper.FloatingWatermarkOverrideText="{Binding Text, ElementName=OverrideText}"
                                          Controls:TextBoxHelper.UseFloatingWatermark="{Binding IsChecked, ElementName=UseFloatingWatermark}"
                                          Controls:TextBoxHelper.Watermark="{Binding Text, ElementName=WatermarkText}"
-                                         Controls:TextBoxHelper.WatermarkAlignment="{Binding SelectedItem.Content, ElementName=WatermarkAlignment}"
                                          Controls:TextBoxHelper.WatermarkTrimming="{Binding SelectedItem.Tag, ElementName=WatermarkTrimming}" />
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
