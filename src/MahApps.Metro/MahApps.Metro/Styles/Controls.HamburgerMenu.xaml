@@ -62,7 +62,7 @@
     <Style x:Key="CreatorsHamburgerListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="3 0 0 0" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Margin" Value="0" />
@@ -78,8 +78,24 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="-4 0 0 0">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                        <Grid Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Controls:Underline x:Name="SideBar"
+                                                Grid.Column="0"
+                                                Margin="0 12"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarBrush), Mode=OneWay}"
+                                                LineExtent="4"
+                                                LineThickness="4"
+                                                Placement="Left"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter Grid.Column="1"
+                                              Margin="-4 0 0 0"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -87,16 +103,25 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarSelectedBrush), Mode=OneWay}" />
+                            <Setter TargetName="SideBar" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarSelectedBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                            <Setter TargetName="SideBar" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarMouseOverSelectedBrush), Mode=OneWay}" />
+                            <Setter TargetName="SideBar" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=(Controls:HamburgerMenuHelper.SideBarMouseOverSelectedBrush), Mode=OneWay}" />
+                        </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="False" />
@@ -245,6 +270,10 @@
     </Style>
 
     <Style x:Key="CreatorsHamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
+        <Setter Property="Controls:HamburgerMenuHelper.SideBarBrush" Value="Transparent" />
+        <Setter Property="Controls:HamburgerMenuHelper.SideBarMouseOverBrush" Value="Transparent" />
+        <Setter Property="Controls:HamburgerMenuHelper.SideBarMouseOverSelectedBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:HamburgerMenuHelper.SideBarSelectedBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
