@@ -153,6 +153,7 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+#pragma warning disable 618
         private WINDOWPOS prevWindowPos;
 
         private IntPtr AssociatedObjectWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -176,6 +177,7 @@ namespace MahApps.Metro.Behaviours
             }
             return IntPtr.Zero;
         }
+#pragma warning restore 618
 
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

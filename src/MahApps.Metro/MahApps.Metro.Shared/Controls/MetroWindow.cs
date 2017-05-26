@@ -1339,8 +1339,10 @@ namespace MahApps.Metro.Controls
             // DragMove works too
             // window.DragMove();
             // instead this 2 lines
+#pragma warning disable 618
             Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
             Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning restore 618
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1354,6 +1356,7 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
+#pragma warning disable 618
                     if (window.WindowState == WindowState.Normal)
                     {
                         Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
@@ -1362,6 +1365,7 @@ namespace MahApps.Metro.Controls
                     {
                         Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
+#pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
                 }
             }

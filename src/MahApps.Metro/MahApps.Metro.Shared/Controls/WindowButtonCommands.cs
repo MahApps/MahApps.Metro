@@ -289,6 +289,8 @@ namespace MahApps.Metro.Controls
             }
         }
 
+#pragma warning disable 618
+
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
             if (null == this.ParentWindow) return;
@@ -307,6 +309,7 @@ namespace MahApps.Metro.Controls
                 Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this.ParentWindow);
             }
         }
+#pragma warning restore 618
 
         private void CloseClick(object sender, RoutedEventArgs e)
         {
