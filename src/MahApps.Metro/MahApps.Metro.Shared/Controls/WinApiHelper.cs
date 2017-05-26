@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 618
+using System;
 
 namespace MahApps.Metro.Controls
 {
