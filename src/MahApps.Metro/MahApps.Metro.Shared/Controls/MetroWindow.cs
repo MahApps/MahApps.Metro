@@ -18,6 +18,11 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Windows.Data;
+    using System.Windows.Interactivity;
+    using ControlzEx.Behaviors;
+    using MahApps.Metro.Behaviours;
+
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -323,6 +328,21 @@ namespace MahApps.Metro.Controls
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
             set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
+
+        /// <summary>
+        /// Gets or sets resize border thickness
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+            get { return (Thickness)this.GetValue(ResizeBorderThicknessProperty); }
+            set { this.SetValue(ResizeBorderThicknessProperty, value); }
+        }
+
+        /// <summary>
+        /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
+        /// </summary>
+        public static readonly DependencyProperty ResizeBorderThicknessProperty =
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(BorderlessWindowBehavior.GetDefaultResizeBorderThickness()));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -857,6 +877,19 @@ namespace MahApps.Metro.Controls
         {
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
+
+            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
+            this.InitializeBorderlessWindowBehavior();
+        }
+
+        /// <summary>
+        /// Initializes the BorderlessWindowBehavior which is needed to render the custom WindowChrome.
+        /// </summary>
+        private void InitializeBorderlessWindowBehavior()
+        {
+            var behavior = new BorderlessWindowBehavior();
+
+            Interaction.GetBehaviors(this).Add(behavior);
         }
 
 #if NET4_5
