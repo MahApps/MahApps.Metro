@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:controlzex="urn:controlzex">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
@@ -567,12 +568,12 @@
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:BorderlessWindowBehavior />
                     <Behaviours:WindowsSettingBehaviour />
                     <Behaviours:GlowWindowBehavior />
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
+        <Setter Property="AllowsTransparency" Value="False" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
@@ -623,6 +624,24 @@
                     <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
+            <Trigger Property="WindowState"
+                     Value="Maximized">
+                <Setter Property="Margin"
+                        Value="0" />
+                <!--remove window border, so we can move the window from top monitor position-->
+                <Setter Property="BorderThickness"
+                        Value="0" />
+            </Trigger>
+            <!-- #1823 try to fix another nasty issue
+                         WindowState = Maximized
+                         ResizeMode = NoResize-->
+            <Trigger Property="ResizeMode"
+                     Value="NoResize">
+                <Setter Property="Margin"
+                        Value="0" />
+                <Setter Property="ResizeBorderThickness"
+                        Value="0" />
+            </Trigger>    
         </Style.Triggers>
     </Style>
 
