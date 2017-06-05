@@ -27,7 +27,7 @@
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
         event, as so:
-        
+
         DialogParticipation.SetRegister(this, null);
     -->
 
@@ -266,6 +266,9 @@
             </TabItem>
             <TabItem Header="tiles">
                 <exampleViews:TilesExample DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="toolbar">
+                <exampleViews:ToolBarExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="colors">
                 <exampleViews:ColorExample DataContext="{Binding}" />

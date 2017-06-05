@@ -1,0 +1,80 @@
+<UserControl
+    x:Class="MetroDemo.ExampleViews.ToolBarExamples"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d"
+    >
+
+    <!--  #Design  -->
+    <StackPanel Width="320" HorizontalAlignment="Left">
+        <ToolBarTray>
+            <ToolBar>
+                <Button ToolBar.OverflowMode="Never">
+                    <iconPacks:PackIconModern
+                        Width="16"
+                        Height="16"
+                        Kind="Add"
+                        />
+                </Button>
+                <Button ToolBar.OverflowMode="Never">
+                    <iconPacks:PackIconModern
+                        Width="16"
+                        Height="16"
+                        Kind="Delete"
+                        />
+                </Button>
+                <Button ToolBar.OverflowMode="Never">
+                    <iconPacks:PackIconModern
+                        Width="16"
+                        Height="16"
+                        Kind="Save"
+                        />
+                </Button>
+                <Button Controls:ToolBarHelper.TrackParentPanel="True" ToolBar.OverflowMode="AsNeeded">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
+
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <iconPacks:PackIconModern
+                                        Width="16"
+                                        Height="16"
+                                        Kind="Question"
+                                        />
+                                </Setter.Value>
+                            </Setter>
+
+                            <Style.Triggers>
+                                <Trigger Property="Controls:ToolBarHelper.IsInOverflowPanel" Value="True">
+                                    <!--  The Overflow style setters  -->
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconModern
+                                                    Width="16"
+                                                    Height="16"
+                                                    VerticalAlignment="Center"
+                                                    Kind="Question"
+                                                    />
+                                                <Label Content="Question" />
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </ToolBar>
+            <ToolBar>
+                <TextBlock VerticalAlignment="Center" Text="Move my toolbar to the left" />
+            </ToolBar>
+        </ToolBarTray>
+    </StackPanel>
+</UserControl>

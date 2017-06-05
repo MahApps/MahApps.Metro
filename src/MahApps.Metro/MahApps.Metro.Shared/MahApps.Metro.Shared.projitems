@@ -82,6 +82,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TabControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ToggleButtonHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ToolBarHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HotKeyBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\IMetroThumb.cs" />
