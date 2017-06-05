@@ -1,40 +1,32 @@
-<UserControl
-    x:Class="MetroDemo.ExampleViews.ToolBarExamples"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
-    mc:Ignorable="d"
-    >
+<UserControl x:Class="MetroDemo.ExampleViews.ToolBarExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
 
     <!--  #Design  -->
     <StackPanel Width="320" HorizontalAlignment="Left">
         <ToolBarTray>
             <ToolBar>
                 <Button ToolBar.OverflowMode="Never">
-                    <iconPacks:PackIconModern
-                        Width="16"
-                        Height="16"
-                        Kind="Add"
-                        />
+                    <iconPacks:PackIconModern Width="16"
+                                              Height="16"
+                                              Kind="Add" />
                 </Button>
                 <Button ToolBar.OverflowMode="Never">
-                    <iconPacks:PackIconModern
-                        Width="16"
-                        Height="16"
-                        Kind="Delete"
-                        />
+                    <iconPacks:PackIconModern Width="16"
+                                              Height="16"
+                                              Kind="Delete" />
                 </Button>
                 <Button ToolBar.OverflowMode="Never">
-                    <iconPacks:PackIconModern
-                        Width="16"
-                        Height="16"
-                        Kind="Save"
-                        />
+                    <iconPacks:PackIconModern Width="16"
+                                              Height="16"
+                                              Kind="Save" />
                 </Button>
                 <Button Controls:ToolBarHelper.TrackParentPanel="True" ToolBar.OverflowMode="AsNeeded">
                     <Button.Style>
@@ -42,11 +34,9 @@
 
                             <Setter Property="Content">
                                 <Setter.Value>
-                                    <iconPacks:PackIconModern
-                                        Width="16"
-                                        Height="16"
-                                        Kind="Question"
-                                        />
+                                    <iconPacks:PackIconModern Width="16"
+                                                              Height="16"
+                                                              Kind="Question" />
                                 </Setter.Value>
                             </Setter>
 
@@ -56,12 +46,10 @@
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconModern
-                                                    Width="16"
-                                                    Height="16"
-                                                    VerticalAlignment="Center"
-                                                    Kind="Question"
-                                                    />
+                                                <iconPacks:PackIconModern Width="16"
+                                                                          Height="16"
+                                                                          VerticalAlignment="Center"
+                                                                          Kind="Question" />
                                                 <Label Content="Question" />
                                             </StackPanel>
                                         </Setter.Value>
