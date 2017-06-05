@@ -207,10 +207,10 @@ namespace MetroDemo
             get
             {
                 return this.closeCmd ?? (this.closeCmd = new SimpleCommand
-                                                         {
-                                                             CanExecuteDelegate = x => this.CanCloseFlyout,
-                                                             ExecuteDelegate = x => ((Flyout)x).IsOpen = false
-                                                         });
+                {
+                    CanExecuteDelegate = x => this.CanCloseFlyout,
+                    ExecuteDelegate = x => ((Flyout)x).IsOpen = false
+                });
             }
         }
 
@@ -259,15 +259,15 @@ namespace MetroDemo
                     {
                         if (x is string)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
                         }
                         else if (x is TextBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox)x).Text));
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox)x).Password));
                         }
                     }
                 });
@@ -287,8 +287,29 @@ namespace MetroDemo
                     {
                         if (x is String)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
                                                                                                   string.Format("Parameter: {0}", x));
+                        }
+                    }
+                });
+            }
+        }
+
+        private ICommand endOfScrollReachedCmdWithParameter;
+
+        public ICommand EndOfScrollReachedCmdWithParameter
+        {
+            get
+            {
+                return this.endOfScrollReachedCmdWithParameter ?? (this.endOfScrollReachedCmdWithParameter = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        if (x is string)
+                        {
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("End of scroll reached!",
+                                                                                                 string.Format("Parameter: {0}", x));
                         }
                     }
                 });
@@ -346,7 +367,7 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = async x =>
                     {
-                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
+                        await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
                     }
                 });
             }
@@ -478,7 +499,7 @@ namespace MetroDemo
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 System.Diagnostics.Debug.WriteLine(instance.FirstName);
             });
-            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};
+            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
@@ -502,9 +523,9 @@ namespace MetroDemo
         private IEnumerable<string> FindBrushResources()
         {
             var rd = new ResourceDictionary
-                {
-                    Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
-                };
+            {
+                Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+            };
 
             var resources = rd.Keys.Cast<object>()
                     .Where(key => rd[key] is Brush)
@@ -566,7 +587,8 @@ namespace MetroDemo
 
         public ICommand ToggleIconScalingCommand
         {
-            get {
+            get
+            {
                 return toggleIconScalingCommand ?? (toggleIconScalingCommand = new SimpleCommand
                 {
                     ExecuteDelegate = ToggleIconScaling
@@ -574,7 +596,8 @@ namespace MetroDemo
             }
         }
 
-        private void ToggleIconScaling(object obj) {
+        private void ToggleIconScaling(object obj)
+        {
             var multiFrameImageMode = (MultiFrameImageMode)obj;
             ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
             RaisePropertyChanged("IsScaleDownLargerFrame");

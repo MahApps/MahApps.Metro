@@ -39,6 +39,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0">
@@ -254,6 +255,23 @@
                 </Label.ContextMenu>
             </Label>
         </Grid>
+
+        <StackPanel Grid.Row="3" Grid.Column="0" Width="250" HorizontalAlignment="Left" Margin="20">
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="End of scroll command" />
+            <ScrollViewer Height="100"
+                Controls:ScrollBarHelper.EndOfScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
+                Controls:ScrollBarHelper.EndOfScrollReachedCommandParameter="some command parameter"
+                VerticalScrollBarVisibility="Auto"
+                >
+                <ItemsControl ItemsSource="{Binding Albums}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 
 </UserControl>
