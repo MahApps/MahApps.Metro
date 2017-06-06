@@ -29,10 +29,11 @@ namespace MetroDemo
 
             Closing += (s, e) =>
                 {
-                    if (!e.Cancel && flyoutDemo != null)
+                    if (!e.Cancel)
                     {
-                        flyoutDemo.Dispose();
+                        flyoutDemo?.Dispose();
                     }
+
                     if (!e.Cancel)
                     {
                         _viewModel.Dispose();
@@ -249,7 +250,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -262,7 +263,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Password: {result.Password}");
             }
         }
 
@@ -275,7 +276,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}\nShouldRemember: {result.ShouldRemember}");
             }
         }
 
@@ -341,7 +342,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
@@ -395,7 +396,7 @@ namespace MetroDemo
             if (testWindow != null) {
                 testWindow.Close();
             }
-            testWindow = new MetroWindow() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, Title = "Another Test...", Width = 500, Height = 300 };
+            testWindow = new MetroWindow { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, Title = "Another Test...", Width = 500, Height = 300 };
             testWindow.Closed += (o, args) => testWindow = null;
             return testWindow;
         }
@@ -403,7 +404,7 @@ namespace MetroDemo
         private void MenuWindowWithoutBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             //w.BorderThickness = new Thickness(1);
             w.Show();
         }
@@ -411,7 +412,7 @@ namespace MetroDemo
         private void MenuWindowWithBorderOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.GlowBrush = null;
             w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
@@ -431,7 +432,7 @@ namespace MetroDemo
         private void MenuWindowWithShadowOnClick(object sender, RoutedEventArgs e)
         {
             var w = this.GetTestWindow();
-            w.Content = new TextBlock() { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.Content = new TextBlock { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             // use this to test the obsolete under the hood code
             w.EnableDWMDropShadow = true;
             w.Show();
@@ -456,13 +457,13 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = this.ShowModalMessageExternal("Authentication Information", $"Username: {result.Username}\nPassword: {result.Password}");
             }
         }
 
         private void ShowMessageDialogOutside(object sender, RoutedEventArgs e)
         {
-            var mySettings = new MetroDialogSettings()
+            var mySettings = new MetroDialogSettings
             {
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",

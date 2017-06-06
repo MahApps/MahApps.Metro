@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
     /// <summary>
     /// Use the dialog coordinator to help you interfact with dialogs from a view model.
     /// </summary>
+    [PublicAPI]
     public interface IDialogCoordinator
     {
         /// <summary>
@@ -83,7 +85,7 @@ namespace MahApps.Metro.Controls.Dialogs
             bool isCancelable = false, MetroDialogSettings settings = null);
 
         /// <summary>
-        /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.        
+        /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
         /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
@@ -106,11 +108,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// This happens if <see cref="ShowMetroDialogAsync"/> hasn't been called before.
         /// </exception>
         Task HideMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null);
-        
+
         /// <summary>
         /// Gets the current shown dialog.
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
-        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;        
+        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;
     }
 }

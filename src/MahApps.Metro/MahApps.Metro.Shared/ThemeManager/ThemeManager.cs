@@ -251,7 +251,7 @@ namespace MahApps.Metro
             {
                 // Note: do not use contains, because that will look in all merged dictionaries as well. We need to check
                 // out the actual keys of the current resource dictionary
-                if (!(from object resourceKey in resources.Keys 
+                if (!(from object resourceKey in resources.Keys
                      select resourceKey as string).Any(keyAsString => string.Equals(keyAsString, styleKey)))
                 {
                     return false;

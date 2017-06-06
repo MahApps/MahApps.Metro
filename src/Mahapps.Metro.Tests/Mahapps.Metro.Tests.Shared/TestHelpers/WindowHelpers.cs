@@ -15,7 +15,7 @@ namespace MahApps.Metro.Tests.TestHelpers
         {
             var window = new T
             {
-                Visibility = Visibility.Hidden, 
+                Visibility = Visibility.Hidden,
                 ShowInTaskbar = false
             };
 
@@ -32,7 +32,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             };
 
             window.Activated += handler;
-            
+
             window.Show();
 
             return completionSource.Task;

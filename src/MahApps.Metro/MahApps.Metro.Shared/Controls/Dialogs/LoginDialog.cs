@@ -100,6 +100,11 @@ namespace MahApps.Metro.Controls.Dialogs
             this.RememberCheckBoxText = settings.RememberCheckBoxText;
         }
 
+        internal override Task WaitForButtonPressAndSetResultAsync()
+        {
+            return this.WaitForButtonPressAsync();
+        }
+
         internal Task<LoginDialogData> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -127,10 +132,17 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Action cleanUpHandlers = null;
 
+            Action<TaskCompletionSource<LoginDialogData>, LoginDialogData> cleanUpAndSetResult = (t, r) =>
+                {
+                    cleanUpHandlers?.Invoke();
+                    var result = r;
+                    this.Result = result;
+                    t.TrySetResult(result);
+                };
+
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
                                                                                                    {
-                                                                                                       cleanUpHandlers();
-                                                                                                       tcs.TrySetResult(null);
+                                                                                                       cleanUpAndSetResult(tcs, null);
                                                                                                    });
 
             cleanUpHandlers = () =>
@@ -153,9 +165,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Escape)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(null);
+                        cleanUpAndSetResult(tcs, null);
                     }
                 };
 
@@ -163,9 +173,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-
-                        tcs.TrySetResult(null);
+                        cleanUpAndSetResult(tcs, null);
                     }
                 };
 
@@ -173,35 +181,32 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     if (e.Key == Key.Enter)
                     {
-                        cleanUpHandlers();
-                        tcs.TrySetResult(new LoginDialogData
-                                         {
-                                             Username = this.Username,
-                                             SecurePassword = this.PART_TextBox2.SecurePassword,
-                                             ShouldRemember = this.RememberCheckBoxChecked
-                                         });
+                        var result = new LoginDialogData
+                                        {
+                                            Username = this.Username,
+                                            SecurePassword = this.PART_TextBox2.SecurePassword,
+                                            ShouldRemember = this.RememberCheckBoxChecked
+                                        };
+                        cleanUpAndSetResult(tcs, result);
                     }
                 };
 
             negativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(null);
+                    cleanUpAndSetResult(tcs, null);
 
                     e.Handled = true;
                 };
 
             affirmativeHandler = (sender, e) =>
                 {
-                    cleanUpHandlers();
-
-                    tcs.TrySetResult(new LoginDialogData
-                                     {
-                                         Username = this.Username,
-                                         SecurePassword = this.PART_TextBox2.SecurePassword,
-                                         ShouldRemember = this.RememberCheckBoxChecked
-                                     });
+                    var result = new LoginDialogData
+                                    {
+                                        Username = this.Username,
+                                        SecurePassword = this.PART_TextBox2.SecurePassword,
+                                        ShouldRemember = this.RememberCheckBoxChecked
+                                    };
+                    cleanUpAndSetResult(tcs, result);
 
                     e.Handled = true;
                 };

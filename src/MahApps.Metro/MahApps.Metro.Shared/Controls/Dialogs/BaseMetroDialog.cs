@@ -373,6 +373,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return tcs.Task;
         }
+
+        /// <summary>
+        /// Gets or sets the result.
+        /// </summary>
+        internal object Result { get; set; }
+
+        internal virtual Task WaitForButtonPressAndSetResultAsync()
+        {
+            var tcs = new TaskCompletionSource<object>();
+            Result = null;
+            tcs.SetResult(null);
+            return tcs.Task;
+        }
     }
 
     /// <summary>

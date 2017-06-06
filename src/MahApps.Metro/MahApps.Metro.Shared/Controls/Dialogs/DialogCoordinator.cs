@@ -77,6 +77,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new ArgumentNullException(nameof(context));
             }
+
             if (!DialogParticipation.IsRegistered(context))
             {
                 throw new InvalidOperationException("Context is not registered. Consider using DialogParticipation.Register in XAML to bind in the DataContext.");
@@ -88,6 +89,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new InvalidOperationException("Context is not inside a MetroWindow.");
             }
+
             return metroWindow;
         }
     }
