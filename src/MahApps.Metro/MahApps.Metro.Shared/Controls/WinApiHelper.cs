@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
             }
             var point = WinApiHelper.GetPhysicalCursorPos();
             Standard.NativeMethods.ScreenToClient(hWnd, ref point);
-            return new System.Windows.Point(point.x, point.y);
+            return new System.Windows.Point(point.X, point.Y);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
             if (returnValue)
             {
                 Standard.NativeMethods.ScreenToClient(hWnd, ref pt);
-                point = new System.Windows.Point(pt.x, pt.y);
+                point = new System.Windows.Point(pt.X, pt.Y);
             }
             else
             {
