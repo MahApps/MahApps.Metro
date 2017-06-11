@@ -1,5 +1,5 @@
 source https://nuget.org/api/v2
-framework >= net40
+framework net462, net45, net40
 
 nuget JetBrains.Annotations
 nuget Costura.Fody
