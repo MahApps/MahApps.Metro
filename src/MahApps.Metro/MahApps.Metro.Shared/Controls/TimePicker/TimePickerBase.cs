@@ -363,7 +363,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsMilitaryTime
         {
-            get { return !string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator) && SpecificCultureInfo.DateTimeFormat.GetAllDateTimePatterns().Any(p => p != null && p.Contains("h")); }
+            get
+            {
+                var dateTimeFormat = this.SpecificCultureInfo.DateTimeFormat;
+                return !string.IsNullOrEmpty(dateTimeFormat.AMDesignator) && (dateTimeFormat.ShortTimePattern.Contains("h") || dateTimeFormat.LongTimePattern.Contains("h"));
+            }
         }
 
         protected internal Popup Popup
