@@ -122,7 +122,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets app theme with the given resource dictionary.
         /// </summary>
-        /// <param name="resources"></param>
+        /// <param name="resources"><see cref="ResourceDictionary"/> from which the theme should be retrieved.</param>
         /// <returns>AppTheme</returns>
         public static AppTheme GetAppTheme(ResourceDictionary resources)
         {
@@ -184,7 +184,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets the <see cref="Accent"/> with the given resource dictionary.
         /// </summary>
-        /// <param name="resources"></param>
+        /// <param name="resources"><see cref="ResourceDictionary"/> from which the accent should be retrieved.</param>
         /// <returns>The <see cref="Accent"/> or <c>null</c>, if the accent wasn't found.</returns>
         public static Accent GetAccent(ResourceDictionary resources)
         {
