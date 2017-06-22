@@ -540,7 +540,7 @@ namespace MahApps.Metro
 
         private static bool DetectThemeFromResources(ref AppTheme detectedTheme, ResourceDictionary dict)
         {
-            var enumerator = dict.MergedDictionaries.GetEnumerator();
+            var enumerator = dict.MergedDictionaries.Reverse().GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var currentRd = enumerator.Current;
@@ -574,7 +574,7 @@ namespace MahApps.Metro
                 return true;
             }
 
-            foreach (ResourceDictionary rd in dict.MergedDictionaries)
+            foreach (ResourceDictionary rd in dict.MergedDictionaries.Reverse())
             {
                 if (GetThemeFromResources(presetTheme, rd, ref detectedAccentTheme))
                     return true;
