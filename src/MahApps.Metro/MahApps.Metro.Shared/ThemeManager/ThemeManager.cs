@@ -368,29 +368,31 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
+                    resources.MergedDictionaries.Add(newAccent.Resources);
+
                     var key = oldAccent.Resources.Source.ToString().ToLower();
                     var oldAccentResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldAccentResource != null)
                     {
-                        resources.MergedDictionaries.Add(newAccent.Resources);
                         resources.MergedDictionaries.Remove(oldAccentResource);
-
-                        themeChanged = true;
                     }
+
+                    themeChanged = true;
                 }
 
                 var oldTheme = oldThemeInfo.Item1;
                 if (oldTheme != null && oldTheme != newTheme)
                 {
+                    resources.MergedDictionaries.Add(newTheme.Resources);
+
                     var key = oldTheme.Resources.Source.ToString().ToLower();
                     var oldThemeResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldThemeResource != null)
                     {
-                        resources.MergedDictionaries.Add(newTheme.Resources);
                         resources.MergedDictionaries.Remove(oldThemeResource);
-
-                        themeChanged = true;
                     }
+
+                    themeChanged = true;
                 }
             }
             else
