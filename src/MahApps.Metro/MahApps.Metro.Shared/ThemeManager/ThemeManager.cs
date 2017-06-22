@@ -596,7 +596,7 @@ namespace MahApps.Metro
         [SecurityCritical]
         private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
         {
-            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs { AppTheme = newTheme, Accent = newAccent });
+            IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme, newAccent));
         }
 
         private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
@@ -606,10 +606,28 @@ namespace MahApps.Metro
         }
     }
 
+    /// <summary>
+    /// Class which is used as argument for an event to signal theme changes.
+    /// </summary>
     public class OnThemeChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Creates a new instance of this class.
+        /// </summary>
+        public OnThemeChangedEventArgs(AppTheme appTheme, Accent accent)
+        {
+            this.AppTheme = appTheme;
+            this.Accent = accent;
+        }
+
+        /// <summary>
+        /// The new theme.
+        /// </summary>
         public AppTheme AppTheme { get; set; }
 
+        /// <summary>
+        /// The new accent
+        /// </summary>
         public Accent Accent { get; set; }
     }
 }
