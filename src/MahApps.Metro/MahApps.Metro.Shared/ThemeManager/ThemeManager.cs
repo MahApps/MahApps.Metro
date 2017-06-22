@@ -1,13 +1,14 @@
-﻿using System.Security;
-using MahApps.Metro.Controls;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-
+﻿// ReSharper disable once CheckNamespace
 namespace MahApps.Metro
 {
+    using System.Security;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows;
+
     /// <summary>
     /// A class that allows for the detection and alteration of a theme and accent.
     /// </summary>
