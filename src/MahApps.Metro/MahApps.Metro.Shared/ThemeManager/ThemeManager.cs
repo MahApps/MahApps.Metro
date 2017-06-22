@@ -17,7 +17,7 @@ namespace MahApps.Metro
         private static IList<AppTheme> _appThemes;
 
         /// <summary>
-        /// Gets a list of all of default themes.
+        /// Gets a list of all of default accents.
         /// </summary>
         public static IEnumerable<Accent> Accents
         {
