@@ -144,7 +144,7 @@ namespace MahApps.Metro
         {
             if (appThemeName == null) throw new ArgumentNullException(nameof(appThemeName));
 
-            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.InvariantCultureIgnoreCase));
+            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -162,12 +162,12 @@ namespace MahApps.Metro
             if (appTheme == null)
                 throw new ArgumentNullException(nameof(appTheme));
 
-            if (appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
+            if (appTheme.Name.EndsWith("dark", StringComparison.OrdinalIgnoreCase))
             {
                 return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
             }
 
-            if (appTheme.Name.EndsWith("light", StringComparison.InvariantCultureIgnoreCase))
+            if (appTheme.Name.EndsWith("light", StringComparison.OrdinalIgnoreCase))
             {
                 return GetAppTheme(appTheme.Name.ToLower().Replace("light", String.Empty) + "dark");
             }
@@ -184,7 +184,7 @@ namespace MahApps.Metro
         {
             if (accentName == null) throw new ArgumentNullException(nameof(accentName));
 
-            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.InvariantCultureIgnoreCase));
+            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
