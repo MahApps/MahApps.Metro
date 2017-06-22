@@ -84,8 +84,6 @@ namespace MahApps.Metro
         /// <summary>
         /// Adds an accent with the given name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resourceAddress"></param>
         /// <returns>true if the accent does not exists and can be added.</returns>
         public static bool AddAccent(string name, Uri resourceAddress)
         {
@@ -105,8 +103,6 @@ namespace MahApps.Metro
         /// <summary>
         /// Adds an app theme with the given name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resourceAddress"></param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
         public static bool AddAppTheme(string name, Uri resourceAddress)
         {
@@ -138,7 +134,6 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets app theme with the given name and theme type (light or dark).
         /// </summary>
-        /// <param name="appThemeName"></param>
         /// <returns>AppTheme</returns>
         public static AppTheme GetAppTheme(string appThemeName)
         {
@@ -178,7 +173,6 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets the <see cref="Accent"/> with the given name.
         /// </summary>
-        /// <param name="accentName"></param>
         /// <returns>The <see cref="Accent"/> or <c>null</c>, if the app theme wasn't found</returns>
         public static Accent GetAccent(string accentName)
         {
