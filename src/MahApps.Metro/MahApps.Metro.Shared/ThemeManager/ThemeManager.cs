@@ -9,7 +9,7 @@ using System.Windows;
 namespace MahApps.Metro
 {
     /// <summary>
-    /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
+    /// A class that allows for the detection and alteration of a theme and accent.
     /// </summary>
     public static class ThemeManager
     {
@@ -51,7 +51,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets a list of all of default metro themes.
+        /// Gets a list of all default themes.
         /// </summary>
         public static IEnumerable<AppTheme> AppThemes
         {
