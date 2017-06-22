@@ -470,12 +470,19 @@ namespace MahApps.Metro
         {
             try
             {
-                return DetectAppStyle(Application.Current.MainWindow);
+                var style = DetectAppStyle(Application.Current.MainWindow);
+
+                if (style != null)
+                {
+                    return style;
+                }
             }
-            catch (Exception)
-            {
-                return DetectAppStyle(Application.Current);
+            catch (Exception ex)
+            {                
+                Trace.WriteLine($"Failed to detect app style on main window.{Environment.NewLine}{ex}");
             }
+
+            return DetectAppStyle(Application.Current);
         }
 
         /// <summary>
