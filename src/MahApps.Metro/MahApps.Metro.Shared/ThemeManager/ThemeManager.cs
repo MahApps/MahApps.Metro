@@ -37,7 +37,7 @@ namespace MahApps.Metro
                 {
                     foreach (var color in colors)
                     {
-                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
                         _accents.Add(new Accent(color, resourceAddress));
                     }
                 }
@@ -68,7 +68,7 @@ namespace MahApps.Metro
                 {
                     foreach (var color in themes)
                     {
-                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
                         _appThemes.Add(new AppTheme(color, resourceAddress));
                     }
                 }
