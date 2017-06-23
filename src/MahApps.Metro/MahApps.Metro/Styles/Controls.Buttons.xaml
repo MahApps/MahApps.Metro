@@ -170,7 +170,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -240,7 +240,7 @@
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -704,7 +704,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -776,7 +776,7 @@
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
