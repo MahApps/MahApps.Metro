@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+
+    <converters:BorderThicknessToStrokeThicknessConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
     <Style x:Key="MetroFlatButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
@@ -170,7 +173,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness, Converter={StaticResource BorderThicknessToStrokeThicknessConverter}}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -240,7 +243,7 @@
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness, Converter={StaticResource BorderThicknessToStrokeThicknessConverter}}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -704,7 +707,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness, Converter={StaticResource BorderThicknessToStrokeThicknessConverter}}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -776,7 +779,7 @@
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left, Mode=OneTime}" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness, Converter={StaticResource BorderThicknessToStrokeThicknessConverter}}" />
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

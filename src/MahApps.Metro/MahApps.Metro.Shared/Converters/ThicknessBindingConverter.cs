@@ -10,27 +10,27 @@ namespace MahApps.Metro.Converters
     /// </summary>
     public class ThicknessBindingConverter : IValueConverter
     {
-        public IgnoreThicknessSideType IgnoreThicknessSide { get; set; }
+        public ThicknessSideType IgnoreThicknessSide { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Thickness)
             {
                 // yes, we can override it with the parameter value
-                if (parameter is IgnoreThicknessSideType)
+                if (parameter is ThicknessSideType)
                 {
-                    this.IgnoreThicknessSide = (IgnoreThicknessSideType)parameter;
+                    this.IgnoreThicknessSide = (ThicknessSideType)parameter;
                 }
                 var orgThickness = (Thickness)value;
                 switch (this.IgnoreThicknessSide)
                 {
-                    case IgnoreThicknessSideType.Left:
+                    case ThicknessSideType.Left:
                         return new Thickness(0, orgThickness.Top, orgThickness.Right, orgThickness.Bottom);
-                    case IgnoreThicknessSideType.Top:
+                    case ThicknessSideType.Top:
                         return new Thickness(orgThickness.Left, 0, orgThickness.Right, orgThickness.Bottom);
-                    case IgnoreThicknessSideType.Right:
+                    case ThicknessSideType.Right:
                         return new Thickness(orgThickness.Left, orgThickness.Top, 0, orgThickness.Bottom);
-                    case IgnoreThicknessSideType.Bottom:
+                    case ThicknessSideType.Bottom:
                         return new Thickness(orgThickness.Left, orgThickness.Top, orgThickness.Right, 0);
                     default:
                         return orgThickness;
@@ -46,7 +46,46 @@ namespace MahApps.Metro.Converters
         }
     }
 
-    public enum IgnoreThicknessSideType
+    [ValueConversion(typeof(Thickness), typeof(double), ParameterType = typeof(ThicknessSideType))]
+    public class BorderThicknessToStrokeThicknessConverter : IValueConverter
+    {
+        public ThicknessSideType TakeThicknessSide { get; set; }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Thickness)
+            {
+                // yes, we can override it with the parameter value
+                if (parameter is ThicknessSideType)
+                {
+                    this.TakeThicknessSide = (ThicknessSideType)parameter;
+                }
+                var orgThickness = (Thickness)value;
+                switch (this.TakeThicknessSide)
+                {
+                    case ThicknessSideType.Left:
+                        return orgThickness.Left;
+                    case ThicknessSideType.Top:
+                        return orgThickness.Top;
+                    case ThicknessSideType.Right:
+                        return orgThickness.Right;
+                    case ThicknessSideType.Bottom:
+                        return orgThickness.Bottom;
+                    default:
+                        return default(double);
+                }
+            }
+
+            return default(double);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new InvalidOperationException("Cannot convert back to source");
+        }
+    }
+
+    public enum ThicknessSideType
     {
         /// <summary>
         /// Use all sides.
