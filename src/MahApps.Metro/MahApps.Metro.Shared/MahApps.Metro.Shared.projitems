@@ -142,6 +142,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BorderThicknessToStrokeThicknessConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessBindingConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessSideType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
