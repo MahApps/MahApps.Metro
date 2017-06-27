@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
-    <converters:BorderThicknessToStrokeThicknessConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
+    <converters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
     <Style x:Key="MetroFlatButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
