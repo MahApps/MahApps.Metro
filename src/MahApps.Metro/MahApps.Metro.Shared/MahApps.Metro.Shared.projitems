@@ -143,6 +143,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\FloatingWatermarkOverrideTextLengthToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MarkupConverter.cs" />
