@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
@@ -12,7 +11,6 @@
 
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <Style x:Key="MetroDatePicker" TargetType="{x:Type DatePicker}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
