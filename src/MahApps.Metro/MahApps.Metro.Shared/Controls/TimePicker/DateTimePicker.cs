@@ -195,17 +195,19 @@
             FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
         }
 
+        protected string GetDateStringFormat()
+        {
+            var formatInfo = SpecificCultureInfo.DateTimeFormat;
+            return SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
+        }
+        
+
         protected override string GetValueForTextBox()
         {
-            var timeFormat = base.GetValueForTextBox();
-            var formatInfo = SpecificCultureInfo.DateTimeFormat;
-            var dateFormat = SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
-            
-            var dateTimeFormat = string.Intern($"{dateFormat} {timeFormat}");
-
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
-            var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
-            return valueForTextBox;
+            var dateTimeFormat = $"{GetDateStringFormat()} {GetTimeStringFormat()}";
+            
+            return selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);
         }
 
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)

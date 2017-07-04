@@ -452,11 +452,15 @@ namespace MahApps.Metro.Controls
         {
             return new Binding(property.Name) { Source = this };
         }
-        
+
+        protected string GetTimeStringFormat()
+        {
+            return SelectedTimeFormat == TimePickerFormat.Long ? SpecificCultureInfo.DateTimeFormat.LongTimePattern : SpecificCultureInfo.DateTimeFormat.ShortTimePattern;
+        }
+
         protected virtual string GetValueForTextBox()
         {
-            var format = SelectedTimeFormat == TimePickerFormat.Long ? string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern) : string.Intern(SpecificCultureInfo.DateTimeFormat.ShortTimePattern);
-            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(format), SpecificCultureInfo);
+            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(this.GetTimeStringFormat(), SpecificCultureInfo);
             return valueForTextBox;
         }
 
