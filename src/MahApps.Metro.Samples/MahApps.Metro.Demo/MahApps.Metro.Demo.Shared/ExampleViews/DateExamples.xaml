@@ -29,8 +29,18 @@
                 <DatePicker Width="200"
                             Margin="0 10 0 0"
                             HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Stretch"
                             Controls:TextBoxHelper.UseFloatingWatermark="True"
-                            Controls:TextBoxHelper.Watermark="Select a date" />
+                            Controls:TextBoxHelper.Watermark="Select a date"
+                            Controls:TextBoxHelper.WatermarkAlignment="Right" />
+                <DatePicker Width="200"
+                            Margin="0 10 0 0"
+                            HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.Watermark="" />
+                <DatePicker Width="200"
+                            Margin="0 10 0 0"
+                            HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.Watermark="{x:Null}" />
                 <DatePicker Width="200"
                             Margin="0 10 0 0"
                             HorizontalAlignment="Center"
@@ -82,13 +92,11 @@
                         Orientation="Vertical">
                 <Label Content="DateTime/Time picker" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <GroupBox Header="Current time">
-                    <Controls:DateTimePicker>
-                        <i:Interaction.Behaviors>
-                            <behaviors:DateTimeNowBehavior />
-                        </i:Interaction.Behaviors>
-                    </Controls:DateTimePicker>
-                </GroupBox>
+                <Controls:DateTimePicker Margin="0 10 0 0">
+                    <i:Interaction.Behaviors>
+                        <behaviors:DateTimeNowBehavior />
+                    </i:Interaction.Behaviors>
+                </Controls:DateTimePicker>
 
                 <GroupBox Header="Try it yourself">
                     <StackPanel>
