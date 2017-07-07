@@ -12,7 +12,7 @@
         <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
-        <Setter Property="MinHeight" Value="{DynamicResource ProgressBarMinHeight}" />
+        <Setter Property="MinHeight" Value="{StaticResource ProgressBarMinHeight}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroProgressBar}">
@@ -269,7 +269,7 @@
                         <Trigger Property="Orientation" Value="Vertical">
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="MinHeight" Value="0" />
-                            <Setter Property="MinWidth" Value="{DynamicResource ProgressBarMinHeight}" />
+                            <Setter Property="MinWidth" Value="{StaticResource ProgressBarMinHeight}" />
                             <Setter Property="VerticalAlignment" Value="Stretch" />
                             <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}" />
                             <Setter TargetName="ContainingGrid" Property="LayoutTransform">
