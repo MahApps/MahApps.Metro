@@ -28,8 +28,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(typeof(MetroProgressBar)));
             IsIndeterminateProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(OnIsIndeterminateChanged));
         }
-
-        public MetroProgressBar()
+public MetroProgressBar()
         {
             IsVisibleChanged += VisibleChangedHandler;
         }
@@ -304,20 +303,28 @@ namespace MahApps.Metro.Controls
             SizeChangedHandler(null, null);
             SizeChanged += SizeChangedHandler;
         }
-
-        protected override void OnInitialized(EventArgs e)
+        
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            base.OnInitialized(e);
+            base.OnRenderSizeChanged(sizeInfo);
+            UpdateEllipseProperties();
+        }
 
+        private void UpdateEllipseProperties()
+        {
             // Update the Ellipse properties to their default values
             // only if they haven't been user-set.
-            if (EllipseDiameter.Equals(0))
+            var actualSize = this.ActualSize(true);
+            if (actualSize > 0)
             {
-                SetEllipseDiameter(this.ActualSize(true));
-            }
-            if (EllipseOffset.Equals(0))
-            {
-                SetEllipseOffset(this.ActualSize(true));
+                if (EllipseDiameter.Equals(0))
+                {
+                    SetEllipseDiameter(actualSize);
+                }
+                if (EllipseOffset.Equals(0))
+                {
+                    SetEllipseOffset(actualSize);
+                }
             }
         }
     }
