@@ -190,7 +190,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                        tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
                     }
                     else if (e.Key == Key.Enter)
                     {
