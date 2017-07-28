@@ -25,6 +25,7 @@ This framework is free and can be used for free, open source and commercial appl
 - [Quick Start](https://github.com/MahApps/MahApps.Metro/wiki/Quick-Start)
 - [Icons](https://github.com/MahApps/MahApps.Metro/wiki/Icons) (MahApps.Metro.IconPacks)
 - [Contributing](https://github.com/MahApps/MahApps.Metro/wiki/Contributing) to MahApps.Metro
+- [Building](https://github.com/MahApps/MahApps.Metro/wiki/Building-the-MahApps.Metro-solution) the MahApps.Metro solution
 - [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
