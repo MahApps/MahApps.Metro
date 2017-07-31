@@ -1,4 +1,4 @@
-FRAMEWORK: >= NET40
+RESTRICTION: >= net40
 NUGET
   remote: https://www.nuget.org/api/v2
     Caliburn.Micro (3.0.3)
@@ -12,7 +12,7 @@ NUGET
     MahApps.Metro.IconPacks (1.7.1)
     Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Async (1.0.168) - framework: net40
+    Microsoft.Bcl.Async (1.0.168) - restriction: == net40
       Microsoft.Bcl (>= 1.1.8)
     Microsoft.Bcl.Build (1.0.21) - import_targets: false
     NHotkey (1.2.1)
