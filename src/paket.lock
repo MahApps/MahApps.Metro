@@ -4,6 +4,7 @@ NUGET
     Caliburn.Micro (3.0.3)
       Caliburn.Micro.Core (3.0.3)
     Caliburn.Micro.Core (3.0.3)
+    ControlzEx (3.0.1-dev0030)
     Costura.Fody (1.3.3)
       Fody (>= 1.26.1)
     ExposedObject (1.2)
@@ -21,5 +22,3 @@ NUGET
     xunit (1.9.2)
     xunit.extensions (1.9.2)
       xunit (1.9.2)
-  remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (3.0.1-dev0024)

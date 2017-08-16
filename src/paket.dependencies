@@ -1,5 +1,5 @@
 source https://nuget.org/api/v2
-framework net462, net45, net40
+framework >= net40
 
 nuget JetBrains.Annotations
 nuget Costura.Fody
@@ -14,5 +14,5 @@ nuget NHotkey.Wpf 1.2.1
 nuget xunit ~> 1.9
 nuget xunit.extensions ~> 1.9
 
-source https://ci.appveyor.com/nuget/controlzex
+#source https://ci.appveyor.com/nuget/controlzex
 nuget ControlzEx @>= 3.0.1 prerelease

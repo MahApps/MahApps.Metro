@@ -629,12 +629,11 @@
                          ResizeMode = NoResize-->
             <Trigger Property="ResizeMode"
                      Value="NoResize">
-                        Value="0" />
                 <Setter Property="Margin"
+                        Value="0" />
                 <Setter Property="ResizeBorderThickness"
                         Value="0" />
-            </Trigger>    
+            </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>
