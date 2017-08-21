@@ -270,12 +270,14 @@ namespace MahApps.Metro.Controls
 
         internal void UpdateCore(Native.RECT rect)
         {
+            // we can handle this._owner.WindowState == WindowState.Normal
+            // or use NOZORDER too
             NativeMethods.SetWindowPos(this.handle, this.ownerHandle,
                                        (int)(this.getLeft(rect)),
                                        (int)(this.getTop(rect)),
                                        (int)(this.getWidth(rect)),
                                        (int)(this.getHeight(rect)),
-                                       SWP.NOACTIVATE);
+                                       SWP.NOACTIVATE | SWP.NOZORDER);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

@@ -26,7 +26,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -38,7 +38,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid x:Name="PART_InnerGrid" Margin="2">
+                        <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
@@ -205,10 +205,9 @@
                                              Duration="0:0:0.2" />
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid>
+                    <Grid x:Name="PART_InnerGrid" Margin="2">
 
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="2 2 20 2"
                                       VerticalAlignment="Stretch"
                                       Background="{x:Null}"
                                       BorderThickness="0"
@@ -216,18 +215,25 @@
                                       IsTabStop="False" />
                         <ContentControl x:Name="PART_Watermark"
                                         Margin="6 0 0 0"
-                                        Padding="2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        VerticalContentAlignment="Center"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                         Focusable="False"
                                         Foreground="{TemplateBinding Foreground}"
                                         IsHitTestVisible="False"
                                         Opacity="0.6"
-                                        Visibility="Hidden" />
+                                        Visibility="Hidden">
+                            <ContentControl.Template>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Text="{TemplateBinding Content}"
+                                               TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                </ControlTemplate>
+                            </ContentControl.Template>
+                        </ContentControl>
                         <TextBlock x:Name="PART_Message"
                                    Margin="4 0 0 0"
-                                   Padding="2"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
@@ -249,7 +255,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}" Value="{x:Static System:String.Empty}">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}" Value="">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
                         </DataTrigger>
 
