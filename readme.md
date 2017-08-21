@@ -29,7 +29,7 @@ This framework is free and can be used for free, open source and commercial appl
 - [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
-## Somehting missing?
+## Something missing?
 
 If you're looking for a control or library which is MahApps compatible, check them out:
 
