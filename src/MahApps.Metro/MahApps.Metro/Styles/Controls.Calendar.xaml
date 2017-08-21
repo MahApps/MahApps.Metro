@@ -169,10 +169,6 @@
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
-                        <Grid.Resources>
-                            <SolidColorBrush x:Key="DisabledColor" Color="#A5FFFFFF" />
-                        </Grid.Resources>
-
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -378,10 +374,10 @@
                             </Grid>
                         </Border>
                         <Rectangle x:Name="PART_DisabledVisual"
-                                   Fill="{StaticResource DisabledColor}"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
                                    Opacity="0"
                                    Stretch="Fill"
-                                   Stroke="{StaticResource DisabledColor}"
+                                   Stroke="{DynamicResource ControlsDisabledBrush}"
                                    StrokeThickness="1"
                                    Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
