@@ -43,10 +43,12 @@
                     </TextBox.ContextMenu>
                 </TextBox>
                 <TextBox Margin="{StaticResource ControlMargin}"
+                         HorizontalContentAlignment="Stretch"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
+                         Controls:TextBoxHelper.WatermarkAlignment="Right"
                          SpellCheck.IsEnabled="True"
                          ToolTip="Default alignment">
                     <TextBox.ContextMenu>
