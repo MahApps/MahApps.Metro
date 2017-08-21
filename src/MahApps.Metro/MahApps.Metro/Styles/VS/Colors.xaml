@@ -5,8 +5,9 @@
                     mc:Ignorable="options">
 
     <!--  Background  -->
-    <SolidColorBrush x:Key="Background" Color="#1C1C1C" />
-    <SolidColorBrush x:Key="LightBackground" Color="#2D2D30" />
+    <SolidColorBrush x:Key="Background" Color="#1C1C1C" options:Freeze="True" />
+    <SolidColorBrush x:Key="LightBackground" Color="#2D2D30" options:Freeze="True" />
+
     <Color x:Key="AccentColor">#2D2D30</Color>
     <Color x:Key="BlackColor">#FFFFFFFF</Color>
     <Color x:Key="WhiteColor">#2D2D30</Color>
