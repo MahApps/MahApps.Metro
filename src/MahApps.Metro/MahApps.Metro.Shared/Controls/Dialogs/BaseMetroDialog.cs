@@ -2,9 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using JetBrains.Annotations;
+using MahApps.Metro.Controls.AutomationPeers;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -22,6 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTitleFontSizeProperty = DependencyProperty.Register("DialogTitleFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(26D));
         public static readonly DependencyProperty DialogMessageFontSizeProperty = DependencyProperty.Register("DialogMessageFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(15D));
 
+        [CanBeNull]
         public MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
         /// <param name="settings">The settings for the message dialog.</param>
-        protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
+        protected BaseMetroDialog([CanBeNull] MetroWindow owningWindow, [CanBeNull] MetroDialogSettings settings)
         {
             this.Initialize(owningWindow, settings);
         }
@@ -318,11 +321,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
         /// </summary>
+        [CanBeNull]
         protected internal Window ParentDialogWindow { get; internal set; }
 
         /// <summary>
         /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
         /// </summary>
+        [CanBeNull]
         protected internal MetroWindow OwningWindow { get; internal set; }
 
         /// <summary>
@@ -372,6 +377,11 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             return tcs.Task;
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new BaseMetroDialogAutomationPeer(this);
         }
     }
 

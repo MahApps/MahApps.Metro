@@ -210,6 +210,12 @@ namespace MetroDemo
             await this.HideMetroDialogAsync(dialog);
         }
 
+        private async void ShowNestedDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = (BaseMetroDialog)this.Resources["CustomStackedDialogTest"];
+            await this.ShowMetroDialogAsync(dialog);
+        }
+
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
             EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
@@ -236,6 +242,13 @@ namespace MetroDemo
         private async void CloseCustomDialog(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
+
+            await this.HideMetroDialogAsync(dialog);
+        }
+
+        private async void CloseNestedDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = (BaseMetroDialog)this.Resources["CustomStackedDialogTest"];
 
             await this.HideMetroDialogAsync(dialog);
         }
@@ -477,5 +490,6 @@ namespace MetroDemo
                 this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
+
     }
 }

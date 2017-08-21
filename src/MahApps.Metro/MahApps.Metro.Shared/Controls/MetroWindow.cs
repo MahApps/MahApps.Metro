@@ -18,6 +18,9 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Windows.Automation.Peers;
+    using MahApps.Metro.Controls.AutomationPeers;
+
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -128,7 +131,7 @@ namespace MahApps.Metro.Controls
         internal ContentPresenter WindowButtonCommandsPresenter;
 
         internal Grid overlayBox;
-        internal Grid metroActiveDialogContainer;
+        public Grid metroActiveDialogContainer;
         internal Grid metroInactiveDialogContainer;
         private Storyboard overlayStoryboard;
         Rectangle flyoutModal;
@@ -711,6 +714,8 @@ namespace MahApps.Metro.Controls
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
+
+        public int I { get; private set; }
 
         /// <summary>
         /// Begins to show the MetroWindow's overlay effect.
@@ -1413,6 +1418,11 @@ namespace MahApps.Metro.Controls
             { }
 
             public Flyout ChangedFlyout { get; internal set; }
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new MetroWindowAutomationPeer(this);
         }
     }
 }

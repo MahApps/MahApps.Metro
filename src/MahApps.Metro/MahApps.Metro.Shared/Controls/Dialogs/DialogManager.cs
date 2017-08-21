@@ -3,11 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    using JetBrains.Annotations;
-
     public static class DialogManager
     {
         /// <summary>
@@ -141,7 +140,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-       
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -151,8 +150,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public static Task<MessageDialogResult> ShowMessageAsync([NotNull] this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, [CanBeNull] MetroDialogSettings settings = null)
         {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
@@ -281,12 +285,10 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
             }
-            else
-            {
-                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-                tcs.SetResult(null);
-                return tcs.Task;
-            }
+
+            var tcs = new TaskCompletionSource<object>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
@@ -295,12 +297,10 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
             }
-            else
-            {
-                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-                tcs.SetResult(null);
-                return tcs.Task;
-            }
+
+            var tcs = new TaskCompletionSource<object>();
+            tcs.SetResult(null);
+            return tcs.Task;
         }
 
         /// <summary>
@@ -319,17 +319,20 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 throw new ArgumentNullException(nameof(window));
             }
-            window.Dispatcher.VerifyAccess();
+
             if (dialog == null)
             {
                 throw new ArgumentNullException(nameof(dialog));
             }
+
+            window.Dispatcher.VerifyAccess();
             if (window.metroActiveDialogContainer.Children.Contains(dialog) || window.metroInactiveDialogContainer.Children.Contains(dialog))
             {
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
             }
 
             settings = settings ?? (dialog.DialogSettings ?? window.MetroDialogOptions);
+            dialog.OwningWindow = window;
 
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
@@ -404,8 +407,18 @@ namespace MahApps.Metro.Controls.Dialogs
         /// The <paramref name="dialog"/> is not visible in the window.
         /// This happens if <see cref="ShowMetroDialogAsync"/> hasn't been called before.
         /// </exception>
-        public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings settings = null)
+        public static Task HideMetroDialogAsync([NotNull] this MetroWindow window, [NotNull] BaseMetroDialog dialog, MetroDialogSettings settings = null)
         {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
+            if (dialog == null)
+            {
+                throw new ArgumentNullException(nameof(dialog));
+            }
+
             window.Dispatcher.VerifyAccess();
             if (!window.metroActiveDialogContainer.Children.Contains(dialog) && !window.metroInactiveDialogContainer.Children.Contains(dialog))
             {
@@ -447,6 +460,57 @@ namespace MahApps.Metro.Controls.Dialogs
                 TDialog dialog = window.metroActiveDialogContainer?.Children.OfType<TDialog>().LastOrDefault();
                 t.TrySetResult(dialog);
             }));
+            return t.Task;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="BaseMetroDialog"/> is the top most dialog of <see cref="MetroWindow"/>.
+        /// </summary>
+        /// <param name="window">The window.</param>
+        /// <param name="dialog">The dialog.</param>
+        public static Task<bool> IsTopMost([NotNull] this MetroWindow window, [NotNull] BaseMetroDialog dialog)
+        {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
+            if (dialog == null)
+            {
+                throw new ArgumentNullException(nameof(dialog));
+            }
+
+            window.Dispatcher.VerifyAccess();
+            var t = new TaskCompletionSource<bool>();
+            window.Dispatcher.Invoke(new Action(() =>
+                {
+                    var lastElement = window.metroActiveDialogContainer?.Children.OfType<UIElement>().LastOrDefault();
+                    var result = ReferenceEquals(dialog, lastElement);
+                    t.TrySetResult(result);
+                }));
+
+            return t.Task;
+        }
+
+        /// <summary>
+        /// Determines whether the <see cref="MetroWindow"/> has got any open dialogs.
+        /// </summary>
+        /// <param name="window">The window.</param>
+        public static Task<bool> HasDialog([NotNull] this MetroWindow window)
+        {
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
+            window.Dispatcher.VerifyAccess();
+            var t = new TaskCompletionSource<bool>();
+            window.Dispatcher.Invoke(new Action(() =>
+                {
+                    var hasDialog = window.metroActiveDialogContainer?.Children.Count > 0;
+                    t.TrySetResult(hasDialog);
+                }));
+
             return t.Task;
         }
 
@@ -558,7 +622,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
                 win.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
@@ -591,7 +658,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
-            
+
             return win;
         }
 
@@ -617,7 +684,7 @@ namespace MahApps.Metro.Controls.Dialogs
             };
 
             SetDialogFontSizes(settings, dialog);
-            
+
             win.Content = dialog;
 
             LoginDialogData result = null;

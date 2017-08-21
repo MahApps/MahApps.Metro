@@ -27,7 +27,7 @@
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
         event, as so:
-        
+
         DialogParticipation.SetRegister(this, null);
     -->
 
@@ -68,7 +68,8 @@
 
             <Dialog:CustomDialog x:Key="CustomDialogTest"
                                  x:Name="CustomTestDialog"
-                                 Title="This dialog allows arbitrary content.">
+                                 Title="This dialog allows arbitrary content."
+                                 AutomationProperties.AutomationId="CustomDialogWithArbitraryContent">
                 <TextBlock x:Name="MessageTextBlock"
                            Height="200"
                            Foreground="{DynamicResource AccentColorBrush}"
@@ -77,14 +78,30 @@
 
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
                                  x:Name="CustomCloseDialogTest"
-                                 Title="Custom Dialog which is awaitable">
-
+                                 Title="Custom Dialog which is awaitable"
+                                 AutomationProperties.AutomationId="CustomAwaitableDialog">
                 <StackPanel>
                     <TextBlock Height="30"
                                Foreground="{DynamicResource AccentColorBrush}"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog" Content="Close Me!" />
+                </StackPanel>
+
+            </Dialog:CustomDialog>
+
+            <Dialog:CustomDialog x:Key="CustomStackedDialogTest"
+                                 x:Name="CustomStackedDialogTest"
+                                 Title="Custom Dialog which is awaitable"
+                                 AutomationProperties.AutomationId="CustomAwaitableDialog"
+                                 Background="{DynamicResource AccentColorBrush4}">
+                <StackPanel>
+                    <TextBlock Height="250"
+                               Foreground="{DynamicResource ControlTextBrushKey}"
+                               Text="This dialog shows how dialogs can be stacked. The content has more height to show that this dialog is still visible after showing the log in dialog."
+                               TextWrapping="Wrap" />
+                    <Button Click="ShowLoginDialog" Content="Show Login Dialog" />
+                    <Button Click="CloseNestedDialog" Content="Close Me!" />
                 </StackPanel>
 
             </Dialog:CustomDialog>
@@ -171,6 +188,7 @@
                 <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                 <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
                 <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                <MenuItem Click="ShowNestedDialog"  Header="Show nested dialogs" />
                 <Separator />
                 <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
                 <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
@@ -187,7 +205,6 @@
                               CommandParameter="BACKGROUND_THREAD"
                               Header="... from Background Thread" />
                 </MenuItem>
-
                 <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
                 <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
             </MenuItem>
