@@ -342,7 +342,7 @@ namespace MahApps.Metro.Controls
         /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
         /// </summary>
         public static readonly DependencyProperty ResizeBorderThicknessProperty =
-            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(BorderlessWindowBehavior.GetDefaultResizeBorderThickness()));
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(WindowChromeBehavior.GetDefaultResizeBorderThickness()));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -879,17 +879,23 @@ namespace MahApps.Metro.Controls
             Loaded += this.MetroWindow_Loaded;
 
             // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
-            this.InitializeBorderlessWindowBehavior();
+            this.InitializeStylizedBehaviors();
         }
 
         /// <summary>
-        /// Initializes the BorderlessWindowBehavior which is needed to render the custom WindowChrome.
+        /// Initializes various behaviors for the window.
+        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
         /// </summary>
-        private void InitializeBorderlessWindowBehavior()
+        private void InitializeStylizedBehaviors()
         {
-            var behavior = new BorderlessWindowBehavior();
+            var collection = new StylizedBehaviorCollection
+            {
+                new BorderlessWindowBehavior(),
+                new WindowsSettingBehaviour(),
+                new GlowWindowBehavior()
+            };
 
-            Interaction.GetBehaviors(this).Add(behavior);
+            StylizedBehaviors.SetBehaviors(this, collection);
         }
 
 #if NET4_5

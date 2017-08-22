@@ -567,14 +567,6 @@
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
-            <Setter.Value>
-                <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:WindowsSettingBehaviour />
-                    <Behaviours:GlowWindowBehavior />
-                </Behaviours:StylizedBehaviorCollection>
-            </Setter.Value>
-        </Setter>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
