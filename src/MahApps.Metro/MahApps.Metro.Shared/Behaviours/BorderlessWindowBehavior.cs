@@ -10,6 +10,7 @@
     {
         protected override void OnAttached()
         {
+            BindingOperations.SetBinding(this, IgnoreTaskbarOnMaximizeProperty, new Binding { Path = new PropertyPath(MetroWindow.IgnoreTaskbarOnMaximizeProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(MetroWindow.ResizeBorderThicknessProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, GlowBrushProperty, new Binding { Path = new PropertyPath(MetroWindow.GlowBrushProperty), Source = this.AssociatedObject });
 
@@ -18,6 +19,7 @@
 
         protected override void OnDetaching()
         {
+            BindingOperations.ClearBinding(this, IgnoreTaskbarOnMaximizeProperty);
             BindingOperations.ClearBinding(this, ResizeBorderThicknessProperty);
             BindingOperations.ClearBinding(this, GlowBrushProperty);
 
