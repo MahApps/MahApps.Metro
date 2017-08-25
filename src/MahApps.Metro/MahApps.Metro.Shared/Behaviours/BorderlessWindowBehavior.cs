@@ -4,7 +4,7 @@
     using System.Windows.Data;
     using ControlzEx.Behaviors;
     using MahApps.Metro.Controls;
-    using Microsoft.Windows.Shell;
+    using ControlzEx.Windows.Shell;
 
     public class BorderlessWindowBehavior : WindowChromeBehavior
     {

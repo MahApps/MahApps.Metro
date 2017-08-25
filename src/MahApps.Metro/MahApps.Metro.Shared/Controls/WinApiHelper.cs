@@ -1,8 +1,9 @@
 ﻿#pragma warning disable 618
-using System;
-
 namespace MahApps.Metro.Controls
 {
+    using System;
+    using ControlzEx.Standard;
+
     public static class WinApiHelper
     {
         /// <summary>
@@ -16,7 +17,7 @@ namespace MahApps.Metro.Controls
                 return new System.Windows.Point();
             }
             var point = WinApiHelper.GetPhysicalCursorPos();
-            Standard.NativeMethods.ScreenToClient(hWnd, ref point);
+            NativeMethods.ScreenToClient(hWnd, ref point);
             return new System.Windows.Point(point.X, point.Y);
         }
 
@@ -26,11 +27,11 @@ namespace MahApps.Metro.Controls
         /// <param name="hWnd">The handle for this method.</param>
         public static bool TryGetRelativeMousePosition(IntPtr hWnd, out System.Windows.Point point)
         {
-            Standard.POINT pt = new Standard.POINT();
-            var returnValue = hWnd != IntPtr.Zero && Standard.NativeMethods.TryGetPhysicalCursorPos(out pt);
+            POINT pt = new POINT();
+            var returnValue = hWnd != IntPtr.Zero && NativeMethods.TryGetPhysicalCursorPos(out pt);
             if (returnValue)
             {
-                Standard.NativeMethods.ScreenToClient(hWnd, ref pt);
+                NativeMethods.ScreenToClient(hWnd, ref pt);
                 point = new System.Windows.Point(pt.X, pt.Y);
             }
             else
@@ -40,14 +41,14 @@ namespace MahApps.Metro.Controls
             return returnValue;
         }
 
-        internal static Standard.POINT GetPhysicalCursorPos()
+        internal static POINT GetPhysicalCursorPos()
         {
             try
             {
                 // Sometimes Win32 will fail this call, such as if you are
                 // not running in the interactive desktop. For example,
                 // a secure screen saver may be running.
-                return Standard.NativeMethods.GetPhysicalCursorPos();
+                return NativeMethods.GetPhysicalCursorPos();
             }
             catch (Exception exception)
             {
