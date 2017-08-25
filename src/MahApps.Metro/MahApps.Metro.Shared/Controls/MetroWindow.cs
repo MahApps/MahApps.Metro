@@ -12,12 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Standard;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Windows.Data;
+    using System.Windows.Interactivity;
+    using ControlzEx.Behaviors;
+    using MahApps.Metro.Behaviours;
+    using ControlzEx.Native;
+
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -323,6 +329,21 @@ namespace MahApps.Metro.Controls
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
             set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
+
+        /// <summary>
+        /// Gets or sets resize border thickness
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+            get { return (Thickness)this.GetValue(ResizeBorderThicknessProperty); }
+            set { this.SetValue(ResizeBorderThicknessProperty, value); }
+        }
+
+        /// <summary>
+        /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
+        /// </summary>
+        public static readonly DependencyProperty ResizeBorderThicknessProperty =
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(WindowChromeBehavior.GetDefaultResizeBorderThickness()));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -857,6 +878,25 @@ namespace MahApps.Metro.Controls
         {
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
+
+            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
+            this.InitializeStylizedBehaviors();
+        }
+
+        /// <summary>
+        /// Initializes various behaviors for the window.
+        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
+        /// </summary>
+        private void InitializeStylizedBehaviors()
+        {
+            var collection = new StylizedBehaviorCollection
+            {
+                new BorderlessWindowBehavior(),
+                new WindowsSettingBehaviour(),
+                new GlowWindowBehavior()
+            };
+
+            StylizedBehaviors.SetBehaviors(this, collection);
         }
 
 #if NET4_5
@@ -1281,8 +1321,10 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+#pragma warning disable 618
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
+#pragma warning restore 618
 
             if (windowIsMaximized)
             {
@@ -1306,8 +1348,10 @@ namespace MahApps.Metro.Controls
             // DragMove works too
             // window.DragMove();
             // instead this 2 lines
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning disable 618
+            NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
+            NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning restore 618
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1321,14 +1365,16 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
+#pragma warning disable 618
                     if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
+#pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
                 }
             }
@@ -1366,21 +1412,23 @@ namespace MahApps.Metro.Controls
             return GetTemplateChild(name);
         }
 
+#pragma warning disable 618
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
         {
             if (window == null) return;
 
             var hwnd = new WindowInteropHelper(window).Handle;
-            if (hwnd == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(hwnd))
+            if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
                 return;
 
-            var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
+            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
+            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
                 (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
-                UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+                NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
+#pragma warning restore 618
 
         internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {

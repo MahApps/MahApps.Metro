@@ -5,8 +5,8 @@ using System.Windows.Interactivity;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using System.Windows.Threading;
-using Standard;
-using WM = MahApps.Metro.Models.Win32.WM;
+using ControlzEx.Standard;
+using ControlzEx.Native;
 
 namespace MahApps.Metro.Behaviours
 {
@@ -153,6 +153,7 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+#pragma warning disable 618
         private WINDOWPOS prevWindowPos;
 
         private IntPtr AssociatedObjectWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -176,6 +177,7 @@ namespace MahApps.Metro.Behaviours
             }
             return IntPtr.Zero;
         }
+#pragma warning restore 618
 
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -201,10 +203,11 @@ namespace MahApps.Metro.Behaviours
             this.bottom?.Update();
         }
 
+#pragma warning disable 618
         private void UpdateCore()
         {
-            Native.RECT rect;
-            if (this.handle != IntPtr.Zero && Native.UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+            RECT rect;
+            if (this.handle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
             {
                 this.left?.UpdateCore(rect);
                 this.right?.UpdateCore(rect);
@@ -212,6 +215,7 @@ namespace MahApps.Metro.Behaviours
                 this.bottom?.UpdateCore(rect);
             }
         }
+#pragma warning restore 618
 
         /// <summary>
         /// Sets the opacity to all glow windows
