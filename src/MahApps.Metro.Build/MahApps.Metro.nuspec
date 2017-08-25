@@ -15,6 +15,9 @@
     <releaseNotes />
 	  <tags>WPF UI Metro Modern Material XAML Toolkit Library .NET</tags>
     </metadata>
+    <dependencies>
+      <dependency id="ControlzEx" version="(3.0.1-dev,4.0)" />
+    </dependencies>
     <files>
       <file src="..\bin\MahApps.Metro\ReleaseNET40\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
       <file src="..\bin\MahApps.Metro\ReleaseNET40\MahApps.Metro.pdb" target="lib\net40\MahApps.Metro.pdb" />
