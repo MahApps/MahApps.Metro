@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using ControlzEx;
 using ControlzEx.Standard;
 using ControlzEx.Native;
 
