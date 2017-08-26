@@ -16,6 +16,7 @@ namespace MahApps.Metro.Behaviours
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
         private IntPtr handle;
+        private HwndSource hwndSource;
 
         private bool IsGlowDisabled
         {
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Behaviours
                 return metroWindow != null && metroWindow.WindowTransitionsEnabled;
             }
         }
-        
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -42,8 +43,8 @@ namespace MahApps.Metro.Behaviours
             this.AssociatedObject.SourceInitialized += (o, args) =>
                 {
                     this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
-                    var hwndSource = HwndSource.FromHwnd(this.handle);
-                    hwndSource?.AddHook(this.AssociatedObjectWindowProc);
+                    this.hwndSource = HwndSource.FromHwnd(this.handle);
+                    this.hwndSource?.AddHook(this.AssociatedObjectWindowProc);
                 };
             this.AssociatedObject.Loaded += this.AssociatedObjectOnLoaded;
             this.AssociatedObject.Unloaded += this.AssociatedObjectUnloaded;
@@ -158,6 +159,11 @@ namespace MahApps.Metro.Behaviours
 
         private IntPtr AssociatedObjectWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (hwndSource?.RootVisual == null)
+            {
+                return IntPtr.Zero;
+            }
+
             switch ((WM)msg)
             {
                 case WM.WINDOWPOSCHANGED:
