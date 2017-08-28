@@ -607,16 +607,6 @@
             <Trigger Property="TitleAlignment" Value="Center">
                 <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
             </Trigger>
-            <Trigger Property="WindowState"
-                     Value="Maximized">
-                <Setter Property="Margin"
-                        Value="0" />
-                <!--remove window border, so we can move the window from top monitor position-->
-                <Setter Property="BorderThickness"
-                        Value="0" />
-                <Setter Property="ResizeBorderThickness"
-                        Value="0" />
-            </Trigger>
             <!-- #1823 try to fix another nasty issue
                          WindowState = Maximized
                          ResizeMode = NoResize-->
