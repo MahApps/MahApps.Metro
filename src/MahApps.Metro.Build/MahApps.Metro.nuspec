@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+<package>
   <metadata>
     <id>MahApps.Metro</id>
     <version>1.5.0.0</version>
