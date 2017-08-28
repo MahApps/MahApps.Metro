@@ -22,4 +22,4 @@ NUGET
     xunit.extensions (1.9.2)
       xunit (1.9.2)
   remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (3.0.1-dev0053)
+    ControlzEx (3.0.1-dev0054)
