@@ -160,6 +160,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
+            "SnapToMultipleOfInterval",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
+
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
@@ -463,6 +469,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(HasDecimalsProperty); }
             set { SetValue(HasDecimalsProperty, value); }
+        }
+
+        /// <summary>
+        ///     Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool SnapToMultipleOfInterval
+        {
+            get { return (bool)GetValue(SnapToMultipleOfIntervalProperty); }
+            set { SetValue(SnapToMultipleOfIntervalProperty, value); }
         }
 
         /// <summary> 
@@ -918,7 +936,18 @@ namespace MahApps.Metro.Controls
             }
         }
 
-      private static bool ValidateDelay(object value)
+        private static void OnSnapToMultipleOfIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            var value = numericUpDown.Value.GetValueOrDefault();
+
+            if ((bool)e.NewValue && Math.Abs(numericUpDown.Interval) > 0)
+            {
+                numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
+            }
+        }
+
+        private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
         }
@@ -1100,6 +1129,11 @@ namespace MahApps.Metro.Controls
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
             {
+                if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
+                {
+                    convertedValue = Math.Round(convertedValue / Interval) * Interval;
+                }
+
                 if (convertedValue > Maximum)
                 {
                     if (!Equals(this.Value, this.Maximum))
