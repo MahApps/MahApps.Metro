@@ -21,6 +21,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(Button))]
         public static Visibility GetDisabledVisualElementVisibility(UIElement element)
         {
             return (Visibility)element.GetValue(DisabledVisualElementVisibilityProperty);

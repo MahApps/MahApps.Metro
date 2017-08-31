@@ -47,6 +47,11 @@
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False" />
+            <Button Width="100"
+                    Margin="{StaticResource ControlMargin}"
+                    Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                    Content="No visual"
+                    IsEnabled="False" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
@@ -87,6 +92,12 @@
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="Disabled"
+                          IsEnabled="False"
+                          Style="{DynamicResource MetroFlatToggleButton}" />
+            <ToggleButton Width="100"
+                          Margin="{StaticResource ControlMargin}"
+                          Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                          Content="No visual"
                           IsEnabled="False"
                           Style="{DynamicResource MetroFlatToggleButton}" />
             <StackPanel Margin="{StaticResource ControlMargin}"
