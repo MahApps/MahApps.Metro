@@ -1039,7 +1039,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            double newValue = Value.GetValueOrDefault() + difference;
+            var newValue = Value.GetValueOrDefault() + difference;
             Value = (double)CoerceValue(this, newValue);
         }
 
@@ -1100,30 +1100,18 @@ namespace MahApps.Metro.Controls
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
             {
-                if (Value == convertedValue)
-                {
-                    OnValueChanged(Value, Value);
-                }
                 if (convertedValue > Maximum)
                 {
-                    if (Value == Maximum)
+                    if (!Equals(this.Value, this.Maximum))
                     {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Maximum);
+                        this.SetValue(ValueProperty, this.Maximum);
                     }
                 }
                 else if (convertedValue < Minimum)
                 {
-                    if (Value == Minimum)
+                    if (!Equals(this.Value, this.Minimum))
                     {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Minimum);
+                        this.SetValue(ValueProperty, this.Minimum);
                     }
                 }
                 else
@@ -1131,10 +1119,8 @@ namespace MahApps.Metro.Controls
                     SetValue(ValueProperty, convertedValue);
                 }
             }
-            else
-            {
-                OnValueChanged(Value, Value);
-            }
+
+            OnValueChanged(Value, Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
