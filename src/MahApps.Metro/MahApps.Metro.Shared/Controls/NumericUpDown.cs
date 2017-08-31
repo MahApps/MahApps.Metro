@@ -160,6 +160,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
+            "SnapToMultipleOfInterval",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
+
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
@@ -463,6 +469,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(HasDecimalsProperty); }
             set { SetValue(HasDecimalsProperty, value); }
+        }
+
+        /// <summary>
+        ///     Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool SnapToMultipleOfInterval
+        {
+            get { return (bool)GetValue(SnapToMultipleOfIntervalProperty); }
+            set { SetValue(SnapToMultipleOfIntervalProperty, value); }
         }
 
         /// <summary> 
@@ -918,7 +936,18 @@ namespace MahApps.Metro.Controls
             }
         }
 
-      private static bool ValidateDelay(object value)
+        private static void OnSnapToMultipleOfIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            var value = numericUpDown.Value.GetValueOrDefault();
+
+            if ((bool)e.NewValue && Math.Abs(numericUpDown.Interval) > 0)
+            {
+                numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
+            }
+        }
+
+        private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
         }
@@ -1039,7 +1068,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            double newValue = Value.GetValueOrDefault() + difference;
+            var newValue = Value.GetValueOrDefault() + difference;
             Value = (double)CoerceValue(this, newValue);
         }
 
@@ -1100,30 +1129,23 @@ namespace MahApps.Metro.Controls
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
             {
-                if (Value == convertedValue)
+                if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
                 {
-                    OnValueChanged(Value, Value);
+                    convertedValue = Math.Round(convertedValue / Interval) * Interval;
                 }
+
                 if (convertedValue > Maximum)
                 {
-                    if (Value == Maximum)
+                    if (!Equals(this.Value, this.Maximum))
                     {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Maximum);
+                        this.SetValue(ValueProperty, this.Maximum);
                     }
                 }
                 else if (convertedValue < Minimum)
                 {
-                    if (Value == Minimum)
+                    if (!Equals(this.Value, this.Minimum))
                     {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Minimum);
+                        this.SetValue(ValueProperty, this.Minimum);
                     }
                 }
                 else
@@ -1131,10 +1153,8 @@ namespace MahApps.Metro.Controls
                     SetValue(ValueProperty, convertedValue);
                 }
             }
-            else
-            {
-                OnValueChanged(Value, Value);
-            }
+
+            OnValueChanged(Value, Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
