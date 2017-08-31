@@ -5,7 +5,7 @@
         <version>1.6.0.0</version>
         <title>MahApps.Metro</title>
         <authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</authors>
-        <owners>punker76,shiftkey,aeoth,jakeginnivan</owners>
+        <owners>punker76, shiftkey</owners>
         <licenseUrl>https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
@@ -14,7 +14,7 @@
         <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.</summary>
         <tags>WPF UI Metro Modern Material XAML Toolkit Library .NET</tags>
         <dependencies>
-            <dependency id="ControlzEx" version="(3.0.1-dev,4.0)"/>
+            <dependency id="ControlzEx" version="(2.0,4.0)"/>
         </dependencies>
     </metadata>
     <files>
