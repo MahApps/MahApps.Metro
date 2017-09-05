@@ -142,6 +142,21 @@
                         <ContentPresenter />
                     </Controls:MetroContentControl>
 
+                    <Controls:MetroContentControl Grid.Row="1"
+                                                  Grid.Column="0"
+                                                  Grid.ColumnSpan="5"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  IsTabStop="False"
+                                                  OnlyLoadTransition="True"
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                  UseLayoutRounding="True">
+
+                        <Grid Background="{DynamicResource SemiTransparentGreyBrush}"
+                              Controls:VisibilityHelper.IsVisible="{TemplateBinding Working}">
+                            <Controls:ProgressRing IsActive="True" EllipseDiameterScale="1" IsLarge="True"  />
+                        </Grid>
+                    </Controls:MetroContentControl>
+
                     <!--  disables the main content when a modal flyout is shown  -->
                     <Rectangle Name="PART_FlyoutModal"
                                Grid.Row="0"
@@ -417,6 +432,21 @@
                                                   TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
                                                   UseLayoutRounding="True">
                         <ContentPresenter />
+                    </Controls:MetroContentControl>
+
+                    <Controls:MetroContentControl Grid.Row="1"
+                                                  Grid.Column="0"
+                                                  Grid.ColumnSpan="5"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  IsTabStop="False"
+                                                  OnlyLoadTransition="True"
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
+                                                  UseLayoutRounding="True">
+
+                        <Grid Background="{DynamicResource SemiTransparentGreyBrush}"
+                              Controls:VisibilityHelper.IsVisible="{TemplateBinding Working}">
+                            <Controls:ProgressRing IsActive="True" EllipseDiameterScale="1" IsLarge="True"  />
+                        </Grid>
                     </Controls:MetroContentControl>
 
                     <!--  disables the main content when a modal flyout is shown  -->

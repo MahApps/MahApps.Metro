@@ -22,7 +22,8 @@
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
                       WindowStartupLocation="CenterScreen"
-                      mc:Ignorable="d">
+                      mc:Ignorable="d"
+                      Working="{Binding Working}">
     <!--
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
@@ -108,6 +109,9 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowLastSeparator="False">
+            <Button Click="ActiveWorking"
+                    Content="Working"
+                    ToolTip="Active working (ProgressRing in content)" />
             <Button Click="LaunchVisualStudioDemo"
                     Content="VS"
                     ToolTip="Visual Studio style demo" />
@@ -192,6 +196,7 @@
                 <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
+
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
                           IsChecked="{Binding Path=ShowMyTitleBar, UpdateSourceTrigger=PropertyChanged}" />
