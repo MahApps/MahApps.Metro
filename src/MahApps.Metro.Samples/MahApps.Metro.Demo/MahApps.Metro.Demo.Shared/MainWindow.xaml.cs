@@ -477,5 +477,13 @@ namespace MetroDemo
                 this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
+
+        private void ActiveWorking(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel vm)
+            {
+                vm.Working = !vm.Working;
+            }
+        }
     }
 }
