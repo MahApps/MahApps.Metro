@@ -267,6 +267,11 @@ namespace MahApps.Metro.Controls
 
         public bool IsGlowing { set; get; }
 
+        internal bool CanUpdateCore()
+        {
+            return this.ownerHandle != IntPtr.Zero && this.handle != IntPtr.Zero;
+        }
+
         internal void UpdateCore(RECT rect)
         {
             // we can handle this._owner.WindowState == WindowState.Normal

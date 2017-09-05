@@ -203,22 +203,31 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void Update()
         {
-            this.left?.Update();
-            this.right?.Update();
-            this.top?.Update();
-            this.bottom?.Update();
+            var canUpdate = this.left != null && this.right != null && this.top != null && this.bottom != null;
+            if (canUpdate)
+            {
+                this.left.Update();
+                this.right.Update();
+                this.top.Update();
+                this.bottom.Update();
+            }
         }
 
 #pragma warning disable 618
         private void UpdateCore()
         {
-            RECT rect;
-            if (this.handle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+            var canUpdateCore = this.left != null && this.right != null && this.top != null && this.bottom != null
+                                && this.left.CanUpdateCore() && this.right.CanUpdateCore() && this.top.CanUpdateCore() && this.bottom.CanUpdateCore();
+            if (canUpdateCore)
             {
-                this.left?.UpdateCore(rect);
-                this.right?.UpdateCore(rect);
-                this.top?.UpdateCore(rect);
-                this.bottom?.UpdateCore(rect);
+                RECT rect;
+                if (this.handle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.handle, out rect))
+                {
+                    this.left.UpdateCore(rect);
+                    this.right.UpdateCore(rect);
+                    this.top.UpdateCore(rect);
+                    this.bottom.UpdateCore(rect);
+                }
             }
         }
 #pragma warning restore 618
@@ -228,10 +237,14 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if (this.left != null) this.left.Opacity = newOpacity;
-            if (this.right != null) this.right.Opacity = newOpacity;
-            if (this.top != null) this.top.Opacity = newOpacity;
-            if (this.bottom != null) this.bottom.Opacity = newOpacity;
+            var canSetOpacity = this.left != null && this.right != null && this.top != null && this.bottom != null;
+            if (canSetOpacity)
+            {
+                this.left.Opacity = newOpacity;
+                this.right.Opacity = newOpacity;
+                this.top.Opacity = newOpacity;
+                this.bottom.Opacity = newOpacity;
+            }
         }
 
         /// <summary>
@@ -239,10 +252,15 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if (this.left?.OpacityStoryboard != null) this.left.BeginStoryboard(this.left.OpacityStoryboard);
-            if (this.right?.OpacityStoryboard != null) this.right.BeginStoryboard(this.right.OpacityStoryboard);
-            if (this.top?.OpacityStoryboard != null) this.top.BeginStoryboard(this.top.OpacityStoryboard);
-            if (this.bottom?.OpacityStoryboard != null) this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
+            var canStartOpacityStoryboard = this.left != null && this.right != null && this.top != null && this.bottom != null
+                                            && this.left.OpacityStoryboard != null && this.right.OpacityStoryboard != null && this.top.OpacityStoryboard != null && this.bottom.OpacityStoryboard != null;
+            if (canStartOpacityStoryboard)
+            {
+                this.left.BeginStoryboard(this.left.OpacityStoryboard);
+                this.right.BeginStoryboard(this.right.OpacityStoryboard);
+                this.top.BeginStoryboard(this.top.OpacityStoryboard);
+                this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
+            }
         }
 
         /// <summary>
