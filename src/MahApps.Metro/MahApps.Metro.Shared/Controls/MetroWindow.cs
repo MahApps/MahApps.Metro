@@ -123,6 +123,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
+        public static readonly DependencyProperty WorkingProperty = DependencyProperty.Register("Working", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
         FrameworkElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
@@ -731,6 +733,15 @@ namespace MahApps.Metro.Controls
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
+        }
+
+        /// <summary>
+        /// Gets/sets the working status for the content.
+        /// </summary>
+        public bool Working
+        {
+            get { return (bool)GetValue(WorkingProperty); }
+            set { SetValue(WorkingProperty, value); }
         }
 
         /// <summary>

@@ -584,5 +584,16 @@ namespace MetroDemo
         public bool IsScaleDownLargerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
 
         public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
+
+        private bool _working;
+        public bool Working
+        {
+            get { return this._working; }
+            set
+            {
+                this._working = value;
+                RaisePropertyChanged(nameof(Working));
+            }
+        }
     }
 }
