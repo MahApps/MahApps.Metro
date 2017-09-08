@@ -836,11 +836,10 @@ namespace MahApps.Metro.Controls
 
             if (GetClearTextButton(parent))
             {
-                BindingExpression expression = null;
                 if (parent is TextBox)
                 {
                     ((TextBox)parent).Clear();
-                    expression = ((TextBox)parent).GetBindingExpression(TextBox.TextProperty);
+                    ((TextBox)parent).GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 }
                 else if (parent is PasswordBox)
                 {
@@ -851,11 +850,11 @@ namespace MahApps.Metro.Controls
                     if (((ComboBox)parent).IsEditable)
                     {
                         ((ComboBox)parent).Text = string.Empty;
+                        ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
                     ((ComboBox)parent).SelectedItem = null;
-                    expression = ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty);
+                    ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
-                expression?.UpdateSource();
             }
         }
 
