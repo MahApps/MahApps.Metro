@@ -5,6 +5,8 @@
 
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
+    <Thickness x:Key="GroupBoxHeaderThemePadding">4</Thickness>
+
     <Style x:Key="MetroGroupBox" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
@@ -13,8 +15,7 @@
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -32,7 +33,7 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True">
                             <Controls:ContentControlEx x:Name="HeaderContent"
-                                                       Padding="{TemplateBinding Padding}"
+                                                       Margin="{DynamicResource GroupBoxHeaderThemePadding}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
