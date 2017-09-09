@@ -176,5 +176,30 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(TransitionProperty, value);
         }
+
+
+
+        /// <summary>
+        /// Defines the position of the <see cref="TabItem"/> Underline
+        /// </summary>
+
+        public static readonly DependencyProperty UnderlinePositionProperty =
+            DependencyProperty.RegisterAttached("UnderlinePosition",
+                                                typeof(Dock),
+                                                typeof(TabControlHelper),
+                                                new PropertyMetadata(Dock.Bottom)
+        );
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Dock GetUnderlinePosition(UIElement element)
+        {
+            return (Dock)element.GetValue(UnderlinePositionProperty);
+        }
+        
+        public static void SetUnderlinePosition(UIElement element, Dock value)
+        {
+            element.SetValue(UnderlinePositionProperty, value);
+        }
     }
 }
