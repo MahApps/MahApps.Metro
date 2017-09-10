@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Interactivity;
 using System.Windows.Threading;
 
@@ -21,7 +22,7 @@ namespace MahApps.Metro.Behaviours
         public static readonly DependencyProperty PasswordProperty
             = DependencyProperty.RegisterAttached("Password", typeof(string),
                                                   typeof(PasswordBoxBindingBehavior),
-                                                  new FrameworkPropertyMetadata(string.Empty, new PropertyChangedCallback(OnPasswordPropertyChanged)));
+                                                  new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnPasswordPropertyChanged)));
 
         [Category(AppName.MahApps)]
         public static string GetPassword(DependencyObject dpo)
