@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Data;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 
 namespace MahApps.Metro.Controls
 {
@@ -844,6 +845,7 @@ namespace MahApps.Metro.Controls
                 else if (parent is PasswordBox)
                 {
                     ((PasswordBox)parent).Clear();
+                    ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
                 }
                 else if (parent is ComboBox)
                 {
