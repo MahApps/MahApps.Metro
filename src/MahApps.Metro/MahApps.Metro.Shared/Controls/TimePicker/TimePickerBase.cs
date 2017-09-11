@@ -450,6 +450,8 @@ namespace MahApps.Metro.Controls
 
             SetDefaultTimeOfDayValues();
             _deactivateRangeBaseEvent = false;
+
+            WriteValueToTextBox();
         }
 
         protected Binding GetBinding(DependencyProperty property)
@@ -466,10 +468,11 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            TimeSpan ts;
-            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
+            var text = string.Intern($"{DateTime.MinValue.ToString(SpecificCultureInfo.DateTimeFormat.ShortDatePattern)} {((DatePickerTextBox)sender).Text}");
+            DateTime dt;
+            if (DateTime.TryParse(text, SpecificCultureInfo, DateTimeStyles.None, out dt))
             {
-                SelectedTime = ts;
+                SelectedTime = dt.TimeOfDay;
             }
             else
             {

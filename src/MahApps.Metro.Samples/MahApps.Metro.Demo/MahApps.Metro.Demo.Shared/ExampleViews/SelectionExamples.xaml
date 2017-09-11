@@ -132,6 +132,38 @@
                           Margin="0 10 0 0"
                           Controls:TextBoxHelper.ClearTextButton="True"
                           Controls:TextBoxHelper.Watermark="Please select an item..."
+                          BorderThickness="4"
+                          SelectedIndex="0">
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Test" />
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
+                    <ComboBoxItem Content="Item 1" />
+                    <ComboBoxItem Content="Item 2" />
+                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                    <ComboBoxItem Content="Item 4" />
+                </ComboBox>
+                <ComboBox Width="200"
+                          Margin="0 10 0 0"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Please select an item..."
+                          SelectedIndex="0">
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Test" />
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
+                    <ComboBoxItem Content="Item 1" />
+                    <ComboBoxItem Content="Item 2" />
+                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                    <ComboBoxItem Content="Item 4" />
+                </ComboBox>
+                <ComboBox Width="200"
+                          Margin="0 10 0 0"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
+                          Controls:TextBoxHelper.Watermark="Please select an item..."
                           SelectedIndex="0">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
@@ -211,3 +243,4 @@
     </TabControl>
 
 </UserControl>
+
