@@ -125,40 +125,37 @@
                           Grid.Row="0"
                           Grid.Column="0"
                           Margin="5 2"
-                          Content="Banner" />
+                          Content="Banner"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=IsBannerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <CheckBox x:Name="ShowMouseOverCheckBox"
                           Grid.Row="0"
                           Grid.Column="1"
                           Margin="5 2"
                           Content="MouseOver Glow"
-                          IsChecked="True" />
+                          IsChecked="{Binding ElementName=FlipView1st, Path=MouseOverGlowEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <CheckBox x:Name="CircularNaviCheckBox"
                           Grid.Row="1"
                           Grid.Column="0"
                           Margin="5 2"
                           Content="Circular Navi"
-                          IsChecked="False" />
+                          IsChecked="{Binding ElementName=FlipView1st, Path=CircularNavigation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <CheckBox x:Name="ShowNaviCheckBox"
                           Grid.Row="1"
                           Grid.Column="1"
                           Margin="5 2"
                           Content="Show NaviButtons"
-                          IsChecked="True" />
+                          IsChecked="{Binding ElementName=FlipView1st, Path=IsNavigationEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <ComboBox x:Name="Orientation"
                           Grid.Row="2"
                           Grid.Column="0"
                           Grid.ColumnSpan="2"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
-                          SelectedIndex="0" />
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue=Horizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Controls:FlipView x:Name="FlipView1st"
                                Height="200"
                                Margin="0 0 5 0"
-                               CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, Mode=OneWay}"
-                               IsNavigationEnabled="{Binding ElementName=ShowNaviCheckBox, Path=IsChecked, Mode=OneWay}"
-                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
-                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}"
+                               Foreground="{DynamicResource WhiteBrush}"
                                SelectionChanged="FlipView_SelectionChanged">
                 <Controls:FlipView.Items>
                     <Grid Background="#2E8DEF">

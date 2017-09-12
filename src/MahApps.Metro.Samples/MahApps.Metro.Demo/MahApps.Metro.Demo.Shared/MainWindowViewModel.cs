@@ -86,7 +86,7 @@ namespace MetroDemo
 
             BrushResources = FindBrushResources();
 
-            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
+            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
