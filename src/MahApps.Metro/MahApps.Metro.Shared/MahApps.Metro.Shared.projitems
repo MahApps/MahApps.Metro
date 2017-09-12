@@ -107,7 +107,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Planerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Position.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ProgressRing.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PropertyChangeNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeSelectionChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeSlider.cs" />

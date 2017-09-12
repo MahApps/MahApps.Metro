@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using ControlzEx;
 using ControlzEx.Standard;
 using ControlzEx.Native;
 
@@ -265,6 +266,11 @@ namespace MahApps.Metro.Controls
         }
 
         public bool IsGlowing { set; get; }
+
+        internal bool CanUpdateCore()
+        {
+            return this.ownerHandle != IntPtr.Zero && this.handle != IntPtr.Zero;
+        }
 
         internal void UpdateCore(RECT rect)
         {
