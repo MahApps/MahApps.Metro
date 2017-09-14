@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
@@ -69,7 +70,16 @@ namespace MahApps.Metro.Behaviours
             {
                 return;
             }
-            settings.Reload();
+
+            try
+            {
+                settings.Reload();
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError($"The settings could not be reloaded! {e}");
+                return;
+            }
 
             // check for existing placement and prevent empty bounds
             if (settings.Placement == null || settings.Placement.normalPosition.IsEmpty)
@@ -85,6 +95,7 @@ namespace MahApps.Metro.Behaviours
                 var hwnd = new WindowInteropHelper(this.AssociatedObject).Handle;
                 if (!NativeMethods.SetWindowPlacement(hwnd, wp))
                 {
+                    Trace.TraceWarning($"The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
                 }
             }
             catch (Exception ex)
@@ -118,7 +129,15 @@ namespace MahApps.Metro.Behaviours
                     settings.Placement = wp;
                 }
             }
-            settings.Save();
+
+            try
+            {
+                settings.Save();
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError($"The settings could not be saved! {e}");
+            }
         }
 #pragma warning restore 618
     }
