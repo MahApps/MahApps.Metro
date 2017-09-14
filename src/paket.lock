@@ -4,7 +4,7 @@ NUGET
     Caliburn.Micro (3.1)
       Caliburn.Micro.Core (3.1)
     Caliburn.Micro.Core (3.1)
-    ControlzEx (3.0.1.66)
+    ControlzEx (3.0.2.4)
     Costura.Fody (1.4.1)
       Fody (>= 2.0.6)
     ExposedObject (1.2)
