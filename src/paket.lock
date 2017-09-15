@@ -9,6 +9,7 @@ NUGET
       Fody (>= 2.0.6)
     ExposedObject (1.2)
     Fody (2.1.2)
+    GitLink (3.1)
     JetBrains.Annotations (11.0)
     MahApps.Metro.IconPacks (1.9)
     Microsoft.Bcl (1.1.10) - restriction: == net40
