@@ -9,7 +9,7 @@
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
- 
+
   install:
     - choco install gitversion.portable -pre -y
 
@@ -21,8 +21,12 @@
 
   build:
     verbosity: minimal
-  
+
   after_build:
+
+  cache:
+    - src\packages -> **\packages.config
+    - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
     - path: \src\bin\MetroDemo\
@@ -39,7 +43,7 @@
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
- 
+
   install:
     - choco install gitversion.portable -pre -y
 
@@ -51,8 +55,12 @@
 
   build:
     verbosity: minimal
-  
+
   after_build:
+
+  cache:
+    - src\packages -> **\packages.config
+    - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
     - path: \src\bin\MetroDemo\
