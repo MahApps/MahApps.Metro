@@ -3,7 +3,7 @@
 -
   branches:
     only:
-      - dev
+      - develop
 
   skip_tags: true
   image: Visual Studio 2017
