@@ -2,6 +2,7 @@ source https://nuget.org/api/v2
 framework >= net40
 
 nuget JetBrains.Annotations
+nuget gitlink
 nuget Costura.Fody 1.4.1
 nuget Caliburn.Micro ~> 3.0
 nuget ExposedObject ~> 1.2

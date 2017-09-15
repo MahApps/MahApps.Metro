@@ -3,7 +3,6 @@ using ControlzEx.Standard;
 using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -92,6 +91,7 @@ namespace MahApps.Metro.Controls
         }
     }
 
+    [Obsolete("This class is obsolete and will be deleted at the next major release.")]
     public class WindowSettings
     {
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.RegisterAttached("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(WindowSettings), new FrameworkPropertyMetadata(OnWindowPlacementSettingsInvalidated));
@@ -140,7 +140,7 @@ namespace MahApps.Metro.Controls
                 wp.flags = 0;
                 wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
                 var hwnd = new WindowInteropHelper(_window).Handle;
-                UnsafeNativeMethods.SetWindowPlacement(hwnd, ref wp);
+                NativeMethods.SetWindowPlacement(hwnd, wp);
             }
             catch (Exception ex)
             {
@@ -155,9 +155,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
             var hwnd = new WindowInteropHelper(_window).Handle;
-            var wp = new WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(wp);
-            UnsafeNativeMethods.GetWindowPlacement(hwnd, ref wp);
+            var wp = NativeMethods.GetWindowPlacement(hwnd);
             // check for saveable values
             if (wp.showCmd != SW.HIDE && wp.length > 0)
             {
