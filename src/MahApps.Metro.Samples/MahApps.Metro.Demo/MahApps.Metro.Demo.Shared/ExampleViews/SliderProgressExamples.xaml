@@ -189,8 +189,8 @@
 
             <Label Content="MetroProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:MetroProgressBar Width="200"
+                                       Height="15"
                                        Margin="0 10 0 0"
-                                       Foreground="{DynamicResource AccentColorBrush}"
                                        Maximum="100"
                                        Minimum="0"
                                        Value="{Binding ElementName=horizSlider, Path=Value}" />
@@ -202,7 +202,6 @@
             <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
                                        Width="200"
                                        Margin="0 10 0 0"
-                                       Foreground="{DynamicResource AccentColorBrush}"
                                        IsIndeterminate="True"
                                        Maximum="100"
                                        Minimum="0"
@@ -218,7 +217,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Controls:ProgressRing Grid.Column="0" Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                <Controls:ProgressRing Grid.Column="1"
+                <Controls:ProgressRing Grid.Column="1" ToolTip="Magic happens!"
                                        Width="40"
                                        Height="40" />
                 <Controls:ProgressRing Grid.Column="2"

@@ -86,7 +86,7 @@ namespace MetroDemo
 
             BrushResources = FindBrushResources();
 
-            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
+            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
@@ -227,6 +227,22 @@ namespace MetroDemo
                 }
                 this.canShowHamburgerAboutCommand = value;
                 this.RaisePropertyChanged("CanShowHamburgerAboutCommand");
+            }
+        }
+
+        private bool isHamburgerMenuPaneOpen;
+
+        public bool IsHamburgerMenuPaneOpen
+        {
+            get { return this.isHamburgerMenuPaneOpen; }
+            set
+            {
+                if (Equals(value, this.isHamburgerMenuPaneOpen))
+                {
+                    return;
+                }
+                this.isHamburgerMenuPaneOpen = value;
+                this.RaisePropertyChanged("IsHamburgerMenuPaneOpen");
             }
         }
 

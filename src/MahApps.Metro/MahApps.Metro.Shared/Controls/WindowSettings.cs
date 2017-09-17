@@ -1,16 +1,18 @@
-﻿using System;
+﻿using ControlzEx.Native;
+using ControlzEx.Standard;
+using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
     public interface IWindowPlacementSettings
     {
-        WINDOWPLACEMENT? Placement { get; set; }
+#pragma warning disable 618
+        WINDOWPLACEMENT Placement { get; set; }
+#pragma warning restore 618
 
         /// <summary>
         /// Refreshes the application settings property values from persistent storage.
@@ -43,8 +45,9 @@ namespace MahApps.Metro.Controls
         {
         }
 
+#pragma warning disable 618
         [UserScopedSetting]
-        public WINDOWPLACEMENT? Placement
+        public WINDOWPLACEMENT Placement
         {
             get
             {
@@ -56,6 +59,7 @@ namespace MahApps.Metro.Controls
             }
             set { this["Placement"] = value; }
         }
+#pragma warning restore 618
 
         /// <summary>
         /// Upgrades the application settings on loading.
@@ -87,6 +91,7 @@ namespace MahApps.Metro.Controls
         }
     }
 
+    [Obsolete("This class is obsolete and will be deleted at the next major release.")]
     public class WindowSettings
     {
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.RegisterAttached("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(WindowSettings), new FrameworkPropertyMetadata(OnWindowPlacementSettingsInvalidated));
@@ -117,6 +122,7 @@ namespace MahApps.Metro.Controls
             _settings = windowPlacementSettings;
         }
 
+#pragma warning disable 618
         protected virtual void LoadWindowState()
         {
             if (_settings == null)
@@ -126,16 +132,15 @@ namespace MahApps.Metro.Controls
             _settings.Reload();
 
             // check for existing placement and prevent empty bounds
-            if (_settings.Placement == null || _settings.Placement.Value.normalPosition.IsEmpty) return;
+            if (_settings.Placement == null || _settings.Placement.normalPosition.IsEmpty) return;
 
             try
             {
-                var wp = _settings.Placement.Value;
-                wp.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+                var wp = _settings.Placement;
                 wp.flags = 0;
-                wp.showCmd = (wp.showCmd == (int)Constants.ShowWindowCommands.SW_SHOWMINIMIZED ? (int)Constants.ShowWindowCommands.SW_SHOWNORMAL : wp.showCmd);
+                wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
                 var hwnd = new WindowInteropHelper(_window).Handle;
-                UnsafeNativeMethods.SetWindowPlacement(hwnd, ref wp);
+                NativeMethods.SetWindowPlacement(hwnd, wp);
             }
             catch (Exception ex)
             {
@@ -150,13 +155,11 @@ namespace MahApps.Metro.Controls
                 return;
             }
             var hwnd = new WindowInteropHelper(_window).Handle;
-            var wp = new WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(wp);
-            UnsafeNativeMethods.GetWindowPlacement(hwnd, ref wp);
+            var wp = NativeMethods.GetWindowPlacement(hwnd);
             // check for saveable values
-            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0)
+            if (wp.showCmd != SW.HIDE && wp.length > 0)
             {
-                if (wp.showCmd == (int)Constants.ShowWindowCommands.SW_NORMAL)
+                if (wp.showCmd == SW.NORMAL)
                 {
                     RECT rect;
                     if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
@@ -171,6 +174,7 @@ namespace MahApps.Metro.Controls
             }
             _settings.Save();
         }
+#pragma warning restore 618
 
         private void Attach()
         {

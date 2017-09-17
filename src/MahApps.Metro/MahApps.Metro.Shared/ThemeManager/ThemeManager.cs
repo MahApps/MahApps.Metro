@@ -1,15 +1,16 @@
-﻿using System.Security;
-using MahApps.Metro.Controls;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-
+﻿// ReSharper disable once CheckNamespace
 namespace MahApps.Metro
 {
+    using System.Security;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Windows;
+
     /// <summary>
-    /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
+    /// A class that allows for the detection and alteration of a theme and accent.
     /// </summary>
     public static class ThemeManager
     {
@@ -17,7 +18,7 @@ namespace MahApps.Metro
         private static IList<AppTheme> _appThemes;
 
         /// <summary>
-        /// Gets a list of all of default themes.
+        /// Gets a list of all of default accents.
         /// </summary>
         public static IEnumerable<Accent> Accents
         {
@@ -37,7 +38,7 @@ namespace MahApps.Metro
                 {
                     foreach (var color in colors)
                     {
-                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
                         _accents.Add(new Accent(color, resourceAddress));
                     }
                 }
@@ -51,7 +52,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets a list of all of default metro themes.
+        /// Gets a list of all default themes.
         /// </summary>
         public static IEnumerable<AppTheme> AppThemes
         {
@@ -68,7 +69,7 @@ namespace MahApps.Metro
                 {
                     foreach (var color in themes)
                     {
-                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
                         _appThemes.Add(new AppTheme(color, resourceAddress));
                     }
                 }
@@ -84,13 +85,11 @@ namespace MahApps.Metro
         /// <summary>
         /// Adds an accent with the given name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resourceAddress"></param>
         /// <returns>true if the accent does not exists and can be added.</returns>
         public static bool AddAccent(string name, Uri resourceAddress)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
             var accentExists = GetAccent(name) != null;
             if (accentExists)
@@ -105,13 +104,11 @@ namespace MahApps.Metro
         /// <summary>
         /// Adds an app theme with the given name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="resourceAddress"></param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
         public static bool AddAppTheme(string name, Uri resourceAddress)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
             var appThemeExists = GetAppTheme(name) != null;
             if (appThemeExists)
@@ -126,11 +123,11 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets app theme with the given resource dictionary.
         /// </summary>
-        /// <param name="resources"></param>
+        /// <param name="resources"><see cref="ResourceDictionary"/> from which the theme should be retrieved.</param>
         /// <returns>AppTheme</returns>
         public static AppTheme GetAppTheme(ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException("resources");
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
 
             return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
         }
@@ -138,13 +135,12 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets app theme with the given name and theme type (light or dark).
         /// </summary>
-        /// <param name="appThemeName"></param>
         /// <returns>AppTheme</returns>
         public static AppTheme GetAppTheme(string appThemeName)
         {
-            if (appThemeName == null) throw new ArgumentNullException("appThemeName");
+            if (appThemeName == null) throw new ArgumentNullException(nameof(appThemeName));
 
-            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.InvariantCultureIgnoreCase));
+            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -160,14 +156,14 @@ namespace MahApps.Metro
         public static AppTheme GetInverseAppTheme(AppTheme appTheme)
         {
             if (appTheme == null)
-                throw new ArgumentNullException("appTheme");
+                throw new ArgumentNullException(nameof(appTheme));
 
-            if (appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
+            if (appTheme.Name.EndsWith("dark", StringComparison.OrdinalIgnoreCase))
             {
                 return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
             }
 
-            if (appTheme.Name.EndsWith("light", StringComparison.InvariantCultureIgnoreCase))
+            if (appTheme.Name.EndsWith("light", StringComparison.OrdinalIgnoreCase))
             {
                 return GetAppTheme(appTheme.Name.ToLower().Replace("light", String.Empty) + "dark");
             }
@@ -178,23 +174,22 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets the <see cref="Accent"/> with the given name.
         /// </summary>
-        /// <param name="accentName"></param>
         /// <returns>The <see cref="Accent"/> or <c>null</c>, if the app theme wasn't found</returns>
         public static Accent GetAccent(string accentName)
         {
-            if (accentName == null) throw new ArgumentNullException("accentName");
+            if (accentName == null) throw new ArgumentNullException(nameof(accentName));
 
-            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.InvariantCultureIgnoreCase));
+            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
         /// Gets the <see cref="Accent"/> with the given resource dictionary.
         /// </summary>
-        /// <param name="resources"></param>
+        /// <param name="resources"><see cref="ResourceDictionary"/> from which the accent should be retrieved.</param>
         /// <returns>The <see cref="Accent"/> or <c>null</c>, if the accent wasn't found.</returns>
         public static Accent GetAccent(ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException("resources");
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
 
             var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
             if (builtInAccent != null)
@@ -228,7 +223,7 @@ namespace MahApps.Metro
         /// <exception cref="System.ArgumentNullException">resources</exception>
         public static bool IsAccentDictionary(ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException("resources");
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
 
             // Note: add more checks if these keys aren't sufficient
             var styleKeys = new List<string>(new[]
@@ -299,8 +294,8 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeAppTheme(Application app, string themeName)
         {
-            if (app == null) throw new ArgumentNullException("app");
-            if (themeName == null) throw new ArgumentNullException("themeName");
+            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (themeName == null) throw new ArgumentNullException(nameof(themeName));
 
             var oldTheme = DetectAppStyle(app);
             AppTheme matched;
@@ -318,8 +313,8 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeAppTheme(Window window, string themeName)
         {
-            if (window == null) throw new ArgumentNullException("window");
-            if (themeName == null) throw new ArgumentNullException("themeName");
+            if (window == null) throw new ArgumentNullException(nameof(window));
+            if (themeName == null) throw new ArgumentNullException(nameof(themeName));
 
             var oldTheme = DetectAppStyle(window);
             AppTheme matched;
@@ -338,7 +333,7 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeAppStyle(Application app, Accent newAccent, AppTheme newTheme)
         {
-            if (app == null) throw new ArgumentNullException("app");
+            if (app == null) throw new ArgumentNullException(nameof(app));
 
             var oldTheme = DetectAppStyle(app);
             ChangeAppStyle(app.Resources, oldTheme, newAccent, newTheme);
@@ -353,7 +348,7 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeAppStyle(Window window, Accent newAccent, AppTheme newTheme)
         {
-            if (window == null) throw new ArgumentNullException("window");
+            if (window == null) throw new ArgumentNullException(nameof(window));
 
             var oldTheme = DetectAppStyle(window);
             ChangeAppStyle(window.Resources, oldTheme, newAccent, newTheme);
@@ -368,29 +363,31 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
+                    resources.MergedDictionaries.Add(newAccent.Resources);
+
                     var key = oldAccent.Resources.Source.ToString().ToLower();
                     var oldAccentResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldAccentResource != null)
                     {
-                        resources.MergedDictionaries.Add(newAccent.Resources);
                         resources.MergedDictionaries.Remove(oldAccentResource);
-
-                        themeChanged = true;
                     }
+
+                    themeChanged = true;
                 }
 
                 var oldTheme = oldThemeInfo.Item1;
                 if (oldTheme != null && oldTheme != newTheme)
                 {
+                    resources.MergedDictionaries.Add(newTheme.Resources);
+
                     var key = oldTheme.Resources.Source.ToString().ToLower();
                     var oldThemeResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldThemeResource != null)
                     {
-                        resources.MergedDictionaries.Add(newTheme.Resources);
                         resources.MergedDictionaries.Remove(oldThemeResource);
-
-                        themeChanged = true;
                     }
+
+                    themeChanged = true;
                 }
             }
             else
@@ -415,9 +412,9 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeAppStyle(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
         {
-            if (resources == null) throw new ArgumentNullException("resources");
-            if (newAccent == null) throw new ArgumentNullException("newAccent");
-            if (newTheme == null) throw new ArgumentNullException("newTheme");
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
+            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
+            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
 
             ApplyResourceDictionary(newAccent.Resources, resources);
             ApplyResourceDictionary(newTheme.Resources, resources);
@@ -451,8 +448,8 @@ namespace MahApps.Metro
         /// </exception>
         internal static void CopyResource(ResourceDictionary fromRD, ResourceDictionary toRD)
         {
-            if (fromRD == null) throw new ArgumentNullException("fromRD");
-            if (toRD == null) throw new ArgumentNullException("toRD");
+            if (fromRD == null) throw new ArgumentNullException(nameof(fromRD));
+            if (toRD == null) throw new ArgumentNullException(nameof(toRD));
 
             ApplyResourceDictionary(fromRD, toRD);
             foreach (var rd in fromRD.MergedDictionaries)
@@ -468,12 +465,19 @@ namespace MahApps.Metro
         {
             try
             {
-                return DetectAppStyle(Application.Current.MainWindow);
+                var style = DetectAppStyle(Application.Current.MainWindow);
+
+                if (style != null)
+                {
+                    return style;
+                }
             }
-            catch (Exception)
-            {
-                return DetectAppStyle(Application.Current);
+            catch (Exception ex)
+            {                
+                Trace.WriteLine($"Failed to detect app style on main window.{Environment.NewLine}{ex}");
             }
+
+            return DetectAppStyle(Application.Current);
         }
 
         /// <summary>
@@ -482,7 +486,7 @@ namespace MahApps.Metro
         /// <param name="window">The Window to scan.</param>
         public static Tuple<AppTheme, Accent> DetectAppStyle(Window window)
         {
-            if (window == null) throw new ArgumentNullException("window");
+            if (window == null) throw new ArgumentNullException(nameof(window));
 
             var detectedStyle = DetectAppStyle(window.Resources);
             if (detectedStyle == null)
@@ -497,7 +501,7 @@ namespace MahApps.Metro
         /// <param name="app">The Application instance to scan.</param>
         public static Tuple<AppTheme, Accent> DetectAppStyle(Application app)
         {
-            if (app == null) throw new ArgumentNullException("app");
+            if (app == null) throw new ArgumentNullException(nameof(app));
 
             return DetectAppStyle(app.Resources);
         }
@@ -508,7 +512,7 @@ namespace MahApps.Metro
         /// <param name="resources">The ResourceDictionary to check.</param>
         private static Tuple<AppTheme, Accent> DetectAppStyle(ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException("resources");
+            if (resources == null) throw new ArgumentNullException(nameof(resources));
 
             AppTheme currentTheme = null;
             Tuple<AppTheme, Accent> detectedAccentTheme = null;
@@ -531,7 +535,7 @@ namespace MahApps.Metro
 
         private static bool DetectThemeFromResources(ref AppTheme detectedTheme, ResourceDictionary dict)
         {
-            var enumerator = dict.MergedDictionaries.GetEnumerator();
+            var enumerator = dict.MergedDictionaries.Reverse().GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var currentRd = enumerator.Current;
@@ -565,7 +569,7 @@ namespace MahApps.Metro
                 return true;
             }
 
-            foreach (ResourceDictionary rd in dict.MergedDictionaries)
+            foreach (ResourceDictionary rd in dict.MergedDictionaries.Reverse())
             {
                 if (GetThemeFromResources(presetTheme, rd, ref detectedAccentTheme))
                     return true;
@@ -587,20 +591,38 @@ namespace MahApps.Metro
         [SecurityCritical]
         private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
         {
-            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs { AppTheme = newTheme, Accent = newAccent });
+            IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme, newAccent));
         }
 
         private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
         {
             return Uri.Compare(first, second,
-                 UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.InvariantCultureIgnoreCase) == 0;
+                 UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 
+    /// <summary>
+    /// Class which is used as argument for an event to signal theme changes.
+    /// </summary>
     public class OnThemeChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Creates a new instance of this class.
+        /// </summary>
+        public OnThemeChangedEventArgs(AppTheme appTheme, Accent accent)
+        {
+            this.AppTheme = appTheme;
+            this.Accent = accent;
+        }
+
+        /// <summary>
+        /// The new theme.
+        /// </summary>
         public AppTheme AppTheme { get; set; }
 
+        /// <summary>
+        /// The new accent
+        /// </summary>
         public Accent Accent { get; set; }
     }
 }

@@ -121,7 +121,9 @@
                                     <ContentPresenter x:Name="PART_ContentPresenter"
                                                       Margin="1 0"
                                                       Content="{TemplateBinding Content}"
+                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     <Rectangle x:Name="PART_Separator"
                                                Width="1"

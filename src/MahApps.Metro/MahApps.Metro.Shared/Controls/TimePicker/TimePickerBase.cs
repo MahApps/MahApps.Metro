@@ -89,6 +89,12 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new FrameworkPropertyMetadata(default(TimeSpan?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedTimeChanged, CoerceSelectedTime));
 
+        public static readonly DependencyProperty SelectedTimeFormatProperty = DependencyProperty.Register(
+            nameof(SelectedTimeFormat),
+            typeof(TimePickerFormat),
+            typeof(TimePickerBase),
+            new PropertyMetadata(TimePickerFormat.Long, OnSelectedTimeFormatChanged));
+
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementHourHand = "PART_HourHand";
@@ -297,6 +303,17 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets the format that is used to display the selected time.
+        /// </summary>
+        [Category("Appearance")]
+        [DefaultValue(TimePickerFormat.Long)]
+        public TimePickerFormat SelectedTimeFormat
+        {
+            get { return (TimePickerFormat)GetValue(SelectedTimeFormatProperty); }
+            set { SetValue(SelectedTimeFormatProperty, value); }
+        }
+
+        /// <summary>
         ///     Gets or sets a collection used to generate the content for selecting the hours.
         /// </summary>
         /// <returns>
@@ -346,7 +363,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsMilitaryTime
         {
-            get { return string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator); }
+            get
+            {
+                var dateTimeFormat = this.SpecificCultureInfo.DateTimeFormat;
+                return !string.IsNullOrEmpty(dateTimeFormat.AMDesignator) && (dateTimeFormat.ShortTimePattern.Contains("h") || dateTimeFormat.LongTimePattern.Contains("h"));
+            }
         }
 
         protected internal Popup Popup
@@ -429,25 +450,29 @@ namespace MahApps.Metro.Controls
 
             SetDefaultTimeOfDayValues();
             _deactivateRangeBaseEvent = false;
+
+            WriteValueToTextBox();
         }
 
         protected Binding GetBinding(DependencyProperty property)
         {
             return new Binding(property.Name) { Source = this };
         }
-
+        
         protected virtual string GetValueForTextBox()
         {
-            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern), SpecificCultureInfo);
+            var format = SelectedTimeFormat == TimePickerFormat.Long ? string.Intern(SpecificCultureInfo.DateTimeFormat.LongTimePattern) : string.Intern(SpecificCultureInfo.DateTimeFormat.ShortTimePattern);
+            var valueForTextBox = (DateTime.MinValue + SelectedTime)?.ToString(string.Intern(format), SpecificCultureInfo);
             return valueForTextBox;
         }
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            TimeSpan ts;
-            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
+            var text = string.Intern($"{DateTime.MinValue.ToString(SpecificCultureInfo.DateTimeFormat.ShortDatePattern)} {((DatePickerTextBox)sender).Text}");
+            DateTime dt;
+            if (DateTime.TryParse(text, SpecificCultureInfo, DateTimeStyles.None, out dt))
             {
-                SelectedTime = ts;
+                SelectedTime = dt.TimeOfDay;
             }
             else
             {
@@ -469,6 +494,16 @@ namespace MahApps.Metro.Controls
         {
             RaiseEvent(e);
         }
+
+        private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tp = d as TimePickerBase;
+            if (tp != null)
+            {
+                tp.WriteValueToTextBox();
+            }
+        }
+
 
         protected void SetDefaultTimeOfDayValues()
         {
@@ -558,7 +593,7 @@ namespace MahApps.Metro.Controls
             var hourList = basevalue as IEnumerable<int>;
             if (timePickerBase != null && hourList != null)
             {
-                if (!timePickerBase.IsMilitaryTime)
+                if (timePickerBase.IsMilitaryTime)
                 {
                     return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
                 }
@@ -759,7 +794,7 @@ namespace MahApps.Metro.Controls
         /// </returns>
         private int GetAmPmOffset(int currentHour)
         {
-            if (!IsMilitaryTime)
+            if (IsMilitaryTime)
             {
                 if (currentHour == 12)
                 {
@@ -796,7 +831,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Collapsed : Visibility.Visible;
+                    _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
         }
@@ -816,7 +851,7 @@ namespace MahApps.Metro.Controls
             _deactivateRangeBaseEvent = true;
             if (_hourInput != null)
             {
-                if (!IsMilitaryTime)
+                if (IsMilitaryTime)
                 {
                     _ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? SpecificCultureInfo.DateTimeFormat.AMDesignator : SpecificCultureInfo.DateTimeFormat.PMDesignator;
                     if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)
