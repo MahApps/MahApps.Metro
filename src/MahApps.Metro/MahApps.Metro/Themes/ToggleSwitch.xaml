@@ -138,6 +138,7 @@
                                             ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                             FontFamily="{TemplateBinding FontFamily}"
                                             FontSize="{TemplateBinding FontSize}"
+                                            FontWeight="{TemplateBinding FontWeight}"
                                             IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Row="1"
