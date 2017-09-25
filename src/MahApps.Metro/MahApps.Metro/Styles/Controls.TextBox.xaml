@@ -242,6 +242,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
     </Style>
 
