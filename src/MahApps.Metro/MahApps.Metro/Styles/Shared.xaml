@@ -13,6 +13,8 @@
                      Exponent="2" />
 
     <DropShadowEffect x:Key="WaitingForDataEffect"
+                      po:Freeze="True"
+                      x:Shared="False"
                       BlurRadius="10"
                       Opacity="0"
                       ShadowDepth="0"

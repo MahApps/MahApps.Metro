@@ -67,6 +67,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -229,14 +230,12 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -290,6 +289,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -435,14 +435,12 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
