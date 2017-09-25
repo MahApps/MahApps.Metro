@@ -73,6 +73,7 @@
                                      IsTabStop="{TemplateBinding IsTabStop}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      TabIndex="{TemplateBinding TabIndex}"
+                                     TextAlignment="{TemplateBinding TextAlignment}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"

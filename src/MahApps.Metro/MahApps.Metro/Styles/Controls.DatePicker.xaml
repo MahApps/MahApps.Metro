@@ -70,11 +70,11 @@
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
-                                               ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}">
+                                               SelectionBrush="{DynamicResource HighlightBrush}"
+                                               TextAlignment="{TemplateBinding Block.TextAlignment}">
                                 <i:Interaction.Behaviors>
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
@@ -154,6 +154,7 @@
 
     <Style x:Key="MetroDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
@@ -271,6 +272,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="TextAlignment" Value="Left" />
     </Style>
 
 </ResourceDictionary>

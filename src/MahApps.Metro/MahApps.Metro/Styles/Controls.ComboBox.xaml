@@ -358,6 +358,7 @@
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Style="{StaticResource EditableTextBoxStyle}"
+                                     TextAlignment="{TemplateBinding Block.TextAlignment}"
                                      Visibility="Collapsed" />
 
                             <TextBlock x:Name="PART_WatermarkMessage"

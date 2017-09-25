@@ -146,13 +146,13 @@
                                                controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
                                                CaretBrush="{DynamicResource BlackBrush}"
-                                               ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontFamily="{TemplateBinding FontFamily}"
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
                                                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}">
+                                               SelectionBrush="{DynamicResource HighlightBrush}"
+                                               TextAlignment="{TemplateBinding Block.TextAlignment}">
                                 <i:Interaction.Behaviors>
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
