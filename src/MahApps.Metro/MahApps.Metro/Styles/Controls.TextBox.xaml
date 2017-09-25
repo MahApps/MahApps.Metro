@@ -60,9 +60,6 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
@@ -282,9 +279,6 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
@@ -548,3 +542,6 @@
         </Setter>
     </Style>
 </ResourceDictionary>
+
+
+
