@@ -1,24 +1,57 @@
-# MahApps.Metro
+<div align="center">
+  <a href="https://github.com/MahApps/MahApps.Metro">
+    <img alt="MahApps.Metro" width="150" heigth="150" src="https://user-images.githubusercontent.com/658431/30882790-73a4194c-a30a-11e7-904f-d141939b5f47.png">
+  </a>
+  <br />
+  <br />
+  <a href="https://gitter.im/MahApps/MahApps.Metro">
+    <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
+  </a>
+  <a href="https://twitter.com/punker76">
+    <img src="https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square">
+  </a>
+  <br />
+  <a href="https://https://www.nuget.org/packages/MahApps.Metro">
+    <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/MahApps/MahApps.Metro/releases/latest">
+    <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://www.nuget.org/packages/MahApps.Metro/">
+    <img src="https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://www.nuget.org/packages/MahApps.Metro/">
+    <img src="https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square&label=nuget-pre">
+  </a>
+  <br />
+  <a href="https://github.com/MahApps/MahApps.Metro/issues">
+    <img src="https://img.shields.io/github/issues-raw/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/MahApps/MahApps.Metro/issues">
+    <img src="https://img.shields.io/github/issues-closed-raw/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/MahApps/MahApps.Metro/issues">
+    <img src="https://img.shields.io/github/issues-pr-raw/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <a href="https://github.com/MahApps/MahApps.Metro/issues">
+    <img src="https://img.shields.io/github/issues-pr-closed-raw/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <br />
+  <a href="http://stackoverflow.com/questions/tagged/mahapps.metro">
+    <img src="https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg">
+  </a>
+  <br />
+  <h1>MahApps.Metro</h1>
+  <p>
+    A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
+  </p>
+</div>
 
-A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
-
-[![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
-
-[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg)](http://stackoverflow.com/questions/tagged/mahapps.metro)
-
-[![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
-[![NuGet](https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
-[![NuGetPre](https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square)](https://www.nuget.org/packages/MahApps.Metro/)
-[![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
-
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroDevelopAlpha.svg?style=flat-square&&label=TeamCity%20dev)](http://builds.brendanforster.com/viewType.html?buildTypeId=MahApps_MahAppsMetroDevelopAlpha)
-[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)](http://builds.brendanforster.com/viewType.html?buildTypeId=MahApps_MahAppsMetroPullRequests)
-
-## Want to say thanks?
+<h2 align="center">Want to say thanks?</h2>
 
 This framework is free and can be used for free, open source and commercial applications. It's tested and contributed by many people... So mainly hit the :star: button, that's all... thx :squirrel: (:dollar:, :euro:, :beer: or some other gifts are also being accepted...).
 
-## Let's get started
+<h2 align="center">Let's get started</h2>
 
 - [Documentation](https://github.com/MahApps/MahApps.Metro/wiki/Documentation)
 - [Releases and Release Notes](https://github.com/MahApps/MahApps.Metro/releases)
@@ -29,7 +62,7 @@ This framework is free and can be used for free, open source and commercial appl
 - [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
-## Something missing?
+<h2 align="center">Something missing?</h2>
 
 If you're looking for a control or library which is MahApps compatible, check them out:
 
@@ -38,12 +71,17 @@ If you're looking for a control or library which is MahApps compatible, check th
 - [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
 - [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
 
-## Awesome tools which MahApps can use
+<h2 align="center">Useful tools</h2>
 
-[![TeamCity](./docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
+<div align="center">
+
 [![Resharper](./docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
 
-## Screenshots
+</div>
+
+<h2 align="center">Screenshots</h2>
+
+<div align="center">
 
 ![maindemowindow01](./docs/main_demo_window.png)
 
@@ -57,6 +95,8 @@ If you're looking for a control or library which is MahApps compatible, check th
 
 ![maindemowindow04](./docs/main_demo_window.gif)
 
-## Licence
+</div>
+
+<h2 align="center">Licence</h2>
 
 [MIT License (MIT)](./LICENSE)
