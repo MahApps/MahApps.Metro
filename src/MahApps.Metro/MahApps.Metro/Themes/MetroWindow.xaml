@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:controlzex="urn:controlzex">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
@@ -12,7 +13,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid>
+        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"  
+              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"> 
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
@@ -287,7 +289,8 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="CenterWindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid>
+        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
+              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
@@ -564,15 +567,6 @@
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
-            <Setter.Value>
-                <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:BorderlessWindowBehavior />
-                    <Behaviours:WindowsSettingBehaviour />
-                    <Behaviours:GlowWindowBehavior />
-                </Behaviours:StylizedBehaviorCollection>
-            </Setter.Value>
-        </Setter>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
@@ -613,17 +607,16 @@
             <Trigger Property="TitleAlignment" Value="Center">
                 <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
             </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="TitleAlignment" Value="Stretch" />
-                    <Condition Property="TitleAlignment" Value="Left" />
-                    <Condition Property="TitleAlignment" Value="Right" />
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
-                </MultiTrigger.Setters>
-            </MultiTrigger>
+            <!-- #1823 try to fix another nasty issue
+                         WindowState = Maximized
+                         ResizeMode = NoResize-->
+            <Trigger Property="ResizeMode"
+                     Value="NoResize">
+                <Setter Property="Margin"
+                        Value="0" />
+                <Setter Property="ResizeBorderThickness"
+                        Value="0" />
+            </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

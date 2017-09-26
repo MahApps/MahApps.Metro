@@ -179,7 +179,7 @@
                 <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
                                                       Header="Price"
                                                       Minimum="0"
-                                                      StringFormat="C" />
+                                                      StringFormat="{}{0:C}" />
             </DataGrid.Columns>
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">

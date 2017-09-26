@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Data;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 
 namespace MahApps.Metro.Controls
 {
@@ -839,18 +840,22 @@ namespace MahApps.Metro.Controls
                 if (parent is TextBox)
                 {
                     ((TextBox)parent).Clear();
+                    ((TextBox)parent).GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 }
                 else if (parent is PasswordBox)
                 {
                     ((PasswordBox)parent).Clear();
+                    ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
                 }
                 else if (parent is ComboBox)
                 {
                     if (((ComboBox)parent).IsEditable)
                     {
                         ((ComboBox)parent).Text = string.Empty;
+                        ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
                     ((ComboBox)parent).SelectedItem = null;
+                    ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
             }
         }

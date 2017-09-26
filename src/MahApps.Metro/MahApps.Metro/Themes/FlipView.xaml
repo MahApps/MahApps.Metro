@@ -84,6 +84,7 @@
                                                           Content="{TemplateBinding SelectedItem}"
                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
                                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                          ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                                           IsTabStop="False" />
                 </Grid>
             </Border>

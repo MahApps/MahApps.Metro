@@ -1,13 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <Style TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
@@ -76,6 +73,7 @@
                                      IsTabStop="{TemplateBinding IsTabStop}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      TabIndex="{TemplateBinding TabIndex}"
+                                     TextAlignment="{TemplateBinding TextAlignment}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"

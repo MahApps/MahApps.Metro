@@ -1,14 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <!--  TextBox Style  -->
     <Style x:Key="MetroTextBox" TargetType="{x:Type TextBox}">
@@ -62,13 +60,11 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -102,8 +98,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0.6"
+                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        Visibility="Collapsed" />
@@ -232,19 +227,18 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
     </Style>
 
@@ -285,13 +279,11 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -325,8 +317,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0.6"
+                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        Visibility="Collapsed" />
@@ -438,14 +429,12 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -498,6 +487,7 @@
         </Style.Resources>
         <Setter Property="AllowDrop" Value="True" />
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Block.TextAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CaretBrush" Value="{DynamicResource BlackBrush}" />
@@ -552,3 +542,6 @@
         </Setter>
     </Style>
 </ResourceDictionary>
+
+
+
