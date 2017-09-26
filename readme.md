@@ -1,9 +1,11 @@
 <div align="center">
   <a href="https://github.com/MahApps/MahApps.Metro">
-    <img alt="MahApps.Metro" width="150" heigth="150" src="https://user-images.githubusercontent.com/658431/30882790-73a4194c-a30a-11e7-904f-d141939b5f47.png">
+    <img alt="MahApps.Metro" width="200" heigth="200" src="https://user-images.githubusercontent.com/658431/30882790-73a4194c-a30a-11e7-904f-d141939b5f47.png">
   </a>
-  <br />
-  <br />
+  <h1>MahApps.Metro</h1>
+  <p>
+    A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
+  </p>
   <a href="https://gitter.im/MahApps/MahApps.Metro">
     <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
   </a>
@@ -36,15 +38,6 @@
   <a href="https://github.com/MahApps/MahApps.Metro/issues">
     <img src="https://img.shields.io/github/issues-pr-closed-raw/MahApps/MahApps.Metro.svg?style=flat-square">
   </a>
-  <br />
-  <a href="http://stackoverflow.com/questions/tagged/mahapps.metro">
-    <img src="https://img.shields.io/stackexchange/stackoverflow/t/mahapps.metro.svg">
-  </a>
-  <br />
-  <h1>MahApps.Metro</h1>
-  <p>
-    A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
-  </p>
 </div>
 
 <h2 align="center">Want to say thanks?</h2>
