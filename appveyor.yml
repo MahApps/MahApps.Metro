@@ -26,12 +26,16 @@
     verbosity: minimal
 
   after_build:
+    - ps: cd src
+    - ps: .paket\paket pack --version $(GitVersion_LegacySemVerPadded) bin
+    - ps: cd..
 
   cache:
     - src\packages -> **\packages.config
     - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
+    - path: \src\bin\MahApps.Metro.*.nupkg
     - path: \src\bin\MetroDemo\
       name: MetroDemo.$(GitVersion_LegacySemVerPadded)
       type: zip
@@ -60,12 +64,16 @@
     verbosity: minimal
 
   after_build:
+    - ps: cd src
+    - ps: .paket\paket pack --version $(GitVersion_LegacySemVerPadded) bin
+    - ps: cd..
 
   cache:
     - src\packages -> **\packages.config
     - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
+    - path: \src\bin\MahApps.Metro.*.nupkg
     - path: \src\bin\MetroDemo\
       name: MetroDemo.$(GitVersion_LegacySemVerPadded)
       type: zip
