@@ -27,7 +27,7 @@
 
   after_build:
     - ps: cd src
-    - ps: .paket\paket pack --version %GitVersion_LegacySemVerPadded% bin
+    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
     - ps: cd..
 
   cache:
@@ -65,7 +65,7 @@
 
   after_build:
     - ps: cd src
-    - ps: .paket\paket pack --version %GitVersion_LegacySemVerPadded% bin
+    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
     - ps: cd..
 
   cache:
