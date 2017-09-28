@@ -6,7 +6,7 @@ authors Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, 
 owners punker76, shiftkey
 licenseUrl https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE
 projectUrl https://github.com/MahApps/MahApps.Metro
-iconUrl https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo.png
+iconUrl https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/mahapps.metro.logo.png
 requireLicenseAcceptance false
 tags WPF UI Metro Modern Material XAML Toolkit Library .NET OSS OpenSource
 description
