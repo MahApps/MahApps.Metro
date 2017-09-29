@@ -81,7 +81,6 @@
                 </Controls:ClipBorder>
             </Border>
             <Popup x:Name="PART_Popup"
-                   MinWidth="{TemplateBinding ActualWidth}"
                    AllowsTransparency="True"
                    Focusable="False"
                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -90,6 +89,7 @@
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
                          Margin="0"
+                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                          BorderBrush="{TemplateBinding BorderBrush}"
                          BorderThickness="{TemplateBinding BorderThickness}"
                          DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -101,6 +101,7 @@
                          ItemTemplate="{TemplateBinding ItemTemplate}"
                          ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                          ItemsPanel="{TemplateBinding ItemsPanel}"
+                         ItemsSource="{TemplateBinding ItemsSource}"
                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                          SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -200,7 +201,6 @@
                 </Controls:ClipBorder>
             </Border>
             <Popup x:Name="PART_Popup"
-                   MinWidth="{TemplateBinding ActualWidth}"
                    AllowsTransparency="True"
                    Focusable="False"
                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -209,6 +209,7 @@
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
                          Margin="0"
+                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                          BorderBrush="{TemplateBinding BorderBrush}"
                          BorderThickness="{TemplateBinding BorderThickness}"
                          DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -220,6 +221,7 @@
                          ItemTemplate="{TemplateBinding ItemTemplate}"
                          ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                          ItemsPanel="{TemplateBinding ItemsPanel}"
+                         ItemsSource="{TemplateBinding ItemsSource}"
                          RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
                          SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                          SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
