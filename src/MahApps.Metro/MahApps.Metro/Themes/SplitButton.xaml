@@ -88,8 +88,8 @@
                    PopupAnimation="Fade"
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
-                         Margin="0"
                          MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                         Margin="0"
                          BorderBrush="{TemplateBinding BorderBrush}"
                          BorderThickness="{TemplateBinding BorderThickness}"
                          DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -208,8 +208,8 @@
                    PopupAnimation="Fade"
                    StaysOpen="True">
                 <ListBox x:Name="PART_ListBox"
-                         Margin="0"
                          MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                         Margin="0"
                          BorderBrush="{TemplateBinding BorderBrush}"
                          BorderThickness="{TemplateBinding BorderThickness}"
                          DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
