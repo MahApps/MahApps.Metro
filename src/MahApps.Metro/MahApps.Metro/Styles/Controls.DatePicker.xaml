@@ -73,8 +73,7 @@
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}"
-                                               TextAlignment="{TemplateBinding Block.TextAlignment}">
+                                               SelectionBrush="{DynamicResource HighlightBrush}">
                                 <i:Interaction.Behaviors>
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
@@ -272,7 +271,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="TextAlignment" Value="Left" />
     </Style>
 
 </ResourceDictionary>
