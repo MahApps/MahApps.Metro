@@ -151,8 +151,7 @@
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
                                                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}"
-                                               TextAlignment="{TemplateBinding Block.TextAlignment}">
+                                               SelectionBrush="{DynamicResource HighlightBrush}">
                                 <i:Interaction.Behaviors>
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
