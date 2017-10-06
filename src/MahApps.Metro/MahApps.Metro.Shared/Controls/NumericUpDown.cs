@@ -1154,7 +1154,6 @@ namespace MahApps.Metro.Controls
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
                     SetCurrentValue(ValueProperty, convertedValue);
-                    e.Handled = true;
                 }
             }
         }
