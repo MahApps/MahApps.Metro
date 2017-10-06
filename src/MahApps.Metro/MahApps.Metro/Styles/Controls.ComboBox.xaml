@@ -76,6 +76,7 @@
                                        Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
@@ -87,7 +88,8 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
                             <Button x:Name="PART_ClearText"
                                     Grid.Row="0"
@@ -346,6 +348,7 @@
                                      Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                      Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                     Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                      Background="{x:Null}"
                                      BorderThickness="0"
                                      CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
@@ -370,6 +373,7 @@
                                        Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
@@ -382,7 +386,8 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
 
                             <Grid x:Name="ContentSite"

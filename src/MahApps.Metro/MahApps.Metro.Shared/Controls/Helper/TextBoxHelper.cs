@@ -43,6 +43,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty WatermarkAlignmentProperty = DependencyProperty.RegisterAttached("WatermarkAlignment", typeof(TextAlignment), typeof(TextBoxHelper), new FrameworkPropertyMetadata(TextAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty WatermarkTrimmingProperty = DependencyProperty.RegisterAttached("WatermarkTrimming", typeof(TextTrimming), typeof(TextBoxHelper), new FrameworkPropertyMetadata(TextTrimming.None, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
@@ -474,6 +475,41 @@ namespace MahApps.Metro.Controls
         public static void SetWatermarkAlignment(DependencyObject obj, TextAlignment value)
         {
             obj.SetValue(WatermarkAlignmentProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the text trimming behavior to employ when watermark overflows the content area.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="T:System.Windows.TextTrimming" /> values that specifies the text trimming behavior to employ. The default is <see cref="F:System.Windows.TextTrimming.None" />.
+        /// </returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
+        public static TextTrimming GetWatermarkTrimming(DependencyObject obj)
+        {
+            return (TextTrimming)obj.GetValue(WatermarkTrimmingProperty);
+        }
+
+        /// <summary>
+        /// Sets the text trimming behavior to employ when watermark overflows the content area.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
+        public static void SetWatermarkTrimming(DependencyObject obj, TextTrimming value)
+        {
+            obj.SetValue(WatermarkTrimmingProperty, value);
         }
 
         [Category(AppName.MahApps)]

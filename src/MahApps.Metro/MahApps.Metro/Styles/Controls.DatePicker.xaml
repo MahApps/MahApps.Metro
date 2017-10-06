@@ -69,6 +69,7 @@
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
+                                               Controls:TextBoxHelper.WatermarkTrimming="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkTrimming), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
@@ -88,7 +89,8 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
 
                             <Popup x:Name="PART_Popup"
@@ -217,6 +219,7 @@
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                        Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                         Focusable="False"
                                         Foreground="{TemplateBinding Foreground}"
                                         IsHitTestVisible="False"
@@ -227,7 +230,8 @@
                                     <TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Text="{TemplateBinding Content}"
-                                               TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                               TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                               TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                                 </ControlTemplate>
                             </ContentControl.Template>
                         </ContentControl>
@@ -238,7 +242,8 @@
                                    Foreground="{TemplateBinding Foreground}"
                                    Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                   TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>

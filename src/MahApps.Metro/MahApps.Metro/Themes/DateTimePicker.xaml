@@ -145,6 +145,7 @@
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
+                                               controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding controls:TextBoxHelper.WatermarkTrimming}"
                                                CaretBrush="{DynamicResource BlackBrush}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontFamily="{TemplateBinding FontFamily}"
@@ -166,7 +167,8 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding controls:TextBoxHelper.WatermarkTrimming}" />
                             </ContentControl>
                             <Button x:Name="PART_Button"
                                     Grid.Row="0"
