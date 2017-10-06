@@ -21,6 +21,7 @@
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
+        <Setter Property="Controls:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -102,6 +103,7 @@
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
@@ -321,6 +323,7 @@
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
