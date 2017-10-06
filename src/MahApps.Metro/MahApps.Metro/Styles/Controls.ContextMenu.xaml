@@ -61,6 +61,7 @@
 
     <Style x:Key="MetroContextMenu" TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{DynamicResource ContextMenuBackgroundBrush}" />
+        <Setter Property="Block.TextAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContextMenuBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
@@ -70,6 +71,7 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         <Setter Property="HasDropShadow" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -87,8 +89,7 @@
 
                             <ScrollViewer x:Name="SubMenuScrollViewer"
                                           CanContentScroll="True"
-                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,
-                                                                                        TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                                 <ItemsPresenter x:Name="ItemsPresenter"
                                                 Margin="0"
                                                 Grid.IsSharedSizeScope="True"
@@ -117,6 +118,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="MetroMenuItem" TargetType="{x:Type MenuItem}">
@@ -125,20 +127,20 @@
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey,                      TypeInTargetAssembly={x:Type MenuItem}}}" />
+        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Padding" Value="7 5 8 6" />
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey,                      TypeInTargetAssembly={x:Type MenuItem}}}" />
+                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
                 <Setter Property="Padding" Value="7 5 8 6" />
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey,                      TypeInTargetAssembly={x:Type MenuItem}}}" />
+                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="Padding" Value="2 6 2 6" />
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey,                      TypeInTargetAssembly={x:Type MenuItem}}}" />
+                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Padding" Value="2 6 2 6" />
@@ -220,8 +222,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{ComponentResourceKey ResourceId=MenuScrollViewer,
-                                        TypeInTargetAssembly={x:Type FrameworkElement}}"
+    <Style x:Key="{ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}"
            BasedOn="{x:Null}"
            TargetType="{x:Type ScrollViewer}">
         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
@@ -329,12 +330,10 @@
                     <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
                     <ContentControl x:Name="SubMenuBorder"
                                     IsTabStop="False"
-                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent,
-                                                                                     TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                         <ScrollViewer x:Name="SubMenuScrollViewer"
                                       CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,
-                                                                                    TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                             <ItemsPresenter x:Name="ItemsPresenter"
                                             Margin="0"
                                             Grid.IsSharedSizeScope="True"
@@ -494,12 +493,10 @@
                     <Rectangle x:Name="LayoutRoot" Fill="{TemplateBinding Background}" />
                     <ContentControl x:Name="SubMenuBorder"
                                     IsTabStop="False"
-                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent,
-                                                                                     TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                         <ScrollViewer x:Name="SubMenuScrollViewer"
                                       CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,
-                                                                                    TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                             <ItemsPresenter x:Name="ItemsPresenter"
                                             Margin="0"
                                             Grid.IsSharedSizeScope="True"

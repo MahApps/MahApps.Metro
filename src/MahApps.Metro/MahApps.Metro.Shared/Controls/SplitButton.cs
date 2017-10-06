@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -334,18 +333,6 @@ namespace MahApps.Metro.Controls
             this._listBox.PreviewMouseLeftButtonDown += this.ListBoxPreviewMouseLeftButtonDown;
             this._popup.Opened += this.PopupOpened;
             this._popup.Closed += this.PopupClosed;
-
-            BindingOperations.ClearBinding(this._listBox, ItemsSourceProperty);
-            this._listBox.SetBinding(ItemsSourceProperty, new Binding(ItemsSourceProperty.Name)
-                                                          {
-                                                              Mode = BindingMode.OneWay,
-                                                              RelativeSource = RelativeSource.TemplatedParent
-                                                          });
-        }
-
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            base.OnSelectionChanged(e);
         }
 
         //Make popup close even if no selectionchanged event fired (case when user select the same item as before)

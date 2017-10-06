@@ -146,7 +146,6 @@
                                                controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding controls:TextBoxHelper.WatermarkAlignment}"
                                                CaretBrush="{DynamicResource BlackBrush}"
-                                               ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontFamily="{TemplateBinding FontFamily}"
                                                FontSize="{TemplateBinding FontSize}"
