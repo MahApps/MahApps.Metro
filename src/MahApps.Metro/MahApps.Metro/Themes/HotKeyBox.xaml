@@ -49,7 +49,6 @@
                              IsTabStop="{TemplateBinding IsTabStop}"
                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                              Text="{TemplateBinding Text}"
-                             TextAlignment="{TemplateBinding Block.TextAlignment}"
                              Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">
