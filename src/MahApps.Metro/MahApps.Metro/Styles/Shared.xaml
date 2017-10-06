@@ -13,10 +13,12 @@
                      Exponent="2" />
 
     <DropShadowEffect x:Key="WaitingForDataEffect"
+                      x:Shared="False"
                       BlurRadius="10"
                       Opacity="0"
                       ShadowDepth="0"
-                      Color="{DynamicResource BlackColor}" />
+                      Color="{DynamicResource BlackColor}"
+                      po:Freeze="True" />
 
     <Storyboard x:Key="WaitingForDataStoryboard" po:Freeze="True">
         <DoubleAnimation AutoReverse="True"
