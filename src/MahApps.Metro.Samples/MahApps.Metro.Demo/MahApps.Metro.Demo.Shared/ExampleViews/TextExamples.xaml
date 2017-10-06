@@ -274,8 +274,8 @@
                 <Label Content="Interval=&quot;5.5&quot; IsTabStop=&quot;False&quot;" />
                 <CheckBox x:Name="SnapToMultipleOfIntervalCheck"
                           Margin="1"
-                          IsChecked="True"
-                          Content="SnapToMultipleOfInterval" />
+                          Content="SnapToMultipleOfInterval"
+                          IsChecked="True" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"

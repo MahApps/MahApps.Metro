@@ -10,7 +10,7 @@ branches:
     track-merge-target: false
   develop:
     mode: ContinuousDeployment
-    tag: dev
+    tag: alpha
     increment: Minor
     prevent-increment-of-merged-branch-version: false
     track-merge-target: true

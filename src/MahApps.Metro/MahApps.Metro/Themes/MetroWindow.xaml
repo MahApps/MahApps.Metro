@@ -13,8 +13,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"  
-              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"> 
+        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}" RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
@@ -289,8 +288,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="CenterWindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
-              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
+        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}" RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
                     <Grid.ColumnDefinitions>
@@ -607,15 +605,14 @@
             <Trigger Property="TitleAlignment" Value="Center">
                 <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
             </Trigger>
-            <!-- #1823 try to fix another nasty issue
-                         WindowState = Maximized
-                         ResizeMode = NoResize-->
-            <Trigger Property="ResizeMode"
-                     Value="NoResize">
-                <Setter Property="Margin"
-                        Value="0" />
-                <Setter Property="ResizeBorderThickness"
-                        Value="0" />
+            <!--
+                #1823 try to fix another nasty issue
+                WindowState = Maximized
+                ResizeMode = NoResize
+            -->
+            <Trigger Property="ResizeMode" Value="NoResize">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="ResizeBorderThickness" Value="0" />
             </Trigger>
         </Style.Triggers>
     </Style>
