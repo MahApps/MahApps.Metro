@@ -85,6 +85,7 @@ namespace MahApps.Metro.Controls
                                                                                                         { typeof(TextBox), TextBox.TextProperty },
                                                                                                         { typeof(ComboBox), Selector.SelectedItemProperty },
                                                                                                         { typeof(NumericUpDown), NumericUpDown.ValueProperty },
+                                                                                                        { typeof(HotKeyBox), HotKeyBox.HotKeyProperty },
                                                                                                         { typeof(DatePicker), DatePicker.SelectedDateProperty },
                                                                                                         { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
                                                                                                         { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty }
@@ -112,6 +113,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static bool GetAutoWatermark(DependencyObject element)
         {
             return (bool)element.GetValue(AutoWatermarkProperty);
@@ -428,6 +430,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static string GetWatermark(DependencyObject obj)
         {
             return (string)obj.GetValue(WatermarkProperty);
@@ -451,6 +454,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static TextAlignment GetWatermarkAlignment(DependencyObject obj)
         {
             return (TextAlignment)obj.GetValue(WatermarkAlignmentProperty);
@@ -466,6 +470,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static void SetWatermarkAlignment(DependencyObject obj, TextAlignment value)
         {
             obj.SetValue(WatermarkAlignmentProperty, value);
@@ -476,6 +481,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static bool GetUseFloatingWatermark(DependencyObject obj)
         {
             return (bool)obj.GetValue(UseFloatingWatermarkProperty);
