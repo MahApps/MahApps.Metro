@@ -141,6 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\MathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />
