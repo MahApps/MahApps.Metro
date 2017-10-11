@@ -89,6 +89,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroHeaderControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroNavigationWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroProgressBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroTabControl.cs" />
