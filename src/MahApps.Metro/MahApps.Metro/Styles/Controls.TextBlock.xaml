@@ -16,11 +16,6 @@
            TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="{DynamicResource FloatingWatermarkFontSize}" />
         <Setter Property="Opacity" Value="0.6" />
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <TranslateTransform />
-            </Setter.Value>
-        </Setter>
         <Style.Triggers>
             <Trigger Property="Text" Value="">
                 <Setter Property="Visibility" Value="Collapsed" />
