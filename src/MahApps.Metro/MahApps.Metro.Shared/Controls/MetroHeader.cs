@@ -4,11 +4,11 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
-    public class MetroHeaderControl : GroupBox
+    public class MetroHeader : GroupBox
     {
-        static MetroHeaderControl()
+        static MetroHeader()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroHeaderControl), new FrameworkPropertyMetadata(typeof(MetroHeaderControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroHeader), new FrameworkPropertyMetadata(typeof(MetroHeader)));
         }
 
         /// <summary>
@@ -16,20 +16,20 @@ namespace MahApps.Metro.Controls
         /// </summary>
         protected override AutomationPeer OnCreateAutomationPeer()
         {
-            return new MetroHeaderControlAutomationPeer(this);
+            return new MetroHeaderAutomationPeer(this);
         }
     }
 
-    public class MetroHeaderControlAutomationPeer : GroupBoxAutomationPeer
+    public class MetroHeaderAutomationPeer : GroupBoxAutomationPeer
     {
-        public MetroHeaderControlAutomationPeer(GroupBox owner)
+        public MetroHeaderAutomationPeer(GroupBox owner)
             : base(owner)
         {
         }
 
         protected override string GetClassNameCore()
         {
-            return "MetroHeaderControl";
+            return "MetroHeader";
         }
     }
 }

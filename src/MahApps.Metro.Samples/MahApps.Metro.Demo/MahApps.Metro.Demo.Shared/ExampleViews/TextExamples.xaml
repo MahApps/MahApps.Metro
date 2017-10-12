@@ -34,8 +34,8 @@
                         Grid.Column="0"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
-                <Controls:MetroHeaderControl Margin="{StaticResource ControlMargin}" Header="TextBox Header">
-                    <Controls:MetroHeaderControl.HeaderTemplate>
+                <Controls:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
+                    <Controls:MetroHeader.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="FaceProfile" />
@@ -44,7 +44,7 @@
                                            Text="{Binding}" />
                             </StackPanel>
                         </DataTemplate>
-                    </Controls:MetroHeaderControl.HeaderTemplate>
+                    </Controls:MetroHeader.HeaderTemplate>
                     <TextBox SpellCheck.IsEnabled="True" Text="Enabled">
                         <TextBox.ContextMenu>
                             <ContextMenu>
@@ -52,7 +52,7 @@
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
-                </Controls:MetroHeaderControl>
+                </Controls:MetroHeader>
                 <TextBox Margin="{StaticResource ControlMargin}"
                          HorizontalContentAlignment="Stretch"
                          Controls:TextBoxHelper.ClearTextButton="True"
