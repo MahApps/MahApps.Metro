@@ -15,9 +15,7 @@
         <ResourceDictionary>
             <Color x:Key="SystemBaseMediumColor">#99FFFFFF</Color>
 
-            <SolidColorBrush x:Key="SplitViewBackgroundBrush"
-                             Opacity="1"
-                             Color="{StaticResource SystemBaseMediumColor}" />
+            <SolidColorBrush x:Key="SplitViewBackgroundBrush" Opacity="1" Color="{StaticResource SystemBaseMediumColor}" />
 
             <Style TargetType="{x:Type controls:SplitView}">
                 <Setter Property="CompactPaneLength" Value="48" />
