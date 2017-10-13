@@ -28,5 +28,8 @@
         <DatePicker x:Name="TestDatePicker"
                     controls:TextBoxHelper.AutoWatermark="True"
                     SelectedDate="{Binding DatePickerDate}" />
+        <controls:HotKeyBox x:Name="TestHotKeyBox"
+                            controls:TextBoxHelper.AutoWatermark="True"
+                            HotKey="{Binding HotKey}" />
     </StackPanel>
 </controls:MetroWindow>

@@ -11,6 +11,7 @@
         <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -56,6 +57,7 @@
         <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -429,6 +431,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -843,6 +846,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -998,6 +1002,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Padding" Value="12 4 12 4" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -1005,7 +1010,8 @@
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
@@ -1113,7 +1119,8 @@
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
