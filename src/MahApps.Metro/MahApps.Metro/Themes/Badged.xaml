@@ -53,8 +53,7 @@
                                 RenderTransformOrigin=".5,.5"
                                 TextElement.FontSize="11"
                                 TextElement.FontWeight="DemiBold"
-                                Visibility="{TemplateBinding IsBadgeSet,
-                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                                Visibility="{TemplateBinding IsBadgeSet, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
@@ -99,6 +98,9 @@
                         <Trigger Property="BadgePlacementMode" Value="Left">
                             <Setter TargetName="PART_BadgeContainer" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="PART_BadgeContainer" Property="VerticalAlignment" Value="Center" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_BadgeContainer" Property="Background" Value="{DynamicResource ResourceKey=MahApps.Metro.Brushes.Badged.DisabledBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

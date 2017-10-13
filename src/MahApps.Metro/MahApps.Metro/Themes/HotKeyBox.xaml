@@ -10,6 +10,8 @@
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource ClearTextButtonFontSize}" />
+        <Setter Property="Controls:TextBoxHelper.Watermark" Value="{Binding RelativeSource={RelativeSource Self}, Path=Watermark, Mode=OneWay}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -36,8 +38,9 @@
                              Controls:TextBoxHelper.IsWaitingForData="{TemplateBinding Controls:TextBoxHelper.IsWaitingForData}"
                              Controls:TextBoxHelper.SelectAllOnFocus="{TemplateBinding Controls:TextBoxHelper.SelectAllOnFocus}"
                              Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
-                             Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"
+                             Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                              Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                             Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                              Background="{TemplateBinding Background}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
@@ -48,7 +51,6 @@
                              IsTabStop="{TemplateBinding IsTabStop}"
                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                              Text="{TemplateBinding Text}"
-                             TextAlignment="{TemplateBinding Block.TextAlignment}"
                              Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">

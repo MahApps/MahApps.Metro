@@ -8,6 +8,7 @@ namespace MahApps.Metro
     using System.Diagnostics;
     using System.Linq;
     using System.Windows;
+    using JetBrains.Annotations;
 
     /// <summary>
     /// A class that allows for the detection and alteration of a theme and accent.
@@ -153,19 +154,18 @@ namespace MahApps.Metro
         /// Returns BaseLight, if BaseDark is given or vice versa.
         /// Custom Themes must end with "Dark" or "Light" for this to work, for example "CustomDark" and "CustomLight".
         /// </remarks>
-        public static AppTheme GetInverseAppTheme(AppTheme appTheme)
+        public static AppTheme GetInverseAppTheme([NotNull] AppTheme appTheme)
         {
-            if (appTheme == null)
-                throw new ArgumentNullException(nameof(appTheme));
+            if (appTheme == null) throw new ArgumentNullException(nameof(appTheme));
 
             if (appTheme.Name.EndsWith("dark", StringComparison.OrdinalIgnoreCase))
             {
-                return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
+                return GetAppTheme(appTheme.Name.ToLower().Replace("dark", "light"));
             }
 
             if (appTheme.Name.EndsWith("light", StringComparison.OrdinalIgnoreCase))
             {
-                return GetAppTheme(appTheme.Name.ToLower().Replace("light", String.Empty) + "dark");
+                return GetAppTheme(appTheme.Name.ToLower().Replace("light", "dark"));
             }
 
             return null;
@@ -331,9 +331,11 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeAppStyle(Application app, Accent newAccent, AppTheme newTheme)
+        public static void ChangeAppStyle([NotNull] Application app, [NotNull] Accent newAccent, [NotNull] AppTheme newTheme)
         {
             if (app == null) throw new ArgumentNullException(nameof(app));
+            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
+            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
 
             var oldTheme = DetectAppStyle(app);
             ChangeAppStyle(app.Resources, oldTheme, newAccent, newTheme);
@@ -346,9 +348,11 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeAppStyle(Window window, Accent newAccent, AppTheme newTheme)
+        public static void ChangeAppStyle([NotNull] Window window, [NotNull] Accent newAccent, [NotNull] AppTheme newTheme)
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
+            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
+            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
 
             var oldTheme = DetectAppStyle(window);
             ChangeAppStyle(window.Resources, oldTheme, newAccent, newTheme);
