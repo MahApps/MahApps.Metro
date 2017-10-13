@@ -90,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroHeader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroNavigationWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroProgressBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroTabControl.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\MathConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />

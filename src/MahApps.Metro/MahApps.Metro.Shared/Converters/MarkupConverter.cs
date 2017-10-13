@@ -15,6 +15,7 @@ namespace MahApps.Metro.Converters
         }
 
         protected abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
+
         protected abstract object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture);
 
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -39,6 +40,23 @@ namespace MahApps.Metro.Converters
             {
                 return DependencyProperty.UnsetValue;
             }
+        }
+    }
+
+    [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
+    public abstract class MarkupMultiConverter : MarkupExtension, IValueConverter, IMultiValueConverter
+    {
+        public abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
+
+        public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
+
+        public abstract object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture);
+
+        public abstract object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture);
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
         }
     }
 }

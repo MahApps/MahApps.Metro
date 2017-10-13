@@ -3,8 +3,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:ProgressRing">
-        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="IsTabStop" Value="False" />

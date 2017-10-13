@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -29,6 +30,7 @@ namespace MetroDemo.ExampleViews
             var index = ((Selector)sender).SelectedIndex;
             var item = ((Selector)sender).SelectedItem;
             var value = ((Selector)sender).SelectedValue;
+            Debug.WriteLine($">> SplitButton SelectionChanged: index={index}, item={item}, value={value}");
         }
     }
 }

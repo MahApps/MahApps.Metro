@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Actions="clr-namespace:MahApps.Metro.Actions"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
-                    xmlns:actions="clr-namespace:MahApps.Metro.Actions"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <ResourceDictionary.MergedDictionaries>
@@ -143,6 +143,9 @@
            BasedOn="{StaticResource MetroTabItem}"
            TargetType="{x:Type TabItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <!--  special property for header font size  -->
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
+        <Setter Property="Controls:TabControlHelper.CloseButtonEnabled" Value="True" />
         <Setter Property="Padding" Value="12 5 12 5" />
         <Setter Property="Template">
             <Setter.Value>
@@ -157,29 +160,30 @@
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Orientation="Horizontal">
-                            <controls:ContentControlEx x:Name="ContentSite"
+                            <Controls:ContentControlEx x:Name="ContentSite"
                                                        Padding="{TemplateBinding Padding}"
                                                        Content="{TemplateBinding Header}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                                        DockPanel.Dock="Top"
                                                        FontFamily="{TemplateBinding FontFamily}"
-                                                       FontSize="{TemplateBinding controls:ControlsHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                        FontStyle="{TemplateBinding FontStyle}"
-                                                       FontWeight="{TemplateBinding controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Foreground}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Button x:Name="PART_CloseButton"
                                     VerticalAlignment="Center"
                                     IsTabStop="False"
-                                    Style="{DynamicResource StandardTabItemCloseButtonStyle}">
+                                    Style="{DynamicResource StandardTabItemCloseButtonStyle}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseButtonEnabled), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
-                                        <actions:CloseTabItemAction TabControl="{Binding RelativeSource={RelativeSource AncestorType=TabControl}}" TabItem="{Binding RelativeSource={RelativeSource AncestorType=TabItem}}" />
+                                        <Actions:CloseTabItemAction Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseTabCommand), Mode=OneWay}" CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseTabCommandParameter), Mode=OneWay}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>
@@ -222,6 +226,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="False" />
                                 <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="Controls:TabControlHelper.CloseButtonEnabled" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Hidden" />
                         </MultiTrigger>
@@ -237,8 +242,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--  special property for header font size  -->
-        <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
     </Style>
 
     <DataTemplate x:Key="ClosableTabItemTemplate">
