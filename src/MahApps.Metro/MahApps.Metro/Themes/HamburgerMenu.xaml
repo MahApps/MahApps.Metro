@@ -93,8 +93,8 @@
     </Style>
 
     <QuinticEase x:Key="ScrollBarEaseInOut"
-                 pOptions:Freeze="true"
-                 EasingMode="EaseInOut" />
+                 EasingMode="EaseInOut"
+                 pOptions:Freeze="true" />
 
     <Style x:Key="HamburgerScrollViewerStyle"
            BasedOn="{StaticResource MetroScrollViewer}"

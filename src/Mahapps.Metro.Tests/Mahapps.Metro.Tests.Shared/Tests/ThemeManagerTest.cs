@@ -12,11 +12,35 @@ namespace MahApps.Metro.Tests
     {
         [Fact]
         [DisplayTestMethodName]
+        public async Task ChangeAppStyleForAppShouldThrowArgumentNullException()
+        {
+            await TestHost.SwitchToAppThread();
+
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle((Application)null, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseLight")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("UnknownTheme")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("UnknownAccentColor"), ThemeManager.GetAppTheme("BaseLight")));
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ChangeAppStyleForWindowShouldThrowArgumentNullException()
+        {
+            await TestHost.SwitchToAppThread();
+
+            await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle((Window)null, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseLight")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current.MainWindow, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("UnknownTheme")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current.MainWindow, ThemeManager.GetAccent("UnknownAccentColor"), ThemeManager.GetAppTheme("BaseLight")));
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         public async Task CanAddAccentBeforeGetterIsCalled()
         {
             await TestHost.SwitchToAppThread();
 
-            ThemeManager.AddAccent("TestAccent", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
+            Assert.True(ThemeManager.AddAccent("TestAccent", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")));
         }
 
         [Fact]
@@ -25,7 +49,7 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"));
+            Assert.True(ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml")));
         }
 
         [Fact]
