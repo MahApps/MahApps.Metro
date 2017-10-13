@@ -41,8 +41,7 @@
                                Focusable="False"
                                StrokeThickness="0"
                                UseLayoutRounding="True"
-                               Visibility="{TemplateBinding ShowTitleBar,
-                                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -56,8 +55,7 @@
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar,
-                                                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
@@ -69,8 +67,7 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar,
-                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="0"
@@ -89,8 +86,7 @@
                                                        ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
                                                        Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar,
-                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -113,8 +109,7 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar,
-                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
@@ -316,8 +311,7 @@
                                Focusable="False"
                                StrokeThickness="0"
                                UseLayoutRounding="True"
-                               Visibility="{TemplateBinding ShowTitleBar,
-                                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -331,8 +325,7 @@
                                     Content="{TemplateBinding Icon}"
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     Focusable="False"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar,
-                                                                 Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the left window commands  -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
@@ -344,8 +337,7 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar,
-                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="0"
@@ -365,8 +357,7 @@
                                                        ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
                                                        Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar,
-                                                                                    Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -389,8 +380,7 @@
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar,
-                                                                   Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
