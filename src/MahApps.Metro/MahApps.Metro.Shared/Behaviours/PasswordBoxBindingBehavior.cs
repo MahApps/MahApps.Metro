@@ -103,15 +103,12 @@ namespace MahApps.Metro.Behaviours
             {
                 selection.Changed += this.PasswordBoxSelectionChanged;
             }
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
-                                        new Action(() =>
-                                            {
-                                                SetPassword(this.AssociatedObject, this.AssociatedObject.Password);
-                                            }));
         }
 
         private void PasswordBoxLoaded(object sender, RoutedEventArgs e)
         {
+            SetPassword(this.AssociatedObject, this.AssociatedObject.Password);
+
             var textBox = this.AssociatedObject.FindChild<TextBox>("RevealedPassword");
             if (textBox != null)
             {
