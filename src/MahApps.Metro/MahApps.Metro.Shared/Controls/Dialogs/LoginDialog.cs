@@ -229,6 +229,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 if (win8MetroPasswordStyle != null)
                 {
                     this.PART_TextBox2.Style = win8MetroPasswordStyle;
+                    // apply template again to fire the loaded event which is necessary for revealed password
+                    this.PART_TextBox2.ApplyTemplate();
                 }
             }
 
