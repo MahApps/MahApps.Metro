@@ -73,6 +73,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)MainWindow.xaml.cs" >
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainWindowViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Markup\EnumBindingSourceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Navigation\HomePage.xaml.cs">
@@ -177,5 +180,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\ButtonsExample.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\ColorExample.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\CustomDialogExample.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\DataGridExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\DateExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuSample.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\OtherExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\SelectionExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\SliderProgressExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\SplitViewExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\TabControlExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\TextExamples.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleViews\TilesExample.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\CleanWindowDemo.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\DynamicFlyout.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\FlyoutDemo.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\InteropDemo.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\ShowcaseFlyout.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\SizeToContentDemo.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)ExampleWindows\VSDemo.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)MainWindow.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Navigation\HomePage.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Navigation\InterestingPage.xaml" />
   </ItemGroup>
 </Project>

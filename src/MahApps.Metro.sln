@@ -19,8 +19,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Caliburn.Demo", "MahApps.Metro.Caliburn.Demo", "{4E620130-FDBD-4072-9CD3-237BBA25DDD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Demo.NET40", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.NET40\MahApps.Metro.Demo.NET40.csproj", "{03FFFAB9-003E-4B0F-9688-A45AA54E98E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{73D442CA-0217-4D9A-AA14-B3E8B95B8500} = {73D442CA-0217-4D9A-AA14-B3E8B95B8500}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Demo.NET45", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.NET45\MahApps.Metro.Demo.NET45.csproj", "{CC00392E-55A8-41EE-BE27-A7D166F032FA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{579D4FA7-0946-4592-AE9B-A73D2D1262C6} = {579D4FA7-0946-4592-AE9B-A73D2D1262C6}
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MahApps.Metro.Demo.Shared", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.shproj", "{D25FB32F-945F-416B-9625-6D38ACEA6355}"
 EndProject
