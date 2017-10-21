@@ -311,8 +311,8 @@
     </ControlTemplate>
 
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
-        <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
+        <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Top">

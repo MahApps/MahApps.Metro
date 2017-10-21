@@ -239,7 +239,7 @@
                                       FocusVisualStyle="{x:Null}"
                                       IsTabStop="False" />
                         <ContentControl x:Name="PART_Watermark"
-                                        Margin="6 0 0 0"
+                                        Margin="4 0 0 0"
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
