@@ -28,11 +28,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <Grid Background="{TemplateBinding Background}">
+                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
