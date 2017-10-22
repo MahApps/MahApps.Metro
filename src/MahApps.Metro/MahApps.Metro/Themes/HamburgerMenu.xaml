@@ -60,6 +60,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
+        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Style.Triggers>
@@ -203,6 +204,7 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type controls:HamburgerMenu}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
@@ -216,7 +218,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Template">
@@ -313,6 +317,7 @@
                                 VerticalAlignment="Top"
                                 AutomationProperties.Name="Main button"
                                 Foreground="{TemplateBinding PaneForeground}"
+                                IsTabStop="{TemplateBinding IsTabStop}"
                                 Style="{StaticResource HamburgerButtonStyle}"
                                 TabIndex="0"
                                 Visibility="{TemplateBinding HamburgerVisibility}">
