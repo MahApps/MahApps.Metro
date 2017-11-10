@@ -43,12 +43,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="OptionsItemCommand"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register("OptionsItemCommand", typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register(nameof(OptionsItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register("OptionsItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register(nameof(OptionsItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets an object source used to generate the content of the options.

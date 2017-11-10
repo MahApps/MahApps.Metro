@@ -4,6 +4,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
@@ -33,20 +34,32 @@
                         Grid.Column="0"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Controls:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
+                    <Controls:MetroHeader.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial VerticalAlignment="Center" Kind="FaceProfile" />
+                                <TextBlock Margin="2 0 0 0"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </Controls:MetroHeader.HeaderTemplate>
+                    <TextBox SpellCheck.IsEnabled="True" Text="Enabled">
+                        <TextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="This is only a Test-Item" />
+                            </ContextMenu>
+                        </TextBox.ContextMenu>
+                    </TextBox>
+                </Controls:MetroHeader>
                 <TextBox Margin="{StaticResource ControlMargin}"
-                         SpellCheck.IsEnabled="True"
-                         Text="Enabled">
-                    <TextBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="This is only a Test-Item" />
-                        </ContextMenu>
-                    </TextBox.ContextMenu>
-                </TextBox>
-                <TextBox Margin="{StaticResource ControlMargin}"
+                         HorizontalContentAlignment="Stretch"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
+                         Controls:TextBoxHelper.WatermarkAlignment="Right"
                          SpellCheck.IsEnabled="True"
                          ToolTip="Default alignment">
                     <TextBox.ContextMenu>
@@ -259,7 +272,7 @@
                               IsChecked="True" />
                 </UniformGrid>
 
-                <Label Content="Min=&quot;0&quot;, Max=&quot;10&quot;, TextAlignment=&quot;Left&quot;" />
+                <Label Content="Min=&quot;0&quot; Max=&quot;10&quot; TextAlignment=&quot;Left&quot;" />
                 <Controls:NumericUpDown x:Name="Test"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsEnabled="False"
@@ -269,13 +282,18 @@
                                         TextAlignment="Left"
                                         Value="5" />
 
-                <Label Content="Interval=&quot;5&quot; IsTabStop=&quot;False&quot;" />
+                <Label Content="Interval=&quot;5.5&quot; IsTabStop=&quot;False&quot;" />
+                <CheckBox x:Name="SnapToMultipleOfIntervalCheck"
+                          Margin="1"
+                          Content="SnapToMultipleOfInterval"
+                          IsChecked="True" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
-                                        Interval="5"
+                                        Interval="5.5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         IsTabStop="False"
+                                        SnapToMultipleOfInterval="{Binding ElementName=SnapToMultipleOfIntervalCheck, Path=IsChecked, Mode=TwoWay}"
                                         Value="5" />
 
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"

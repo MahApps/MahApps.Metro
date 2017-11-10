@@ -33,7 +33,7 @@
 
     <!--  Win10 style  -->
 
-    <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" />
+    <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" TakeThicknessSide="Left" />
 
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton.Win10"
            BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"

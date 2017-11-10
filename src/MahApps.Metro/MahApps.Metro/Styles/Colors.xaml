@@ -97,7 +97,7 @@
 
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource Gray6}" options:Freeze="True" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{StaticResource Gray2}" options:Freeze="True" />
-    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1" options:Freeze="True">
         <GradientStop Offset="0" Color="{StaticResource Gray7}" />
         <GradientStop Offset="1" Color="{StaticResource WhiteColor}" />
     </LinearGradientBrush>
@@ -107,7 +107,7 @@
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{StaticResource Gray5}" options:Freeze="True" />
 
-    <LinearGradientBrush x:Key="ProgressBrush" StartPoint="1.002,0.5" EndPoint="0.001,0.5">
+    <LinearGradientBrush x:Key="ProgressBrush" StartPoint="1.002,0.5" EndPoint="0.001,0.5" options:Freeze="True">
         <GradientStop Offset="0" Color="{StaticResource HighlightColor}" />
         <GradientStop Offset="1" Color="{StaticResource AccentColor3}" />
     </LinearGradientBrush>

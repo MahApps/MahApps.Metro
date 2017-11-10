@@ -44,8 +44,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("CloseButtonEnabled",
                                         typeof(bool),
                                         typeof(MetroTabItem),
-                                        new FrameworkPropertyMetadata(false,
-                                                                      FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                        new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets/sets whether the Close Button is visible.
@@ -103,8 +102,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("CloseButtonMargin",
                                         typeof(Thickness),
                                         typeof(MetroTabItem),
-                                        new FrameworkPropertyMetadata(new Thickness(),
-                                                                      FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                        new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets/sets the Close Button Margin.
@@ -112,7 +110,7 @@ namespace MahApps.Metro.Controls
         public Thickness CloseButtonMargin
         {
             get { return (Thickness)GetValue(CloseButtonMarginProperty); }
-            set { SetValue(CloseButtonEnabledProperty, value); }
+            set { SetValue(CloseButtonMarginProperty, value); }
         }
     }
 }

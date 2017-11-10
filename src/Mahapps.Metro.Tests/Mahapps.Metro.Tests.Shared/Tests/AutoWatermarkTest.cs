@@ -25,6 +25,7 @@ namespace Mahapps.Metro.Tests
                                   Assert.Equal(autoWatermark, window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty));
                                   Assert.Equal(autoWatermark, window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty));
                                   Assert.Equal(autoWatermark, window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty));
+                                  Assert.Equal(autoWatermark, window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty));
                               });
         }
     }
