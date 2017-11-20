@@ -183,6 +183,23 @@
         }
 
         /// <summary>
+        ///     Identifies the <see cref="PaneForeground" /> dependency property.
+        /// </summary>
+        /// <returns>The identifier for the <see cref="PaneForeground" /> dependency property.</returns>
+        public static readonly DependencyProperty PaneForegroundProperty =
+            DependencyProperty.Register("PaneForeground", typeof(Brush), typeof(SplitView), new PropertyMetadata(null));
+
+        /// <summary>
+        ///     Gets or sets the Brush to apply to the foreground of the <see cref="Pane" /> area of the control.
+        /// </summary>
+        /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
+        public Brush PaneForeground
+        {
+            get { return (Brush)this.GetValue(PaneForegroundProperty); }
+            set { this.SetValue(PaneForegroundProperty, value); }
+        }
+
+        /// <summary>
         ///     Identifies the PanePlacement dependency property.
         /// </summary>
         /// <returns>The identifier for the PanePlacement dependency property.</returns>

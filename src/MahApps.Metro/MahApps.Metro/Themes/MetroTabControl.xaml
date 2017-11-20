@@ -2,8 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:MetroTabControl}">
-        <Setter Property="Background" Value="{x:Null}" />
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroTabControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabControl}">
@@ -16,13 +19,22 @@
                             <RowDefinition x:Name="RowDefinition0" Height="Auto" />
                             <RowDefinition x:Name="RowDefinition1" Height="*" />
                         </Grid.RowDefinitions>
-                        <TabPanel x:Name="HeaderPanel"
-                                  Grid.Row="0"
-                                  Grid.Column="0"
-                                  Margin="{TemplateBinding TabStripMargin}"
-                                  Panel.ZIndex="1"
-                                  IsItemsHost="true"
-                                  KeyboardNavigation.TabIndex="1" />
+                        <Grid x:Name="HeaderPanelGrid"
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding TabStripMargin}"
+                              Panel.ZIndex="1">
+                            <Controls:Underline x:Name="Underline"
+                                                Background="Transparent"
+                                                BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
+                                                LineThickness="1"
+                                                Placement="Bottom"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                Visibility="Collapsed" />
+                            <TabPanel x:Name="HeaderPanel"
+                                      IsItemsHost="true"
+                                      KeyboardNavigation.TabIndex="1" />
+                        </Grid>
                         <Border x:Name="ContentPanel"
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -39,31 +51,37 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+                            <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
+                        </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Bottom">
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="1" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Top" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Left">
                             <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
                             <Setter TargetName="ColumnDefinition1" Property="Width" Value="*" />
                             <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Right" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
                             <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
                             <Setter TargetName="ColumnDefinition1" Property="Width" Value="Auto" />
                             <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
                             <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
+                            <Setter TargetName="Underline" Property="Placement" Value="Left" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

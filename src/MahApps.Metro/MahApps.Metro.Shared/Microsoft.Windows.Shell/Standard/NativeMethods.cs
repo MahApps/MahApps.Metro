@@ -2997,11 +2997,13 @@
             return rc;
         }
 
+        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DllImport("user32.dll", EntryPoint = "GetCursorPos", SetLastError = true)]
+        [DllImport("user32.dll", EntryPoint = "GetCursorPos", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetCursorPos(out POINT lpPoint);
 
+        [SecurityCritical]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static POINT GetCursorPos()
         {
@@ -3010,8 +3012,59 @@
             {
                 HRESULT.ThrowLastError();
             }
-
             return pt;
+        }
+
+        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static bool TryGetCursorPos(out POINT pt)
+        {
+            var returnValue = _GetCursorPos(out pt);
+            // Sometimes Win32 will fail this call, such as if you are
+            // not running in the interactive desktop. For example,
+            // a secure screen saver may be running.
+            if (!returnValue)
+            {
+                System.Diagnostics.Debug.WriteLine("GetCursorPos failed!");
+                pt.x = 0;
+                pt.y = 0;
+            }
+            return returnValue;
+        }
+
+        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "GetPhysicalCursorPos", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _GetPhysicalCursorPos(out POINT lpPoint);
+
+        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static POINT GetPhysicalCursorPos()
+        {
+            POINT pt;
+            if (!_GetPhysicalCursorPos(out pt))
+            {
+                HRESULT.ThrowLastError();
+            }
+            return pt;
+        }
+
+        [SecurityCritical]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static bool TryGetPhysicalCursorPos(out POINT pt)
+        {
+            var returnValue = _GetPhysicalCursorPos(out pt);
+            // Sometimes Win32 will fail this call, such as if you are
+            // not running in the interactive desktop. For example,
+            // a secure screen saver may be running.
+            if (!returnValue)
+            {
+                System.Diagnostics.Debug.WriteLine("GetPhysicalCursorPos failed!");
+                pt.x = 0;
+                pt.y = 0;
+            }
+            return returnValue;
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

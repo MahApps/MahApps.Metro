@@ -6,23 +6,23 @@
                       xmlns:MetroDemo="clr-namespace:MetroDemo"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
-                      Closing="MetroWindow_Closing"
                       Dialog:DialogParticipation.Register="{Binding}"
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+                      d:DesignHeight="600"
+                      d:DesignWidth="800"
+                      Closing="MetroWindow_Closing"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Icon="mahapps.metro.logo2.ico"
                       NonActiveGlowBrush="#CDFF0000"
                       ShowIconOnTitleBar="True"
-                      ShowTitleBar="True"
+                      ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
                       WindowStartupLocation="CenterScreen"
-                      mc:Ignorable="d"
-                      d:DesignHeight="600"
-                      d:DesignWidth="800"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+                      mc:Ignorable="d">
     <!--
         if using DialogParticipation on Windows which open/close frequently you will get a
         memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
@@ -40,15 +40,15 @@
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
+                     x:Shared="False"
                      Fill="{Binding ColorBrush, Mode=OneWay}"
                      Stroke="{Binding BorderColorBrush, Mode=OneWay}"
-                     StrokeThickness="1"
-                     x:Shared="False" />
+                     StrokeThickness="1" />
             <Ellipse x:Key="AccentMenuIcon"
                      Width="16"
                      Height="16"
-                     Fill="{Binding ColorBrush, Mode=OneWay}"
-                     x:Shared="False" />
+                     x:Shared="False"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
 
             <Style x:Key="AppThemeMenuItemStyle"
                    BasedOn="{StaticResource MetroMenuItem}"
@@ -88,7 +88,7 @@
                 </StackPanel>
 
             </Dialog:CustomDialog>
-            
+
         </ResourceDictionary>
     </Window.Resources>
 
@@ -99,7 +99,9 @@
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <Button Click="LaunchMahAppsOnGitHub" ToolTip="MahApps.Metro on GitHub">
-                <iconPacks:PackIconModern Kind="SocialGithubOctocat" Width="22" Height="22" />
+                <iconPacks:PackIconModern Width="22"
+                                          Height="22"
+                                          Kind="SocialGithubOctocat" />
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
@@ -142,22 +144,22 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0"
-                Margin="5"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch">
+              Margin="5"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Stretch">
             <MenuItem Header="Theme"
-                        ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}"
-                        ItemsSource="{Binding AppThemes, Mode=OneWay}" />
+                      ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}"
+                      ItemsSource="{Binding AppThemes, Mode=OneWay}" />
             <MenuItem Header="Accent"
-                        ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
-                        ItemsSource="{Binding AccentColors, Mode=OneWay}" />
+                      ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
+                      ItemsSource="{Binding AccentColors, Mode=OneWay}" />
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}" />
                 <MenuItem Header="Show Dialogs over TitleBar"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
@@ -178,29 +180,33 @@
                 <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
                 <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
                 <MenuItem Header="Show MessageDialog via VM">
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="DISPATCHER_THREAD" Header="... from Main Thread" />
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}" CommandParameter="BACKGROUND_THREAD" Header="... from Background Thread" />
+                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="DISPATCHER_THREAD"
+                              Header="... from Main Thread" />
+                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="BACKGROUND_THREAD"
+                              Header="... from Background Thread" />
                 </MenuItem>
-                    
+
                 <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
                 <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowTitleBar}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding Path=ShowMyTitleBar, UpdateSourceTrigger=PropertyChanged}" />
                 <MenuItem Header="ShowInTaskbar"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
                 <MenuItem Header="Topmost"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
                 <MenuItem Header="Ignore taskbar on maximize"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
                 <MenuItem Header="Toggle FullScreen (no taskbar, window style = none)"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
                 <Separator />
                 <MenuItem Click="MenuWindowWithoutBorderOnClick" Header="Window without Border" />
                 <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with Border" />
@@ -209,24 +215,24 @@
                 <MenuItem Click="LaunchSizeToContentDemo" Header="Window with SizeToContent" />
                 <Separator />
                 <MenuItem x:Name="ShowSeparatorsMI"
-                            Header="ShowSeparators (RightWindowCommands)"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
+                          Header="ShowSeparators (RightWindowCommands)"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
                 <MenuItem Header="ShowLastSeparator in (RightWindowCommands)"
-                            IsCheckable="True"
-                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}"
-                            IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}" />
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}"
+                          IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}" />
                 <Separator />
-                <MenuItem Header="Window icon: scale down larger frame"
-                          Command="{Binding ToggleIconScalingCommand}"
+                <MenuItem Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static Controls:MultiFrameImageMode.ScaleDownLargerFrame}"
-                          IsChecked="{Binding IsScaleDownLargerFrame, Mode=OneWay}"
-                          IsCheckable="True" />
-                <MenuItem Header="Window icon: no scale, smaller frame"
-                          Command="{Binding ToggleIconScalingCommand}"
+                          Header="Window icon: scale down larger frame"
+                          IsCheckable="True"
+                          IsChecked="{Binding IsScaleDownLargerFrame, Mode=OneWay}" />
+                <MenuItem Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static Controls:MultiFrameImageMode.NoScaleSmallerFrame}"
-                          IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}"
-                          IsCheckable="True" />
+                          Header="Window icon: no scale, smaller frame"
+                          IsCheckable="True"
+                          IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
             </MenuItem>
         </Menu>
 

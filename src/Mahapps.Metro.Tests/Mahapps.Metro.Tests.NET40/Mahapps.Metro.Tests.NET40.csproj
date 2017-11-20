@@ -156,8 +156,8 @@
         <Reference Include="System.Net">
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
-          <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+        <Reference Include="Microsoft.Threading.Tasks">
+          <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -166,8 +166,8 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Microsoft.Threading.Tasks">
-          <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+          <HintPath>..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

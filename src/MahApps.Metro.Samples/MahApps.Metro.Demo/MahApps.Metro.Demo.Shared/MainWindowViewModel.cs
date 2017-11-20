@@ -59,6 +59,7 @@ namespace MetroDemo
 
         public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
+            this.Title = "Flyout Binding Test";
             _dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
@@ -168,6 +169,64 @@ namespace MetroDemo
                 if (value.Equals(_quitConfirmationEnabled)) return;
                 _quitConfirmationEnabled = value;
                 RaisePropertyChanged("QuitConfirmationEnabled");
+            }
+        }
+
+        private bool showMyTitleBar = true;
+        public bool ShowMyTitleBar
+        {
+            get { return showMyTitleBar; }
+            set
+            {
+                if (value.Equals(showMyTitleBar)) return;
+                showMyTitleBar = value;
+                RaisePropertyChanged("ShowMyTitleBar");
+            }
+        }
+
+        private bool canCloseFlyout = true;
+
+        public bool CanCloseFlyout
+        {
+            get { return this.canCloseFlyout; }
+            set
+            {
+                if (Equals(value, this.canCloseFlyout))
+                {
+                    return;
+                }
+                this.canCloseFlyout = value;
+                this.RaisePropertyChanged("CanCloseFlyout");
+            }
+        }
+
+        private ICommand closeCmd;
+
+        public ICommand CloseCmd
+        {
+            get
+            {
+                return this.closeCmd ?? (this.closeCmd = new SimpleCommand
+                                                         {
+                                                             CanExecuteDelegate = x => this.CanCloseFlyout,
+                                                             ExecuteDelegate = x => ((Flyout)x).IsOpen = false
+                                                         });
+            }
+        }
+
+        private bool canShowHamburgerAboutCommand = true;
+
+        public bool CanShowHamburgerAboutCommand
+        {
+            get { return this.canShowHamburgerAboutCommand; }
+            set
+            {
+                if (Equals(value, this.canShowHamburgerAboutCommand))
+                {
+                    return;
+                }
+                this.canShowHamburgerAboutCommand = value;
+                this.RaisePropertyChanged("CanShowHamburgerAboutCommand");
             }
         }
 

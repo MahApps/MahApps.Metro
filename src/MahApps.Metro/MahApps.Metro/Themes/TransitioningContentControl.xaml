@@ -6,8 +6,6 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Transition" Value="Default" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:TransitioningContentControl">
@@ -355,6 +353,8 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Transition" Value="Default" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
 </ResourceDictionary>

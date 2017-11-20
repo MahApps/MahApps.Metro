@@ -6,7 +6,6 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="#FF000000" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -29,7 +28,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LayoutStates">
                                 <VisualState x:Name="AfterLoaded">
-                                    <Storyboard>
+                                    <Storyboard x:Name="AfterLoadedStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -49,7 +48,7 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="AfterLoadedReverse">
-                                    <Storyboard>
+                                    <Storyboard x:Name="AfterLoadedReverseStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
@@ -108,5 +107,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>
