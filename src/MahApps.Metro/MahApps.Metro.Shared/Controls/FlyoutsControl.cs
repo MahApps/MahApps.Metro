@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
@@ -91,7 +92,7 @@ namespace MahApps.Metro.Controls
 
             this.ReorderZIndices(flyout);
 
-            var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex);
+            var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex).ToList();
             parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
         }
 

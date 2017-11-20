@@ -12,12 +12,16 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class MetroProgressBar : ProgressBar
     {
-        public static readonly DependencyProperty EllipseDiameterProperty =
-            DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(MetroProgressBar),
-                                        new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty EllipseDiameterProperty
+            = DependencyProperty.Register(nameof(EllipseDiameter),
+                                          typeof(double),
+                                          typeof(MetroProgressBar),
+                                          new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty EllipseOffsetProperty =
-            DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
+            DependencyProperty.Register(nameof(EllipseOffset),
+                                        typeof(double),
+                                        typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
         private readonly object lockme = new object();
@@ -31,7 +35,7 @@ namespace MahApps.Metro.Controls
 
         public MetroProgressBar()
         {
-            IsVisibleChanged += VisibleChangedHandler;
+            this.IsVisibleChanged += this.VisibleChangedHandler;
         }
 
         private void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
@@ -46,11 +50,10 @@ namespace MahApps.Metro.Controls
         private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var bar = (MetroProgressBar)dependencyObject;
-            if (!bar.IsLoaded || !bar.IsVisible)
+            if (bar.IsLoaded && bar.IsVisible)
             {
-                return;
+                ToggleIndeterminate(bar, (bool)e.OldValue, (bool)e.NewValue);
             }
-            ToggleIndeterminate(bar, (bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void ToggleIndeterminate(MetroProgressBar bar, bool oldValue, bool newValue)
@@ -85,8 +88,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public double EllipseDiameter
         {
-            get { return (double)GetValue(EllipseDiameterProperty); }
-            set { SetValue(EllipseDiameterProperty, value); }
+            get { return (double)this.GetValue(EllipseDiameterProperty); }
+            set { this.SetValue(EllipseDiameterProperty, value); }
         }
 
         /// <summary>
@@ -94,8 +97,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public double EllipseOffset
         {
-            get { return (double)GetValue(EllipseOffsetProperty); }
-            set { SetValue(EllipseOffsetProperty, value); }
+            get { return (double)this.GetValue(EllipseOffsetProperty); }
+            set { this.SetValue(EllipseOffsetProperty, value); }
         }
 
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
@@ -112,6 +115,7 @@ namespace MahApps.Metro.Controls
         {
             if (invalidateMeasureArrange)
             {
+                this.UpdateLayout();
                 this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
                 this.InvalidateArrange();
             }
@@ -127,14 +131,14 @@ namespace MahApps.Metro.Controls
             lock (this.lockme)
             {
                 //perform calculations
-                var containerAnimStart = CalcContainerAnimStart(width);
-                var containerAnimEnd = CalcContainerAnimEnd(width);
-                var ellipseAnimWell = CalcEllipseAnimWell(width);
-                var ellipseAnimEnd = CalcEllipseAnimEnd(width);
+                var containerAnimStart = this.CalcContainerAnimStart(width);
+                var containerAnimEnd = this.CalcContainerAnimEnd(width);
+                var ellipseAnimWell = this.CalcEllipseAnimWell(width);
+                var ellipseAnimEnd = this.CalcEllipseAnimEnd(width);
                 //reset the main double animation
                 try
                 {
-                    var indeterminate = GetIndeterminate();
+                    var indeterminate = this.GetIndeterminate();
 
                     if (indeterminate != null && this.indeterminateStoryboard != null)
                     {
@@ -147,7 +151,9 @@ namespace MahApps.Metro.Controls
                         foreach (var elemName in namesOfElements)
                         {
                             var doubleAnimParent = (DoubleAnimationUsingKeyFrames)newStoryboard.Children.First(t => t.Name == elemName + "Anim");
-                            DoubleKeyFrame first, second, third;
+                            DoubleKeyFrame first,
+                                           second,
+                                           third;
                             if (elemName == "E1")
                             {
                                 first = doubleAnimParent.KeyFrames[1];
@@ -172,7 +178,7 @@ namespace MahApps.Metro.Controls
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
                         }
 
-                        var containingGrid = (FrameworkElement)GetTemplateChild("ContainingGrid");
+                        var containingGrid = (FrameworkElement)this.GetTemplateChild("ContainingGrid");
 
                         if (removeOldStoryboard && indeterminate.Storyboard != null)
                         {
@@ -183,10 +189,7 @@ namespace MahApps.Metro.Controls
 
                         indeterminate.Storyboard = newStoryboard;
 
-                        if (indeterminate.Storyboard != null)
-                        {
-                            indeterminate.Storyboard.Begin(containingGrid, true);
-                        }
+                        indeterminate.Storyboard?.Begin(containingGrid, true);
                     }
                 }
                 catch (Exception)
@@ -198,80 +201,38 @@ namespace MahApps.Metro.Controls
 
         private VisualState GetIndeterminate()
         {
-            var templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
+            var templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
             if (templateGrid == null)
             {
                 this.ApplyTemplate();
-                templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
+                templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
                 if (templateGrid == null) return null;
             }
             var groups = VisualStateManager.GetVisualStateGroups(templateGrid);
-            return groups != null
-                ? groups.Cast<VisualStateGroup>()
-                        .SelectMany(@group => @group.States.Cast<VisualState>())
-                        .FirstOrDefault(state => state.Name == "Indeterminate")
-                : null;
+            return groups?.OfType<VisualStateGroup>()
+                         .SelectMany(group => group.States.OfType<VisualState>())
+                         .FirstOrDefault(state => state.Name == "Indeterminate");
         }
 
         private void SetEllipseDiameter(double width)
         {
-            if (width <= 180)
-            {
-                EllipseDiameter = 4;
-                return;
-            }
-            if (width <= 280)
-            {
-                EllipseDiameter = 5;
-                return;
-            }
-
-            EllipseDiameter = 6;
+            this.EllipseDiameter = width <= 180 ? 4 : (width <= 280 ? 5 : 6);
         }
 
         private void SetEllipseOffset(double width)
         {
-            if (width <= 180)
-            {
-                EllipseOffset = 4;
-                return;
-            }
-            if (width <= 280)
-            {
-                EllipseOffset = 7;
-                return;
-            }
-
-            EllipseOffset = 9;
+            this.EllipseOffset = width <= 180 ? 4 : (width <= 280 ? 7 : 9);
         }
 
         private double CalcContainerAnimStart(double width)
         {
-            if (width <= 180)
-            {
-                return -34;
-            }
-            if (width <= 280)
-            {
-                return -50.5;
-            }
-
-            return -63;
+            return width <= 180 ? -34 : (width <= 280 ? -50.5 : -63);
         }
 
         private double CalcContainerAnimEnd(double width)
         {
             var firstPart = 0.4352 * width;
-            if (width <= 180)
-            {
-                return firstPart - 25.731;
-            }
-            if (width <= 280)
-            {
-                return firstPart + 27.84;
-            }
-
-            return firstPart + 58.862;
+            return width <= 180 ? firstPart - 25.731 : (width <= 280 ? firstPart + 27.84 : firstPart + 58.862);
         }
 
         private double CalcEllipseAnimWell(double width)
@@ -293,30 +254,38 @@ namespace MahApps.Metro.Controls
                 this.indeterminateStoryboard = this.TryFindResource("IndeterminateStoryboard") as Storyboard;
             }
 
-            Loaded -= LoadedHandler;
-            Loaded += LoadedHandler;
+            this.Loaded -= this.LoadedHandler;
+            this.Loaded += this.LoadedHandler;
         }
 
         private void LoadedHandler(object sender, RoutedEventArgs routedEventArgs)
         {
-            Loaded -= LoadedHandler;
-            SizeChangedHandler(null, null);
-            SizeChanged += SizeChangedHandler;
+            this.Loaded -= this.LoadedHandler;
+            this.SizeChangedHandler(null, null);
+            this.SizeChanged += this.SizeChangedHandler;
         }
 
-        protected override void OnInitialized(EventArgs e)
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            base.OnInitialized(e);
+            base.OnRenderSizeChanged(sizeInfo);
+            this.UpdateEllipseProperties();
+        }
 
+        private void UpdateEllipseProperties()
+        {
             // Update the Ellipse properties to their default values
             // only if they haven't been user-set.
-            if (EllipseDiameter.Equals(0))
+            var actualSize = this.ActualSize(true);
+            if (actualSize > 0)
             {
-                SetEllipseDiameter(this.ActualSize(true));
-            }
-            if (EllipseOffset.Equals(0))
-            {
-                SetEllipseOffset(this.ActualSize(true));
+                if (this.EllipseDiameter.Equals(0))
+                {
+                    this.SetEllipseDiameter(actualSize);
+                }
+                if (this.EllipseOffset.Equals(0))
+                {
+                    this.SetEllipseOffset(actualSize);
+                }
             }
         }
     }

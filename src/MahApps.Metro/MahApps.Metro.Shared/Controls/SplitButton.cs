@@ -201,19 +201,18 @@ namespace MahApps.Metro.Controls
         {
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
         }
 
         private void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            e.RoutedEvent = SelectionChangedEvent;
-            this.RaiseEvent(e);
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
+            e.Handled = true;
         }
 
         private void ExpanderClick(object sender, RoutedEventArgs e)
         {
-            this.IsExpanded = !this.IsExpanded;
+            this.SetCurrentValue(IsExpandedProperty, !this.IsExpanded);
         }
 
         public override void OnApplyTemplate()
@@ -345,14 +344,14 @@ namespace MahApps.Metro.Controls
                 var item = ContainerFromElement(this._listBox, source) as ListBoxItem;
                 if (item != null)
                 {
-                    this.IsExpanded = false;
+                    this.SetCurrentValue(IsExpandedProperty, false);
                 }
             }
         }
 
         private void PopupClosed(object sender, EventArgs e)
         {
-            this.IsExpanded = false;
+            this.SetCurrentValue(IsExpandedProperty, false);
             this.ReleaseMouseCapture();
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
             if (this.IsKeyboardFocusWithin)
@@ -394,7 +393,7 @@ namespace MahApps.Metro.Controls
             // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
             if (!(bool)e.NewValue)
             {
-                this.IsExpanded = false;
+                this.SetCurrentValue(IsExpandedProperty, false);
             }
         }
 

@@ -4,7 +4,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Controls;
-using MahApps.Metro.Native;
+using ControlzEx.Native;
+using ControlzEx.Standard;
 
 namespace MahApps.Metro.Controls {
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
@@ -37,9 +38,11 @@ namespace MahApps.Metro.Controls {
             set { SetValue(AreModifierKeysRequiredProperty, value); }
         }
 
+        [Obsolete("This property will be deleted in the next release. Instead use TextBoxHelper.Watermark attached property.")]
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register(
             "Watermark", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
 
+        [Obsolete("This property will be deleted in the next release. Instead use TextBoxHelper.Watermark attached property.")]
         public string Watermark
         {
             get { return (string) GetValue(WatermarkProperty); }
@@ -121,14 +124,16 @@ namespace MahApps.Metro.Controls {
             ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcherOnThreadPreprocessMessage;
         }
 
+#pragma warning disable 618
         private void ComponentDispatcherOnThreadPreprocessMessage(ref MSG msg, ref bool handled)
         {
-            if (msg.message == Constants.WM_HOTKEY)
+            if (msg.message == (int)WM.HOTKEY)
             {
                 // swallow all hotkeys, so our control can catch the key strokes
                 handled = true;
             }
         }
+#pragma warning restore 618
 
         private void TextBoxOnLostFocus(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -201,7 +206,7 @@ namespace MahApps.Metro.Controls {
         private readonly Key _key;
         private readonly ModifierKeys _modifierKeys;
 
-        public HotKey(Key key, ModifierKeys modifierKeys)
+        public HotKey(Key key, ModifierKeys modifierKeys = ModifierKeys.None)
         {
             _key = key;
             _modifierKeys = modifierKeys;
@@ -235,6 +240,7 @@ namespace MahApps.Metro.Controls {
             return _key == other._key && _modifierKeys == other._modifierKeys;
         }
 
+#pragma warning disable 618
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -255,12 +261,25 @@ namespace MahApps.Metro.Controls {
             }
             if ((_modifierKeys & ModifierKeys.Windows) == ModifierKeys.Windows)
             {
-                sb.Append("WINDOWS+");
+                sb.Append("Windows+");
             }
-            sb.Append(GetLocalizedKeyStringUnsafe(KeyInterop.VirtualKeyFromKey(_key)).ToUpper());
+            sb.Append(GetLocalizedKeyString(_key));
             return sb.ToString();
         }
+#pragma warning restore 618
 
+        private static string GetLocalizedKeyString(Key key)
+        {
+            if (key >= Key.BrowserBack && key <= Key.LaunchApplication2)
+            {
+                return key.ToString();
+            }
+
+            var vkey = KeyInterop.VirtualKeyFromKey(key);
+            return GetLocalizedKeyStringUnsafe(vkey) ?? key.ToString();
+        }
+
+#pragma warning disable 618
         private static string GetLocalizedKeyStringUnsafe(int key)
         {
             // strip any modifier keys
@@ -268,7 +287,7 @@ namespace MahApps.Metro.Controls {
 
             var sb = new StringBuilder(256);
 
-            long scanCode = UnsafeNativeMethods.MapVirtualKey((uint)keyCode, Constants.MAPVK_VK_TO_VSC);
+            long scanCode = NativeMethods.MapVirtualKey((uint)keyCode, NativeMethods.MapType.MAPVK_VK_TO_VSC);
 
             // shift the scancode to the high word
             scanCode = (scanCode << 16);
@@ -281,9 +300,9 @@ namespace MahApps.Metro.Controls {
                 scanCode |= 0x1000000;
             }
 
-            UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
-            return sb.ToString();
+            var resultLength = UnsafeNativeMethods.GetKeyNameText((int)scanCode, sb, 256);
+            return resultLength > 0 ? sb.ToString() : null;
         }
-
+#pragma warning restore 618
     }
 }

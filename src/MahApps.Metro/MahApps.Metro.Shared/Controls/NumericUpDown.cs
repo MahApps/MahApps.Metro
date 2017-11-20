@@ -160,7 +160,14 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
+            "SnapToMultipleOfInterval",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
+
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -170,7 +177,6 @@ namespace MahApps.Metro.Controls
         private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
-        private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
         private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
         private double _internalLargeChange = DefaultInterval * 100;
@@ -463,6 +469,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(HasDecimalsProperty); }
             set { SetValue(HasDecimalsProperty, value); }
+        }
+
+        /// <summary>
+        ///     Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool SnapToMultipleOfInterval
+        {
+            get { return (bool)GetValue(SnapToMultipleOfIntervalProperty); }
+            set { SetValue(SnapToMultipleOfIntervalProperty, value); }
         }
 
         /// <summary> 
@@ -860,7 +878,6 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -869,9 +886,8 @@ namespace MahApps.Metro.Controls
         {
             var numericUpDown = (NumericUpDown)d;
 
-            numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.CoerceValue(MaximumProperty);
-            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
+            numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -887,13 +903,17 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown nud = (NumericUpDown)d;
 
-            nud.SetRemoveStringFormatFromText((string)e.NewValue);
-            if (nud._valueTextBox != null &&
-                nud.Value.HasValue)
+            if (nud._valueTextBox != null && nud.Value.HasValue)
             {
                 nud.InternalSetText(nud.Value);
             }
-            nud.HasDecimals = !RegexStringFormatHexadecimal.IsMatch((string)e.NewValue);
+
+            var value = (string)e.NewValue;
+
+            if (!nud.HasDecimals && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
+            {
+                nud.SetCurrentValue(HasDecimalsProperty, true);
+            }
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -914,7 +934,18 @@ namespace MahApps.Metro.Controls
             }
         }
 
-      private static bool ValidateDelay(object value)
+        private static void OnSnapToMultipleOfIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            var value = numericUpDown.Value.GetValueOrDefault();
+
+            if ((bool)e.NewValue && Math.Abs(numericUpDown.Interval) > 0)
+            {
+                numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
+            }
+        }
+
+        private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
         }
@@ -927,15 +958,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            CultureInfo culture = SpecificCultureInfo;
-            if (string.IsNullOrEmpty(StringFormat))
-            {
-                _valueTextBox.Text = newValue.Value.ToString(culture);
-            }
-            else
-            {
-                FormatValue(newValue, culture);
-            }
+            _valueTextBox.Text = FormattedValue(newValue, StringFormat, SpecificCultureInfo);
 
             if ((bool)GetValue(TextBoxHelper.IsMonitoringProperty))
             {
@@ -943,33 +966,36 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void FormatValue(double? newValue, CultureInfo culture)
+        private string FormattedValue(double? newValue, string format, CultureInfo culture)
         {
-            var match = RegexStringFormatHexadecimal.Match(StringFormat);
-            if (match.Success)
+            format = format.Replace("{}", string.Empty);
+            if (!string.IsNullOrWhiteSpace(format))
             {
-                if (match.Groups["simpleHEX"].Success)
+                var match = RegexStringFormatHexadecimal.Match(format);
+                if (match.Success)
                 {
-                    // HEX DOES SUPPORT INT ONLY.
-                    _valueTextBox.Text = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
-                }
-                else if (match.Groups["complexHEX"].Success)
-                {
-                    _valueTextBox.Text = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
-                }
-            }
-            else
-            {
-                if (!StringFormat.Contains("{"))
-                {
-                    // then we may have a StringFormat of e.g. "N0"
-                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+                    if (match.Groups["simpleHEX"].Success)
+                    {
+                        // HEX DOES SUPPORT INT ONLY.
+                        return ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                    }
+                    if (match.Groups["complexHEX"].Success)
+                    {
+                        return string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                    }
                 }
                 else
                 {
-                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+                    if (!format.Contains("{"))
+                    {
+                        // then we may have a StringFormat of e.g. "N0"
+                        return newValue.Value.ToString(format, culture);
+                    }
+                    return string.Format(culture, format, newValue.Value);
                 }
             }
+
+            return newValue.Value.ToString(culture);
         }
 
         private ScrollViewer TryFindScrollViewer()
@@ -1035,8 +1061,8 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            double newValue = Value.GetValueOrDefault() + difference;
-            Value = (double)CoerceValue(this, newValue);
+            var newValue = Value.GetValueOrDefault() + difference;
+            SetCurrentValue(ValueProperty, newValue);
         }
 
         private void EnableDisableDown()
@@ -1096,41 +1122,24 @@ namespace MahApps.Metro.Controls
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
             {
-                if (Value == convertedValue)
+                if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
                 {
-                    OnValueChanged(Value, Value);
+                    convertedValue = Math.Round(convertedValue / Interval) * Interval;
                 }
+
                 if (convertedValue > Maximum)
                 {
-                    if (Value == Maximum)
-                    {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Maximum);
-                    }
+                    convertedValue = this.Maximum;
                 }
                 else if (convertedValue < Minimum)
                 {
-                    if (Value == Minimum)
-                    {
-                        OnValueChanged(Value, Value);
-                    }
-                    else
-                    {
-                        SetValue(ValueProperty, Minimum);
-                    }
+                    convertedValue = this.Minimum;
                 }
-                else
-                {
-                    SetValue(ValueProperty, convertedValue);
-                }
+
+                SetCurrentValue(ValueProperty, convertedValue);
             }
-            else
-            {
-                OnValueChanged(Value, Value);
-            }
+
+            OnValueChanged(Value, Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -1144,8 +1153,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    Value = (double?)CoerceValue(this, convertedValue);
-                    e.Handled = true;
+                    SetCurrentValue(ValueProperty, convertedValue);
                 }
             }
         }
@@ -1190,46 +1198,19 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            text = RemoveStringFormatFromText(text);
+            text = GetAnyNumberFromText(text);
 
             return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
 
-        private string RemoveStringFormatFromText(string text)
+        private string GetAnyNumberFromText(string text)
         {
-            // remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
-            if (!string.IsNullOrEmpty(_removeFromText.Item1))
+            var matches = RegexStringFormatNumber.Matches(text);
+            if (matches.Count > 0)
             {
-                text = text.Replace(_removeFromText.Item1, string.Empty);
-            }
-            if (!string.IsNullOrEmpty(_removeFromText.Item2))
-            {
-                text = text.Replace(_removeFromText.Item2, string.Empty);
+                return matches[0].Value;
             }
             return text;
-        }
-
-        private void SetRemoveStringFormatFromText(string stringFormat)
-        {
-            string tailing = string.Empty;
-            string leading = string.Empty;
-            string format = stringFormat;
-            int indexOf = format.IndexOf("{", StrComp);
-            if (indexOf > -1)
-            {
-                if (indexOf > 0)
-                {
-                    // remove beginning e.g.
-                    // pcs. from "pcs. {0:N2}"
-                    tailing = format.Substring(0, indexOf);
-                }
-
-                // remove tailing e.g.
-                // pcs. from "{0:N2} pcs."
-                leading = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray()).Trim();
-            }
-
-            _removeFromText = new Tuple<string, string>(tailing, leading);
         }
     }
 }

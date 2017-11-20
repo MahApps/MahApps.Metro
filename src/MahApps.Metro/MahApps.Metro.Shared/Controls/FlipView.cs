@@ -207,11 +207,11 @@ namespace MahApps.Metro.Controls
             IEnumerable<Button> inactiveButtons = null;
             this.GetNavigationButtons(out prevButton, out nextButton, out inactiveButtons);
 
-            foreach (var item in inactiveButtons)
+            foreach (var button in inactiveButtons)
             {
-                if (item != null)
+                if (button != null)
                 {
-                    inactiveButtonsApply(item);
+                    inactiveButtonsApply(button);
                 }
             }
 
@@ -261,10 +261,6 @@ namespace MahApps.Metro.Controls
             }
 
             this.Unloaded += this.FlipViewUnloaded;
-            this.backButton.Click += this.PrevButtonClick;
-            this.forwardButton.Click += this.NextButtonClick;
-            this.upButton.Click += this.PrevButtonClick;
-            this.downButton.Click += this.NextButtonClick;
 
             if (this.SelectedIndex < 0)
             {
@@ -280,11 +276,6 @@ namespace MahApps.Metro.Controls
         private void FlipViewUnloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= this.FlipViewUnloaded;
-
-            this.backButton.Click -= this.PrevButtonClick;
-            this.forwardButton.Click -= this.NextButtonClick;
-            this.upButton.Click -= this.PrevButtonClick;
-            this.downButton.Click -= this.NextButtonClick;
 
             if (this.hideControlStoryboard != null && this.hideControlStoryboardCompletedHandler != null)
             {
@@ -304,10 +295,13 @@ namespace MahApps.Metro.Controls
         {
             base.OnKeyDown(e);
 
-            var canGoPrev = (e.Key == Key.Left && this.Orientation == Orientation.Horizontal && this.backButton != null && this.backButton.Visibility == Visibility.Visible && this.backButton.IsEnabled)
-                            || (e.Key == Key.Up && this.Orientation == Orientation.Vertical && this.upButton != null && this.upButton.Visibility == Visibility.Visible && this.upButton.IsEnabled);
-            var canGoNext = (e.Key == Key.Right && this.Orientation == Orientation.Horizontal && this.forwardButton != null && this.forwardButton.Visibility == Visibility.Visible && this.forwardButton.IsEnabled)
-                            || (e.Key == Key.Down && this.Orientation == Orientation.Vertical && this.downButton != null && this.downButton.Visibility == Visibility.Visible && this.downButton.IsEnabled);
+            var isHorizontal = this.Orientation == Orientation.Horizontal;
+            var isVertical = this.Orientation == Orientation.Vertical;
+            var canGoPrev = (e.Key == Key.Left && isHorizontal && this.backButton != null && this.backButton.Visibility == Visibility.Visible && this.backButton.IsEnabled)
+                            || (e.Key == Key.Up && isVertical && this.upButton != null && this.upButton.Visibility == Visibility.Visible && this.upButton.IsEnabled);
+            var canGoNext = (e.Key == Key.Right && isHorizontal && this.forwardButton != null && this.forwardButton.Visibility == Visibility.Visible && this.forwardButton.IsEnabled)
+                            || (e.Key == Key.Down && isVertical && this.downButton != null && this.downButton.Visibility == Visibility.Visible && this.downButton.IsEnabled);
+
             if (canGoPrev)
             {
                 this.GoBack();
@@ -339,14 +333,53 @@ namespace MahApps.Metro.Controls
             this.hideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
-            this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
+
+            if (this.forwardButton != null)
+            {
+                this.forwardButton.Click -= this.NextButtonClick;
+            }
+            if (this.backButton != null)
+            {
+                this.backButton.Click -= this.PrevButtonClick;
+            }
+            if (this.upButton != null)
+            {
+                this.upButton.Click -= this.PrevButtonClick;
+            }
+            if (this.downButton != null)
+            {
+                this.downButton.Click -= this.NextButtonClick;
+            }
+
             this.forwardButton = this.GetTemplateChild(PART_ForwardButton) as Button;
+            this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
             this.upButton = this.GetTemplateChild(PART_UpButton) as Button;
             this.downButton = this.GetTemplateChild(PART_DownButton) as Button;
+
             this.bannerGrid = this.GetTemplateChild(PART_BannerGrid) as Grid;
             this.bannerLabel = this.GetTemplateChild(PART_BannerLabel) as Label;
 
-            this.bannerLabel.Opacity = this.IsBannerEnabled ? 1.0 : 0.0;
+            if (this.forwardButton != null)
+            {
+                this.forwardButton.Click += this.NextButtonClick;
+            }
+            if (this.backButton != null)
+            {
+                this.backButton.Click += this.PrevButtonClick;
+            }
+            if (this.upButton != null)
+            {
+                this.upButton.Click += this.PrevButtonClick;
+            }
+            if (this.downButton != null)
+            {
+                this.downButton.Click += this.NextButtonClick;
+            }
+
+            if (this.bannerLabel != null)
+            {
+                this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
+            }
         }
 
         protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

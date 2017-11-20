@@ -4,26 +4,26 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metroDemo="clr-namespace:MetroDemo"
-                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       x:Name="flyoutsDemo"
                       Title="Flyouts Demo"
-                      TitleCharacterCasing="Normal"
                       Width="700"
                       Height="500"
                       MinWidth="700"
                       MinHeight="500"
+                      d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
-                      SaveWindowPosition="True"
-                      WindowStartupLocation="CenterScreen"
                       IconOverlayBehavior="Never"
                       LeftWindowCommandsOverlayBehavior="Never"
                       RightWindowCommandsOverlayBehavior="Never"
+                      SaveWindowPosition="True"
+                      TitleCharacterCasing="Normal"
                       WindowButtonCommandsOverlayBehavior="Always"
-                      mc:Ignorable="d"
-                      d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
+                      WindowStartupLocation="CenterScreen"
+                      mc:Ignorable="d">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -40,24 +40,27 @@
 
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
-            <iconPacks:PackIconModern Kind="Box"
-                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+            <iconPacks:PackIconModern Width="{TemplateBinding Width}"
+                                      Height="{TemplateBinding Height}"
                                       Margin="4"
-                                      Width="{TemplateBinding Width}"
-                                      Height="{TemplateBinding Height}" />
+                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                      Kind="Box" />
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <TextBlock Margin="0 -1 8 0"
                            VerticalAlignment="Center"
                            FontFamily="{DynamicResource HeaderFontFamily}"
                            FontSize="{DynamicResource WindowTitleFontSize}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
-                <Button Content="Click Me..." Margin="1" Click="ClickMeOnClick" Style="{StaticResource MetroFlatButton}" />
+                <Button Margin="1"
+                        Click="ClickMeOnClick"
+                        Content="Click Me..."
+                        Style="{StaticResource MetroFlatButton}" />
             </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
@@ -84,9 +87,9 @@
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
-                             Controls:ControlsHelper.ContentCharacterCasing="Upper"
                              Margin="200 30 0 0"
-                             AreAnimationsEnabled="False"
+                             Controls:ControlsHelper.ContentCharacterCasing="Upper"
+                             AreAnimationsEnabled="True"
                              FocusedElement="{Binding ElementName=firstTB}"
                              Header="Settings"
                              Position="Right">
@@ -100,20 +103,25 @@
                         <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
                         <TextBlock Grid.Row="0" Text="This Flyout animates its opacity when opening and closing." />
                     </StackPanel>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Vertical">
-                            <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="TextBox 01" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 02" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 03" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 04" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 05" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 06" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 07" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 08" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 09" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 10" />
-                        </StackPanel>
-                    </ScrollViewer>
+                    <TabControl Grid.Row="1" Controls:TabControlHelper.Underlined="TabPanel">
+                        <TabItem Header="Settings">
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="TextBox 01" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 02" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 03" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 04" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 05" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 06" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 07" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 08" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 09" />
+                                    <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 10" />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Header="Empty" />
+                    </TabControl>
                     <UniformGrid Grid.Row="2"
                                  Margin="10"
                                  Columns="2">
@@ -127,29 +135,29 @@
                 </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout AnimateOpacity="True"
+            <Controls:Flyout HorizontalContentAlignment="Stretch"
+                             AnimateOpacity="True"
                              CloseButtonIsCancel="True"
                              Header="New Goodness"
-                             HorizontalContentAlignment="Stretch"
                              Position="Right">
                 <StackPanel Margin="10" Orientation="Vertical">
-                    <Button Content="create"
-                            Margin="2"
+                    <Button Margin="2"
+                            Content="create"
                             Style="{StaticResource MetroFlatButton}" />
-                    <Button Content="cancel"
-                            Margin="2"
+                    <Button Margin="2"
+                            Content="cancel"
                             Style="{StaticResource MetroFlatButton}" />
                 </StackPanel>
             </Controls:Flyout>
 
-            <exampleWindows:CustomFlyout />
+            <exampleWindows:ShowcaseFlyout DataContext="{Binding}" />
 
             <Controls:Flyout Header="Accented"
                              Position="Right"
                              Theme="Accent">
                 <Grid Width="400" Margin="10">
                     <StackPanel>
-                        <TextBlock Foreground="{DynamicResource IdealForegroundColorBrush}" Text="This flyout adapts its theme to the current accent" />
+                        <TextBlock Text="This flyout adapts its theme to the current accent" />
                         <GroupBox Height="250"
                                   Margin="10"
                                   Header="Flyout Group Box" />
@@ -193,17 +201,17 @@
                     <ComboBox x:Name="flyoutSettingsComboboxDownloadlanguage"
                               Grid.Row="0"
                               Grid.Column="1"
-                              Margin="0,5,5,5"
+                              Margin="0 5 5 5"
                               VerticalAlignment="Center" />
                     <Button x:Name="flyoutSettingsButtonSave"
-                            Style="{StaticResource MetroFlatButton}"
                             Grid.Row="1"
                             Grid.Column="1"
                             Width="75"
                             Margin="5"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            Content="Save" />
+                            Content="Save"
+                            Style="{StaticResource MetroFlatButton}" />
                     <UniformGrid Grid.Row="2"
                                  Grid.Column="0"
                                  Grid.ColumnSpan="2"
@@ -222,7 +230,7 @@
                 </Grid>
             </Controls:Flyout>
             <Controls:Flyout Header="Left" Position="Left">
-                <StackPanel Width="150" Margin="5,5,5,5">
+                <StackPanel Width="150" Margin="5 5 5 5">
                     <TextBlock Text="a test for left" />
                     <CheckBox Content="a simple checkbox" />
                     <RadioButton Content="a simple RadioButton" />
@@ -234,30 +242,41 @@
                 </StackPanel>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="Top"
+            <Controls:Flyout Margin="50 0 50 0"
+                             CloseButtonVisibility="Collapsed"
+                             Header="Top"
+                             IsModal="True"
                              Position="Top"
                              Theme="Light"
-                             IsModal="True"
-                             Margin="50 0 50 0"
-                             TitleVisibility="Collapsed"
-                             CloseButtonVisibility="Collapsed">
+                             TitleVisibility="Collapsed">
                 <Grid Height="150">
-                    <TextBlock Text="Flyout on the top..." FontSize="22" Margin="10" />
+                    <TextBlock Margin="10"
+                               FontSize="22"
+                               Text="Flyout on the top..." />
                     <Grid VerticalAlignment="Bottom" Background="{DynamicResource AccentColorBrush2}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Style="{DynamicResource MetroFlatButton}" Margin="5" Content="_Save" IsEnabled="False" />
-                        <Button Grid.Column="2" Style="{DynamicResource MetroFlatButton}" Margin="5" IsCancel="True" Content="_Close" Click="TopFlyoutCloseButtonOnClick" />
+                        <Button Grid.Column="1"
+                                Margin="5"
+                                Content="_Save"
+                                IsEnabled="False"
+                                Style="{DynamicResource MetroFlatButton}" />
+                        <Button Grid.Column="2"
+                                Margin="5"
+                                Click="TopFlyoutCloseButtonOnClick"
+                                Content="_Close"
+                                IsCancel="True"
+                                Style="{DynamicResource MetroFlatButton}" />
                     </Grid>
                 </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="Top"
-                             Position="Top"
-                             Height="150">
+            <Controls:Flyout Height="150"
+                             Header="Top"
+                             Position="Top">
                 <StackPanel Height="80"
                             Margin="5"
                             HorizontalAlignment="Right"
@@ -273,7 +292,7 @@
 
             <Controls:Flyout Header="Bottom" Position="Bottom">
                 <StackPanel Height="80"
-                            Margin="5,5,5,5"
+                            Margin="5 5 5 5"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal">
                     <Button Width="36"
@@ -290,7 +309,7 @@
                              IsModal="True"
                              Position="Right">
                 <StackPanel Height="80"
-                            Margin="5,5,5,5"
+                            Margin="5 5 5 5"
                             Orientation="Horizontal">
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
@@ -308,7 +327,9 @@
                              Header="AutoClose"
                              IsAutoCloseEnabled="True"
                              Position="Right">
-                <StackPanel Width="400" Margin="10" SnapsToDevicePixels="True">
+                <StackPanel Width="400"
+                            Margin="10"
+                            SnapsToDevicePixels="True">
                     <CheckBox Margin="4"
                               Content="AutoClose Enabled"
                               IsChecked="{Binding IsAutoCloseEnabled, ElementName=AutoCloseFlyout, Mode=TwoWay}" />
@@ -329,9 +350,9 @@
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
-        
+
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroFlatButton}" />
+            <Style BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}" />
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
@@ -479,7 +500,7 @@
                           SelectedValue="{Binding ElementName=flyoutsDemo, Path=IconOverlayBehavior}" />
             </Grid>
 
-            <Button Margin="2,10,2,2"
+            <Button Margin="2 10 2 2"
                     Click="ShowLeft"
                     Content="Show Left" />
             <Button Margin="2"

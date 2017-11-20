@@ -12,12 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Standard;
 using JetBrains.Annotations;
 using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Windows.Data;
+    using System.Windows.Interactivity;
+    using ControlzEx.Behaviors;
+    using MahApps.Metro.Behaviours;
+    using ControlzEx.Native;
+
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -47,6 +53,7 @@ namespace MahApps.Metro.Controls
         private const string PART_MetroActiveDialogContainer = "PART_MetroActiveDialogContainer";
         private const string PART_MetroInactiveDialogsContainer = "PART_MetroInactiveDialogsContainer";
         private const string PART_FlyoutModal = "PART_FlyoutModal";
+        private const string PART_Content = "PART_Content";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowIconOnTitleBarPropertyChangedCallback));
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
@@ -142,6 +149,14 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(FlyoutsStatusChangedEvent, value); }
         }
 
+        public static readonly RoutedEvent WindowTransitionCompletedEvent = EventManager.RegisterRoutedEvent("WindowTransitionCompleted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
+
+        public event RoutedEventHandler WindowTransitionCompleted
+        {
+            add { this.AddHandler(WindowTransitionCompletedEvent, value); }
+            remove { this.RemoveHandler(WindowTransitionCompletedEvent, value); }
+        }
+
         /// <summary>
         /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
@@ -175,9 +190,9 @@ namespace MahApps.Metro.Controls
 
         private void UseDropShadow()
         {
-            this.BorderThickness = new Thickness(0);
-            this.BorderBrush = null;
-            this.GlowBrush = Brushes.Black;
+            this.SetCurrentValue(BorderThicknessProperty, new Thickness(0));
+            this.SetCurrentValue(BorderBrushProperty, null);
+            this.SetCurrentValue(GlowBrushProperty, Brushes.Black);
         }
 
         public bool IsWindowDraggable
@@ -314,6 +329,21 @@ namespace MahApps.Metro.Controls
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
             set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
+
+        /// <summary>
+        /// Gets or sets resize border thickness
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+            get { return (Thickness)this.GetValue(ResizeBorderThicknessProperty); }
+            set { this.SetValue(ResizeBorderThicknessProperty, value); }
+        }
+
+        /// <summary>
+        /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
+        /// </summary>
+        public static readonly DependencyProperty ResizeBorderThicknessProperty =
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(WindowChromeBehavior.GetDefaultResizeBorderThickness()));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -454,11 +484,11 @@ namespace MahApps.Metro.Controls
             // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
             if (useNoneWindowStyle)
             {
-                ShowTitleBar = false;
+                this.SetCurrentValue(ShowTitleBarProperty, false);
             }
             else
             {
-                ShowTitleBar = isTitleBarVisible;
+                this.SetCurrentValue(ShowTitleBarProperty, isTitleBarVisible);
             }
             if (LeftWindowCommandsPresenter != null)
             {
@@ -848,22 +878,51 @@ namespace MahApps.Metro.Controls
         {
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
+
+            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
+            this.InitializeStylizedBehaviors();
+        }
+
+        /// <summary>
+        /// Initializes various behaviors for the window.
+        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
+        /// </summary>
+        private void InitializeStylizedBehaviors()
+        {
+            var collection = new StylizedBehaviorCollection
+            {
+                new BorderlessWindowBehavior(),
+                new WindowsSettingBehaviour(),
+                new GlowWindowBehavior()
+            };
+
+            StylizedBehaviors.SetBehaviors(this, collection);
         }
 
 #if NET4_5
         protected override async void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #else
         protected override void OnClosing(CancelEventArgs e)
         {
-            // #2409: don't close window if there is a dialog still open
-            var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-            e.Cancel = dialog != null;
+            // Don't overwrite cancellation for close
+            if (e.Cancel == false)
+            {
+                // #2409: don't close window if there is a dialog still open
+                var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
+                e.Cancel = dialog != null;
+            }
+
             base.OnClosing(e);
         }
 #endif
@@ -1095,6 +1154,12 @@ namespace MahApps.Metro.Controls
             this.flyoutModalDragMoveThumb = GetTemplateChild(PART_FlyoutModalDragMoveThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
+
+            var metroContentControl = GetTemplateChild(PART_Content) as MetroContentControl;
+            if (metroContentControl != null)
+            {
+                metroContentControl.TransitionCompleted += (sender, args) => this.RaiseEvent(new RoutedEventArgs(WindowTransitionCompletedEvent));
+            }
         }
 
         protected IntPtr CriticalHandle
@@ -1246,7 +1311,7 @@ namespace MahApps.Metro.Controls
             // tage from DragMove internal code
             window.VerifyAccess();
 
-            var cursorPos = Standard.NativeMethods.GetCursorPos();
+            //var cursorPos = WinApiHelper.GetPhysicalCursorPos();
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
@@ -1256,12 +1321,14 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+#pragma warning disable 618
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
+#pragma warning restore 618
 
             if (windowIsMaximized)
             {
-                var cursorXPos = cursorPos.x;
+                //var cursorXPos = cursorPos.x;
                 EventHandler windowOnStateChanged = null;
                 windowOnStateChanged = (sender, args) =>
                     {
@@ -1281,8 +1348,10 @@ namespace MahApps.Metro.Controls
             // DragMove works too
             // window.DragMove();
             // instead this 2 lines
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning disable 618
+            NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
+            NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning restore 618
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1296,14 +1365,16 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    if (window.WindowState == WindowState.Maximized)
+#pragma warning disable 618
+                    if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
+#pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
                 }
             }
@@ -1341,36 +1412,38 @@ namespace MahApps.Metro.Controls
             return GetTemplateChild(name);
         }
 
+#pragma warning disable 618
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
         {
             if (window == null) return;
 
             var hwnd = new WindowInteropHelper(window).Handle;
-            if (hwnd == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(hwnd))
+            if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
                 return;
 
-            var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
+            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
+            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
                 (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
-                UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+                NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
+#pragma warning restore 618
 
-        internal void HandleFlyoutStatusChange(Flyout flyout, IEnumerable<Flyout> visibleFlyouts)
+        internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {
             //checks a recently opened flyout's position.
-            if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
+            //if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
                 // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
                 //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's.
-                this.icon?.SetValue(Panel.ZIndexProperty, this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
-                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
+                this.icon?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.LeftWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.RightWindowCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
+                this.WindowButtonCommandsPresenter?.SetValue(Panel.ZIndexProperty, flyout.IsModal && flyout.IsOpen ? 0 : (this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1));
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
 

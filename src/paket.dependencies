@@ -2,7 +2,8 @@ source https://nuget.org/api/v2
 framework >= net40
 
 nuget JetBrains.Annotations
-nuget Costura.Fody
+nuget gitlink
+nuget Costura.Fody 1.4.1
 nuget Caliburn.Micro ~> 3.0
 nuget ExposedObject ~> 1.2
 nuget MahApps.Metro.IconPacks
@@ -13,5 +14,4 @@ nuget NHotkey 1.2.1
 nuget NHotkey.Wpf 1.2.1
 nuget xunit ~> 1.9
 nuget xunit.extensions ~> 1.9
-
-github ControlzEx/ControlzEx:72aa238cd565ef63e8d52c29982a587e039d04ec src/ControlzEx/KeyboardNavigationEx.cs
+nuget ControlzEx ~> 3.0

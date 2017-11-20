@@ -18,15 +18,15 @@
 
                         <Controls:ContentControlEx Grid.Row="0"
                                                    Margin="{TemplateBinding Padding}"
-                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
-                                                   FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                   FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                   FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                    Content="{TemplateBinding Header}"
                                                    ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                    ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                   FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                   FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                   FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
                                                    RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
@@ -47,10 +47,10 @@
                             </Grid.Resources>
 
                             <Border Grid.Column="0"
-                                    Style="{StaticResource InternalBorderStyle}"
                                     Background="{TemplateBinding BorderBrush}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Style="{StaticResource InternalBorderStyle}" />
 
                             <ContentPresenter Grid.Column="1"
                                               Content="{TemplateBinding Content}"
@@ -58,10 +58,10 @@
                                               Cursor="{TemplateBinding Cursor}" />
 
                             <Border Grid.Column="2"
-                                    Style="{StaticResource InternalBorderStyle}"
                                     Background="{TemplateBinding BorderBrush}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Style="{StaticResource InternalBorderStyle}" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>

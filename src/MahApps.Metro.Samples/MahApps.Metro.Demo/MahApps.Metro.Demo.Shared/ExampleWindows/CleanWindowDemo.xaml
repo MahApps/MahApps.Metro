@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:models="clr-namespace:MetroDemo.Models"
+                      x:Name="ThisView"
                       Title="CleanWindowDemo"
                       Width="800"
                       Height="400"
@@ -17,6 +18,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type HorizontalAlignment}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="HorizontalAlignment" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
             <DataTemplate x:Key="Temp0">
                 <TextBlock Text="Nothing selected" />
@@ -60,15 +69,15 @@
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
                             <TextBox Controls:TextBoxHelper.Watermark="TextBox 01" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 02" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 03" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 04" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 05" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 06" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 07" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 08" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 09" />
-                            <TextBox Margin="0,5,0,0" Controls:TextBoxHelper.Watermark="TextBox 10" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 02" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 03" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 04" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 05" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 06" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 07" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 08" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 09" />
+                            <TextBox Margin="0 5 0 0" Controls:TextBoxHelper.Watermark="TextBox 10" />
                         </StackPanel>
                     </ScrollViewer>
 
@@ -110,14 +119,16 @@
                       Padding="5"
                       Controls:ControlsHelper.HeaderFontSize="30"
                       Header="artists">
-                <ListBox ItemsSource="{x:Static models:SampleData.Artists}">
+                <ListBox x:Name="artist"
+                         ItemsSource="{x:Static models:SampleData.Artists}"
+                         Style="{DynamicResource VirtualisedMetroListBox}">
                     <ListBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate DataType="{x:Type models:Artist}">
                             <TextBlock>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} - {1}">
-                                        <Binding Path="ArtistId" Mode="OneWay" />
-                                        <Binding Path="Name" Mode="OneWay" />
+                                        <Binding Mode="OneWay" Path="ArtistId" />
+                                        <Binding Mode="OneWay" Path="Name" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -127,24 +138,51 @@
             </GroupBox>
 
             <Controls:MetroTabControl x:Name="TC" Grid.Column="1">
-                <Controls:MetroTabItem Header="my music" />
-
-                <Controls:MetroTabItem Header="youtube" />
+                <Controls:MetroTabItem Header="artist">
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               Text="{Binding ElementName=artist, Path=SelectedItem.Name, TargetNullValue=''}" />
+                </Controls:MetroTabItem>
+                <Controls:MetroTabItem Header="albums">
+                    <ListBox x:Name="albums"
+                             ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
+                             Style="{DynamicResource VirtualisedMetroListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:Album}">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Mode="OneWay" Path="Title" />
+                                            <Binding Mode="OneWay" Path="Price" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Controls:MetroTabItem>
             </Controls:MetroTabControl>
 
             <GroupBox Grid.Column="2"
                       Padding="5"
                       Controls:ControlsHelper.HeaderFontSize="30"
-                      Header="playlists">
-                <StackPanel Orientation="Horizontal">
-                    <Button Width="40"
-                            Height="20"
+                      Header="some tests">
+                <StackPanel MinWidth="100"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+                    <Button Margin="2"
                             Click="Button_Click"
-                            Content="Test" />
-                    <Button Width="40"
-                            Height="20"
+                            Content="Flyout"
+                            Style="{DynamicResource MetroFlatButton}" />
+                    <Button Margin="2"
                             Click="Button_Click_1"
-                            Content="Test 2" />
+                            Content="Dialog"
+                            Style="{DynamicResource MetroFlatButton}" />
+                    <ComboBox Margin="2"
+                              ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}"
+                              SelectedItem="{Binding ElementName=ThisView, Path=TitleAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </GroupBox>
         </Grid>

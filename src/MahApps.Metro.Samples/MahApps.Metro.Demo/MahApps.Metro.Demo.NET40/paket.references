@@ -6,3 +6,4 @@ Microsoft.Bcl.Async
 Microsoft.Bcl.Build import_targets: true
 NHotkey
 NHotkey.Wpf
+ControlzEx

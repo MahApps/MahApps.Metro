@@ -18,12 +18,12 @@
         <TextBox x:Name="PART_TextBox"
                  Grid.Row="1"
                  Margin="0 5 0 0"
+                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:TextBoxHelper.SelectAllOnFocus="True"
                  FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 TextWrapping="Wrap"
-                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
-                 controls:TextBoxHelper.SelectAllOnFocus="True" />
+                 TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="2"
                     Height="85"

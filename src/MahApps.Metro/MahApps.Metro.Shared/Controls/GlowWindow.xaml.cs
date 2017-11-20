@@ -1,22 +1,21 @@
-﻿using System;
+﻿#pragma warning disable 618
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
-using MahApps.Metro.Models.Win32;
-using MahApps.Metro.Native;
-using NativeMethods = MahApps.Metro.Models.Win32.NativeMethods;
-using RECT = MahApps.Metro.Native.RECT;
-using SWP = MahApps.Metro.Models.Win32.SWP;
+using ControlzEx;
+using ControlzEx.Standard;
+using ControlzEx.Native;
 
 namespace MahApps.Metro.Controls
 {
     partial class GlowWindow : Window
     {
         private readonly Func<Point, RECT, Cursor> getCursor;
-        private readonly Func<Point, RECT, HitTestValues> getHitTestValue;
+        private readonly Func<Point, RECT, HT> getHitTestValue;
         private readonly Func<RECT, double> getLeft;
         private readonly Func<RECT, double> getTop;
         private readonly Func<RECT, double> getWidth;
@@ -64,15 +63,15 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Left:
                     this.glow.Orientation = Orientation.Vertical;
                     this.glow.HorizontalAlignment = HorizontalAlignment.Right;
-                    this.getLeft = (rect) => rect.left - glowSize + 1;
-                    this.getTop = (rect) => rect.top - 2;
+                    this.getLeft = (rect) => rect.Left - glowSize + 1;
+                    this.getTop = (rect) => rect.Top - 2;
                     this.getWidth = (rect) => glowSize;
                     this.getHeight = (rect) => rect.Height + 4;
                     this.getHitTestValue = (p, rect) => new Rect(0, 0, rect.Width, edgeSize).Contains(p)
-                        ? HitTestValues.HTTOPLEFT
+                        ? HT.TOPLEFT
                         : new Rect(0, rect.Height + 4 - edgeSize, rect.Width, edgeSize).Contains(p)
-                            ? HitTestValues.HTBOTTOMLEFT
-                            : HitTestValues.HTLEFT;
+                            ? HT.BOTTOMLEFT
+                            : HT.LEFT;
                     this.getCursor = (p, rect) => new Rect(0, 0, rect.Width, edgeSize).Contains(p)
                         ? Cursors.SizeNWSE
                         : new Rect(0, rect.Height + 4 - edgeSize, rect.Width, edgeSize).Contains(p)
@@ -82,15 +81,15 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Right:
                     this.glow.Orientation = Orientation.Vertical;
                     this.glow.HorizontalAlignment = HorizontalAlignment.Left;
-                    this.getLeft = (rect) => rect.right - 1;
-                    this.getTop = (rect) => rect.top - 2;
+                    this.getLeft = (rect) => rect.Right - 1;
+                    this.getTop = (rect) => rect.Top - 2;
                     this.getWidth = (rect) => glowSize;
                     this.getHeight = (rect) => rect.Height + 4;
                     this.getHitTestValue = (p, rect) => new Rect(0, 0, rect.Width, edgeSize).Contains(p)
-                        ? HitTestValues.HTTOPRIGHT
+                        ? HT.TOPRIGHT
                         : new Rect(0, rect.Height + 4 - edgeSize, rect.Width, edgeSize).Contains(p)
-                            ? HitTestValues.HTBOTTOMRIGHT
-                            : HitTestValues.HTRIGHT;
+                            ? HT.BOTTOMRIGHT
+                            : HT.RIGHT;
                     this.getCursor = (p, rect) => new Rect(0, 0, rect.Width, edgeSize).Contains(p)
                         ? Cursors.SizeNESW
                         : new Rect(0, rect.Height + 4 - edgeSize, rect.Width, edgeSize).Contains(p)
@@ -103,20 +102,20 @@ namespace MahApps.Metro.Controls
                         {
                             if (this.ownerHandle != IntPtr.Zero)
                             {
-                                Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.TOP, IntPtr.Zero);
+                                NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HT.TOP, IntPtr.Zero);
                             }
                         };
                     this.glow.Orientation = Orientation.Horizontal;
                     this.glow.VerticalAlignment = VerticalAlignment.Bottom;
-                    this.getLeft = (rect) => rect.left - 2;
-                    this.getTop = (rect) => rect.top - glowSize + 1;
+                    this.getLeft = (rect) => rect.Left - 2;
+                    this.getTop = (rect) => rect.Top - glowSize + 1;
                     this.getWidth = (rect) => rect.Width + 4;
                     this.getHeight = (rect) => glowSize;
                     this.getHitTestValue = (p, rect) => new Rect(0, 0, edgeSize - glowSize, rect.Height).Contains(p)
-                        ? HitTestValues.HTTOPLEFT
+                        ? HT.TOPLEFT
                         : new Rect(rect.Width + 4 - edgeSize + glowSize, 0, edgeSize - glowSize, rect.Height).Contains(p)
-                            ? HitTestValues.HTTOPRIGHT
-                            : HitTestValues.HTTOP;
+                            ? HT.TOPRIGHT
+                            : HT.TOP;
                     this.getCursor = (p, rect) => new Rect(0, 0, edgeSize - glowSize, rect.Height).Contains(p)
                         ? Cursors.SizeNWSE
                         : new Rect(rect.Width + 4 - edgeSize + glowSize, 0, edgeSize - glowSize, rect.Height).Contains(p)
@@ -128,20 +127,20 @@ namespace MahApps.Metro.Controls
                         {
                             if (this.ownerHandle != IntPtr.Zero)
                             {
-                                Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.NCLBUTTONDBLCLK, (IntPtr)Standard.HT.BOTTOM, IntPtr.Zero);
+                                NativeMethods.SendMessage(this.ownerHandle, WM.NCLBUTTONDBLCLK, (IntPtr)HT.BOTTOM, IntPtr.Zero);
                             }
                         };
                     this.glow.Orientation = Orientation.Horizontal;
                     this.glow.VerticalAlignment = VerticalAlignment.Top;
-                    this.getLeft = (rect) => rect.left - 2;
-                    this.getTop = (rect) => rect.bottom - 1;
+                    this.getLeft = (rect) => rect.Left - 2;
+                    this.getTop = (rect) => rect.Bottom - 1;
                     this.getWidth = (rect) => rect.Width + 4;
                     this.getHeight = (rect) => glowSize;
                     this.getHitTestValue = (p, rect) => new Rect(0, 0, edgeSize - glowSize, rect.Height).Contains(p)
-                        ? HitTestValues.HTBOTTOMLEFT
+                        ? HT.BOTTOMLEFT
                         : new Rect(rect.Width + 4 - edgeSize + glowSize, 0, edgeSize - glowSize, rect.Height).Contains(p)
-                            ? HitTestValues.HTBOTTOMRIGHT
-                            : HitTestValues.HTBOTTOM;
+                            ? HT.BOTTOMRIGHT
+                            : HT.BOTTOM;
                     this.getCursor = (p, rect) => new Rect(0, 0, edgeSize - glowSize, rect.Height).Contains(p)
                         ? Cursors.SizeNESW
                         : new Rect(rect.Width + 4 - edgeSize + glowSize, 0, edgeSize - glowSize, rect.Height).Contains(p)
@@ -185,21 +184,21 @@ namespace MahApps.Metro.Controls
             this.hwndSource = (HwndSource)PresentationSource.FromVisual(this);
             if (this.hwndSource == null) return;
 
-            var ws = this.hwndSource.Handle.GetWindowLong();
-            var wsex = this.hwndSource.Handle.GetWindowLongEx();
+            var ws = NativeMethods.GetWindowStyle(this.hwndSource.Handle);
+            var wsex = NativeMethods.GetWindowStyleEx(this.hwndSource.Handle);
 
             ws |= WS.POPUP;
 
-            wsex &= ~WSEX.APPWINDOW;
-            wsex |= WSEX.TOOLWINDOW;
+            wsex &= ~WS_EX.APPWINDOW;
+            wsex |= WS_EX.TOOLWINDOW;
 
             if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
             {
-                wsex |= WSEX.TRANSPARENT;
+                wsex |= WS_EX.TRANSPARENT;
             }
 
-            this.hwndSource.Handle.SetWindowLong(ws);
-            this.hwndSource.Handle.SetWindowLongEx(wsex);
+            NativeMethods.SetWindowStyle(this.hwndSource.Handle, ws);
+            NativeMethods.SetWindowStyleEx(this.hwndSource.Handle, wsex);
             this.hwndSource.AddHook(this.WndProc);
 
             this.handle = this.hwndSource.Handle;
@@ -211,16 +210,16 @@ namespace MahApps.Metro.Controls
 
         private void ResizeModeChanged(object sender, EventArgs e)
         {
-            var wsex = this.hwndSource.Handle.GetWindowLongEx();
+            var wsex = NativeMethods.GetWindowStyleEx(this.hwndSource.Handle);
             if (this._owner.ResizeMode == ResizeMode.NoResize || this._owner.ResizeMode == ResizeMode.CanMinimize)
             {
-                wsex |= WSEX.TRANSPARENT;
+                wsex |= WS_EX.TRANSPARENT;
             }
             else
             {
-                wsex ^= WSEX.TRANSPARENT;
+                wsex ^= WS_EX.TRANSPARENT;
             }
-            this.hwndSource.Handle.SetWindowLongEx(wsex);
+            NativeMethods.SetWindowStyleEx(this.hwndSource.Handle, wsex);
         }
 
         public void Update()
@@ -268,14 +267,21 @@ namespace MahApps.Metro.Controls
 
         public bool IsGlowing { set; get; }
 
-        internal void UpdateCore(Native.RECT rect)
+        internal bool CanUpdateCore()
         {
+            return this.ownerHandle != IntPtr.Zero && this.handle != IntPtr.Zero;
+        }
+
+        internal void UpdateCore(RECT rect)
+        {
+            // we can handle this._owner.WindowState == WindowState.Normal
+            // or use NOZORDER too
             NativeMethods.SetWindowPos(this.handle, this.ownerHandle,
                                        (int)(this.getLeft(rect)),
                                        (int)(this.getTop(rect)),
                                        (int)(this.getWidth(rect)),
                                        (int)(this.getHeight(rect)),
-                                       SWP.NOACTIVATE);
+                                       SWP.NOACTIVATE | SWP.NOZORDER);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -293,14 +299,17 @@ namespace MahApps.Metro.Controls
                     handled = true;
                     if (this.ownerHandle != IntPtr.Zero)
                     {
-                        Standard.NativeMethods.SendMessage(this.ownerHandle, Standard.WM.ACTIVATE, wParam, lParam);
+                        NativeMethods.SendMessage(this.ownerHandle, WM.ACTIVATE, wParam, lParam);
                     }
                     return new IntPtr(3);
                 case WM.LBUTTONDOWN:
                     if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                     {
-                        var pt = this.GetRelativeMousePosition();
-                        NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
+                        Point pt;
+                        if (WinApiHelper.TryGetRelativeMousePosition(this.handle, out pt))
+                        {
+                            NativeMethods.PostMessage(this.ownerHandle, WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt, rect), IntPtr.Zero);
+                        }
                     }
                     break;
                 case WM.NCHITTEST:
@@ -313,8 +322,11 @@ namespace MahApps.Metro.Controls
                     {
                         if (this.ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(this.ownerHandle, out rect))
                         {
-                            var pt = this.GetRelativeMousePosition();
-                            cursor = this.getCursor(pt, rect);
+                            Point pt;
+                            if (WinApiHelper.TryGetRelativeMousePosition(this.handle, out pt))
+                            {
+                                cursor = this.getCursor(pt, rect);
+                            }
                         }
                     }
                     if (cursor != null && cursor != this.Cursor)
@@ -324,17 +336,6 @@ namespace MahApps.Metro.Controls
                     break;
             }
             return IntPtr.Zero;
-        }
-
-        private Point GetRelativeMousePosition()
-        {
-            if (this.handle == IntPtr.Zero)
-            {
-                return new Point();
-            }
-            var point = Standard.NativeMethods.GetCursorPos();
-            Standard.NativeMethods.ScreenToClient(this.handle, ref point);
-            return new Point(point.x, point.y);
         }
     }
 }

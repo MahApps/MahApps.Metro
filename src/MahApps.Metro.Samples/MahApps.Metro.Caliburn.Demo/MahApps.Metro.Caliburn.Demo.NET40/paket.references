@@ -6,3 +6,4 @@ Microsoft.Bcl.Async
 Microsoft.Bcl.Build import_targets: true
 Caliburn.Micro
 Caliburn.Micro.Core
+ControlzEx

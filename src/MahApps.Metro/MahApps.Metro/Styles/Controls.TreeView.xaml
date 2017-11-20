@@ -11,7 +11,6 @@
     <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Height" Value="16" />
-        <Setter Property="Width" Value="16" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -23,9 +22,9 @@
                         <Path x:Name="ExpandPath"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              Data="{StaticResource TreeArrow}"
                               Fill="Transparent"
-                              Stroke="{DynamicResource BlackBrush}"
-                              Data="{StaticResource TreeArrow}">
+                              Stroke="{DynamicResource BlackBrush}">
                             <Path.RenderTransform>
                                 <RotateTransform Angle="135" CenterX="3" CenterY="3" />
                             </Path.RenderTransform>
@@ -60,6 +59,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Width" Value="16" />
     </Style>
 
     <!--  obsolete  -->
@@ -68,11 +68,11 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle Margin="0"
-                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                               StrokeThickness="5"
                                Opacity="0"
                                SnapsToDevicePixels="True"
-                               StrokeDashArray="1 2" />
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeDashArray="1 2"
+                               StrokeThickness="5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -81,11 +81,10 @@
     <converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
     <Style x:Key="MetroTreeViewItem" TargetType="{x:Type TreeViewItem}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -108,9 +107,9 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton x:Name="Expander"
-                                              Style="{StaticResource ExpandCollapseToggleStyle}"
                                               ClickMode="Press"
-                                              IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}" />
+                                              IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
+                                              Style="{StaticResource ExpandCollapseToggleStyle}" />
                                 <ContentPresenter x:Name="PART_Header"
                                                   Grid.Column="1"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -162,6 +161,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Center, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Style.Triggers>
             <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
                 <Setter Property="ItemsPanel">
@@ -181,7 +181,6 @@
         <!--  default to 0  -->
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -205,6 +204,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
                 <Setter Property="ItemsPanel">

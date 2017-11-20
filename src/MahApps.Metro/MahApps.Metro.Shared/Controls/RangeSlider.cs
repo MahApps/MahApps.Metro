@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
@@ -1611,7 +1612,7 @@ namespace MahApps.Metro.Controls
             if (!IsMoveToPointEnabled)
             {
                 //Check if current value is exactly Tick value or it situated between Ticks
-                var checkingValueChanged = checkingValuePos + distance;
+                var checkingValueChanged = checkingValuePos; // + distance; // <-- introduced by @drayde with #2006 but it breaks the left thumb movement #2880
                 var x = checkingValueChanged / TickFrequency;
                 if (!IsDoubleCloseToInt(x))
                 {
