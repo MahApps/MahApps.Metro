@@ -56,10 +56,14 @@ namespace MahApps.Metro.Behaviours
 
         private void CleanUp()
         {
-            this.AssociatedObject.StateChanged -= this.AssociatedObject_StateChanged;
-            this.AssociatedObject.Closing -= this.AssociatedObject_Closing;
-            this.AssociatedObject.Closed -= this.AssociatedObject_Closed;
-            this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
+            var associatedObject = this.AssociatedObject;
+            if (associatedObject != null)
+            {
+                associatedObject.StateChanged -= this.AssociatedObject_StateChanged;
+                associatedObject.Closing -= this.AssociatedObject_Closing;
+                associatedObject.Closed -= this.AssociatedObject_Closed;
+                associatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
+            }
         }
 
 #pragma warning disable 618
