@@ -5,9 +5,25 @@
 
     <converters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
+    <Style x:Key="MahApps.Metro.Styles.FlatButtonFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2"
+                               SnapsToDevicePixels="True"
+                               Stroke="{DynamicResource FlatButtonForegroundBrush}"
+                               StrokeDashArray="1 2"
+                               StrokeThickness="1"
+                               UseLayoutRounding="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MetroFlatButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
         <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
@@ -54,6 +70,7 @@
     <Style x:Key="MetroFlatToggleButton" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
         <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
