@@ -28,7 +28,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0" UseLayoutRounding="True">
             <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:Badged Width="100"
                              Margin="{StaticResource ControlMargin}"
