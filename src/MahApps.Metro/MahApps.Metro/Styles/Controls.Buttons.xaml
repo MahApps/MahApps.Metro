@@ -144,7 +144,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.MetroCircleFocusVisual">
+    <Style x:Key="MahApps.Metro.Styles.CircleButtonFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
@@ -152,11 +152,15 @@
                              SnapsToDevicePixels="True"
                              Stroke="{DynamicResource BlackBrush}"
                              StrokeDashArray="2 2"
-                             StrokeThickness="1" />
+                             StrokeThickness="1"
+                             UseLayoutRounding="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  obsolete  -->
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleFocusVisual" BasedOn="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
 
     <!--  obsolete  -->
     <Style x:Key="MetroCircleButtonFocusVisual">
@@ -178,7 +182,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -232,7 +236,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -302,7 +306,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -712,7 +716,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
@@ -769,7 +773,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -841,7 +845,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -28,7 +28,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" UseLayoutRounding="True">
+        <StackPanel Grid.Column="0">
             <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:Badged Width="100"
                              Margin="{StaticResource ControlMargin}"
@@ -141,10 +141,25 @@
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style x:Key="AccentCircleButtonStyle"
+                           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                           TargetType="{x:Type ButtonBase}">
+                        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
                 <Button Width="48"
                         Height="48"
                         Margin="4"
-                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                        Style="{StaticResource AccentCircleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -153,10 +168,24 @@
                         Height="48"
                         Margin="4"
                         IsEnabled="False"
-                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                        Style="{StaticResource AccentCircleButtonStyle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
-                                              Kind="City" />
+                                              Kind="CitySeattle" />
+                </Button>
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Foreground="{DynamicResource AccentColorBrush}"
+                        IsEnabled="False"
+                        Style="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="CitySeattle" />
+                        </DataTemplate>
+                    </Button.ContentTemplate>
                 </Button>
             </StackPanel>
         </StackPanel>
