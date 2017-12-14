@@ -387,7 +387,15 @@ namespace MahApps.Metro.Controls
                 resources["TextBrush"] = newBrush;
                 resources["LabelTextBrush"] = newBrush;
 
-                fromColor = (Color)resources["AccentBaseColor"];
+                if (resources.Contains("AccentBaseColor"))
+                {
+                    fromColor = (Color)resources["AccentBaseColor"];
+                }
+                else
+                {
+                    var accentColor = (Color)resources["AccentColor"];
+                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
+                }
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["HighlightColor"] = fromColor;

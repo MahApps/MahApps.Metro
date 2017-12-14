@@ -60,6 +60,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
+        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Style.Triggers>
@@ -149,7 +150,7 @@
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="controls:ScrollBarHelper.VerticalScrollBarOnLeftSide" Value="True">
+                        <Trigger Property="controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
                             <Setter TargetName="PART_HorizontalScrollBar" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_ScrollContentPresenter" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_VerticalScrollBar" Property="HorizontalAlignment" Value="Left" />
@@ -203,6 +204,7 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type controls:HamburgerMenu}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerMenuTemplate">
             <Setter.Value>
@@ -216,7 +218,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Template">
@@ -254,7 +258,7 @@
                                                   Grid.Row="1"
                                                   HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Stretch"
-                                                  controls:ScrollBarHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
+                                                  controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
                                                   HorizontalScrollBarVisibility="Disabled"
                                                   Style="{StaticResource HamburgerScrollViewerStyle}"
                                                   VerticalScrollBarVisibility="Auto">
@@ -313,6 +317,7 @@
                                 VerticalAlignment="Top"
                                 AutomationProperties.Name="Main button"
                                 Foreground="{TemplateBinding PaneForeground}"
+                                IsTabStop="{TemplateBinding IsTabStop}"
                                 Style="{StaticResource HamburgerButtonStyle}"
                                 TabIndex="0"
                                 Visibility="{TemplateBinding HamburgerVisibility}">

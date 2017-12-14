@@ -79,6 +79,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\MouseWheelState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\PasswordBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ScrollBarHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ScrollViewerHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\SliderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TabControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TextBoxHelper.cs" />
