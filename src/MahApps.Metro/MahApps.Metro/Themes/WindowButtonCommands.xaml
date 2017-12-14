@@ -211,6 +211,8 @@
     <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands.Win10"
            BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}"
            TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Dark.Win10}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Light.Win10}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </Style>
 
