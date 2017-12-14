@@ -93,7 +93,7 @@
     </Window.Resources>
 
     <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -284,4 +284,3 @@
 
     </Grid>
 </Controls:MetroWindow>
-
