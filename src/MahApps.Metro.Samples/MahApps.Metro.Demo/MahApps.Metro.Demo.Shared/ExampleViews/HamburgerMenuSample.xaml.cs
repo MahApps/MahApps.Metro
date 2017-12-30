@@ -27,6 +27,19 @@ namespace MetroDemo.ExampleViews
             }
         }
 
+        private void CreatorsHamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
+            // we can do this
+            CreatorsHamburgerMenuControl.Content = e.ClickedItem;
+
+            // close the menu if a item was selected
+            if (this.CreatorsHamburgerMenuControl.IsPaneOpen)
+            {
+                this.CreatorsHamburgerMenuControl.IsPaneOpen = false;
+            }
+        }
+
         // Another option to handle the options menu item click
         [UsedImplicitly]
         private async void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)

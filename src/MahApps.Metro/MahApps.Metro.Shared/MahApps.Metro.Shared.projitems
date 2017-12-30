@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\DataGridRowHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\GroupBoxHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\HamburgerMenuHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\MouseWheelChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\MouseWheelState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\PasswordBoxHelper.cs" />
