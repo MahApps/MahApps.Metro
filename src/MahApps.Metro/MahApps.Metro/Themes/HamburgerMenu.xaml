@@ -189,7 +189,6 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">
@@ -237,9 +236,11 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Template">
@@ -280,6 +281,7 @@
                                              Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
                                              AutomationProperties.Name="Menu items"
                                              Foreground="{TemplateBinding PaneForeground}"
+                                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
@@ -296,6 +298,7 @@
                                              VerticalAlignment="Bottom"
                                              AutomationProperties.Name="Option items"
                                              Foreground="{TemplateBinding PaneForeground}"
+                                             ItemContainerStyle="{TemplateBinding OptionsItemContainerStyle}"
                                              ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding OptionsItemsSource}"
