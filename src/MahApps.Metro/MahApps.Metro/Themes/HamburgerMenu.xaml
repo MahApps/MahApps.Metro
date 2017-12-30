@@ -175,6 +175,7 @@
         <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
         <Style.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
