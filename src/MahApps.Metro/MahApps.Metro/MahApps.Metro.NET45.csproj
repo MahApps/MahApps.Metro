@@ -457,6 +457,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\HamburgerMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\HotKeyBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
