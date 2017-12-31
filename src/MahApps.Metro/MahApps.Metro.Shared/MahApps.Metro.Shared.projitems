@@ -56,6 +56,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.EventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.HamburgerButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Options.cs" />
