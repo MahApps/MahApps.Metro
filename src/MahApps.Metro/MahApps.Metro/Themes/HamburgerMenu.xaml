@@ -21,11 +21,11 @@
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuItemStyle}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
-        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerListBoxItemStyle}" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuItemStyle}" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="Template" Value="{StaticResource HamburgerMenuTemplate}" />

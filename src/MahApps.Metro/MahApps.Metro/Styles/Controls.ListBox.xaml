@@ -98,7 +98,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
