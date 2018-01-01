@@ -186,8 +186,10 @@
         </Style.Triggers>
     </Style>
 
-    <!-- obsolete -->
-    <Style x:Key="HamburgerListBoxItemStyle" BasedOn="{StaticResource HamburgerMenuItemStyle}" TargetType="{x:Type ListBoxItem}" />
+    <!--  obsolete  -->
+    <Style x:Key="HamburgerListBoxItemStyle"
+           BasedOn="{StaticResource HamburgerMenuItemStyle}"
+           TargetType="{x:Type ListBoxItem}" />
 
     <Style x:Key="HamburgerMenuListStyle"
            BasedOn="{StaticResource MetroListBox}"
@@ -227,8 +229,10 @@
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
     </Style>
 
-    <!-- obsolete -->
-    <Style x:Key="HamburgerListBoxStyle" BasedOn="{StaticResource HamburgerMenuListStyle}" TargetType="{x:Type ListBoxItem}" />
+    <!--  obsolete  -->
+    <Style x:Key="HamburgerListBoxStyle"
+           BasedOn="{StaticResource HamburgerMenuListStyle}"
+           TargetType="{x:Type ListBoxItem}" />
 
     <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>

@@ -670,7 +670,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
