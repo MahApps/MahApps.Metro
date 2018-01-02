@@ -179,10 +179,14 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
-            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                    <Condition Property="IsSelected" Value="False" />
+                </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
                 <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-            </Trigger>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
