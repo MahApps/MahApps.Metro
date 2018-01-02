@@ -232,7 +232,7 @@
     <!--  obsolete  -->
     <Style x:Key="HamburgerListBoxStyle"
            BasedOn="{StaticResource HamburgerMenuListStyle}"
-           TargetType="{x:Type ListBoxItem}" />
+           TargetType="{x:Type ListBox}" />
 
     <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>
