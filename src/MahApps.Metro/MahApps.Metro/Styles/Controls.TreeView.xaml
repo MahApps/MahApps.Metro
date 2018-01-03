@@ -9,7 +9,9 @@
     <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
 
     <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Height" Value="16" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="Template">
@@ -23,8 +25,8 @@
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               Data="{StaticResource TreeArrow}"
-                              Fill="Transparent"
-                              Stroke="{DynamicResource BlackBrush}">
+                              Fill="{TemplateBinding Background}"
+                              Stroke="{TemplateBinding Foreground}">
                             <Path.RenderTransform>
                                 <RotateTransform Angle="135" CenterX="3" CenterY="3" />
                             </Path.RenderTransform>
@@ -38,7 +40,6 @@
                                     <RotateTransform Angle="180" CenterX="3" CenterY="3" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource BlackBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource GrayBrush5}" />
@@ -124,21 +125,40 @@
                         <Trigger Property="IsExpanded" Value="False">
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-
                         <Trigger Property="HasItems" Value="False">
                             <Setter TargetName="Expander" Property="Visibility" Value="Hidden" />
                         </Trigger>
 
-                        <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
-                        </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                        </MultiTrigger>
+
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -149,13 +169,6 @@
                                 <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
                             </MultiTrigger.Setters>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

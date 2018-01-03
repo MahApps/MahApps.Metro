@@ -64,7 +64,8 @@
                 <Setter Property="Controls:ListItemHelper.DisabledForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
                 <Setter Property="Controls:ListItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="Controls:ListItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
-                <Setter Property="Controls:ListItemHelper.MouseOverBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="Controls:ListItemHelper.HoverBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="Controls:ListItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
                 <Setter Property="Controls:ListItemHelper.SelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="Controls:ListItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
                 <Setter Property="Template">
@@ -97,6 +98,30 @@
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Opacity" Value="1.0" />
                                 </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="True" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                                </MultiTrigger>
+
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                        <Condition Property="IsSelected" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True" />
+                                        <Condition Property="IsSelected" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                                </MultiTrigger>
+
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
                                 </Trigger>
@@ -108,17 +133,6 @@
                                     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
                                 </MultiTrigger>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsSelected" Value="True" />
-                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
-                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
-                                </MultiTrigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ListItemHelper.MouseOverBackgroundBrush), Mode=OneWay}" />
-                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -129,7 +143,7 @@
                             <Condition Property="IsKeyboardFocusWithin" Value="True" />
                             <Condition Property="IsSelected" Value="False" />
                         </MultiTrigger.Conditions>
-                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.MouseOverBackgroundBrush), Mode=OneWay}" />
+                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ListItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
                         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                     </MultiTrigger>
                 </Style.Triggers>

@@ -126,8 +126,8 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the background brush which will be used for an mouse hovered item.
         /// </summary>
-        public static readonly DependencyProperty MouseOverBackgroundBrushProperty
-            = DependencyProperty.RegisterAttached("MouseOverBackgroundBrush",
+        public static readonly DependencyProperty HoverBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached("HoverBackgroundBrush",
                                                   typeof(Brush),
                                                   typeof(ListItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -137,9 +137,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
-        public static Brush GetMouseOverBackgroundBrush(UIElement element)
+        public static Brush GetHoverBackgroundBrush(UIElement element)
         {
-            return (Brush)element.GetValue(MouseOverBackgroundBrushProperty);
+            return (Brush)element.GetValue(HoverBackgroundBrushProperty);
         }
 
         /// <summary>
@@ -147,9 +147,38 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
-        public static void SetMouseOverBackgroundBrush(UIElement element, Brush value)
+        public static void SetHoverBackgroundBrush(UIElement element, Brush value)
         {
-            element.SetValue(MouseOverBackgroundBrushProperty, value);
+            element.SetValue(HoverBackgroundBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the background brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        public static readonly DependencyProperty HoverSelectedBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached("HoverSelectedBackgroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ListItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the background brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        public static Brush GetHoverSelectedBackgroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(HoverSelectedBackgroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the background brush which will be used for an mouse hovered and selected item.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        public static void SetHoverSelectedBackgroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(HoverSelectedBackgroundBrushProperty, value);
         }
 
         /// <summary>
