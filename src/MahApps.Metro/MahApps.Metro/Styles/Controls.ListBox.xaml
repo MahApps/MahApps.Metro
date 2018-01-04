@@ -146,6 +146,3 @@
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Center, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     </Style>
 </ResourceDictionary>
-
-
-
