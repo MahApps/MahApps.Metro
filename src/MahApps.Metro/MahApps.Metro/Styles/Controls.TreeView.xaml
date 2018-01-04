@@ -92,7 +92,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
                     <StackPanel>
-                        <Border x:Name="Bd"
+                        <Border x:Name="Border"
                                 MinHeight="{TemplateBinding MinHeight}"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
@@ -131,7 +131,7 @@
 
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -139,7 +139,7 @@
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
                         </MultiTrigger>
 
                         <MultiTrigger>
@@ -147,14 +147,14 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
                         </MultiTrigger>
 
                         <Trigger Property="IsEnabled" Value="False">
@@ -166,7 +166,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
