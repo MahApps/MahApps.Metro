@@ -707,6 +707,7 @@
 
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

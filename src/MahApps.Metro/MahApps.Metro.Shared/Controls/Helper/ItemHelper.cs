@@ -256,6 +256,37 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets the background brush which will be used for disabled items.
+        /// </summary>
+        public static readonly DependencyProperty DisabledBackgroundBrushProperty
+            = DependencyProperty.RegisterAttached("DisabledBackgroundBrush",
+                                                  typeof(Brush),
+                                                  typeof(ItemHelper),
+                                                  new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the background brush which will be used for disabled items.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static Brush GetDisabledBackgroundBrush(UIElement element)
+        {
+            return (Brush)element.GetValue(DisabledBackgroundBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the background brush which will be used for disabled items.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
+        public static void SetDisabledBackgroundBrush(UIElement element, Brush value)
+        {
+            element.SetValue(DisabledBackgroundBrushProperty, value);
+        }
+
+        /// <summary>
         /// Gets or sets the foreground brush which will be used for disabled items.
         /// </summary>
         public static readonly DependencyProperty DisabledForegroundBrushProperty
