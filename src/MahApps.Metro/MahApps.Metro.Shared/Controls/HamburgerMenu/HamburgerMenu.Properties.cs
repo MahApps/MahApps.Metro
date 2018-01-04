@@ -97,6 +97,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register(nameof(VerticalScrollBarOnLeftSide), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
 
         /// <summary>
+        /// Identifies the <see cref="ShowSelectionIndicator"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowSelectionIndicatorProperty = DependencyProperty.Register(nameof(ShowSelectionIndicator), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
         /// </summary>
         public double OpenPaneLength
@@ -263,6 +268,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(VerticalScrollBarOnLeftSideProperty); }
             set { SetValue(VerticalScrollBarOnLeftSideProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets wheather a selection indicator will be shown on the HamburgerMenuItem.
+        /// </summary>
+        public bool ShowSelectionIndicator
+        {
+            get { return (bool)GetValue(ShowSelectionIndicatorProperty); }
+            set { SetValue(ShowSelectionIndicatorProperty, value); }
         }
 
         /// <summary>
