@@ -21,6 +21,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetActiveSelectionBackgroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(ActiveSelectionBackgroundBrushProperty);
@@ -31,6 +32,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetActiveSelectionBackgroundBrush(UIElement element, Brush value)
         {
             element.SetValue(ActiveSelectionBackgroundBrushProperty, value);
@@ -50,6 +52,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetActiveSelectionForegroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(ActiveSelectionForegroundBrushProperty);
@@ -60,6 +63,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetActiveSelectionForegroundBrush(UIElement element, Brush value)
         {
             element.SetValue(ActiveSelectionForegroundBrushProperty, value);
@@ -79,6 +83,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetSelectedBackgroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(SelectedBackgroundBrushProperty);
@@ -89,6 +94,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetSelectedBackgroundBrush(UIElement element, Brush value)
         {
             element.SetValue(SelectedBackgroundBrushProperty, value);
@@ -108,6 +114,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetSelectedForegroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(SelectedForegroundBrushProperty);
@@ -118,6 +125,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetSelectedForegroundBrush(UIElement element, Brush value)
         {
             element.SetValue(SelectedForegroundBrushProperty, value);
@@ -137,6 +145,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetHoverBackgroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(HoverBackgroundBrushProperty);
@@ -147,6 +156,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetHoverBackgroundBrush(UIElement element, Brush value)
         {
             element.SetValue(HoverBackgroundBrushProperty, value);
@@ -166,6 +176,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetHoverSelectedBackgroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(HoverSelectedBackgroundBrushProperty);
@@ -176,6 +187,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetHoverSelectedBackgroundBrush(UIElement element, Brush value)
         {
             element.SetValue(HoverSelectedBackgroundBrushProperty, value);
@@ -195,6 +207,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetDisabledSelectedBackgroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(DisabledSelectedBackgroundBrushProperty);
@@ -205,6 +218,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetDisabledSelectedBackgroundBrush(UIElement element, Brush value)
         {
             element.SetValue(DisabledSelectedBackgroundBrushProperty, value);
@@ -224,6 +238,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetDisabledSelectedForegroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(DisabledSelectedForegroundBrushProperty);
@@ -234,6 +249,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetDisabledSelectedForegroundBrush(UIElement element, Brush value)
         {
             element.SetValue(DisabledSelectedForegroundBrushProperty, value);
@@ -253,6 +269,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static Brush GetDisabledForegroundBrush(UIElement element)
         {
             return (Brush)element.GetValue(DisabledForegroundBrushProperty);
@@ -263,6 +280,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ListBoxItem))]
+        [AttachedPropertyBrowsableForType(typeof(TreeViewItem))]
         public static void SetDisabledForegroundBrush(UIElement element, Brush value)
         {
             element.SetValue(DisabledForegroundBrushProperty, value);
