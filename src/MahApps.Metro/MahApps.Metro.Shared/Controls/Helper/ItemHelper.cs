@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
-    public static class ListItemHelper
+    public static class ItemHelper
     {
         /// <summary>
         /// Gets or sets the background brush which will be used for the active selected item (if the keyboard focus is within).
@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ActiveSelectionBackgroundBrushProperty
             = DependencyProperty.RegisterAttached("ActiveSelectionBackgroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ActiveSelectionForegroundBrushProperty
             = DependencyProperty.RegisterAttached("ActiveSelectionForegroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectedBackgroundBrushProperty
             = DependencyProperty.RegisterAttached("SelectedBackgroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectedForegroundBrushProperty
             = DependencyProperty.RegisterAttached("SelectedForegroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HoverBackgroundBrushProperty
             = DependencyProperty.RegisterAttached("HoverBackgroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HoverSelectedBackgroundBrushProperty
             = DependencyProperty.RegisterAttached("HoverSelectedBackgroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DisabledSelectedBackgroundBrushProperty
             = DependencyProperty.RegisterAttached("DisabledSelectedBackgroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DisabledSelectedForegroundBrushProperty
             = DependencyProperty.RegisterAttached("DisabledSelectedForegroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DisabledForegroundBrushProperty
             = DependencyProperty.RegisterAttached("DisabledForegroundBrush",
                                                   typeof(Brush),
-                                                  typeof(ListItemHelper),
+                                                  typeof(ItemHelper),
                                                   new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
