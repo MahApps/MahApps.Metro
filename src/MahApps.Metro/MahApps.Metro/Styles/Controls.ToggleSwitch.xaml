@@ -173,10 +173,10 @@
         <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton.Win10}" />
         <!--  for v1.5.0 or later  -->
-        <!--        <Setter Property="Padding" Value="0 0 10 0" />-->
+        <!--        <Setter Property="ContentPadding" Value="0 0 10 0" />-->
         <!--        <Style.Triggers>-->
         <!--            <Trigger Property="ContentDirection" Value="RightToLeft">-->
-        <!--                <Setter Property="Padding" Value="10 0 0 0" />-->
+        <!--                <Setter Property="ContentPadding" Value="10 0 0 0" />-->
         <!--            </Trigger>-->
         <!--        </Style.Triggers>-->
     </Style>
