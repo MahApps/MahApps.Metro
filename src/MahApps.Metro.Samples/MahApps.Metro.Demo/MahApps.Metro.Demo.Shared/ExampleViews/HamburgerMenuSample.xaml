@@ -12,7 +12,7 @@
              mc:Ignorable="d">
 
     <Grid>
-        <TabControl Margin="0 10 0 0" Controls:TabControlHelper.Underlined="TabPanel">
+        <TabControl Margin="10" Controls:TabControlHelper.Underlined="TabPanel">
             <TabItem Header="Default">
                 <exampleViews:HamburgerMenuDefault DataContext="{Binding}" />
             </TabItem>
