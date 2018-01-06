@@ -28,6 +28,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\DateExamples.xaml.cs">
       <DependentUpon>DateExamples.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuCreatorsUpdate.xaml.cs">
+      <DependentUpon>HamburgerMenuCreatorsUpdate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuDefault.xaml.cs">
+      <DependentUpon>HamburgerMenuDefault.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuSample.xaml.cs">
       <DependentUpon>HamburgerMenuSample.xaml</DependentUpon>
     </Compile>
@@ -106,6 +112,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)ExampleViews\DateExamples.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuCreatorsUpdate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuDefault.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
