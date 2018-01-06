@@ -37,7 +37,7 @@ namespace MahApps.Metro.Controls
                 _optionsListView.SelectedIndex = -1;
             }
 
-            var selectedItem = this._buttonsListView.SelectedItem;
+            var selectedItem = _buttonsListView.SelectedItem;
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseItemCommand();
@@ -53,7 +53,7 @@ namespace MahApps.Metro.Controls
                 _buttonsListView.SelectedIndex = -1;
             }
 
-            var selectedItem = this._optionsListView.SelectedItem;
+            var selectedItem = _optionsListView.SelectedItem;
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseOptionsItemCommand();

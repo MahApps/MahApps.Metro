@@ -68,16 +68,6 @@
                 <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
                 <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-                <Style.Triggers>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsKeyboardFocusWithin" Value="True" />
-                            <Condition Property="IsSelected" Value="False" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
-                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                    </MultiTrigger>
-                </Style.Triggers>
             </Style>
 
             <Style x:Key="HamburgerMenuCreatorsStyle"

@@ -10,7 +10,7 @@ namespace MahApps.Metro.Controls
     {
         public ItemClickEventArgs(object clickedObject)
         {
-            this.ClickedItem = clickedObject;
+            ClickedItem = clickedObject;
         }
 
         /// <summary>

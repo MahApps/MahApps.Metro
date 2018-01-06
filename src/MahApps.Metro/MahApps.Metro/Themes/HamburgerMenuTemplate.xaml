@@ -170,13 +170,20 @@
         </Setter>
     </Style>
 
+    <ControlTemplate x:Key="HamburgerMenuItemFocusVisualTemplate">
+        <Rectangle SnapsToDevicePixels="True"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   UseLayoutRounding="True" />
+    </ControlTemplate>
+
     <Style x:Key="HamburgerMenuItemStyle"
            BasedOn="{StaticResource MetroListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
@@ -257,16 +264,6 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
-                    <Condition Property="IsSelected" Value="False" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
-                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-            </MultiTrigger>
-        </Style.Triggers>
     </Style>
 
     <!--  obsolete  -->
