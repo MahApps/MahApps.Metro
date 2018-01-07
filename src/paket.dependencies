@@ -29,3 +29,4 @@ group net45
 	framework >= net45
 
 	nuget ExposedObject
+	nuget MaterialDesignThemes prerelease

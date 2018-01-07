@@ -34,3 +34,6 @@ RESTRICTION: >= net45
 NUGET
   remote: https://www.nuget.org/api/v2
     ExposedObject (1.3)
+    MaterialDesignColors (1.1.3)
+    MaterialDesignThemes (2.3.2-ci1021)
+      MaterialDesignColors (>= 1.1.2)
