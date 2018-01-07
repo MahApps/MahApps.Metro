@@ -70,7 +70,7 @@
                                Style="{StaticResource LargeTileStyle}">
                     <iconPacks:PackIconFontAwesome Width="40"
                                                    Height="40"
-                                                   Kind="Desktop" />
+                                                   Kind="DesktopSolid" />
                 </Controls:Tile>
                 <Controls:Tile Title="Finance"
                                Background="DimGray"
