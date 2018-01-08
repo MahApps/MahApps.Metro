@@ -499,6 +499,7 @@
                                                       From="OpenCompactOverlayRight"
                                                       To="ClosedCompactRight" />
                                 </VisualStateGroup.Transitions>
+                                <VisualState x:Name="None" />
                                 <VisualState x:Name="Closed" />
                                 <VisualState x:Name="ClosedCompactLeft" Storyboard="{StaticResource ClosedCompactLeftStoryboard}" />
                                 <VisualState x:Name="ClosedCompactRight" Storyboard="{StaticResource ClosedCompactRightStoryboard}" />
