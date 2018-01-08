@@ -72,6 +72,15 @@
     <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\LakeAnnMushroom.png">
       <Link>Assets\Photos\LakeAnnMushroom.png</Link>
     </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\Home.jpg">
+      <Link>Assets\Photos\Home.jpg</Link>
+    </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\Privat.jpg">
+      <Link>Assets\Photos\Privat.jpg</Link>
+    </Resource>
+    <Resource Include="..\MahApps.Metro.Demo.Shared\Assets\Photos\Settings.jpg">
+      <Link>Assets\Photos\Settings.jpg</Link>
+    </Resource>
     <Content Include="FodyWeavers.xml" />
     <Compile Include="..\MahApps.Metro.Demo.Shared\MainWindow.xaml.cs">
       <Link>MainWindow.xaml.cs</Link>

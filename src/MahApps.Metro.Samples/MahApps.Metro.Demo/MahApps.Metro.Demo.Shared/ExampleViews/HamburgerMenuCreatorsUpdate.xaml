@@ -71,20 +71,6 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
-            <Style x:Key="ToggleSwitchWin10"
-                   BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
-                   TargetType="{x:Type Controls:ToggleSwitch}">
-                <Setter Property="ContentPadding" Value="0 0 10 0" />
-                <Setter Property="FontSize" Value="15" />
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Style.Triggers>
-                    <Trigger Property="ContentDirection" Value="RightToLeft">
-                        <Setter Property="ContentPadding" Value="10 0 0 0" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <Style x:Key="HamburgerMenuCreatorsItemStyle"
                    BasedOn="{StaticResource HamburgerMenuItemStyle}"
                    TargetType="{x:Type ListBoxItem}">
@@ -124,72 +110,60 @@
                       Padding="0 0 5 0"
                       HorizontalContentAlignment="Stretch"
                       HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Orientation="Vertical">
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="IsPaneOpen:"
-                       FontSize="15" />
-                <Controls:ToggleSwitch IsChecked="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ToggleSwitchWin10}" />
+            <StackPanel Margin="0 0 0 10" Orientation="Vertical">
+                <Controls:ToggleSwitch Margin="0 10 0 5"
+                                       Header="IsPaneOpen:"
+                                       IsChecked="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="DisplayMode:"
-                       FontSize="15" />
-                <ComboBox HorizontalAlignment="Left"
-                          ItemsSource="{Binding Source={StaticResource DisplayModeEnumValues}}"
-                          SelectedItem="{Binding ElementName=HamburgerMenuControl, Path=DisplayMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
+                    <ComboBox MinWidth="150"
+                              HorizontalAlignment="Left"
+                              ItemsSource="{Binding Source={StaticResource DisplayModeEnumValues}}"
+                              SelectedItem="{Binding ElementName=HamburgerMenuControl, Path=DisplayMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
 
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="SelectedIndex:"
-                       FontSize="15" />
-                <Slider AutoToolTipPlacement="TopLeft"
-                        Maximum="3"
-                        Minimum="0"
-                        Value="{Binding ElementName=HamburgerMenuControl, Path=SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Controls:MetroHeader Margin="0 10 0 5" Header="SelectedIndex:">
+                    <Slider AutoToolTipPlacement="TopLeft"
+                            Maximum="3"
+                            Minimum="0"
+                            Value="{Binding ElementName=HamburgerMenuControl, Path=SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
 
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="CompactPaneLength:"
-                       FontSize="15" />
-                <Slider AutoToolTipPlacement="TopLeft"
-                        Maximum="80"
-                        Minimum="10"
-                        Value="{Binding ElementName=HamburgerMenuControl, Path=CompactPaneLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="OpenPaneLength:"
-                       FontSize="15" />
-                <Slider AutoToolTipPlacement="TopLeft"
-                        Maximum="400"
-                        Minimum="50"
-                        Value="{Binding ElementName=HamburgerMenuControl, Path=OpenPaneLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="HamburgerVisibility:"
-                       FontSize="15" />
-                <ComboBox HorizontalAlignment="Left"
-                          ItemsSource="{Binding Source={StaticResource VisibilityEnumValues}}"
-                          SelectedItem="{Binding ElementName=HamburgerMenuControl, Path=HamburgerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                <Label Margin="0 10 0 5"
-                       Padding="2"
-                       Content="Hamburger Width / Height:"
-                       FontSize="15" />
-                <UniformGrid Columns="2">
-                    <Slider Margin="0 0 5 0"
-                            AutoToolTipPlacement="TopLeft"
+                <Controls:MetroHeader Margin="0 10 0 5" Header="CompactPaneLength:">
+                    <Slider AutoToolTipPlacement="TopLeft"
                             Maximum="80"
                             Minimum="10"
-                            Value="{Binding ElementName=HamburgerMenuControl, Path=HamburgerWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Slider Margin="5 0 0 0"
-                            AutoToolTipPlacement="TopLeft"
-                            Maximum="80"
-                            Minimum="10"
-                            Value="{Binding ElementName=HamburgerMenuControl, Path=HamburgerHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </UniformGrid>
+                            Value="{Binding ElementName=HamburgerMenuControl, Path=CompactPaneLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
+
+                <Controls:MetroHeader Margin="0 10 0 5" Header="OpenPaneLength:">
+                    <Slider AutoToolTipPlacement="TopLeft"
+                            Maximum="400"
+                            Minimum="50"
+                            Value="{Binding ElementName=HamburgerMenuControl, Path=OpenPaneLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
+
+                <Controls:MetroHeader Margin="0 10 0 5" Header="HamburgerVisibility:">
+                    <ComboBox MinWidth="150"
+                              HorizontalAlignment="Left"
+                              ItemsSource="{Binding Source={StaticResource VisibilityEnumValues}}"
+                              SelectedItem="{Binding ElementName=HamburgerMenuControl, Path=HamburgerVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
+
+                <Controls:MetroHeader Margin="0 10 0 5" Header="Hamburger Width / Height:">
+                    <UniformGrid Columns="2">
+                        <Slider Margin="0 0 5 0"
+                                AutoToolTipPlacement="TopLeft"
+                                Maximum="80"
+                                Minimum="10"
+                                Value="{Binding ElementName=HamburgerMenuControl, Path=HamburgerWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Slider Margin="5 0 0 0"
+                                AutoToolTipPlacement="TopLeft"
+                                Maximum="80"
+                                Minimum="10"
+                                Value="{Binding ElementName=HamburgerMenuControl, Path=HamburgerHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </UniformGrid>
+                </Controls:MetroHeader>
             </StackPanel>
         </ScrollViewer>
 

@@ -6,9 +6,13 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Grid>
-        <TextBlock VerticalAlignment="Center"
-                   FontSize="32"
-                   Text="Home View" />
-    </Grid>
+    <StackPanel>
+        <Image MaxWidth="800"
+               Margin="0 10 0 0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Source="/Assets/Photos/Home.jpg"
+               Stretch="Uniform" />
+        <TextBlock Text="Image from StockSnap.io" />
+    </StackPanel>
 </UserControl>

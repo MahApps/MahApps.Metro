@@ -71,7 +71,8 @@
                             <Grid x:Name="PART_ThumbIndicator"
                                   Width="{TemplateBinding Height}"
                                   Height="{TemplateBinding Height}"
-                                  HorizontalAlignment="Left">
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center">
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate" />
                                 </Grid.RenderTransform>
