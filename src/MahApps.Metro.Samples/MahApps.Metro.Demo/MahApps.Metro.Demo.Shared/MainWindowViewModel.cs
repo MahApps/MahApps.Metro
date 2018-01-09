@@ -473,12 +473,12 @@ namespace MetroDemo
         {
             var customDialog = new CustomDialog() { Title = "Custom Dialog" };
 
-            var customDialogExampleContent = new CustomDialogExampleContent(instance =>
+            var dataContext = new CustomDialogExampleContent(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 System.Diagnostics.Debug.WriteLine(instance.FirstName);
             });
-            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};
+            customDialog.Content = new CustomDialogExample { DataContext = dataContext};
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
