@@ -115,14 +115,6 @@ namespace MahApps.Metro.Controls.Dialogs
             this.OwningWindow = owningWindow;
             this.DialogSettings = this.ConfigureSettings(settings ?? (owningWindow?.MetroDialogOptions ?? new MetroDialogSettings()));
 
-            if (this.DialogSettings != null && !this.DialogSettings.SuppressDefaultResources)
-            {
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
-            }
-
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
             if (this.DialogSettings?.CustomResourceDictionary != null)
             {
                 this.Resources.MergedDictionaries.Add(this.DialogSettings.CustomResourceDictionary);
@@ -154,43 +146,63 @@ namespace MahApps.Metro.Controls.Dialogs
             this.HandleThemeChange();
         }
 
-        private void HandleThemeChange()
+        private static object TryGetResource(Accent accent, AppTheme theme, string key)
         {
+            if (accent == null || theme == null)
+            {
+                // nothing to do here, we can't found an app style (make sure all custom themes are added!)
+                return null;
+            }
+
+            object themeResource = theme.Resources[key]; //check the theme first
+
+            //next check the accent
+            var accentResource = accent.Resources[key];
+            if (accentResource != null)
+            {
+                return accentResource;
+            }
+
+            return themeResource;
+        }
+
+        internal void HandleThemeChange()
+        {
+            var windowTheme = DetectTheme(this);
+
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) || windowTheme == null)
+            {
+                return;
+            }
+
+            Accent windowAccent = windowTheme.Item2;
+            AppTheme theme = windowTheme.Item1;
+
             if (this.DialogSettings != null)
             {
-                var windowTheme = DetectTheme(this);
-
-                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) || windowTheme == null)
-                {
-                    return;
-                }
-
-                var theme = windowTheme.Item1;
-                var windowAccent = windowTheme.Item2;
-
                 switch (this.DialogSettings.ColorScheme)
                 {
                     case MetroDialogColorScheme.Theme:
                         ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
+                        this.SetValue(BackgroundProperty, TryGetResource(windowAccent, theme, "WhiteColorBrush"));
+                        this.SetValue(ForegroundProperty, TryGetResource(windowAccent, theme, "BlackBrush"));
                         break;
                     case MetroDialogColorScheme.Inverted:
-                        var inverseTheme = ThemeManager.GetInverseAppTheme(theme);
-                        if (inverseTheme == null)
+                        theme = ThemeManager.GetInverseAppTheme(theme);
+                        if (theme == null)
                         {
                             throw new InvalidOperationException("The inverse dialog theme only works if the window theme abides the naming convention. " +
                                                                 "See ThemeManager.GetInverseAppTheme for more infos");
                         }
 
-                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "BlackColorBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
+                        this.SetValue(BackgroundProperty, TryGetResource(windowAccent, theme, "WhiteColorBrush"));
+                        this.SetValue(ForegroundProperty, TryGetResource(windowAccent, theme, "BlackBrush"));
                         break;
                     case MetroDialogColorScheme.Accented:
                         ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
+                        this.SetValue(BackgroundProperty, TryGetResource(windowAccent, theme, "HighlightBrush"));
+                        this.SetValue(ForegroundProperty, TryGetResource(windowAccent, theme, "IdealForegroundColorBrush"));
                         break;
                 }
             }
@@ -198,7 +210,7 @@ namespace MahApps.Metro.Controls.Dialogs
             if (this.ParentDialogWindow != null)
             {
                 this.ParentDialogWindow.SetValue(BackgroundProperty, this.Background);
-                var glowBrush = ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "AccentColorBrush");
+                var glowBrush = TryGetResource(windowAccent, theme, "AccentColorBrush");
                 if (glowBrush != null)
                 {
                     this.ParentDialogWindow.SetValue(MetroWindow.GlowBrushProperty, glowBrush);
@@ -350,7 +362,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.DialogSettings.AnimateHide)
             {
-                Storyboard closingStoryboard = this.Resources["DialogCloseStoryboard"] as Storyboard;
+                Storyboard closingStoryboard = this.TryFindResource("DialogCloseStoryboard") as Storyboard;
 
                 if (closingStoryboard == null)
                 {
@@ -464,6 +476,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// If set, stops standard resource dictionaries being applied to the dialog.
         /// </summary>
+        [Obsolete("This property will be deleted in the next release.")]
         public bool SuppressDefaultResources { get; set; }
 
         /// <summary>
