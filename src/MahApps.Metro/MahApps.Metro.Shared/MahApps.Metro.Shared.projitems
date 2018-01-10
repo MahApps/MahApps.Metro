@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\InputDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogIcon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\ProgressDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\ProgressDialogController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DropDownButton.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\IconTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MarkupConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\MetroTabItemCloseButtonWidthConverter.cs" />

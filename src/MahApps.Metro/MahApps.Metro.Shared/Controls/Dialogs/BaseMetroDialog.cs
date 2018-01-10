@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -21,6 +22,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogTitleFontSizeProperty = DependencyProperty.Register("DialogTitleFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(26D));
         public static readonly DependencyProperty DialogMessageFontSizeProperty = DependencyProperty.Register("DialogMessageFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(15D));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(default(object)));
+        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(BaseMetroDialog), new PropertyMetadata(default(DataTemplate)));
 
         public MetroDialogSettings DialogSettings { get; private set; }
 
@@ -31,6 +34,26 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)this.GetValue(TitleProperty); }
             set { this.SetValue(TitleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the dialogs's icon.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public object Icon
+        {
+            get { return GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the data template used to display the content of the <see cref="Icon"/>. 
+        /// </summary>
+        public DataTemplate IconTemplate
+        {
+            get { return (DataTemplate)GetValue(IconTemplateProperty); }
+            set { SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>
@@ -302,11 +325,8 @@ namespace MahApps.Metro.Controls.Dialogs
             return Task.Factory.StartNew(() => { });
         }
 
-        protected internal virtual void OnShown()
-        {
-        }
-
-        protected internal virtual void OnClose()
+        internal protected virtual void OnShown() { }
+        internal protected virtual void OnClose()
         {
             // this is only set when a dialog is shown (externally) in it's OWN window.
             this.ParentDialogWindow?.Close();

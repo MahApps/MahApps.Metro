@@ -17,8 +17,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the LoginDialog.</param>
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <param name="icon">Optional icon that is shown in the dialog.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
+        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -31,7 +32,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     LoginDialog dialog = new LoginDialog(window, settings)
                     {
                         Title = title,
-                        Message = message
+                        Message = message,
+                        Icon = icon
                     };
 
                     SetDialogFontSizes(settings, dialog);
@@ -83,8 +85,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <param name="icon">Optional icon that is shown in the dialog.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
+        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -99,6 +102,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         Message = message,
                         Input = settings.DefaultText,
+                        Icon = icon
                     };
 
                     SetDialogFontSizes(settings, dialog);
@@ -141,7 +145,13 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-       
+
+
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogIcon icon, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        {
+            return ShowMessageAsync(window, title, message, style, settings, icon);
+        }
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -150,8 +160,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <param name="icon">Optional icon that is shown in the dialog.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -165,7 +176,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         Message = message,
                         Title = title,
-                        ButtonStyle = style
+                        ButtonStyle = style,
+                        Icon = icon
                     };
 
                     SetDialogFontSizes(settings, dialog);
@@ -217,8 +229,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message within the ProgressDialog.</param>
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
+        /// <param name="icon">Optional icon that is shown in the dialog.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -232,8 +245,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     var dialog = new ProgressDialog(window, settings)
                     {
                         Title = title,
-                        Message = message,
-                        IsCancelable = isCancelable
+                        IsCancelable = isCancelable,
+                        Icon = icon
                     };
 
                     SetDialogFontSizes(settings, dialog);
@@ -308,6 +321,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// If you want to wait until the user has closed the dialog, use <see cref="BaseMetroDialog.WaitUntilUnloadedAsync"/>
         /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// If you want to wait until the user has closed the dialog, use the await keyword when calling this method or call any <see cref="Task.ContinueWith(Action{Task})">Task.ContinueWith(...)</see> overload.
+        /// </remarks>
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
