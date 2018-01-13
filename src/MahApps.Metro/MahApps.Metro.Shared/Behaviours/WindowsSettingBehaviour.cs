@@ -117,6 +117,11 @@ namespace MahApps.Metro.Behaviours
                 var wp = settings.Placement;
                 wp.flags = 0;
                 wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
+
+                // this fixes wrong monitor positioning together with different Dpi usage for SetWindowPlacement
+                window.Left = wp.normalPosition.Left;
+                window.Top = wp.normalPosition.Top;
+
                 var hwnd = new WindowInteropHelper(window).Handle;
                 if (!NativeMethods.SetWindowPlacement(hwnd, wp))
                 {
