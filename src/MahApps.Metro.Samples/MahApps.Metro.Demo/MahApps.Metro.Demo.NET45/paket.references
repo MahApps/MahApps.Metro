@@ -4,3 +4,7 @@ MahApps.Metro.IconPacks
 NHotkey
 NHotkey.Wpf
 ControlzEx
+
+group net45
+
+	MaterialDesignThemes
