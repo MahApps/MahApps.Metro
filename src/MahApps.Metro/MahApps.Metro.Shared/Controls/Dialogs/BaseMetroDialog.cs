@@ -413,6 +413,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.CancellationToken = CancellationToken.None;
             this.DialogTitleFontSize = Double.NaN;
             this.DialogMessageFontSize = Double.NaN;
+            this.DialogResultOnCancel = null;
         }
 
         /// <summary>
@@ -462,7 +463,24 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets or sets which button should be focused by default
         /// </summary>
         public MessageDialogResult DefaultButtonFocus { get; set; }
-
+    
+        /// <summary>
+        /// Gets or sets the dialog result when the user cancelled the dialog with 'ESC' key
+        /// </summary>
+        /// <remarks>If the value is <see langword="null"/> the default behavior is determined 
+        /// by the <see cref="MessageDialogStyle"/>.
+        /// <table>
+        /// <tr><td><see cref="MessageDialogStyle"/></td><td><see cref="MessageDialogResult"/></td></tr>
+        /// <tr><td><see cref="MessageDialogStyle.Affirmative"/></td><td><see cref="MessageDialogResult.Affirmative"/></td></tr>
+        /// <tr><td>
+        /// <list type="bullet">
+        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegative"/></item>
+        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary"/></item>
+        /// <item><see cref="MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary"/></item>
+        /// </list></td>
+        /// <td><see cref="MessageDialogResult.Negative"/></td></tr></table></remarks>
+        public MessageDialogResult? DialogResultOnCancel { get; set; }
+    
         /// <summary>
         /// Gets/sets the token to cancel the dialog.
         /// </summary>
