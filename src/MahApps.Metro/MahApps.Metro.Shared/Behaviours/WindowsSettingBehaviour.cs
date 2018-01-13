@@ -15,19 +15,20 @@ namespace MahApps.Metro.Behaviours
         protected override void OnAttached()
         {
             base.OnAttached();
+
             this.AssociatedObject.SourceInitialized += this.AssociatedObject_SourceInitialized;
         }
 
         /// <inheritdoc />
         protected override void OnDetaching()
         {
-            this.CleanUp();
+            this.CleanUp("from OnDetaching");
             base.OnDetaching();
         }
 
         private void AssociatedObject_Closed(object sender, EventArgs e)
         {
-            this.CleanUp();
+            this.CleanUp("from AssociatedObject closed event");
         }
 
         private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -39,34 +40,58 @@ namespace MahApps.Metro.Behaviours
         {
             this.LoadWindowState();
 
-            this.AssociatedObject.StateChanged += this.AssociatedObject_StateChanged;
-            this.AssociatedObject.Closing += this.AssociatedObject_Closing;
-            this.AssociatedObject.Closed += this.AssociatedObject_Closed;
+            var window = this.AssociatedObject;
+            if (null == window)
+            {
+                // if the associated object is null at this point, then there is really something wrong!
+                Trace.TraceError($"{this}: Can not attach to nested events, cause the AssociatedObject is null.");
+                return;
+            }
+
+            window.StateChanged += this.AssociatedObject_StateChanged;
+            window.Closing += this.AssociatedObject_Closing;
+            window.Closed += this.AssociatedObject_Closed;
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
         {
             // save the settings on this state change, because hidden windows gets no window placements
             // all the saving stuff could be so much easier with ReactiveUI :-D 
-            if (this.AssociatedObject.WindowState == WindowState.Minimized)
+            if (this.AssociatedObject?.WindowState == WindowState.Minimized)
             {
                 this.SaveWindowState();
             }
         }
 
-        private void CleanUp()
+        private void CleanUp(string fromWhere)
         {
-            this.AssociatedObject.StateChanged -= this.AssociatedObject_StateChanged;
-            this.AssociatedObject.Closing -= this.AssociatedObject_Closing;
-            this.AssociatedObject.Closed -= this.AssociatedObject_Closed;
-            this.AssociatedObject.SourceInitialized -= this.AssociatedObject_SourceInitialized;
+            var window = this.AssociatedObject;
+            if (null == window)
+            {
+                // it's bad if the associated object is null, so trace this here
+                Trace.TraceWarning($"{this}: Can not clean up {fromWhere}, cause the AssociatedObject is null. This can maybe happen if this Behavior was already detached.");
+                return;
+            }
+
+            Trace.TraceInformation($"{this}: Clean up {fromWhere}.");
+
+            window.StateChanged -= this.AssociatedObject_StateChanged;
+            window.Closing -= this.AssociatedObject_Closing;
+            window.Closed -= this.AssociatedObject_Closed;
+            window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
         }
 
 #pragma warning disable 618
         private void LoadWindowState()
         {
-            var settings = this.AssociatedObject.GetWindowPlacementSettings();
-            if (settings == null || !this.AssociatedObject.SaveWindowPosition)
+            var window = this.AssociatedObject;
+            if (null == window)
+            {
+                return;
+            }
+
+            var settings = window.GetWindowPlacementSettings();
+            if (null == settings || !window.SaveWindowPosition)
             {
                 return;
             }
@@ -77,12 +102,12 @@ namespace MahApps.Metro.Behaviours
             }
             catch (Exception e)
             {
-                Trace.TraceError($"The settings could not be reloaded! {e}");
+                Trace.TraceError($"{this}: The settings could not be reloaded! {e}");
                 return;
             }
 
             // check for existing placement and prevent empty bounds
-            if (settings.Placement == null || settings.Placement.normalPosition.IsEmpty)
+            if (null == settings.Placement || settings.Placement.normalPosition.IsEmpty)
             {
                 return;
             }
@@ -92,10 +117,10 @@ namespace MahApps.Metro.Behaviours
                 var wp = settings.Placement;
                 wp.flags = 0;
                 wp.showCmd = (wp.showCmd == SW.SHOWMINIMIZED ? SW.SHOWNORMAL : wp.showCmd);
-                var hwnd = new WindowInteropHelper(this.AssociatedObject).Handle;
+                var hwnd = new WindowInteropHelper(window).Handle;
                 if (!NativeMethods.SetWindowPlacement(hwnd, wp))
                 {
-                    Trace.TraceWarning($"The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
+                    Trace.TraceWarning($"{this}: The WINDOWPLACEMENT {wp} could not be set by SetWindowPlacement.");
                 }
             }
             catch (Exception ex)
@@ -106,12 +131,19 @@ namespace MahApps.Metro.Behaviours
 
         private void SaveWindowState()
         {
-            var settings = this.AssociatedObject.GetWindowPlacementSettings();
-            if (settings == null || !this.AssociatedObject.SaveWindowPosition)
+            var window = this.AssociatedObject;
+            if (null == window)
             {
                 return;
             }
-            var hwnd = new WindowInteropHelper(this.AssociatedObject).Handle;
+
+            var settings = window.GetWindowPlacementSettings();
+            if (null == settings || !window.SaveWindowPosition)
+            {
+                return;
+            }
+
+            var hwnd = new WindowInteropHelper(window).Handle;
             var wp = NativeMethods.GetWindowPlacement(hwnd);
             // check for saveable values
             if (wp.showCmd != SW.HIDE && wp.length > 0)
@@ -124,6 +156,7 @@ namespace MahApps.Metro.Behaviours
                         wp.normalPosition = rect;
                     }
                 }
+
                 if (!wp.normalPosition.IsEmpty)
                 {
                     settings.Placement = wp;
@@ -136,7 +169,7 @@ namespace MahApps.Metro.Behaviours
             }
             catch (Exception e)
             {
-                Trace.TraceError($"The settings could not be saved! {e}");
+                Trace.TraceError($"{this}: The settings could not be saved! {e}");
             }
         }
 #pragma warning restore 618
