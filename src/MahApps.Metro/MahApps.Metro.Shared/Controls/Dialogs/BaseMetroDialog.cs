@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using JetBrains.Annotations;
@@ -389,6 +390,11 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             return tcs.Task;
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new MetroDialogAutomationPeer(this);
         }
     }
 }
