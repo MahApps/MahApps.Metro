@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Automation.Peers;
+﻿using System.Windows.Automation.Peers;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
