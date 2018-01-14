@@ -1,17 +1,17 @@
 ﻿using System.Windows.Automation.Peers;
 
-namespace MahApps.Metro.Controls.Dialogs
+namespace MahApps.Metro.Controls
 {
-    public class MetroDialogAutomationPeer : FrameworkElementAutomationPeer
+    public class FlyoutAutomationPeer : FrameworkElementAutomationPeer
     {
-        public MetroDialogAutomationPeer(BaseMetroDialog owner)
+        public FlyoutAutomationPeer(Flyout owner)
             : base(owner)
         {
         }
 
         protected override string GetClassNameCore()
         {
-            return this.Owner.GetType().Name;
+            return "Flyout";
         }
 
         protected override AutomationControlType GetAutomationControlTypeCore()
@@ -24,12 +24,12 @@ namespace MahApps.Metro.Controls.Dialogs
             string nameCore = base.GetNameCore();
             if (string.IsNullOrEmpty(nameCore))
             {
-                nameCore = ((BaseMetroDialog)this.Owner).Title;
+                nameCore = ((Flyout)this.Owner).Header as string;
             }
 
             if (string.IsNullOrEmpty(nameCore))
             {
-                nameCore = ((BaseMetroDialog)this.Owner).Name;
+                nameCore = ((Flyout)this.Owner).Name;
             }
 
             if (string.IsNullOrEmpty(nameCore))
