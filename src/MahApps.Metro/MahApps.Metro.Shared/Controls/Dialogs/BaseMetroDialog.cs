@@ -120,9 +120,6 @@ namespace MahApps.Metro.Controls.Dialogs
                 this.Resources.MergedDictionaries.Add(this.DialogSettings.CustomResourceDictionary);
             }
 
-            this.DialogTitleFontSize = (this.TryFindResource("DialogTitleFontSize") as double?).GetValueOrDefault(this.DialogTitleFontSize);
-            this.DialogMessageFontSize = (this.TryFindResource("DialogMessageFontSize") as double?).GetValueOrDefault(this.DialogMessageFontSize);
-
             this.HandleThemeChange();
 
             this.Loaded += this.BaseMetroDialogLoaded;
