@@ -43,6 +43,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ContentPresenter Grid.Row="0"
+                              AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             <Grid Grid.Row="1">
@@ -52,13 +53,14 @@
                     <ColumnDefinition Width="25*" />
                 </Grid.ColumnDefinitions>
                 <!--  Content area  -->
-                <Grid Grid.Column="1" Margin="0 10 0 0">
+                <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="PART_Title"
                                Grid.Row="0"
+                               AutomationProperties.Name="Dialog title"
                                FontSize="{TemplateBinding DialogTitleFontSize}"
                                Foreground="{TemplateBinding Foreground}"
                                Text="{TemplateBinding Title}"
@@ -66,6 +68,7 @@
                     <ContentPresenter Grid.Row="1"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      AutomationProperties.Name="Dialog content"
                                       Content="{TemplateBinding Content}"
                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -74,6 +77,7 @@
                 </Grid>
             </Grid>
             <ContentPresenter Grid.Row="2"
+                              AutomationProperties.Name="Dialog bottom"
                               Content="{TemplateBinding DialogBottom}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
@@ -106,6 +110,7 @@
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
         <Setter Property="Opacity" Value="0" />
+        <Setter Property="Padding" Value="0 10 0 0" />
         <Setter Property="Template" Value="{StaticResource MetroDialogTemplate}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
