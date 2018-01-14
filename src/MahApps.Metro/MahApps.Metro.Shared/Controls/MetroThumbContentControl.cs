@@ -242,39 +242,5 @@ namespace MahApps.Metro.Controls
             return new MetroThumbContentControlAutomationPeer(this);
         }
     }
-
-    public class MetroThumbContentControlDragStartedEventArgs : DragStartedEventArgs
-    {
-        public MetroThumbContentControlDragStartedEventArgs(double horizontalOffset, double verticalOffset)
-            : base(horizontalOffset, verticalOffset)
-        {
-            this.RoutedEvent = MetroThumbContentControl.DragStartedEvent;
-        }
-    }
-
-    public class MetroThumbContentControlDragCompletedEventArgs : DragCompletedEventArgs
-    {
-        public MetroThumbContentControlDragCompletedEventArgs(double horizontalOffset, double verticalOffset, bool canceled)
-            : base(horizontalOffset, verticalOffset, canceled)
-        {
-            this.RoutedEvent = MetroThumbContentControl.DragCompletedEvent;
-        }
-    }
-
-    public class MetroThumbContentControlAutomationPeer : FrameworkElementAutomationPeer
-    {
-        public MetroThumbContentControlAutomationPeer(FrameworkElement owner) : base(owner)
-        { }
-
-        protected override string GetClassNameCore()
-        {
-            return "MetroThumbContentControl";
-        }
-
-        protected override AutomationControlType GetAutomationControlTypeCore()
-        {
-            return AutomationControlType.Custom;
-        }
-    }
 }
 

@@ -230,7 +230,7 @@
     </Style>
 
     <Style x:Key="MetroScrollViewer" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide" Value="False" />
+        <Setter Property="Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -275,7 +275,7 @@
                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide" Value="True">
+                        <Trigger Property="Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="True">
                             <Setter TargetName="PART_HorizontalScrollBar" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_ScrollContentPresenter" Property="Grid.Column" Value="1" />
                             <Setter TargetName="PART_VerticalScrollBar" Property="Grid.Column" Value="0" />

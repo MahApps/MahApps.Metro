@@ -190,7 +190,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         cleanUpHandlers();
 
-                        tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                        tcs.TrySetResult(this.DialogSettings.DialogResultOnCancel ?? (this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative));
                     }
                     else if (e.Key == Key.Enter)
                     {
@@ -220,12 +220,14 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register("FirstAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register("SecondAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, new PropertyChangedCallback((s, e) =>
-                                                                                                                                                                                                                                                           {
-                                                                                                                                                                                                                                                               MessageDialog md = (MessageDialog)s;
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, new PropertyChangedCallback(ButtonStylePropertyChangedCallback)));
 
-                                                                                                                                                                                                                                                               SetButtonState(md);
-                                                                                                                                                                                                                                                           })));
+        private static void ButtonStylePropertyChangedCallback(DependencyObject s, DependencyPropertyChangedEventArgs e)
+        {
+            MessageDialog md = (MessageDialog)s;
+
+            SetButtonState(md);
+        }
 
         private static void SetButtonState(MessageDialog md)
         {
