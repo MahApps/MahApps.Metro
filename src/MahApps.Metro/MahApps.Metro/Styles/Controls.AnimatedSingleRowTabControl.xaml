@@ -196,6 +196,7 @@
             <ScrollViewer x:Name="HeaderPanelScroll"
                           Grid.Row="0"
                           Panel.ZIndex="1"
+                          Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                           HorizontalScrollBarVisibility="Auto"
                           Template="{StaticResource ScrollViewerTemplate}"
                           VerticalScrollBarVisibility="Disabled">
@@ -487,6 +488,7 @@
     </ControlTemplate>
 
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
+        <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
         <Style.Triggers>

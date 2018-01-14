@@ -550,16 +550,6 @@ namespace MahApps.Metro.Controls.Dialogs
         private static Window SetupExternalDialogWindow(BaseMetroDialog dialog)
         {
             var win = CreateExternalWindow();
-
-            try
-            {
-                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
-                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
-                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
-                win.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
-            }
-            catch (Exception) { }
-
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
             win.SizeToContent = SizeToContent.Height;
@@ -567,6 +557,8 @@ namespace MahApps.Metro.Controls.Dialogs
             dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
 
             win.Content = dialog;
+
+            dialog.HandleThemeChange();
 
             EventHandler closedHandler = null;
             closedHandler = (sender, args) =>
