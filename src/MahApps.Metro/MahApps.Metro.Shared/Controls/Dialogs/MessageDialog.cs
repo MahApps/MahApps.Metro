@@ -343,32 +343,4 @@ namespace MahApps.Metro.Controls.Dialogs
             return false;
         }
     }
-
-    /// <summary>
-    /// An enum representing the result of a Message Dialog.
-    /// </summary>
-    public enum MessageDialogResult
-    {
-        Negative = 0,
-        Affirmative = 1,
-        FirstAuxiliary,
-        SecondAuxiliary,
-    }
-
-    /// <summary>
-    /// An enum representing the different button states for a Message Dialog.
-    /// </summary>
-    public enum MessageDialogStyle
-    {
-        /// <summary>
-        /// Just "OK"
-        /// </summary>
-        Affirmative = 0,
-        /// <summary>
-        /// "OK" and "Cancel"
-        /// </summary>
-        AffirmativeAndNegative = 1,
-        AffirmativeAndNegativeAndSingleAuxiliary = 2,
-        AffirmativeAndNegativeAndDoubleAuxiliary = 3
-    }
 }
