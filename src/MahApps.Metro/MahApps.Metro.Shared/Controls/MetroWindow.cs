@@ -12,18 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Behaviors;
+using ControlzEx.Native;
 using ControlzEx.Standard;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Windows.Data;
-    using System.Windows.Interactivity;
-    using ControlzEx.Behaviors;
-    using MahApps.Metro.Behaviours;
-    using ControlzEx.Native;
-
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -62,6 +59,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyPropertyKey IsAnyDialogVisiblePropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogVisible), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="IsAnyDialogVisible"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsAnyDialogVisibleProperty = IsAnyDialogVisiblePropertyKey.DependencyProperty;
 
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -402,6 +406,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
             set { SetValue(ShowDialogsOverTitleBarProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets whether one or more dialogs are shown.
+        /// </summary>
+        public bool IsAnyDialogVisible
+        {
+            get { return (bool)GetValue(IsAnyDialogVisibleProperty); }
+            private set { SetValue(IsAnyDialogVisibleProperty, value); }
         }
 
         /// <summary>
