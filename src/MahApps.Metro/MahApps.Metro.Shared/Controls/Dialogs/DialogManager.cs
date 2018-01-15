@@ -485,7 +485,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             window.metroActiveDialogContainer.Children.Add(dialog); //add the dialog to the container}
 
-            window.SetValue(MetroWindow.IsAnyDialogVisiblePropertyKey, true);
+            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, true);
         }
 
         private static void RemoveDialog(this MetroWindow window, BaseMetroDialog dialog)
@@ -512,7 +512,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 window.RestoreFocus();
             }
 
-            window.SetValue(MetroWindow.IsAnyDialogVisiblePropertyKey, window.metroActiveDialogContainer.Children.Count > 0);
+            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, window.metroActiveDialogContainer.Children.Count > 0);
         }
 
         public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog)
