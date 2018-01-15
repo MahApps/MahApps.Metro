@@ -107,7 +107,6 @@
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
         <Setter Property="Controls:TabControlHelper.UnderlineSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
-        <Setter Property="Controls:TabControlHelper.Underlined" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined), Mode=OneWay}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -213,13 +212,13 @@
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
                         </Trigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="None">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="None">
                             <Setter TargetName="Underline" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem">
                             <Setter TargetName="Underline" Property="LineThickness" Value="0" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel">
                             <Setter TargetName="Underline" Property="LineExtent" Value="4" />
                             <Setter TargetName="Underline" Property="LineThickness" Value="1" />
                         </DataTrigger>
@@ -234,14 +233,14 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="LineThickness" Value="3" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="LineThickness" Value="2" />
@@ -254,7 +253,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="TabPanel" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
                                 <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
                             </MultiDataTrigger.Conditions>
@@ -262,7 +261,7 @@
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.Underlined)}" Value="SelectedTabItem" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="False" />
                                 <Condition Binding="{Binding ElementName=Border, Path=IsMouseOver}" Value="True" />
                             </MultiDataTrigger.Conditions>

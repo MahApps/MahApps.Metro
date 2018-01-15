@@ -38,14 +38,6 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            // Removing a TabItem in code behind can produce such nasty output
-            // System.Windows.Data Warning: 4 : Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.TabControl', AncestorLevel='1''. BindingExpression:Path=Background; DataItem=null; target element is 'TabItem' (Name=''); target property is 'Background' (type 'Brush')
-            // or
-            // System.Windows.Data Error: 4 : Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.TabControl', AncestorLevel='1''. BindingExpression:Path=(0); DataItem=null; target element is 'TabItem' (Name=''); target property is 'UnderlineBrush' (type 'Brush')
-            //
-            // This is a timing problem in WPF of the binding mechanism itself.
-            //
-            // To avoid this, we can set the Style and Template to null.
             tabItem.Template = null;
             tabItem.Style = null;
         }
@@ -180,7 +172,6 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
         public static UnderlinedType GetUnderlined(UIElement element)
         {
             return (UnderlinedType)element.GetValue(UnderlinedProperty);
@@ -188,7 +179,6 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabItem))]
         public static void SetUnderlined(UIElement element, UnderlinedType value)
         {
             element.SetValue(UnderlinedProperty, value);
