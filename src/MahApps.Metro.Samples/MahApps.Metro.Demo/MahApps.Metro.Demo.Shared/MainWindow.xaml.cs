@@ -368,26 +368,35 @@ namespace MetroDemo
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (e.Cancel) return;
+            if (e.Cancel)
+            {
+                return;
+            }
+
             e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
-            if (_shutdown) return;
+            if (!e.Cancel)
+            {
+                return;
+            }
 
             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Quit",
-                NegativeButtonText = "Cancel",
-                AnimateShow = true,
-                AnimateHide = false
-            };
+                             {
+                                 AffirmativeButtonText = "Quit",
+                                 NegativeButtonText = "Cancel",
+                                 AnimateShow = true,
+                                 AnimateHide = false
+                             };
 
             var result = await this.ShowMessageAsync("Quit application?",
-                "Sure you want to quit application?",
-                MessageDialogStyle.AffirmativeAndNegative, mySettings);
+                                                     "Sure you want to quit application?",
+                                                     MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
             _shutdown = result == MessageDialogResult.Affirmative;
 
             if (_shutdown)
+            {
                 Application.Current.Shutdown();
+            }
         }
 
         private MetroWindow testWindow;
