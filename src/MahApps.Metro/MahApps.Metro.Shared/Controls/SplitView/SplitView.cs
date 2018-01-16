@@ -37,6 +37,7 @@
         {
             var sender = d as SplitView;
             sender?.TemplateSettings?.Update();
+            sender?.ChangeVisualState();
         }
 
         /// <summary>
@@ -322,6 +323,7 @@
                 }
             }
 
+            VisualStateManager.GoToState(this, "None", animated);
             VisualStateManager.GoToState(this, state, animated);
         }
 

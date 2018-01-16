@@ -1,21 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    public sealed class ItemClickEventArgs : RoutedEventArgs
-    {
-        public ItemClickEventArgs(object clickedObject)
-        {
-            this.ClickedItem = clickedObject;
-        }
-
-        public object ClickedItem { get; private set; }
-    }
-
-    public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
-
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -31,6 +20,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event ItemClickEventHandler OptionsItemClick;
 
+        /// <summary>
+        /// Event raised when an item is invoked
+        /// </summary>
+        public event EventHandler<HamburgerMenuItemInvokedEventArgs> ItemInvoked;
+
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             IsPaneOpen = !IsPaneOpen;
@@ -43,10 +37,13 @@ namespace MahApps.Metro.Controls
                 _optionsListView.SelectedIndex = -1;
             }
 
-            (_buttonsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            var selectedItem = _buttonsListView.SelectedItem;
+
+            (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseItemCommand();
 
-            ItemClick?.Invoke(this, new ItemClickEventArgs(_buttonsListView.SelectedItem));
+            ItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
+            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = false });
         }
 
         private void OnOptionsItemClick()
@@ -56,10 +53,13 @@ namespace MahApps.Metro.Controls
                 _buttonsListView.SelectedIndex = -1;
             }
 
-            (_optionsListView.SelectedItem as HamburgerMenuItem)?.RaiseCommand();
+            var selectedItem = _optionsListView.SelectedItem;
+
+            (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseOptionsItemCommand();
 
-            OptionsItemClick?.Invoke(this, new ItemClickEventArgs(_optionsListView.SelectedItem));
+            OptionsItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
+            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = true });
         }
 
         private ListBoxItem GetClickedListBoxItem(ItemsControl itemsControl, DependencyObject dependencyObject)

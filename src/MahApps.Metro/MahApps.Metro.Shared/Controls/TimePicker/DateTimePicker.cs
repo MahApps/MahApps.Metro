@@ -19,6 +19,10 @@
         public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty SelectedDateFormatProperty = DatePicker.SelectedDateFormatProperty.AddOwner(
+            typeof(DateTimePicker), 
+            new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
+
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
             "Orientation", 
             typeof(Orientation), 
@@ -31,7 +35,10 @@
             typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>),
             typeof(DateTimePicker));
 
-        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
+        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(
+            typeof(DateTimePicker), 
+            new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
+
       
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
@@ -98,6 +105,17 @@
         }
 
         /// <summary>
+        /// Gets or sets the format that is used to display the selected date.
+        /// </summary>
+        [Category("Appearance")]
+        [DefaultValue(DatePickerFormat.Short)]
+        public DatePickerFormat SelectedDateFormat
+        {
+            get { return (DatePickerFormat)GetValue(SelectedDateFormatProperty); }
+            set { SetValue(SelectedDateFormatProperty, value); }
+        }
+
+        /// <summary>
         ///     Gets or sets a value that indicates whether the current date will be highlighted.
         /// </summary>
         /// <returns>true if the current date is highlighted; otherwise, false. The default is true. </returns>
@@ -145,6 +163,15 @@
             RaiseEvent(e);
         }
 
+        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dtp = d as DateTimePicker;
+            if (dtp != null)
+            {
+                dtp.WriteValueToTextBox();
+            }
+        }
+
         protected override void ApplyBindings()
         {
             base.ApplyBindings();
@@ -170,8 +197,11 @@
 
         protected override string GetValueForTextBox()
         {
-            var formatInfo = SpecificCultureInfo.DateTimeFormat;
-            var dateTimeFormat = string.Intern($"{formatInfo.ShortDatePattern} {formatInfo.LongTimePattern}");
+            var formatInfo = this.SpecificCultureInfo.DateTimeFormat;
+            var timeFormat = this.SelectedTimeFormat == TimePickerFormat.Long ? formatInfo.LongTimePattern : formatInfo.ShortTimePattern;
+            var dateFormat = this.SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
+            
+            var dateTimeFormat = string.Intern($"{dateFormat} {timeFormat}");
 
             var selectedDateTimeFromGui = this.GetSelectedDateTimeFromGUI();
             var valueForTextBox = selectedDateTimeFromGui?.ToString(dateTimeFormat, this.SpecificCultureInfo);

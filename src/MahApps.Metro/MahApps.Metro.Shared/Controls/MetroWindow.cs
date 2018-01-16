@@ -12,9 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Behaviors;
+using ControlzEx.Native;
+using ControlzEx.Standard;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
@@ -57,6 +60,13 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
+
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -64,6 +74,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register("IsMinButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -325,6 +342,21 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets resize border thickness
+        /// </summary>
+        public Thickness ResizeBorderThickness
+        {
+            get { return (Thickness)this.GetValue(ResizeBorderThicknessProperty); }
+            set { this.SetValue(ResizeBorderThicknessProperty, value); }
+        }
+
+        /// <summary>
+        /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
+        /// </summary>
+        public static readonly DependencyProperty ResizeBorderThicknessProperty =
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(WindowChromeBehavior.GetDefaultResizeBorderThickness()));
+
+        /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
         /// </summary>
         public Brush TitleForeground
@@ -381,6 +413,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
             set { SetValue(ShowDialogsOverTitleBarProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets whether one or more dialogs are shown.
+        /// </summary>
+        public bool IsAnyDialogOpen
+        {
+            get { return (bool)GetValue(IsAnyDialogOpenProperty); }
+            private set { SetValue(IsAnyDialogOpenProperty, value); }
         }
 
         /// <summary>
@@ -531,6 +572,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
             set { SetValue(IsCloseButtonEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether if the close button should be enabled or not if a dialog is shown.
+        /// </summary>
+        public bool IsCloseButtonEnabledWithDialog
+        {
+            get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogProperty, value); }
         }
 
         /// <summary>
@@ -857,6 +907,25 @@ namespace MahApps.Metro.Controls
         {
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
+
+            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
+            this.InitializeStylizedBehaviors();
+        }
+
+        /// <summary>
+        /// Initializes various behaviors for the window.
+        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
+        /// </summary>
+        private void InitializeStylizedBehaviors()
+        {
+            var collection = new StylizedBehaviorCollection
+            {
+                new BorderlessWindowBehavior(),
+                new WindowsSettingBehaviour(),
+                new GlowWindowBehavior()
+            };
+
+            StylizedBehaviors.SetBehaviors(this, collection);
         }
 
 #if NET4_5
@@ -867,7 +936,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -880,7 +949,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -1281,8 +1350,10 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+#pragma warning disable 618
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
+#pragma warning restore 618
 
             if (windowIsMaximized)
             {
@@ -1306,8 +1377,10 @@ namespace MahApps.Metro.Controls
             // DragMove works too
             // window.DragMove();
             // instead this 2 lines
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
-            Standard.NativeMethods.SendMessage(criticalHandle, Standard.WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning disable 618
+            NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
+            NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+#pragma warning restore 618
         }
 
         internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
@@ -1321,14 +1394,16 @@ namespace MahApps.Metro.Controls
                 var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
+#pragma warning disable 618
                     if (window.WindowState == WindowState.Normal)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
+                        ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
+#pragma warning restore 618
                     mouseButtonEventArgs.Handled = true;
                 }
             }
@@ -1366,21 +1441,23 @@ namespace MahApps.Metro.Controls
             return GetTemplateChild(name);
         }
 
+#pragma warning disable 618
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
         {
             if (window == null) return;
 
             var hwnd = new WindowInteropHelper(window).Handle;
-            if (hwnd == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(hwnd))
+            if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
                 return;
 
-            var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
+            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
+            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
                 (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
-                UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+                NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
+#pragma warning restore 618
 
         internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {

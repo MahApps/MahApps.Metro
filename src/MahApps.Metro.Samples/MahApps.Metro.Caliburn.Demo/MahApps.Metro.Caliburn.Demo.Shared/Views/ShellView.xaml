@@ -1,4 +1,4 @@
-<Controls:MetroWindow x:Class="Caliburn.Metro.Demo.Views.ShellView"
+﻿<Controls:MetroWindow x:Class="Caliburn.Metro.Demo.Views.ShellView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"

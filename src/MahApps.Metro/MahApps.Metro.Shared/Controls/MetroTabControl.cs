@@ -145,6 +145,7 @@ namespace MahApps.Metro.Controls
                 {
                     // if the list is hard-coded (i.e. has no ItemsSource)
                     // then we remove the item from the collection
+                    tabItem.ClearStyle();
                     this.Items.Remove(tabItem);
                 }
                 else
@@ -160,6 +161,7 @@ namespace MahApps.Metro.Controls
                     var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
                     if (item2Remove != null)
                     {
+                        tabItem.ClearStyle();
                         collection.Remove(item2Remove);
                     }
                 }

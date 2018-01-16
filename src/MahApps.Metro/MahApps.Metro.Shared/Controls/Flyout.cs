@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {    
@@ -14,8 +16,6 @@ namespace MahApps.Metro.Controls
     /// <see cref="MetroWindow"/>
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
-    [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_Root", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
@@ -253,6 +253,11 @@ namespace MahApps.Metro.Controls
             this.InitializeAutoCloseTimer();
         }
 
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlyoutAutomationPeer(this);
+        }
+
         private void InternalCloseCommandExecuteAction(object o)
         {
             var closeCommand = this.CloseCommand;
@@ -386,7 +391,15 @@ namespace MahApps.Metro.Controls
                 resources["TextBrush"] = newBrush;
                 resources["LabelTextBrush"] = newBrush;
 
-                fromColor = (Color)resources["AccentBaseColor"];
+                if (resources.Contains("AccentBaseColor"))
+                {
+                    fromColor = (Color)resources["AccentBaseColor"];
+                }
+                else
+                {
+                    var accentColor = (Color)resources["AccentColor"];
+                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
+                }
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["HighlightColor"] = fromColor;

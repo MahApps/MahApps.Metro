@@ -3,17 +3,13 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <SolidColorBrush x:Key="ProgressBarFillBrush" Color="#FF008287" />
-    <SolidColorBrush x:Key="ProgressBarTrackBrush" Color="#1FFFFFFF" />
-    <Thickness x:Key="OutlineBorderThickness">0</Thickness>
     <System:Double x:Key="ProgressBarMinHeight">6</System:Double>
-    <SolidColorBrush x:Key="TransparentOutlineBrush">Transparent</SolidColorBrush>
 
     <Style TargetType="{x:Type Controls:MetroProgressBar}">
-        <Setter Property="Background" Value="{StaticResource ProgressBarTrackBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource TransparentOutlineBrush}" />
-        <Setter Property="BorderThickness" Value="{StaticResource OutlineBorderThickness}" />
-        <Setter Property="Foreground" Value="{StaticResource ProgressBarFillBrush}" />
+        <Setter Property="Background" Value="#1FFFFFFF" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="MinHeight" Value="{StaticResource ProgressBarMinHeight}" />

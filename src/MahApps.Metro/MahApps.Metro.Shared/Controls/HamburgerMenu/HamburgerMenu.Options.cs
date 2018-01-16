@@ -16,6 +16,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OptionsItemsSourceProperty = DependencyProperty.Register(nameof(OptionsItemsSource), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="OptionsItemContainerStyle"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OptionsItemContainerStyleProperty = DependencyProperty.Register(nameof(OptionsItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="OptionsItemTemplate"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty OptionsItemTemplateProperty = DependencyProperty.Register(nameof(OptionsItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
@@ -43,12 +48,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="OptionsItemCommand"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register("OptionsItemCommand", typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register(nameof(OptionsItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register("OptionsItemCommandParameter", typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register(nameof(OptionsItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets an object source used to generate the content of the options.
@@ -57,6 +62,15 @@ namespace MahApps.Metro.Controls
         {
             get { return GetValue(OptionsItemsSourceProperty); }
             set { SetValue(OptionsItemsSourceProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Style used for each item in the options.
+        /// </summary>
+        public Style OptionsItemContainerStyle
+        {
+            get { return (Style)GetValue(OptionsItemContainerStyleProperty); }
+            set { SetValue(OptionsItemContainerStyleProperty, value); }
         }
 
         /// <summary>

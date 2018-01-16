@@ -82,6 +82,7 @@
                     <Controls:TransitioningContentControl x:Name="PART_Presenter"
                                                           Panel.ZIndex="1"
                                                           Content="{TemplateBinding SelectedItem}"
+                                                          ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
                                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                           IsTabStop="False" />
