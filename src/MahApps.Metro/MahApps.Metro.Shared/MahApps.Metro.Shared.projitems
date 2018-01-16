@@ -41,6 +41,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\InputDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogStyle.cs" />

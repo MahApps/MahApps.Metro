@@ -11,6 +11,8 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         public MetroDialogSettings()
         {
+            this.CanCloseDialogOwner = false;
+
             this.AffirmativeButtonText = "OK";
             this.NegativeButtonText = "Cancel";
 
@@ -26,6 +28,11 @@ namespace MahApps.Metro.Controls.Dialogs
             this.DialogMessageFontSize = Double.NaN;
             this.DialogResultOnCancel = null;
         }
+
+        /// <summary>
+        /// Gets or sets wheater the owner of the dialog can be closed.
+        /// </summary>
+        public bool CanCloseDialogOwner { get; set; }
 
         /// <summary>
         /// Gets or sets the text used for the Affirmative button. For example: "OK" or "Yes".

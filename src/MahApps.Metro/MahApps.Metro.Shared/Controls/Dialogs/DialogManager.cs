@@ -21,12 +21,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
+            settings = settings ?? new LoginDialogSettings();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return (Task<LoginDialogData>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData>>(() =>
                 {
-                    settings = settings ?? new LoginDialogSettings();
-
                     //create the dialog control
                     LoginDialog dialog = new LoginDialog(window, settings)
                     {
@@ -87,12 +86,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
+            settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                 {
-                    settings = settings ?? window.MetroDialogOptions;
-
                     //create the dialog control
                     var dialog = new InputDialog(window, settings)
                     {
@@ -154,12 +152,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
+            settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                 {
-                    settings = settings ?? window.MetroDialogOptions;
-
                     //create the dialog control
                     var dialog = new MessageDialog(window, settings)
                     {
@@ -221,13 +218,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-
+            settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                 {
-                    settings = settings ?? window.MetroDialogOptions;
-
                     //create the dialog control
                     var dialog = new ProgressDialog(window, settings)
                     {
@@ -291,6 +286,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
+            window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || settings == null || settings.CanCloseDialogOwner);
+
             if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
             {
                 return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
@@ -509,7 +506,13 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (window.metroActiveDialogContainer.Children.Count == 0)
             {
+                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, true);
                 window.RestoreFocus();
+            }
+            else
+            {
+                var settings = window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault()?.DialogSettings;
+                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || settings == null || settings.CanCloseDialogOwner);
             }
 
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, window.metroActiveDialogContainer.Children.Count > 0);
