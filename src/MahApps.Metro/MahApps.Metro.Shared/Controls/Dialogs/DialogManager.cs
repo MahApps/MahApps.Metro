@@ -306,22 +306,24 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
-            return Task.Factory.StartNew(() => { window.Invoke(() => window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || settings == null || settings.OwnerCanCloseWithDialog)); }).ContinueWith(task =>
-                {
-                    return window.Invoke(() =>
-                        {
-                            if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
-                            {
-                                return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
-                            }
-                            else
-                            {
-                                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
-                                tcs.SetResult(null);
-                                return tcs.Task;
-                            }
-                        });
-                });
+            return Task.Factory.StartNew(() => { window.Invoke(() => window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || settings == null || settings.OwnerCanCloseWithDialog)); })
+                       .ContinueWith(task =>
+                           {
+                               return window.Invoke(() =>
+                                   {
+                                       if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
+                                       {
+                                           return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
+                                       }
+                                       else
+                                       {
+                                           var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+                                           tcs.SetResult(null);
+                                           return tcs.Task;
+                                       }
+                                   });
+                           })
+                       .Unwrap();
         }
 
         /// <summary>

@@ -213,18 +213,19 @@ namespace MetroDemo
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
             EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
-            dialogManagerOnDialogOpened = (o, args) => {
-                                              DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                                              Console.WriteLine("Custom Dialog opened!");
-                                          };
+            dialogManagerOnDialogOpened = (o, args) =>
+                {
+                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
+                    Console.WriteLine("Custom Dialog opened!");
+                };
             DialogManager.DialogOpened += dialogManagerOnDialogOpened;
 
             EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogClosed = null;
-            dialogManagerOnDialogClosed = async (o, args) => {
-                                                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                                                    Console.WriteLine("Custom Dialog closed!");
-                                                    await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
-                                                };
+            dialogManagerOnDialogClosed = (o, args) =>
+                {
+                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
+                    Console.WriteLine("Custom Dialog closed!");
+                };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
@@ -238,6 +239,7 @@ namespace MetroDemo
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
             await this.HideMetroDialogAsync(dialog);
+            await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
         }
 
         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
