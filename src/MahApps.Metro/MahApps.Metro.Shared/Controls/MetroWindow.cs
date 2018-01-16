@@ -75,6 +75,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
+
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
@@ -568,6 +575,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets whether if the close button should be enabled or not if a dialog is shown.
+        /// </summary>
+        public bool IsCloseButtonEnabledWithDialog
+        {
+            get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets if the the system menu should popup on right click.
         /// </summary>
         public bool ShowSystemMenuOnRightClick
@@ -920,7 +936,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -933,7 +949,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
