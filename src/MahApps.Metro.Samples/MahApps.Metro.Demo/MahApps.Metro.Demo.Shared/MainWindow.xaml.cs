@@ -202,7 +202,7 @@ namespace MetroDemo
 
             await TaskEx.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() {OwnerCanCloseWithDialog = true});
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await TaskEx.Delay(2000);

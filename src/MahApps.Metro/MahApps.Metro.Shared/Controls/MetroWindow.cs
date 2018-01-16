@@ -75,7 +75,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
-        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         /// <summary>
         /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
@@ -936,7 +936,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null && (dialog.DialogSettings == null || !dialog.DialogSettings.CanCloseDialogOwner);
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -949,7 +949,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null && (dialog.DialogSettings == null || !dialog.DialogSettings.CanCloseDialogOwner);
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
