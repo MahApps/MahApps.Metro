@@ -297,7 +297,7 @@
                 <ControlTemplate TargetType="GridViewColumnHeader">
                     <Grid>
                         <Rectangle Fill="Transparent" IsHitTestVisible="True" />
-                        <Border x:Name="HeaderBorder" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="HeaderBorder">
                             <Controls:ContentControlEx x:Name="HeaderContent"
                                                        Margin="0 0 0 1"
                                                        Padding="{TemplateBinding Padding}"
