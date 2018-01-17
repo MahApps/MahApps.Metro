@@ -114,6 +114,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindowHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MultiFrameImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDown.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventHandler.cs" />

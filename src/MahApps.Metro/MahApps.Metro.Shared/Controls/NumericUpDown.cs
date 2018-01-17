@@ -147,18 +147,25 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
-        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
+        [Obsolete("This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
             "SelectAllOnFocus",
             typeof(bool),
             typeof(NumericUpDown),
             new PropertyMetadata(true, (o, e) => TextBoxHelper.SetSelectAllOnFocus(o, (bool)e.NewValue)));
 
+        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
         public static readonly DependencyProperty HasDecimalsProperty = DependencyProperty.Register(
             "HasDecimals",
             typeof(bool), 
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
+
+        public static readonly DependencyProperty NumericInputModeProperty = DependencyProperty.Register(
+            "NumericInputMode",
+            typeof(NumericInput),
+            typeof(NumericUpDown),
+            new FrameworkPropertyMetadata(NumericInput.All, OnNumericInputModeChanged));
 
         public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
             "SnapToMultipleOfInterval",
@@ -462,6 +469,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Indicates if the NumericUpDown should show the decimal separator or not.
         /// </summary>
+        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
         [Bindable(true)]
         [Category("Common")]
         [DefaultValue(true)]
@@ -469,6 +477,17 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(HasDecimalsProperty); }
             set { SetValue(HasDecimalsProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets which numeric input for the NumericUpDown is allowed.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(NumericInput.All)]
+        public NumericInput NumericInputMode
+        {
+            get { return (NumericInput)GetValue(NumericInputModeProperty); }
+            set { SetValue(NumericInputModeProperty, value); }
         }
 
         /// <summary>
@@ -693,7 +712,7 @@ namespace MahApps.Metro.Controls
                 {
                     if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
-                        if (HasDecimals)
+                        if (NumericInputMode.HasFlag(NumericInput.Decimal))
                         {
                             e.Handled = false;
                         }
@@ -843,7 +862,7 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
             double val = ((double?)value).Value;
 
-            if (numericUpDown.HasDecimals == false)
+            if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
             {
                 val = Math.Truncate(val);
             }
@@ -910,9 +929,9 @@ namespace MahApps.Metro.Controls
 
             var value = (string)e.NewValue;
 
-            if (!nud.HasDecimals && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
+            if (!nud.NumericInputMode.HasFlag(NumericInput.Decimal) && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
             {
-                nud.SetCurrentValue(HasDecimalsProperty, true);
+                nud.SetCurrentValue(NumericInputModeProperty, nud.NumericInputMode | NumericInput.Decimal);
             }
         }
 
@@ -926,11 +945,35 @@ namespace MahApps.Metro.Controls
         private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var numericUpDown = (NumericUpDown)d;
-            double? oldValue = numericUpDown.Value;
-
-            if ((bool)e.NewValue == false && numericUpDown.Value != null)
+            if (e.NewValue != e.OldValue && e.NewValue is bool && numericUpDown.Value != null)
             {
-                numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                var hasDecimals = (bool)e.NewValue;
+                var numericInput = numericUpDown.NumericInputMode;
+                if (!hasDecimals)
+                {
+                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                    numericInput &= ~NumericInput.Decimal;
+                }
+                else
+                {
+                    numericInput |= NumericInput.Decimal;
+                }
+
+                numericUpDown.SetCurrentValue(NumericInputModeProperty, numericInput);
+            }
+        }
+
+        private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            if (e.NewValue != e.OldValue && e.NewValue is NumericInput && numericUpDown.Value != null)
+            {
+                var numericInput = (NumericInput)e.NewValue;
+
+                if (!numericInput.HasFlag(NumericInput.Decimal))
+                {
+                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                }
             }
         }
 
@@ -1091,7 +1134,7 @@ namespace MahApps.Metro.Controls
         {
             _manualChange = true;
 
-            if (HasDecimals && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
+            if (NumericInputMode.HasFlag(NumericInput.Decimal) && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
             {
                 TextBox textBox = sender as TextBox;
 
