@@ -743,13 +743,14 @@ namespace MahApps.Metro.Controls
                         else if (textBox.SelectionStart > 0)
                         {
                             string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp))
+                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp) && NumericInputMode.HasFlag(NumericInput.Decimal))
                             {
                                 e.Handled = false;
                             }
                         }
                     }
                     else if (text.Equals(ScientificNotationChar, StrComp) &&
+                             NumericInputMode.HasFlag(NumericInput.Decimal) &&
                              textBox.SelectionStart > 0 &&
                              !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
                     {

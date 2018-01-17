@@ -13,16 +13,12 @@ namespace MahApps.Metro.Controls
         /// </summary>
         Numbers = 1 << 1, // Only Numbers
         /// <summary>
-        /// Decimal numbers are allowed
+        /// Numbers with decimal point and allowed scientific input
         /// </summary>
-        Decimal = 2 << 1, // Numbers with decimal point
-        /// <summary>
-        /// Scientific is allowed for (decimal) numbers
-        /// </summary>
-        Scientific = 3 << 1, // Numbers and Decimal with scientific
+        Decimal = 2 << 1,
         /// <summary>
         /// All is allowed
         /// </summary>
-        All = Decimal | Scientific
+        All = Numbers | Decimal
     }
 }
