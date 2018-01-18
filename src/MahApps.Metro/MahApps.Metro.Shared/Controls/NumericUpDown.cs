@@ -508,23 +508,27 @@ namespace MahApps.Metro.Controls
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             // When NumericUpDown gets logical focus, select the text inside us.
-            NumericUpDown numericUpDown = (NumericUpDown)sender;
-
             // If we're an editable NumericUpDown, forward focus to the TextBox element
             if (!e.Handled)
             {
-                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && numericUpDown._valueTextBox != null)
+                NumericUpDown numericUpDown = (NumericUpDown)sender;
+                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && e.OriginalSource == numericUpDown)
                 {
-                    if (e.OriginalSource == numericUpDown)
+                    // MoveFocus takes a TraversalRequest as its argument.
+                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
+                    // Gets the element with keyboard focus.
+                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
+                    // Change keyboard focus.
+                    if (elementWithFocus != null)
                     {
-                        // MoveFocus takes a TraversalRequest as its argument.
-                        var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                        // Gets the element with keyboard focus.
-                        var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                        // Change keyboard focus.
-                        elementWithFocus?.MoveFocus(request);
-                        e.Handled = true;
+                        elementWithFocus.MoveFocus(request);
                     }
+                    else
+                    {
+                        numericUpDown.Focus();
+                    }
+
+                    e.Handled = true;
                 }
             }
         }
