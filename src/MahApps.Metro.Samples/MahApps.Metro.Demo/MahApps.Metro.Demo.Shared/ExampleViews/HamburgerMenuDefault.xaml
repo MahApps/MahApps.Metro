@@ -21,40 +21,58 @@
 
             <!--  This is the template for all menu items. In this sample we use the glyph items.  -->
             <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
-                <Grid Height="48">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="48" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Image Margin="12"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Source="{Binding Glyph}"
-                           Stretch="UniformToFill" />
-                    <TextBlock Grid.Column="1"
+                <DockPanel Height="48" LastChildFill="True">
+                    <Grid x:Name="IconPart"
+                          Width="48"
+                          DockPanel.Dock="Left">
+                        <Image Margin="12"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="{Binding Glyph}"
+                               Stretch="UniformToFill" />
+                    </Grid>
+                    <TextBlock x:Name="TextPart"
                                VerticalAlignment="Center"
                                FontSize="16"
                                Text="{Binding Label}" />
-                </Grid>
+                </DockPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                        <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                        <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
 
             <!--  This is the template for all option menu items.  -->
             <DataTemplate x:Key="HamburgerOptionsMenuItem" DataType="{x:Type Controls:HamburgerMenuItem}">
-                <Grid Height="48">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="48" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <ContentControl Grid.Column="0"
+                <DockPanel Height="48" LastChildFill="True">
+                    <ContentControl x:Name="IconPart"
+                                    Width="48"
                                     Content="{Binding Tag}"
+                                    DockPanel.Dock="Left"
                                     Focusable="False"
                                     IsTabStop="False" />
-                    <TextBlock Grid.Column="1"
+                    <TextBlock x:Name="TextPart"
                                VerticalAlignment="Center"
                                FontSize="16"
                                Text="{Binding Label}" />
-                </Grid>
+                </DockPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                        <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                        <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
+
+            <ObjectDataProvider x:Key="PanePlacementEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type Controls:SplitViewPanePlacement}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Controls:SplitViewPanePlacement" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
             <ObjectDataProvider x:Key="DisplayModeEnumValues"
                                 MethodName="GetValues"
@@ -97,6 +115,13 @@
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="IsPaneOpen:"
                                        IsChecked="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Controls:MetroHeader Margin="0 10 0 5" Header="PanePlacement:">
+                    <ComboBox MinWidth="150"
+                              HorizontalAlignment="Left"
+                              ItemsSource="{Binding Source={StaticResource PanePlacementEnumValues}}"
+                              SelectedItem="{Binding ElementName=HamburgerMenuControl, Path=PanePlacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Controls:MetroHeader>
 
                 <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
                     <ComboBox MinWidth="150"
@@ -167,7 +192,7 @@
                 <!--  Header  -->
                 <Controls:HamburgerMenu.HamburgerMenuHeaderTemplate>
                     <DataTemplate>
-                        <TextBlock HorizontalAlignment="Left"
+                        <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="16"
                                    Foreground="White"
@@ -207,7 +232,7 @@
                                 <RowDefinition Height="48" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="#7A7A7A">
+                            <Border Grid.Row="0" Background="#7A7A7A" Margin="-1 0 -1 0">
                                 <TextBlock x:Name="Header"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
