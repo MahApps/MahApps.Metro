@@ -211,23 +211,6 @@
                         Visibility="Collapsed" />
         </Grid>
 
-        <ControlTemplate.Resources>
-            <Storyboard x:Key="OverlayFastSemiFadeIn"
-                        AccelerationRatio=".97"
-                        BeginTime="0:0:0"
-                        SpeedRatio="2.7"
-                        Storyboard.TargetProperty="Opacity">
-                <DoubleAnimation To=".7" />
-            </Storyboard>
-            <Storyboard x:Key="OverlayFastSemiFadeOut"
-                        AccelerationRatio=".97"
-                        BeginTime="0:0:0"
-                        SpeedRatio="2.7"
-                        Storyboard.TargetProperty="Opacity">
-                <DoubleAnimation To="0.0" />
-            </Storyboard>
-        </ControlTemplate.Resources>
-
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
                 <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
@@ -553,6 +536,21 @@
 
     </ControlTemplate>
 
+    <Storyboard x:Key="OverlayFastSemiFadeIn"
+                AccelerationRatio=".97"
+                BeginTime="0:0:0"
+                SpeedRatio="2.7"
+                Storyboard.TargetProperty="Opacity">
+        <DoubleAnimation To=".7" />
+    </Storyboard>
+    <Storyboard x:Key="OverlayFastSemiFadeOut"
+                AccelerationRatio=".97"
+                BeginTime="0:0:0"
+                SpeedRatio="2.7"
+                Storyboard.TargetProperty="Opacity">
+        <DoubleAnimation To="0.0" />
+    </Storyboard>
+
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -561,6 +559,8 @@
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
         <Setter Property="OverlayBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />
+        <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
         <Setter Property="TextElement.FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />

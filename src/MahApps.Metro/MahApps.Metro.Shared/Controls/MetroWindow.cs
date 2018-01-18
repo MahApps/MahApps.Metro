@@ -108,6 +108,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromScRgb(255, 0, 0, 0)))); // BlackColorBrush
         public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
 
+        /// <summary>
+        /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayFadeInProperty = DependencyProperty.Register("OverlayFadeIn", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
+        /// <summary>
+        /// Identifies the <see cref="OverlayFadeOut"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayFadeOutProperty = DependencyProperty.Register("OverlayFadeOut", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
+
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
 
@@ -756,6 +765,24 @@ namespace MahApps.Metro.Controls
             set { SetValue(OverlayOpacityProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the overlay fade in storyboard.
+        /// </summary>
+        public Storyboard OverlayFadeIn
+        {
+            get { return (Storyboard)GetValue(OverlayFadeInProperty); }
+            set { SetValue(OverlayFadeInProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the overlay fade out storyboard.
+        /// </summary>
+        public Storyboard OverlayFadeOut
+        {
+            get { return (Storyboard)GetValue(OverlayFadeOutProperty); }
+            set { SetValue(OverlayFadeOutProperty, value); }
+        }
+
         [Obsolete("This property will be deleted in the next release.")]
         public string WindowTitle
         {
@@ -783,30 +810,42 @@ namespace MahApps.Metro.Controls
 
             overlayBox.Visibility = Visibility.Visible;
 
-            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeIn"]).Clone();
-            ((DoubleAnimation)sb.Children[0]).To = this.OverlayOpacity;
-
-            EventHandler completionHandler = null;
-            completionHandler = (sender, args) =>
+            var sb = OverlayFadeIn?.Clone();
+            if (sb != null)
             {
-                sb.Completed -= completionHandler;
+                overlayStoryboard = sb;
 
-                if (overlayStoryboard == sb)
-                {
-                    overlayStoryboard = null;
-                }
+                ((DoubleAnimation)sb.Children[0]).To = this.OverlayOpacity;
 
+                this.BeginInvoke(() =>
+                    {
+                        EventHandler completionHandler = null;
+                        completionHandler = (sender, args) =>
+                            {
+                                //sb.Completed -= completionHandler;
+                                if (overlayStoryboard == sb)
+                                {
+                                    overlayStoryboard = null;
+                                }
+
+                                tcs.TrySetResult(null);
+                            };
+
+                        sb.Completed += completionHandler;
+                        sb.Freeze();
+                        overlayBox.BeginStoryboard(sb);
+                    });
+            }
+            else
+            {
+                overlayStoryboard = null;
+                this.overlayBox.Opacity = this.OverlayOpacity;
                 tcs.TrySetResult(null);
-            };
-
-            sb.Completed += completionHandler;
-
-            overlayBox.BeginStoryboard(sb);
-
-            overlayStoryboard = sb;
+            }
 
             return tcs.Task;
         }
+
         /// <summary>
         /// Begins to hide the MetroWindow's overlay effect.
         /// </summary>
@@ -817,7 +856,7 @@ namespace MahApps.Metro.Controls
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
+            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity <= 0.0)
             {
                 //No Task.FromResult in .NET 4.
                 tcs.SetResult(null);
@@ -826,42 +865,57 @@ namespace MahApps.Metro.Controls
 
             Dispatcher.VerifyAccess();
 
-            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeOut"]).Clone();
-            ((DoubleAnimation)sb.Children[0]).To = 0d;
-
-            EventHandler completionHandler = null;
-            completionHandler = (sender, args) =>
+            var sb = OverlayFadeOut?.Clone();
+            if (sb != null)
             {
-                sb.Completed -= completionHandler;
+                overlayStoryboard = sb;
 
-                if (overlayStoryboard == sb)
-                {
-                    overlayBox.Visibility = Visibility.Hidden;
-                    overlayStoryboard = null;
-                }
+                ((DoubleAnimation)sb.Children[0]).To = 0d;
 
+                this.BeginInvoke(() =>
+                    {
+                        EventHandler completionHandler = null;
+                        completionHandler = (sender, args) =>
+                            {
+                                //sb.Completed -= completionHandler;
+                                if (overlayStoryboard == sb)
+                                {
+                                    overlayBox.Visibility = Visibility.Hidden;
+                                    overlayStoryboard = null;
+                                }
+
+                                tcs.TrySetResult(null);
+                            };
+
+                        sb.Completed += completionHandler;
+                        sb.Freeze();
+                        this.overlayBox.BeginStoryboard(sb);
+                    });
+
+            }
+            else
+            {
+                overlayStoryboard = null;
+                overlayBox.Visibility = Visibility.Hidden;
                 tcs.TrySetResult(null);
-            };
-
-            sb.Completed += completionHandler;
-
-            overlayBox.BeginStoryboard(sb);
-
-            overlayStoryboard = sb;
+            }
 
             return tcs.Task;
         }
+
         public bool IsOverlayVisible()
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
             return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= this.OverlayOpacity;
         }
+
         public void ShowOverlay()
         {
             overlayBox.Visibility = Visibility.Visible;
             overlayBox.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
         }
+
         public void HideOverlay()
         {
             overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
