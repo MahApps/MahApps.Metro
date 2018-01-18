@@ -272,10 +272,10 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (md.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    md.PART_AffirmativeButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
-                    md.PART_NegativeButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
-                    md.PART_FirstAuxiliaryButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
-                    md.PART_SecondAuxiliaryButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
+                    md.PART_AffirmativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
+                    md.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
+                    md.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
+                    md.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
                     break;
             }
         }
@@ -342,33 +342,5 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return false;
         }
-    }
-
-    /// <summary>
-    /// An enum representing the result of a Message Dialog.
-    /// </summary>
-    public enum MessageDialogResult
-    {
-        Negative = 0,
-        Affirmative = 1,
-        FirstAuxiliary,
-        SecondAuxiliary,
-    }
-
-    /// <summary>
-    /// An enum representing the different button states for a Message Dialog.
-    /// </summary>
-    public enum MessageDialogStyle
-    {
-        /// <summary>
-        /// Just "OK"
-        /// </summary>
-        Affirmative = 0,
-        /// <summary>
-        /// "OK" and "Cancel"
-        /// </summary>
-        AffirmativeAndNegative = 1,
-        AffirmativeAndNegativeAndSingleAuxiliary = 2,
-        AffirmativeAndNegativeAndDoubleAuxiliary = 3
     }
 }

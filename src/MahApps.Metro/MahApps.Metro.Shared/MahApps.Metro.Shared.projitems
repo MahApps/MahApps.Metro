@@ -41,7 +41,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\InputDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogStyle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogColorScheme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogSettings.cs" />
@@ -51,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlipView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Flyout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutsControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutTheme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Glow.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindowHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MultiFrameImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDown.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventHandler.cs" />

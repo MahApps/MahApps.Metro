@@ -12,18 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Behaviors;
+using ControlzEx.Native;
 using ControlzEx.Standard;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Windows.Data;
-    using System.Windows.Interactivity;
-    using ControlzEx.Behaviors;
-    using MahApps.Metro.Behaviours;
-    using ControlzEx.Native;
-
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -63,6 +60,13 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
+
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -70,6 +74,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register("IsMinButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -405,6 +416,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets whether one or more dialogs are shown.
+        /// </summary>
+        public bool IsAnyDialogOpen
+        {
+            get { return (bool)GetValue(IsAnyDialogOpenProperty); }
+            private set { SetValue(IsAnyDialogOpenProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets edge mode of the titlebar icon.
         /// </summary>
         public EdgeMode IconEdgeMode
@@ -552,6 +572,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
             set { SetValue(IsCloseButtonEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether if the close button should be enabled or not if a dialog is shown.
+        /// </summary>
+        public bool IsCloseButtonEnabledWithDialog
+        {
+            get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogProperty, value); }
         }
 
         /// <summary>
@@ -907,7 +936,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -920,7 +949,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
