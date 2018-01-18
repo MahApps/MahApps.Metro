@@ -658,7 +658,7 @@ namespace MahApps.Metro.Controls
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             TimePickerBase picker = (TimePickerBase)sender;
-            if (!e.Handled && picker.Focusable && (picker._textBox != null))
+            if (!e.Handled && picker.Focusable)
             {
                 if (Equals(e.OriginalSource, picker))
                 {
@@ -667,10 +667,18 @@ namespace MahApps.Metro.Controls
                     // Gets the element with keyboard focus.
                     var elementWithFocus = Keyboard.FocusedElement as UIElement;
                     // Change keyboard focus.
-                    elementWithFocus?.MoveFocus(request);
+                    if (elementWithFocus != null)
+                    {
+                        elementWithFocus.MoveFocus(request);
+                    }
+                    else
+                    {
+                        picker.Focus();
+                    }
+
                     e.Handled = true;
                 }
-                else if (Equals(e.OriginalSource, picker._textBox))
+                else if (picker._textBox != null && Equals(e.OriginalSource, picker._textBox))
                 {
                     picker._textBox.SelectAll();
                     e.Handled = true;
