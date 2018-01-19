@@ -789,6 +789,30 @@ namespace MahApps.Metro.Controls
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
+        private bool CanUseOverlayFadingStoryboard(Storyboard sb, out DoubleAnimation animation)
+        {
+            animation = null;
+            if (null == sb)
+            {
+                return false;
+            }
+
+            sb.Dispatcher.VerifyAccess();
+
+            animation = sb.Children.OfType<DoubleAnimation>().FirstOrDefault();
+            if (null == animation)
+            {
+                return false;
+            }
+
+            return (sb.Duration.HasTimeSpan && sb.Duration.TimeSpan.Ticks > 0)
+                   || (sb.AccelerationRatio > 0)
+                   || (sb.DecelerationRatio > 0)
+                   || (animation.Duration.HasTimeSpan && animation.Duration.TimeSpan.Ticks > 0)
+                   || animation.AccelerationRatio > 0
+                   || animation.DecelerationRatio > 0;
+        }
+
         /// <summary>
         /// Begins to show the MetroWindow's overlay effect.
         /// </summary>
@@ -808,38 +832,33 @@ namespace MahApps.Metro.Controls
 
             Dispatcher.VerifyAccess();
 
-            overlayBox.Visibility = Visibility.Visible;
-
             var sb = OverlayFadeIn?.Clone();
-            if (sb != null)
+            overlayStoryboard = sb;
+            DoubleAnimation animation;
+            if (CanUseOverlayFadingStoryboard(sb, out animation))
             {
-                overlayStoryboard = sb;
+                this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
-                ((DoubleAnimation)sb.Children[0]).To = this.OverlayOpacity;
+                animation.To = this.OverlayOpacity;
 
-                this.BeginInvoke(() =>
+                EventHandler completionHandler = null;
+                completionHandler = (sender, args) =>
                     {
-                        EventHandler completionHandler = null;
-                        completionHandler = (sender, args) =>
-                            {
-                                //sb.Completed -= completionHandler;
-                                if (overlayStoryboard == sb)
-                                {
-                                    overlayStoryboard = null;
-                                }
+                        sb.Completed -= completionHandler;
+                        if (overlayStoryboard == sb)
+                        {
+                            overlayStoryboard = null;
+                        }
 
-                                tcs.TrySetResult(null);
-                            };
+                        tcs.TrySetResult(null);
+                    };
 
-                        sb.Completed += completionHandler;
-                        sb.Freeze();
-                        overlayBox.BeginStoryboard(sb);
-                    });
+                sb.Completed += completionHandler;
+                overlayBox.BeginStoryboard(sb);
             }
             else
             {
-                overlayStoryboard = null;
-                this.overlayBox.Opacity = this.OverlayOpacity;
+                ShowOverlay();
                 tcs.TrySetResult(null);
             }
 
@@ -859,6 +878,7 @@ namespace MahApps.Metro.Controls
             if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity <= 0.0)
             {
                 //No Task.FromResult in .NET 4.
+                this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
                 tcs.SetResult(null);
                 return tcs.Task;
             }
@@ -866,37 +886,31 @@ namespace MahApps.Metro.Controls
             Dispatcher.VerifyAccess();
 
             var sb = OverlayFadeOut?.Clone();
-            if (sb != null)
+            overlayStoryboard = sb;
+            DoubleAnimation animation;
+            if (CanUseOverlayFadingStoryboard(sb, out animation))
             {
-                overlayStoryboard = sb;
+                animation.To = 0d;
 
-                ((DoubleAnimation)sb.Children[0]).To = 0d;
-
-                this.BeginInvoke(() =>
+                EventHandler completionHandler = null;
+                completionHandler = (sender, args) =>
                     {
-                        EventHandler completionHandler = null;
-                        completionHandler = (sender, args) =>
-                            {
-                                //sb.Completed -= completionHandler;
-                                if (overlayStoryboard == sb)
-                                {
-                                    overlayBox.Visibility = Visibility.Hidden;
-                                    overlayStoryboard = null;
-                                }
+                        sb.Completed -= completionHandler;
+                        if (overlayStoryboard == sb)
+                        {
+                            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+                            overlayStoryboard = null;
+                        }
 
-                                tcs.TrySetResult(null);
-                            };
+                        tcs.TrySetResult(null);
+                    };
 
-                        sb.Completed += completionHandler;
-                        sb.Freeze();
-                        this.overlayBox.BeginStoryboard(sb);
-                    });
-
+                sb.Completed += completionHandler;
+                overlayBox.BeginStoryboard(sb);
             }
             else
             {
-                overlayStoryboard = null;
-                overlayBox.Visibility = Visibility.Hidden;
+                HideOverlay();
                 tcs.TrySetResult(null);
             }
 
@@ -912,14 +926,14 @@ namespace MahApps.Metro.Controls
 
         public void ShowOverlay()
         {
-            overlayBox.Visibility = Visibility.Visible;
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             overlayBox.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
         }
 
         public void HideOverlay()
         {
-            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
-            overlayBox.Visibility = System.Windows.Visibility.Hidden;
+            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0d);
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
         }
 
         /// <summary>
