@@ -83,7 +83,7 @@
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MetroRichTextBox}" TargetType="RichTextBox" />
-    <Style BasedOn="{StaticResource MetroSlider}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.Slider}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MetroLabel}" TargetType="Label" />
     <Style BasedOn="{StaticResource MetroTabItem}" TargetType="TabItem" />
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="TabControl" />

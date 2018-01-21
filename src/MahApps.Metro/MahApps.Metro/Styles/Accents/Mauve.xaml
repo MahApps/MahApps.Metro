@@ -41,6 +41,10 @@
 
     <!--  Slider brushes  -->
 
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillMouseOver" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillPressed" Color="{StaticResource AccentColor}" options:Freeze="True" />
+
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderThumbBackground.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFill.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillMouseOver.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
