@@ -89,25 +89,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid x:Name="Root" Margin="0 -1 0 0">
-                        <Rectangle Height="5" Margin="0 1 0 0">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
-                                    <GradientStop Offset="0.25" Color="{DynamicResource AccentColor}" />
-                                    <GradientStop Offset="0.75" Color="{DynamicResource AccentColor}" />
-                                    <GradientStop Offset="1.0" Color="{TemplateBinding Background}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                    <Grid Margin="0 -1 0 0">
+                        <Rectangle Height="5"
+                                   Margin="0 1 0 0"
+                                   Fill="{DynamicResource AccentColorBrush}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -136,17 +121,17 @@
                          Visibility="Collapsed" />
                 <Track x:Name="PART_Track" Grid.Row="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource HorizontalTrackValue}" />
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{DynamicResource HorizontalTrackValue}" />
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource HorizontalTrackLargeDecrease}" />
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <controls:MetroThumb x:Name="HorizontalThumb"
                                              Width="{DynamicResource HorizontalThumbWidth}"
                                              Height="{DynamicResource HorizontalThumbHeight}"
                                              IsTabStop="True"
-                                             Style="{StaticResource HorizontalSliderThumb}" />
+                                             Style="{DynamicResource HorizontalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>
@@ -215,25 +200,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid x:Name="Root" Margin="-1 0 0 0">
-                        <Rectangle Width="5" Margin="1 0 0 0">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                    <GradientStop Offset="0.0" Color="{TemplateBinding Background}" />
-                                    <GradientStop Offset="0.25" Color="{DynamicResource AccentColor}" />
-                                    <GradientStop Offset="0.75" Color="{DynamicResource AccentColor}" />
-                                    <GradientStop Offset="1.0" Color="{TemplateBinding Background}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                    <Grid Margin="-1 0 0 0">
+                        <Rectangle Width="5"
+                                   Margin="1 0 0 0"
+                                   Fill="{DynamicResource AccentColorBrush}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -262,17 +232,17 @@
                          Visibility="Collapsed" />
                 <Track x:Name="PART_Track" Grid.Column="1">
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource VerticalTrackValue}" />
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{DynamicResource VerticalTrackValue}" />
                     </Track.DecreaseRepeatButton>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource VerticalTrackLargeDecrease}" />
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{DynamicResource VerticalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
                         <controls:MetroThumb x:Name="VerticalThumb"
                                              Width="{DynamicResource VerticalThumbWidth}"
                                              Height="{DynamicResource VerticalThumbHeight}"
                                              IsTabStop="True"
-                                             Style="{StaticResource VerticalSliderThumb}" />
+                                             Style="{DynamicResource VerticalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>

@@ -232,7 +232,9 @@
                                 <RowDefinition Height="48" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Border Grid.Row="0" Background="#7A7A7A" Margin="-1 0 -1 0">
+                            <Border Grid.Row="0"
+                                    Margin="-1 0 -1 0"
+                                    Background="#7A7A7A">
                                 <TextBlock x:Name="Header"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"

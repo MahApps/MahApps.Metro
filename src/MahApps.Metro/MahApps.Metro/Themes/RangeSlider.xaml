@@ -35,9 +35,11 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Rectangle Height="5"
-                                                   Margin="0 1 0 0"
-                                                   Fill="{DynamicResource AccentColorBrush}" />
+                                        <Grid Margin="0 -1 0 0">
+                                            <Rectangle Height="5"
+                                                       Margin="0 1 0 0"
+                                                       Fill="{DynamicResource AccentColorBrush}" />
+                                        </Grid>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -111,9 +113,11 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Rectangle Width="5"
-                                                   Margin="0 0 0 0"
-                                                   Fill="{DynamicResource AccentColorBrush}" />
+                                        <Grid Margin="-1 0 0 0">
+                                            <Rectangle Width="5"
+                                                       Margin="1 0 0 0"
+                                                       Fill="{DynamicResource AccentColorBrush}" />
+                                        </Grid>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
