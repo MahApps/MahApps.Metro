@@ -39,17 +39,6 @@
     <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Opacity="0.4" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
 
-    <!--  Slider brushes  -->
-
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillMouseOver" Color="{StaticResource AccentColor}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillPressed" Color="{StaticResource AccentColor}" options:Freeze="True" />
-
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderThumbBackground.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFill.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillMouseOver.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Metro.Brushes.SliderTrackValueFillPressed.Win10" Color="{StaticResource AccentBaseColor}" options:Freeze="True" />
-
     <!--  DataGrid brushes  -->
 
     <SolidColorBrush x:Key="MetroDataGrid.HighlightBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
