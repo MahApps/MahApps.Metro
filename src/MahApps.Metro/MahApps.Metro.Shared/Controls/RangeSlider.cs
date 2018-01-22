@@ -19,7 +19,7 @@ namespace MahApps.Metro.Controls
     /// A slider control with the ability to select a range between two values.
     /// </summary>
     [DefaultEvent("RangeSelectionChanged"),
-     TemplatePart(Name = "PART_Container", Type = typeof(StackPanel)),
+     TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement)),
      TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel)),
      TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton)),
      TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton)),
@@ -392,7 +392,7 @@ namespace MahApps.Metro.Controls
         private RepeatButton _leftButton;
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
-        private StackPanel _container;
+        private FrameworkElement _container;
         private Double _movableWidth;
         private readonly DispatcherTimer _timer;
 
@@ -885,44 +885,61 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _container = EnforceInstance<StackPanel>("PART_Container");
-            _visualElementsContainer = EnforceInstance<StackPanel>("PART_RangeSliderContainer");
-            _centerThumb = EnforceInstance<Thumb>("PART_MiddleThumb");
-            _leftButton = EnforceInstance<RepeatButton>("PART_LeftEdge");
-            _rightButton = EnforceInstance<RepeatButton>("PART_RightEdge");
-            _leftThumb = EnforceInstance<Thumb>("PART_LeftThumb");
-            _rightThumb = EnforceInstance<Thumb>("PART_RightThumb");
+
+            _container = GetTemplateChild("PART_Container") as FrameworkElement;
+            _visualElementsContainer = GetTemplateChild("PART_RangeSliderContainer") as StackPanel;
+            _centerThumb = GetTemplateChild("PART_MiddleThumb") as Thumb;
+            _leftButton = GetTemplateChild("PART_LeftEdge") as RepeatButton;
+            _rightButton = GetTemplateChild("PART_RightEdge") as RepeatButton;
+            _leftThumb = GetTemplateChild("PART_LeftThumb") as Thumb;
+            _rightThumb = GetTemplateChild("PART_RightThumb") as Thumb;
+
             InitializeVisualElementsContainer();
             ReCalculateSize();
-        }
-
-        //Get element from name. If it exist then element instance return, if not, new will be created
-        private T EnforceInstance<T>(string partName) where T : FrameworkElement, new()
-        {
-            var element = GetTemplateChild(partName) as T ?? new T();
-            return element;
         }
 
         //adds visual element to the container
         private void InitializeVisualElementsContainer()
         {
-            _leftThumb.DragCompleted += LeftThumbDragComplete;
-            _rightThumb.DragCompleted += RightThumbDragComplete;
-            _leftThumb.DragStarted += LeftThumbDragStart;
-            _rightThumb.DragStarted += RightThumbDragStart;
-            _centerThumb.DragStarted += CenterThumbDragStarted;
-            _centerThumb.DragCompleted += CenterThumbDragCompleted;
+            if (_visualElementsContainer != null
+                && _leftThumb != null
+                && _rightThumb != null
+                && _centerThumb != null)
+            {
+                _leftThumb.DragCompleted -= LeftThumbDragComplete;
+                _rightThumb.DragCompleted -= RightThumbDragComplete;
+                _leftThumb.DragStarted -= LeftThumbDragStart;
+                _rightThumb.DragStarted -= RightThumbDragStart;
+                _centerThumb.DragStarted -= CenterThumbDragStarted;
+                _centerThumb.DragCompleted -= CenterThumbDragCompleted;
 
-            //handle the drag delta events
-            _centerThumb.DragDelta += CenterThumbDragDelta;
-            _leftThumb.DragDelta += LeftThumbDragDelta;
-            _rightThumb.DragDelta += RightThumbDragDelta;
+                //handle the drag delta events
+                _centerThumb.DragDelta -= CenterThumbDragDelta;
+                _leftThumb.DragDelta -= LeftThumbDragDelta;
+                _rightThumb.DragDelta -= RightThumbDragDelta;
 
-            _visualElementsContainer.PreviewMouseDown += VisualElementsContainerPreviewMouseDown;
-            _visualElementsContainer.PreviewMouseUp += VisualElementsContainerPreviewMouseUp;
-            _visualElementsContainer.MouseLeave += VisualElementsContainerMouseLeave;
+                _visualElementsContainer.PreviewMouseDown -= VisualElementsContainerPreviewMouseDown;
+                _visualElementsContainer.PreviewMouseUp -= VisualElementsContainerPreviewMouseUp;
+                _visualElementsContainer.MouseLeave -= VisualElementsContainerMouseLeave;
+                _visualElementsContainer.MouseDown -= VisualElementsContainerMouseDown;
 
-            _visualElementsContainer.MouseDown += VisualElementsContainerMouseDown;
+                _leftThumb.DragCompleted += LeftThumbDragComplete;
+                _rightThumb.DragCompleted += RightThumbDragComplete;
+                _leftThumb.DragStarted += LeftThumbDragStart;
+                _rightThumb.DragStarted += RightThumbDragStart;
+                _centerThumb.DragStarted += CenterThumbDragStarted;
+                _centerThumb.DragCompleted += CenterThumbDragCompleted;
+
+                //handle the drag delta events
+                _centerThumb.DragDelta += CenterThumbDragDelta;
+                _leftThumb.DragDelta += LeftThumbDragDelta;
+                _rightThumb.DragDelta += RightThumbDragDelta;
+
+                _visualElementsContainer.PreviewMouseDown += VisualElementsContainerPreviewMouseDown;
+                _visualElementsContainer.PreviewMouseUp += VisualElementsContainerPreviewMouseUp;
+                _visualElementsContainer.MouseLeave += VisualElementsContainerMouseLeave;
+                _visualElementsContainer.MouseDown += VisualElementsContainerMouseDown;
+            }
         }
 
         //Handler for preview mouse button down for the whole StackPanel container
