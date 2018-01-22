@@ -22,12 +22,10 @@ namespace MahApps.Metro.Controls
      TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement)),
      TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel)),
      TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton)),
-     TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton)),
      TemplatePart(Name = "PART_LeftThumb", Type = typeof(Thumb)),
      TemplatePart(Name = "PART_MiddleThumb", Type = typeof(Thumb)),
-     TemplatePart(Name = "PART_PART_TopTick", Type = typeof(TickBar)),
-     TemplatePart(Name = "PART_PART_BottomTick", Type = typeof(TickBar)),
-     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb))]
+     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb)),
+     TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton))]
     public class RangeSlider : RangeBase
     {
         #region Routed UI commands
