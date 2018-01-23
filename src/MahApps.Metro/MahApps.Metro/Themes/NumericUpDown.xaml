@@ -143,6 +143,13 @@
                             <Setter TargetName="PART_NumericDown" Property="IsEnabled" Value="False" />
                             <Setter TargetName="PART_NumericUp" Property="IsEnabled" Value="False" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsReadOnly" Value="False" />
+                                <Condition Property="InterceptManualEnter" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
+                        </MultiTrigger>
                         <Trigger SourceName="PART_NumericUp" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_NumericUp" Property="Background" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="PolygonUp" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
