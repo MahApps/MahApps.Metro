@@ -24,6 +24,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Slider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
@@ -39,6 +40,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="FloatingMessageContainerStyle" TargetType="{x:Type ContentControl}">
@@ -83,7 +85,7 @@
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MetroRichTextBox}" TargetType="RichTextBox" />
-    <Style BasedOn="{StaticResource MetroSlider}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.Slider}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MetroLabel}" TargetType="Label" />
     <Style BasedOn="{StaticResource MetroTabItem}" TargetType="TabItem" />
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="TabControl" />
