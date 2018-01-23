@@ -84,7 +84,7 @@
     </Style>
 
     <!--  HorizontalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate" TargetType="Slider">
+    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -168,7 +168,7 @@
     </ControlTemplate>
 
     <!--  VerticalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate" TargetType="Slider">
+    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -252,7 +252,7 @@
     </ControlTemplate>
 
     <!--  Slider Style  -->
-    <Style x:Key="MahApps.Metro.Styles.Slider" TargetType="Slider">
+    <Style x:Key="MahApps.Metro.Styles.Slider" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource GrayBrush2}" />
@@ -373,7 +373,7 @@
     </Style>
 
     <!--  obsolete  -->
-    <ControlTemplate x:Key="HorizontalSliderTemplate" TargetType="Slider">
+    <ControlTemplate x:Key="HorizontalSliderTemplate" TargetType="{x:Type Slider}">
         <Grid x:Name="Root">
             <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
                 <Grid.RowDefinitions>
@@ -488,7 +488,7 @@
     </Style>
 
     <!--  obsolete  -->
-    <ControlTemplate x:Key="VerticalSliderTemplate" TargetType="Slider">
+    <ControlTemplate x:Key="VerticalSliderTemplate" TargetType="{x:Type Slider}">
         <Grid x:Name="Root">
             <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
                 <Grid.ColumnDefinitions>
@@ -551,7 +551,7 @@
     </ControlTemplate>
 
     <!--  obsolete  -->
-    <Style x:Key="MetroSlider" TargetType="Slider">
+    <Style x:Key="MetroSlider" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -617,7 +617,7 @@
     </Style>
 
     <!--  HorizontalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10" TargetType="Slider">
+    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -702,7 +702,7 @@
     </ControlTemplate>
 
     <!--  VerticalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate.Win10" TargetType="Slider">
+    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate.Win10" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -787,7 +787,7 @@
     </ControlTemplate>
 
     <!--  Slider Win10 Style  -->
-    <Style x:Key="MahApps.Metro.Styles.Slider.Win10" TargetType="Slider">
+    <Style x:Key="MahApps.Metro.Styles.Slider.Win10" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource AccentBaseColorBrush}" />
