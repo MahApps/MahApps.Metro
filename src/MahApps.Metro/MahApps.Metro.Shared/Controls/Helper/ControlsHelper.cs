@@ -41,10 +41,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ContentCharacterCasingProperty =
             DependencyProperty.RegisterAttached(
                 "ContentCharacterCasing",
-                typeof (CharacterCasing),
-                typeof (ControlsHelper),
+                typeof(CharacterCasing),
+                typeof(ControlsHelper),
                 new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.AffectsMeasure),
-                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing) value && (CharacterCasing) value <= CharacterCasing.Upper));
+                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
 
         /// <summary>
         /// Gets the character casing of the control
@@ -67,7 +67,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize){ Inherits = true});
+            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize) { Inherits = true });
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -233,6 +233,31 @@ namespace MahApps.Metro.Controls
         public static void SetCornerRadius(UIElement element, CornerRadius value)
         {
             element.SetValue(CornerRadiusProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the child contents of the control are not editable.
+        /// </summary>
+        public static readonly DependencyProperty IsReadOnlyProperty
+            = DependencyProperty.RegisterAttached("IsReadOnly",
+                                                  typeof(bool),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Gets a value indicating whether the child contents of the control are not editable.
+        /// </summary>
+        public static bool GetIsReadOnly(UIElement element)
+        {
+            return (bool)element.GetValue(IsReadOnlyProperty);
+        }
+
+        /// <summary>
+        /// Sets a value indicating whether the child contents of the control are not editable.
+        /// </summary>
+        public static void SetIsReadOnly(UIElement element, bool value)
+        {
+            element.SetValue(IsReadOnlyProperty, value);
         }
     }
 }

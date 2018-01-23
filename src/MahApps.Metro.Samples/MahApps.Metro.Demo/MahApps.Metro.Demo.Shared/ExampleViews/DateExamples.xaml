@@ -35,6 +35,11 @@
                             Controls:TextBoxHelper.WatermarkAlignment="Right" />
                 <DatePicker Width="200"
                             Margin="0 10 0 0"
+                            Controls:ControlsHelper.IsReadOnly="True"
+                            SelectedDate="{x:Static system:DateTime.Now}"
+                            HorizontalAlignment="Center" />
+                <DatePicker Width="200"
+                            Margin="0 10 0 0"
                             HorizontalAlignment="Center"
                             Controls:TextBoxHelper.Watermark="" />
                 <DatePicker Width="200"
