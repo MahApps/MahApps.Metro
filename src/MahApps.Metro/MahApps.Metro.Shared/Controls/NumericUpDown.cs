@@ -45,15 +45,6 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, IsReadOnlyPropertyChangedCallback));
 
-        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                numUpDown.ToggleReadOnlyMode((bool)e.NewValue | !numUpDown.InterceptManualEnter);
-            }
-        }
-
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register(
             "StringFormat",
             typeof(string),
@@ -126,15 +117,6 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(true, InterceptManualEnterChangedCallback));
 
-        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                numUpDown.ToggleReadOnlyMode(!(bool)e.NewValue | numUpDown.IsReadOnly);
-            }
-        }
-
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
@@ -172,6 +154,26 @@ namespace MahApps.Metro.Controls
             typeof(bool),
             typeof(NumericUpDown),
             new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
+
+        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                var isReadOnly = (bool)e.NewValue;
+                numUpDown.ToggleReadOnlyMode(isReadOnly || !numUpDown.InterceptManualEnter);
+            }
+        }
+
+        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                var interceptManualEnter = (bool)e.NewValue;
+                numUpDown.ToggleReadOnlyMode(!interceptManualEnter || numUpDown.IsReadOnly);
+            }
+        }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
@@ -1164,27 +1166,30 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            TextBox tb = (TextBox)sender;
-            _manualChange = false;
-
-            double convertedValue;
-            if (ValidateText(tb.Text, out convertedValue))
+            if (_manualChange)
             {
-                if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
-                {
-                    convertedValue = Math.Round(convertedValue / Interval) * Interval;
-                }
+                TextBox tb = (TextBox)sender;
+                _manualChange = false;
 
-                if (convertedValue > Maximum)
+                double convertedValue;
+                if (ValidateText(tb.Text, out convertedValue))
                 {
-                    convertedValue = this.Maximum;
-                }
-                else if (convertedValue < Minimum)
-                {
-                    convertedValue = this.Minimum;
-                }
+                    if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
+                    {
+                        convertedValue = Math.Round(convertedValue / Interval) * Interval;
+                    }
 
-                SetCurrentValue(ValueProperty, convertedValue);
+                    if (convertedValue > Maximum)
+                    {
+                        convertedValue = this.Maximum;
+                    }
+                    else if (convertedValue < Minimum)
+                    {
+                        convertedValue = this.Minimum;
+                    }
+
+                    SetCurrentValue(ValueProperty, convertedValue);
+                }
             }
 
             OnValueChanged(Value, Value);
