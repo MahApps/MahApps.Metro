@@ -13,9 +13,11 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}" RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
+        <Grid Background="{TemplateBinding Background}"
+              LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
+              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
             <AdornerDecorator>
-                <Grid Background="{TemplateBinding Background}">
+                <Grid Margin="{TemplateBinding BorderThickness}">
                     <Grid.ColumnDefinitions>
                         <!--  icon  -->
                         <ColumnDefinition Width="Auto" />
@@ -266,9 +268,11 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="CenterWindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Grid LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}" RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
+        <Grid Background="{TemplateBinding Background}"
+              LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
+              RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}">
             <AdornerDecorator>
-                <Grid Background="{TemplateBinding Background}">
+                <Grid Margin="{TemplateBinding BorderThickness}">
                     <Grid.ColumnDefinitions>
                         <!--  icon  -->
                         <ColumnDefinition Width="Auto" />
