@@ -12,18 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Behaviors;
+using ControlzEx.Native;
 using ControlzEx.Standard;
 using JetBrains.Annotations;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Windows.Data;
-    using System.Windows.Interactivity;
-    using ControlzEx.Behaviors;
-    using MahApps.Metro.Behaviours;
-    using ControlzEx.Native;
-
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
@@ -63,6 +60,13 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
+
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -70,6 +74,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register("IsMinButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -96,6 +107,15 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromScRgb(255, 0, 0, 0)))); // BlackColorBrush
         public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
+
+        /// <summary>
+        /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayFadeInProperty = DependencyProperty.Register("OverlayFadeIn", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
+        /// <summary>
+        /// Identifies the <see cref="OverlayFadeOut"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OverlayFadeOutProperty = DependencyProperty.Register("OverlayFadeOut", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
@@ -405,6 +425,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets whether one or more dialogs are shown.
+        /// </summary>
+        public bool IsAnyDialogOpen
+        {
+            get { return (bool)GetValue(IsAnyDialogOpenProperty); }
+            private set { SetValue(IsAnyDialogOpenProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets edge mode of the titlebar icon.
         /// </summary>
         public EdgeMode IconEdgeMode
@@ -552,6 +581,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
             set { SetValue(IsCloseButtonEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether if the close button should be enabled or not if a dialog is shown.
+        /// </summary>
+        public bool IsCloseButtonEnabledWithDialog
+        {
+            get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogProperty, value); }
         }
 
         /// <summary>
@@ -727,10 +765,52 @@ namespace MahApps.Metro.Controls
             set { SetValue(OverlayOpacityProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the overlay fade in storyboard.
+        /// </summary>
+        public Storyboard OverlayFadeIn
+        {
+            get { return (Storyboard)GetValue(OverlayFadeInProperty); }
+            set { SetValue(OverlayFadeInProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the overlay fade out storyboard.
+        /// </summary>
+        public Storyboard OverlayFadeOut
+        {
+            get { return (Storyboard)GetValue(OverlayFadeOutProperty); }
+            set { SetValue(OverlayFadeOutProperty, value); }
+        }
+
         [Obsolete("This property will be deleted in the next release.")]
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
+        }
+
+        private bool CanUseOverlayFadingStoryboard(Storyboard sb, out DoubleAnimation animation)
+        {
+            animation = null;
+            if (null == sb)
+            {
+                return false;
+            }
+
+            sb.Dispatcher.VerifyAccess();
+
+            animation = sb.Children.OfType<DoubleAnimation>().FirstOrDefault();
+            if (null == animation)
+            {
+                return false;
+            }
+
+            return (sb.Duration.HasTimeSpan && sb.Duration.TimeSpan.Ticks > 0)
+                   || (sb.AccelerationRatio > 0)
+                   || (sb.DecelerationRatio > 0)
+                   || (animation.Duration.HasTimeSpan && animation.Duration.TimeSpan.Ticks > 0)
+                   || animation.AccelerationRatio > 0
+                   || animation.DecelerationRatio > 0;
         }
 
         /// <summary>
@@ -752,32 +832,39 @@ namespace MahApps.Metro.Controls
 
             Dispatcher.VerifyAccess();
 
-            overlayBox.Visibility = Visibility.Visible;
-
-            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeIn"]).Clone();
-            ((DoubleAnimation)sb.Children[0]).To = this.OverlayOpacity;
-
-            EventHandler completionHandler = null;
-            completionHandler = (sender, args) =>
-            {
-                sb.Completed -= completionHandler;
-
-                if (overlayStoryboard == sb)
-                {
-                    overlayStoryboard = null;
-                }
-
-                tcs.TrySetResult(null);
-            };
-
-            sb.Completed += completionHandler;
-
-            overlayBox.BeginStoryboard(sb);
-
+            var sb = OverlayFadeIn?.Clone();
             overlayStoryboard = sb;
+            DoubleAnimation animation;
+            if (CanUseOverlayFadingStoryboard(sb, out animation))
+            {
+                this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+
+                animation.To = this.OverlayOpacity;
+
+                EventHandler completionHandler = null;
+                completionHandler = (sender, args) =>
+                    {
+                        sb.Completed -= completionHandler;
+                        if (overlayStoryboard == sb)
+                        {
+                            overlayStoryboard = null;
+                        }
+
+                        tcs.TrySetResult(null);
+                    };
+
+                sb.Completed += completionHandler;
+                overlayBox.BeginStoryboard(sb);
+            }
+            else
+            {
+                ShowOverlay();
+                tcs.TrySetResult(null);
+            }
 
             return tcs.Task;
         }
+
         /// <summary>
         /// Begins to hide the MetroWindow's overlay effect.
         /// </summary>
@@ -788,55 +875,65 @@ namespace MahApps.Metro.Controls
 
             var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
+            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity <= 0.0)
             {
                 //No Task.FromResult in .NET 4.
+                this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
                 tcs.SetResult(null);
                 return tcs.Task;
             }
 
             Dispatcher.VerifyAccess();
 
-            var sb = ((Storyboard)this.Template.Resources["OverlayFastSemiFadeOut"]).Clone();
-            ((DoubleAnimation)sb.Children[0]).To = 0d;
-
-            EventHandler completionHandler = null;
-            completionHandler = (sender, args) =>
-            {
-                sb.Completed -= completionHandler;
-
-                if (overlayStoryboard == sb)
-                {
-                    overlayBox.Visibility = Visibility.Hidden;
-                    overlayStoryboard = null;
-                }
-
-                tcs.TrySetResult(null);
-            };
-
-            sb.Completed += completionHandler;
-
-            overlayBox.BeginStoryboard(sb);
-
+            var sb = OverlayFadeOut?.Clone();
             overlayStoryboard = sb;
+            DoubleAnimation animation;
+            if (CanUseOverlayFadingStoryboard(sb, out animation))
+            {
+                animation.To = 0d;
+
+                EventHandler completionHandler = null;
+                completionHandler = (sender, args) =>
+                    {
+                        sb.Completed -= completionHandler;
+                        if (overlayStoryboard == sb)
+                        {
+                            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+                            overlayStoryboard = null;
+                        }
+
+                        tcs.TrySetResult(null);
+                    };
+
+                sb.Completed += completionHandler;
+                overlayBox.BeginStoryboard(sb);
+            }
+            else
+            {
+                HideOverlay();
+                tcs.TrySetResult(null);
+            }
 
             return tcs.Task;
         }
+
         public bool IsOverlayVisible()
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
             return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= this.OverlayOpacity;
         }
+
         public void ShowOverlay()
         {
-            overlayBox.Visibility = Visibility.Visible;
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             overlayBox.SetCurrentValue(Grid.OpacityProperty, this.OverlayOpacity);
         }
+
         public void HideOverlay()
         {
-            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
-            overlayBox.Visibility = System.Windows.Visibility.Hidden;
+            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0d);
+            this.overlayBox.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
         }
 
         /// <summary>
@@ -907,7 +1004,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = await this.GetCurrentDialogAsync<BaseMetroDialog>();
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);
@@ -920,7 +1017,7 @@ namespace MahApps.Metro.Controls
             {
                 // #2409: don't close window if there is a dialog still open
                 var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null;
+                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
             }
 
             base.OnClosing(e);

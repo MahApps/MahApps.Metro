@@ -9,8 +9,13 @@
 
     <Color x:Key="Gray1">#FFF9F9F9</Color>
     <Color x:Key="Gray2">#FF7F7F7F</Color>
+    <Color x:Key="Gray3">#FF9D9D9D</Color>
+    <Color x:Key="Gray4">#FFA59F93</Color>
+    <Color x:Key="Gray5">#FFB9B9B9</Color>
+    <Color x:Key="Gray6">#FFCCCCCC</Color>
     <Color x:Key="Gray7">#FF7E7E7E</Color>
     <Color x:Key="Gray8">#FF454545</Color>
+    <Color x:Key="Gray9">#5EC9C9C9</Color>
     <Color x:Key="Gray10">#FF2F2F2F</Color>
 
     <Color x:Key="GrayNormal">#FF7D7D7D</Color>
@@ -84,6 +89,7 @@
     <Color x:Key="MenuShadowColor">#FFFFFFFF</Color>
 
     <!--  DataGrid brushes  -->
+
     <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10" Color="#FF999999" options:Freeze="True" />

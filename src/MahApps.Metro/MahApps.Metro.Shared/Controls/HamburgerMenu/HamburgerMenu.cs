@@ -66,6 +66,8 @@ namespace MahApps.Metro.Controls
                 _optionsListView.SelectionChanged += OptionsListView_SelectionChanged;
             }
 
+            ChangeItemFocusVisualStyle();
+
             Loaded -= HamburgerMenu_Loaded;
             Loaded += HamburgerMenu_Loaded;
 
@@ -74,10 +76,15 @@ namespace MahApps.Metro.Controls
 
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            var selectedItem = this._buttonsListView?.SelectedItem ?? this._optionsListView?.SelectedItem;
+            if (GetValue(ContentProperty) != null)
+            {
+                return;
+            }
+
+            var selectedItem = _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem;
             if (selectedItem != null)
             {
-                this.SetCurrentValue(ContentProperty, selectedItem);
+                SetCurrentValue(ContentProperty, selectedItem);
             }
         }
     }

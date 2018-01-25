@@ -40,8 +40,8 @@ namespace MetroDemo.ExampleWindows
                                  AnimateHide = false
                              };
             var result = await this.ShowMessageAsync(
-                "Quit application?",
-                "Sure you want to quit application?",
+                "Quit window?",
+                "Sure you want to quit this clean demo?",
                 MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
             this.closeMe = result == MessageDialogResult.Affirmative;

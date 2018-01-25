@@ -11,7 +11,7 @@
   platform: Any CPU
 
   pull_requests:
-    do_not_increment_build_number: true
+    do_not_increment_build_number: false
 
   install:
     - choco install gitversion.portable -pre -y

@@ -13,17 +13,27 @@
     <img src="https://img.shields.io/badge/twitter-%40punker76-55acee.svg?style=flat-square">
   </a>
   <br />
-  <a href="https://https://www.nuget.org/packages/MahApps.Metro">
+  <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
-  </a>
-  <a href="https://github.com/MahApps/MahApps.Metro/releases/latest">
-    <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
   </a>
   <a href="https://www.nuget.org/packages/MahApps.Metro/">
     <img src="https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square">
   </a>
   <a href="https://www.nuget.org/packages/MahApps.Metro/">
     <img src="https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square&label=nuget-pre">
+  </a>
+  <a href="https://github.com/MahApps/MahApps.Metro/releases/latest">
+    <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
+  </a>
+  <br />
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/master">
+    <img alt="masterstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=master">
+  </a>
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/dev">
+    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=dev">
+  </a>
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/dev">
+    <img alt="devtests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
   </a>
   <br />
   <a href="https://github.com/MahApps/MahApps.Metro/issues">
