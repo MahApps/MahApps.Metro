@@ -47,7 +47,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property. 
         /// </summary>
-        public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register(nameof(ToolTip), typeof(string), typeof(HamburgerMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register(nameof(ToolTip), typeof(object), typeof(HamburgerMenuItem), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies label to display.
@@ -168,9 +168,9 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets a value that specifies label to display.
+        /// Gets or sets a value that specifies ToolTip to display.
         /// </summary>
-        public string ToolTip
+        public object ToolTip
         {
             get
             {
