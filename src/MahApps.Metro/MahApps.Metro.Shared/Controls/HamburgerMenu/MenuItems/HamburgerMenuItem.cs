@@ -174,7 +174,7 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                return (string)GetValue(ToolTipProperty);
+                return GetValue(ToolTipProperty);
             }
 
             set
