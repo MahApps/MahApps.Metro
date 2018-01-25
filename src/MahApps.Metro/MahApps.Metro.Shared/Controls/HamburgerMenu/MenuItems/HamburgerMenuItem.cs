@@ -45,6 +45,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(nameof(IsEnabled), typeof(bool), typeof(HamburgerMenuItem), new PropertyMetadata(true, null, IsEnabledCoerceValueCallback));
 
         /// <summary>
+        /// Identifies the <see cref="ToolTip"/> dependency property. 
+        /// </summary>
+        public static readonly DependencyProperty ToolTipProperty = DependencyProperty.Register(nameof(ToolTip), typeof(string), typeof(HamburgerMenuItem), new PropertyMetadata(null));
+
+        /// <summary>
         /// Gets or sets a value that specifies label to display.
         /// </summary>
         public string Label
@@ -159,6 +164,22 @@ namespace MahApps.Metro.Controls
             set
             {
                 this.SetValue(IsEnabledProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that specifies label to display.
+        /// </summary>
+        public string ToolTip
+        {
+            get
+            {
+                return (string)GetValue(ToolTipProperty);
+            }
+
+            set
+            {
+                SetValue(ToolTipProperty, value);
             }
         }
 
