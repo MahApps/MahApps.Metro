@@ -886,13 +886,10 @@ namespace MahApps.Metro.Controls
 
         public static void ButtonClicked(object sender, RoutedEventArgs e)
         {
-            var button = ((Button)sender);
-            var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox || parent is PasswordBox || parent is ComboBox))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
+            var button = (Button)sender;
 
+            var parent = button.GetAncestors().FirstOrDefault(a => a is TextBox || a is PasswordBox || a is ComboBox);
+            
             var command = GetButtonCommand(parent);
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
             if (command != null && command.CanExecute(commandParameter))

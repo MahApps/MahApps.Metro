@@ -172,10 +172,7 @@ namespace MahApps.Metro.Behaviours
 
         private static Panel GetParentPanel(DependencyObject element)
         {
-            var parent = VisualTreeHelper.GetParent(element);
-            var panel = parent as Panel;
-
-            return panel ?? (parent == null ? null : GetParentPanel(parent));
+            return element.TryFindParent<Panel>();
         }
     }
 }
