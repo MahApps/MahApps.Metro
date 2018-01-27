@@ -1083,11 +1083,11 @@ namespace MahApps.Metro.Controls
             if ((dLeft < halfDistance) && (dRight < halfDistance))
             {
                 Grid.SetColumn(this.titleBar, 0);
-                Grid.SetColumnSpan(this.titleBar, 5);
+                Grid.SetColumnSpan(this.titleBar, 7);
             }
             else
             {
-                Grid.SetColumn(this.titleBar, 2);
+                Grid.SetColumn(this.titleBar, 3);
                 Grid.SetColumnSpan(this.titleBar, 1);
             }
         }
