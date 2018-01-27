@@ -119,6 +119,7 @@
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
                                       Grid.Row="1"
+                                      Grid.RowSpan="2"
                                       Grid.Column="5"
                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       VerticalAlignment="Top"
@@ -216,9 +217,12 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
             <Trigger Property="UseNoneWindowStyle" Value="True">
@@ -376,6 +380,7 @@
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
                                       Grid.Row="1"
+                                      Grid.RowSpan="2"
                                       Grid.Column="5"
                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       VerticalAlignment="Top"
@@ -490,9 +495,12 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="ShowDialogsOverTitleBar" Value="False">
-                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroActiveDialogContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_MetroInactiveDialogsContainer" Property="Grid.RowSpan" Value="1" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_OverlayBox" Property="Grid.RowSpan" Value="1" />
             </Trigger>
 
             <Trigger Property="UseNoneWindowStyle" Value="True">

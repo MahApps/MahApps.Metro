@@ -634,29 +634,18 @@ namespace MahApps.Metro.Controls
         {
             this.SetVisibiltyForIcon();
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
-            if (this.titleBar != null)
-            {
-                this.titleBar.Visibility = newVisibility;
-            }
-            if (this.titleBarBackground != null)
-            {
-                this.titleBarBackground.Visibility = newVisibility;
-            }
-            if (this.LeftWindowCommandsPresenter != null)
-            {
-                this.LeftWindowCommandsPresenter.Visibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
-                    Visibility.Visible : newVisibility;
-            }
-            if (this.RightWindowCommandsPresenter != null)
-            {
-                this.RightWindowCommandsPresenter.Visibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
-                    Visibility.Visible : newVisibility;
-            }
-            if (this.WindowButtonCommandsPresenter != null)
-            {
-                this.WindowButtonCommandsPresenter.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
-                    Visibility.Visible : newVisibility;
-            }
+
+            this.titleBar?.SetCurrentValue(VisibilityProperty, newVisibility);
+            this.titleBarBackground?.SetCurrentValue(VisibilityProperty, newVisibility);
+
+            newVisibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
+            this.LeftWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, newVisibility);
+
+            newVisibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
+            this.RightWindowCommandsPresenter?.SetCurrentValue(VisibilityProperty, newVisibility);
+
+            newVisibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? Visibility.Visible : newVisibility;
+            this.WindowButtonCommandsPresenter?.SetCurrentValue(VisibilityProperty, newVisibility);
 
             SetWindowEvents();
         }
