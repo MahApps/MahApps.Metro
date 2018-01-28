@@ -10,9 +10,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <!--  for testing  -->
             <SolidColorBrush x:Key="ListViewBackground" Color="Transparent" />
         </ResourceDictionary>
@@ -21,7 +18,7 @@
     <StackPanel Margin="10" Orientation="Vertical">
 
         <Slider Margin="5"
-                Style="{StaticResource FlatSlider}"
+                Style="{DynamicResource FlatSlider}"
                 Value="50" />
 
         <ListView x:Name="Artists"
