@@ -37,6 +37,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToggleSwitch.xaml" />
 
         <!--  Theme styles with keys  -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroHeader.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />

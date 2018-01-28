@@ -6,11 +6,11 @@ using MahApps.Metro.Controls;
 namespace MetroDemo.ExampleViews
 {
     /// <summary>
-    /// Interaction logic for SliderProgressExamples.xaml
+    /// Interaction logic for Sliders.xaml
     /// </summary>
-    public partial class SliderProgressExamples : UserControl
+    public partial class Sliders : UserControl
     {
-        public SliderProgressExamples()
+        public Sliders()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.SliderProgressExamples"
+﻿<UserControl x:Class="MetroDemo.ExampleViews.ProgressBars"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -17,6 +17,10 @@
     </UserControl.Resources>
 
     <Grid>
+
+        
+        
+<!--        
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -275,6 +279,7 @@
                     TickPlacement="TopLeft"
                     Value="50" />
         </Grid>
+-->
     </Grid>
 
 </UserControl>
