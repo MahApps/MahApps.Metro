@@ -460,6 +460,8 @@ namespace MahApps.Metro.Controls
                 {
                     slider.Value -= difference;
                 }
+
+                e.Handled = true;
             }
         }
     }
