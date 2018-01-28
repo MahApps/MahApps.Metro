@@ -5,7 +5,7 @@
 
     <System:Double x:Key="ProgressBarMinHeight">6</System:Double>
 
-    <Style TargetType="{x:Type Controls:MetroProgressBar}">
+    <Style x:Key="MahApps.Metro.Styles.MetroProgressBar" TargetType="{x:Type Controls:MetroProgressBar}">
         <Setter Property="Background" Value="#1FFFFFFF" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -143,118 +143,120 @@
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid x:Name="ContainingGrid" ClipToBounds="True">
-                        <Grid x:Name="EllipseGrid" Opacity="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RenderTransform>
-                                <TranslateTransform />
-                            </Grid.RenderTransform>
-                            <Border x:Name="B1"
-                                    Grid.Column="8"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
+                    <Grid x:Name="ContainingGrid">
+                        <Grid x:Name="EllipseClip" ClipToBounds="True">
+                            <Grid x:Name="EllipseGrid" Opacity="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RenderTransform>
                                     <TranslateTransform />
-                                </Border.RenderTransform>
-                                <Ellipse x:Name="E1"
-                                         Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Fill="{TemplateBinding Foreground}"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <Ellipse.RenderTransform>
+                                </Grid.RenderTransform>
+                                <Border x:Name="B1"
+                                        Grid.Column="8"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
                                         <TranslateTransform />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                            </Border>
-                            <Rectangle Grid.Column="7" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Border x:Name="B2"
-                                    Grid.Column="6"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
-                                    <TranslateTransform />
-                                </Border.RenderTransform>
-                                <Ellipse x:Name="E2"
-                                         Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Fill="{TemplateBinding Foreground}"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <Ellipse.RenderTransform>
+                                    </Border.RenderTransform>
+                                    <Ellipse x:Name="E1"
+                                             Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Fill="{TemplateBinding Foreground}"
+                                             RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Border>
+                                <Rectangle Grid.Column="7" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <Border x:Name="B2"
+                                        Grid.Column="6"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
                                         <TranslateTransform />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                            </Border>
-                            <Rectangle Grid.Column="5" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Border x:Name="B3"
-                                    Grid.Column="4"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
-                                    <TranslateTransform />
-                                </Border.RenderTransform>
-                                <Ellipse x:Name="E3"
-                                         Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Fill="{TemplateBinding Foreground}"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <Ellipse.RenderTransform>
+                                    </Border.RenderTransform>
+                                    <Ellipse x:Name="E2"
+                                             Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Fill="{TemplateBinding Foreground}"
+                                             RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Border>
+                                <Rectangle Grid.Column="5" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <Border x:Name="B3"
+                                        Grid.Column="4"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
                                         <TranslateTransform />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                            </Border>
-                            <Rectangle Grid.Column="3" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Border x:Name="B4"
-                                    Grid.Column="2"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
-                                    <TranslateTransform />
-                                </Border.RenderTransform>
-                                <Ellipse x:Name="E4"
-                                         Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Fill="{TemplateBinding Foreground}"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <Ellipse.RenderTransform>
+                                    </Border.RenderTransform>
+                                    <Ellipse x:Name="E3"
+                                             Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Fill="{TemplateBinding Foreground}"
+                                             RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Border>
+                                <Rectangle Grid.Column="3" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <Border x:Name="B4"
+                                        Grid.Column="2"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
                                         <TranslateTransform />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                            </Border>
-                            <Rectangle Grid.Column="1" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Border x:Name="B5"
-                                    Grid.Column="0"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Border.RenderTransform>
-                                    <TranslateTransform />
-                                </Border.RenderTransform>
-                                <Ellipse x:Name="E5"
-                                         Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                         Fill="{TemplateBinding Foreground}"
-                                         RenderTransformOrigin="0.5,0.5">
-                                    <Ellipse.RenderTransform>
+                                    </Border.RenderTransform>
+                                    <Ellipse x:Name="E4"
+                                             Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Fill="{TemplateBinding Foreground}"
+                                             RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Border>
+                                <Rectangle Grid.Column="1" Width="{Binding EllipseOffset, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <Border x:Name="B5"
+                                        Grid.Column="0"
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
                                         <TranslateTransform />
-                                    </Ellipse.RenderTransform>
-                                </Ellipse>
-                            </Border>
-                        </Grid>
-                        <Border x:Name="DeterminateRoot" Opacity="0">
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Border x:Name="PART_Track"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}" />
-                                <Rectangle x:Name="PART_Indicator"
-                                           HorizontalAlignment="Left"
-                                           Fill="{TemplateBinding Foreground}" />
+                                    </Border.RenderTransform>
+                                    <Ellipse x:Name="E5"
+                                             Width="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Height="{Binding EllipseDiameter, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                             Fill="{TemplateBinding Foreground}"
+                                             RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.RenderTransform>
+                                            <TranslateTransform />
+                                        </Ellipse.RenderTransform>
+                                    </Ellipse>
+                                </Border>
                             </Grid>
-                        </Border>
+                        </Grid>
+                        <Grid x:Name="DeterminateRoot"
+                              Margin="{TemplateBinding Padding}"
+                              Opacity="0">
+                            <Border x:Name="PART_Track"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
+                            <Rectangle x:Name="PART_Indicator"
+                                       HorizontalAlignment="Left"
+                                       Fill="{TemplateBinding Foreground}" />
+                        </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Determinate" />
@@ -267,22 +269,18 @@
                             <Setter TargetName="DeterminateRoot" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="Orientation" Value="Vertical">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="MinHeight" Value="0" />
                             <Setter Property="MinWidth" Value="{StaticResource ProgressBarMinHeight}" />
-                            <Setter Property="VerticalAlignment" Value="Stretch" />
-                            <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}" />
+                            <Setter Property="UseLayoutRounding" Value="True" />
                             <Setter TargetName="ContainingGrid" Property="LayoutTransform">
                                 <Setter.Value>
-                                    <RotateTransform Angle="270" />
+                                    <RotateTransform Angle="-90" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="ContainingGrid" Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 </ResourceDictionary>

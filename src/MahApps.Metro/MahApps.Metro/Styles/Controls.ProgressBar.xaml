@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  ProgressBar Style  -->
-    <Style x:Key="MetroProgressBar" TargetType="ProgressBar">
+    <Style x:Key="MahApps.Metro.Styles.ProgressBar" TargetType="ProgressBar">
         <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -106,6 +106,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="UseLayoutRounding" Value="True" />
                             <Setter TargetName="Root" Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="-90" />
@@ -121,4 +122,10 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  obsolete  -->
+    <Style x:Key="MetroProgressBar"
+           BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}"
+           TargetType="ProgressBar" />
+
 </ResourceDictionary>

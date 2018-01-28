@@ -51,5 +51,6 @@
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroDialog}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.RangeSlider}" TargetType="{x:Type Controls:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
 
 </ResourceDictionary>

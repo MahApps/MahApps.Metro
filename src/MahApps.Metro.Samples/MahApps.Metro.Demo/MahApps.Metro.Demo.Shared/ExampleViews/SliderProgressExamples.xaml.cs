@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls;
@@ -18,64 +17,57 @@ namespace MetroDemo.ExampleViews
 
         private void RangeSlider_OnLowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
-            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
-        }
-
-        private void RangeSlider_OnUpperValueChanged(object sender, RangeParameterChangedEventArgs e)
-        {
-            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
+            Trace.TraceInformation($"LowerValueChanged: {e.ParameterType}, {e.OldValue} -> {e.OldValue}");
         }
 
         private void RangeSlider_OnLowerThumbDragStarted(object sender, DragStartedEventArgs e)
         {
-            //TestBlock.Text = "lower thumb drag started";
-        }
-
-        private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            try
-            {
-                //RangeSlider1.MinRange = RangeSlider1.LowerValue;
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message + exception.StackTrace + exception.TargetSite);
-            }
-            //TestBlock.Text = "lower thumb drag completed";
-        }
-
-        private void RangeSlider_OnUpperThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //TestBlock.Text = "upper thumb drag started";
-        }
-
-        private void RangeSlider_OnUpperThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //TestBlock.Text = "upper thumb drag completed";
-        }
-
-        private void RangeSlider_OnCentralThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //TestBlock.Text = "central thumb drag started";
-        }
-
-        private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            
-            //TestBlock.Text = "central thumb drag completed";
+            Trace.TraceInformation("LowerThumbDragStarted");
         }
 
         private void RangeSlider_OnLowerThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
+            Trace.TraceInformation($"LowerThumbDragDelta: h={e.HorizontalChange}, v={e.VerticalChange}");
+        }
+
+        private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            Trace.TraceInformation("LowerThumbDragCompleted");
+        }
+
+        private void RangeSlider_OnUpperValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            Trace.TraceInformation($"UpperValueChanged: {e.ParameterType}, {e.OldValue} -> {e.OldValue}");
+        }
+
+        private void RangeSlider_OnUpperThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            Trace.TraceInformation("UpperThumbDragStarted");
         }
 
         private void RangeSlider_OnUpperThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
+            Trace.TraceInformation($"LowerThumbDragDelta: h={e.HorizontalChange}, v={e.VerticalChange}");
+        }
+
+        private void RangeSlider_OnUpperThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            Trace.TraceInformation("UpperThumbDragCompleted");
+        }
+
+        private void RangeSlider_OnCentralThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            Trace.TraceInformation("CentralThumbDragStarted");
         }
 
         private void RangeSlider_OnCentralThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            //TestBlock.Text = "central thumb drag delta";
+            Trace.TraceInformation($"CentralThumbDragDelta: h={e.HorizontalChange}, v={e.VerticalChange}");
+        }
+
+        private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            Trace.TraceInformation("CentralThumbDragCompleted");
         }
     }
 }
