@@ -3,10 +3,10 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
-        <Setter Property="Focusable" Value="false" />
-        <Setter Property="IsTabStop" Value="false" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -17,8 +17,8 @@
     </Style>
 
     <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -37,7 +37,6 @@
                 <Setter Property="Margin" Value="0 0 0 3" />
             </Trigger>
             <Trigger Property="Placement" Value="Bottom">
-                <Setter Property="Grid.Row" Value="2" />
                 <Setter Property="Height" Value="6" />
                 <Setter Property="Margin" Value="0 3 0 0" />
             </Trigger>
@@ -47,7 +46,6 @@
                 <Setter Property="Width" Value="6" />
             </Trigger>
             <Trigger Property="Placement" Value="Right">
-                <Setter Property="Grid.Column" Value="2" />
                 <Setter Property="Margin" Value="3 0 0 0" />
                 <Setter Property="Width" Value="6" />
             </Trigger>
@@ -62,31 +60,30 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
+                     Grid.Row="0"
                      Placement="Top"
                      Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track" Grid.Row="1">
+            <TickBar x:Name="BottomTick"
+                     Grid.Row="2"
+                     Placement="Bottom"
+                     Style="{StaticResource SliderTickBarStyle}" />
+            <Track x:Name="PART_Track" Grid.Row="1" Height="{TemplateBinding Slider.MinHeight}">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Background="{TemplateBinding Slider.Foreground}"
+                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Width="{TemplateBinding Slider.Height}"
-                                         Height="{TemplateBinding Slider.Height}"
+                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
                                          Background="{TemplateBinding Slider.BorderBrush}"
                                          Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Background="{TemplateBinding Slider.Background}"
+                    <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
-            <TickBar x:Name="BottomTick"
-                     Placement="Bottom"
-                     Style="{StaticResource SliderTickBarStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
@@ -110,31 +107,30 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
+                     Grid.Column="0"
                      Placement="Left"
                      Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track" Grid.Column="1">
+            <TickBar x:Name="BottomTick"
+                     Grid.Column="2"
+                     Placement="Right"
+                     Style="{StaticResource SliderTickBarStyle}" />
+            <Track x:Name="PART_Track" Grid.Column="1" Width="{TemplateBinding Slider.MinWidth}">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Background="{TemplateBinding Slider.Foreground}"
+                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Width="{TemplateBinding Slider.Width}"
-                                         Height="{TemplateBinding Slider.Width}"
+                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
                                          Background="{TemplateBinding Slider.BorderBrush}"
                                          Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Height="{TemplateBinding Slider.Height}"
-                                  Background="{TemplateBinding Slider.Background}"
+                    <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
-            <TickBar x:Name="BottomTick"
-                     Placement="Right"
-                     Style="{StaticResource SliderTickBarStyle}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
@@ -157,8 +153,8 @@
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Orientation" Value="Horizontal" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Value" Value="0" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -171,14 +167,14 @@
                 <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Height" Value="12" />
                 <Setter Property="MinHeight" Value="12" />
+                <Setter Property="MinWidth" Value="0" />
                 <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="MinWidth" Value="12" />
+                <Setter Property="MinHeight" Value="0" />
                 <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
-                <Setter Property="Width" Value="12" />
             </Trigger>
         </Style.Triggers>
     </Style>
