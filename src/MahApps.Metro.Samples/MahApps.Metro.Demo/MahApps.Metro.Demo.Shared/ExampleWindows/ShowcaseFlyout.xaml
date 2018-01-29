@@ -178,7 +178,7 @@
                                 Maximum="100"
                                 Minimum="0"
                                 SmallChange="1"
-                                Style="{StaticResource FlatSlider}"
+                                Style="{StaticResource MahApps.Metro.Styles.FlatSlider}"
                                 Value="{Binding ElementName=TheSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Margin="2"
                                    HorizontalAlignment="Center"

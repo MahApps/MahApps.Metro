@@ -18,7 +18,7 @@
     <StackPanel Margin="10" Orientation="Vertical">
 
         <Slider Margin="5"
-                Style="{DynamicResource FlatSlider}"
+                Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
                 Value="50" />
 
         <ListView x:Name="Artists"
