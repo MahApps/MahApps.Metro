@@ -48,6 +48,7 @@
                      Placement="Top"
                      ReservedSpace="{DynamicResource HorizontalThumbWidth}"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <TickBar x:Name="PART_BottomTick"
                      Grid.Row="2"
@@ -58,6 +59,7 @@
                      Placement="Bottom"
                      ReservedSpace="{DynamicResource HorizontalThumbWidth}"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <StackPanel x:Name="PART_RangeSliderContainer"
                         Grid.Row="1"
@@ -158,6 +160,7 @@
                      Placement="Left"
                      ReservedSpace="{DynamicResource VerticalThumbHeight}"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <TickBar x:Name="PART_BottomTick"
                      Grid.Column="2"
@@ -168,6 +171,7 @@
                      Placement="Right"
                      ReservedSpace="{DynamicResource VerticalThumbHeight}"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <StackPanel x:Name="PART_RangeSliderContainer"
                         Grid.Column="1"
@@ -323,6 +327,7 @@
                      Placement="Top"
                      ReservedSpace="8"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <TickBar x:Name="PART_BottomTick"
                      Grid.Row="2"
@@ -333,6 +338,7 @@
                      Placement="Bottom"
                      ReservedSpace="8"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <StackPanel x:Name="PART_RangeSliderContainer"
                         Grid.Row="0"
@@ -432,6 +438,7 @@
                      Placement="Left"
                      ReservedSpace="8"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <TickBar x:Name="PART_BottomTick"
                      Grid.Column="2"
@@ -442,6 +449,7 @@
                      Placement="Right"
                      ReservedSpace="8"
                      TickFrequency="{TemplateBinding TickFrequency}"
+                     Ticks="{TemplateBinding Ticks}"
                      Visibility="Collapsed" />
             <StackPanel x:Name="PART_RangeSliderContainer"
                         Grid.Column="0"

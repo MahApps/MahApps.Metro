@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using ControlzEx;
 
@@ -199,17 +200,32 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(Orientation.Horizontal));
 
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.TickPlacement" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TickPlacementProperty =
+            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
+                                        new FrameworkPropertyMetadata(TickPlacement.None));
+
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.TickFrequency" /> dependency property.
+        /// </summary>
         public static readonly DependencyProperty TickFrequencyProperty =
             DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(1.0), IsValidTickFrequency);
 
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.Ticks" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TicksProperty
+            = DependencyProperty.Register("Ticks",
+                                          typeof(DoubleCollection),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(default(DoubleCollection)));
+
         public static readonly DependencyProperty IsMoveToPointEnabledProperty =
             DependencyProperty.Register("IsMoveToPointEnabled", typeof(Boolean), typeof(RangeSlider),
                                         new PropertyMetadata(false));
-
-        public static readonly DependencyProperty TickPlacementProperty =
-            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(TickPlacement.None));
 
         public static readonly DependencyProperty AutoToolTipPlacementProperty =
             DependencyProperty.Register("AutoToolTipPlacement", typeof(AutoToolTipPlacement), typeof(RangeSlider),
@@ -268,9 +284,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Get/sets tick placement position
+        /// Gets or sets the position of tick marks with respect to the <see cref="T:System.Windows.Controls.Primitives.Track" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
         /// </summary>
-        [Bindable(true), Category("Common")]
+        /// <returns>
+        /// A <see cref="P:System.Windows.Controls.Slider.TickPlacement" /> value that defines how to position the tick marks in a <see cref="T:MahApps.Metro.Controls.RangeSlider" /> with respect to the slider bar. The default is <see cref="F:System.Windows.Controls.Primitives.TickPlacement.None" />.
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
         public TickPlacement TickPlacement
         {
             get { return (TickPlacement)GetValue(TickPlacementProperty); }
@@ -278,19 +298,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Get/sets IsMoveToPoint feature which will enable/disable moving to exact point inside control when user clicked on it
+        /// Gets or sets the interval between tick marks.
         /// </summary>
-        [Bindable(true), Category("Common")]
-        public Boolean IsMoveToPointEnabled
-        {
-            get { return (Boolean)GetValue(IsMoveToPointEnabledProperty); }
-            set { SetValue(IsMoveToPointEnabledProperty, value); }
-        }
-
-        /// <summary>
-        /// Get/sets tickFrequency
-        /// </summary>
-        [Bindable(true), Category("Common")]
+        /// <returns>
+        /// The distance between tick marks. The default is (1.0).
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
         public Double TickFrequency
         {
             get { return (Double)GetValue(TickFrequencyProperty); }
@@ -298,9 +312,35 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Get/sets orientation of range slider
+        /// Gets or sets the positions of the tick marks to display for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />. </summary>
+        /// <returns>
+        /// A set of tick marks to display for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />. The default is <see langword="null" />.
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public DoubleCollection Ticks
+        {
+            get { return (DoubleCollection)this.GetValue(TicksProperty); }
+            set { SetValue(TicksProperty, value); }
+        }
+
+        /// <summary>
+        /// Get or sets IsMoveToPoint feature which will enable/disable moving to exact point inside control when user clicked on it
+        /// Gets or sets a value that indicates whether the two <see cref="P:System.Windows.Controls.Primitives.Track.Thumb" /> of a <see cref="T:MahApps.Metro.Controls.RangeSlider" /> moves immediately to the location of the mouse click that occurs while the mouse pointer pauses on the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> tracks.
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true)]
+        [Category("Behavior")]
+        public Boolean IsMoveToPointEnabled
+        {
+            get { return (Boolean)GetValue(IsMoveToPointEnabledProperty); }
+            set { SetValue(IsMoveToPointEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the orientation of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
@@ -672,6 +712,7 @@ namespace MahApps.Metro.Controls
                         _centerThumb.Height = Math.Max(ActualHeight - (_rightThumb.ActualHeight + _leftThumb.ActualHeight), 0);
                     }
                 }
+
                 _density = _movableWidth / MovableRange;
             }
         }
@@ -736,6 +777,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
             _roundToPrecision = false;
             _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
 
@@ -755,6 +797,7 @@ namespace MahApps.Metro.Controls
                 {
                     lower = direction == Direction.Increase ? Math.Min(this.UpperValue - this.MinRange, value) : Math.Max(this.Minimum, value);
                 }
+
                 if (!tickFrequency.ToLower().Contains("e+") && tickFrequency.Contains("."))
                 {
                     //decimal part is for cutting value exactly on that number of digits, which has TickFrequency to have correct values
@@ -775,6 +818,7 @@ namespace MahApps.Metro.Controls
                 {
                     upper = direction == Direction.Increase ? Math.Min(value, this.Maximum) : Math.Max(this.LowerValue + this.MinRange, value);
                 }
+
                 if (!tickFrequency.ToLower().Contains("e+") && tickFrequency.Contains("."))
                 {
                     var decimalPart = tickFrequency.Split('.');
@@ -794,7 +838,8 @@ namespace MahApps.Metro.Controls
         //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
         private void ReCalculateRangeSelected(double newLower, double newUpper, Direction direction)
         {
-            double lower = 0, upper = 0;
+            double lower = 0,
+                   upper = 0;
             _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
             _oldLower = LowerValue;
             _oldUpper = UpperValue;
@@ -811,6 +856,7 @@ namespace MahApps.Metro.Controls
                     lower = Math.Max(newLower, Minimum);
                     upper = Math.Max(Minimum + (UpperValue - LowerValue), newUpper);
                 }
+
                 var tickFrequency = this.TickFrequency.ToString(CultureInfo.InvariantCulture);
                 if (!tickFrequency.ToLower().Contains("e+") && tickFrequency.Contains("."))
                 {
@@ -845,6 +891,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
             _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
 
             RaiseValueChangedEvents(this);
@@ -1033,6 +1080,7 @@ namespace MahApps.Metro.Controls
                         this.JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, this.LowerValue, true);
                     }
                 }
+
                 if (!IsMoveToPointEnabled)
                 {
                     _position = Mouse.GetPosition(_visualElementsContainer);
@@ -1078,6 +1126,7 @@ namespace MahApps.Metro.Controls
                         this.JumpToNextTick(Direction.Increase, ButtonType.Both, change, this.UpperValue, true);
                     }
                 }
+
                 if (!IsMoveToPointEnabled)
                 {
                     _position = Mouse.GetPosition(_visualElementsContainer);
@@ -1126,6 +1175,7 @@ namespace MahApps.Metro.Controls
                             this.JumpToNextTick(Direction.Increase, ButtonType.Both, change, this.LowerValue, true);
                         }
                     }
+
                     if (!IsMoveToPointEnabled)
                     {
                         _position = Mouse.GetPosition(_visualElementsContainer);
@@ -1168,6 +1218,7 @@ namespace MahApps.Metro.Controls
                             this.JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, this.UpperValue, true);
                         }
                     }
+
                     if (!IsMoveToPointEnabled)
                     {
                         _position = Mouse.GetPosition(_visualElementsContainer);
@@ -1197,10 +1248,12 @@ namespace MahApps.Metro.Controls
                     _autoToolTip.Placement = PlacementMode.Custom;
                     _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
                 }
+
                 _autoToolTip.Content = GetLowerToolTipNumber();
                 _autoToolTip.PlacementTarget = _leftThumb;
                 _autoToolTip.IsOpen = true;
             }
+
             _basePoint = Mouse.GetPosition(_container);
             e.RoutedEvent = LowerThumbDragStartedEvent;
             RaiseEvent(e);
@@ -1235,6 +1288,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
             _basePoint = Mouse.GetPosition(_container);
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
@@ -1253,6 +1307,7 @@ namespace MahApps.Metro.Controls
                 _autoToolTip.IsOpen = false;
                 _autoToolTip = null;
             }
+
             e.RoutedEvent = LowerThumbDragCompletedEvent;
             RaiseEvent(e);
         }
@@ -1268,10 +1323,12 @@ namespace MahApps.Metro.Controls
                     _autoToolTip.Placement = PlacementMode.Custom;
                     _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
                 }
+
                 _autoToolTip.Content = GetUpperToolTipNumber();
                 _autoToolTip.PlacementTarget = _rightThumb;
                 _autoToolTip.IsOpen = true;
             }
+
             _basePoint = Mouse.GetPosition(_container);
             e.RoutedEvent = UpperThumbDragStartedEvent;
             RaiseEvent(e);
@@ -1308,11 +1365,13 @@ namespace MahApps.Metro.Controls
 
                 _basePoint = Mouse.GetPosition(_container);
             }
+
             if (AutoToolTipPlacement != AutoToolTipPlacement.None)
             {
                 _autoToolTip.Content = GetUpperToolTipNumber();
                 RelocateAutoToolTip();
             }
+
             e.RoutedEvent = UpperThumbDragDeltaEvent;
             RaiseEvent(e);
         }
@@ -1324,6 +1383,7 @@ namespace MahApps.Metro.Controls
                 _autoToolTip.IsOpen = false;
                 _autoToolTip = null;
             }
+
             e.RoutedEvent = UpperThumbDragCompletedEvent;
             RaiseEvent(e);
         }
@@ -1335,15 +1395,18 @@ namespace MahApps.Metro.Controls
             {
                 if (_autoToolTip == null)
                 {
-                    _autoToolTip = new ToolTip {
-                        Placement = PlacementMode.Custom,
-                        CustomPopupPlacementCallback = PopupPlacementCallback
-                    };
+                    _autoToolTip = new ToolTip
+                                   {
+                                       Placement = PlacementMode.Custom,
+                                       CustomPopupPlacementCallback = PopupPlacementCallback
+                                   };
                 }
+
                 _autoToolTip.Content = GetLowerToolTipNumber() + " ; " + GetUpperToolTipNumber();
                 _autoToolTip.PlacementTarget = _centerThumb;
                 _autoToolTip.IsOpen = true;
             }
+
             _basePoint = Mouse.GetPosition(_container);
             e.RoutedEvent = CentralThumbDragStartedEvent;
             RaiseEvent(e);
@@ -1380,6 +1443,7 @@ namespace MahApps.Metro.Controls
                         }
                     }
                 }
+
                 _basePoint = Mouse.GetPosition(_container);
                 if (AutoToolTipPlacement != AutoToolTipPlacement.None)
                 {
@@ -1399,6 +1463,7 @@ namespace MahApps.Metro.Controls
                 _autoToolTip.IsOpen = false;
                 _autoToolTip = null;
             }
+
             e.RoutedEvent = CentralThumbDragCompletedEvent;
             RaiseEvent(e);
         }
@@ -1440,6 +1505,7 @@ namespace MahApps.Metro.Controls
                     d = this.Orientation == Orientation.Horizontal ? this.ActualWidth - this._rightButton.ActualWidth - this._rightThumb.ActualWidth : this._rightButton.ActualHeight + this._rightThumb.ActualHeight;
                 }
             }
+
             return d;
         }
 
@@ -1450,6 +1516,7 @@ namespace MahApps.Metro.Controls
                 return Orientation == Orientation.Horizontal && currentPoint > endPoint ||
                        Orientation == Orientation.Vertical && currentPoint < endPoint;
             }
+
             return Orientation == Orientation.Horizontal && currentPoint < endPoint ||
                    Orientation == Orientation.Vertical && currentPoint > endPoint;
         }
@@ -1471,6 +1538,7 @@ namespace MahApps.Metro.Controls
                 {
                     widthChange = LargeChange;
                 }
+
                 _roundToPrecision = true;
                 if (!widthChange.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e") &&
                     widthChange.ToString(CultureInfo.InvariantCulture).Contains("."))
@@ -1482,6 +1550,7 @@ namespace MahApps.Metro.Controls
                 {
                     _precision = 0;
                 }
+
                 //Change value sign according to Horizontal or Vertical orientation
                 widthChange = Orientation == Orientation.Horizontal ? widthChange : -widthChange;
                 //Change value sign one more time according to Increase or Decrease direction
@@ -1555,6 +1624,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
             _tickCount++;
         }
 
@@ -1574,6 +1644,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._centerThumb, this._rightButton, difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(false, true, UpperValue + value, direction);
                         }
+
                         break;
                     case ButtonType.BottomLeft:
                         if (LowerValue < UpperValue - MinRange)
@@ -1581,6 +1652,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._leftButton, this._centerThumb, difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(true, false, LowerValue + value, direction);
                         }
+
                         break;
                     case ButtonType.Both:
                         if (UpperValue < Maximum)
@@ -1588,6 +1660,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._leftButton, this._rightButton, difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(LowerValue + value, UpperValue + value, direction);
                         }
+
                         break;
                 }
             }
@@ -1601,6 +1674,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._centerThumb, this._rightButton, -difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(false, true, UpperValue - value, direction);
                         }
+
                         break;
                     case ButtonType.BottomLeft:
                         if (LowerValue > Minimum)
@@ -1608,6 +1682,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._leftButton, this._centerThumb, -difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(true, false, LowerValue - value, direction);
                         }
+
                         break;
                     case ButtonType.Both:
                         if (LowerValue > Minimum)
@@ -1615,6 +1690,7 @@ namespace MahApps.Metro.Controls
                             MoveThumb(this._leftButton, this._rightButton, -difference * this._density, this.Orientation);
                             ReCalculateRangeSelected(LowerValue - value, UpperValue - value, direction);
                         }
+
                         break;
                 }
             }
@@ -1636,11 +1712,13 @@ namespace MahApps.Metro.Controls
                     {
                         distance += TickFrequency;
                     }
+
                     distance = (distance - Math.Abs(checkingValuePos));
                     _currenValue = 0;
                     return Math.Abs(distance);
                 }
             }
+
             //If we need move directly to next tick without calculating the difference between ticks
             //Use when MoveToPoint disabled
             if (moveDirectlyToNextTick)
@@ -1669,6 +1747,7 @@ namespace MahApps.Metro.Controls
                     distance = (Math.Abs(checkingValuePos) - previousValue);
                 }
             }
+
             //return absolute value without sign not to depend on it if value is negative 
             //(could cause bugs in calcutaions if return not absolute value)
             return Math.Abs(distance);
@@ -1743,6 +1822,7 @@ namespace MahApps.Metro.Controls
             {
                 return true;
             }
+
             return false;
         }
 
@@ -1799,6 +1879,7 @@ namespace MahApps.Metro.Controls
                         // Place popup at top of thumb
                         return new CustomPopupPlacement[] { new CustomPopupPlacement(new Point((targetSize.Width - popupSize.Width) * 0.5, -popupSize.Height), PopupPrimaryAxis.Horizontal) };
                     }
+
                     // Place popup at left of thumb 
                     return new CustomPopupPlacement[] { new CustomPopupPlacement(new Point(-popupSize.Width, (targetSize.Height - popupSize.Height) * 0.5), PopupPrimaryAxis.Vertical) };
 
@@ -1808,6 +1889,7 @@ namespace MahApps.Metro.Controls
                         // Place popup at bottom of thumb 
                         return new CustomPopupPlacement[] { new CustomPopupPlacement(new Point((targetSize.Width - popupSize.Width) * 0.5, targetSize.Height), PopupPrimaryAxis.Horizontal) };
                     }
+
                     // Place popup at right of thumb 
                     return new CustomPopupPlacement[] { new CustomPopupPlacement(new Point(targetSize.Width, (targetSize.Height - popupSize.Height) * 0.5), PopupPrimaryAxis.Vertical) };
 
@@ -1827,22 +1909,24 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValidMinRange(object value)
         {
-            var d = (double)value;
-            if (d < 0.0 || Double.IsInfinity(d) || Double.IsNaN(d))
+            double d = (double)value;
+            if (!Double.IsNaN(d))
             {
-                return false;
+                return d >= 0d || !double.IsInfinity(d);
             }
-            return true;
+
+            return false;
         }
 
         private static bool IsValidTickFrequency(object value)
         {
-            var d = (double)value;
-            if (d <= 0.0 || Double.IsInfinity(d) || Double.IsNaN(d))
+            double d = (double)value;
+            if (!Double.IsNaN(d))
             {
-                return false;
+                return !double.IsInfinity(d);
             }
-            return true;
+
+            return false;
         }
 
         #endregion
@@ -1857,6 +1941,7 @@ namespace MahApps.Metro.Controls
             {
                 return rs.Maximum;
             }
+
             return basevalue;
         }
 
@@ -1868,6 +1953,7 @@ namespace MahApps.Metro.Controls
             {
                 return rs.Minimum;
             }
+
             return basevalue;
         }
 
@@ -1879,10 +1965,12 @@ namespace MahApps.Metro.Controls
             {
                 return rs.Minimum;
             }
+
             if (value > rs.UpperValue - rs.MinRange)
             {
                 return rs.UpperValue - rs.MinRange;
             }
+
             return basevalue;
         }
 
@@ -1894,10 +1982,12 @@ namespace MahApps.Metro.Controls
             {
                 return rs.Maximum;
             }
+
             if (value < rs.LowerValue + rs.MinRange)
             {
                 return rs.LowerValue + rs.MinRange;
             }
+
             return basevalue;
         }
 
@@ -1909,6 +1999,7 @@ namespace MahApps.Metro.Controls
             {
                 return rs.Maximum - rs.LowerValue;
             }
+
             return basevalue;
         }
 
@@ -1926,8 +2017,10 @@ namespace MahApps.Metro.Controls
                 {
                     width = rs.ActualHeight - rs._leftThumb.ActualHeight - rs._rightThumb.ActualHeight;
                 }
+
                 return (Double)basevalue > width / 2 ? width / 2 : (Double)basevalue;
             }
+
             return basevalue;
         }
 
@@ -2015,10 +2108,12 @@ namespace MahApps.Metro.Controls
             {
                 slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
             }
+
             if (lowerValueReCalculated && !lowerValueEquals)
             {
                 slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue), LowerValueChangedEvent);
             }
+
             if (upperValueReCalculated && !upperValueEquals)
             {
                 slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue), UpperValueChangedEvent);
