@@ -12,12 +12,12 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style TargetType="{x:Type Controls:MetroHeader}" BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}">
+            <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                                <TextBlock Text="{Binding}" Margin="0 4 0 4" />
+                                <TextBlock Margin="0 4 0 4" Text="{Binding}" />
                                 <Separator />
                             </StackPanel>
                         </DataTemplate>
@@ -29,139 +29,919 @@
 
     <Grid>
         <ScrollViewer>
-            <StackPanel Orientation="Vertical" Margin="10">
-                
-                <Controls:MetroHeader Header="Slider Win10 style" Margin="0 0 0 10">
+            <StackPanel Margin="10" Orientation="Vertical">
+
+                <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Win10 style">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!-- vertical -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 0">
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  vertical  -->
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0"
+                                    Orientation="Horizontal">
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
-                        <!-- horizontal -->
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  horizontal  -->
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0"
+                                    Orientation="Vertical">
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
                     </Grid>
                 </Controls:MetroHeader>
 
-                <Controls:MetroHeader Header="Slider Metro style" Margin="0 0 0 10">
+                <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Metro style">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!-- vertical -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 0">
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  vertical  -->
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0"
+                                    Orientation="Horizontal">
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
-                        <!-- horizontal -->
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  horizontal  -->
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0"
+                                    Orientation="Vertical">
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
                     </Grid>
                 </Controls:MetroHeader>
 
-                <Controls:MetroHeader Header="RangeSlider Win10 style" Margin="0 0 0 10">
+                <Controls:MetroHeader Margin="0 0 0 10" Header="RangeSlider Win10 style">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!-- vertical -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 0">
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="50" UpperValue="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  vertical  -->
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0"
+                                    Orientation="Horizontal">
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="TopLeft"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="BottomRight"
+                                                  LargeChange="10"
+                                                  LowerValue="50"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickPlacement="TopLeft"
+                                                  Ticks="20 25 30 50 70 75 80"
+                                                  UpperValue="50" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  IsSelectionRangeEnabled="True"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SelectionEnd="80"
+                                                  SelectionStart="20"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  IsEnabled="False"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="BottomRight"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="Both"
+                                                  UpperValue="40" />
                         </StackPanel>
-                        <!-- horizontal -->
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="50" UpperValue="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  horizontal  -->
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0"
+                                    Orientation="Vertical">
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="TopLeft"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="BottomRight"
+                                                  LargeChange="10"
+                                                  LowerValue="50"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickPlacement="TopLeft"
+                                                  Ticks="20 25 30 50 70 75 80"
+                                                  UpperValue="50" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  IsSelectionRangeEnabled="True"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SelectionEnd="80"
+                                                  SelectionStart="20"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  IsEnabled="False"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="BottomRight"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                                  TickFrequency="5"
+                                                  TickPlacement="Both"
+                                                  UpperValue="40" />
                         </StackPanel>
                     </Grid>
                 </Controls:MetroHeader>
 
-                <Controls:MetroHeader Header="RangeSlider Metro style" Margin="0 0 0 10">
+                <Controls:MetroHeader Margin="0 0 0 10" Header="RangeSlider Metro style">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!-- vertical -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 0">
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="50" UpperValue="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  vertical  -->
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0"
+                                    Orientation="Horizontal">
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="TopLeft"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="BottomRight"
+                                                  LargeChange="10"
+                                                  LowerValue="50"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  TickPlacement="TopLeft"
+                                                  Ticks="20 25 30 50 70 75 80"
+                                                  UpperValue="50" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  IsSelectionRangeEnabled="True"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SelectionEnd="80"
+                                                  SelectionStart="20"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  IsEnabled="False"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="BottomRight"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Height="150"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Vertical"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="Both"
+                                                  UpperValue="40" />
                         </StackPanel>
-                        <!-- horizontal -->
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="50" UpperValue="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Controls:RangeSlider Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" LowerValue="40" UpperValue="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  horizontal  -->
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0"
+                                    Orientation="Vertical">
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="TopLeft"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                                  AutoToolTipPlacement="BottomRight"
+                                                  LargeChange="10"
+                                                  LowerValue="50"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  TickPlacement="TopLeft"
+                                                  Ticks="20 25 30 50 70 75 80"
+                                                  UpperValue="50" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  IsSelectionRangeEnabled="True"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SelectionEnd="80"
+                                                  SelectionStart="20"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  IsEnabled="False"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  TickFrequency="5"
+                                                  TickPlacement="TopLeft"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="BottomRight"
+                                                  UpperValue="40" />
+                            <Controls:RangeSlider Width="200"
+                                                  Margin="4"
+                                                  LargeChange="10"
+                                                  LowerValue="40"
+                                                  Maximum="100"
+                                                  Minimum="0"
+                                                  Orientation="Horizontal"
+                                                  SmallChange="1"
+                                                  TickFrequency="5"
+                                                  TickPlacement="Both"
+                                                  UpperValue="40" />
                         </StackPanel>
                     </Grid>
                 </Controls:MetroHeader>
 
-                <Controls:MetroHeader Header="Slider Flat style" Margin="0 0 0 10">
+                <Controls:MetroHeader Margin="0 0 0 10" Header="Slider Flat style">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!-- vertical -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 0">
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Vertical" Margin="4" Height="150" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  vertical  -->
+                        <StackPanel Grid.Column="0"
+                                    Margin="10 0"
+                                    Orientation="Horizontal">
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Height="150"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Vertical"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
-                        <!-- horizontal -->
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 0">
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" AutoToolTipPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.ChangeValueBy="LargeChange" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="50" AutoToolTipPlacement="BottomRight" Ticks="20 25 30 50 70 75 80" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" Controls:SliderHelper.EnableMouseWheel="MouseHover" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="TopLeft" IsEnabled="False" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="BottomRight" SmallChange="1" LargeChange="10" />
-                            <Slider Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}" Orientation="Horizontal" Margin="4" Width="200" Minimum="0" Maximum="100" Value="40" TickFrequency="5" TickPlacement="Both" SmallChange="1" LargeChange="10" />
+                        <!--  horizontal  -->
+                        <StackPanel Grid.Column="1"
+                                    Margin="10 0"
+                                    Orientation="Vertical">
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.ChangeValueBy="LargeChange"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="TopLeft"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    Controls:SliderHelper.EnableMouseWheel="MouseHover"
+                                    AutoToolTipPlacement="BottomRight"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickPlacement="TopLeft"
+                                    Ticks="20 25 30 50 70 75 80"
+                                    Value="50" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsSelectionRangeEnabled="True"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SelectionEnd="80"
+                                    SelectionStart="20"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    IsEnabled="False"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="TopLeft"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    Value="40" />
+                            <Slider Width="200"
+                                    Margin="4"
+                                    LargeChange="10"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Orientation="Horizontal"
+                                    SmallChange="1"
+                                    Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                                    TickFrequency="5"
+                                    TickPlacement="Both"
+                                    Value="40" />
                         </StackPanel>
                     </Grid>
                 </Controls:MetroHeader>

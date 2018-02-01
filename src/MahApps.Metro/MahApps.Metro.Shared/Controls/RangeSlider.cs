@@ -212,7 +212,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty TickFrequencyProperty =
             DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(1.0), IsValidTickFrequency);
+                                        new FrameworkPropertyMetadata(1.0), IsValidDoubleValue);
 
         /// <summary>
         /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.Ticks" /> dependency property.
@@ -242,6 +242,35 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IntervalProperty =
             DependencyProperty.Register("Interval", typeof(Int32), typeof(RangeSlider),
                                         new FrameworkPropertyMetadata(100, IntervalChangedCallback), IsValidPrecision);
+
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.IsSelectionRangeEnabled" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsSelectionRangeEnabledProperty
+            = DependencyProperty.Register("IsSelectionRangeEnabled",
+                                          typeof(bool),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.SelectionStart" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectionStartProperty
+            = DependencyProperty.Register("SelectionStart",
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionStartChanged, CoerceSelectionStart),
+                                          IsValidDoubleValue);
+
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.SelectionEnd" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectionEndProperty
+            = DependencyProperty.Register("SelectionEnd",
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionEndChanged, CoerceSelectionEnd),
+                                          IsValidDoubleValue);
 
         /// <summary>
         /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
@@ -417,6 +446,96 @@ namespace MahApps.Metro.Controls
             set { SetValue(MinRangeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value that indicates whether the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> displays a selection range along the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if a selection range is displayed; otherwise, <see langword="false" />. The default is <see langword="false" />.
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public bool IsSelectionRangeEnabled
+        {
+            get { return (bool)this.GetValue(IsSelectionRangeEnabledProperty); }
+            set { this.SetValue(IsSelectionRangeEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the smallest value of a specified selection for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// </summary>
+        /// <returns>
+        /// The largest value of a selected range of values of a <see cref="T:MahApps.Metro.Controls.RangeSlider" />. The default is zero (0.0).
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public double SelectionStart
+        {
+            get { return (double)this.GetValue(SelectionStartProperty); }
+            set { this.SetValue(SelectionStartProperty, (object)value); }
+        }
+
+        private static void OnSelectionStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RangeSlider rangeSlider = (RangeSlider)d;
+            rangeSlider.CoerceValue(SelectionEndProperty);
+        }
+
+        private static object CoerceSelectionStart(DependencyObject d, object value)
+        {
+            RangeSlider rangeSlider = (RangeSlider)d;
+            double num = (double)value;
+            double minimum = rangeSlider.Minimum;
+            double maximum = rangeSlider.Maximum;
+            if (num < minimum)
+            {
+                return minimum;
+            }
+
+            if (num > maximum)
+            {
+                return maximum;
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets or sets the largest value of a specified selection for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// </summary>
+        /// <returns>
+        /// The largest value of a selected range of values of a <see cref="T:MahApps.Metro.Controls.RangeSlider" />. The default is zero (0.0).
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public double SelectionEnd
+        {
+            get { return (double)this.GetValue(SelectionEndProperty); }
+            set { this.SetValue(SelectionEndProperty, (object)value); }
+        }
+
+        private static void OnSelectionEndChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
+        private static object CoerceSelectionEnd(DependencyObject d, object value)
+        {
+            RangeSlider rangeSlider = (RangeSlider)d;
+            double num = (double)value;
+            double selectionStart = rangeSlider.SelectionStart;
+            double maximum = rangeSlider.Maximum;
+            if (num < selectionStart)
+            {
+                return selectionStart;
+            }
+
+            if (num > maximum)
+            {
+                return maximum;
+            }
+
+            return value;
+        }
+
         #endregion
 
         #region Variables
@@ -490,6 +609,7 @@ namespace MahApps.Metro.Controls
         /// <param name="oldMinimum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param><param name="newMinimum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param>
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
+            this.CoerceValue(SelectionStartProperty);
             ReCalculateSize();
         }
 
@@ -499,6 +619,8 @@ namespace MahApps.Metro.Controls
         /// <param name="oldMaximum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param><param name="newMaximum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param>
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
+            this.CoerceValue(SelectionStartProperty);
+            this.CoerceValue(SelectionEndProperty);
             ReCalculateSize();
         }
 
@@ -1816,14 +1938,14 @@ namespace MahApps.Metro.Controls
             _autoToolTip.HorizontalOffset = offset;
         }
 
-        private Boolean IsValidDouble(Double d)
+        private static bool IsValidDoubleValue(object value)
         {
-            if (!Double.IsNaN(d) && !Double.IsInfinity(d))
-            {
-                return true;
-            }
+            return value is double && IsValidDouble((double)value);
+        }
 
-            return false;
+        private static bool IsValidDouble(double d)
+        {
+            return !double.IsNaN(d) && !double.IsInfinity(d);
         }
 
         //CHeck if two doubles approximately equals
@@ -1913,17 +2035,6 @@ namespace MahApps.Metro.Controls
             if (!Double.IsNaN(d))
             {
                 return d >= 0d || !double.IsInfinity(d);
-            }
-
-            return false;
-        }
-
-        private static bool IsValidTickFrequency(object value)
-        {
-            double d = (double)value;
-            if (!Double.IsNaN(d))
-            {
-                return !double.IsInfinity(d);
             }
 
             return false;
