@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -93,10 +95,12 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             if (this.IsMouseCaptured)
             {
                 this.ReleaseMouseCapture();
             }
+
             this.ClearValue(IsDraggingPropertyKey);
             var horizontalChange = this.oldDragScreenPoint.X - this.startDragScreenPoint.X;
             var verticalChange = this.oldDragScreenPoint.Y - this.startDragScreenPoint.Y;
@@ -108,21 +112,23 @@ namespace MahApps.Metro.Controls
             if (!this.IsDragging)
             {
                 e.Handled = true;
-                // focus me
-                this.Focus();
-                // now capture the mouse for the drag action
-                this.CaptureMouse();
-                // so now we are in dragging mode
-                this.SetValue(IsDraggingPropertyKey, true);
-                // get the mouse points
-                this.startDragPoint = e.GetPosition(this);
-                this.oldDragScreenPoint = this.startDragScreenPoint = this.PointToScreen(this.startDragPoint);
                 try
                 {
+                    // focus me
+                    this.Focus();
+                    // now capture the mouse for the drag action
+                    this.CaptureMouse();
+                    // so now we are in dragging mode
+                    this.SetValue(IsDraggingPropertyKey, true);
+                    // get the mouse points
+                    this.startDragPoint = e.GetPosition(this);
+                    this.oldDragScreenPoint = this.startDragScreenPoint = this.PointToScreen(this.startDragPoint);
+
                     this.RaiseEvent(new MetroThumbContentControlDragStartedEventArgs(this.startDragPoint.X, this.startDragPoint.Y));
                 }
-                catch
+                catch (Exception exception)
                 {
+                    Trace.TraceError($"{this}: Something went wrong here: {exception} {Environment.NewLine} {exception.StackTrace}");
                     this.CancelDragAction();
                 }
             }
@@ -167,6 +173,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             if (e.MouseDevice.LeftButton == MouseButtonState.Pressed)
             {
                 Point currentDragPoint = e.GetPosition(this);
@@ -188,6 +195,7 @@ namespace MahApps.Metro.Controls
                 {
                     this.ReleaseMouseCapture();
                 }
+
                 this.ClearValue(IsDraggingPropertyKey);
                 this.startDragPoint.X = 0;
                 this.startDragPoint.Y = 0;
@@ -242,39 +250,4 @@ namespace MahApps.Metro.Controls
             return new MetroThumbContentControlAutomationPeer(this);
         }
     }
-
-    public class MetroThumbContentControlDragStartedEventArgs : DragStartedEventArgs
-    {
-        public MetroThumbContentControlDragStartedEventArgs(double horizontalOffset, double verticalOffset)
-            : base(horizontalOffset, verticalOffset)
-        {
-            this.RoutedEvent = MetroThumbContentControl.DragStartedEvent;
-        }
-    }
-
-    public class MetroThumbContentControlDragCompletedEventArgs : DragCompletedEventArgs
-    {
-        public MetroThumbContentControlDragCompletedEventArgs(double horizontalOffset, double verticalOffset, bool canceled)
-            : base(horizontalOffset, verticalOffset, canceled)
-        {
-            this.RoutedEvent = MetroThumbContentControl.DragCompletedEvent;
-        }
-    }
-
-    public class MetroThumbContentControlAutomationPeer : FrameworkElementAutomationPeer
-    {
-        public MetroThumbContentControlAutomationPeer(FrameworkElement owner) : base(owner)
-        { }
-
-        protected override string GetClassNameCore()
-        {
-            return "MetroThumbContentControl";
-        }
-
-        protected override AutomationControlType GetAutomationControlTypeCore()
-        {
-            return AutomationControlType.Custom;
-        }
-    }
 }
-

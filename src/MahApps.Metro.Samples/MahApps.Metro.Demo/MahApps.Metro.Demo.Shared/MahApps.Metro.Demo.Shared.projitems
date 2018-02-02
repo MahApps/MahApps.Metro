@@ -28,17 +28,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\DateExamples.xaml.cs">
       <DependentUpon>DateExamples.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuCreatorsUpdate.xaml.cs">
+      <DependentUpon>HamburgerMenuCreatorsUpdate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuDefault.xaml.cs">
+      <DependentUpon>HamburgerMenuDefault.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuSample.xaml.cs">
       <DependentUpon>HamburgerMenuSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\OtherExamples.xaml.cs">
       <DependentUpon>OtherExamples.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\ProgressBars.xaml.cs">
+      <DependentUpon>ProgressBars.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\SelectionExamples.xaml.cs">
       <DependentUpon>SelectionExamples.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\SliderProgressExamples.xaml.cs">
-      <DependentUpon>SliderProgressExamples.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\Sliders.xaml.cs">
+      <DependentUpon>Sliders.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ExampleViews\SplitViewExamples.xaml.cs">
       <DependentUpon>SplitViewExamples.xaml</DependentUpon>
@@ -112,6 +121,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuCreatorsUpdate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuDefault.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)ExampleViews\HamburgerMenuSample.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -120,11 +137,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\ProgressBars.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)ExampleViews\SelectionExamples.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\SliderProgressExamples.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)ExampleViews\Sliders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

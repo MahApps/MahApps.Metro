@@ -57,7 +57,7 @@
                            FontSize="{DynamicResource WindowTitleFontSize}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
-                <Button Margin="1"
+                <Button Margin="1 0 1 1"
                         Click="ClickMeOnClick"
                         Content="Click Me..."
                         Style="{StaticResource MetroFlatButton}" />

@@ -19,17 +19,4 @@ namespace MahApps.Metro.Controls
             return new MetroHeaderAutomationPeer(this);
         }
     }
-
-    public class MetroHeaderAutomationPeer : GroupBoxAutomationPeer
-    {
-        public MetroHeaderAutomationPeer(GroupBox owner)
-            : base(owner)
-        {
-        }
-
-        protected override string GetClassNameCore()
-        {
-            return "MetroHeader";
-        }
-    }
 }

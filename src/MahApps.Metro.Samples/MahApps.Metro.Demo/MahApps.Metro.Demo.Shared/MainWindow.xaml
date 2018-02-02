@@ -18,7 +18,9 @@
                       Closing="MetroWindow_Closing"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Icon="mahapps.metro.logo2.ico"
+                      LeftWindowCommandsOverlayBehavior="Never"
                       NonActiveGlowBrush="#CDFF0000"
+                      RightWindowCommandsOverlayBehavior="Never"
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
                       WindowStartupLocation="CenterScreen"
@@ -33,10 +35,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -93,7 +91,7 @@
     </Window.Resources>
 
     <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -249,8 +247,11 @@
             <TabItem Header="selection">
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
-            <TabItem Header="sliders and progress">
-                <exampleViews:SliderProgressExamples DataContext="{Binding}" />
+            <TabItem Header="sliders">
+                <exampleViews:Sliders DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="progress">
+                <exampleViews:ProgressBars DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="splitview">
                 <exampleViews:SplitViewExamples DataContext="{Binding}" />
@@ -287,4 +288,3 @@
 
     </Grid>
 </Controls:MetroWindow>
-

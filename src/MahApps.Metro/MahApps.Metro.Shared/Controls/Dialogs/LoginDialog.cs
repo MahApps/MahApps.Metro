@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,72 +6,6 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    public class LoginDialogSettings : MetroDialogSettings
-    {
-        private const string DefaultUsernameWatermark = "Username...";
-        private const string DefaultPasswordWatermark = "Password...";
-        private const string DefaultRememberCheckBoxText = "Remember";
-
-        public LoginDialogSettings()
-        {
-            this.UsernameWatermark = DefaultUsernameWatermark;
-            this.UsernameCharacterCasing = CharacterCasing.Normal;
-            this.PasswordWatermark = DefaultPasswordWatermark;
-            this.NegativeButtonVisibility = Visibility.Collapsed;
-            this.ShouldHideUsername = false;
-            this.AffirmativeButtonText = "Login";
-            this.EnablePasswordPreview = false;
-            this.RememberCheckBoxVisibility = Visibility.Collapsed;
-            this.RememberCheckBoxText = DefaultRememberCheckBoxText;
-        }
-
-        public string InitialUsername { get; set; }
-
-        public string InitialPassword { get; set; }
-
-        public string UsernameWatermark { get; set; }
-
-        public CharacterCasing UsernameCharacterCasing { get; set; }
-
-        public bool ShouldHideUsername { get; set; }
-
-        public string PasswordWatermark { get; set; }
-
-        public Visibility NegativeButtonVisibility { get; set; }
-
-        public bool EnablePasswordPreview { get; set; }
-
-        public Visibility RememberCheckBoxVisibility { get; set; }
-
-        public string RememberCheckBoxText { get; set; }
-    }
-
-    public class LoginDialogData
-    {
-        public string Username { get; internal set; }
-
-        public string Password
-        {
-            [SecurityCritical]
-            get
-            {
-                IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(this.SecurePassword);
-                try
-                {
-                    return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ptr);
-                }
-                finally
-                {
-                    System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ptr);
-                }
-            }
-        }
-
-        public SecureString SecurePassword { get; internal set; }
-
-        public bool ShouldRemember { get; internal set; }
-    }
-
     public partial class LoginDialog : BaseMetroDialog
     {
         internal LoginDialog()
@@ -240,7 +173,7 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (this.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    this.PART_NegativeButton.Style = this.FindResource("AccentedDialogHighlightedSquareButton") as Style;
+                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
                     this.PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     this.PART_TextBox2.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     break;
