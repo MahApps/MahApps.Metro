@@ -17,6 +17,8 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -48,10 +50,12 @@
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
                              Foreground="{TemplateBinding Foreground}"
+                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                              IsTabStop="{TemplateBinding IsTabStop}"
                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                              Text="{TemplateBinding Text}"
-                             Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}" />
+                             Validation.ErrorTemplate="{TemplateBinding Validation.ErrorTemplate}"
+                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">
                             <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Mode=OneWay}" />

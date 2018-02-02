@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -250,6 +251,11 @@ namespace MahApps.Metro.Controls
             this.InternalCloseCommand = new CloseCommand(this.InternalCloseCommandCanExecute, this.InternalCloseCommandExecuteAction);
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlyoutAutomationPeer(this);
         }
 
         private void InternalCloseCommandExecuteAction(object o)

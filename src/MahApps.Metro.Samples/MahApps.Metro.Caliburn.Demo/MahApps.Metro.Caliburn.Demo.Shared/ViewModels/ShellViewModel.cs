@@ -7,15 +7,11 @@ namespace Caliburn.Metro.Demo.ViewModels
     [Export(typeof(IShell))]
     public class ShellViewModel : Screen, IShell
     {
-        private readonly IObservableCollection<FlyoutBaseViewModel> flyouts =
-            new BindableCollection<FlyoutBaseViewModel>();
+        public IObservableCollection<FlyoutBaseViewModel> FlyoutViewModels { get; }
 
-        public IObservableCollection<FlyoutBaseViewModel> FlyoutViewModels
+        public ShellViewModel()
         {
-            get
-            {
-                return this.flyouts;
-            }
+            FlyoutViewModels = new BindableCollection<FlyoutBaseViewModel>();
         }
 
         public void Close()
@@ -25,7 +21,7 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         public void ToggleFlyout(int index)
         {
-            var flyout = this.flyouts[index];
+            var flyout = this.FlyoutViewModels[index];
             flyout.IsOpen = !flyout.IsOpen;
         }
 
@@ -33,13 +29,13 @@ namespace Caliburn.Metro.Demo.ViewModels
         {
             base.OnInitialize();
             this.DisplayName = "Caliburn Metro Demo";
-            this.flyouts.Add(new Flyout1ViewModel());
-            this.flyouts.Add(new Flyout2ViewModel());
-            this.flyouts.Add(new Flyout3ViewModel());
-            this.flyouts.Add(new FlyoutSettingsViewModel());
-            this.flyouts.Add(new FlyoutLeftViewModel());
-            this.flyouts.Add(new FlyoutTopViewModel());
-            this.flyouts.Add(new FlyoutBottomViewModel());
+            this.FlyoutViewModels.Add(new Flyout1ViewModel());
+            this.FlyoutViewModels.Add(new Flyout2ViewModel());
+            this.FlyoutViewModels.Add(new Flyout3ViewModel());
+            this.FlyoutViewModels.Add(new FlyoutSettingsViewModel());
+            this.FlyoutViewModels.Add(new FlyoutLeftViewModel());
+            this.FlyoutViewModels.Add(new FlyoutTopViewModel());
+            this.FlyoutViewModels.Add(new FlyoutBottomViewModel());
         }
     }
 }

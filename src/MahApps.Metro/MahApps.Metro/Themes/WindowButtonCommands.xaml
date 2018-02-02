@@ -55,7 +55,7 @@
             </Button>
             <Button x:Name="PART_Close"
                     Focusable="False"
-                    IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     RenderOptions.EdgeMode="Aliased"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
@@ -74,6 +74,14 @@
             </Button>
         </StackPanel>
         <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsAnyDialogOpen}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabledWithDialog}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
+            </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 <Setter TargetName="PART_MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
@@ -147,7 +155,7 @@
             <Button x:Name="PART_Close"
                     Width="46"
                     Focusable="False"
-                    IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                    IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
                 <Button.Visibility>
@@ -181,6 +189,13 @@
             </Button>
         </StackPanel>
         <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabledWithDialog}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
+            </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 <Setter TargetName="PART_MaxPath" Property="Data" Value="M10,9 9,9 9,3 3,3 3,2 10,2 10,9Z M8,11 1,11 1,4 8,4 8,11Z M2,1 2,3 0,3 0,12 9,12 9,10 11,10 11,1 2,1Z" />

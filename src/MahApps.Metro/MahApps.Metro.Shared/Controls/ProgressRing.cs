@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
                                                                     ring.SetCurrentValue(ProgressRing.IsActiveProperty, false);
                                                                 } else {
                                                                     // #1105 don't forget to re-activate
-                                                                    ring.IsActive = true;
+                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, true);
                                                                 }
                                                             }
                                                         })));

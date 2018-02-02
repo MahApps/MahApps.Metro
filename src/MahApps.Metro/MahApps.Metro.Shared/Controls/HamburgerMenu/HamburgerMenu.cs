@@ -76,6 +76,11 @@ namespace MahApps.Metro.Controls
 
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
+            if (GetValue(ContentProperty) != null)
+            {
+                return;
+            }
+
             var selectedItem = _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem;
             if (selectedItem != null)
             {

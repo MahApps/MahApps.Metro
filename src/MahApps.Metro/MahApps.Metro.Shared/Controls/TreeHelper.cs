@@ -36,6 +36,21 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Finds all Ancestors of a given item on the visual tree.
+        /// </summary>
+        /// <param name="child">A node in a visual tree</param>
+        /// <returns>All ancestors in visual tree of <paramref name="child"/> element</returns>
+        public static IEnumerable<DependencyObject> GetAncestors(this DependencyObject child)
+        {
+            var parent = VisualTreeHelper.GetParent(child);
+            while (parent != null)
+            {
+                yield return parent;
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+        }
+
+        /// <summary>
         /// Finds a Child of a given item in the visual tree. 
         /// </summary>
         /// <param name="parent">A direct parent of the queried item.</param>

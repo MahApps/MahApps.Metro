@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Behaviours
@@ -54,12 +51,10 @@ namespace MahApps.Metro.Behaviours
             ((ContentControl)d).Loaded += ReloadLoaded;
         }
 
-        static void ReloadLoaded(object sender, RoutedEventArgs e)
+        private static void ReloadLoaded(object sender, RoutedEventArgs e)
         {
-            var metroContentControl = ((ContentControl)sender);
-            var tab = Ancestors(metroContentControl)
-                .OfType<TabControl>()
-                .FirstOrDefault();
+            var metroContentControl = (ContentControl)sender;
+            var tab = metroContentControl.TryFindParent<TabControl>();
 
             if (tab == null) return;
 
@@ -67,19 +62,8 @@ namespace MahApps.Metro.Behaviours
             tab.SelectionChanged -= ReloadSelectionChanged;
             tab.SelectionChanged += ReloadSelectionChanged;
         }
-
-        private static IEnumerable<DependencyObject> Ancestors(DependencyObject obj)
-        {
-            var parent = VisualTreeHelper.GetParent(obj);
-            while (parent != null)
-            {
-                yield return parent;
-                obj = parent;
-                parent = VisualTreeHelper.GetParent(obj);
-            }
-        }
-
-        static void ReloadSelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+        private static void ReloadSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.OriginalSource != sender)
                 return;
