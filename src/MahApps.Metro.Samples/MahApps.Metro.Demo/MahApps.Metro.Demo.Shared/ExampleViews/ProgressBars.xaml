@@ -193,7 +193,7 @@
                     </Grid>
                 </Controls:MetroHeader>
 
-                <Controls:MetroHeader Margin="0 0 0 10" Header="MetroProgressBar">
+                <Controls:MetroHeader Margin="0 0 0 10" Header="ProgressRing">
                     <StackPanel MinHeight="150"
                                 Margin="10 0"
                                 Orientation="Vertical">
