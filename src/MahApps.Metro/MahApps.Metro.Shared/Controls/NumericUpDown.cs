@@ -695,23 +695,27 @@ namespace MahApps.Metro.Controls
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
-            if (string.IsNullOrWhiteSpace(e.Text) ||
-                e.Text.Length != 1)
+            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
             {
                 return;
             }
+
+            TextBox textBox = (TextBox)sender;
+            CultureInfo equivalentCulture = SpecificCultureInfo;
+            NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
 
             string text = e.Text;
 
             if (char.IsDigit(text[0]))
             {
-                e.Handled = false;
+                if (textBox.Text.IndexOf(numberFormatInfo.NegativeSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0
+                    && textBox.Text.IndexOf(numberFormatInfo.PositiveSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0)
+                {
+                    e.Handled = false;
+                }
             }
             else
             {
-                CultureInfo equivalentCulture = SpecificCultureInfo;
-                NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-                TextBox textBox = (TextBox)sender;
                 bool allTextSelected = textBox.SelectedText == textBox.Text;
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
@@ -764,6 +768,8 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
+            this._manualChange = this._manualChange || !e.Handled;
         }
 
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
@@ -1112,7 +1118,7 @@ namespace MahApps.Metro.Controls
         private void ChangeValueBy(double difference)
         {
             var newValue = Value.GetValueOrDefault() + difference;
-            SetCurrentValue(ValueProperty, newValue);
+            SetCurrentValue(ValueProperty, CoerceValue(this, newValue));
         }
 
         private void EnableDisableDown()
@@ -1139,7 +1145,7 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            _manualChange = true;
+            _manualChange = _manualChange || e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod;
 
             if (NumericInputMode.HasFlag(NumericInput.Decimal) && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
             {
@@ -1219,6 +1225,7 @@ namespace MahApps.Metro.Controls
             var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
             if (!isText)
             {
+                e.CancelCommand();
                 return;
             }
 
@@ -1229,6 +1236,10 @@ namespace MahApps.Metro.Controls
             if (!ValidateText(newText, out number))
             {
                 e.CancelCommand();
+            }
+            else
+            {
+                _manualChange = true;
             }
         }
 
