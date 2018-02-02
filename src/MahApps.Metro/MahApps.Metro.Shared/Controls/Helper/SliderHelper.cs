@@ -391,7 +391,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
-        public static MouseWheelChange GetChangeValueBy(Slider element)
+        [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
+        public static MouseWheelChange GetChangeValueBy(UIElement element)
         {
             return (MouseWheelChange)element.GetValue(ChangeValueByProperty);
         }
@@ -399,7 +400,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/Sets the type how the value will be changed if the user rotates the mouse wheel.
         /// </summary>
-        public static void SetChangeValueBy(Slider element, MouseWheelChange value)
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Slider))]
+        [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
+        public static void SetChangeValueBy(UIElement element, MouseWheelChange value)
         {
             element.SetValue(ChangeValueByProperty, value);
         }
@@ -415,7 +419,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Slider))]
-        public static MouseWheelState GetEnableMouseWheel(Slider element)
+        [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
+        public static MouseWheelState GetEnableMouseWheel(UIElement element)
         {
             return (MouseWheelState)element.GetValue(EnableMouseWheelProperty);
         }
@@ -423,7 +428,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/Sets the value when the slider will be changed. Possible values are if the slider is focused or if the mouse is over the slider.
         /// </summary>
-        public static void SetEnableMouseWheel(Slider element, MouseWheelState value)
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Slider))]
+        [AttachedPropertyBrowsableForType(typeof(RangeSlider))]
+        public static void SetEnableMouseWheel(UIElement element, MouseWheelState value)
         {
             element.SetValue(EnableMouseWheelProperty, value);
         }
@@ -432,22 +440,31 @@ namespace MahApps.Metro.Controls
         {
             if (e.NewValue != e.OldValue)
             {
-                var slider = d as Slider;
-                if (slider != null)
+                if (d is Slider)
                 {
-                    slider.PreviewMouseWheel -= OnPreviewMouseWheel;
+                    var slider = (Slider)d;
+                    slider.PreviewMouseWheel -= OnSliderPreviewMouseWheel;
                     if ((MouseWheelState)e.NewValue != MouseWheelState.None)
                     {
-                        slider.PreviewMouseWheel += OnPreviewMouseWheel;
+                        slider.PreviewMouseWheel += OnSliderPreviewMouseWheel;
+                    }
+                }
+                else if (d is RangeSlider)
+                {
+                    var rangeSlider = (RangeSlider)d;
+                    rangeSlider.PreviewMouseWheel -= OnRangeSliderPreviewMouseWheel;
+                    if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                    {
+                        rangeSlider.PreviewMouseWheel += OnRangeSliderPreviewMouseWheel;
                     }
                 }
             }
         }
 
-        private static void OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private static void OnSliderPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var slider = ((Slider)sender);
-            if (slider.IsFocused || MouseWheelState.MouseHover.Equals(slider.GetValue(EnableMouseWheelProperty)))
+            var slider = sender as Slider;
+            if (slider != null && (slider.IsFocused || MouseWheelState.MouseHover.Equals(slider.GetValue(EnableMouseWheelProperty))))
             {
                 var changeType = (MouseWheelChange)slider.GetValue(ChangeValueByProperty);
                 var difference = changeType == MouseWheelChange.LargeChange ? slider.LargeChange : slider.SmallChange;
@@ -460,6 +477,31 @@ namespace MahApps.Metro.Controls
                 {
                     slider.Value -= difference;
                 }
+
+                e.Handled = true;
+            }
+        }
+
+        private static void OnRangeSliderPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var rangeSlider = sender as RangeSlider;
+            if (rangeSlider != null && (rangeSlider.IsFocused || MouseWheelState.MouseHover.Equals(rangeSlider.GetValue(EnableMouseWheelProperty))))
+            {
+                var changeType = (MouseWheelChange)rangeSlider.GetValue(ChangeValueByProperty);
+                var difference = changeType == MouseWheelChange.LargeChange ? rangeSlider.LargeChange : rangeSlider.SmallChange;
+
+                if (e.Delta > 0)
+                {
+                    rangeSlider.LowerValue += difference;
+                    rangeSlider.UpperValue += difference;
+                }
+                else
+                {
+                    rangeSlider.LowerValue -= difference;
+                    rangeSlider.UpperValue -= difference;
+                }
+
+                e.Handled = true;
             }
         }
     }

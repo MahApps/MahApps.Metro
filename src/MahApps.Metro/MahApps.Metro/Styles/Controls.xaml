@@ -37,10 +37,12 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToggleSwitch.xaml" />
 
         <!--  Theme styles with keys  -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroHeader.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="FloatingMessageContainerStyle" TargetType="{x:Type ContentControl}">
@@ -91,7 +93,7 @@
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="TabControl" />
     <Style BasedOn="{StaticResource MetroScrollBar}" TargetType="ScrollBar" />
     <Style BasedOn="{StaticResource MetroRadioButton}" TargetType="RadioButton" />
-    <Style BasedOn="{StaticResource MetroProgressBar}" TargetType="ProgressBar" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}" TargetType="ProgressBar" />
     <Style BasedOn="{StaticResource MetroPasswordBox}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MetroComboBox}" TargetType="ComboBox" />

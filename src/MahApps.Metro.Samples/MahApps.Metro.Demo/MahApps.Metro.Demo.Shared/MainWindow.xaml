@@ -35,10 +35,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -251,8 +247,11 @@
             <TabItem Header="selection">
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
-            <TabItem Header="sliders and progress">
-                <exampleViews:SliderProgressExamples DataContext="{Binding}" />
+            <TabItem Header="sliders">
+                <exampleViews:Sliders DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="progress">
+                <exampleViews:ProgressBars DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="splitview">
                 <exampleViews:SplitViewExamples DataContext="{Binding}" />

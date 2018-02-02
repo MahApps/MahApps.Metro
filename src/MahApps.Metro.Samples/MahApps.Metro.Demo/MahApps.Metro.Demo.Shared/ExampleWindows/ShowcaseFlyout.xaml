@@ -19,10 +19,6 @@
 
     <controls:Flyout.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <ObjectDataProvider x:Key="FlyoutThemeEnumValues"
                                 MethodName="GetValues"
                                 ObjectType="{x:Type controls:FlyoutTheme}">
@@ -182,7 +178,7 @@
                                 Maximum="100"
                                 Minimum="0"
                                 SmallChange="1"
-                                Style="{StaticResource FlatSlider}"
+                                Style="{StaticResource MahApps.Metro.Styles.FlatSlider}"
                                 Value="{Binding ElementName=TheSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Margin="2"
                                    HorizontalAlignment="Center"
