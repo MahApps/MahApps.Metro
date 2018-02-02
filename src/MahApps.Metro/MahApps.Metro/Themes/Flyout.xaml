@@ -89,7 +89,9 @@
                                                        FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
+                    <ContentPresenter x:Name="PART_Content"
+                                      ContentSource="Content"
+                                      DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
             <VisualStateManager.VisualStateGroups>

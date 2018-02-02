@@ -134,6 +134,10 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:ControlsHelper.IsReadOnly" Value="True">
+                            <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>

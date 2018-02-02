@@ -89,6 +89,7 @@
     <Color x:Key="MenuShadowColor">#FF000000</Color>
 
     <!--  DataGrid brushes  -->
+
     <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10" Color="#FF666666" options:Freeze="True" />
