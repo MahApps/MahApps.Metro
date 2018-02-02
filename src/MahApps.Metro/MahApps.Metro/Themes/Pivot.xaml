@@ -58,6 +58,7 @@
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView x:Name="PART_Headers"
                                   Grid.Row="1"
+                                  Background="{x:Null}"
                                   BorderBrush="{x:Null}"
                                   ItemContainerStyle="{StaticResource PivotListViewItem}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
