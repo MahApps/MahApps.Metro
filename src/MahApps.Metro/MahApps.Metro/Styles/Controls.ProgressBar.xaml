@@ -7,9 +7,10 @@
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="Height" Value="10" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
+        <Setter Property="MinHeight" Value="10" />
+        <Setter Property="MinWidth" Value="10" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar">
@@ -106,7 +107,6 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Orientation" Value="Vertical">
-                            <Setter Property="UseLayoutRounding" Value="True" />
                             <Setter TargetName="Root" Property="LayoutTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="-90" />
