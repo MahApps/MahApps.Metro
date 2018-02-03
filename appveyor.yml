@@ -27,7 +27,7 @@
 
   after_build:
     - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
+    - ps: .paket\paket pack --version $env:GitVersion_NuGetVersion bin
     - ps: cd..
 
   cache:
@@ -37,7 +37,10 @@
   artifacts:
     - path: \src\bin\MahApps.Metro.*.nupkg
     - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
+      name: MetroDemo.v$(GitVersion_NuGetVersion)
+      type: zip
+    - path: \src\bin\Caliburn.Metro.Demo\
+      name: Caliburn.MetroDemo.v$(GitVersion_NuGetVersion)
       type: zip
 
 # configuration for master/Release branch
@@ -65,7 +68,7 @@
 
   after_build:
     - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
+    - ps: .paket\paket pack --version $env:GitVersion_NuGetVersion bin
     - ps: cd..
 
   cache:
@@ -75,5 +78,8 @@
   artifacts:
     - path: \src\bin\MahApps.Metro.*.nupkg
     - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
+      name: MetroDemo.v$(GitVersion_NuGetVersion)
+      type: zip
+    - path: \src\bin\Caliburn.Metro.Demo\
+      name: Caliburn.MetroDemo.v$(GitVersion_NuGetVersion)
       type: zip
