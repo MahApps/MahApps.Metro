@@ -1938,16 +1938,6 @@ namespace MahApps.Metro.Controls
             _autoToolTip.HorizontalOffset = offset;
         }
 
-        private static bool IsValidDoubleValue(object value)
-        {
-            return value is double && IsValidDouble((double)value);
-        }
-
-        private static bool IsValidDouble(double d)
-        {
-            return !double.IsNaN(d) && !double.IsInfinity(d);
-        }
-
         //CHeck if two doubles approximately equals
         private bool ApproximatelyEquals(double value1, double value2)
         {
@@ -2024,6 +2014,16 @@ namespace MahApps.Metro.Controls
 
         #region Validation methods
 
+        private static bool IsValidDoubleValue(object value)
+        {
+            return value is double && IsValidDouble((double)value);
+        }
+
+        private static bool IsValidDouble(double d)
+        {
+            return !double.IsNaN(d) && !double.IsInfinity(d);
+        }
+
         private static bool IsValidPrecision(object value)
         {
             return ((Int32)value >= 0);
@@ -2031,13 +2031,7 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValidMinRange(object value)
         {
-            double d = (double)value;
-            if (!Double.IsNaN(d))
-            {
-                return d >= 0d || !double.IsInfinity(d);
-            }
-
-            return false;
+            return value is double && IsValidDouble((double)value) && (double)value >= 0d;
         }
 
         #endregion
