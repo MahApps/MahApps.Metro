@@ -55,7 +55,9 @@ namespace MahApps.Metro.Controls
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             if (element != item)
-                element.SetCurrentValue(DataContextProperty, item); //dont want to set the datacontext to itself.
+            {
+                element.SetValue(DataContextProperty, item); //dont want to set the datacontext to itself.
+            }
 
             base.PrepareContainerForItemOverride(element, item);
         }

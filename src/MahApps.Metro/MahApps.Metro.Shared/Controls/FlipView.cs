@@ -152,7 +152,7 @@ namespace MahApps.Metro.Controls
         {
             if (element != item)
             {
-                element.SetCurrentValue(DataContextProperty, item); //dont want to set the datacontext to itself. taken from MetroTabControl.cs
+                element.SetValue(DataContextProperty, item); //dont want to set the datacontext to itself.
             }
 
             base.PrepareContainerForItemOverride(element, item);
