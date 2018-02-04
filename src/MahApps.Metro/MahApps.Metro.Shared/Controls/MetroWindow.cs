@@ -430,7 +430,7 @@ namespace MahApps.Metro.Controls
         public bool IsAnyDialogOpen
         {
             get { return (bool)GetValue(IsAnyDialogOpenProperty); }
-            private set { SetValue(IsAnyDialogOpenProperty, value); }
+            private set { SetValue(IsAnyDialogOpenPropertyKey, value); }
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace MahApps.Metro.Controls
         public bool IsCloseButtonEnabledWithDialog
         {
             get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
-            private set { SetValue(IsCloseButtonEnabledWithDialogProperty, value); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, value); }
         }
 
         /// <summary>

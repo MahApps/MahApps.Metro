@@ -617,4 +617,12 @@
     </When>
   </Choose>
   <Import Project="..\..\packages\gitlink\build\GitLink.targets" Condition="Exists('..\..\packages\gitlink\build\GitLink.targets')" Label="Paket" />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\WpfAnalyzers\analyzers\dotnet\cs\WpfAnalyzers.Analyzers.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+    <Analyzer Include="..\..\packages\WpfAnalyzers\analyzers\dotnet\cs\WpfAnalyzers.CodeFixes.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+  </ItemGroup>
 </Project>

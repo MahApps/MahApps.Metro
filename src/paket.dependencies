@@ -1,6 +1,7 @@
 source https://nuget.org/api/v2
 framework >= net40
 
+nuget WpfAnalyzers
 nuget JetBrains.Annotations
 nuget gitlink
 nuget Fody 2.3.25

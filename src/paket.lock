@@ -14,6 +14,7 @@ NUGET
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
+    WpfAnalyzers (2.1.2)
     xunit (1.9.2)
     xunit.extensions (1.9.2)
       xunit (1.9.2)

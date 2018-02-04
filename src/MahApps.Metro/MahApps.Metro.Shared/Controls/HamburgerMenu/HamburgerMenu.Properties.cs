@@ -319,7 +319,7 @@ namespace MahApps.Metro.Controls
         public Style ItemFocusVisualStyle
         {
             get { return (Style)GetValue(ItemFocusVisualStyleProperty); }
-            private set { SetValue(ItemFocusVisualStyleProperty, value); }
+            private set { SetValue(ItemFocusVisualStylePropertyKey, value); }
         }
 
         /// <summary>
