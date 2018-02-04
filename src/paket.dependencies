@@ -3,7 +3,7 @@ framework >= net40
 
 nuget JetBrains.Annotations
 nuget gitlink
-nuget Fody < 2.3
+nuget Fody 2.3.25
 nuget Costura.Fody 1.4.1
 nuget Caliburn.Micro ~> 3.0
 nuget MahApps.Metro.IconPacks
