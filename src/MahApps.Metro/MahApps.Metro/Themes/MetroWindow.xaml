@@ -572,6 +572,7 @@
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource NonActiveWindowTitleColorBrush}" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="OverlayBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />
         <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
