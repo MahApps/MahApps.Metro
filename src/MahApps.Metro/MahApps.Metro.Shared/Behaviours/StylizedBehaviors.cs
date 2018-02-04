@@ -138,7 +138,7 @@ namespace MahApps.Metro.Behaviours
         }
 
         private static readonly DependencyProperty OriginalBehaviorProperty
-            = DependencyProperty.RegisterAttached("OriginalBehaviorInternal",
+            = DependencyProperty.RegisterAttached("OriginalBehavior",
                                                   typeof(Behavior),
                                                   typeof(StylizedBehaviors),
                                                   new UIPropertyMetadata(null));
