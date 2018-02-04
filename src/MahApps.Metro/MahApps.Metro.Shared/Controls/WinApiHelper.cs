@@ -25,6 +25,7 @@ namespace MahApps.Metro.Controls
         /// Try to get the relative mouse position to the given handle in client coordinates.
         /// </summary>
         /// <param name="hWnd">The handle for this method.</param>
+        /// <param name="point">The relative mouse position to the given handle.</param>
         public static bool TryGetRelativeMousePosition(IntPtr hWnd, out System.Windows.Point point)
         {
             POINT pt = new POINT();

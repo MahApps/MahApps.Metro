@@ -224,10 +224,12 @@ namespace MahApps.Metro.Controls
             if (close != null)
             {
                 // TODO: Delete this if statement once WindowCloseButtonStyle property is deleted from MetroWindow!
+#pragma warning disable 618
                 if (ParentWindow?.WindowCloseButtonStyle != null)
                 {
                     close.Style = ParentWindow.WindowCloseButtonStyle;
                 }
+#pragma warning restore 618
                 else
                 {
                     close.Style = (Theme == Theme.Light) ? LightCloseButtonStyle : DarkCloseButtonStyle;
@@ -236,10 +238,12 @@ namespace MahApps.Metro.Controls
             if (max != null)
             {
                 // TODO: Delete this if statement once WindowMaxButtonStyle property is deleted from MetroWindow!
+#pragma warning disable 618
                 if (ParentWindow?.WindowMaxButtonStyle != null)
                 {
                     max.Style = ParentWindow.WindowMaxButtonStyle;
                 }
+#pragma warning restore 618
                 else
                 {
                     max.Style = (Theme == Theme.Light) ? LightMaxButtonStyle : DarkMaxButtonStyle;
@@ -248,10 +252,12 @@ namespace MahApps.Metro.Controls
             if (min != null)
             {
                 // TODO: Delete this if statement once WindowMinButtonStyle property is deleted from MetroWindow!
+#pragma warning disable 618
                 if (ParentWindow?.WindowMinButtonStyle != null)
                 {
                     min.Style = ParentWindow.WindowMinButtonStyle;
                 }
+#pragma warning restore 618
                 else
                 {
                     min.Style = (Theme == Theme.Light) ? LightMinButtonStyle : DarkMinButtonStyle;

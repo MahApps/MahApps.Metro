@@ -1025,10 +1025,12 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+#pragma warning disable 618
             if (EnableDWMDropShadow)
             {
                 this.UseDropShadow();
             }
+#pragma warning restore 618
 
             if (this.WindowTransitionsEnabled)
             {
