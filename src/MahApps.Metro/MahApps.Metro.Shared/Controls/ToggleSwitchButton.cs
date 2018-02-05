@@ -35,7 +35,7 @@ namespace MahApps.Metro.Controls
         private readonly PropertyChangeNotifier isCheckedPropertyChangeNotifier;
 
         [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).SetCurrentValue(OnSwitchBrushProperty, e.NewValue as Brush)));
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
 

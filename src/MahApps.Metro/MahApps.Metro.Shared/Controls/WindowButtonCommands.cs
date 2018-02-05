@@ -187,19 +187,19 @@ namespace MahApps.Metro.Controls
                                         new Action(() => {
                                                        if (string.IsNullOrWhiteSpace(this.Minimize))
                                                        {
-                                                           this.Minimize = GetCaption(900);
+                                                           this.SetCurrentValue(MinimizeProperty, GetCaption(900));
                                                        }
                                                        if (string.IsNullOrWhiteSpace(this.Maximize))
                                                        {
-                                                           this.Maximize = GetCaption(901);
+                                                           this.SetCurrentValue(MaximizeProperty, GetCaption(901));
                                                        }
                                                        if (string.IsNullOrWhiteSpace(this.Close))
                                                        {
-                                                           this.Close = GetCaption(905);
+                                                           this.SetCurrentValue(CloseProperty, GetCaption(905));
                                                        }
                                                        if (string.IsNullOrWhiteSpace(this.Restore))
                                                        {
-                                                           this.Restore = GetCaption(903);
+                                                           this.SetCurrentValue(RestoreProperty, GetCaption(903));
                                                        }
                                                    }));
         }

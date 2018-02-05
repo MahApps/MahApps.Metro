@@ -216,12 +216,12 @@ namespace MahApps.Metro.Controls
 
         private void SetEllipseDiameter(double width)
         {
-            this.EllipseDiameter = width <= 180 ? 4 : (width <= 280 ? 5 : 6);
+            this.SetCurrentValue(EllipseDiameterProperty, width <= 180 ? 4d : (width <= 280 ? 5d : 6d));
         }
 
         private void SetEllipseOffset(double width)
         {
-            this.EllipseOffset = width <= 180 ? 4 : (width <= 280 ? 7 : 9);
+            this.SetCurrentValue(EllipseOffsetProperty, width <= 180 ? 4d : (width <= 280 ? 7d : 9d));
         }
 
         private double CalcContainerAnimStart(double width)

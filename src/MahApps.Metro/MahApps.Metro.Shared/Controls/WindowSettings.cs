@@ -98,6 +98,11 @@ namespace MahApps.Metro.Controls
 
         public static void SetSave(DependencyObject dependencyObject, IWindowPlacementSettings windowPlacementSettings)
         {
+            SetWindowPlacementSettings(dependencyObject, windowPlacementSettings);
+        }
+
+        public static void SetWindowPlacementSettings(DependencyObject dependencyObject, IWindowPlacementSettings windowPlacementSettings)
+        {
             dependencyObject.SetValue(WindowPlacementSettingsProperty, windowPlacementSettings);
         }
 

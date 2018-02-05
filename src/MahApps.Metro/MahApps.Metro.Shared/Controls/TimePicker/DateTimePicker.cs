@@ -192,7 +192,7 @@
         {
             base.ApplyCulture();
 
-            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            SetCurrentValue(FirstDayOfWeekProperty, SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek);
         }
 
         protected override string GetValueForTextBox()
