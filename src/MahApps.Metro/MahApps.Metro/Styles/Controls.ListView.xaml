@@ -5,7 +5,7 @@
     <Style x:Key="MetroGridViewScrollViewerStyle"
            BasedOn="{StaticResource {x:Static GridView.GridViewScrollViewerStyleKey}}"
            TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -21,11 +21,12 @@
                         </Grid.RowDefinitions>
                         <DockPanel Margin="{TemplateBinding Padding}">
                             <ScrollViewer DockPanel.Dock="Top"
-                                          Focusable="false"
+                                          Focusable="False"
                                           HorizontalScrollBarVisibility="Hidden"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalScrollBarVisibility="Hidden">
-                                <GridViewHeaderRowPresenter Margin="2 0 2 0"
+                                <GridViewHeaderRowPresenter x:Name="PART_HeaderRowPresenter"
+                                                            Margin="2 0 2 0"
                                                             AllowsColumnReorder="{Binding TemplatedParent.View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}"
                                                             ColumnHeaderContainerStyle="{Binding TemplatedParent.View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
                                                             ColumnHeaderContextMenu="{Binding TemplatedParent.View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
@@ -64,7 +65,7 @@
                         <!-- this is from original style, but we don't want it!!!
                         <DockPanel Background="{Binding Background, ElementName=PART_VerticalScrollBar}"
                                    Grid.Column="1"
-                                   LastChildFill="false"
+                                   LastChildFill="False"
                                    Grid.Row="1">
                             <Rectangle DockPanel.Dock="Left"
                                        Fill="White"
@@ -77,6 +78,11 @@
                         </DockPanel>
                         -->
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding TemplatedParent.View.Columns, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="PART_HeaderRowPresenter" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -84,7 +90,7 @@
 
     <!--
         Do not set CanContentScroll=True below. This breaks the scrolling for groups with more items that will fit on screen.
-        It also (setting true) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose
+        It also (setting True) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose
         virtualisation http://serialseb.blogspot.com/2007/09/wpf-tips-7-smooth-scrolling.html
     -->
     <Style x:Key="MetroListView" TargetType="{x:Type ListView}">
@@ -92,11 +98,11 @@
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="0 1 0 0" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
@@ -116,10 +122,10 @@
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsGrouping" Value="true">
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        <Trigger Property="IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -178,6 +184,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
                             <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RowPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="True">
@@ -320,11 +327,11 @@
                                Style="{StaticResource GridViewColumnHeaderGripper}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
+                        <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="HeaderContent" Property="Margin" Value="1 1 0 0" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -341,7 +348,8 @@
                             <Canvas Name="PART_FloatingHeaderCanvas">
                                 <Rectangle Width="{TemplateBinding ActualWidth}"
                                            Height="{TemplateBinding ActualHeight}"
-                                           Fill="#60000000" />
+                                           Fill="{DynamicResource AccentColorBrush3}" />
+                                <!--  Fill="#60000000" />  -->
                             </Canvas>
                         </ControlTemplate>
                     </Setter.Value>
