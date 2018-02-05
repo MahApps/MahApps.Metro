@@ -354,13 +354,13 @@
             }
             else
             {
-                this.IsPaneOpen = false;
+                this.SetCurrentValue(IsPaneOpenProperty, false);
             }
         }        
 
         private void OnLightDismiss(object sender, MouseButtonEventArgs e)
         {
-            this.IsPaneOpen = false;
+            this.SetCurrentValue(IsPaneOpenProperty, false);
         }
     }
 }

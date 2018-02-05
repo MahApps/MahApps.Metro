@@ -184,7 +184,7 @@ namespace MahApps.Metro.Controls
 #endif
                 if (attribute != null)
                 {
-                    obj.SetValue(WatermarkProperty, attribute.GetPrompt());
+                    obj.SetCurrentValue(WatermarkProperty, attribute.GetPrompt());
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace MahApps.Metro.Controls
 
             if (e.OldValue != e.NewValue)
             {
-                tb.SetValue(SpellCheck.IsEnabledProperty, (bool)e.NewValue);
+                tb.SetCurrentValue(SpellCheck.IsEnabledProperty, (bool)e.NewValue);
                 if ((bool)e.NewValue)
                 {
                     tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;

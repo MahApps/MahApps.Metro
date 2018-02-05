@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="Thumbnail"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register(nameof(Thumbnail), typeof(ImageSource), typeof(HamburgerMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register(nameof(Thumbnail), typeof(ImageSource), typeof(HamburgerMenuImageItem), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies a bitmap to display with an Image control.

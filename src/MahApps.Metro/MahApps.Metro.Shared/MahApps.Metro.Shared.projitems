@@ -9,7 +9,9 @@
     <Import_RootNamespace>MahApps.Metro</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\CloseFlyoutAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\CloseTabItemAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\CommandTriggerAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\BorderlessWindowBehavior.cs" />

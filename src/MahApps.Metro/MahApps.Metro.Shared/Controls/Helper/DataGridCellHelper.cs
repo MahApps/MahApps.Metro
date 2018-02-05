@@ -29,23 +29,29 @@ namespace MahApps.Metro.Controls
                     cell.Loaded += DataGridCellLoaded;
                     cell.Unloaded += DataGridCellUnloaded;
                 }
+#pragma warning disable 618
                 SetDataGrid(cell, dataGrid);
+#pragma warning restore 618
             }
         }
 
         static void DataGridCellLoaded(object sender, RoutedEventArgs e)
         {
             var cell = (DataGridCell)sender;
+#pragma warning disable 618
             if (GetDataGrid(cell) == null)
             {
                 var dataGrid = cell.TryFindParent<DataGrid>();
                 SetDataGrid(cell, dataGrid);
             }
+#pragma warning restore 618
         }
 
         static void DataGridCellUnloaded(object sender, RoutedEventArgs e)
         {
+#pragma warning disable 618
             SetDataGrid((DataGridCell)sender, null);
+#pragma warning restore 618
         }
 
         /// <summary>

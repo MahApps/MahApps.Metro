@@ -97,7 +97,7 @@ namespace MahApps.Metro.Converters
     /// MathAddConverter provides a multi value converter as a MarkupExtension which can be used for math operations.
     /// This class cannot be inherited.
     /// </summary>
-    [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
+    [MarkupExtensionReturnType(typeof(MathAddConverter))]
     public sealed class MathAddConverter : MarkupMultiConverter
     {
         private static MathAddConverter _instance;
@@ -139,7 +139,7 @@ namespace MahApps.Metro.Converters
     /// MathSubtractConverter provides a multi value converter as a MarkupExtension which can be used for math operations.
     /// This class cannot be inherited.
     /// </summary>
-    [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
+    [MarkupExtensionReturnType(typeof(MathSubtractConverter))]
     public sealed class MathSubtractConverter : MarkupMultiConverter
     {
         private static MathSubtractConverter _instance;
@@ -181,7 +181,7 @@ namespace MahApps.Metro.Converters
     /// MathMultiplyConverter provides a multi value converter as a MarkupExtension which can be used for math operations.
     /// This class cannot be inherited.
     /// </summary>
-    [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
+    [MarkupExtensionReturnType(typeof(MathMultiplyConverter))]
     public sealed class MathMultiplyConverter : MarkupMultiConverter
     {
         private static MathMultiplyConverter _instance;
@@ -223,7 +223,7 @@ namespace MahApps.Metro.Converters
     /// MathDivideConverter provides a multi value converter as a MarkupExtension which can be used for math operations.
     /// This class cannot be inherited.
     /// </summary>
-    [MarkupExtensionReturnType(typeof(MarkupMultiConverter))]
+    [MarkupExtensionReturnType(typeof(MathDivideConverter))]
     public sealed class MathDivideConverter : MarkupMultiConverter
     {
         private static MathDivideConverter _instance;

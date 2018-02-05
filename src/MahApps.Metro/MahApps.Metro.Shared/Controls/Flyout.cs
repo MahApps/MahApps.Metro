@@ -56,6 +56,8 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
+
+        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
         internal static readonly DependencyProperty InternalCloseCommandProperty = DependencyProperty.Register("InternalCloseCommand", typeof(ICommand), typeof(Flyout));
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
@@ -127,6 +129,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets a command which will be executed if the close button was clicked.
         /// </summary>
+        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
         internal ICommand InternalCloseCommand
         {
             get { return (ICommand)this.GetValue(InternalCloseCommandProperty); }
@@ -248,7 +251,9 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
+#pragma warning disable 618
             this.InternalCloseCommand = new CloseCommand(this.InternalCloseCommandCanExecute, this.InternalCloseCommandExecuteAction);
+#pragma warning restore 618
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
         }
@@ -264,7 +269,7 @@ namespace MahApps.Metro.Controls
             // close the Flyout only if there is no command
             if (closeCommand == null)
             {
-                this.IsOpen = false;
+                this.SetCurrentValue(IsOpenProperty, false);
             }
             else
             {

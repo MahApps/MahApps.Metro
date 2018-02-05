@@ -3,61 +3,15 @@ using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Actions
 {
-    public class CloseTabItemAction : TriggerAction<FrameworkElement>
+    public class CloseTabItemAction : CommandTriggerAction
     {
         private TabItem associatedTabItem;
 
         private TabItem AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
-
-        /// <summary>
-        /// Identifies the <see cref="Command" /> dependency property
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty
-            = DependencyProperty.Register(nameof(Command),
-                                          typeof(ICommand),
-                                          typeof(CloseTabItemAction),
-                                          new PropertyMetadata(null, (s, e) => OnCommandChanged(s as CloseTabItemAction, e)));
-
-        /// <summary>
-        /// Gets or sets the command that this trigger is bound to.
-        /// </summary>
-        public ICommand Command
-        {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="CommandParameter" /> dependency property
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty
-            = DependencyProperty.Register(nameof(CommandParameter),
-                                          typeof(object),
-                                          typeof(CloseTabItemAction),
-                                          new PropertyMetadata(null,
-                                                               (s, e) =>
-                                                                   {
-                                                                       var sender = s as CloseTabItemAction;
-                                                                       if (sender?.AssociatedObject != null)
-                                                                       {
-                                                                           sender.EnableDisableElement();
-                                                                       }
-                                                                   }));
-
-        /// <summary>
-        /// Gets or sets an object that will be passed to the <see cref="Command" /> attached to this trigger.
-        /// </summary>
-        public object CommandParameter
-        {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
-        }
 
         [Obsolete("This property will be deleted in the next release.")]
         public static readonly DependencyProperty TabControlProperty =
@@ -85,12 +39,6 @@ namespace MahApps.Metro.Actions
         {
             get { return (TabItem)this.GetValue(TabItemProperty); }
             set { this.SetValue(TabItemProperty, value); }
-        }
-
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            this.EnableDisableElement();
         }
 
         protected override void Invoke(object parameter)
@@ -160,46 +108,9 @@ namespace MahApps.Metro.Actions
             }
         }
 
-        private static void OnCommandChanged(CloseTabItemAction action, DependencyPropertyChangedEventArgs e)
-        {
-            if (action == null)
-            {
-                return;
-            }
-
-            if (e.OldValue != null)
-            {
-                ((ICommand)e.OldValue).CanExecuteChanged -= action.OnCommandCanExecuteChanged;
-            }
-
-            var command = (ICommand)e.NewValue;
-            if (command != null)
-            {
-                command.CanExecuteChanged += action.OnCommandCanExecuteChanged;
-            }
-
-            action.EnableDisableElement();
-        }
-
-        private object GetCommandParameter()
+        protected override object GetCommandParameter()
         {
             return this.CommandParameter ?? this.AssociatedTabItem;
-        }
-
-        private void EnableDisableElement()
-        {
-            if (this.AssociatedObject == null)
-            {
-                return;
-            }
-
-            var command = this.Command;
-            this.AssociatedObject.IsEnabled = command == null || command.CanExecute(this.GetCommandParameter());
-        }
-
-        private void OnCommandCanExecuteChanged(object sender, EventArgs e)
-        {
-            this.EnableDisableElement();
         }
     }
 }
