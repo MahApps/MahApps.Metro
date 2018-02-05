@@ -6,9 +6,15 @@ using System.Windows.Markup;
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
+[assembly: XmlnsPrefix("http://metro.mahapps.com/winfx/xaml/controls", "mah")]
+[assembly: XmlnsPrefix("http://metro.mahapps.com/winfx/xaml/shared", "mah")]
+
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Behaviours")]
+[assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Actions")]
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Converters")]
+[assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro")]
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls")]
+[assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls.Dialogs")]
 
 [assembly: AssemblyTitle("MahApps.Metro")]
 [assembly: AssemblyCopyright("Copyright © MahApps.Metro 2011-2017")]
