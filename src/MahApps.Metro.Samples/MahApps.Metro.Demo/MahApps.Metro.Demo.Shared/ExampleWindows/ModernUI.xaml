@@ -1,0 +1,75 @@
+﻿<mah:MetroWindow x:Class="MetroDemo.ExampleWindows.ModernUI"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="ModernUI"
+                 Width="800"
+                 Height="400"
+                 d:DesignHeight="300"
+                 d:DesignWidth="400"
+                 FontFamily="{DynamicResource DefaultFontFamily}"
+                 FontSize="{DynamicResource DefaultFontSize}"
+                 GlowBrush="{DynamicResource AccentBaseColorBrush}"
+                 ResizeMode="CanResizeWithGrip"
+                 TitleCharacterCasing="Normal"
+                 WindowStartupLocation="CenterOwner"
+                 mc:Ignorable="d">
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/ModernUI/ModernUI.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/ModernUI/ModernUI.Light.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
+    <Grid>
+        <ScrollViewer Margin="20">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Margin="0 0 0 8"
+                           Style="{StaticResource Heading2}"
+                           Text="BUTTON" />
+                <StackPanel Width="140" HorizontalAlignment="Left">
+                    <Button Margin="0 0 0 8" Content="standard button" />
+                    <Button Margin="0 0 0 32"
+                            Content="disabled button"
+                            IsEnabled="False" />
+                </StackPanel>
+
+                <TextBlock Margin="0 0 0 8"
+                           Style="{StaticResource Heading2}"
+                           Text="CHECKBOX" />
+                <CheckBox Margin="0 0 0 4" Content="standard checkbox" />
+                <CheckBox Margin="0 0 0 4"
+                          Content="three state checkbox"
+                          IsThreeState="True" />
+                <CheckBox Margin="0 0 0 4"
+                          Content="disabled checkbox"
+                          IsEnabled="False" />
+                <CheckBox Margin="0 0 0 32"
+                          Content="disabled checked checkbox"
+                          IsChecked="True"
+                          IsEnabled="False" />
+
+                <TextBlock Margin="0 0 0 8"
+                           Style="{StaticResource Heading2}"
+                           Text="RADIOBUTTON" />
+                <RadioButton Margin="0 0 0 4" Content="option 1" />
+                <RadioButton Margin="0 0 0 4" Content="option 2" />
+                <RadioButton Margin="0 0 0 4"
+                             Content="option 3, disabled"
+                             IsEnabled="False" />
+                <RadioButton Content="another option, disabled and checked"
+                             GroupName="Foo"
+                             IsChecked="True"
+                             IsEnabled="False" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</mah:MetroWindow>
