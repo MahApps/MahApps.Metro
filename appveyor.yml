@@ -14,7 +14,7 @@
   pull_requests:
     do_not_increment_build_number: false
 
-  build:
+  build_script:
     - ps: cd src
     - ps: .\build.ps1 -Target appveyor
     - ps: cd..
