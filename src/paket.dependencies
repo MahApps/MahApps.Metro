@@ -4,7 +4,7 @@ framework >= net40
 nuget WpfAnalyzers
 nuget JetBrains.Annotations
 nuget gitlink
-nuget Fody 2.3.25
+nuget Fody 2.4.1
 nuget Costura.Fody 1.4.1
 nuget Caliburn.Micro ~> 3.0
 nuget MahApps.Metro.IconPacks
@@ -14,8 +14,19 @@ nuget xunit ~> 1.9
 nuget xunit.extensions ~> 1.9
 nuget ControlzEx ~> 3.0
 
-group net40
+group cake
+	source https://nuget.org/api/v2
+	framework: net45
+	
+	nuget Cake
+	nuget Cake.Figlet
+	nuget Cake.Paket
+	nuget Cake.Paket.Module
+	nuget GitVersion.CommandLine
+	nuget gitreleasemanager
+	nuget xunit.runner.console
 
+group net40
 	source https://nuget.org/api/v2
 	framework >= net40
 
@@ -25,7 +36,6 @@ group net40
 	nuget Microsoft.Bcl.Build
 
 group net45
-
 	source https://nuget.org/api/v2
 	framework >= net45
 

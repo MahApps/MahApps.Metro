@@ -7,7 +7,7 @@ NUGET
     ControlzEx (3.0.2.4)
     Costura.Fody (1.4.1)
       Fody (>= 2.0.6)
-    Fody (2.3.25)
+    Fody (2.4.1)
     gitlink (3.1)
     JetBrains.Annotations (11.1)
     MahApps.Metro.IconPacks (2.0)
@@ -18,6 +18,18 @@ NUGET
     xunit (1.9.2)
     xunit.extensions (1.9.2)
       xunit (1.9.2)
+
+GROUP cake
+RESTRICTION: == net45
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Cake (0.25)
+    Cake.Figlet (1.0)
+    Cake.Paket (2.0)
+    Cake.Paket.Module (2.0)
+    gitreleasemanager (0.6)
+    GitVersion.CommandLine (3.6.5)
+    xunit.runner.console (2.3.1)
 
 GROUP net40
 RESTRICTION: >= net40

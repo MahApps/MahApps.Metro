@@ -6,6 +6,8 @@
     <RestorePackages Condition=" '$(RestorePackages)' == '' ">true</RestorePackages>
     <PaketToolsPath>$(MSBuildThisFileDirectory)</PaketToolsPath>
     <PaketRootPath>$(MSBuildThisFileDirectory)..\</PaketRootPath>
+    <PaketLockFilePath>$(PaketRootPath)paket.lock</PaketLockFilePath>
+    <PaketRestoreCacheFile>$(PaketRootPath)paket-files\paket.restore.cached</PaketRestoreCacheFile>
     <MonoPath Condition="'$(MonoPath)' == '' And Exists('/Library/Frameworks/Mono.framework/Commands/mono')">/Library/Frameworks/Mono.framework/Commands/mono</MonoPath>
     <MonoPath Condition="'$(MonoPath)' == ''">mono</MonoPath>
   </PropertyGroup>
@@ -43,16 +45,28 @@
 
   <PropertyGroup>
   <!-- Commands -->
-    <RestoreCommand>$(PaketCommand) restore --references-files "$(PaketReferences)"</RestoreCommand>
+    <RestoreCommand>$(PaketCommand) restore --references-file "$(PaketReferences)"</RestoreCommand>
     <!-- We need to ensure packages are restored prior to assembly resolve -->
     <BuildDependsOn Condition="$(RestorePackages) == 'true'">RestorePackages; $(BuildDependsOn);</BuildDependsOn>
   </PropertyGroup>
   <Target Name="RestorePackages">
+    <PropertyGroup>
+      <PaketRestoreRequired>true</PaketRestoreRequired>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="Exists('$(PaketRestoreCacheFile)') ">
+      <PaketRestoreCachedHash>$([System.IO.File]::ReadAllText('$(PaketRestoreCacheFile)'))</PaketRestoreCachedHash>
+      <PaketRestoreLockFileHash>$([System.IO.File]::ReadAllText('$(PaketLockFilePath)'))</PaketRestoreLockFileHash>
+      <PaketRestoreRequired>true</PaketRestoreRequired>
+      <PaketRestoreRequired Condition=" '$(PaketRestoreLockFileHash)' == '$(PaketRestoreCachedHash)' ">false</PaketRestoreRequired>
+      <PaketRestoreRequired Condition=" '$(PaketRestoreLockFileHash)' == '' ">true</PaketRestoreRequired>
+    </PropertyGroup>
+
     <Exec Command="$(RestoreCommand)" 
           IgnoreStandardErrorWarningFormat="true" 
           WorkingDirectory="$(PaketRootPath)" 
           ContinueOnError="false" 
-          Condition=" Exists('$(PaketReferences)') AND '$(PaketReferences)' != '' " 
+          Condition=" '$(PaketRestoreRequired)' == 'true' AND Exists('$(PaketReferences)') AND '$(PaketReferences)' != '' " 
     />
   </Target>
 </Project>
