@@ -10,6 +10,7 @@
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
+  test: off
 
   pull_requests:
     do_not_increment_build_number: false

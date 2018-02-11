@@ -11,7 +11,7 @@ branches:
   develop:
     mode: ContinuousDeployment
     tag: alpha
-    increment: Minor
+    increment: Patch
     prevent-increment-of-merged-branch-version: false
     track-merge-target: true
   pull-request:
