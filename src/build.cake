@@ -33,6 +33,12 @@ if (string.IsNullOrWhiteSpace(configuration))
 GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
 GitVersion gitVersion;
 
+var local = BuildSystem.IsLocalBuild;
+var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", AppVeyor.Environment.Repository.Branch);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", AppVeyor.Environment.Repository.Branch);
+var isTagged = AppVeyor.Environment.Repository.Tag?.IsTag;
+
 // Define directories.
 var buildDir = "./bin";
 var publishDir = "./Publish";
@@ -44,8 +50,10 @@ var publishDir = "./Publish";
 Setup(context =>
 {
     gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
-    Information("Informational Version: {0}", gitVersion.InformationalVersion);
-    Information("SemVer Version: {0}", gitVersion.SemVer);
+    Information("Informational Version : {0}", gitVersion.InformationalVersion);
+    Information("SemVer Version        : {0}", gitVersion.SemVer);
+    Information("AssemblySemVer Version: {0}", gitVersion.AssemblySemVer);
+    Information("NuGet Version         : {0}", gitVersion.NuGetVersion);
 
     Information(Figlet("MahApps.Metro"));
 });
@@ -86,7 +94,7 @@ Task("Paket-Pack")
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
-	PaketPack(publishDir, new PaketPackSettings { Version = gitVersion.NuGetVersion });
+	PaketPack(publishDir, new PaketPackSettings { Version = isReleaseBranch ? gitVersion.AssemblySemVer : gitVersion.NuGetVersion });
 });
 
 Task("Zip-Demos")
@@ -109,6 +117,9 @@ Task("Unit-Tests")
 });
 
 Task("CreateRelease")
+    .WithCriteria(() => !isPullRequest)
+    .WithCriteria(() => isReleaseBranch)
+    .WithCriteria(() => !isTagged)
     .Does(() =>
 {
     var username = EnvironmentVariable("GITHUB_USERNAME");
