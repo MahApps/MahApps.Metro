@@ -28,7 +28,7 @@ NUGET
     Cake.Paket (2.0)
     Cake.Paket.Module (2.0)
     gitreleasemanager (0.6)
-    GitVersion.CommandLine (3.6.5)
+    GitVersion.CommandLine (4.0.0-beta0012)
     xunit.runner.console (2.3.1)
 
 GROUP net40
@@ -48,5 +48,5 @@ NUGET
   remote: https://www.nuget.org/api/v2
     ExposedObject (1.3)
     MaterialDesignColors (1.1.3)
-    MaterialDesignThemes (2.3.2-ci1033)
+    MaterialDesignThemes (2.3.2-ci1036)
       MaterialDesignColors (>= 1.1.2)

@@ -34,10 +34,8 @@ GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer })
 GitVersion gitVersion;
 
 // Define directories.
-var buildDir = Directory("./bin");
-
-var username = "";
-var password = "";
+var buildDir = "./bin";
+var publishDir = "./Publish";
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -55,7 +53,7 @@ Setup(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectory(buildDir);
+    CleanDirectory(Directory(buildDir));
 });
 
 Task("Paket-Restore")
@@ -87,17 +85,17 @@ Task("Paket-Pack")
     //.WithCriteria(ShouldRunRelease())
     .Does(() =>
 {
-	EnsureDirectoryExists("./Publish");
-	PaketPack("./Publish", new PaketPackSettings { Version = gitVersion.NuGetVersion });
+	EnsureDirectoryExists(Directory(publishDir));
+	PaketPack(publishDir, new PaketPackSettings { Version = gitVersion.NuGetVersion });
 });
 
 Task("Zip-Demos")
     //.WithCriteria(ShouldRunRelease())
     .Does(() =>
 {
-	EnsureDirectoryExists("./Publish");
-    Zip("./bin/MetroDemo/", "./Publish/MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
-    Zip("./bin/Caliburn.Metro.Demo/", "./Publish/Caliburn.MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
+	EnsureDirectoryExists(Directory(publishDir));
+    Zip(buildDir + "/MetroDemo/", publishDir + "/MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip(buildDir + "/Caliburn.Metro.Demo/", publishDir + "/Caliburn.MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
 });
 
 Task("Unit-Tests")
@@ -110,28 +108,51 @@ Task("Unit-Tests")
     );
 });
 
-Task("GetCredentials")
+Task("CreateRelease")
     .Does(() =>
 {
-    username = EnvironmentVariable("GITHUB_USERNAME_MAHAPPS");
-    password = EnvironmentVariable("GITHUB_PASSWORD_MAHAPPS");
-});
+    var username = EnvironmentVariable("GITHUB_USERNAME");
+    if (string.IsNullOrEmpty(username))
+    {
+        throw new Exception("The GITHUB_USERNAME environment variable is not defined.");
+    }
 
-Task("CreateReleaseNotes")
-    .Does(() =>
-{
-    EnsureDirectoryExists("./Publish");
-    // GitReleaseManagerExport(username, password, "MahApps", "MahApps.Metro", "./Publish/releasenotes.md", new GitReleaseManagerExportSettings {
-    //     TagName         = "1.5.0",
-    //     TargetDirectory = "./Publish",
-    //     LogFilePath     = "./Publish/grm.log"
-    // });
-    GitReleaseManagerCreate(username, password, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
-        Milestone         = gitVersion.MajorMinorPatch,
+    var token = EnvironmentVariable("GITHUB_TOKEN");
+    if (string.IsNullOrEmpty(token))
+    {
+        throw new Exception("The GITHUB_TOKEN environment variable is not defined.");
+    }
+
+    GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
+        Milestone         = gitVersion.SemVer,
         Name              = gitVersion.SemVer,
         Prerelease        = false,
         TargetCommitish   = "master",
         WorkingDirectory  = "../"
+    });
+});
+
+Task("ExportReleaseNotes")
+    .Does(() =>
+{
+    var username = EnvironmentVariable("GITHUB_USERNAME");
+    if (string.IsNullOrEmpty(username))
+    {
+        throw new Exception("The GITHUB_USERNAME environment variable is not defined.");
+    }
+
+    var token = EnvironmentVariable("GITHUB_TOKEN");
+    if (string.IsNullOrEmpty(token))
+    {
+        throw new Exception("The GITHUB_TOKEN environment variable is not defined.");
+    }
+
+    EnsureDirectoryExists(Directory(publishDir));
+    GitReleaseManagerExport(username, token, "MahApps", "MahApps.Metro", publishDir + "/releasenotes.md", new GitReleaseManagerExportSettings {
+        // TagName         = gitVersion.SemVer,
+        TagName         = "1.5.0",
+        TargetDirectory = publishDir,
+        LogFilePath     = publishDir + "/grm.log"
     });
 });
 
