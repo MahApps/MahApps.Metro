@@ -37,7 +37,7 @@ var local = BuildSystem.IsLocalBuild;
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", AppVeyor.Environment.Repository.Branch);
 var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", AppVeyor.Environment.Repository.Branch);
-var isTagged = AppVeyor.Environment.Repository.Tag?.IsTag;
+var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Define directories.
 var buildDir = "./bin";
