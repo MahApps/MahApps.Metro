@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interactivity;
 
@@ -78,7 +79,7 @@ namespace MahApps.Metro.Behaviours
 
         private static void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
         {
-            var s = "";
+            Debug.WriteLine("Dispatcher.ShutdownStarted");
         }
 
         private static void FrameworkElementUnloaded(object sender, RoutedEventArgs e)
@@ -138,7 +139,7 @@ namespace MahApps.Metro.Behaviours
         }
 
         private static readonly DependencyProperty OriginalBehaviorProperty
-            = DependencyProperty.RegisterAttached("OriginalBehaviorInternal",
+            = DependencyProperty.RegisterAttached("OriginalBehavior",
                                                   typeof(Behavior),
                                                   typeof(StylizedBehaviors),
                                                   new UIPropertyMetadata(null));

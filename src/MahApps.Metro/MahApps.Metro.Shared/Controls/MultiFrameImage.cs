@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
                     break;
                 case MultiFrameImageMode.NoScaleSmallerFrame:
                     var maxSize = Math.Min(RenderSize.Width, RenderSize.Height);
-                    var maxFrame = _frames.LastOrDefault(f => f.Width <= maxSize && f.Height >= maxSize) ?? _frames.First();
+                    var maxFrame = _frames.LastOrDefault(f => f.Width <= maxSize && f.Height <= maxSize) ?? _frames.First();
                     dc.DrawImage(maxFrame, new Rect((RenderSize.Width-maxFrame.Width)/2, (RenderSize.Height - maxFrame.Height) / 2, maxFrame.Width, maxFrame.Height));
                     break;
                 default:

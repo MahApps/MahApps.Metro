@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace MahApps.Metro.Converters
 {
@@ -30,22 +31,7 @@ namespace MahApps.Metro.Converters
     {
         public static int GetDepth(this TreeViewItem item)
         {
-            TreeViewItem parent;
-            while ((parent = GetParent(item)) != null)
-            {
-                return GetDepth(parent) + 1;
-            }
-            return 0;
-        }
-
-        private static TreeViewItem GetParent(TreeViewItem item)
-        {
-            var parent = item != null ? VisualTreeHelper.GetParent(item) : null;
-            while (parent != null && !(parent is TreeViewItem || parent is TreeView))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-            return parent as TreeViewItem;
+            return item.GetAncestors().TakeWhile(e => !(e is TreeView)).OfType<TreeViewItem>().Count();
         }
     }
 }

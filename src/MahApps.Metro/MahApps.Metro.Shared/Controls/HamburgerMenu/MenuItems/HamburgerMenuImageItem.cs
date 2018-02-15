@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -11,16 +11,16 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="Thumbnail"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register(nameof(Thumbnail), typeof(BitmapImage), typeof(HamburgerMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty ThumbnailProperty = DependencyProperty.Register(nameof(Thumbnail), typeof(ImageSource), typeof(HamburgerMenuImageItem), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies a bitmap to display with an Image control.
         /// </summary>
-        public BitmapImage Thumbnail
+        public ImageSource Thumbnail
         {
             get
             {
-                return (BitmapImage)GetValue(ThumbnailProperty);
+                return (ImageSource)GetValue(ThumbnailProperty);
             }
 
             set

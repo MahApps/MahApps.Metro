@@ -9,7 +9,9 @@
     <Import_RootNamespace>MahApps.Metro</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\CloseFlyoutAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\CloseTabItemAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\CommandTriggerAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Behaviours\BorderlessWindowBehavior.cs" />
@@ -41,13 +43,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\InputDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\LoginDialogSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MessageDialogStyle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogColorScheme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\MetroDialogSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\ProgressDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dialogs\ProgressDialogController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DropDownButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlipView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Flyout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutsControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlyoutTheme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Glow.cs" />
@@ -56,6 +66,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.EventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Events.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.HamburgerButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\HamburgerMenu\HamburgerMenu.Options.cs" />
@@ -74,10 +85,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\DataGridRowHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\GroupBoxHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ItemHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\MouseWheelChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\MouseWheelState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\PasswordBoxHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ScrollBarHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\ScrollViewerHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\SliderHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TabControlHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Helper\TextBoxHelper.cs" />
@@ -89,15 +102,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroHeader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroHeaderAutomationPeer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroNavigationWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroProgressBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroTabControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroTabItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroThumb.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroThumbContentControl.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroThumbContentControlAutomationPeer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroThumbContentControlDragCompletedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroThumbContentControlDragStartedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MetroWindowHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MultiFrameImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDown.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericUpDownChangedRoutedEventHandler.cs" />
@@ -106,7 +125,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Planerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Position.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ProgressRing.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PropertyChangeNotifier.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeSelectionChangedEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\RangeSlider.cs" />
@@ -129,6 +147,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePicker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerBaseSelectionChangedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\TimePicker\TimePickerFormat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleSwitch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\ToggleSwitchButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\TransitioningContentControl.cs" />
@@ -141,6 +160,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WindowSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\MathConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ClockDegreeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\IsNullConverter.cs" />
@@ -152,43 +173,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessBindingConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\ThicknessSideType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\ToUpperConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TreeViewMarginConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MahAppsException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ComGuids.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Debug.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\DpiHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ErrorCodes.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\MessageWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\NativeMethods.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\NtDll.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\StreamHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Utilities.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Utilities.Windows.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Utilities.Wpf.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\Standard\Verify.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemCommands.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\SystemParameters2.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChrome.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Microsoft.Windows.Shell\WindowChromeWorker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\GWL.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\HitTestValues.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\NativeMethods.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\SWP.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WM.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WS.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Win32\WSEX.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\Constants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\MONITORINFO.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\POINT.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\RECT.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\SafeLibraryHandle.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\UnsafeNativeMethods.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Native\WINDOWPLACEMENT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThemeManager\Accent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThemeManager\AppTheme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ThemeManager\ThemeManager.cs" />

@@ -56,6 +56,10 @@ namespace MahApps.Metro.Controls
 
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
+        /// <summary>
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.ToggleSwitch.ContentPadding" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ContentPaddingProperty = DependencyProperty.Register(nameof(ContentPadding), typeof(Thickness), typeof(ToggleSwitch), new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsParentMeasure));
         public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public event EventHandler<RoutedEventArgs> Checked;
@@ -153,6 +157,17 @@ namespace MahApps.Metro.Controls
         {
             get { return (FlowDirection)GetValue(ContentDirectionProperty); }
             set { SetValue(ContentDirectionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the padding of the inner content.
+        /// </summary>
+        [Bindable(true)]
+        [Category(AppName.MahApps)]
+        public Thickness ContentPadding
+        {
+            get { return (Thickness)this.GetValue(ContentPaddingProperty); }
+            set { this.SetValue(ContentPaddingProperty, value); }
         }
 
         /// <summary>

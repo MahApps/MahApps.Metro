@@ -12,11 +12,6 @@ namespace MahApps.Metro.Controls
                                                   typeof(object),
                                                   typeof(PasswordBoxHelper),
                                                   new PropertyMetadata("!", ShowCapslockWarningChanged));
-        public static readonly DependencyProperty CapsLockWarningToolTipProperty
-            = DependencyProperty.RegisterAttached("CapsLockWarningToolTip",
-                                                  typeof(object),
-                                                  typeof(PasswordBoxHelper),
-                                                  new PropertyMetadata("Caps lock is on"));
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -25,21 +20,11 @@ namespace MahApps.Metro.Controls
             return element.GetValue(CapsLockIconProperty);
         }
 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static void SetCapsLockIcon(PasswordBox element, object value)
         {
             element.SetValue(CapsLockIconProperty, value);
-        }
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        public static object GetCapsLockWarningToolTip(PasswordBox element)
-        {
-            return element.GetValue(CapsLockWarningToolTipProperty);
-        }
-
-        public static void SetCapsLockWarningToolTip(PasswordBox element, object value)
-        {
-            element.SetValue(CapsLockWarningToolTipProperty, value);
         }
 
         private static void ShowCapslockWarningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -84,6 +69,78 @@ namespace MahApps.Metro.Controls
         private static FrameworkElement FindCapsLockIndicator(Control pb)
         {
             return pb?.Template?.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
+        }
+
+        public static readonly DependencyProperty CapsLockWarningToolTipProperty
+            = DependencyProperty.RegisterAttached("CapsLockWarningToolTip",
+                                                  typeof(object),
+                                                  typeof(PasswordBoxHelper),
+                                                  new PropertyMetadata("Caps lock is on"));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static object GetCapsLockWarningToolTip(PasswordBox element)
+        {
+            return element.GetValue(CapsLockWarningToolTipProperty);
+        }
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static void SetCapsLockWarningToolTip(PasswordBox element, object value)
+        {
+            element.SetValue(CapsLockWarningToolTipProperty, value);
+        }
+
+        public static readonly DependencyProperty RevealButtonContentProperty
+            = DependencyProperty.RegisterAttached("RevealButtonContent",
+                                                  typeof(object),
+                                                  typeof(PasswordBoxHelper),
+                                                  new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets the content of the RevealButton.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static object GetRevealButtonContent(DependencyObject d)
+        {
+            return (object)d.GetValue(RevealButtonContentProperty);
+        }
+
+        /// <summary>
+        /// Sets the content of the RevealButton.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static void SetRevealButtonContent(DependencyObject obj, object value)
+        {
+            obj.SetValue(RevealButtonContentProperty, value);
+        }
+
+        public static readonly DependencyProperty RevealButtonContentTemplateProperty
+            = DependencyProperty.RegisterAttached("RevealButtonContentTemplate",
+                                                  typeof(DataTemplate),
+                                                  typeof(PasswordBoxHelper),
+                                                  new FrameworkPropertyMetadata((DataTemplate)null));
+
+        /// <summary> 
+        /// Gets the data template used to display the content of the RevealButton.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static DataTemplate GetRevealButtonContentTemplate(DependencyObject d)
+        {
+            return (DataTemplate)d.GetValue(RevealButtonContentTemplateProperty);
+        }
+
+        /// <summary> 
+        /// Sets the data template used to display the content of the RevealButton.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        public static void SetRevealButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        {
+            obj.SetValue(RevealButtonContentTemplateProperty, value);
         }
     }
 }

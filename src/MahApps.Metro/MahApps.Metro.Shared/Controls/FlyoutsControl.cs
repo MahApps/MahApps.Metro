@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
@@ -54,7 +55,30 @@ namespace MahApps.Metro.Controls
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
+            var flyout = element as Flyout;
+            var headerTemplate = flyout?.HeaderTemplate;
+            var headerTemplateSelector = flyout?.HeaderTemplateSelector;
+            var headerStringFormat = flyout?.HeaderStringFormat;
+
             base.PrepareContainerForItemOverride(element, item);
+
+            if (flyout != null)
+            {
+                if (headerTemplate != null)
+                    flyout.SetValue(HeaderedContentControl.HeaderTemplateProperty, (object)headerTemplate);
+                if (headerTemplateSelector != null)
+                    flyout.SetValue(HeaderedContentControl.HeaderTemplateSelectorProperty, (object)headerTemplateSelector);
+                if (headerStringFormat != null)
+                    flyout.SetValue(HeaderedContentControl.HeaderStringFormatProperty, (object)headerStringFormat);
+
+                if (ItemTemplate != null && null == flyout.ContentTemplate)
+                    flyout.SetValue(HeaderedContentControl.ContentTemplateProperty, (object)ItemTemplate);
+                if (ItemTemplateSelector != null && null == flyout.ContentTemplateSelector)
+                    flyout.SetValue(HeaderedContentControl.ContentTemplateSelectorProperty, (object)ItemTemplateSelector);
+                if (ItemStringFormat != null && null == flyout.ContentStringFormat)
+                    flyout.SetValue(HeaderedContentControl.ContentStringFormatProperty, (object)ItemStringFormat);
+            }
+
             this.AttachHandlers((Flyout)element);
         }
 

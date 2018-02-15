@@ -9,7 +9,7 @@
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro - Demo Application"
-                      Width="960"
+                      Width="900"
                       Height="600"
                       Dialog:DialogParticipation.Register="{Binding}"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
@@ -18,7 +18,9 @@
                       Closing="MetroWindow_Closing"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Icon="mahapps.metro.logo2.ico"
+                      LeftWindowCommandsOverlayBehavior="Never"
                       NonActiveGlowBrush="#CDFF0000"
+                      RightWindowCommandsOverlayBehavior="Never"
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
                       WindowStartupLocation="CenterScreen"
@@ -33,10 +35,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -93,7 +91,7 @@
     </Window.Resources>
 
     <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -108,15 +106,15 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowLastSeparator="False">
-            <Button Click="LaunchVisualStudioDemo"
-                    Content="VS"
-                    ToolTip="Visual Studio style demo" />
             <Button Click="LaunchFlyoutDemo"
                     Content="Flyouts"
                     ToolTip="Flyouts demo window" />
             <Button Click="LaunchIcons"
-                    Content="Icons"
+                    Content="IconPacks"
                     ToolTip="All MahApp icons" />
+            <Button Click="LaunchVisualStudioDemo"
+                    Content="VS"
+                    ToolTip="Visual Studio style demo" />
             <Button Click="LauchCleanDemo"
                     Content="Clean"
                     ToolTip="Clean window style demo" />
@@ -126,10 +124,6 @@
             <Button Click="LaunchNavigationDemo"
                     Content="Navigation"
                     ToolTip="Window navigation demo" />
-            <ToggleButton x:Name="MagicToggleButton"
-                          Content="ToggleButton"
-                          IsChecked="{Binding MagicToggleButtonIsChecked}"
-                          ToolTip="Shows the toggle button magic" />
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
                           ToolTip="Enable quit confirmation dialog on exit" />
@@ -249,8 +243,11 @@
             <TabItem Header="selection">
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
-            <TabItem Header="sliders and progress">
-                <exampleViews:SliderProgressExamples DataContext="{Binding}" />
+            <TabItem Header="sliders">
+                <exampleViews:Sliders DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="progress">
+                <exampleViews:ProgressBars DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="splitview">
                 <exampleViews:SplitViewExamples DataContext="{Binding}" />
@@ -284,4 +281,3 @@
 
     </Grid>
 </Controls:MetroWindow>
-

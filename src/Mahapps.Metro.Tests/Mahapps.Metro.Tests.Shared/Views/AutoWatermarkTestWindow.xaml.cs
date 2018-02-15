@@ -3,6 +3,7 @@
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations;
+    using MahApps.Metro.Controls;
 
     public partial class AutoWatermarkTestWindow
     {
@@ -25,6 +26,9 @@
 
         [Display(Prompt = "AutoWatermark")]
         public DateTime? DatePickerDate { get; set; }
+
+        [Display(Prompt = "AutoWatermark")]
+        public HotKey HotKey { get; set; }
 
         public AutoWatermarkTestSubModel SubModel { get; set; }= new AutoWatermarkTestSubModel();
 

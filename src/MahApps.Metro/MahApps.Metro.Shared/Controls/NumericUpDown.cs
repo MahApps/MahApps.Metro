@@ -45,15 +45,6 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, IsReadOnlyPropertyChangedCallback));
 
-        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                numUpDown.ToggleReadOnlyMode((bool)e.NewValue | !numUpDown.InterceptManualEnter);
-            }
-        }
-
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register(
             "StringFormat",
             typeof(string),
@@ -126,15 +117,6 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(true, InterceptManualEnterChangedCallback));
 
-        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                numUpDown.ToggleReadOnlyMode(!(bool)e.NewValue | numUpDown.IsReadOnly);
-            }
-        }
-
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
@@ -147,20 +129,54 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
-        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
+        [Obsolete("This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
             "SelectAllOnFocus",
             typeof(bool),
             typeof(NumericUpDown),
             new PropertyMetadata(true, (o, e) => TextBoxHelper.SetSelectAllOnFocus(o, (bool)e.NewValue)));
 
+        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
         public static readonly DependencyProperty HasDecimalsProperty = DependencyProperty.Register(
             "HasDecimals",
             typeof(bool), 
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
+        public static readonly DependencyProperty NumericInputModeProperty = DependencyProperty.Register(
+            "NumericInputMode",
+            typeof(NumericInput),
+            typeof(NumericUpDown),
+            new FrameworkPropertyMetadata(NumericInput.All, OnNumericInputModeChanged));
+
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
+            "SnapToMultipleOfInterval",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
+
+        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                var isReadOnly = (bool)e.NewValue;
+                numUpDown.ToggleReadOnlyMode(isReadOnly || !numUpDown.InterceptManualEnter);
+            }
+        }
+
+        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                var interceptManualEnter = (bool)e.NewValue;
+                numUpDown.ToggleReadOnlyMode(!interceptManualEnter || numUpDown.IsReadOnly);
+            }
+        }
+
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -170,7 +186,6 @@ namespace MahApps.Metro.Controls
         private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
-        private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
         private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
         private double _internalLargeChange = DefaultInterval * 100;
@@ -456,6 +471,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Indicates if the NumericUpDown should show the decimal separator or not.
         /// </summary>
+        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
         [Bindable(true)]
         [Category("Common")]
         [DefaultValue(true)]
@@ -465,29 +481,56 @@ namespace MahApps.Metro.Controls
             set { SetValue(HasDecimalsProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets which numeric input for the NumericUpDown is allowed.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(NumericInput.All)]
+        public NumericInput NumericInputMode
+        {
+            get { return (NumericInput)GetValue(NumericInputModeProperty); }
+            set { SetValue(NumericInputModeProperty, value); }
+        }
+
+        /// <summary>
+        ///     Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool SnapToMultipleOfInterval
+        {
+            get { return (bool)GetValue(SnapToMultipleOfIntervalProperty); }
+            set { SetValue(SnapToMultipleOfIntervalProperty, value); }
+        }
+
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             // When NumericUpDown gets logical focus, select the text inside us.
-            NumericUpDown numericUpDown = (NumericUpDown)sender;
-
             // If we're an editable NumericUpDown, forward focus to the TextBox element
             if (!e.Handled)
             {
-                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && numericUpDown._valueTextBox != null)
+                NumericUpDown numericUpDown = (NumericUpDown)sender;
+                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown.Focusable && e.OriginalSource == numericUpDown)
                 {
-                    if (e.OriginalSource == numericUpDown)
+                    // MoveFocus takes a TraversalRequest as its argument.
+                    var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
+                    // Gets the element with keyboard focus.
+                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
+                    // Change keyboard focus.
+                    if (elementWithFocus != null)
                     {
-                        // MoveFocus takes a TraversalRequest as its argument.
-                        var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
-                        // Gets the element with keyboard focus.
-                        var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                        // Change keyboard focus.
-                        elementWithFocus?.MoveFocus(request);
-                        e.Handled = true;
+                        elementWithFocus.MoveFocus(request);
                     }
+                    else
+                    {
+                        numericUpDown.Focus();
+                    }
+
+                    e.Handled = true;
                 }
             }
         }
@@ -652,30 +695,34 @@ namespace MahApps.Metro.Controls
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
-            if (string.IsNullOrWhiteSpace(e.Text) ||
-                e.Text.Length != 1)
+            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
             {
                 return;
             }
+
+            TextBox textBox = (TextBox)sender;
+            CultureInfo equivalentCulture = SpecificCultureInfo;
+            NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
 
             string text = e.Text;
 
             if (char.IsDigit(text[0]))
             {
-                e.Handled = false;
+                if (textBox.Text.IndexOf(numberFormatInfo.NegativeSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0
+                    && textBox.Text.IndexOf(numberFormatInfo.PositiveSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0)
+                {
+                    e.Handled = false;
+                }
             }
             else
             {
-                CultureInfo equivalentCulture = SpecificCultureInfo;
-                NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-                TextBox textBox = (TextBox)sender;
                 bool allTextSelected = textBox.SelectedText == textBox.Text;
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
                 {
                     if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
-                        if (HasDecimals)
+                        if (NumericInputMode.HasFlag(NumericInput.Decimal))
                         {
                             e.Handled = false;
                         }
@@ -706,13 +753,14 @@ namespace MahApps.Metro.Controls
                         else if (textBox.SelectionStart > 0)
                         {
                             string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp))
+                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp) && NumericInputMode.HasFlag(NumericInput.Decimal))
                             {
                                 e.Handled = false;
                             }
                         }
                     }
                     else if (text.Equals(ScientificNotationChar, StrComp) &&
+                             NumericInputMode.HasFlag(NumericInput.Decimal) &&
                              textBox.SelectionStart > 0 &&
                              !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
                     {
@@ -720,6 +768,8 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
+            this._manualChange = this._manualChange || !e.Handled;
         }
 
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
@@ -825,7 +875,7 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
             double val = ((double?)value).Value;
 
-            if (numericUpDown.HasDecimals == false)
+            if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
             {
                 val = Math.Truncate(val);
             }
@@ -885,16 +935,16 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown nud = (NumericUpDown)d;
 
-            nud.SetRemoveStringFormatFromText((string)e.NewValue);
-            if (nud._valueTextBox != null &&
-                nud.Value.HasValue)
+            if (nud._valueTextBox != null && nud.Value.HasValue)
             {
                 nud.InternalSetText(nud.Value);
             }
 
-            if (!nud.HasDecimals && RegexStringFormatHexadecimal.IsMatch((string)e.NewValue))
+            var value = (string)e.NewValue;
+
+            if (!nud.NumericInputMode.HasFlag(NumericInput.Decimal) && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
             {
-                nud.SetCurrentValue(HasDecimalsProperty, true);
+                nud.SetCurrentValue(NumericInputModeProperty, nud.NumericInputMode | NumericInput.Decimal);
             }
         }
 
@@ -908,15 +958,50 @@ namespace MahApps.Metro.Controls
         private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var numericUpDown = (NumericUpDown)d;
-            double? oldValue = numericUpDown.Value;
-
-            if ((bool)e.NewValue == false && numericUpDown.Value != null)
+            if (e.NewValue != e.OldValue && e.NewValue is bool && numericUpDown.Value != null)
             {
-                numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                var hasDecimals = (bool)e.NewValue;
+                var numericInput = numericUpDown.NumericInputMode;
+                if (!hasDecimals)
+                {
+                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                    numericInput &= ~NumericInput.Decimal;
+                }
+                else
+                {
+                    numericInput |= NumericInput.Decimal;
+                }
+
+                numericUpDown.SetCurrentValue(NumericInputModeProperty, numericInput);
             }
         }
 
-      private static bool ValidateDelay(object value)
+        private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            if (e.NewValue != e.OldValue && e.NewValue is NumericInput && numericUpDown.Value != null)
+            {
+                var numericInput = (NumericInput)e.NewValue;
+
+                if (!numericInput.HasFlag(NumericInput.Decimal))
+                {
+                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                }
+            }
+        }
+
+        private static void OnSnapToMultipleOfIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            var value = numericUpDown.Value.GetValueOrDefault();
+
+            if ((bool)e.NewValue && Math.Abs(numericUpDown.Interval) > 0)
+            {
+                numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
+            }
+        }
+
+        private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
         }
@@ -929,15 +1014,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            CultureInfo culture = SpecificCultureInfo;
-            if (string.IsNullOrEmpty(StringFormat))
-            {
-                _valueTextBox.Text = newValue.Value.ToString(culture);
-            }
-            else
-            {
-                FormatValue(newValue, culture);
-            }
+            _valueTextBox.Text = FormattedValue(newValue, StringFormat, SpecificCultureInfo);
 
             if ((bool)GetValue(TextBoxHelper.IsMonitoringProperty))
             {
@@ -945,33 +1022,36 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void FormatValue(double? newValue, CultureInfo culture)
+        private string FormattedValue(double? newValue, string format, CultureInfo culture)
         {
-            var match = RegexStringFormatHexadecimal.Match(StringFormat);
-            if (match.Success)
+            format = format.Replace("{}", string.Empty);
+            if (!string.IsNullOrWhiteSpace(format))
             {
-                if (match.Groups["simpleHEX"].Success)
+                var match = RegexStringFormatHexadecimal.Match(format);
+                if (match.Success)
                 {
-                    // HEX DOES SUPPORT INT ONLY.
-                    _valueTextBox.Text = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
-                }
-                else if (match.Groups["complexHEX"].Success)
-                {
-                    _valueTextBox.Text = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
-                }
-            }
-            else
-            {
-                if (!StringFormat.Contains("{"))
-                {
-                    // then we may have a StringFormat of e.g. "N0"
-                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+                    if (match.Groups["simpleHEX"].Success)
+                    {
+                        // HEX DOES SUPPORT INT ONLY.
+                        return ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                    }
+                    if (match.Groups["complexHEX"].Success)
+                    {
+                        return string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                    }
                 }
                 else
                 {
-                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+                    if (!format.Contains("{"))
+                    {
+                        // then we may have a StringFormat of e.g. "N0"
+                        return newValue.Value.ToString(format, culture);
+                    }
+                    return string.Format(culture, format, newValue.Value);
                 }
             }
+
+            return newValue.Value.ToString(culture);
         }
 
         private ScrollViewer TryFindScrollViewer()
@@ -1037,8 +1117,8 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            double newValue = Value.GetValueOrDefault() + difference;
-            Value = (double)CoerceValue(this, newValue);
+            var newValue = Value.GetValueOrDefault() + difference;
+            SetCurrentValue(ValueProperty, CoerceValue(this, newValue));
         }
 
         private void EnableDisableDown()
@@ -1065,9 +1145,9 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            _manualChange = true;
+            _manualChange = _manualChange || e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod;
 
-            if (HasDecimals && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
+            if (NumericInputMode.HasFlag(NumericInput.Decimal) && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
             {
                 TextBox textBox = sender as TextBox;
 
@@ -1092,47 +1172,33 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            TextBox tb = (TextBox)sender;
-            _manualChange = false;
+            if (_manualChange)
+            {
+                TextBox tb = (TextBox)sender;
+                _manualChange = false;
 
-            double convertedValue;
-            if (ValidateText(tb.Text, out convertedValue))
-            {
-                if (Value == convertedValue)
+                double convertedValue;
+                if (ValidateText(tb.Text, out convertedValue))
                 {
-                    OnValueChanged(Value, Value);
-                }
-                if (convertedValue > Maximum)
-                {
-                    if (Value == Maximum)
+                    if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
                     {
-                        OnValueChanged(Value, Value);
+                        convertedValue = Math.Round(convertedValue / Interval) * Interval;
                     }
-                    else
+
+                    if (convertedValue > Maximum)
                     {
-                        SetValue(ValueProperty, Maximum);
+                        convertedValue = this.Maximum;
                     }
-                }
-                else if (convertedValue < Minimum)
-                {
-                    if (Value == Minimum)
+                    else if (convertedValue < Minimum)
                     {
-                        OnValueChanged(Value, Value);
+                        convertedValue = this.Minimum;
                     }
-                    else
-                    {
-                        SetValue(ValueProperty, Minimum);
-                    }
-                }
-                else
-                {
-                    SetValue(ValueProperty, convertedValue);
+
+                    SetCurrentValue(ValueProperty, convertedValue);
                 }
             }
-            else
-            {
-                OnValueChanged(Value, Value);
-            }
+
+            OnValueChanged(Value, Value);
         }
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
@@ -1146,8 +1212,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    Value = (double?)CoerceValue(this, convertedValue);
-                    e.Handled = true;
+                    SetCurrentValue(ValueProperty, convertedValue);
                 }
             }
         }
@@ -1160,6 +1225,7 @@ namespace MahApps.Metro.Controls
             var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
             if (!isText)
             {
+                e.CancelCommand();
                 return;
             }
 
@@ -1170,6 +1236,10 @@ namespace MahApps.Metro.Controls
             if (!ValidateText(newText, out number))
             {
                 e.CancelCommand();
+            }
+            else
+            {
+                _manualChange = true;
             }
         }
 
@@ -1192,46 +1262,19 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            text = RemoveStringFormatFromText(text);
+            text = GetAnyNumberFromText(text);
 
             return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
 
-        private string RemoveStringFormatFromText(string text)
+        private string GetAnyNumberFromText(string text)
         {
-            // remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
-            if (!string.IsNullOrEmpty(_removeFromText.Item1))
+            var matches = RegexStringFormatNumber.Matches(text);
+            if (matches.Count > 0)
             {
-                text = text.Replace(_removeFromText.Item1, string.Empty);
-            }
-            if (!string.IsNullOrEmpty(_removeFromText.Item2))
-            {
-                text = text.Replace(_removeFromText.Item2, string.Empty);
+                return matches[0].Value;
             }
             return text;
-        }
-
-        private void SetRemoveStringFormatFromText(string stringFormat)
-        {
-            string tailing = string.Empty;
-            string leading = string.Empty;
-            string format = stringFormat;
-            int indexOf = format.IndexOf("{", StrComp);
-            if (indexOf > -1)
-            {
-                if (indexOf > 0)
-                {
-                    // remove beginning e.g.
-                    // pcs. from "pcs. {0:N2}"
-                    tailing = format.Substring(0, indexOf);
-                }
-
-                // remove tailing e.g.
-                // pcs. from "{0:N2} pcs."
-                leading = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray()).Trim();
-            }
-
-            _removeFromText = new Tuple<string, string>(tailing, leading);
         }
     }
 }

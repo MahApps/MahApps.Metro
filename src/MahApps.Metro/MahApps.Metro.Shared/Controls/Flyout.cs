@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {    
@@ -14,8 +16,6 @@ namespace MahApps.Metro.Controls
     /// <see cref="MetroWindow"/>
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
-    [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_BackHeaderText", Type = typeof(TextBlock))]
     [TemplatePart(Name = "PART_Root", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(FrameworkElement))]
     [TemplatePart(Name = "PART_Content", Type = typeof(FrameworkElement))]
@@ -56,6 +56,8 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
+
+        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
         internal static readonly DependencyProperty InternalCloseCommandProperty = DependencyProperty.Register("InternalCloseCommand", typeof(ICommand), typeof(Flyout));
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
@@ -127,6 +129,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets a command which will be executed if the close button was clicked.
         /// </summary>
+        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
         internal ICommand InternalCloseCommand
         {
             get { return (ICommand)this.GetValue(InternalCloseCommandProperty); }
@@ -248,9 +251,16 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
+#pragma warning disable 618
             this.InternalCloseCommand = new CloseCommand(this.InternalCloseCommandCanExecute, this.InternalCloseCommandExecuteAction);
+#pragma warning restore 618
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new FlyoutAutomationPeer(this);
         }
 
         private void InternalCloseCommandExecuteAction(object o)
@@ -259,7 +269,7 @@ namespace MahApps.Metro.Controls
             // close the Flyout only if there is no command
             if (closeCommand == null)
             {
-                this.IsOpen = false;
+                this.SetCurrentValue(IsOpenProperty, false);
             }
             else
             {
@@ -386,7 +396,15 @@ namespace MahApps.Metro.Controls
                 resources["TextBrush"] = newBrush;
                 resources["LabelTextBrush"] = newBrush;
 
-                fromColor = (Color)resources["AccentBaseColor"];
+                if (resources.Contains("AccentBaseColor"))
+                {
+                    fromColor = (Color)resources["AccentBaseColor"];
+                }
+                else
+                {
+                    var accentColor = (Color)resources["AccentColor"];
+                    fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
+                }
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["HighlightColor"] = fromColor;

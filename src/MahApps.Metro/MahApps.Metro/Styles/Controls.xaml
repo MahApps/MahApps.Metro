@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Sizes.xaml" />
@@ -24,6 +24,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Slider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
@@ -36,7 +37,12 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToggleSwitch.xaml" />
 
         <!--  Theme styles with keys  -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroHeader.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="FloatingMessageContainerStyle" TargetType="{x:Type ContentControl}">
@@ -44,8 +50,7 @@
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="5 0" />
-        <Setter Property="MaxHeight" Value="0" />
-        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Visibility" Value="Collapsed" />
     </Style>
 
     <Style x:Key="PathIconContentControlStyle" TargetType="{x:Type ContentControl}">
@@ -59,7 +64,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
                     <Viewbox Margin="{TemplateBinding Padding}" UseLayoutRounding="True">
-                        <Path Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                        <Path Data="{Binding Content, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={Converters:NullToUnsetValueConverter}}"
                               Fill="{TemplateBinding Foreground}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               Stretch="Uniform"
@@ -82,13 +87,13 @@
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MetroTextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MetroRichTextBox}" TargetType="RichTextBox" />
-    <Style BasedOn="{StaticResource MetroSlider}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.Slider}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MetroLabel}" TargetType="Label" />
     <Style BasedOn="{StaticResource MetroTabItem}" TargetType="TabItem" />
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="TabControl" />
     <Style BasedOn="{StaticResource MetroScrollBar}" TargetType="ScrollBar" />
     <Style BasedOn="{StaticResource MetroRadioButton}" TargetType="RadioButton" />
-    <Style BasedOn="{StaticResource MetroProgressBar}" TargetType="ProgressBar" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}" TargetType="ProgressBar" />
     <Style BasedOn="{StaticResource MetroPasswordBox}" TargetType="PasswordBox" />
     <Style BasedOn="{StaticResource MetroCheckBox}" TargetType="CheckBox" />
     <Style BasedOn="{StaticResource MetroComboBox}" TargetType="ComboBox" />
@@ -107,7 +112,7 @@
     <Style BasedOn="{StaticResource MetroTreeViewItem}" TargetType="TreeViewItem" />
     <Style BasedOn="{StaticResource MetroDatePicker}" TargetType="DatePicker" />
     <Style BasedOn="{StaticResource MetroDatePickerTextBox}" TargetType="DatePickerTextBox" />
-    <Style BasedOn="{StaticResource MetroCalendar}" TargetType="Calendar" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendar}" TargetType="Calendar" />
     <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="DataGrid" />
     <Style BasedOn="{StaticResource MetroStatusBar}" TargetType="StatusBar" />
     <Style BasedOn="{StaticResource MetroStatusBarItem}" TargetType="StatusBarItem" />

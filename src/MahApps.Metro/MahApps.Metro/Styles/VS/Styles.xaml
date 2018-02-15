@@ -1,4 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Window.xaml" />
@@ -8,6 +9,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/GroupBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Expander.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource StandardButton}" TargetType="Button" />
@@ -18,5 +21,7 @@
     <Style BasedOn="{StaticResource StandardTabItem}" TargetType="TabItem" />
     <Style BasedOn="{StaticResource StandardTabControl}" TargetType="TabControl" />
     <Style BasedOn="{StaticResource StandardTextBox}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource StandardGroupBox}" TargetType="GroupBox" />
+    <Style BasedOn="{StaticResource StandardExpander}" TargetType="Expander" />
 
 </ResourceDictionary>

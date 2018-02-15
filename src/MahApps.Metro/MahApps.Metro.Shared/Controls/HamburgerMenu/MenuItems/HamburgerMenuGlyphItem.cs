@@ -10,7 +10,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="Glyph"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(HamburgerMenuItem), new PropertyMetadata(null));
+        public static readonly DependencyProperty GlyphProperty = DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(HamburgerMenuGlyphItem), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets a value that specifies the glyph to use from Segoe MDL2 Assets font.
