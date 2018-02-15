@@ -5,7 +5,7 @@ branches:
   master:
     mode: ContinuousDeployment
     tag: rc
-    increment: Patch
+    increment: Minor
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
   develop:
