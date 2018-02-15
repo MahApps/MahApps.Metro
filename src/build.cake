@@ -54,6 +54,7 @@ Setup(context =>
     Information("SemVer Version        : {0}", gitVersion.SemVer);
     Information("AssemblySemVer Version: {0}", gitVersion.AssemblySemVer);
     Information("NuGet Version         : {0}", gitVersion.NuGetVersion);
+    Information("IsLocalBuild          : {0}", local);
 
     Information(Figlet("MahApps.Metro"));
 });

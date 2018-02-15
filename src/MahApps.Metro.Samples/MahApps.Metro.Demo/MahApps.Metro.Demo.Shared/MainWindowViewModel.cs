@@ -144,22 +144,6 @@ namespace MetroDemo
             }
         }
 
-        bool _magicToggleButtonIsChecked = true;
-        public bool MagicToggleButtonIsChecked
-        {
-            get { return this._magicToggleButtonIsChecked; }
-            set
-            {
-                if (Equals(value, _magicToggleButtonIsChecked))
-                {
-                    return;
-                }
-
-                _magicToggleButtonIsChecked = value;
-                RaisePropertyChanged("MagicToggleButtonIsChecked");
-            }
-        }
-
         private bool _quitConfirmationEnabled;
         public bool QuitConfirmationEnabled
         {
@@ -507,7 +491,7 @@ namespace MetroDemo
                 };
 
             var resources = rd.Keys.Cast<object>()
-                    .Where(key => rd[key] is Brush)
+                    .Where(key => rd[key] is SolidColorBrush)
                     .Select(key => key.ToString())
                     .OrderBy(s => s)
                     .ToList();
