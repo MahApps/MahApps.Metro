@@ -94,17 +94,41 @@ We use these awesome tools to build and develop MahApps.Metro.
 
 <div align="center">
 
-<img alt="screenshot01" width="800" src="./docs/main_demo_window.png">
+<img alt="screenshot01" src="./docs/2018-02-15_22h54_57.png">
 
-<img alt="screenshot02" width="800" src="./docs/main_demo_text.png">
+<img alt="screenshot02" src="./docs/2018-02-15_22h55_19.png">
 
-<img alt="screenshot02" src="./docs/main_demo_flyout1.png">
+<img alt="screenshot02" src="./docs/2018-02-15_22h55_52.png">
 
-<img alt="screenshot02" src="./docs/main_demo_flyout2.png">
+<img alt="screenshot02" src="./docs/2018-02-15_22h50_39.png">
 
-<img alt="screenshot02" width="800" src="./docs/mahapps_main.gif">
+<img alt="screenshot02" src="./docs/2018-02-15_22h51_03.png">
 
-<img alt="screenshot02" width="800" src="./docs/main_demo_window.gif">
+<img alt="screenshot02" src="./docs/2018-02-15_22h51_22.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h52_01.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h52_26.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h53_14.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h53_41.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h56_33.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h57_16.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h57_37.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_22h57_51.png">
+
+<img alt="screenshot02" src="./docs/2018-02-15_23h00_35.png">
+
+<img alt="screenshot03" src="./docs/main_demo_flyout1.png">
+
+<img alt="screenshot04" src="./docs/main_demo_flyout2.png">
+
+<img alt="screenshot05" src="./docs/mahapps_v1.6.0">
 
 </div>
 
