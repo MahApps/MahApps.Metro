@@ -50,11 +50,12 @@ var publishDir = "./Publish";
 Setup(context =>
 {
     gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
-    Information("Informational Version : {0}", gitVersion.InformationalVersion);
-    Information("SemVer Version        : {0}", gitVersion.SemVer);
-    Information("AssemblySemVer Version: {0}", gitVersion.AssemblySemVer);
-    Information("NuGet Version         : {0}", gitVersion.NuGetVersion);
-    Information("IsLocalBuild          : {0}", local);
+    Information("Informational Version  : {0}", gitVersion.InformationalVersion);
+    Information("SemVer Version         : {0}", gitVersion.SemVer);
+    Information("AssemblySemVer Version : {0}", gitVersion.AssemblySemVer);
+    Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
+    Information("NuGet Version          : {0}", gitVersion.NuGetVersion);
+    Information("IsLocalBuild           : {0}", local);
 
     Information(Figlet("MahApps.Metro"));
 });
@@ -95,7 +96,7 @@ Task("Paket-Pack")
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
-	PaketPack(publishDir, new PaketPackSettings { Version = isReleaseBranch ? gitVersion.AssemblySemVer : gitVersion.NuGetVersion });
+	PaketPack(publishDir, new PaketPackSettings { Version = isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion });
 });
 
 Task("Zip-Demos")
@@ -118,8 +119,6 @@ Task("Unit-Tests")
 });
 
 Task("CreateRelease")
-    .WithCriteria(() => !isPullRequest)
-    .WithCriteria(() => isReleaseBranch)
     .WithCriteria(() => !isTagged)
     .Does(() =>
 {
@@ -136,8 +135,8 @@ Task("CreateRelease")
     }
 
     GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
-        Milestone         = gitVersion.SemVer,
-        Name              = gitVersion.SemVer,
+        Milestone         = gitVersion.MajorMinorPatch,
+        Name              = "MahApps.Metro " + gitVersion.MajorMinorPatch,
         Prerelease        = false,
         TargetCommitish   = "master",
         WorkingDirectory  = "../"
