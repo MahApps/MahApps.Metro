@@ -50,11 +50,11 @@
   </a>
 </div>
 
-<h2 align="center">Want to say thanks?</h2>
+<h2>Want to say thanks?</h2>
 
 This framework is free and can be used for free, open source and commercial applications. It's tested and contributed by many people... So mainly hit the :star: button, that's all... thx :squirrel: (:dollar:, :euro:, :beer: or some other gifts are also being accepted...).
 
-<h2 align="center">Let's get started</h2>
+<h2>Let's get started</h2>
 
 - [Documentation](https://github.com/MahApps/MahApps.Metro/wiki/Documentation)
 - [Releases and Release Notes](https://github.com/MahApps/MahApps.Metro/releases)
@@ -65,41 +65,49 @@ This framework is free and can be used for free, open source and commercial appl
 - [Visual Studio Templates](https://github.com/MahApps/MahApps.Metro/wiki/Visual-Studio-Templates)
 - [Wiki](https://github.com/MahApps/MahApps.Metro/wiki)
 
-<h2 align="center">Something missing?</h2>
+<h2>Something missing?</h2>
 
-If you're looking for a control or library which is MahApps compatible, check them out:
+If you're looking for another awesome libraries which are compatible with MahApps, check them out:
 
 - [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
 - [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
 - [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
 - [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
 
-<h2 align="center">Useful tools</h2>
+<h2>Tools</h2>
+
+We use these awesome tools to build and develop MahApps.Metro.
+
+<div>
+  <a href="https://cakebuild.net/">
+    <img alt="cakebuild.net" width="128" heigth="128" src="./docs/cake-medium.png">
+  </a>
+  <a href="https://www.jetbrains.com/resharper/">
+    <img alt="R#" width="128" heigth="128" hspace="40" src="./docs/icon_ReSharper.png">
+  </a>
+  <a href="https://www.appveyor.com/">
+    <img alt="appveyor" width="128" heigth="128" src="./docs/Appveyor_logo.svg">
+  </a>
+</div>
+
+<h2>Screenshots</h2>
 
 <div align="center">
 
-[![Resharper](./docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
+<img alt="screenshot01" width="800" src="./docs/main_demo_window.png">
+
+<img alt="screenshot02" width="800" src="./docs/main_demo_text.png">
+
+<img alt="screenshot02" src="./docs/main_demo_flyout1.png">
+
+<img alt="screenshot02" src="./docs/main_demo_flyout2.png">
+
+<img alt="screenshot02" width="800" src="./docs/mahapps_main.gif">
+
+<img alt="screenshot02" width="800" src="./docs/main_demo_window.gif">
 
 </div>
 
-<h2 align="center">Screenshots</h2>
-
-<div align="center">
-
-![maindemowindow01](./docs/main_demo_window.png)
-
-![maindemowindow04](./docs/mahapps_main.gif)
-
-![maindemowindow02](./docs/main_demo_text.png)
-
-![maindemowindow03](./docs/main_demo_flyout1.png)
-
-![maindemowindow03](./docs/main_demo_flyout2.png)
-
-![maindemowindow04](./docs/main_demo_window.gif)
-
-</div>
-
-<h2 align="center">Licence</h2>
+<h2>Licence</h2>
 
 [MIT License (MIT)](./LICENSE)
