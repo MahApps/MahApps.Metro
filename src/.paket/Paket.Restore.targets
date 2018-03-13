@@ -53,10 +53,10 @@
     </PropertyGroup>
 
     <!-- If shasum and awk exist get the hashes -->
-    <Exec Condition=" '$(PaketRestoreCachedHasher)' != '' " Command="$(PaketRestoreCachedHasher)" ConsoleToMSBuild='true'>
+    <Exec StandardOutputImportance="Low" Condition=" '$(PaketRestoreCachedHasher)' != '' " Command="$(PaketRestoreCachedHasher)" ConsoleToMSBuild='true'>
         <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreCachedHash" />
     </Exec>
-    <Exec Condition=" '$(PaketRestoreLockFileHasher)' != '' " Command="$(PaketRestoreLockFileHasher)" ConsoleToMSBuild='true'>
+    <Exec StandardOutputImportance="Low" Condition=" '$(PaketRestoreLockFileHasher)' != '' " Command="$(PaketRestoreLockFileHasher)" ConsoleToMSBuild='true'>
         <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreLockFileHash" />
     </Exec>
 

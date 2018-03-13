@@ -136,7 +136,7 @@ Task("CreateRelease")
 
     GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
         Milestone         = gitVersion.MajorMinorPatch,
-        Name              = "MahApps.Metro " + gitVersion.MajorMinorPatch,
+        Name              = gitVersion.MajorMinorPatch,
         Prerelease        = false,
         TargetCommitish   = "master",
         WorkingDirectory  = "../"

@@ -14,7 +14,7 @@ description
 summary
   The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.
 dependencies
-  ControlzEx > 3.0.2 < 4.0
+  ControlzEx >= LOCKEDVERSION < 4.0
 include-pdbs true
 files
   bin/MahApps.Metro/ReleaseNET40/MahApps.Metro.* ==> lib/net40/
