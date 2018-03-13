@@ -29,10 +29,10 @@
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/master">
     <img alt="masterstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=master">
   </a>
-  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/dev">
-    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=dev">
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
+    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
   </a>
-  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/dev">
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
     <img alt="devtests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
   </a>
   <br />

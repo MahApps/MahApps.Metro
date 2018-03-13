@@ -12,13 +12,13 @@ nuget NHotkey 1.2.1
 nuget NHotkey.Wpf 1.2.1
 nuget xunit ~> 1.9
 nuget xunit.extensions ~> 1.9
-nuget ControlzEx ~> 3.0
+nuget ControlzEx < 4.0
 
 group cake
 	source https://nuget.org/api/v2
 	framework: net45
 	
-	nuget Cake
+	nuget Cake < 0.26
 	nuget Cake.Figlet
 	nuget Cake.Paket
 	nuget Cake.Paket.Module
