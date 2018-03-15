@@ -152,9 +152,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET45.csproj">
-      <Project>{579d4fa7-0946-4592-ae9b-a73d2d1262c6}</Project>
-      <Name>MahApps.Metro.NET45</Name>
+    <ProjectReference Include="..\..\..\MahApps.Metro\MahApps.Metro.csproj">
+      <Project>{f6432f90-04c2-42b9-992b-cd828729976b}</Project>
+      <Name>MahApps.Metro</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.projitems" Label="Shared" />
@@ -168,7 +168,7 @@
   </Target>
   -->
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Delete Files="@(ReferenceCopyLocalPaths-&gt;'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="..\..\..\.paket\paket.targets" />
   <Choose>

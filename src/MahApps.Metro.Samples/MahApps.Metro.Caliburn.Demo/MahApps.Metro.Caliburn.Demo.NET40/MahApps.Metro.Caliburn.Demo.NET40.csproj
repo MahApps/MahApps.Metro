@@ -79,9 +79,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MahApps.Metro\MahApps.Metro\MahApps.Metro.NET40.csproj">
-      <Project>{73d442ca-0217-4d9a-aa14-b3e8b95b8500}</Project>
-      <Name>MahApps.Metro.NET40</Name>
+    <ProjectReference Include="..\..\..\MahApps.Metro\MahApps.Metro.csproj">
+      <Project>{f6432f90-04c2-42b9-992b-cd828729976b}</Project>
+      <Name>MahApps.Metro</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems" Label="Shared" />
@@ -95,7 +95,7 @@
   </Target>
   -->
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Delete Files="@(ReferenceCopyLocalPaths-&gt;'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="..\..\..\.paket\paket.targets" />
   <Choose>
