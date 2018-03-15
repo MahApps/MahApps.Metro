@@ -17,5 +17,7 @@ dependencies
   ControlzEx >= LOCKEDVERSION < 4.0
 include-pdbs true
 files
-  bin/MahApps.Metro/ReleaseNET40/MahApps.Metro.* ==> lib/net40/
-  bin/MahApps.Metro/ReleaseNET45/MahApps.Metro.* ==> lib/net45/
+  MahApps.Metro/bin/Release/net40/MahApps.Metro.* ==> lib/net40/
+  MahApps.Metro/bin/Release/net45/MahApps.Metro.* ==> lib/net45/
+  MahApps.Metro/bin/Release/net46/MahApps.Metro.* ==> lib/net46/
+  MahApps.Metro/bin/Release/net47/MahApps.Metro.* ==> lib/net47/

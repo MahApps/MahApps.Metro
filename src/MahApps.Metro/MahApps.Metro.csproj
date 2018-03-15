@@ -6,12 +6,10 @@
     </PropertyGroup>
     <!-- Project properties -->
     <PropertyGroup>
-        <!-- <SolutionDir Condition="'$(SolutionDir)' == ''">..\</SolutionDir> -->
-        <OutputPath>$(MSBuildThisFileDirectory)\bin\$(MSBuildProjectName)\$(Configuration)\</OutputPath>
         <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
+        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <AssemblyName>MahApps.Metro</AssemblyName>
         <RootNamespace>MahApps.Metro</RootNamespace>
-        <Copyright>Copyright 2012-2018</Copyright>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
@@ -23,7 +21,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.2" PrivateAssets="All" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -38,6 +37,7 @@
     <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
         <DefineConstants>NET47;NET4_5</DefineConstants>
     </PropertyGroup>
+
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -46,35 +46,34 @@
         <DebugType>pdbonly</DebugType>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
+
     <ItemGroup>
         <ProjectCapability Include="DynamicDependentFile" />
         <ProjectCapability Include="WindowsXaml;WindowsXamlPage;WindowsXamlCodeBehind;WindowsXamlResourceDictionary;WindowsXamlUserControl" />
     </ItemGroup>
+
     <!-- Items include -->
     <ItemGroup>
         <None Include="paket.references" />
         <Compile Remove="$(BaseIntermediateOutputPath)\**" />
-        <Compile Include="**\*.cs" Exclude="MahApps.Metro\**\*;MahApps.Metro.Shared\**;$(BaseIntermediateOutputPath)\**" />
-        <Page Include="**\*.xaml" Exclude="MahApps.Metro\**\*;MahApps.Metro.Shared\**">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-        <UpToDateCheckInput Include="**\*.xaml" Exclude="MahApps.Metro\**\*;MahApps.Metro.Shared\**" />
+        <Compile Include="**\*.cs" Exclude="$(BaseIntermediateOutputPath)\**" />
+        <Page Include="**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" Exclude="$(BaseIntermediateOutputPath)\**" />
+        <Compile Update="**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
+        <UpToDateCheckInput Include="**\*.xaml" Exclude="$(BaseIntermediateOutputPath)\**" />
     </ItemGroup>
-    <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
-    </ItemGroup>
+
     <!-- Workaround to fix Intellisense file generation for XAML projects https://github.com/dotnet/project-system/issues/2488 -->
     <Target Name="WorkaroundForXAMLIntellisenseBuildIssue" AfterTargets="_CheckCompileDesignTimePrerequisite">
         <PropertyGroup>
             <BuildingProject>false</BuildingProject>
         </PropertyGroup>
     </Target>
+
     <!-- workaround for issue #4 from https://github.com/dotnet/sdk/issues/810#issuecomment-295642279 -->
     <PropertyGroup>
         <LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
     </PropertyGroup>
+
     <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
     <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

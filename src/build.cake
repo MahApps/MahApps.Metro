@@ -6,6 +6,7 @@
 #tool paket:?package=GitVersion.CommandLine
 #tool paket:?package=gitreleasemanager
 #tool paket:?package=xunit.runner.console
+#addin paket:?package=Cake.ExtendedNuGet
 #addin paket:?package=Cake.Figlet
 #addin paket:?package=Cake.Paket
 
@@ -49,6 +50,8 @@ var publishDir = "./Publish";
 
 Setup(context =>
 {
+    context.Tools.RegisterFile("./packages/NuGet.CommandLine/tools/NuGet.exe");
+
     gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
     Information("Informational Version  : {0}", gitVersion.InformationalVersion);
     Information("SemVer Version         : {0}", gitVersion.SemVer);
@@ -66,10 +69,18 @@ Task("Clean")
     CleanDirectory(Directory(buildDir));
 });
 
-Task("Paket-Restore")
+Task("NuGet-Paket-Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
+    // Restore all NuGet packages.
+    var solutions = GetFiles("./**/*.sln");
+    foreach(var solution in solutions)
+    {
+    	Information("Restoring {0}", solution);
+    	NuGetRestore(solution);
+    }
+
     PaketRestore();
 });
 
@@ -81,7 +92,7 @@ Task("Update-SolutionInfo")
 });
 
 Task("Build")
-    .IsDependentOn("Paket-Restore")
+    .IsDependentOn("NuGet-Paket-Restore")
     .Does(() =>
 {
     if(IsRunningOnWindows())
