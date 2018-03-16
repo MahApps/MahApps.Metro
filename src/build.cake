@@ -6,7 +6,6 @@
 #tool paket:?package=GitVersion.CommandLine
 #tool paket:?package=gitreleasemanager
 #tool paket:?package=xunit.runner.console
-#addin paket:?package=Cake.ExtendedNuGet
 #addin paket:?package=Cake.Figlet
 #addin paket:?package=Cake.Paket
 
@@ -73,15 +72,15 @@ Task("NuGet-Paket-Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
+    PaketRestore();
+
     // Restore all NuGet packages.
     var solutions = GetFiles("./**/*.sln");
     foreach(var solution in solutions)
     {
     	Information("Restoring {0}", solution);
-    	NuGetRestore(solution);
+        MSBuild(solution, settings => settings.SetMaxCpuCount(0).SetConfiguration(configuration).WithTarget("restore"));
     }
-
-    PaketRestore();
 });
 
 Task("Update-SolutionInfo")
@@ -95,10 +94,11 @@ Task("Build")
     .IsDependentOn("NuGet-Paket-Restore")
     .Does(() =>
 {
-    if(IsRunningOnWindows())
+    var solutions = GetFiles("./**/*.sln");
+    foreach(var solution in solutions)
     {
-      // Use MSBuild
-      MSBuild("./MahApps.Metro.sln", settings => settings.SetMaxCpuCount(0).SetConfiguration(configuration));
+    	Information("Building {0}", solution);
+        MSBuild(solution, settings => settings.SetMaxCpuCount(0).SetConfiguration(configuration));
     }
 });
 

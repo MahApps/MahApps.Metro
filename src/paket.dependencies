@@ -3,8 +3,6 @@ framework: auto-detect
 source https://nuget.org/api/v2
 
 nuget MSBuild.Sdk.Extras
-
-nuget NuGet.CommandLine
 nuget WpfAnalyzers
 nuget JetBrains.Annotations
 nuget gitlink
@@ -23,7 +21,6 @@ group cake
 	source https://nuget.org/api/v2
 	
 	nuget Cake < 0.26
-	nuget Cake.ExtendedNuGet
 	nuget Cake.Figlet
 	nuget Cake.Paket
 	nuget Cake.Paket.Module

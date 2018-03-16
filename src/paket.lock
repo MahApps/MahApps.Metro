@@ -15,7 +15,6 @@ NUGET
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
-    NuGet.CommandLine (4.5.1)
     WpfAnalyzers (2.1.2)
     xunit (1.9.2)
     xunit.extensions (1.9.2)
@@ -26,8 +25,7 @@ RESTRICTION: == net45
 NUGET
   remote: https://www.nuget.org/api/v2
     Cake (0.25)
-    Cake.ExtendedNuGet (1.0.0.27)
-    Cake.Figlet (1.0)
+    Cake.Figlet (1.1)
     Cake.Paket (2.0)
     Cake.Paket.Module (2.0)
     gitreleasemanager (0.7)
