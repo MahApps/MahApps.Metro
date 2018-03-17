@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
-        <OriginalProjectName>MahApps.Metro</OriginalProjectName>
-    </PropertyGroup>
+<Project Sdk="MSBuild.Sdk.Extras/1.2.2">
     <!-- Project properties -->
     <PropertyGroup>
         <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
@@ -12,12 +8,6 @@
         <RootNamespace>MahApps.Metro</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
-    <PropertyGroup>
-        <!-- you can disable (set false) these two properties if you don't want to use default VS behavior for adding your files -->
-        <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
-        <EnableDefaultItems>false</EnableDefaultItems>
-        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     </PropertyGroup>
 
     <ItemGroup>
@@ -43,6 +33,7 @@
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <NoWarn>1591</NoWarn>
         <DebugType>pdbonly</DebugType>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
@@ -56,10 +47,7 @@
     <ItemGroup>
         <None Include="paket.references" />
         <Compile Remove="$(BaseIntermediateOutputPath)\**" />
-        <Compile Include="**\*.cs" Exclude="$(BaseIntermediateOutputPath)\**" />
-        <Page Include="**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" Exclude="$(BaseIntermediateOutputPath)\**" />
-        <Compile Update="**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
-        <UpToDateCheckInput Include="**\*.xaml" Exclude="$(BaseIntermediateOutputPath)\**" />
+        <UpToDateCheckInput Include="**\*.xaml" />
     </ItemGroup>
 
     <!-- Workaround to fix Intellisense file generation for XAML projects https://github.com/dotnet/project-system/issues/2488 -->
@@ -69,11 +57,5 @@
         </PropertyGroup>
     </Target>
 
-    <!-- workaround for issue #4 from https://github.com/dotnet/sdk/issues/810#issuecomment-295642279 -->
-    <PropertyGroup>
-        <LanguageTargets>$(MSBuildToolsPath)\Microsoft.CSharp.targets</LanguageTargets>
-    </PropertyGroup>
-
-    <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
     <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
