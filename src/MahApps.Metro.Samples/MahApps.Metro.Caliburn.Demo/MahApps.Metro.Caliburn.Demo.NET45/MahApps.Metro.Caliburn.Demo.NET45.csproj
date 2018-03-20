@@ -91,7 +91,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -101,7 +100,7 @@
   </Target>
   -->
   <Target AfterTargets="AfterBuild;NonWinFodyTarget" Name="CleanReferenceCopyLocalPaths" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Delete Files="@(ReferenceCopyLocalPaths-&gt;'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
+    <Delete Files="@(ReferenceCopyLocalPaths->'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="..\..\..\.paket\paket.targets" />
   <Choose>

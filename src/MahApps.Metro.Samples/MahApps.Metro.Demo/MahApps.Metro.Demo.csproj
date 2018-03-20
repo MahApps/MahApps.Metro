@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/1.2.2">
+  <!-- Project properties -->
+  <PropertyGroup>
+    <TargetFrameworks>net47;net46;net45</TargetFrameworks>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <AssemblyName>MetroDemo</AssemblyName>
+    <RootNamespace>MetroDemo</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+    <NoWarn>SA1652</NoWarn>
+    <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+  </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsFormsIntegration" />
+    </ItemGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <DefineConstants>NET40;NET4</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>NET45;NET4_5</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <DefineConstants>NET46;NET4_5</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <DefineConstants>NET47;NET4_5</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <NoWarn>1591</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectCapability Include="DynamicDependentFile" />
+    <ProjectCapability Include="WindowsXaml;WindowsXamlPage;WindowsXamlCodeBehind;WindowsXamlResourceDictionary;WindowsXamlUserControl" />
+  </ItemGroup>
+  <PropertyGroup>
+    <ProjectConfigFileName>App.config</ProjectConfigFileName>
+  </PropertyGroup>
+  <!-- Items include -->
+  <ItemGroup>
+      <None Remove="$(MSBuildProjectDirectory)/App*.config" />
+      <!-- <None Include="App.config">
+          <TransformOnBuild>true</TransformOnBuild>
+      </None>
+      <None Include="$(MSBuildProjectDirectory)/App.net40.config" DependentUpon="App.config" Condition=" '$(TargetFramework)' == 'net40' " />
+      <None Include="$(MSBuildProjectDirectory)/App.net45.config" DependentUpon="App.config" Condition=" '$(TargetFramework)' == 'net45' " />
+      <None Include="$(MSBuildProjectDirectory)/App.net46.config" DependentUpon="App.config" Condition=" '$(TargetFramework)' == 'net46' " />
+      <None Include="$(MSBuildProjectDirectory)/App.net47.config" DependentUpon="App.config" Condition=" '$(TargetFramework)' == 'net47' ">
+          <IsTransformFile>True</IsTransformFile>
+      </None> -->
+
+      <None Include="paket.references" />
+    <Compile Remove="$(BaseIntermediateOutputPath)\**" />
+    <UpToDateCheckInput Include="**\*.xaml" />
+
+<!--    <None Update="App.config">-->
+<!--      <TransformOnBuild>true</TransformOnBuild>-->
+<!--    </None>-->
+<!--    <None Update="App.net40.config">-->
+<!--      <IsTransformFile>True</IsTransformFile>-->
+<!--    </None>-->
+<!--    <None Update="App.net45.config">-->
+<!--      <IsTransformFile>True</IsTransformFile>-->
+<!--    </None>-->
+<!--    <None Update="App.net46.config">-->
+<!--      <IsTransformFile>True</IsTransformFile>-->
+<!--    </None>-->
+<!--    <None Update="App.net47.config">-->
+<!--      <IsTransformFile>True</IsTransformFile>-->
+<!--    </None>-->
+  </ItemGroup>
+  <!-- Workaround to fix Intellisense file generation for XAML projects https://github.com/dotnet/project-system/issues/2488 -->
+  <Target Name="WorkaroundForXAMLIntellisenseBuildIssue" AfterTargets="_CheckCompileDesignTimePrerequisite">
+    <PropertyGroup>
+      <BuildingProject>false</BuildingProject>
+    </PropertyGroup>
+  </Target>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

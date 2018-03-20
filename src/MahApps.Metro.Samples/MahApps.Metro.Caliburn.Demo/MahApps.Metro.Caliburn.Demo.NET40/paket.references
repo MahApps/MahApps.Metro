@@ -5,8 +5,6 @@ Caliburn.Micro
 Caliburn.Micro.Core
 ControlzEx
 
-group net40
-
-	Microsoft.Bcl redirects: on
-	Microsoft.Bcl.Async
-	Microsoft.Bcl.Build import_targets: true
+Microsoft.Bcl redirects: on, framework: net40
+Microsoft.Bcl.Async framework: net40
+Microsoft.Bcl.Build import_targets: true, framework: net40

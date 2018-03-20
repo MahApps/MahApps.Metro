@@ -29,6 +29,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <NoWarn>1591</NoWarn>
         <DebugType>full</DebugType>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>

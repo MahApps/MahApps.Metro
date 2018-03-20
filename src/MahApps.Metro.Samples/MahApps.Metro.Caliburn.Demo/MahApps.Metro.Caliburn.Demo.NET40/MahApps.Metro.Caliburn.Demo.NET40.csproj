@@ -86,7 +86,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\MahApps.Metro.Caliburn.Demo.Shared\MahApps.Metro.Caliburn.Demo.Shared.projitems" Label="Shared" />
-  <Import Project="..\..\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -242,17 +241,17 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
         <Reference Include="System.IO">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.IO.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.IO.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="System.Runtime">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.Runtime.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.Runtime.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="System.Threading.Tasks">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.Threading.Tasks.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.Threading.Tasks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -260,23 +259,23 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.7')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
         <Reference Include="System.Net">
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.Threading.Tasks">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.Threading.Tasks.Extensions">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
         <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
-          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -284,5 +283,5 @@
     </When>
   </Choose>
   <Import Project="..\..\..\packages\Fody\build\Fody.targets" Condition="Exists('..\..\..\packages\Fody\build\Fody.targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\net40\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\net40\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets')" Label="Paket" />
 </Project>
