@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras/1.2.2">
-    <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
-    <PropertyGroup>
-        <_SdkLanguageName>CSharp</_SdkLanguageName>
-    </PropertyGroup>
-    <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.props"/>
-    <!-- Project properties -->
-    <PropertyGroup>
-        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
-        <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-        <AssemblyName>MahApps.Metro</AssemblyName>
-        <RootNamespace>MahApps.Metro</RootNamespace>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
-    </ItemGroup>
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-        <DefineConstants>NET40;NET4</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-        <DefineConstants>NET45;NET4_5</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
-        <DefineConstants>NET46;NET4_5</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
-        <DefineConstants>NET47;NET4_5</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <NoWarn>1591</NoWarn>
-        <DebugType>full</DebugType>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <NoWarn>1591</NoWarn>
-        <DebugType>pdbonly</DebugType>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    </PropertyGroup>
-    <!-- Items include -->
-    <ItemGroup>
-        <None Include="paket.references"/>
-    </ItemGroup>
-    <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
-    <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.targets"/>
-    <Import Project="..\.paket\Paket.Restore.targets"/>
+	<!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+	<PropertyGroup>
+		<_SdkLanguageName>CSharp</_SdkLanguageName>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	</PropertyGroup>
+	<Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.props"/>
+	<!-- Project properties -->
+	<PropertyGroup>
+		<TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
+		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>MahApps.Metro</AssemblyName>
+		<RootNamespace>MahApps.Metro</RootNamespace>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System.ComponentModel.DataAnnotations"/>
+		<Reference Include="System.Configuration"/>
+	</ItemGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+		<DefineConstants>NET40;NET4</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+		<DefineConstants>NET45;NET4_5</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+		<DefineConstants>NET46;NET4_5</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
+		<DefineConstants>NET47;NET4_5</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<NoWarn>1591</NoWarn>
+		<DebugType>full</DebugType>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<NoWarn>1591</NoWarn>
+		<DebugType>pdbonly</DebugType>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	</PropertyGroup>
+	<!-- Items include -->
+	<ItemGroup>
+		<None Include="paket.references"/>
+	</ItemGroup>
+	<!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+	<Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.targets"/>
+	<Import Project="..\.paket\Paket.Restore.targets"/>
 </Project>

@@ -8,7 +8,7 @@
 	<Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.props"/>
 	<!-- Project properties -->
 	<PropertyGroup>
-		<TargetFrameworks>net46;net45</TargetFrameworks>
+		<TargetFrameworks>net47;net46;net45</TargetFrameworks>
 		<AssemblyName>MahApps.Metro.Demo</AssemblyName>
 		<RootNamespace>MetroDemo</RootNamespace>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
