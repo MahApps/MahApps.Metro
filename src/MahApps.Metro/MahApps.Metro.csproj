@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras/1.2.2">
+    <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+    <PropertyGroup>
+        <_SdkLanguageName>CSharp</_SdkLanguageName>
+    </PropertyGroup>
+    <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.props"/>
     <!-- Project properties -->
     <PropertyGroup>
         <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
@@ -9,12 +14,10 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-
     <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.Configuration"/>
     </ItemGroup>
-
     <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
         <DefineConstants>NET40;NET4</DefineConstants>
     </PropertyGroup>
@@ -27,7 +30,6 @@
     <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
         <DefineConstants>NET47;NET4_5</DefineConstants>
     </PropertyGroup>
-
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <NoWarn>1591</NoWarn>
         <DebugType>full</DebugType>
@@ -38,25 +40,11 @@
         <DebugType>pdbonly</DebugType>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
-
-    <ItemGroup>
-        <ProjectCapability Include="DynamicDependentFile" />
-        <ProjectCapability Include="WindowsXaml;WindowsXamlPage;WindowsXamlCodeBehind;WindowsXamlResourceDictionary;WindowsXamlUserControl" />
-    </ItemGroup>
-
     <!-- Items include -->
     <ItemGroup>
-        <None Include="paket.references" />
-        <Compile Remove="$(BaseIntermediateOutputPath)\**" />
-        <UpToDateCheckInput Include="**\*.xaml" />
+        <None Include="paket.references"/>
     </ItemGroup>
-
-    <!-- Workaround to fix Intellisense file generation for XAML projects https://github.com/dotnet/project-system/issues/2488 -->
-    <Target Name="WorkaroundForXAMLIntellisenseBuildIssue" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-        </PropertyGroup>
-    </Target>
-
-    <Import Project="..\.paket\Paket.Restore.targets" />
+    <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+    <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.targets"/>
+    <Import Project="..\.paket\Paket.Restore.targets"/>
 </Project>
