@@ -1,0 +1,11 @@
+JetBrains.Annotations
+xunit
+xunit.extensions
+ControlzEx
+
+group net40
+
+	ExposedObject
+	Microsoft.Bcl redirects: on
+	Microsoft.Bcl.Async
+	Microsoft.Bcl.Build import_targets: true

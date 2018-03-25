@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.HamburgerMenuSample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:metroDemo="clr-namespace:MetroDemo"
+             d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" TargetType="{x:Type Controls:ToggleSwitch}">
+            <Setter Property="ContentPadding" Value="0 0 10 0" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="ContentDirection" Value="RightToLeft">
+                    <Setter Property="ContentPadding" Value="10 0 0 0" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style BasedOn="{StaticResource {x:Type Controls:MetroHeader}}" TargetType="{x:Type Controls:MetroHeader}">
+            <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <TabControl x:Name="HamburgerTabControl"
+                    Margin="10"
+                    Controls:TabControlHelper.Underlined="TabPanel">
+            <TabItem Header="Default">
+                <exampleViews:HamburgerMenuDefault DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="Creators Style">
+                <exampleViews:HamburgerMenuCreatorsUpdate DataContext="{Binding}" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</UserControl>

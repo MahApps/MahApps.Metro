@@ -1,0 +1,21 @@
+type file
+id MahApps.Metro
+title MahApps.Metro
+version 1.6
+authors Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell
+owners punker76, shiftkey
+licenseUrl https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE
+projectUrl https://github.com/MahApps/MahApps.Metro
+iconUrl https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/mahapps.metro.logo.png
+requireLicenseAcceptance false
+tags WPF UI Metro Modern Material XAML Toolkit Library .NET OSS OpenSource
+description
+  The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.
+summary
+  The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern UI" for their WPF4+ apps, with minimal effort.
+dependencies
+  ControlzEx >= LOCKEDVERSION < 4.0
+include-pdbs true
+files
+  bin/MahApps.Metro/ReleaseNET40/MahApps.Metro.* ==> lib/net40/
+  bin/MahApps.Metro/ReleaseNET45/MahApps.Metro.* ==> lib/net45/

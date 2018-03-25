@@ -1,0 +1,8 @@
+JetBrains.Annotations
+xunit
+xunit.extensions
+ControlzEx
+
+group net45
+
+	ExposedObject

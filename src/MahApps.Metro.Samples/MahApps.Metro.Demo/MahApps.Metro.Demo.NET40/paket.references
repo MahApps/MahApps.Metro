@@ -1,0 +1,12 @@
+Costura.Fody content: once
+JetBrains.Annotations
+MahApps.Metro.IconPacks
+NHotkey
+NHotkey.Wpf
+ControlzEx
+
+group net40
+
+	Microsoft.Bcl redirects: on
+	Microsoft.Bcl.Async
+	Microsoft.Bcl.Build import_targets: true

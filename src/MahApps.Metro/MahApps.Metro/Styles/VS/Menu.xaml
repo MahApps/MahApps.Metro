@@ -1,0 +1,195 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Border Margin="25 0 0 0"
+                            BorderBrush="{DynamicResource MenuSeparatorBorderBrush}"
+                            BorderThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="StandardMenu" TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource LightBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+    </Style>
+
+    <Style x:Key="StandardMenuItem" TargetType="{x:Type MenuItem}">
+        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <!--  Border 1  -->
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="False">
+                        <Grid x:Name="Grid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="Col0"
+                                                  Width="Auto"
+                                                  MinWidth="17"
+                                                  SharedSizeGroup="MenuItemIconColumnGroup" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuTextColumnGroup" />
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                                <ColumnDefinition x:Name="Col3" Width="14" />
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter x:Name="Icon"
+                                              Grid.Column="0"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Icon" />
+                            <ContentPresenter x:Name="HeaderHost"
+                                              Grid.Column="1"
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True" />
+                            <ContentPresenter x:Name="IGTHost"
+                                              Grid.Column="2"
+                                              Margin="8 1 8 1"
+                                              VerticalAlignment="Center"
+                                              ContentSource="InputGestureText" />
+                            <Grid x:Name="ArrowPanel"
+                                  Grid.Column="3"
+                                  Margin="4 0 6 0"
+                                  VerticalAlignment="Center">
+                                <Path x:Name="ArrowPanelPath"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Center"
+                                      Data="M0,0 L0,8 L4,4 z"
+                                      Fill="{TemplateBinding Foreground}" />
+                            </Grid>
+                            <Popup x:Name="SubMenuPopup"
+                                   AllowsTransparency="True"
+                                   Focusable="false"
+                                   HorizontalOffset="-1"
+                                   IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Placement="Right"
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+                                <Grid Margin="0 0 5 5">
+                                    <!--  Border 2  -->
+                                    <Border x:Name="SubMenuBorder"
+                                            Background="{DynamicResource SubmenuItemBackground}"
+                                            BorderBrush="{DynamicResource MenuSeparatorBorderBrush}"
+                                            BorderThickness="1"
+                                            SnapsToDevicePixels="True">
+                                        <Grid x:Name="SubMenu"
+                                              Margin="2"
+                                              Grid.IsSharedSizeScope="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                        </Grid>
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="2" Color="Black" />
+                                        </Border.Effect>
+                                    </Border>
+                                    <!--  Border 3  -->
+                                    <Border x:Name="TransitionBorder"
+                                            Width="0"
+                                            Height="2"
+                                            Margin="1 0 0 0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Background="{DynamicResource SubmenuItemBackground}"
+                                            BorderBrush="{DynamicResource SubmenuItemBackground}"
+                                            BorderThickness="1"
+                                            SnapsToDevicePixels="False" />
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Role" Value="TopLevelHeader">
+                            <Setter Property="Padding" Value="6 0 6 2" />
+                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Col0" Property="MinWidth" Value="0" />
+                            <Setter TargetName="Col3" Property="Width" Value="Auto" />
+                            <Setter TargetName="IGTHost" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="SubMenu" Property="Margin" Value="2 3 2 2" />
+                            <Setter TargetName="SubMenuBorder" Property="BorderThickness" Value="1 1 1 1" />
+                            <Setter TargetName="SubMenuPopup" Property="Placement" Value="Bottom" />
+                            <Setter TargetName="TransitionBorder" Property="Width" Value="{Binding ActualWidth, ElementName=Grid}" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="TopLevelItem">
+                            <Setter Property="Padding" Value="6 0 6 2" />
+                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Col0" Property="MinWidth" Value="0" />
+                            <Setter TargetName="Col3" Property="Width" Value="Auto" />
+                            <Setter TargetName="IGTHost" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuHeader">
+                            <Setter Property="DockPanel.Dock" Value="Top" />
+                            <Setter Property="Padding" Value="10 3 0 3" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
+                            <Setter TargetName="Border" Property="MinHeight" Value="22" />
+                        </Trigger>
+                        <Trigger Property="Role" Value="SubmenuItem">
+                            <Setter Property="DockPanel.Dock" Value="Top" />
+                            <Setter Property="Padding" Value="10 3 0 3" />
+                            <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
+                            <Setter TargetName="Border" Property="MinHeight" Value="22" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="true" />
+                                <Condition Property="Role" Value="TopLevelHeader" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHighlightedBackground}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="true" />
+                                <Condition Property="Role" Value="TopLevelItem" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHighlightedBackground}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="true" />
+                                <Condition Property="Role" Value="SubmenuHeader" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackgroundHighlighted}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsHighlighted" Value="true" />
+                                <Condition Property="Role" Value="SubmenuItem" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackgroundHighlighted}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSubmenuOpen" Value="true" />
+                                <Condition Property="Role" Value="TopLevelHeader" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MenuSeparatorBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1 1 1 0" />
+                        </MultiTrigger>
+                        <Trigger Property="IsSubmenuOpen" Value="true">
+                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{DynamicResource BackgroundSelected}" />
+                        </Trigger>
+                        <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+                            <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None" />
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource MenuDisabledForeground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

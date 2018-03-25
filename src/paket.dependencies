@@ -1,0 +1,43 @@
+source https://nuget.org/api/v2
+framework >= net40
+
+nuget WpfAnalyzers
+nuget JetBrains.Annotations
+nuget gitlink
+nuget Fody 2.4.1
+nuget Costura.Fody 1.4.1
+nuget Caliburn.Micro ~> 3.0
+nuget MahApps.Metro.IconPacks
+nuget NHotkey 1.2.1
+nuget NHotkey.Wpf 1.2.1
+nuget xunit ~> 1.9
+nuget xunit.extensions ~> 1.9
+nuget ControlzEx < 4.0
+
+group cake
+	source https://nuget.org/api/v2
+	framework: net45
+	
+	nuget Cake < 0.26
+	nuget Cake.Figlet
+	nuget Cake.Paket
+	nuget Cake.Paket.Module
+	nuget GitVersion.CommandLine 4.0.0-beta0012
+	nuget gitreleasemanager
+	nuget xunit.runner.console
+
+group net40
+	source https://nuget.org/api/v2
+	framework >= net40
+
+	nuget ExposedObject < 1.3
+	nuget Microsoft.Bcl
+	nuget Microsoft.Bcl.Async
+	nuget Microsoft.Bcl.Build
+
+group net45
+	source https://nuget.org/api/v2
+	framework >= net45
+
+	nuget ExposedObject
+	nuget MaterialDesignThemes prerelease

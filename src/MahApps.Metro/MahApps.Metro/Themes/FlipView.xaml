@@ -1,0 +1,185 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ControlTemplate x:Key="FlipViewTemplate" TargetType="{x:Type Controls:FlipView}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Border x:Name="PART_HoverBorder"
+                    BorderBrush="Transparent"
+                    BorderThickness="{TemplateBinding MouseHoverBorderThickness}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                <Grid Margin="{TemplateBinding Padding}">
+                    <Grid x:Name="ControlGrid" Panel.ZIndex="7">
+                        <Button x:Name="PART_BackButton"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource ControlButton}">
+                            <Path Canvas.Left="15.9063"
+                                  Canvas.Top="14.75"
+                                  Width="16"
+                                  Height="18"
+                                  Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z "
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Stretch="Fill" />
+                        </Button>
+                        <Button x:Name="PART_ForwardButton"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource ControlButton}">
+                            <Path Canvas.Left="15.9063"
+                                  Canvas.Top="14.75"
+                                  Width="16"
+                                  Height="18"
+                                  Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z "
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Stretch="Fill" />
+                        </Button>
+
+                        <Button x:Name="PART_UpButton"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Style="{DynamicResource ControlButton}"
+                                Visibility="Hidden">
+                            <Path Canvas.Left="15.9063"
+                                  Canvas.Top="14.75"
+                                  Width="16"
+                                  Height="18"
+                                  Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Stretch="Fill" />
+                        </Button>
+                        <Button x:Name="PART_DownButton"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Style="{DynamicResource ControlButton}"
+                                Visibility="Hidden">
+                            <Path Canvas.Left="15.9063"
+                                  Canvas.Top="14.75"
+                                  Width="16"
+                                  Height="18"
+                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z "
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Stretch="Fill" />
+                        </Button>
+                    </Grid>
+
+                    <Grid x:Name="PART_BannerGrid"
+                          Height="0"
+                          VerticalAlignment="Bottom"
+                          Panel.ZIndex="6"
+                          Background="{DynamicResource BlackBrush}"
+                          Opacity="0.85">
+                        <Label x:Name="PART_BannerLabel"
+                               FontFamily="{TemplateBinding FontFamily}"
+                               FontSize="{TemplateBinding FontSize}"
+                               Foreground="{DynamicResource WhiteBrush}"
+                               IsTabStop="False" />
+                    </Grid>
+
+                    <Controls:TransitioningContentControl x:Name="PART_Presenter"
+                                                          Panel.ZIndex="1"
+                                                          Content="{TemplateBinding SelectedItem}"
+                                                          ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                          ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                          IsTabStop="False" />
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="MouseHoverBorderEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_HoverBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseHoverBorderBrush, Mode=OneWay}" />
+            </MultiTrigger>
+            <Trigger Property="MouseHoverBorderEnabled" Value="False">
+                <Setter TargetName="PART_HoverBorder" Property="BorderThickness" Value="0" />
+            </Trigger>
+
+            <Trigger Property="Orientation" Value="Vertical">
+                <Trigger.Setters>
+                    <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
+
+                    <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
+                </Trigger.Setters>
+            </Trigger>
+        </ControlTemplate.Triggers>
+        <ControlTemplate.Resources>
+            <Style x:Key="ControlButton" TargetType="Button">
+                <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Focusable" Value="True" />
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="IsTabStop" Value="True" />
+                <Setter Property="Opacity" Value="0.4" />
+                <Setter Property="Panel.ZIndex" Value="5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Padding="1"
+                                    BorderBrush="{TemplateBinding Background}"
+                                    CornerRadius="4">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <Label HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="Marlett"
+                                           FontSize="17"
+                                           Foreground="{TemplateBinding Foreground}">
+                                        <ContentPresenter ContentSource="Content" />
+                                    </Label>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Width" Value="50" />
+            </Style>
+            <Storyboard x:Key="ShowBannerStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Height"
+                                 To="30.0" />
+            </Storyboard>
+            <Storyboard x:Key="HideBannerStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Height"
+                                 To="0.0" />
+            </Storyboard>
+            <Storyboard x:Key="HideControlStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0.0" />
+            </Storyboard>
+            <Storyboard x:Key="ShowControlStoryboard">
+                <DoubleAnimation AccelerationRatio="1.0"
+                                 SpeedRatio="2.5"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1.0" />
+            </Storyboard>
+        </ControlTemplate.Resources>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type Controls:FlipView}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
+        <Setter Property="MinHeight" Value="100" />
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True" />
+        <Setter Property="Template" Value="{StaticResource FlipViewTemplate}" />
+    </Style>
+</ResourceDictionary>
