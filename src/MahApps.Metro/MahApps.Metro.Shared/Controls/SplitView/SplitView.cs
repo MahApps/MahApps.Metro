@@ -37,6 +37,7 @@
         {
             var sender = d as SplitView;
             sender?.TemplateSettings?.Update();
+            sender?.ChangeVisualState();
         }
 
         /// <summary>
@@ -322,6 +323,7 @@
                 }
             }
 
+            VisualStateManager.GoToState(this, "None", animated);
             VisualStateManager.GoToState(this, state, animated);
         }
 
@@ -352,13 +354,13 @@
             }
             else
             {
-                this.IsPaneOpen = false;
+                this.SetCurrentValue(IsPaneOpenProperty, false);
             }
         }        
 
         private void OnLightDismiss(object sender, MouseButtonEventArgs e)
         {
-            this.IsPaneOpen = false;
+            this.SetCurrentValue(IsPaneOpenProperty, false);
         }
     }
 }

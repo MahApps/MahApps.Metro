@@ -2,17 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <Style x:Key="MetroDatePicker" TargetType="{x:Type DatePicker}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
@@ -28,7 +23,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -40,7 +35,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid x:Name="PART_InnerGrid" Margin="2">
+                        <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
@@ -71,8 +66,8 @@
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
+                                               Controls:TextBoxHelper.WatermarkTrimming="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkTrimming), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
-                                               ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
@@ -81,18 +76,44 @@
                                     <behaviours:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
                             </DatePickerTextBox>
+
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
+                                <ContentControl.Height>
+                                    <MultiBinding Converter="{Converters:MathMultiplyConverter}">
+                                        <Binding ElementName="PART_FloatingMessage"
+                                                 Mode="OneWay"
+                                                 Path="ActualHeight" />
+                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                 Mode="OneWay"
+                                                 Path="Opacity" />
+                                    </MultiBinding>
+                                </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="FloatingMessageTransform">
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{Converters:MathSubtractConverter}">
+                                                    <Binding ElementName="PART_FloatingMessage"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                    <Binding ElementName="PART_FloatingMessageContainer"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                             </ContentControl>
 
                             <Popup x:Name="PART_Popup"
@@ -113,6 +134,10 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:ControlsHelper.IsReadOnly" Value="True">
+                            <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
+                            <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
@@ -137,6 +162,7 @@
                         </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}" Value="True" />
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
@@ -156,6 +182,7 @@
 
     <Style x:Key="MetroDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
@@ -207,35 +234,44 @@
                                              Duration="0:0:0.2" />
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid>
+                    <Grid x:Name="PART_InnerGrid" Margin="2">
 
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="2 2 20 2"
                                       VerticalAlignment="Stretch"
                                       Background="{x:Null}"
                                       BorderThickness="0"
                                       FocusVisualStyle="{x:Null}"
                                       IsTabStop="False" />
                         <ContentControl x:Name="PART_Watermark"
-                                        Margin="6 0 0 0"
-                                        Padding="2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        VerticalContentAlignment="Center"
+                                        Margin="4 0 0 0"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                        Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                         Focusable="False"
                                         Foreground="{TemplateBinding Foreground}"
                                         IsHitTestVisible="False"
                                         Opacity="0.6"
-                                        Visibility="Hidden" />
+                                        Visibility="Hidden">
+                            <ContentControl.Template>
+                                <ControlTemplate TargetType="{x:Type ContentControl}">
+                                    <TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Text="{TemplateBinding Content}"
+                                               TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                               TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
+                                </ControlTemplate>
+                            </ContentControl.Template>
+                        </ContentControl>
                         <TextBlock x:Name="PART_Message"
                                    Margin="4 0 0 0"
-                                   Padding="2"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
                                    Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                   TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                   TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -251,7 +287,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}" Value="{x:Static System:String.Empty}">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}" Value="">
                             <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible" />
                         </DataTrigger>
 

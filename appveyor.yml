@@ -1,0 +1,28 @@
+# configuration for develop and master branch
+
+-
+  branches:
+    only:
+      - develop
+      - master
+
+  skip_tags: true
+  image: Visual Studio 2017
+  configuration: Release
+  platform: Any CPU
+  test: off
+
+  pull_requests:
+    do_not_increment_build_number: false
+
+  build_script:
+    - ps: cd src
+    - ps: .\build.ps1 -Target appveyor
+    - ps: cd..
+
+  cache:
+    - src\packages -> **\packages.config
+    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
+
+  artifacts:
+    - path: \src\Publish\*.*

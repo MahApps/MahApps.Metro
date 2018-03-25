@@ -141,10 +141,8 @@ namespace MahApps.Metro.Behaviours
                         if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
                             current.Y < (attachedElement).ActualHeight)
                         {
-                            RotatorParent.RotationY = -1 * TiltFactor +
-                                                      current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
-                            RotatorParent.RotationX = -1 * TiltFactor +
-                                                      current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
+                            RotatorParent.RotationY = -1 * TiltFactor + current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
+                            RotatorParent.RotationX = -1 * TiltFactor + current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
                         }
                         isPressed = true;
                     }
@@ -172,10 +170,7 @@ namespace MahApps.Metro.Behaviours
 
         private static Panel GetParentPanel(DependencyObject element)
         {
-            var parent = VisualTreeHelper.GetParent(element);
-            var panel = parent as Panel;
-
-            return panel ?? (parent == null ? null : GetParentPanel(parent));
+            return element.TryFindParent<Panel>();
         }
     }
 }

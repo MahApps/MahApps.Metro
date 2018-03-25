@@ -55,7 +55,9 @@ namespace MahApps.Metro.Controls
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             if (element != item)
-                element.SetCurrentValue(DataContextProperty, item); //dont want to set the datacontext to itself.
+            {
+                element.SetValue(DataContextProperty, item); //dont want to set the datacontext to itself.
+            }
 
             base.PrepareContainerForItemOverride(element, item);
         }
@@ -145,6 +147,7 @@ namespace MahApps.Metro.Controls
                 {
                     // if the list is hard-coded (i.e. has no ItemsSource)
                     // then we remove the item from the collection
+                    tabItem.ClearStyle();
                     this.Items.Remove(tabItem);
                 }
                 else
@@ -160,6 +163,7 @@ namespace MahApps.Metro.Controls
                     var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
                     if (item2Remove != null)
                     {
+                        tabItem.ClearStyle();
                         collection.Remove(item2Remove);
                     }
                 }

@@ -86,7 +86,7 @@ namespace MetroDemo
 
             BrushResources = FindBrushResources();
 
-            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
+            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
@@ -141,22 +141,6 @@ namespace MetroDemo
 
                 _datePickerDate = value;
                 RaisePropertyChanged("DatePickerDate");
-            }
-        }
-
-        bool _magicToggleButtonIsChecked = true;
-        public bool MagicToggleButtonIsChecked
-        {
-            get { return this._magicToggleButtonIsChecked; }
-            set
-            {
-                if (Equals(value, _magicToggleButtonIsChecked))
-                {
-                    return;
-                }
-
-                _magicToggleButtonIsChecked = value;
-                RaisePropertyChanged("MagicToggleButtonIsChecked");
             }
         }
 
@@ -473,12 +457,12 @@ namespace MetroDemo
         {
             var customDialog = new CustomDialog() { Title = "Custom Dialog" };
 
-            var customDialogExampleContent = new CustomDialogExampleContent(instance =>
+            var dataContext = new CustomDialogExampleContent(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 System.Diagnostics.Debug.WriteLine(instance.FirstName);
             });
-            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};
+            customDialog.Content = new CustomDialogExample { DataContext = dataContext};
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
@@ -507,7 +491,7 @@ namespace MetroDemo
                 };
 
             var resources = rd.Keys.Cast<object>()
-                    .Where(key => rd[key] is Brush)
+                    .Where(key => rd[key] is SolidColorBrush)
                     .Select(key => key.ToString())
                     .OrderBy(s => s)
                     .ToList();

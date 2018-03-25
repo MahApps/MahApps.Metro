@@ -11,10 +11,20 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public partial class HamburgerMenu
     {
+        private ControlTemplate _defaultItemFocusVisualTemplate = null;
+
         /// <summary>
         /// Identifies the <see cref="OpenPaneLength"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OpenPaneLengthProperty = DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(240.0));
+        public static readonly DependencyProperty OpenPaneLengthProperty = DependencyProperty.Register(nameof(OpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(240.0, OpenPaneLengthPropertyChangedCallback));
+
+        private static void OpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (args.NewValue != args.OldValue)
+            {
+                (dependencyObject as HamburgerMenu)?.ChangeItemFocusVisualStyle();
+            }
+        }
 
         /// <summary>
         /// Identifies the <see cref="PanePlacement"/> dependency property.
@@ -29,7 +39,15 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="CompactPaneLength"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty CompactPaneLengthProperty = DependencyProperty.Register(nameof(CompactPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(48.0));
+        public static readonly DependencyProperty CompactPaneLengthProperty = DependencyProperty.Register(nameof(CompactPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(48.0, CompactPaneLengthPropertyChangedCallback));
+
+        private static void CompactPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (args.NewValue != args.OldValue)
+            {
+                (dependencyObject as HamburgerMenu)?.ChangeItemFocusVisualStyle();
+            }
+        }
 
         /// <summary>
         /// Identifies the <see cref="PaneBackground"/> dependency property.
@@ -44,12 +62,25 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="IsPaneOpen"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(nameof(IsPaneOpen), typeof(bool), typeof(HamburgerMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsPaneOpenPropertyChangedCallback));
+
+        private static void IsPaneOpenPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (args.NewValue != args.OldValue)
+            {
+                (dependencyObject as HamburgerMenu)?.ChangeItemFocusVisualStyle();
+            }
+        }
 
         /// <summary>
         /// Identifies the <see cref="ItemsSource"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(nameof(ItemsSource), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemContainerStyle"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemContainerStyleProperty = DependencyProperty.Register(nameof(ItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="ItemTemplate"/> dependency property.
@@ -90,6 +121,18 @@ namespace MahApps.Metro.Controls
         /// Identifies the <see cref="VerticalScrollBarOnLeftSide"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty = DependencyProperty.Register(nameof(VerticalScrollBarOnLeftSide), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Identifies the <see cref="ShowSelectionIndicator"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ShowSelectionIndicatorProperty = DependencyProperty.Register(nameof(ShowSelectionIndicator), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        public static readonly DependencyPropertyKey ItemFocusVisualStylePropertyKey = DependencyProperty.RegisterReadOnly(nameof(ItemFocusVisualStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="ItemFocusVisualStyle"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ItemFocusVisualStyleProperty = ItemFocusVisualStylePropertyKey.DependencyProperty;
 
         /// <summary>
         /// Gets or sets the width of the pane when it's fully expanded.
@@ -164,6 +207,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets the Style used for each item.
+        /// </summary>
+        public Style ItemContainerStyle
+        {
+            get { return (Style)GetValue(ItemContainerStyleProperty); }
+            set { SetValue(ItemContainerStyleProperty, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the DataTemplate used to display each item.
         /// </summary>
         public DataTemplate ItemTemplate
@@ -220,8 +272,8 @@ namespace MahApps.Metro.Controls
 
         public TransitionType ContentTransition
         {
-            get { return (TransitionType)this.GetValue(ContentTransitionProperty); }
-            set { this.SetValue(ContentTransitionProperty, value); }
+            get { return (TransitionType)GetValue(ContentTransitionProperty); }
+            set { SetValue(ContentTransitionProperty, value); }
         }
 
         /// <summary>
@@ -252,6 +304,25 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets wheather a selection indicator will be shown on the HamburgerMenuItem.
+        /// </summary>
+        public bool ShowSelectionIndicator
+        {
+            get { return (bool)GetValue(ShowSelectionIndicatorProperty); }
+            set { SetValue(ShowSelectionIndicatorProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the default FocusVisualStyle for a HamburgerMenuItem.
+        /// This style can be override at the HamburgerMenuItem style by setting the FocusVisualStyle property.
+        /// </summary>
+        public Style ItemFocusVisualStyle
+        {
+            get { return (Style)GetValue(ItemFocusVisualStyleProperty); }
+            private set { SetValue(ItemFocusVisualStylePropertyKey, value); }
+        }
+
+        /// <summary>
         /// Executes the item command which can be set by the user.
         /// </summary>
         public void RaiseItemCommand()
@@ -261,6 +332,21 @@ namespace MahApps.Metro.Controls
             if (command != null && command.CanExecute(commandParameter))
             {
                 command.Execute(commandParameter);
+            }
+        }
+
+        private void ChangeItemFocusVisualStyle()
+        {
+            _defaultItemFocusVisualTemplate = _defaultItemFocusVisualTemplate ?? TryFindResource("HamburgerMenuItemFocusVisualTemplate") as ControlTemplate;
+            if (_defaultItemFocusVisualTemplate != null)
+            {
+                var focusVisualStyle = new Style(typeof(Control));
+                focusVisualStyle.Setters.Add(new Setter(Control.TemplateProperty, _defaultItemFocusVisualTemplate));
+                focusVisualStyle.Setters.Add(new Setter(Control.WidthProperty, IsPaneOpen ? OpenPaneLength : CompactPaneLength));
+                focusVisualStyle.Setters.Add(new Setter(Control.HorizontalAlignmentProperty, HorizontalAlignment.Left));
+                focusVisualStyle.Seal();
+
+                SetValue(ItemFocusVisualStylePropertyKey, focusVisualStyle);
             }
         }
     }

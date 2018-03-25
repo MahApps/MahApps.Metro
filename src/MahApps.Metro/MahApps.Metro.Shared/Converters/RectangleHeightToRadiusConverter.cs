@@ -6,7 +6,7 @@ using System.Windows.Markup;
 
 namespace MahApps.Metro.Converters
 {
-    [ValueConversion(typeof(double), typeof(double))]
+    [ValueConversion(typeof(double?), typeof(double))]
     [MarkupExtensionReturnType(typeof(RectangleHeightToRadiusConverter))]
     public class RectangleHeightToRadiusConverter : MarkupConverter
     {

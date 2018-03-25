@@ -64,72 +64,88 @@
             </Grid.ColumnDefinitions>
             <TabControl Margin="0 10 0 0" TabStripPlacement="Top">
                 <TabItem Header="Start">
-                    <Grid Margin="50">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="15" />
-                            <RowDefinition Height="25" />
-                            <RowDefinition Height="25" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0"
-                                   Grid.ColumnSpan="3"
-                                   FontSize="30"
-                                   Foreground="{StaticResource Foreground}">
-                            Space Commander - Starship Enterprise
-                        </TextBlock>
-                        <TextBlock Grid.Row="1"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            You are logged in as:
-                        </TextBlock>
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="1"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}"
-                                   Text="{x:Static System:Environment.UserName}" />
-                        <TextBlock Grid.Row="2"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            Ship state
-                        </TextBlock>
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   FontSize="16"
-                                   Foreground="{StaticResource BackgroundSelected}">
-                            IO
-                        </TextBlock>
-                        <Separator Grid.Row="3"
-                                   Grid.ColumnSpan="2"
-                                   Margin="5" />
-                        <TextBlock Grid.Row="4"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            Ship commander
-                        </TextBlock>
-                        <TextBlock Grid.Row="4"
-                                   Grid.Column="1"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            Captain James T. Kirk
-                        </TextBlock>
-                        <TextBlock Grid.Row="5"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            Ship name
-                        </TextBlock>
-                        <TextBlock Grid.Row="5"
-                                   Grid.Column="1"
-                                   FontSize="16"
-                                   Foreground="{StaticResource Foreground}">
-                            Enterprise (NCC-1701)
-                        </TextBlock>
+                        <GroupBox Grid.Row="0"
+                                  Margin="20"
+                                  Header="Into Space">
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="15" />
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Grid.ColumnSpan="3"
+                                           FontSize="30"
+                                           Foreground="{StaticResource Foreground}">
+                                    Space Commander - Starship Enterprise
+                                </TextBlock>
+                                <TextBlock Grid.Row="1"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    You are logged in as:
+                                </TextBlock>
+                                <TextBlock Grid.Row="1"
+                                           Grid.Column="1"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}"
+                                           Text="{x:Static System:Environment.UserName}" />
+                                <TextBlock Grid.Row="2"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    Ship state
+                                </TextBlock>
+                                <TextBlock Grid.Row="2"
+                                           Grid.Column="1"
+                                           FontSize="16"
+                                           Foreground="{StaticResource BackgroundSelected}">
+                                    IO
+                                </TextBlock>
+                                <Separator Grid.Row="3"
+                                           Grid.ColumnSpan="2"
+                                           Margin="5" />
+                                <TextBlock Grid.Row="4"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    Ship commander
+                                </TextBlock>
+                                <TextBlock Grid.Row="4"
+                                           Grid.Column="1"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    Captain James T. Kirk
+                                </TextBlock>
+                                <TextBlock Grid.Row="5"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    Ship name
+                                </TextBlock>
+                                <TextBlock Grid.Row="5"
+                                           Grid.Column="1"
+                                           FontSize="16"
+                                           Foreground="{StaticResource Foreground}">
+                                    Enterprise (NCC-1701)
+                                </TextBlock>
+                            </Grid>
+                        </GroupBox>
+                        <Expander Grid.Row="1"
+                                  Margin="20"
+                                  ExpandDirection="Down"
+                                  Header="Hidden Stuff">
+                            <!--  some content here  -->
+                        </Expander>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Manage Rockets">

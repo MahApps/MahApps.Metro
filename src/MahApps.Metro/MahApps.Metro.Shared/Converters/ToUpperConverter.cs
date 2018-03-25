@@ -5,7 +5,7 @@ using System.Windows.Markup;
 
 namespace MahApps.Metro.Converters
 {
-    [MarkupExtensionReturnType(typeof(IValueConverter))]
+    [MarkupExtensionReturnType(typeof(ToUpperConverter))]
     public class ToUpperConverter : MarkupConverter
     {
         private static ToUpperConverter _instance;
@@ -33,7 +33,7 @@ namespace MahApps.Metro.Converters
         }
     }
 
-    [MarkupExtensionReturnType(typeof(IValueConverter))]
+    [MarkupExtensionReturnType(typeof(ToLowerConverter))]
     public class ToLowerConverter : MarkupConverter
     {
         private static ToLowerConverter _instance;

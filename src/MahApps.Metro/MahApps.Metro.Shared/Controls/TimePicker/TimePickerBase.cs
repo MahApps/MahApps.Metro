@@ -363,7 +363,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsMilitaryTime
         {
-            get { return string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator); }
+            get
+            {
+                var dateTimeFormat = this.SpecificCultureInfo.DateTimeFormat;
+                return !string.IsNullOrEmpty(dateTimeFormat.AMDesignator) && (dateTimeFormat.ShortTimePattern.Contains("h") || dateTimeFormat.LongTimePattern.Contains("h"));
+            }
         }
 
         protected internal Popup Popup
@@ -446,6 +450,8 @@ namespace MahApps.Metro.Controls
 
             SetDefaultTimeOfDayValues();
             _deactivateRangeBaseEvent = false;
+
+            WriteValueToTextBox();
         }
 
         protected Binding GetBinding(DependencyProperty property)
@@ -462,10 +468,11 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            TimeSpan ts;
-            if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
+            var text = string.Intern($"{DateTime.MinValue.ToString(SpecificCultureInfo.DateTimeFormat.ShortDatePattern)} {((DatePickerTextBox)sender).Text}");
+            DateTime dt;
+            if (DateTime.TryParse(text, SpecificCultureInfo, DateTimeStyles.None, out dt))
             {
-                SelectedTime = ts;
+                SelectedTime = dt.TimeOfDay;
             }
             else
             {
@@ -586,7 +593,7 @@ namespace MahApps.Metro.Controls
             var hourList = basevalue as IEnumerable<int>;
             if (timePickerBase != null && hourList != null)
             {
-                if (!timePickerBase.IsMilitaryTime)
+                if (timePickerBase.IsMilitaryTime)
                 {
                     return hourList.Where(i => i > 0 && i <= 12).OrderBy(i => i, new AmPmComparer());
                 }
@@ -651,7 +658,7 @@ namespace MahApps.Metro.Controls
         private static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             TimePickerBase picker = (TimePickerBase)sender;
-            if (!e.Handled && picker.Focusable && (picker._textBox != null))
+            if (!e.Handled && picker.Focusable)
             {
                 if (Equals(e.OriginalSource, picker))
                 {
@@ -660,10 +667,18 @@ namespace MahApps.Metro.Controls
                     // Gets the element with keyboard focus.
                     var elementWithFocus = Keyboard.FocusedElement as UIElement;
                     // Change keyboard focus.
-                    elementWithFocus?.MoveFocus(request);
+                    if (elementWithFocus != null)
+                    {
+                        elementWithFocus.MoveFocus(request);
+                    }
+                    else
+                    {
+                        picker.Focus();
+                    }
+
                     e.Handled = true;
                 }
-                else if (Equals(e.OriginalSource, picker._textBox))
+                else if (picker._textBox != null && Equals(e.OriginalSource, picker._textBox))
                 {
                     picker._textBox.SelectAll();
                     e.Handled = true;
@@ -787,7 +802,7 @@ namespace MahApps.Metro.Controls
         /// </returns>
         private int GetAmPmOffset(int currentHour)
         {
-            if (!IsMilitaryTime)
+            if (IsMilitaryTime)
             {
                 if (currentHour == 12)
                 {
@@ -824,7 +839,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Collapsed : Visibility.Visible;
+                    _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
         }
@@ -844,7 +859,7 @@ namespace MahApps.Metro.Controls
             _deactivateRangeBaseEvent = true;
             if (_hourInput != null)
             {
-                if (!IsMilitaryTime)
+                if (IsMilitaryTime)
                 {
                     _ampmSwitcher.SelectedValue = timeOfDay.Hours < 12 ? SpecificCultureInfo.DateTimeFormat.AMDesignator : SpecificCultureInfo.DateTimeFormat.PMDesignator;
                     if (timeOfDay.Hours == 0 || timeOfDay.Hours == 12)

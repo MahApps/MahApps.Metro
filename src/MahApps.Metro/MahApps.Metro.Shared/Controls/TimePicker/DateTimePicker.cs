@@ -192,14 +192,14 @@
         {
             base.ApplyCulture();
 
-            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            SetCurrentValue(FirstDayOfWeekProperty, SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek);
         }
 
         protected override string GetValueForTextBox()
         {
-            var timeFormat = base.GetValueForTextBox();
-            var formatInfo = SpecificCultureInfo.DateTimeFormat;
-            var dateFormat = SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
+            var formatInfo = this.SpecificCultureInfo.DateTimeFormat;
+            var timeFormat = this.SelectedTimeFormat == TimePickerFormat.Long ? formatInfo.LongTimePattern : formatInfo.ShortTimePattern;
+            var dateFormat = this.SelectedDateFormat == DatePickerFormat.Long ? formatInfo.LongDatePattern : formatInfo.ShortDatePattern;
             
             var dateTimeFormat = string.Intern($"{dateFormat} {timeFormat}");
 

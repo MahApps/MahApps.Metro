@@ -6,34 +6,43 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=FirstNameTextBox}" Grid.IsSharedSizeScope="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" SharedSizeGroup="LabelCol" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock>First Name:</TextBlock>
-        <TextBox Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="First Name:" />
+        <TextBox x:Name="FirstNameTextBox"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 Margin="8 8 0 0"
+                 Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+
         <TextBlock Grid.Row="1"
                    Grid.Column="0"
-                   Margin="0 8 0 0">
-            Last Name:
-        </TextBlock>
+                   Margin="0 8 0 0"
+                   Text="Last Name:" />
         <TextBox Grid.Row="1"
                  Grid.Column="1"
-                 Margin="0 8 0 0"
+                 Margin="8 8 0 0"
                  Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
 
         <Button Grid.Row="2"
-                Grid.Column="1"
-                Margin="0 8 0 8"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                MinWidth="80"
+                Margin="8 8 0 8"
                 HorizontalAlignment="Right"
-                Command="{Binding CloseCommand}">
-            OK
-        </Button>
+                Command="{Binding CloseCommand}"
+                Content="OK" />
     </Grid>
 </UserControl>

@@ -8,7 +8,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <!--  TextBox Style  -->
     <Style x:Key="MetroTextBox" TargetType="{x:Type TextBox}">
@@ -23,6 +22,7 @@
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
+        <Setter Property="Controls:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -62,13 +62,11 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -105,19 +103,46 @@
                                        Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
+                                <ContentControl.Height>
+                                    <MultiBinding Converter="{Converters:MathMultiplyConverter}">
+                                        <Binding ElementName="PART_FloatingMessage"
+                                                 Mode="OneWay"
+                                                 Path="ActualHeight" />
+                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                 Mode="OneWay"
+                                                 Path="Opacity" />
+                                    </MultiBinding>
+                                </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="FloatingMessageTransform">
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{Converters:MathSubtractConverter}">
+                                                    <Binding ElementName="PART_FloatingMessage"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                    <Binding ElementName="PART_FloatingMessageContainer"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                             </ContentControl>
                             <Button x:Name="PART_ClearText"
                                     Grid.Row="0"
@@ -231,14 +256,12 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -284,13 +307,11 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
-                            <AdornerDecorator.CacheMode>
-                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </AdornerDecorator.CacheMode>
                             <Border x:Name="PART_WaitingForDataEffectGrid"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="Transparent"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    Effect="{DynamicResource WaitingForDataEffect}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                         <Border x:Name="Base"
@@ -327,19 +348,46 @@
                                        Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                       TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                       TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
+                                <ContentControl.Height>
+                                    <MultiBinding Converter="{Converters:MathMultiplyConverter}">
+                                        <Binding ElementName="PART_FloatingMessage"
+                                                 Mode="OneWay"
+                                                 Path="ActualHeight" />
+                                        <Binding ElementName="PART_FloatingMessageContainer"
+                                                 Mode="OneWay"
+                                                 Path="Opacity" />
+                                    </MultiBinding>
+                                </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MetroAutoCollapsingTextBlock}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}" />
+                                           TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
+                                           TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="FloatingMessageTransform">
+                                            <TranslateTransform.Y>
+                                                <MultiBinding Converter="{Converters:MathSubtractConverter}">
+                                                    <Binding ElementName="PART_FloatingMessage"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                    <Binding ElementName="PART_FloatingMessageContainer"
+                                                             Mode="OneWay"
+                                                             Path="ActualHeight" />
+                                                </MultiBinding>
+                                            </TranslateTransform.Y>
+                                        </TranslateTransform>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                             </ContentControl>
                             <Button x:Name="PART_ClearText"
                                     Grid.Row="0"
@@ -436,14 +484,12 @@
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{DynamicResource WaitingForDataEffect}" />
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
                             </MultiTrigger.EnterActions>
                         </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -550,3 +596,6 @@
         </Setter>
     </Style>
 </ResourceDictionary>
+
+
+
