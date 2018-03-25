@@ -218,7 +218,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Controls:ProgressRing Grid.Column="0" Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                <Controls:ProgressRing Grid.Column="1"
+                <Controls:ProgressRing Grid.Column="1" ToolTip="Magic happens!"
                                        Width="40"
                                        Height="40" />
                 <Controls:ProgressRing Grid.Column="2"
