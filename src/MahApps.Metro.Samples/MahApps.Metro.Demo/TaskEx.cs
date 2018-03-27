@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#if !NET40
+using System.Threading.Tasks;
 
 namespace MetroDemo
 {
@@ -13,3 +14,4 @@ namespace MetroDemo
         }
     }
 }
+#endif
