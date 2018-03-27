@@ -2,6 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras/1.2.2">
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro</AssemblyName>
         <RootNamespace>MahApps.Metro</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>

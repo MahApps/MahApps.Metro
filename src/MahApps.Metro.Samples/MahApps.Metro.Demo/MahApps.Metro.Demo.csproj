@@ -2,6 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras/1.2.2">
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DefaultItemExcludes Condition=" '$(TargetFramework)' == 'net40' ">$(DefaultItemExcludes);$(MSBuildProjectDirectory)/HamburgerMenuRipple/**</DefaultItemExcludes>
