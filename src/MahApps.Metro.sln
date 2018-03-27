@@ -8,10 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{5FEFAE
 		paket.dependencies = paket.dependencies
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro", "MahApps.Metro", "{51372046-0912-4AD0-916A-13FC6C278CFF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MahApps.Metro.Samples", "MahApps.Metro.Samples", "{79FFABBA-E8B4-400E-B0DE-3C3A96FCC1C7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro", "MahApps.Metro\MahApps.Metro.csproj", "{F6432F90-04C2-42B9-992B-CD828729976B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.Demo", "MahApps.Metro.Samples\MahApps.Metro.Demo\MahApps.Metro.Demo.csproj", "{A83B4603-02BF-43FA-8EE8-606D6DAC8B3D}"
@@ -33,10 +29,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F6432F90-04C2-42B9-992B-CD828729976B} = {51372046-0912-4AD0-916A-13FC6C278CFF}
-		{A83B4603-02BF-43FA-8EE8-606D6DAC8B3D} = {79FFABBA-E8B4-400E-B0DE-3C3A96FCC1C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {002611DA-9902-44B8-96DC-ED7107FAB879}
