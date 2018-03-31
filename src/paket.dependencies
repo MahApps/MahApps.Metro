@@ -2,7 +2,7 @@
 framework: auto-detect
 source https://nuget.org/api/v2
 
-nuget MSBuild.Sdk.Extras
+nuget MSBuild.Sdk.Extras 1.2.2
 nuget WpfAnalyzers
 nuget JetBrains.Annotations
 nuget gitlink
