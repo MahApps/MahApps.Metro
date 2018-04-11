@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.Demo", "MahAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.Caliburn.Demo", "MahApps.Metro.Samples\MahApps.Metro.Caliburn.Demo\MahApps.Metro.Caliburn.Demo.csproj", "{D9ACF0D0-A178-4C91-BD23-D013CEA763A0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MahApps.Metro.Tests", "Mahapps.Metro.Tests\MahApps.Metro.Tests.csproj", "{40048BCF-D1C7-46CC-B781-05718BE25BFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{D9ACF0D0-A178-4C91-BD23-D013CEA763A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9ACF0D0-A178-4C91-BD23-D013CEA763A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9ACF0D0-A178-4C91-BD23-D013CEA763A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40048BCF-D1C7-46CC-B781-05718BE25BFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40048BCF-D1C7-46CC-B781-05718BE25BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40048BCF-D1C7-46CC-B781-05718BE25BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40048BCF-D1C7-46CC-B781-05718BE25BFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

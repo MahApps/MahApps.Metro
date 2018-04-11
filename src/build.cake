@@ -40,7 +40,6 @@ var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", AppVeyor
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Define directories.
-var buildDir = "./bin";
 var publishDir = "./Publish";
 
 //////////////////////////////////////////////////////////////////////
@@ -65,7 +64,8 @@ Setup(context =>
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectory(Directory(buildDir));
+	CleanDirectories("./**/bin");
+	CleanDirectories("./**/obj");
 });
 
 Task("NuGet-Paket-Restore")
@@ -115,8 +115,8 @@ Task("Zip-Demos")
     .Does(() =>
 {
 	EnsureDirectoryExists(Directory(publishDir));
-    Zip(buildDir + "/MetroDemo/", publishDir + "/MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
-    Zip(buildDir + "/Caliburn.Metro.Demo/", publishDir + "/Caliburn.MetroDemo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip("./MahApps.Metro.Samples/MahApps.Metro.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Demo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip("./MahApps.Metro.Samples/MahApps.Metro.Caliburn.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Caliburn.Demo-v" + gitVersion.NuGetVersion + ".zip");
 });
 
 Task("Unit-Tests")
@@ -124,7 +124,7 @@ Task("Unit-Tests")
     .Does(() =>
 {
     XUnit(
-        "./Mahapps.Metro.Tests/**/bin/" + configuration + "/*.Tests.dll",
+        "./Mahapps.Metro.Tests/bin/" + configuration + "/**/*.Tests.dll",
         new XUnitSettings { ToolPath = "./packages/cake/xunit.runner.console/tools/net452/xunit.console.exe" }
     );
 });

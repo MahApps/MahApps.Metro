@@ -7,7 +7,8 @@ NUGET
     ControlzEx (3.0.2.4)
     Costura.Fody (2.0)
       Fody (>= 3.0) - restriction: || (&& (== net40) (>= net452)) (&& (== net45) (>= net452)) (== net46) (== net47)
-    Fody (3.0.1)
+    ExposedObject (1.2)
+    Fody (3.0.3)
     gitlink (3.1)
     JetBrains.Annotations (11.1)
     MahApps.Metro.IconPacks (2.2)
@@ -40,15 +41,3 @@ NUGET
     gitreleasemanager (0.7)
     GitVersion.CommandLine (4.0.0-beta0012)
     xunit.runner.console (2.3.1)
-
-GROUP net40
-RESTRICTION: || (== net40) (== net45) (== net46) (== net47)
-NUGET
-  remote: https://www.nuget.org/api/v2
-    ExposedObject (1.2)
-
-GROUP net45
-RESTRICTION: || (== net40) (== net45) (== net46) (== net47)
-NUGET
-  remote: https://www.nuget.org/api/v2
-    ExposedObject (1.3)
