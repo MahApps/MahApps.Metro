@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
@@ -40,16 +41,16 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  set up default styles for our custom controls  -->
+
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" TargetType="{x:Type Controls:ToggleSwitchButton}" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" TargetType="{x:Type Controls:ToggleSwitch}" />
-
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" TargetType="{x:Type Controls:ContentControlEx}" />
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" TargetType="{x:Type Controls:MetroThumbContentControl}" />
-
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" TargetType="{x:Type Controls:WindowButtonCommands}" />
-
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.HamburgerMenu}" TargetType="{x:Type Controls:HamburgerMenu}" />
-
     <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroDialog}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.RangeSlider}" TargetType="{x:Type Controls:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
 
 </ResourceDictionary>

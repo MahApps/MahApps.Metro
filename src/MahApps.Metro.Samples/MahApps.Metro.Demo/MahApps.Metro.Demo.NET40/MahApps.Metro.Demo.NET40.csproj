@@ -117,18 +117,6 @@
   <Import Project="..\MahApps.Metro.Demo.Shared\MahApps.Metro.Demo.Shared.projitems" Label="Shared" />
   <Import Project="..\..\MahApps.Metro.Core.Demo.Shared\MahApps.Metro.Core.Demo.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
-      <PropertyGroup>
-        <__paket__Fody_targets>netstandard1.0\Fody</__paket__Fody_targets>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3')">
-      <PropertyGroup>
-        <__paket__Fody_targets>portable-net+sl+win+wpa+wp\Fody</__paket__Fody_targets>
-      </PropertyGroup>
-    </When>
-  </Choose>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -169,7 +157,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="ControlzEx">
           <HintPath>..\..\..\packages\ControlzEx\lib\net462\ControlzEx.dll</HintPath>
@@ -185,7 +173,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="JetBrains.Annotations">
           <HintPath>..\..\..\packages\JetBrains.Annotations\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -214,7 +202,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="MahApps.Metro.IconPacks">
           <HintPath>..\..\..\packages\MahApps.Metro.IconPacks\lib\net46\MahApps.Metro.IconPacks.dll</HintPath>
@@ -225,52 +213,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
-      <ItemGroup>
-        <Reference Include="System.IO">
-          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.IO.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Runtime">
-          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.Runtime.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Threading.Tasks">
-          <HintPath>..\..\..\packages\Microsoft.Bcl\lib\net40\System.Threading.Tasks.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
-      <ItemGroup>
-        <Reference Include="System.Net">
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Microsoft.Threading.Tasks">
-          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Microsoft.Threading.Tasks.Extensions">
-          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
-          <HintPath>..\..\..\packages\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="NHotkey">
           <HintPath>..\..\..\packages\NHotkey\lib\net20\NHotkey.dll</HintPath>
@@ -281,7 +224,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="NHotkey.Wpf">
           <HintPath>..\..\..\packages\NHotkey.Wpf\lib\net35\NHotkey.Wpf.dll</HintPath>
@@ -291,6 +234,51 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\..\packages\Fody\build\$(__paket__Fody_targets).targets" Condition="Exists('..\..\..\packages\Fody\build\$(__paket__Fody_targets).targets')" Label="Paket" />
-  <Import Project="..\..\..\packages\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets')" Label="Paket" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3')">
+      <ItemGroup>
+        <Reference Include="System.IO">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.IO.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Runtime">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.Runtime.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="System.Threading.Tasks">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl\lib\net40\System.Threading.Tasks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
+      <ItemGroup>
+        <Reference Include="System.Net">
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.Threading.Tasks">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.Threading.Tasks.Extensions">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+          <HintPath>..\..\..\packages\net40\Microsoft.Bcl.Async\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="..\..\..\packages\Fody\build\Fody.targets" Condition="Exists('..\..\..\packages\Fody\build\Fody.targets')" Label="Paket" />
+  <Import Project="..\..\..\packages\net40\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\..\packages\net40\Microsoft.Bcl.Build\build\Microsoft.Bcl.Build.targets')" Label="Paket" />
 </Project>

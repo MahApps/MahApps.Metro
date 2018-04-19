@@ -1,0 +1,27 @@
+create:
+  include-footer: true
+  footer-heading: Where to get it
+  footer-content: You can download this release from [MahApps.Metro](https://github.com/MahApps/MahApps.Metro/releases/{milestone})
+  footer-includes-milestone: true
+  milestone-replace-text: '{milestone}'
+export:
+  include-created-date-in-title: true
+  created-date-string-format: MMMM dd, yyyy
+  perform-regex-removal: true
+  regex-text: '### Where to get it(\r\n)*You can .*\)'
+  multiline-regex: true
+issue-labels-include:
+- Breaking change
+- Bug
+- Feature
+- Feature Request
+issue-labels-exclude:
+- Internal Refactoring
+- Build
+- Question
+- WontFix
+- Duplicate
+issue-labels-alias:
+    - name:    Documentation
+      header:  Documentation
+      plural:  Documentation

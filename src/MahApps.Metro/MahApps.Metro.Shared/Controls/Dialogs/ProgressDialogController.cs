@@ -3,6 +3,7 @@ namespace MahApps.Metro.Controls.Dialogs
     using System;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Media;
 
     /// <summary>
     /// A class for manipulating an open ProgressDialog.
@@ -124,6 +125,15 @@ namespace MahApps.Metro.Controls.Dialogs
         public void SetTitle(string title)
         {
             this.WrappedDialog.Invoke(() => this.WrappedDialog.Title = title);
+        }
+
+        /// <summary>
+        /// Sets the dialog's progress bar brush
+        /// </summary>
+        /// <param name="brush">The brush to use for the progress bar's foreground</param>
+        public void SetProgressBarForegroundBrush(Brush brush)
+        {
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.ProgressBarForeground = brush);
         }
 
         /// <summary>

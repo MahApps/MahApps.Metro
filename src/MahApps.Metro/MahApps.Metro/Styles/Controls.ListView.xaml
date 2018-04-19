@@ -5,7 +5,7 @@
     <Style x:Key="MetroGridViewScrollViewerStyle"
            BasedOn="{StaticResource {x:Static GridView.GridViewScrollViewerStyleKey}}"
            TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -21,11 +21,12 @@
                         </Grid.RowDefinitions>
                         <DockPanel Margin="{TemplateBinding Padding}">
                             <ScrollViewer DockPanel.Dock="Top"
-                                          Focusable="false"
+                                          Focusable="False"
                                           HorizontalScrollBarVisibility="Hidden"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalScrollBarVisibility="Hidden">
-                                <GridViewHeaderRowPresenter Margin="2 0 2 0"
+                                <GridViewHeaderRowPresenter x:Name="PART_HeaderRowPresenter"
+                                                            Margin="2 0 2 0"
                                                             AllowsColumnReorder="{Binding TemplatedParent.View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}"
                                                             ColumnHeaderContainerStyle="{Binding TemplatedParent.View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
                                                             ColumnHeaderContextMenu="{Binding TemplatedParent.View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
@@ -64,7 +65,7 @@
                         <!-- this is from original style, but we don't want it!!!
                         <DockPanel Background="{Binding Background, ElementName=PART_VerticalScrollBar}"
                                    Grid.Column="1"
-                                   LastChildFill="false"
+                                   LastChildFill="False"
                                    Grid.Row="1">
                             <Rectangle DockPanel.Dock="Left"
                                        Fill="White"
@@ -77,6 +78,11 @@
                         </DockPanel>
                         -->
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding TemplatedParent.View.Columns, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="PART_HeaderRowPresenter" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -84,7 +90,7 @@
 
     <!--
         Do not set CanContentScroll=True below. This breaks the scrolling for groups with more items that will fit on screen.
-        It also (setting true) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose
+        It also (setting True) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose
         virtualisation http://serialseb.blogspot.com/2007/09/wpf-tips-7-smooth-scrolling.html
     -->
     <Style x:Key="MetroListView" TargetType="{x:Type ListView}">
@@ -92,11 +98,11 @@
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="0 1 0 0" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
@@ -116,10 +122,10 @@
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsGrouping" Value="true">
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        <Trigger Property="IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -141,6 +147,15 @@
     <Style x:Key="MetroListViewItem" TargetType="{x:Type ListViewItem}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
+        <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush2}" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
@@ -149,37 +164,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Grid>
-                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                <GridViewRowPresenter.Resources>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=Foreground}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
-                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False">
-                                                <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
-                                            </DataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False" />
-                                                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </GridViewRowPresenter.Resources>
-                            </GridViewRowPresenter>
-                            <ContentPresenter x:Name="contentPresenter"
+                            <GridViewRowPresenter x:Name="PART_RowPresenter"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter x:Name="PART_ContentPresenter"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -189,18 +183,43 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
-                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_RowPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
+                        </MultiTrigger>
+
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledBackgroundBrush), Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -208,19 +227,10 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+                                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedForegroundBrush), Mode=OneWay}" />
+                                <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ItemHelper.DisabledSelectedBackgroundBrush), Mode=OneWay}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
                             </MultiTrigger.Setters>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -241,7 +251,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -249,7 +259,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#e0eff8" />
+                            <Setter TargetName="Border" Property="Background" Value="#e0eff8" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -297,7 +307,7 @@
                 <ControlTemplate TargetType="GridViewColumnHeader">
                     <Grid>
                         <Rectangle Fill="Transparent" IsHitTestVisible="True" />
-                        <Border x:Name="HeaderBorder" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="HeaderBorder">
                             <Controls:ContentControlEx x:Name="HeaderContent"
                                                        Margin="0 0 0 1"
                                                        Padding="{TemplateBinding Padding}"
@@ -317,11 +327,11 @@
                                Style="{StaticResource GridViewColumnHeaderGripper}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
+                        <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="HeaderContent" Property="Margin" Value="1 1 0 0" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -338,7 +348,8 @@
                             <Canvas Name="PART_FloatingHeaderCanvas">
                                 <Rectangle Width="{TemplateBinding ActualWidth}"
                                            Height="{TemplateBinding ActualHeight}"
-                                           Fill="#60000000" />
+                                           Fill="{DynamicResource AccentColorBrush3}" />
+                                <!--  Fill="#60000000" />  -->
                             </Canvas>
                         </ControlTemplate>
                     </Setter.Value>

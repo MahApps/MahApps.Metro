@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
                                                                     ring.SetCurrentValue(ProgressRing.IsActiveProperty, false);
                                                                 } else {
                                                                     // #1105 don't forget to re-activate
-                                                                    ring.IsActive = true;
+                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, true);
                                                                 }
                                                             }
                                                         })));
@@ -106,12 +106,9 @@ namespace MahApps.Metro.Controls
             var action = new Action(() =>
             {
 
-                ring.SetEllipseDiameter(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetEllipseOffset(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetMaxSideLength(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
+                ring.SetEllipseDiameter((double) dependencyPropertyChangedEventArgs.NewValue);
+                ring.SetEllipseOffset((double) dependencyPropertyChangedEventArgs.NewValue);
+                ring.SetMaxSideLength((double) dependencyPropertyChangedEventArgs.NewValue);
             });
 
             if (ring._deferredActions != null)
@@ -122,17 +119,17 @@ namespace MahApps.Metro.Controls
 
         private void SetMaxSideLength(double width)
         {
-            MaxSideLength = width <= 20 ? 20 : width;
+            SetCurrentValue(MaxSideLengthProperty, width <= 20 ? 20 : width);
         }
 
         private void SetEllipseDiameter(double width)
         {
-            EllipseDiameter =(width / 8)*EllipseDiameterScale;
+            SetCurrentValue(EllipseDiameterProperty, (width / 8)*EllipseDiameterScale);
         }
 
         private void SetEllipseOffset(double width)
         {
-            EllipseOffset = new Thickness(0, width / 2, 0, 0);
+            SetCurrentValue(EllipseOffsetProperty, new Thickness(0, width / 2, 0, 0));
         }
 
         private static void IsLargeChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -162,7 +159,7 @@ namespace MahApps.Metro.Controls
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            BindableWidth = ActualWidth;
+            SetCurrentValue(BindableWidthProperty, ActualWidth);
         }
 
         private static void IsActiveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -203,6 +200,7 @@ namespace MahApps.Metro.Controls
         }
     }
 
+    [Obsolete("This class will be deleted in the next release.")]
     internal class WidthToMaxSideLengthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

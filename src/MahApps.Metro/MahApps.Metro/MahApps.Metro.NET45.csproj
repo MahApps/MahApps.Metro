@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\GitLink\build\GitLink.props" Condition="Exists('..\..\packages\GitLink\build\GitLink.props')" Label="Paket" />
+  <Import Project="..\..\packages\gitlink\build\GitLink.props" Condition="Exists('..\..\packages\gitlink\build\GitLink.props')" Label="Paket" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -457,6 +457,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\HamburgerMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\HotKeyBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -586,7 +590,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="ControlzEx">
           <HintPath>..\..\packages\ControlzEx\lib\net462\ControlzEx.dll</HintPath>
@@ -602,7 +606,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v5.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.0.3' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1')">
       <ItemGroup>
         <Reference Include="JetBrains.Annotations">
           <HintPath>..\..\packages\JetBrains.Annotations\lib\net20\JetBrains.Annotations.dll</HintPath>
@@ -612,5 +616,13 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\..\packages\GitLink\build\GitLink.targets" Condition="Exists('..\..\packages\GitLink\build\GitLink.targets')" Label="Paket" />
+  <Import Project="..\..\packages\gitlink\build\GitLink.targets" Condition="Exists('..\..\packages\gitlink\build\GitLink.targets')" Label="Paket" />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\WpfAnalyzers\analyzers\dotnet\cs\WpfAnalyzers.Analyzers.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+    <Analyzer Include="..\..\packages\WpfAnalyzers\analyzers\dotnet\cs\WpfAnalyzers.CodeFixes.dll">
+      <Paket>True</Paket>
+    </Analyzer>
+  </ItemGroup>
 </Project>

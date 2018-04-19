@@ -1,71 +1,23 @@
-# configuration for develop/CI branch
+# configuration for develop and master branch
 
 -
   branches:
     only:
       - develop
-
-  skip_tags: true
-  image: Visual Studio 2017
-  configuration: Release
-  platform: Any CPU
-
-  pull_requests:
-    do_not_increment_build_number: false
-
-  install:
-    - choco install gitversion.portable -pre -y
-
-  before_build:
-    - ps: cd src
-    - ps: .paket\paket restore
-    - ps: cd..
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-
-  build:
-    verbosity: minimal
-
-  after_build:
-    - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
-    - ps: cd..
-
-  cache:
-    - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
-
-  artifacts:
-    - path: \src\bin\MahApps.Metro.*.nupkg
-    - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
-      type: zip
-
-# configuration for master/Release branch
--
-  branches:
-    only:
       - master
 
   skip_tags: true
   image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
+  test: off
 
-  install:
-    - choco install gitversion.portable -pre -y
+  pull_requests:
+    do_not_increment_build_number: false
 
-  before_build:
+  build_script:
     - ps: cd src
-    - ps: .paket\paket restore
-    - ps: cd..
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-
-  build:
-    verbosity: minimal
-
-  after_build:
-    - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
+    - ps: .\build.ps1 -Target appveyor
     - ps: cd..
 
   cache:
@@ -73,7 +25,4 @@
     # - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
-    - path: \src\bin\MahApps.Metro.*.nupkg
-    - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
-      type: zip
+    - path: \src\Publish\*.*

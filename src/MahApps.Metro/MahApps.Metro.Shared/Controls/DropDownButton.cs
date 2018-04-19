@@ -257,7 +257,7 @@ namespace MahApps.Metro.Controls
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.IsExpanded = true;
+            this.SetCurrentValue(IsExpandedProperty, true);
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
         }

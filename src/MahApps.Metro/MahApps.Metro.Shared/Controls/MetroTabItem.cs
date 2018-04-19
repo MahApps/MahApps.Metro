@@ -12,32 +12,6 @@ namespace MahApps.Metro.Controls
         public MetroTabItem()
         {
             DefaultStyleKey = typeof(MetroTabItem);
-            this.InternalCloseTabCommand = new CloseCommand(InternalCloseTabCommandCanExecute, InternalCloseTabCommandExecuteAction);
-        }
-
-        private void InternalCloseTabCommandExecuteAction(object o)
-        {
-            var closeTabCommand = this.CloseTabCommand;
-            if (closeTabCommand != null)
-            {
-                var closeTabCommandParameter = this.CloseTabCommandParameter ?? this;
-                if (closeTabCommand.CanExecute(closeTabCommandParameter))
-                {
-                    // force the command handler to run
-                    closeTabCommand.Execute(closeTabCommandParameter);
-                }
-            }
-
-            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
-            // run the command handler for the TabControl
-            // see #555
-            owningTabControl?.BeginInvoke(() => owningTabControl.CloseThisTabItem(this));
-        }
-
-        private bool InternalCloseTabCommandCanExecute(object o)
-        {
-            var closeTabCommand = this.CloseTabCommand;
-            return closeTabCommand == null || closeTabCommand.CanExecute(this.CloseTabCommandParameter ?? this);
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =
@@ -53,20 +27,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
             set { SetValue(CloseButtonEnabledProperty, value); }
-        }
-
-        internal static readonly DependencyProperty InternalCloseTabCommandProperty =
-            DependencyProperty.Register("InternalCloseTabCommand",
-                                        typeof(ICommand),
-                                        typeof(MetroTabItem));
-
-        /// <summary>
-        /// Gets/sets the command that is executed when the Close Button is clicked.
-        /// </summary>
-        internal ICommand InternalCloseTabCommand
-        { 
-            get { return (ICommand)GetValue(InternalCloseTabCommandProperty); } 
-            set { SetValue(InternalCloseTabCommandProperty, value); } 
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =

@@ -202,7 +202,7 @@ namespace MetroDemo
 
             await TaskEx.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() {OwnerCanCloseWithDialog = true});
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await TaskEx.Delay(2000);
@@ -213,18 +213,19 @@ namespace MetroDemo
         private async void ShowAwaitCustomDialog(object sender, RoutedEventArgs e)
         {
             EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogOpened = null;
-            dialogManagerOnDialogOpened = (o, args) => {
-                                              DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
-                                              Console.WriteLine("Custom Dialog opened!");
-                                          };
+            dialogManagerOnDialogOpened = (o, args) =>
+                {
+                    DialogManager.DialogOpened -= dialogManagerOnDialogOpened;
+                    Console.WriteLine("Custom Dialog opened!");
+                };
             DialogManager.DialogOpened += dialogManagerOnDialogOpened;
 
             EventHandler<DialogStateChangedEventArgs> dialogManagerOnDialogClosed = null;
-            dialogManagerOnDialogClosed = async (o, args) => {
-                                                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
-                                                    Console.WriteLine("Custom Dialog closed!");
-                                                    await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
-                                                };
+            dialogManagerOnDialogClosed = (o, args) =>
+                {
+                    DialogManager.DialogClosed -= dialogManagerOnDialogClosed;
+                    Console.WriteLine("Custom Dialog closed!");
+                };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
@@ -238,6 +239,7 @@ namespace MetroDemo
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
             await this.HideMetroDialogAsync(dialog);
+            await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
         }
 
         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
@@ -366,26 +368,35 @@ namespace MetroDemo
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (e.Cancel) return;
+            if (e.Cancel)
+            {
+                return;
+            }
+
             e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
-            if (_shutdown) return;
+            if (!e.Cancel)
+            {
+                return;
+            }
 
             var mySettings = new MetroDialogSettings()
-            {
-                AffirmativeButtonText = "Quit",
-                NegativeButtonText = "Cancel",
-                AnimateShow = true,
-                AnimateHide = false
-            };
+                             {
+                                 AffirmativeButtonText = "Quit",
+                                 NegativeButtonText = "Cancel",
+                                 AnimateShow = true,
+                                 AnimateHide = false
+                             };
 
             var result = await this.ShowMessageAsync("Quit application?",
-                "Sure you want to quit application?",
-                MessageDialogStyle.AffirmativeAndNegative, mySettings);
+                                                     "Sure you want to quit application?",
+                                                     MessageDialogStyle.AffirmativeAndNegative, mySettings);
 
             _shutdown = result == MessageDialogResult.Affirmative;
 
             if (_shutdown)
+            {
                 Application.Current.Shutdown();
+            }
         }
 
         private MetroWindow testWindow;
@@ -404,7 +415,7 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock() { Text = "MetroWindow without Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
-            //w.BorderThickness = new Thickness(1);
+            w.BorderThickness = new Thickness(0);
             w.Show();
         }
 
@@ -412,9 +423,6 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock() { Text = "MetroWindow with Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
-            w.BorderThickness = new Thickness(1);
-            w.GlowBrush = null;
-            w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
             w.Show();
         }
 

@@ -3,61 +3,15 @@ using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Actions
 {
-    public class CloseTabItemAction : TriggerAction<FrameworkElement>
+    public class CloseTabItemAction : CommandTriggerAction
     {
         private TabItem associatedTabItem;
 
         private TabItem AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
-
-        /// <summary>
-        /// Identifies the <see cref="Command" /> dependency property
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty
-            = DependencyProperty.Register(nameof(Command),
-                                          typeof(ICommand),
-                                          typeof(CloseTabItemAction),
-                                          new PropertyMetadata(null, (s, e) => OnCommandChanged(s as CloseTabItemAction, e)));
-
-        /// <summary>
-        /// Gets or sets the command that this trigger is bound to.
-        /// </summary>
-        public ICommand Command
-        {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="CommandParameter" /> dependency property
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty
-            = DependencyProperty.Register(nameof(CommandParameter),
-                                          typeof(object),
-                                          typeof(CloseTabItemAction),
-                                          new PropertyMetadata(null,
-                                                               (s, e) =>
-                                                                   {
-                                                                       var sender = s as CloseTabItemAction;
-                                                                       if (sender?.AssociatedObject != null)
-                                                                       {
-                                                                           sender.EnableDisableElement();
-                                                                       }
-                                                                   }));
-
-        /// <summary>
-        /// Gets or sets an object that will be passed to the <see cref="Command" /> attached to this trigger.
-        /// </summary>
-        public object CommandParameter
-        {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
-        }
 
         [Obsolete("This property will be deleted in the next release.")]
         public static readonly DependencyProperty TabControlProperty =
@@ -87,12 +41,6 @@ namespace MahApps.Metro.Actions
             set { this.SetValue(TabItemProperty, value); }
         }
 
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            this.EnableDisableElement();
-        }
-
         protected override void Invoke(object parameter)
         {
             if (this.AssociatedObject == null || (this.AssociatedObject != null && !this.AssociatedObject.IsEnabled))
@@ -117,76 +65,52 @@ namespace MahApps.Metro.Actions
                 }
             }
 
-            var closeAction =
-                new Action(
-                    () =>
-                        {
-                            // TODO Raise a closing event to cancel this action
+            if (tabControl is MetroTabControl && tabItem is MetroTabItem)
+            {
+                // run the command handler for the TabControl
+                // see #555
+                tabControl.BeginInvoke(() => ((MetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
+            }
+            else
+            {
+                var closeAction =
+                    new Action(
+                        () =>
+                            {
+                                // TODO Raise a closing event to cancel this action
 
-                            if (tabControl.ItemsSource == null)
-                            {
-                                // if the list is hard-coded (i.e. has no ItemsSource)
-                                // then we remove the item from the collection
-                                tabControl.Items.Remove(tabItem);
-                            }
-                            else
-                            {
-                                // if ItemsSource is something we cannot work with, bail out
-                                var collection = tabControl.ItemsSource as IList;
-                                if (collection == null)
+                                if (tabControl.ItemsSource == null)
                                 {
-                                    return;
+                                    // if the list is hard-coded (i.e. has no ItemsSource)
+                                    // then we remove the item from the collection
+                                    tabItem.ClearStyle();
+                                    tabControl.Items.Remove(tabItem);
                                 }
-                                // find the item and kill it (I mean, remove it)
-                                var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
-                                if (item2Remove != null)
+                                else
                                 {
-                                    collection.Remove(item2Remove);
+                                    // if ItemsSource is something we cannot work with, bail out
+                                    var collection = tabControl.ItemsSource as IList;
+                                    if (collection == null)
+                                    {
+                                        return;
+                                    }
+
+                                    // find the item and kill it (I mean, remove it)
+                                    var item2Remove = collection.OfType<object>().FirstOrDefault(item => tabItem == item || tabItem.DataContext == item);
+                                    if (item2Remove != null)
+                                    {
+                                        tabItem.ClearStyle();
+                                        collection.Remove(item2Remove);
+                                    }
                                 }
-                            }
-                        });
-            this.BeginInvoke(closeAction);
+                            });
+                this.BeginInvoke(closeAction);
+            }
         }
 
-        private static void OnCommandChanged(CloseTabItemAction action, DependencyPropertyChangedEventArgs e)
-        {
-            if (action == null)
-            {
-                return;
-            }
-
-            if (e.OldValue != null)
-            {
-                ((ICommand)e.OldValue).CanExecuteChanged -= action.OnCommandCanExecuteChanged;
-            }
-
-            var command = (ICommand)e.NewValue;
-            if (command != null)
-            {
-                command.CanExecuteChanged += action.OnCommandCanExecuteChanged;
-            }
-
-            action.EnableDisableElement();
-        }
-
-        private object GetCommandParameter()
+        protected override object GetCommandParameter()
         {
             return this.CommandParameter ?? this.AssociatedTabItem;
-        }
-
-        private void EnableDisableElement()
-        {
-            if (this.AssociatedObject == null)
-            {
-                return;
-            }
-            var command = this.Command;
-            this.AssociatedObject.IsEnabled = command == null || command.CanExecute(this.GetCommandParameter());
-        }
-
-        private void OnCommandCanExecuteChanged(object sender, EventArgs e)
-        {
-            this.EnableDisableElement();
         }
     }
 }
