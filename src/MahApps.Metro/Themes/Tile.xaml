@@ -1,0 +1,80 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+
+    <Style TargetType="Controls:Tile">
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{x:Null}" />
+        <Setter Property="CountFontSize" Value="28" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Height" Value="140" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:Tile">
+                    <Grid>
+                        <Border x:Name="PART_Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid>
+                                <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Orientation="Horizontal">
+                                    <ContentPresenter RecognizesAccessKey="True" />
+                                    <TextBlock VerticalAlignment="Center"
+                                               FontSize="{TemplateBinding CountFontSize}"
+                                               Text="{TemplateBinding Count}" />
+                                </StackPanel>
+                                <Label HorizontalAlignment="{TemplateBinding HorizontalTitleAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalTitleAlignment}"
+                                       Foreground="{TemplateBinding Foreground}">
+                                    <AccessText Margin="3"
+                                                FontSize="{TemplateBinding TitleFontSize}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Text="{TemplateBinding Title}"
+                                                TextWrapping="Wrap" />
+                                </Label>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="PART_HoverBorder"
+                                BorderBrush="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
+                                BorderThickness="2"
+                                Opacity="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay, Converter={x:Static converters:IsNullConverter.Instance}}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver, Mode=OneWay}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_HoverBorder" Property="Opacity" Value="0.6" />
+                        </MultiDataTrigger>
+                        <Trigger Property="Button.IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform CenterX="0.5"
+                                                    CenterY="0.5"
+                                                    ScaleX="0.98"
+                                                    ScaleY="0.98" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".55" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TitleFontSize" Value="16" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="140" />
+    </Style>
+
+</ResourceDictionary>

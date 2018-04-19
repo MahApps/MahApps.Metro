@@ -1,0 +1,35 @@
+﻿<controls:MetroWindow x:Class="MahApps.Metro.Tests.AutoWatermarkTestWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:tests="clr-namespace:MahApps.Metro.Tests"
+                      d:DataContext="{d:DesignInstance tests:AutoWatermarkTestModel}"
+                      d:DesignHeight="300"
+                      d:DesignWidth="300"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.DataContext>
+        <tests:AutoWatermarkTestModel />
+    </controls:MetroWindow.DataContext>
+    <StackPanel>
+        <TextBox x:Name="TestTextBox"
+                 controls:TextBoxHelper.AutoWatermark="True"
+                 Text="{Binding TextBoxText}" />
+        <TextBox x:Name="TestTextBoxSubModel"
+                 controls:TextBoxHelper.AutoWatermark="True"
+                 Text="{Binding SubModel.TextBoxText}" />
+        <ComboBox x:Name="TestComboBox"
+                  controls:TextBoxHelper.AutoWatermark="True"
+                  SelectedItem="{Binding ComboBoxSelectedObject}" />
+        <controls:NumericUpDown x:Name="TestNumericUpDown"
+                                controls:TextBoxHelper.AutoWatermark="True"
+                                Value="{Binding NumericUpDownValue}" />
+        <DatePicker x:Name="TestDatePicker"
+                    controls:TextBoxHelper.AutoWatermark="True"
+                    SelectedDate="{Binding DatePickerDate}" />
+        <controls:HotKeyBox x:Name="TestHotKeyBox"
+                            controls:TextBoxHelper.AutoWatermark="True"
+                            HotKey="{Binding HotKey}" />
+    </StackPanel>
+</controls:MetroWindow>
