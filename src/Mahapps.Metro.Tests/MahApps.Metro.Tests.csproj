@@ -3,7 +3,7 @@
     <!-- Project properties -->
     <PropertyGroup>
         <!-- <TargetFrameworks>net45;net40</TargetFrameworks> -->
-        <TargetFramework>net40</TargetFramework>
+        <TargetFrameworks>net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Tests</AssemblyName>
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
