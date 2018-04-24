@@ -34,13 +34,16 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task ShowsRightWindowCommandsOnTopByDefault()
+        public async Task CheckDefaultOverlayBehaviors()
         {
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.IconOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Flyouts, window.LeftWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Flyouts, window.RightWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Always, window.WindowButtonCommandsOverlayBehavior);
         }
 
         [Fact]

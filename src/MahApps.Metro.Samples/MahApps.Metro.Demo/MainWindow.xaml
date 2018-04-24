@@ -18,11 +18,9 @@
                       Closing="MetroWindow_Closing"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Icon="mahapps.metro.logo2.ico"
-                      LeftWindowCommandsOverlayBehavior="Never"
                       NonActiveGlowBrush="#CDFF0000"
-                      RightWindowCommandsOverlayBehavior="Never"
                       ShowIconOnTitleBar="True"
-                      ShowTitleBar="{Binding ShowMyTitleBar, Mode=OneWay}"
+                      ShowTitleBar="{Binding ShowMyTitleBar, Mode=TwoWay}"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
     <!--
@@ -188,7 +186,7 @@
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
                           IsCheckable="True"
-                          IsChecked="{Binding Path=ShowMyTitleBar, UpdateSourceTrigger=PropertyChanged}" />
+                          IsChecked="{Binding Path=ShowMyTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <MenuItem Header="ShowInTaskbar"
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />

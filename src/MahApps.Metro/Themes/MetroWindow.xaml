@@ -46,8 +46,7 @@
                                Grid.ColumnSpan="5"
                                Fill="{TemplateBinding WindowTitleBrush}"
                                Focusable="False"
-                               StrokeThickness="0"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               StrokeThickness="0" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -71,8 +70,7 @@
                                       VerticalAlignment="Top"
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Focusable="False" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="1"
@@ -91,8 +89,7 @@
                                                        Content="{TemplateBinding Title}"
                                                        ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                       Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Focusable="False">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -113,8 +110,7 @@
                                       VerticalAlignment="Top"
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Focusable="False" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
@@ -306,8 +302,7 @@
                                Grid.ColumnSpan="5"
                                Fill="{TemplateBinding WindowTitleBrush}"
                                Focusable="False"
-                               StrokeThickness="0"
-                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                               StrokeThickness="0" />
 
                     <!--  icon  -->
                     <ContentControl x:Name="PART_Icon"
@@ -331,8 +326,7 @@
                                       VerticalAlignment="Top"
                                       Panel.ZIndex="1"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Focusable="False" />
 
                     <Controls:MetroThumb x:Name="PART_WindowTitleThumb"
                                          Grid.Row="1"
@@ -352,8 +346,7 @@
                                                        Content="{TemplateBinding Title}"
                                                        ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                       Focusable="False"
-                                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                       Focusable="False">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding ElementName="PART_WindowTitleBackground"
@@ -374,8 +367,7 @@
                                       VerticalAlignment="Top"
                                       Panel.ZIndex="1"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Focusable="False"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                      Focusable="False" />
 
                     <!--  the window button commands  -->
                     <ContentPresenter x:Name="PART_WindowButtonCommands"
