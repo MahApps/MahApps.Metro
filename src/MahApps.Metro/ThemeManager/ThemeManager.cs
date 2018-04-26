@@ -84,10 +84,12 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Adds an accent with the given name.
+        /// Adds an accent with the given name and uniform resource identfier.
         /// </summary>
+        /// <param name="name">The name of the new Accent.</param>
+        /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>
         /// <returns>true if the accent does not exists and can be added.</returns>
-        public static bool AddAccent(string name, Uri resourceAddress)
+        public static bool AddAccent([NotNull] string name, [NotNull] Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
@@ -103,10 +105,33 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Adds an accent with the given name and resource dictionary.
+        /// </summary>
+        /// <param name="name">The name of the new Accent.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        /// <returns>true if the accent does not exists and can be added.</returns>
+        public static bool AddAccent(string name, ResourceDictionary resourceDictionary)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+
+            var accentExists = GetAccent(name) != null;
+            if (accentExists)
+            {
+                return false;
+            }
+
+            _accents.Add(new Accent(name, resourceDictionary));
+            return true;
+        }
+
+        /// <summary>
         /// Adds an app theme with the given name.
         /// </summary>
+        /// <param name="name">The name of the new AppTheme.</param>
+        /// <param name="resourceAddress">The URI of the AppTheme ResourceDictionary.</param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddAppTheme(string name, Uri resourceAddress)
+        public static bool AddAppTheme([NotNull] string name, [NotNull] Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
@@ -118,6 +143,27 @@ namespace MahApps.Metro
             }
 
             _appThemes.Add(new AppTheme(name, resourceAddress));
+            return true;
+        }
+
+        /// <summary>
+        /// Adds an app theme with the given name.
+        /// </summary>
+        /// <param name="name">The name of the new AppTheme.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        /// <returns>true if the app theme does not exists and can be added.</returns>
+        public static bool AddAppTheme([NotNull] string name, [NotNull] ResourceDictionary resourceDictionary)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+
+            var appThemeExists = GetAppTheme(name) != null;
+            if (appThemeExists)
+            {
+                return false;
+            }
+
+            _appThemes.Add(new AppTheme(name, resourceDictionary));
             return true;
         }
 
