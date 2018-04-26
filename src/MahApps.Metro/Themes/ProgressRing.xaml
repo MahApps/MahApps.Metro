@@ -3,7 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:ProgressRing">
-        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Height" Value="60" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -27,6 +26,7 @@
                               MaxWidth="{Binding MaxSideLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                               MaxHeight="{Binding MaxSideLength, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                               Margin="{TemplateBinding Padding}"
+                              Background="Transparent"
                               FlowDirection="LeftToRight"
                               RenderTransformOrigin=".5,.5"
                               Visibility="Collapsed">
