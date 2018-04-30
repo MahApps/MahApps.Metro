@@ -176,7 +176,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException(nameof(resources));
 
-            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
+            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException(nameof(resources));
 
-            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
+            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
             if (builtInAccent != null)
             {
                 return builtInAccent;
@@ -413,14 +413,13 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
-                    resources.MergedDictionaries.Add(newAccent.Resources);
-
-                    var key = oldAccent.Resources.Source.ToString().ToLower();
-                    var oldAccentResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
+                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldAccent.Resources));
                     if (oldAccentResource != null)
                     {
                         resources.MergedDictionaries.Remove(oldAccentResource);
                     }
+                    
+                    resources.MergedDictionaries.Add(newAccent.Resources);
 
                     themeChanged = true;
                 }
@@ -428,14 +427,13 @@ namespace MahApps.Metro
                 var oldTheme = oldThemeInfo.Item1;
                 if (oldTheme != null && oldTheme != newTheme)
                 {
-                    resources.MergedDictionaries.Add(newTheme.Resources);
-
-                    var key = oldTheme.Resources.Source.ToString().ToLower();
-                    var oldThemeResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
+                    var oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
                     if (oldThemeResource != null)
                     {
                         resources.MergedDictionaries.Remove(oldThemeResource);
                     }
+
+                    resources.MergedDictionaries.Add(newTheme.Resources);
 
                     themeChanged = true;
                 }
@@ -644,10 +642,36 @@ namespace MahApps.Metro
             IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme, newAccent));
         }
 
-        private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
+        private static bool AreResourceDictionarySourcesEqual(ResourceDictionary first, ResourceDictionary second)
         {
-            return Uri.Compare(first, second,
-                 UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
+            if (first == null || second == null)
+            {
+                return false;
+            }
+
+            if (first.Source == null || second.Source == null)
+            {
+                try
+                {
+                    foreach (var key in first.Keys)
+                    {
+                        var isTheSame = second.Contains(key) && Equals(first[key], second[key]);
+                        if (!isTheSame)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Trace.TraceError($"Could not compare resource dictionaries: {exception} {Environment.NewLine} {exception.StackTrace}");
+                    return false;
+                }
+
+                return true;
+            }
+
+            return Uri.Compare(first.Source, second.Source, UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 

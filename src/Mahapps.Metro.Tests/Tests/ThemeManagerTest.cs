@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
 using Xunit;
@@ -161,6 +162,31 @@ namespace MahApps.Metro.Tests
 
             Assert.NotNull(detected);
             Assert.Equal("Blue", detected.Name);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task CreateDynamicAccentWithColor()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var applicationTheme = ThemeManager.DetectAppStyle(Application.Current);
+
+            var ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Red, "CustomAccentRed"));
+            Assert.Null(ex);
+            
+            var detected = ThemeManager.DetectAppStyle(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentRed", detected.Item2.Name);
+
+            ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Green, "CustomAccentGreen"));
+            Assert.Null(ex);
+            
+            detected = ThemeManager.DetectAppStyle(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentGreen", detected.Item2.Name);
+
+            ThemeManager.ChangeAppStyle(Application.Current, applicationTheme.Item2, applicationTheme.Item1);
         }
     }
 }
