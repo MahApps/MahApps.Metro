@@ -16,7 +16,6 @@
   <ItemGroup>
     <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
     <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
-    <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\*.g$(_SdkLanguageExtension)"/>
   </ItemGroup>
   <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
   <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.targets"/>

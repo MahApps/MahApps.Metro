@@ -1,6 +1,8 @@
-﻿namespace MahApps.Metro.Tests
+﻿using MahApps.Metro.Controls;
+
+namespace MahApps.Metro.Tests
 {
-    public partial class TextBoxHelperTestWindow
+    public partial class TextBoxHelperTestWindow : MetroWindow
     {
         public TextBoxHelperTestWindow()
         {

@@ -123,9 +123,9 @@ Task("Unit-Tests")
     //.WithCriteria(ShouldRunRelease())
     .Does(() =>
 {
-    XUnit(
+    XUnit2(
         "./Mahapps.Metro.Tests/bin/" + configuration + "/**/*.Tests.dll",
-        new XUnitSettings { ToolPath = "./packages/cake/xunit.runner.console/tools/net452/xunit.console.exe" }
+        new XUnit2Settings { ToolTimeout = TimeSpan.FromMinutes(5) }
     );
 });
 

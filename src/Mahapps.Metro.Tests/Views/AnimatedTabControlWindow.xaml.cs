@@ -1,10 +1,11 @@
-﻿namespace MahApps.Metro.Tests
-{
-    using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Controls;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
-    public partial class AnimatedTabControlWindow
+namespace MahApps.Metro.Tests
+{
+    public partial class AnimatedTabControlWindow : MetroWindow
     {
         public AnimatedTabControlWindow()
         {

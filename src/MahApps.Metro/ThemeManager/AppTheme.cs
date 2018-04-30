@@ -1,9 +1,11 @@
 // ReSharper disable once CheckNamespace
+
 namespace MahApps.Metro
 {
     using System;
     using System.Diagnostics;
     using System.Windows;
+    using JetBrains.Annotations;
 
     internal class AppName
     {
@@ -19,7 +21,7 @@ namespace MahApps.Metro
         /// <summary>
         /// The ResourceDictionary that represents this application theme.
         /// </summary>
-        public ResourceDictionary Resources {get; }
+        public ResourceDictionary Resources { get; }
 
         /// <summary>
         /// Gets the name of the application theme.
@@ -30,14 +32,28 @@ namespace MahApps.Metro
         /// Initializes a new instance of the AppTheme class.
         /// </summary>
         /// <param name="name">The name of the new AppTheme.</param>
-        /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>
-        public AppTheme(string name, Uri resourceAddress)
+        /// <param name="resourceAddress">The URI of the AppTheme ResourceDictionary.</param>
+        public AppTheme([NotNull] string name, [NotNull] Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
 
             this.Name = name;
-            this.Resources = new ResourceDictionary {Source = resourceAddress};
+            this.Resources = new ResourceDictionary { Source = resourceAddress };
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppTheme class.
+        /// </summary>
+        /// <param name="name">The name of the new AppTheme.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        public AppTheme([NotNull] string name, [NotNull] ResourceDictionary resourceDictionary)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+
+            this.Name = name;
+            this.Resources = resourceDictionary;
         }
     }
 }

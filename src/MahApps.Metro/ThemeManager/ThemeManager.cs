@@ -84,10 +84,12 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Adds an accent with the given name.
+        /// Adds an accent with the given name and uniform resource identfier.
         /// </summary>
+        /// <param name="name">The name of the new Accent.</param>
+        /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>
         /// <returns>true if the accent does not exists and can be added.</returns>
-        public static bool AddAccent(string name, Uri resourceAddress)
+        public static bool AddAccent([NotNull] string name, [NotNull] Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
@@ -103,10 +105,33 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Adds an accent with the given name and resource dictionary.
+        /// </summary>
+        /// <param name="name">The name of the new Accent.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        /// <returns>true if the accent does not exists and can be added.</returns>
+        public static bool AddAccent(string name, ResourceDictionary resourceDictionary)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+
+            var accentExists = GetAccent(name) != null;
+            if (accentExists)
+            {
+                return false;
+            }
+
+            _accents.Add(new Accent(name, resourceDictionary));
+            return true;
+        }
+
+        /// <summary>
         /// Adds an app theme with the given name.
         /// </summary>
+        /// <param name="name">The name of the new AppTheme.</param>
+        /// <param name="resourceAddress">The URI of the AppTheme ResourceDictionary.</param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddAppTheme(string name, Uri resourceAddress)
+        public static bool AddAppTheme([NotNull] string name, [NotNull] Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException(nameof(name));
             if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
@@ -122,6 +147,27 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Adds an app theme with the given name.
+        /// </summary>
+        /// <param name="name">The name of the new AppTheme.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        /// <returns>true if the app theme does not exists and can be added.</returns>
+        public static bool AddAppTheme([NotNull] string name, [NotNull] ResourceDictionary resourceDictionary)
+        {
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+
+            var appThemeExists = GetAppTheme(name) != null;
+            if (appThemeExists)
+            {
+                return false;
+            }
+
+            _appThemes.Add(new AppTheme(name, resourceDictionary));
+            return true;
+        }
+
+        /// <summary>
         /// Gets app theme with the given resource dictionary.
         /// </summary>
         /// <param name="resources"><see cref="ResourceDictionary"/> from which the theme should be retrieved.</param>
@@ -130,7 +176,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException(nameof(resources));
 
-            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
+            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
         }
 
         /// <summary>
@@ -191,7 +237,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException(nameof(resources));
 
-            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
+            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
             if (builtInAccent != null)
             {
                 return builtInAccent;
@@ -367,14 +413,13 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
-                    resources.MergedDictionaries.Add(newAccent.Resources);
-
-                    var key = oldAccent.Resources.Source.ToString().ToLower();
-                    var oldAccentResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
+                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldAccent.Resources));
                     if (oldAccentResource != null)
                     {
                         resources.MergedDictionaries.Remove(oldAccentResource);
                     }
+                    
+                    resources.MergedDictionaries.Add(newAccent.Resources);
 
                     themeChanged = true;
                 }
@@ -382,14 +427,13 @@ namespace MahApps.Metro
                 var oldTheme = oldThemeInfo.Item1;
                 if (oldTheme != null && oldTheme != newTheme)
                 {
-                    resources.MergedDictionaries.Add(newTheme.Resources);
-
-                    var key = oldTheme.Resources.Source.ToString().ToLower();
-                    var oldThemeResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
+                    var oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
                     if (oldThemeResource != null)
                     {
                         resources.MergedDictionaries.Remove(oldThemeResource);
                     }
+
+                    resources.MergedDictionaries.Add(newTheme.Resources);
 
                     themeChanged = true;
                 }
@@ -598,10 +642,36 @@ namespace MahApps.Metro
             IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme, newAccent));
         }
 
-        private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
+        private static bool AreResourceDictionarySourcesEqual(ResourceDictionary first, ResourceDictionary second)
         {
-            return Uri.Compare(first, second,
-                 UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
+            if (first == null || second == null)
+            {
+                return false;
+            }
+
+            if (first.Source == null || second.Source == null)
+            {
+                try
+                {
+                    foreach (var key in first.Keys)
+                    {
+                        var isTheSame = second.Contains(key) && Equals(first[key], second[key]);
+                        if (!isTheSame)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Trace.TraceError($"Could not compare resource dictionaries: {exception} {Environment.NewLine} {exception.StackTrace}");
+                    return false;
+                }
+
+                return true;
+            }
+
+            return Uri.Compare(first.Source, second.Source, UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 

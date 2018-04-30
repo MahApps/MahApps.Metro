@@ -192,11 +192,12 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.DoesNotThrow(() => {
+            var ex = Record.Exception(() => {
                                     var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
                                     var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
                                     Assert.NotNull(flyoutOnGrid);
                                 });
+            Assert.Null(ex);
         }
 
         [Fact]
