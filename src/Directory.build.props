@@ -1,0 +1,22 @@
+<Project>
+  <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+  <PropertyGroup>
+    <_SdkLanguageName>CSharp</_SdkLanguageName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.props"/>
+  <!-- Project properties -->
+  <PropertyGroup>
+    <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
+    <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
+  </ItemGroup>
+  <!-- workaround for https://github.com/NuGet/Home/issues/5894 -->
+  <Import Condition=" '$(MSBuildProjectExtension)' == '.tmp_proj'" Project="obj\*.targets"/>
+</Project>

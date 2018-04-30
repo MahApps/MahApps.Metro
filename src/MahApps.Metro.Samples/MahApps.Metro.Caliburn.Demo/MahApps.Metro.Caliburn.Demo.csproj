@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/1.3.0">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
+        <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
+    </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <StartupObject />
+        <NoWarn>SA1652</NoWarn>
+        <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="app.manifest" />
+        <None Include="paket.references" />
+        <None Remove="App.config" />
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+            <TargetPath>$(AssemblyName).config</TargetPath>
+        </AppConfigWithTargetPath>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+    </ItemGroup>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>

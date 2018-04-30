@@ -48,16 +48,16 @@
 
     <!-- Because ReadAllText is slow on osx/linux, try to find shasum and awk -->
     <PropertyGroup>
-        <PaketRestoreCachedHasher Condition="'$(OS)' != 'Windows_NT' And '$(PaketRestoreCachedHasher)' == '' And Exists('/usr/bin/shasum') And Exists('/usr/bin/awk')">/usr/bin/shasum $(PaketRestoreCacheFile) | /usr/bin/awk '{ print $1 }'</PaketRestoreCachedHasher>
-        <PaketRestoreLockFileHasher Condition="'$(OS)' != 'Windows_NT' And '$(PaketRestoreLockFileHash)' == '' And Exists('/usr/bin/shasum') And Exists('/usr/bin/awk')">/usr/bin/shasum $(PaketLockFilePath) | /usr/bin/awk '{ print $1 }'</PaketRestoreLockFileHasher>
+      <PaketRestoreCachedHasher Condition="'$(OS)' != 'Windows_NT' And '$(PaketRestoreCachedHasher)' == '' And Exists('/usr/bin/shasum') And Exists('/usr/bin/awk')">/usr/bin/shasum $(PaketRestoreCacheFile) | /usr/bin/awk '{ print $1 }'</PaketRestoreCachedHasher>
+      <PaketRestoreLockFileHasher Condition="'$(OS)' != 'Windows_NT' And '$(PaketRestoreLockFileHash)' == '' And Exists('/usr/bin/shasum') And Exists('/usr/bin/awk')">/usr/bin/shasum $(PaketLockFilePath) | /usr/bin/awk '{ print $1 }'</PaketRestoreLockFileHasher>
     </PropertyGroup>
 
     <!-- If shasum and awk exist get the hashes -->
     <Exec StandardOutputImportance="Low" Condition=" '$(PaketRestoreCachedHasher)' != '' " Command="$(PaketRestoreCachedHasher)" ConsoleToMSBuild='true'>
-        <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreCachedHash" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreCachedHash" />
     </Exec>
     <Exec StandardOutputImportance="Low" Condition=" '$(PaketRestoreLockFileHasher)' != '' " Command="$(PaketRestoreLockFileHasher)" ConsoleToMSBuild='true'>
-        <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreLockFileHash" />
+      <Output TaskParameter="ConsoleOutput" PropertyName="PaketRestoreLockFileHash" />
     </Exec>
 
     <PropertyGroup Condition="Exists('$(PaketRestoreCacheFile)') ">
@@ -127,6 +127,7 @@
       <PackageReference Include="%(PaketReferencesFileLinesInfo.PackageName)">
         <Version>%(PaketReferencesFileLinesInfo.PackageVersion)</Version>
         <PrivateAssets Condition="%(PaketReferencesFileLinesInfo.AllPrivateAssets) == 'true'">All</PrivateAssets>
+        <ExcludeAssets Condition="%(PaketReferencesFileLinesInfo.AllPrivateAssets) == 'exclude'">runtime</ExcludeAssets>
       </PackageReference>
     </ItemGroup>
 
@@ -183,8 +184,8 @@
 
     <ConvertToAbsolutePath Condition="@(_NuspecFiles) != ''" Paths="@(_NuspecFiles)">
       <Output TaskParameter="AbsolutePaths" PropertyName="NuspecFileAbsolutePath" />
-    </ConvertToAbsolutePath>      
-        
+    </ConvertToAbsolutePath>
+
 
     <!-- Call Pack -->
     <PackTask Condition="$(UseNewPack)"

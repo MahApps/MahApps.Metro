@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/1.3.0">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
+        <AssemblyName>MahApps.Metro</AssemblyName>
+        <RootNamespace>MahApps.Metro</RootNamespace>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
+    </ItemGroup>
+    <!-- Items include -->
+    <ItemGroup>
+        <None Include="paket.references" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+    </ItemGroup>
+    <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>

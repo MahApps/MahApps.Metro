@@ -1,0 +1,12 @@
+JetBrains.Annotations
+ExposedObject
+
+Microsoft.Bcl redirects: on, framework: net40
+Microsoft.Bcl.Async framework: net40
+Microsoft.Bcl.Build import_targets: true, framework: net40
+
+group xunit40
+    xunit framework: net40
+
+group xunit45
+    xunit framework: >=net45
