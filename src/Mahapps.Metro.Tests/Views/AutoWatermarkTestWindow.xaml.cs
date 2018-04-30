@@ -1,11 +1,11 @@
-﻿namespace MahApps.Metro.Tests
-{
-    using System;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel.DataAnnotations;
-    using MahApps.Metro.Controls;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using MahApps.Metro.Controls;
 
-    public partial class AutoWatermarkTestWindow
+namespace MahApps.Metro.Tests
+{
+    public partial class AutoWatermarkTestWindow : MetroWindow
     {
         public AutoWatermarkTestWindow()
         {

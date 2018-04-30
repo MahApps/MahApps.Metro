@@ -1,24 +1,59 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Windows;
 using MahApps.Metro.Controls;
+using Xunit;
+
+#if !NET40
+using System.Windows.Threading;
+using Xunit.Sdk;
+#endif
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Threading;
-    using Xunit;
+    public class ApplicationFixture : IDisposable
+    {
+        public ApplicationFixture()
+        {
+            // ... initialize
+
+            TestHost.Initialize();
+        }
+
+        public void Dispose()
+        {
+            // ... clean up
+
+#if !NET40
+            Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
+#endif
+        }
+    }
+
+#if !NET40
+    [CollectionDefinition("ApplicationFixtureCollection")]
+    public class ApplicationFixtureCollectionClass : ICollectionFixture<ApplicationFixture>
+    {
+    }
+
+#endif
 
     /// <summary>
     /// This is the base class for all of our UI tests.
     /// </summary>
+#if !NET40
+    [Collection("ApplicationFixtureCollection")]
+#endif
     public class AutomationTestBase : IDisposable
+#if NET40
+        , IUseFixture<ApplicationFixture>
+#endif
     {
         public AutomationTestBase()
         {
-            TestHost.Initialize();
-
             var message = $"Create test class '{this.GetType().Name}' with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                           $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
             Debug.WriteLine(message);
@@ -41,6 +76,14 @@ namespace MahApps.Metro.Tests.TestHelpers
                 });
         }
 
+#if NET40
+        private ApplicationFixture fixture;
+        public void SetFixture(ApplicationFixture data)
+        {
+            this.fixture = data;
+        }
+#endif
+
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
@@ -57,7 +100,6 @@ namespace MahApps.Metro.Tests.TestHelpers
             var message = $"Setup for test '{methodUnderTest.Name}' with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                           $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
             Debug.WriteLine(message);
-            //Console.WriteLine("Setup for test '{0}.'", methodUnderTest.Name);
         }
 
         public override void After(MethodInfo methodUnderTest)
@@ -65,7 +107,6 @@ namespace MahApps.Metro.Tests.TestHelpers
             var message = $"TearDown for test '{methodUnderTest.Name}' with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                           $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
             Debug.WriteLine(message);
-            //Console.WriteLine("TearDown for test '{0}.'", methodUnderTest.Name);
         }
     }
 }

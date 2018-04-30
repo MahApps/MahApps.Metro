@@ -25,10 +25,7 @@ NUGET
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
-    WpfAnalyzers (2.1.2)
-    xunit (1.9.2)
-    xunit.extensions (1.9.2)
-      xunit (1.9.2)
+    WpfAnalyzers (2.1.2.1)
 
 GROUP cake
 RESTRICTION: == net45
@@ -41,3 +38,42 @@ NUGET
     gitreleasemanager (0.7)
     GitVersion.CommandLine (4.0.0-beta0012)
     xunit.runner.console (2.3.1)
+
+GROUP xunit40
+RESTRICTION: == net40
+NUGET
+  remote: https://www.nuget.org/api/v2
+    xunit (1.9.2)
+    xunit.extensions (1.9.2)
+      xunit (1.9.2)
+
+GROUP xunit45
+RESTRICTION: >= net45
+NUGET
+  remote: https://www.nuget.org/api/v2
+    Microsoft.CodeCoverage (1.0.3)
+    Microsoft.NET.Test.Sdk (15.7)
+      Microsoft.CodeCoverage (>= 1.0.3)
+    Microsoft.NETCore.Platforms (2.0.2) - restriction: || (&& (>= net45) (< net452) (< netstandard1.3)) (&& (>= net45) (>= netcoreapp2.0)) (&& (>= net45) (< netstandard1.0)) (&& (>= net45) (< netstandard1.3) (>= wpa81)) (&& (>= net45) (< netstandard1.5) (>= uap10.0)) (&& (>= net45) (< portable-net45+win8+wpa81)) (&& (>= net45) (>= uap10.1)) (&& (>= net45) (>= wp8)) (&& (< net452) (>= net46) (< netstandard1.4)) (&& (< net452) (>= net461))
+    NETStandard.Library (2.0.2) - restriction: && (>= net45) (< net452)
+      Microsoft.NETCore.Platforms (>= 1.1)
+      System.Runtime.InteropServices.RuntimeInformation (>= 4.3) - restriction: || (&& (>= net45) (< netstandard1.0)) (&& (>= net45) (< netstandard1.3)) (&& (>= net45) (< netstandard1.5) (>= uap10.0)) (&& (>= net46) (< netstandard1.4))
+    System.Runtime.InteropServices.RuntimeInformation (4.3) - restriction: || (&& (>= net45) (< net452) (< netstandard1.3)) (&& (>= net45) (< netstandard1.0)) (&& (>= net45) (< netstandard1.3) (>= wpa81)) (&& (>= net45) (< netstandard1.5) (>= uap10.0)) (&& (< net452) (>= net46) (< netstandard1.4))
+    xunit (2.3.1)
+      xunit.analyzers (>= 0.7)
+      xunit.assert (2.3.1)
+      xunit.core (2.3.1)
+    xunit.abstractions (2.0.1)
+    xunit.analyzers (0.8)
+    xunit.assert (2.3.1)
+      NETStandard.Library (>= 1.6.1) - restriction: && (>= net45) (< net452)
+    xunit.core (2.3.1)
+      xunit.extensibility.core (2.3.1)
+      xunit.extensibility.execution (2.3.1)
+    xunit.extensibility.core (2.3.1)
+      NETStandard.Library (>= 1.6.1) - restriction: && (>= net45) (< net452)
+      xunit.abstractions (>= 2.0.1)
+    xunit.extensibility.execution (2.3.1)
+      NETStandard.Library (>= 1.6.1) - restriction: && (>= net45) (< net452)
+      xunit.extensibility.core (2.3.1)
+    xunit.runner.visualstudio (2.3.1)

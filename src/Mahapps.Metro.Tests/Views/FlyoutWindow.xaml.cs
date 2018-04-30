@@ -1,6 +1,8 @@
-﻿namespace MahApps.Metro.Tests
+﻿using MahApps.Metro.Controls;
+
+namespace MahApps.Metro.Tests
 {
-    public partial class FlyoutWindow
+    public partial class FlyoutWindow : MetroWindow
     {
         public FlyoutWindow()
         {

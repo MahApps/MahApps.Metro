@@ -9,29 +9,32 @@
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <StartupObject/>
+        <StartupObject />
         <NoWarn>SA1652</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
-        <Reference Include="System.Data.DataSetExtensions"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Windows.Forms"/>
-        <Reference Include="WindowsFormsIntegration"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Include="paket.references"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Include="paket.references" />
+        <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
-    <Import Project="..\..\.paket\Paket.Restore.targets"/>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+    </ItemGroup>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

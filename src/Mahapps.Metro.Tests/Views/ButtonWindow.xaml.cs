@@ -1,6 +1,8 @@
-﻿namespace MahApps.Metro.Tests
+﻿using MahApps.Metro.Controls;
+
+namespace MahApps.Metro.Tests
 {
-    public partial class ButtonWindow
+    public partial class ButtonWindow : MetroWindow
     {
         public ButtonWindow()
         {

@@ -8,12 +8,15 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
     </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
-        <None Include="paket.references"/>
+        <None Include="paket.references" />
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets"/>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+    </ItemGroup>
+    <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

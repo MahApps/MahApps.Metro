@@ -50,6 +50,7 @@ namespace MahApps.Metro.Tests.TestHelpers
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
+                    
                 };
             app.Startup += (sender, args) =>
                 {
