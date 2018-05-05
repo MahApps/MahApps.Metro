@@ -84,7 +84,7 @@
                      Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.TickBar}" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
-                   Height="{TemplateBinding Slider.MinHeight}">
+                   Height="{TemplateBinding Slider.Height}">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
