@@ -131,6 +131,7 @@
                                                   FocusVisualStyle="{x:Null}"
                                                   IsTabStop="False"
                                                   OnlyLoadTransition="True"
+                                                  ClipToBounds="{TemplateBinding ClipsContent}"
                                                   TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}"
                                                   UseLayoutRounding="True">
                         <ContentPresenter Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}" UseLayoutRounding="False" />

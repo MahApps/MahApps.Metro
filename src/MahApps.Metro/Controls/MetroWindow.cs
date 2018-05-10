@@ -108,6 +108,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
 
+        public static readonly DependencyProperty ClipsContentProperty = DependencyProperty.Register("ClipsContent", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
         /// <summary>
         /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
         /// </summary>
@@ -735,6 +737,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (double)GetValue(OverlayOpacityProperty); }
             set { SetValue(OverlayOpacityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether the window clips its content.
+        /// </summary>
+        public bool ClipsContent
+        {
+            get { return (bool)this.GetValue(ClipsContentProperty); }
+            set { SetValue(ClipsContentProperty, value); }
         }
 
         /// <summary>
