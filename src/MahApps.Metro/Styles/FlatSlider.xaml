@@ -68,10 +68,10 @@
            TargetType="TickBar" />
 
     <ControlTemplate x:Key="MahApps.Metro.Styles.FlatSlider.HorizontalTemplate" TargetType="{x:Type Slider}">
-        <Grid>
+        <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
@@ -82,18 +82,14 @@
                      Grid.Row="2"
                      Placement="Bottom"
                      Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.TickBar}" />
-            <Track x:Name="PART_Track"
-                   Grid.Row="1"
-                   Height="{TemplateBinding Slider.MinHeight}">
+            <Track x:Name="PART_Track" Grid.Row="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Track}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
+                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -118,10 +114,10 @@
 
     <!--  obsolete  -->
     <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
-        <Grid>
+        <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
@@ -132,18 +128,14 @@
                      Grid.Row="2"
                      Placement="Bottom"
                      Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track"
-                   Grid.Row="1"
-                   Height="{TemplateBinding Slider.MinHeight}">
+            <Track x:Name="PART_Track" Grid.Row="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{StaticResource SliderThumbStyle}" />
+                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -167,10 +159,10 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="MahApps.Metro.Styles.FlatSlider.VerticalTemplate" TargetType="{x:Type Slider}">
-        <Grid>
+        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
@@ -181,18 +173,14 @@
                      Grid.Column="2"
                      Placement="Right"
                      Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.TickBar}" />
-            <Track x:Name="PART_Track"
-                   Grid.Column="1"
-                   Width="{TemplateBinding Slider.MinWidth}">
+            <Track x:Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Track}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
+                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -217,10 +205,10 @@
 
     <!--  obsolete  -->
     <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
-        <Grid>
+        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
@@ -231,18 +219,14 @@
                      Grid.Column="2"
                      Placement="Right"
                      Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track"
-                   Grid.Column="1"
-                   Width="{TemplateBinding Slider.MinWidth}">
+            <Track x:Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{StaticResource SliderThumbStyle}" />
+                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -269,12 +253,14 @@
         <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Value" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Background" Value="{DynamicResource SliderTrackDisabled}" />
