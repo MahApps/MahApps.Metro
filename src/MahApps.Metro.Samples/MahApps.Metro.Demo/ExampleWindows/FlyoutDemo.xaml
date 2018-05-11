@@ -28,12 +28,13 @@
     <Window.Resources>
         <ResourceDictionary>
 
-            <x:Array x:Key="WindowCommandsOverlayBehaviorArray" Type="Controls:WindowCommandsOverlayBehavior">
-                <Controls:WindowCommandsOverlayBehavior>Always</Controls:WindowCommandsOverlayBehavior>
-                <Controls:WindowCommandsOverlayBehavior>Flyouts</Controls:WindowCommandsOverlayBehavior>
-                <Controls:WindowCommandsOverlayBehavior>HiddenTitleBar</Controls:WindowCommandsOverlayBehavior>
-                <Controls:WindowCommandsOverlayBehavior>Never</Controls:WindowCommandsOverlayBehavior>
-            </x:Array>
+            <ObjectDataProvider x:Key="WindowCommandsOverlayBehaviorValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type Controls:WindowCommandsOverlayBehavior}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="Controls:WindowCommandsOverlayBehavior" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
         </ResourceDictionary>
     </Window.Resources>
@@ -445,7 +446,7 @@
                           Width="100"
                           Margin="2"
                           VerticalAlignment="Center"
-                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          ItemsSource="{Binding Source={StaticResource WindowCommandsOverlayBehaviorValues}}"
                           SelectedValue="{Binding ElementName=flyoutsDemo, Path=LeftWindowCommandsOverlayBehavior}" />
             </Grid>
 
@@ -462,7 +463,7 @@
                           Width="100"
                           Margin="2"
                           VerticalAlignment="Center"
-                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          ItemsSource="{Binding Source={StaticResource WindowCommandsOverlayBehaviorValues}}"
                           SelectedValue="{Binding ElementName=flyoutsDemo, Path=RightWindowCommandsOverlayBehavior}" />
             </Grid>
 
@@ -479,7 +480,7 @@
                           Width="100"
                           Margin="2"
                           VerticalAlignment="Center"
-                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          ItemsSource="{Binding Source={StaticResource WindowCommandsOverlayBehaviorValues}}"
                           SelectedValue="{Binding ElementName=flyoutsDemo, Path=WindowButtonCommandsOverlayBehavior}" />
             </Grid>
 
@@ -496,9 +497,11 @@
                           Width="100"
                           Margin="2"
                           VerticalAlignment="Center"
-                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          ItemsSource="{Binding Source={StaticResource WindowCommandsOverlayBehaviorValues}}"
                           SelectedValue="{Binding ElementName=flyoutsDemo, Path=IconOverlayBehavior}" />
             </Grid>
+
+            <CheckBox Content="ShowTitleBar" IsChecked="{Binding ElementName=flyoutsDemo, Path=ShowTitleBar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button Margin="2 10 2 2"
                     Click="ShowLeft"

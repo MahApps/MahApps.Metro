@@ -85,10 +85,12 @@
 
     <!--  HorizontalSlider  -->
     <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate" TargetType="{x:Type Slider}">
-        <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+        <Grid x:Name="HorizontalTemplate"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
@@ -169,10 +171,12 @@
 
     <!--  VerticalSlider  -->
     <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate" TargetType="{x:Type Slider}">
-        <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+        <Grid x:Name="HorizontalTemplate"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
@@ -268,10 +272,12 @@
         <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource GrayBrush1}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTemplate}" />
         <Setter Property="Value" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTemplate}" />
@@ -616,10 +622,12 @@
 
     <!--  HorizontalSlider  -->
     <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10" TargetType="{x:Type Slider}">
-        <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+        <Grid x:Name="HorizontalTemplate"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TickBar x:Name="TopTick"
@@ -701,10 +709,12 @@
 
     <!--  VerticalSlider  -->
     <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate.Win10" TargetType="{x:Type Slider}">
-        <Grid x:Name="HorizontalTemplate" Background="{TemplateBinding Background}">
+        <Grid x:Name="HorizontalTemplate"
+              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+              Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"
@@ -801,11 +811,13 @@
         <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource AccentBaseColorBrush}" />
         <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource AccentBaseColorBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10}" />
         <Setter Property="Value" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTemplate.Win10}" />
