@@ -130,11 +130,5 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
         public string SecondAuxiliaryButtonText { get; set; }
-
-        /// <summary>
-        /// If set, stops standard resource dictionaries being applied to the dialog.
-        /// </summary>
-        [Obsolete("This property will be deleted in the next release.")]
-        public bool SuppressDefaultResources { get; set; }
     }
 }

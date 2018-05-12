@@ -14,6 +14,14 @@
     <UserControl.Resources>
         <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
         <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+
+        <ObjectDataProvider x:Key="NumericInputValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type Controls:NumericInput}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Controls:NumericInput" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
     <AdornerDecorator>
@@ -262,23 +270,34 @@
                         Grid.IsSharedSizeScope="True">
                 <Label Content="NumericUpDown" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <UniformGrid Columns="2">
-                    <CheckBox x:Name="ReadOnlyCheck"
+                <CheckBox x:Name="ReadOnlyCheck"
+                          Margin="1"
+                          Content="IsReadOnly" />
+                <CheckBox x:Name="HasDecimalsCheckBox"
+                          Margin="1"
+                          Content="HasDecimals"
+                          IsChecked="True" />
+
+                <Grid Margin="{StaticResource ControlMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="LabelCol" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="NumericInputMode" />
+                    <ComboBox x:Name="NumericInputCheckBox"
+                              Grid.Column="1"
+                              Width="100"
                               Margin="1"
-                              Content="IsReadOnly" />
-                    <CheckBox x:Name="HasDecimalsCheckBox"
-                              Margin="1"
-                              Content="HasDecimals"
-                              IsChecked="True" />
-                </UniformGrid>
+                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}" />
+                </Grid>
 
                 <Label Content="Min=&quot;0&quot; Max=&quot;10&quot; TextAlignment=&quot;Left&quot;" />
                 <Controls:NumericUpDown x:Name="Test"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsEnabled="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10"
                                         Minimum="0"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         TextAlignment="Left"
                                         Value="5" />
 
@@ -289,33 +308,33 @@
                           IsChecked="True" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval="5.5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         IsTabStop="False"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         SnapToMultipleOfInterval="{Binding ElementName=SnapToMultipleOfIntervalCheck, Path=IsChecked, Mode=TwoWay}"
                                         Value="5" />
 
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="No Speedup when long pressed"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         Speedup="false" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.UseFloatingWatermark="True"
                                         Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
                                         Delay="1000"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         Speedup="true" />
 
                 <Label Margin="{StaticResource ControlMargin}"
                        Content="{Binding ElementName=test, Path=Value, Mode=OneWay}"
                        ContentStringFormat="StringFormat, Real Value = {0}" />
                 <Controls:NumericUpDown x:Name="test"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="100"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         StringFormat="pcs. {0:N2} pcs."
                                         Value="5" />
                 <Grid Margin="{StaticResource ControlMargin}">
@@ -344,18 +363,18 @@
                 </Grid>
                 <Controls:NumericUpDown x:Name="StringFormatNumUpDown"
                                         Margin="{StaticResource ControlMargin}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval=".1"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         StringFormat="0,000.00"
                                         Value="{Binding ElementName=test, Path=Value, Mode=TwoWay}" />
 
                 <Label Content="Select all on focus" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Interval="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
+                                        NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         Value="500" />
             </StackPanel>
 
@@ -364,9 +383,9 @@
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="HotKeyBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    Controls:TextBoxHelper.Watermark="Enter hot key"
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
-                                    HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                                    Watermark="Enter hot key" />
+                                    HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 <TextBlock Margin="{StaticResource ControlMargin}"
                            Foreground="{DynamicResource DarkIdealForegroundDisabledBrush}"
                            Text="Try SHIFT+D to demonstrate validation" />

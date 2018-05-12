@@ -129,20 +129,6 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
-        [Obsolete("This property will be deleted in the next release. You should use TextBoxHelper.SelectAllOnFocus instead.")]
-        public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
-            "SelectAllOnFocus",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(true, (o, e) => TextBoxHelper.SetSelectAllOnFocus(o, (bool)e.NewValue)));
-
-        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
-        public static readonly DependencyProperty HasDecimalsProperty = DependencyProperty.Register(
-            "HasDecimals",
-            typeof(bool), 
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
-
         public static readonly DependencyProperty NumericInputModeProperty = DependencyProperty.Register(
             "NumericInputMode",
             typeof(NumericInput),
@@ -375,20 +361,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(IntervalProperty, value); }
         }
 
-        [Obsolete(@"This property will be deleted in the next release. You should use Controls:TextBoxHelper.SelectAllOnFocus instead.")]
-        [Bindable(true)]
-        [Category("Behavior")]
-        [DefaultValue(true)]
-        public bool SelectAllOnFocus
-        {
-            get { return (bool)GetValue(SelectAllOnFocusProperty); }
-            set { SetValue(SelectAllOnFocusProperty, value); }
-        }
-
         /// <summary>
         ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
-
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue(false)]
@@ -466,19 +441,6 @@ namespace MahApps.Metro.Controls
         private CultureInfo SpecificCultureInfo
         {
             get { return Culture ?? Language.GetSpecificCulture(); }
-        }
-
-        /// <summary>
-        ///     Indicates if the NumericUpDown should show the decimal separator or not.
-        /// </summary>
-        [Obsolete("This property will be deleted in the next release. Please use the new NumericInputMode property instead.")]
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(true)]
-        public bool HasDecimals
-        {
-            get { return (bool)GetValue(HasDecimalsProperty); }
-            set { SetValue(HasDecimalsProperty, value); }
         }
 
         /// <summary>
