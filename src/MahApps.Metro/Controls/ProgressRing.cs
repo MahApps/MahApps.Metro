@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace MahApps.Metro.Controls
 {
@@ -197,26 +195,6 @@ namespace MahApps.Metro.Controls
                 foreach (var action in _deferredActions)
                     action();
             _deferredActions = null;
-        }
-    }
-
-    [Obsolete("This class will be deleted in the next release.")]
-    internal class WidthToMaxSideLengthConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is double)
-            {
-                var width = (double)value;
-                return width <= 20 ? 20 : width;
-            }
-
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -57,9 +57,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register("CloseCommandParameter", typeof(object), typeof(Flyout), new PropertyMetadata(null));
 
-        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
-        internal static readonly DependencyProperty InternalCloseCommandProperty = DependencyProperty.Register("InternalCloseCommand", typeof(ICommand), typeof(Flyout));
-
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
@@ -124,16 +121,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)this.GetValue(CloseCommandParameterProperty); }
             set { this.SetValue(CloseCommandParameterProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets a command which will be executed if the close button was clicked.
-        /// </summary>
-        [Obsolete("This property will be deleted in the next release. Please use the new CloseFlyoutAction trigger.")]
-        internal ICommand InternalCloseCommand
-        {
-            get { return (ICommand)this.GetValue(InternalCloseCommandProperty); }
-            set { this.SetValue(InternalCloseCommandProperty, value); }
         }
 
         /// <summary>
@@ -251,9 +238,6 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
-#pragma warning disable 618
-            this.InternalCloseCommand = new CloseCommand(this.InternalCloseCommandCanExecute, this.InternalCloseCommandExecuteAction);
-#pragma warning restore 618
             this.Loaded += (sender, args) => this.UpdateFlyoutTheme();
             this.InitializeAutoCloseTimer();
         }
@@ -261,31 +245,6 @@ namespace MahApps.Metro.Controls
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new FlyoutAutomationPeer(this);
-        }
-
-        private void InternalCloseCommandExecuteAction(object o)
-        {
-            var closeCommand = this.CloseCommand;
-            // close the Flyout only if there is no command
-            if (closeCommand == null)
-            {
-                this.SetCurrentValue(IsOpenProperty, false);
-            }
-            else
-            {
-                var closeCommandParameter = this.CloseCommandParameter ?? this;
-                if (closeCommand.CanExecute(closeCommandParameter))
-                {
-                    // force the command handler to run
-                    closeCommand.Execute(closeCommandParameter);
-                }
-            }
-        }
-
-        private bool InternalCloseCommandCanExecute(object o)
-        {
-            var closeCommand = this.CloseCommand;
-            return closeCommand == null || closeCommand.CanExecute(this.CloseCommandParameter ?? this);
         }
 
         private void InitializeAutoCloseTimer()

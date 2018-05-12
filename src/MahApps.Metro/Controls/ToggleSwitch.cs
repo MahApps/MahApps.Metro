@@ -35,8 +35,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
 
-        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
 
@@ -93,16 +91,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (string)GetValue(OffLabelProperty); }
             set { SetValue(OffLabelProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the brush used for the switch's foreground.
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public Brush SwitchForeground
-        {
-            get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set { SetValue(SwitchForegroundProperty, value); }
         }
 
         /// <summary>

@@ -316,10 +316,8 @@ namespace MahApps.Metro.Tests
             be.UpdateTarget();
 
             // default should be UPPER
-            Assert.Equal(true, window.TitleCaps);
             Assert.Equal("TEST", titleBarContent.Content);
 
-            window.TitleCaps = false;
             be.UpdateTarget();
             Assert.Equal("Test", titleBarContent.Content);
         }

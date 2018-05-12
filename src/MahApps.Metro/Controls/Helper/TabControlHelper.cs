@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -127,38 +126,6 @@ namespace MahApps.Metro.Controls
         public static void SetCloseTabCommandParameter(UIElement element, object value)
         {
             element.SetValue(CloseTabCommandParameterProperty, value);
-        }
-
-        /// <summary>
-        /// Defines whether the underline below the <see cref="TabItem"/> is shown or not.
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static readonly DependencyProperty IsUnderlinedProperty =
-            DependencyProperty.RegisterAttached("IsUnderlined",
-                                                typeof(bool),
-                                                typeof(TabControlHelper),
-                                                new PropertyMetadata(false,
-                                                                     (o, e) =>
-                                                                         {
-                                                                             var element = o as UIElement;
-                                                                             if (element != null && e.OldValue != e.NewValue && e.NewValue is bool)
-                                                                             {
-                                                                                 TabControlHelper.SetUnderlined(element, (bool)e.NewValue ? UnderlinedType.TabItems : UnderlinedType.None);
-                                                                             }
-                                                                         }));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static bool GetIsUnderlined(UIElement element)
-        {
-            return (bool)element.GetValue(IsUnderlinedProperty);
-        }
-
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static void SetIsUnderlined(UIElement element, bool value)
-        {
-            element.SetValue(IsUnderlinedProperty, value);
         }
 
         /// <summary>

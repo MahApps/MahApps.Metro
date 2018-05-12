@@ -85,8 +85,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
-        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
-        public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, (o, e) => ((MetroWindow)o).SetCurrentValue(TitleCharacterCasingProperty, (bool)e.NewValue ? CharacterCasing.Upper : CharacterCasing.Normal)));
         public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register("TitleCharacterCasing", typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
         public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
 
@@ -139,8 +137,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
-        [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" to get a drop shadow around the Window.")]
-        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         FrameworkElement icon;
@@ -190,29 +186,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (MetroDialogSettings)GetValue(MetroDialogOptionsProperty); }
             set { SetValue(MetroDialogOptionsProperty, value); }
-        }
-
-        [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" to get a drop shadow around the Window.")]
-        public bool EnableDWMDropShadow
-        {
-            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
-            set { SetValue(EnableDWMDropShadowProperty, value); }
-        }
-
-        private static void OnEnableDWMDropShadowPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue != e.OldValue && (bool)e.NewValue)
-            {
-                var window = (MetroWindow)d;
-                window.UseDropShadow();
-            }
-        }
-
-        private void UseDropShadow()
-        {
-            this.SetCurrentValue(BorderThicknessProperty, new Thickness(0));
-            this.SetCurrentValue(BorderBrushProperty, null);
-            this.SetCurrentValue(GlowBrushProperty, Brushes.Black);
         }
 
         public bool IsWindowDraggable
@@ -634,16 +607,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the TitleBar's text is automatically capitalized.
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should use the new TitleCharacterCasing dependency property.")]
-        public bool TitleCaps
-        {
-            get { return (bool)GetValue(TitleCapsProperty); }
-            set { SetValue(TitleCapsProperty, value); }
-        }
-
-        /// <summary>
         /// Character casing of the title
         /// </summary>
         public CharacterCasing TitleCharacterCasing
@@ -753,12 +716,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (Storyboard)GetValue(OverlayFadeOutProperty); }
             set { SetValue(OverlayFadeOutProperty, value); }
-        }
-
-        [Obsolete("This property will be deleted in the next release.")]
-        public string WindowTitle
-        {
-            get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
         private bool CanUseOverlayFadingStoryboard(Storyboard sb, out DoubleAnimation animation)
@@ -1015,13 +972,6 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-#pragma warning disable 618
-            if (EnableDWMDropShadow)
-            {
-                this.UseDropShadow();
-            }
-#pragma warning restore 618
-
             if (this.WindowTransitionsEnabled)
             {
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
