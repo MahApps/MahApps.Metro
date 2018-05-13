@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty LightMinButtonStyleProperty =
             DependencyProperty.Register("LightMinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the minimize button.
@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty LightMaxButtonStyleProperty =
             DependencyProperty.Register("LightMaxButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the maximize button.
@@ -44,7 +44,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty LightCloseButtonStyleProperty =
             DependencyProperty.Register("LightCloseButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the close button.
@@ -57,7 +57,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty DarkMinButtonStyleProperty =
             DependencyProperty.Register("DarkMinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current dark style for the minimize button.
@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty DarkMaxButtonStyleProperty =
             DependencyProperty.Register("DarkMaxButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current dark style for the maximize button.
@@ -83,7 +83,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty DarkCloseButtonStyleProperty =
             DependencyProperty.Register("DarkCloseButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(null, OnThemeChanged));
+                                        new PropertyMetadata(null));
         
         /// <summary>
         /// Gets or sets the value indicating current dark style for the close button.
@@ -96,7 +96,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ThemeProperty =
             DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowButtonCommands),
-                                        new PropertyMetadata(Theme.Light, OnThemeChanged));
+                                        new PropertyMetadata(Theme.Light));
 
         /// <summary>
         /// Gets or sets the value indicating current theme.
@@ -105,16 +105,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (Theme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
-        }
-
-        private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue == e.OldValue)
-            {
-                return;
-            }
-
-            ((WindowButtonCommands)d).ApplyTheme();
         }
 
         public static readonly DependencyProperty MinimizeProperty =
@@ -218,53 +208,6 @@ namespace MahApps.Metro.Controls
         }
 #pragma warning restore 618
 
-        // TODO: Change back to private once Window(Min/Max/Close)ButtonStyle properties are deleted from MetroWindow!
-        public void ApplyTheme()
-        {
-            if (close != null)
-            {
-                // TODO: Delete this if statement once WindowCloseButtonStyle property is deleted from MetroWindow!
-#pragma warning disable 618
-                if (ParentWindow?.WindowCloseButtonStyle != null)
-                {
-                    close.Style = ParentWindow.WindowCloseButtonStyle;
-                }
-#pragma warning restore 618
-                else
-                {
-                    close.Style = (Theme == Theme.Light) ? LightCloseButtonStyle : DarkCloseButtonStyle;
-                }
-            }
-            if (max != null)
-            {
-                // TODO: Delete this if statement once WindowMaxButtonStyle property is deleted from MetroWindow!
-#pragma warning disable 618
-                if (ParentWindow?.WindowMaxButtonStyle != null)
-                {
-                    max.Style = ParentWindow.WindowMaxButtonStyle;
-                }
-#pragma warning restore 618
-                else
-                {
-                    max.Style = (Theme == Theme.Light) ? LightMaxButtonStyle : DarkMaxButtonStyle;
-                }
-            }
-            if (min != null)
-            {
-                // TODO: Delete this if statement once WindowMinButtonStyle property is deleted from MetroWindow!
-#pragma warning disable 618
-                if (ParentWindow?.WindowMinButtonStyle != null)
-                {
-                    min.Style = ParentWindow.WindowMinButtonStyle;
-                }
-#pragma warning restore 618
-                else
-                {
-                    min.Style = (Theme == Theme.Light) ? LightMinButtonStyle : DarkMinButtonStyle;
-                }
-            }
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -286,8 +229,6 @@ namespace MahApps.Metro.Controls
             {
                 min.Click += MinimizeClick;
             }
-
-            ApplyTheme();
         }
 
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)

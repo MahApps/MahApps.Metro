@@ -303,29 +303,6 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task TestTitleCapsProperty()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.Title = "Test");
-            var titleBar = window.FindChild<ContentControl>("PART_TitleBar");
-            var titleBarContent = titleBar.FindChild<ContentPresenter>("PART_ContentPresenter");
-
-            var be = BindingOperations.GetBindingExpression(titleBarContent, ContentControl.ContentProperty);
-            Assert.NotNull(be);
-            be.UpdateTarget();
-
-            // default should be UPPER
-            Assert.Equal(true, window.TitleCaps);
-            Assert.Equal("TEST", titleBarContent.Content);
-
-            window.TitleCaps = false;
-            be.UpdateTarget();
-            Assert.Equal("Test", titleBarContent.Content);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
         public async Task TestTitleCharacterCasingProperty()
         {
             await TestHost.SwitchToAppThread();

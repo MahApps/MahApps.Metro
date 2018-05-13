@@ -34,24 +34,12 @@ namespace MahApps.Metro.Controls
         private TranslateTransform _ThumbTranslate;
         private readonly PropertyChangeNotifier isCheckedPropertyChangeNotifier;
 
-        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).SetCurrentValue(OnSwitchBrushProperty, e.NewValue as Brush)));
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
 
         public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
-
-        /// <summary>
-        /// Gets/sets the brush used for the control's foreground.
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
-        public Brush SwitchForeground
-        {
-            get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set { SetValue(SwitchForegroundProperty, value); }
-        }
 
         /// <summary>
         /// Gets/sets the brush used for the on-switch's foreground.

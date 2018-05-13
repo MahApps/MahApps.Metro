@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 #endif
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -440,8 +441,9 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock() { Text = "Window with drop shadow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
-            // use this to test the obsolete under the hood code
-            w.EnableDWMDropShadow = true;
+            w.BorderThickness = new Thickness(0);
+            w.BorderBrush = null;
+            w.GlowBrush = Brushes.Black;
             w.Show();
         }
 

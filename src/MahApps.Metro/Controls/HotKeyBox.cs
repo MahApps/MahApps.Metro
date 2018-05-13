@@ -38,17 +38,6 @@ namespace MahApps.Metro.Controls {
             set { SetValue(AreModifierKeysRequiredProperty, value); }
         }
 
-        [Obsolete("This property will be deleted in the next release. Instead use TextBoxHelper.Watermark attached property.")]
-        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register(
-            "Watermark", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
-
-        [Obsolete("This property will be deleted in the next release. Instead use TextBoxHelper.Watermark attached property.")]
-        public string Watermark
-        {
-            get { return (string) GetValue(WatermarkProperty); }
-            set { SetValue(WatermarkProperty, value); }
-        }
-
         private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(
             "Text", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
 

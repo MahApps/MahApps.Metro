@@ -198,13 +198,15 @@
                        BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
                        TargetType="{x:Type Controls:ToggleSwitch}">
                     <Setter Property="OffLabel" Value="False" />
+                    <Setter Property="OffSwitchBrush" Value="Red" />
                     <Setter Property="OnLabel" Value="True" />
-                    <Setter Property="SwitchForeground" Value="Red" />
+                    <Setter Property="OnSwitchBrush" Value="Green" />
                 </Style>
                 <Style x:Key="CustomMetroToggleSwitchButton"
                        BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
                        TargetType="{x:Type Controls:ToggleSwitchButton}">
-                    <Setter Property="SwitchForeground" Value="YellowGreen" />
+                    <Setter Property="OffSwitchBrush" Value="DarkRed" />
+                    <Setter Property="OnSwitchBrush" Value="DarkGreen" />
                 </Style>
             </StackPanel.Resources>
             <Label Content="Toggle switch" Style="{DynamicResource DescriptionHeaderStyle}" />

@@ -496,8 +496,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
         public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
         public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
-        [Obsolete("This property will be deleted in the next release. You should use now MouseHoverBorderEnabled instead.")]
-        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (o, e) => ((FlipView)o).SetCurrentValue(MouseHoverBorderEnabledProperty, (bool)e.NewValue)));
         public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
         public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
         public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
@@ -529,13 +527,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (TransitionType)this.GetValue(RightTransitionProperty); }
             set { this.SetValue(RightTransitionProperty, value); }
-        }
-
-        [Obsolete("This property will be deleted in the next release. You should use now MouseHoverBorderEnabled instead.")]
-        public bool MouseOverGlowEnabled
-        {
-            get { return (bool)this.GetValue(MouseOverGlowEnabledProperty); }
-            set { this.SetValue(MouseOverGlowEnabledProperty, value); }
         }
 
         /// <summary>
