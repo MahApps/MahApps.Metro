@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -128,37 +127,6 @@ namespace MahApps.Metro.Controls
         public static void SetHeaderMargin(UIElement element, Thickness value)
         {
             element.SetValue(HeaderMarginProperty, value);
-        }
-
-        /// <summary>
-        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox, NumericUpDown
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
-        public static readonly DependencyProperty ButtonWidthProperty =
-            DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(
-                                                    22d,
-                                                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits,
-                                                    (o, e) =>
-                                                        {
-                                                            var element = o as UIElement;
-                                                            if (element != null && e.OldValue != e.NewValue && e.NewValue is double)
-                                                            {
-                                                                TextBoxHelper.SetButtonWidth(element, (double)e.NewValue);
-                                                            }
-                                                        }));
-
-        [Category(AppName.MahApps)]
-        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
-        public static double GetButtonWidth(DependencyObject obj)
-        {
-            return (double)obj.GetValue(ButtonWidthProperty);
-        }
-
-        [Obsolete(@"This property will be deleted in the next release. You should use TextBoxHelper.ButtonWidth instead.")]
-        public static void SetButtonWidth(DependencyObject obj, double value)
-        {
-            obj.SetValue(ButtonWidthProperty, value);
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
