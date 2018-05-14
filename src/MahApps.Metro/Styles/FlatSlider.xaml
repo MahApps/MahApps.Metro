@@ -89,7 +89,9 @@
                                   Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Track}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
+                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -135,7 +137,9 @@
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{StaticResource SliderThumbStyle}" />
+                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -180,7 +184,9 @@
                                   Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Track}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Thumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
@@ -226,7 +232,9 @@
                                   Style="{StaticResource SliderButtonStyle}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroThumb Background="{TemplateBinding Slider.BorderBrush}" Style="{StaticResource SliderThumbStyle}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
+                                         Background="{TemplateBinding Slider.BorderBrush}"
+                                         Style="{StaticResource SliderThumbStyle}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
