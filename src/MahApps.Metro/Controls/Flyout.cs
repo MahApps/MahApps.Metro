@@ -734,8 +734,8 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
-            //if (window != null && this.Position != Position.Bottom && (this.Position == Position.Top || (this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)))
-            //if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
+            //if (window != null && this.Position != Position.Bottom && (this.Position == Position.Top || (this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitleBarHeight && window.TitleBarHeight > 0)))
+            //if (window != null && this.Position != Position.Bottom && this.dragStartedMousePos.GetValueOrDefault().Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
             if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbMoveOnDragDelta(sender as IMetroThumb, window, dragDeltaEventArgs);
@@ -745,7 +745,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
+            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
             {
                 MetroWindow.DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(window, mouseButtonEventArgs);
             }
@@ -754,7 +754,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
-            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitlebarHeight && window.TitlebarHeight > 0)
+            if (window != null && this.Position != Position.Bottom && Mouse.GetPosition((IInputElement)sender).Y <= window.TitleBarHeight && window.TitleBarHeight > 0)
             {
                 MetroWindow.DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(window, e);
             }

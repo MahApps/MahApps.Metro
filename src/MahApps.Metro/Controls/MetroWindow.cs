@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
-        public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
+        public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register("TitleBarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register("TitleCharacterCasing", typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
         public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
 
@@ -520,13 +520,13 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the TitleBar's height.
         /// </summary>
-        public int TitlebarHeight
+        public int TitleBarHeight
         {
-            get { return (int)GetValue(TitlebarHeightProperty); }
-            set { SetValue(TitlebarHeightProperty, value); }
+            get { return (int)GetValue(TitleBarHeightProperty); }
+            set { SetValue(TitleBarHeightProperty, value); }
         }
 
-        private static void TitlebarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void TitleBarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var window = (MetroWindow)dependencyObject;
             if (e.NewValue != e.OldValue)
@@ -549,7 +549,7 @@ namespace MahApps.Metro.Controls
         private void SetVisibiltyForAllTitleElements()
         {
             this.SetVisibiltyForIcon();
-            var newVisibility = this.TitlebarHeight > 0 && this.ShowTitleBar && !this.UseNoneWindowStyle ? Visibility.Visible : Visibility.Collapsed;
+            var newVisibility = this.TitleBarHeight > 0 && this.ShowTitleBar && !this.UseNoneWindowStyle ? Visibility.Visible : Visibility.Collapsed;
 
             this.titleBar?.SetCurrentValue(VisibilityProperty, newVisibility);
             this.titleBarBackground?.SetCurrentValue(VisibilityProperty, newVisibility);
@@ -1238,7 +1238,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
+                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitleBarHeight)));
                 }
             }
         }
@@ -1296,7 +1296,7 @@ namespace MahApps.Metro.Controls
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
-            var isMouseOnTitlebar = Mouse.GetPosition(thumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
+            var isMouseOnTitlebar = Mouse.GetPosition(thumb).Y <= window.TitleBarHeight && window.TitleBarHeight > 0;
             if (!isMouseOnTitlebar && windowIsMaximized)
             {
                 return;
@@ -1343,7 +1343,7 @@ namespace MahApps.Metro.Controls
                 // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
                 var canResize = window.ResizeMode == ResizeMode.CanResizeWithGrip || window.ResizeMode == ResizeMode.CanResize;
                 var mousePos = Mouse.GetPosition(window);
-                var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
+                var isMouseOnTitlebar = mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
 #pragma warning disable 618
@@ -1367,7 +1367,7 @@ namespace MahApps.Metro.Controls
             {
                 // show menu only if mouse pos is on title bar or if we have a window with none style and no title bar
                 var mousePos = e.GetPosition(window);
-                if ((mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0) || (window.UseNoneWindowStyle && window.TitlebarHeight <= 0))
+                if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
                 {
                     ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
                 }
