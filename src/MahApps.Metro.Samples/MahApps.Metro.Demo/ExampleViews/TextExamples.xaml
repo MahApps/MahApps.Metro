@@ -288,7 +288,8 @@
                               Grid.Column="1"
                               Width="100"
                               Margin="1"
-                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}" />
+                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
+                              SelectedItem="{x:Static Controls:NumericInput.All}" />
                 </Grid>
 
                 <Label Content="Min=&quot;0&quot; Max=&quot;10&quot; TextAlignment=&quot;Left&quot;" />

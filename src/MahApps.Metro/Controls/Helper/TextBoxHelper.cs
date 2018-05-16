@@ -438,6 +438,14 @@ namespace MahApps.Metro.Controls
             return (string)obj.GetValue(WatermarkProperty);
         }
 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(TimePickerBase))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        [AttachedPropertyBrowsableForType(typeof(HotKeyBox))]
         public static void SetWatermark(DependencyObject obj, string value)
         {
             obj.SetValue(WatermarkProperty, value);

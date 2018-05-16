@@ -130,8 +130,8 @@
                           Grid.Row="0"
                           Grid.Column="1"
                           Margin="5 2"
-                          Content="MouseOver Glow"
-                          IsChecked="{Binding ElementName=FlipView1st, Path=MouseOverGlowEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          Content="MouseOver Border"
+                          IsChecked="{Binding ElementName=FlipView1st, Path=MouseHoverBorderEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <CheckBox x:Name="CircularNaviCheckBox"
                           Grid.Row="1"
                           Grid.Column="0"

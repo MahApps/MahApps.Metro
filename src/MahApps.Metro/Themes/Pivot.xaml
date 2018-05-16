@@ -71,7 +71,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate DataType="{x:Type Controls:PivotItem}">
                                     <TextBlock Margin="0 0 25 0"
                                                FontFamily="{DynamicResource HeaderFontFamily}"
                                                FontSize="{DynamicResource SubHeaderFontSize}"
