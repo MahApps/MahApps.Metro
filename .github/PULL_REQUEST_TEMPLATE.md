@@ -1,5 +1,10 @@
-## What changed?
+**Describe the changes you have made to improve this project**
+A clear and concise description of what the change is.
 
-_Describe the changes you have made to improve this project._
+**Unit test**
+If it's possible then make a unit test for your changes.
 
-_Closed issues._
+**Additional context**
+Add any other context or screenshots about the feature request here.
+
+**Closed Issues**
