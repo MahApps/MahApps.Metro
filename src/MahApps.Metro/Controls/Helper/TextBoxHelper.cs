@@ -89,8 +89,8 @@ namespace MahApps.Metro.Controls
                                                                                                         { typeof(NumericUpDown), NumericUpDown.ValueProperty },
                                                                                                         { typeof(HotKeyBox), HotKeyBox.HotKeyProperty },
                                                                                                         { typeof(DatePicker), DatePicker.SelectedDateProperty },
-                                                                                                        { typeof(TimePicker), TimePickerBase.SelectedTimeProperty },
-                                                                                                        { typeof(DateTimePicker), DateTimePicker.SelectedDateProperty }
+                                                                                                        { typeof(TimePicker), TimePickerBase.SelectedDateTimeProperty },
+                                                                                                        { typeof(DateTimePicker), DateTimePicker.SelectedDateTimeProperty }
                                                                                                     };
 
         /// <summary>
@@ -636,11 +636,11 @@ namespace MahApps.Metro.Controls
                 var timePicker = (TimePickerBase)d;
                 if ((bool)e.NewValue)
                 {
-                    timePicker.SelectedTimeChanged += OnTimePickerBaseSelectedTimeChanged;
+                    timePicker.SelectedDateTimeChanged += OnTimePickerBaseSelectedDateTimeChanged;
                 }
                 else
                 {
-                    timePicker.SelectedTimeChanged -= OnTimePickerBaseSelectedTimeChanged;
+                    timePicker.SelectedDateTimeChanged -= OnTimePickerBaseSelectedDateTimeChanged;
                 }
             }
             else if (d is DatePicker)
@@ -687,9 +687,9 @@ namespace MahApps.Metro.Controls
             SetTextLength(sender as DatePicker, timePickerBase => timePickerBase.SelectedDate.HasValue ? 1 : 0);
         }
 
-        private static void OnTimePickerBaseSelectedTimeChanged(object sender, RoutedEventArgs e)
+        private static void OnTimePickerBaseSelectedDateTimeChanged(object sender, RoutedEventArgs e)
         {
-            SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedTime.HasValue ? 1 : 0);
+            SetTextLength(sender as TimePickerBase, timePickerBase => timePickerBase.SelectedDateTime.HasValue ? 1 : 0);
         }
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)

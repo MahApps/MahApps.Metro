@@ -11,7 +11,6 @@
     ///     Represents a control that allows the user to select a date and a time.
     /// </summary>
     [TemplatePart(Name = ElementCalendar, Type = typeof(Calendar))]
-    [DefaultEvent("SelectedDateChanged")]
     public class DateTimePicker : TimePickerBase
     {
         public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
@@ -29,17 +28,6 @@
             typeof(DateTimePicker), 
             new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
 
-        public static readonly RoutedEvent SelectedDateChangedEvent = EventManager.RegisterRoutedEvent(
-            "SelectedDateChanged", 
-            RoutingStrategy.Direct, 
-            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>),
-            typeof(DateTimePicker));
-
-        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(
-            typeof(DateTimePicker), 
-            new FrameworkPropertyMetadata(default(DateTime?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedDateChanged));
-
-      
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
         private bool _deactivateWriteValueToTextBox;
@@ -48,15 +36,6 @@
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             IsClockVisibleProperty.OverrideMetadata(typeof(DateTimePicker), new PropertyMetadata(OnClockVisibilityChanged));
-        }
-
-        /// <summary>
-        ///     Occurs when the <see cref="SelectedDate" /> property is changed.
-        /// </summary>
-        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>> SelectedDateChanged
-        {
-            add { AddHandler(SelectedDateChangedEvent, value); }
-            remove { RemoveHandler(SelectedDateChangedEvent, value); }
         }
 
         /// <summary>
@@ -139,28 +118,11 @@
             set { SetValue(OrientationProperty, value); }
         }
 
-        /// <summary>
-        ///     Gets or sets the currently selected date.
-        /// </summary>
-        /// <returns>
-        ///     The date currently selected. The default is null.
-        /// </returns>
-        public DateTime? SelectedDate
-        {
-            get { return (DateTime?)GetValue(SelectedDateProperty); }
-            set { SetValue(SelectedDateProperty, value); }
-        }
-
         public override void OnApplyTemplate()
         {
             _calendar = GetTemplateChild(ElementCalendar) as Calendar;
             base.OnApplyTemplate();
             SetDatePartValues();
-        }
-
-        protected virtual void OnSelectedDateChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
-        {
-            RaiseEvent(e);
         }
 
         private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -184,7 +146,7 @@
                 _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
-                _calendar.SelectedDatesChanged += OnCalendarSelectedDateChanged;
+                _calendar.SelectedDatesChanged += OnSelectedDateChanged;
             }
         }
 
@@ -229,16 +191,16 @@
             DateTime ts;
             if (DateTime.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out ts))
             {
-                SelectedDate = ts;
+                SelectedDateTime = ts;
             }
             else
             {
-                if (SelectedDate == null)
+                if (SelectedDateTime == null)
                 {
                     // if already null, overwrite wrong data in textbox
                     WriteValueToTextBox();
                 }
-                SelectedDate = null;
+                SelectedDateTime = null;
             }
         }
 
@@ -247,19 +209,6 @@
             if (!_deactivateWriteValueToTextBox)
             {
                 base.WriteValueToTextBox();
-            }
-        }
-
-        private void OnCalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems.Count > 0)
-            {
-                var dt = (DateTime)e.AddedItems[0];
-
-                var timeOfDay = SelectedDate.GetValueOrDefault().TimeOfDay;
-
-                dt += timeOfDay;
-                SelectedDate = dt;
             }
         }
 
@@ -278,21 +227,20 @@
             d.CoerceValue(OrientationProperty);
         }
 
-        private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            var dateTimePicker = (DateTimePicker)d;
+            var dateTimePicker = (DateTimePicker)((Calendar)sender).TemplatedParent;
 
             /* Without deactivating changing SelectedTime would callbase.OnSelectedTimeChanged.
              * This would write too and this would result in duplicate writing.
              * More problematic would be instead that a short amount of time SelectedTime would be as value in TextBox
              */
-            dateTimePicker._deactivateWriteValueToTextBox = true; 
+            dateTimePicker._deactivateWriteValueToTextBox = true;
 
-            var dt = (DateTime?)e.NewValue;
+            var dt = (DateTime?)e.AddedItems[0];
             if (dt.HasValue)
             {
-                dateTimePicker.SelectedTime = dt.Value.TimeOfDay;
-                dateTimePicker.OnSelectedDateChanged(new TimePickerBaseSelectionChangedEventArgs<DateTime?>(SelectedDateChangedEvent, (DateTime?)e.OldValue, (DateTime?)e.NewValue));
+                dateTimePicker.SelectedDateTime = dt.Value.Date + dateTimePicker.GetSelectedTimeFromGUI();
             }
             else
             {
@@ -307,7 +255,7 @@
         private DateTime? GetSelectedDateTimeFromGUI()
         {
             // Because Calendar.SelectedDate is bound to this.SelectedDate return this.SelectedDate
-            var selectedDate = SelectedDate;
+            var selectedDate = SelectedDateTime;
 
             if (selectedDate != null)
             {
@@ -323,9 +271,9 @@
             if (dateTime != null)
             {
                 DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-                if ((SelectedDate != DisplayDate && SelectedDate != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
+                if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
                 {
-                    SelectedDate = DisplayDate;
+                    SelectedDateTime = DisplayDate;
                 }
             }
         }

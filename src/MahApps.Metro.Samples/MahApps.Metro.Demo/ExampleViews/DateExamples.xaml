@@ -257,7 +257,7 @@
                                                      IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                      IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                      PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                     SelectedTime="{Binding Path=SelectedTime, ElementName=DateTimePicker}"
+                                                     SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
                                                      SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                             </StackPanel>
                         </GroupBox>
