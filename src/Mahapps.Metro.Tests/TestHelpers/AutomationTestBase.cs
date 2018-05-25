@@ -19,15 +19,15 @@ namespace MahApps.Metro.Tests.TestHelpers
         public ApplicationFixture()
         {
             // ... initialize
-
             TestHost.Initialize();
         }
 
         public void Dispose()
         {
             // ... clean up
-
+            GC.Collect();
 #if !NET40
+            Dispatcher.ExitAllFrames();
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
 #endif
         }

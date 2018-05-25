@@ -282,7 +282,7 @@
                                                                Fill="{DynamicResource BlackColorBrush}"
                                                                RenderTransformOrigin=".5,1">
                                                         <Rectangle.RenderTransform>
-                                                            <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
+                                                            <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
                                                         </Rectangle.RenderTransform>
                                                     </Rectangle>
 
@@ -294,7 +294,7 @@
                                                                Fill="{DynamicResource BlackColorBrush}"
                                                                RenderTransformOrigin=".5,1">
                                                         <Rectangle.RenderTransform>
-                                                            <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
+                                                            <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
                                                         </Rectangle.RenderTransform>
                                                     </Rectangle>
                                                     <Ellipse Canvas.Left="-2"
@@ -313,7 +313,7 @@
                                                                Opacity=".25"
                                                                RenderTransformOrigin=".5,.75">
                                                         <Rectangle.RenderTransform>
-                                                            <RotateTransform Angle="{Binding Path=SelectedTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='s', Mode=OneWay}" />
+                                                            <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='s', Mode=OneWay}" />
                                                         </Rectangle.RenderTransform>
                                                     </Rectangle>
                                                 </Canvas>
@@ -394,6 +394,7 @@
                         </Trigger>
                         <Trigger Property="IsClockVisible" Value="False">
                             <Setter TargetName="PART_Clock" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_ClockPartSelectorsHolder" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsDatePickerVisible" Value="True">
                             <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
