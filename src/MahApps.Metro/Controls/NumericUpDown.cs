@@ -141,6 +141,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
 
+        public static readonly DependencyProperty ParsingNumberStyleProperty = DependencyProperty.Register(
+            @"ParsingNumberStyle", 
+            typeof(NumberStyles),
+            typeof(NumericUpDown),
+            new PropertyMetadata(NumberStyles.Any));
+
         private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue != e.NewValue && e.NewValue != null)
@@ -466,6 +472,17 @@ namespace MahApps.Metro.Controls
             set { SetValue(SnapToMultipleOfIntervalProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the parsing number style for the value from text to numeric.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(NumberStyles.Any)]
+        public NumberStyles ParsingNumberStyle
+        {
+            get { return (NumberStyles)GetValue(ParsingNumberStyleProperty); }
+            set { SetValue(ParsingNumberStyleProperty, value); }
+        }
+
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
@@ -656,82 +673,8 @@ namespace MahApps.Metro.Controls
         
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = true;
-            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
-            {
-                return;
-            }
-
-            TextBox textBox = (TextBox)sender;
-            CultureInfo equivalentCulture = SpecificCultureInfo;
-            NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-
-            string text = e.Text;
-
-            if (char.IsDigit(text[0]))
-            {
-                if (textBox.Text.IndexOf(numberFormatInfo.NegativeSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0
-                    && textBox.Text.IndexOf(numberFormatInfo.PositiveSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0)
-                {
-                    e.Handled = false;
-                }
-            }
-            else
-            {
-                bool allTextSelected = textBox.SelectedText == textBox.Text;
-
-                if (numberFormatInfo.NumberDecimalSeparator == text)
-                {
-                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
-                    {
-                        if (NumericInputMode.HasFlag(NumericInput.Decimal))
-                        {
-                            e.Handled = false;
-                        }
-                    }
-                }
-                else
-                {
-                    if (numberFormatInfo.NegativeSign == text ||
-                        text == numberFormatInfo.PositiveSign)
-                    {
-                        if (textBox.SelectionStart == 0)
-                        {
-                            // check if text already has a + or - sign
-                            if (textBox.Text.Length > 1)
-                            {
-                                if (allTextSelected || 
-                                    (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
-                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp)))
-                                {
-                                    e.Handled = false;
-                                }
-                            }
-                            else
-                            {
-                                e.Handled = false;
-                            }
-                        }
-                        else if (textBox.SelectionStart > 0)
-                        {
-                            string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp) && NumericInputMode.HasFlag(NumericInput.Decimal))
-                            {
-                                e.Handled = false;
-                            }
-                        }
-                    }
-                    else if (text.Equals(ScientificNotationChar, StrComp) &&
-                             NumericInputMode.HasFlag(NumericInput.Decimal) &&
-                             textBox.SelectionStart > 0 &&
-                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
-                    {
-                        e.Handled = false;
-                    }
-                }
-            }
-
-            this._manualChange = this._manualChange || !e.Handled;
+            e.Handled = false;
+            this._manualChange = true;
         }
 
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
@@ -1091,6 +1034,33 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private bool ConvertNumber(string text, out double convertedValue)
+        {
+            if (!int.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
+            {
+                // If unable to parse, remove any characters that are not digits and try again.
+                var currentValueTextSpecialCharacters = text.Where(c => !char.IsDigit(c));
+                var textSpecialCharacters = text.Where(c => !char.IsDigit(c));
+
+                if(currentValueTextSpecialCharacters.Except(textSpecialCharacters).ToList().Count == 0)
+                {
+                    foreach(var character in textSpecialCharacters)
+                    {
+                        text = text.Replace(character.ToString(), string.Empty);
+                    }
+
+                    if(int.TryParse(text, this.ParsingNumberStyle, SpecificCultureInfo, out convertedInt))
+                    {
+                        convertedValue = convertedInt;
+                        return false;
+                    }
+                }
+            }
+
+            convertedValue = convertedInt;
+            return true;
+        }
+
         private void EnableDisableUp()
         {
             if (_repeatUp != null)
@@ -1224,19 +1194,33 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            text = GetAnyNumberFromText(text);
-
-            return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
-        }
-
-        private string GetAnyNumberFromText(string text)
-        {
-            var matches = RegexStringFormatNumber.Matches(text);
-            if (matches.Count > 0)
+            // If we are only accepting numbers then attempt to parse as an integer.
+            if (NumericInputMode == NumericInput.Numbers)
             {
-                return matches[0].Value;
+                return ConvertNumber(text, out convertedValue);
             }
-            return text;
+
+            if (!double.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
+            {
+                // If unable to parse, remove any characters that are not digits and try again.
+                var currentValueTextSpecialCharacters = text.Where(c => !char.IsDigit(c));
+                var textSpecialCharacters = text.Where(c => !char.IsDigit(c));
+
+                if( currentValueTextSpecialCharacters.Except(textSpecialCharacters ).ToList().Count == 0)
+                {
+                    foreach(var character in textSpecialCharacters)
+                    {
+                        text = text.Replace(character.ToString(), string.Empty);
+                    }
+
+                    if( double.TryParse(text, this.ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
