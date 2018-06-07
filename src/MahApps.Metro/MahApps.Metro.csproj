@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras/1.3.0">
+<Project Sdk="MSBuild.Sdk.Extras">
     <!-- Project properties -->
     <PropertyGroup>
         <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
