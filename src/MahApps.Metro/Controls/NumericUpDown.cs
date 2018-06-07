@@ -168,14 +168,12 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
         private const string ElementNumericUp = "PART_NumericUp";
         private const string ElementTextBox = "PART_TextBox";
-        private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
         private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
@@ -673,7 +671,10 @@ namespace MahApps.Metro.Controls
         
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = false;
+            var textBox = ((TextBox)sender);
+            var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
+            double convertedValue;
+            e.Handled = !ValidateText(fullText, out convertedValue);
             this._manualChange = true;
         }
 
@@ -1034,33 +1035,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private bool ConvertNumber(string text, out double convertedValue)
-        {
-            if (!int.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
-            {
-                // If unable to parse, remove any characters that are not digits and try again.
-                var currentValueTextSpecialCharacters = text.Where(c => !char.IsDigit(c));
-                var textSpecialCharacters = text.Where(c => !char.IsDigit(c));
-
-                if(currentValueTextSpecialCharacters.Except(textSpecialCharacters).ToList().Count == 0)
-                {
-                    foreach(var character in textSpecialCharacters)
-                    {
-                        text = text.Replace(character.ToString(), string.Empty);
-                    }
-
-                    if(int.TryParse(text, this.ParsingNumberStyle, SpecificCultureInfo, out convertedInt))
-                    {
-                        convertedValue = convertedInt;
-                        return false;
-                    }
-                }
-            }
-
-            convertedValue = convertedInt;
-            return true;
-        }
-
         private void EnableDisableUp()
         {
             if (_repeatUp != null)
@@ -1078,23 +1052,6 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             _manualChange = _manualChange || e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod;
-
-            if (NumericInputMode.HasFlag(NumericInput.Decimal) && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
-            {
-                TextBox textBox = sender as TextBox;
-
-                if (textBox.Text.Contains(this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator) == false)
-                {
-                    //the control doesn't contai the decimal separator
-                    //so we get the current caret index to insert the current culture decimal separator
-                    var caret = textBox.CaretIndex;
-                    //update the control text
-                    textBox.Text = textBox.Text.Insert(caret, this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator);
-                    //move the caret to the correct position
-                    textBox.CaretIndex = caret + 1;
-                }
-                e.Handled = true;
-            }
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
@@ -1164,8 +1121,8 @@ namespace MahApps.Metro.Controls
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
             string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
-            double number;
-            if (!ValidateText(newText, out number))
+            double convertedValue;
+            if (!ValidateText(newText, out convertedValue))
             {
                 e.CancelCommand();
             }
@@ -1194,32 +1151,65 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
+            convertedValue = 0d;
+
+            if (text == SpecificCultureInfo.NumberFormat.PositiveSign
+                || text == SpecificCultureInfo.NumberFormat.NegativeSign)
+            {
+                return true;
+            }
+
+            if (text.Count(c => c == SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 1
+                || text.Count(c => c == SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 1
+                || text.Count(c => c == SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1)
+            {
+                return false;
+            }
+
+            var isNumeric = NumericInputMode == NumericInput.Numbers
+                            || ParsingNumberStyle == NumberStyles.AllowHexSpecifier
+                            || ParsingNumberStyle == NumberStyles.HexNumber
+                            || ParsingNumberStyle == NumberStyles.Integer
+                            || ParsingNumberStyle == NumberStyles.Number;
+
             // If we are only accepting numbers then attempt to parse as an integer.
-            if (NumericInputMode == NumericInput.Numbers)
+            if (isNumeric)
             {
                 return ConvertNumber(text, out convertedValue);
             }
 
-            if (!double.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
+            if (text == SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
+                || text == SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
+                || text == SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
             {
-                // If unable to parse, remove any characters that are not digits and try again.
-                var currentValueTextSpecialCharacters = text.Where(c => !char.IsDigit(c));
-                var textSpecialCharacters = text.Where(c => !char.IsDigit(c));
-
-                if( currentValueTextSpecialCharacters.Except(textSpecialCharacters ).ToList().Count == 0)
-                {
-                    foreach(var character in textSpecialCharacters)
-                    {
-                        text = text.Replace(character.ToString(), string.Empty);
-                    }
-
-                    if( double.TryParse(text, this.ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
-                    {
-                        return false;
-                    }
-                }
+                return true;
             }
 
+            if (!double.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ConvertNumber(string text, out double convertedValue)
+        {
+            if (text.Any(c => c == SpecificCultureInfo.NumberFormat.NumberDecimalSeparator[0]
+                              || c == SpecificCultureInfo.NumberFormat.PercentDecimalSeparator[0]
+                              || c == SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator[0]))
+            {
+                convertedValue = 0d;
+                return false;
+            }
+
+            if (!int.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
+            {
+                convertedValue = convertedInt;
+                return false;
+            }
+
+            convertedValue = convertedInt;
             return true;
         }
     }
