@@ -1203,7 +1203,7 @@ namespace MahApps.Metro.Controls
                 return false;
             }
 
-            if (!int.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
+            if (!long.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
             {
                 convertedValue = convertedInt;
                 return false;

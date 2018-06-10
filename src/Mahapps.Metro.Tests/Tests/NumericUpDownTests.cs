@@ -1,0 +1,145 @@
+﻿using System.Globalization;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using Xunit;
+
+namespace MahApps.Metro.Tests
+{
+    public class NumericUpDownTests : AutomationTestBase
+    {
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertTextInput()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.All;
+
+            SetText(textBox, "42");
+            Assert.Equal(42d, window.TheNUD.Value);
+
+            SetText(textBox, "42.2");
+            Assert.Equal(42.2d, window.TheNUD.Value);
+
+            SetText(textBox, ".");
+            Assert.Equal(0d, window.TheNUD.Value);
+
+            SetText(textBox, ".9");
+            Assert.Equal(0.9d, window.TheNUD.Value);
+
+            SetText(textBox, ".0115");
+            Assert.Equal(0.0115d, window.TheNUD.Value);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertDecimalTextInput()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.Decimal;
+
+            SetText(textBox, "42");
+            Assert.Equal(42d, window.TheNUD.Value);
+
+            SetText(textBox, "42.2");
+            Assert.Equal(42.2d, window.TheNUD.Value);
+
+            SetText(textBox, ".");
+            Assert.Equal(0d, window.TheNUD.Value);
+
+            SetText(textBox, ".9");
+            Assert.Equal(0.9d, window.TheNUD.Value);
+
+            SetText(textBox, ".0115");
+            Assert.Equal(0.0115d, window.TheNUD.Value);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertNumericTextInput()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.Numbers;
+
+            SetText(textBox, "42");
+            Assert.Equal(42d, window.TheNUD.Value);
+
+            SetText(textBox, "42.2");
+            Assert.Equal(null, window.TheNUD.Value);
+
+            SetText(textBox, ".");
+            Assert.Equal(null, window.TheNUD.Value);
+
+            SetText(textBox, ".9");
+            Assert.Equal(null, window.TheNUD.Value);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertHexadecimalTextInput()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.Numbers;
+            window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
+
+            SetText(textBox, "F");
+            Assert.Equal(15d, window.TheNUD.Value);
+
+            SetText(textBox, "1F");
+            Assert.Equal(31d, window.TheNUD.Value);
+
+            SetText(textBox, "37C5");
+            Assert.Equal(14277d, window.TheNUD.Value);
+
+            SetText(textBox, "ACDC");
+            Assert.Equal(44252d, window.TheNUD.Value);
+
+            SetText(textBox, "10000");
+            Assert.Equal(65536d, window.TheNUD.Value);
+
+            SetText(textBox, "AFFE");
+            Assert.Equal(45054d, window.TheNUD.Value);
+
+            SetText(textBox, "AFFE0815");
+            Assert.Equal(2952661013d, window.TheNUD.Value);
+        }
+
+        private static void SetText(TextBox textBox, string text)
+        {
+            textBox.Clear();
+            var textCompositionEventArgs = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, textBox, text));
+            textCompositionEventArgs.RoutedEvent = TextBox.PreviewTextInputEvent;
+            textBox.RaiseEvent(textCompositionEventArgs);
+            textCompositionEventArgs.RoutedEvent = TextBox.TextInputEvent;
+            textBox.RaiseEvent(textCompositionEventArgs);
+            textBox.RaiseEvent(new RoutedEventArgs(TextBox.LostFocusEvent));
+        }
+    }
+}
