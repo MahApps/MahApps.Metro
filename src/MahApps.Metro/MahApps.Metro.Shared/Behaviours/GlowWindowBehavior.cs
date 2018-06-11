@@ -39,14 +39,18 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
-            this.AssociatedObject.SourceInitialized += (o, args) =>
-                {
-                    this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
-                    var hwndSource = HwndSource.FromHwnd(this.handle);
-                    hwndSource?.AddHook(this.AssociatedObjectWindowProc);
-                };
+            this.AssociatedObject.SourceInitialized += this.AssociatedObjectSourceInitialized;
             this.AssociatedObject.Loaded += this.AssociatedObjectOnLoaded;
             this.AssociatedObject.Unloaded += this.AssociatedObjectUnloaded;
+        }
+
+        protected override void OnDetaching()
+        {
+            this.AssociatedObject.SourceInitialized -= this.AssociatedObjectSourceInitialized;
+            this.AssociatedObject.Loaded -= this.AssociatedObjectOnLoaded;
+            this.AssociatedObject.Unloaded -= this.AssociatedObjectUnloaded;
+
+            base.OnDetaching();
         }
 
         private void AssociatedObjectStateChanged(object sender, EventArgs e)
@@ -104,6 +108,13 @@ namespace MahApps.Metro.Behaviours
             if (this.right != null) this.right.IsGlowing = false;
             if (this.bottom != null) this.bottom.IsGlowing = false;
             this.Update();
+        }
+
+        private void AssociatedObjectSourceInitialized(object sender, EventArgs e)
+        {
+            this.handle = new WindowInteropHelper(this.AssociatedObject).Handle;
+            var hwndSource = HwndSource.FromHwnd(this.handle);
+            hwndSource?.AddHook(this.AssociatedObjectWindowProc);
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
