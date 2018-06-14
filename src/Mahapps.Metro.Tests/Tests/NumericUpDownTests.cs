@@ -42,6 +42,57 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
+        public async Task ShouldConvertTextInputWithStringFormat()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.All;
+            window.TheNUD.StringFormat = "{}{0:N2} cm";
+
+            SetText(textBox, "42");
+            Assert.Equal(42d, window.TheNUD.Value);
+            Assert.Equal("42.00 cm", textBox.Text);
+
+            SetText(textBox, "42.2");
+            Assert.Equal(42.2d, window.TheNUD.Value);
+            Assert.Equal("42.20 cm", textBox.Text);
+
+            SetText(textBox, ".");
+            Assert.Equal(0d, window.TheNUD.Value);
+            Assert.Equal("0.00 cm", textBox.Text);
+
+            SetText(textBox, ".9");
+            Assert.Equal(0.9d, window.TheNUD.Value);
+            Assert.Equal("0.90 cm", textBox.Text);
+
+            SetText(textBox, ".0115");
+            Assert.Equal(0.0115d, window.TheNUD.Value);
+            Assert.Equal("0.01 cm", textBox.Text);
+
+            SetText(textBox, ".0155");
+            Assert.Equal(0.0155d, window.TheNUD.Value);
+            Assert.Equal("0.02 cm", textBox.Text);
+
+            SetText(textBox, "100.00 cm");
+            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal("100.00 cm", textBox.Text);
+
+            SetText(textBox, "200.00cm");
+            Assert.Equal(200d, window.TheNUD.Value);
+            Assert.Equal("200.00 cm", textBox.Text);
+
+            SetText(textBox, "200.00");
+            Assert.Equal(200d, window.TheNUD.Value);
+            Assert.Equal("200.00 cm", textBox.Text);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         public async Task ShouldConvertDecimalTextInput()
         {
             await TestHost.SwitchToAppThread();
