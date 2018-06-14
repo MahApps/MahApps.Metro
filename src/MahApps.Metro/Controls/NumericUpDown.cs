@@ -142,7 +142,7 @@ namespace MahApps.Metro.Controls
             new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
 
         public static readonly DependencyProperty ParsingNumberStyleProperty = DependencyProperty.Register(
-            @"ParsingNumberStyle", 
+            "ParsingNumberStyle", 
             typeof(NumberStyles),
             typeof(NumericUpDown),
             new PropertyMetadata(NumberStyles.Any));
@@ -168,6 +168,9 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+        //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
+        private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
+        private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -1167,10 +1170,16 @@ namespace MahApps.Metro.Controls
             }
 
             var isNumeric = NumericInputMode == NumericInput.Numbers
-                            || ParsingNumberStyle == NumberStyles.AllowHexSpecifier
+                            || ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                             || ParsingNumberStyle == NumberStyles.HexNumber
                             || ParsingNumberStyle == NumberStyles.Integer
                             || ParsingNumberStyle == NumberStyles.Number;
+
+            var isHex = NumericInputMode == NumericInput.Numbers
+                        || ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
+                        || ParsingNumberStyle == NumberStyles.HexNumber;
+
+            text = TryGetNumberFromText(text, isHex);
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
@@ -1211,6 +1220,18 @@ namespace MahApps.Metro.Controls
 
             convertedValue = convertedInt;
             return true;
+        }
+
+        private string TryGetNumberFromText(string text, bool isHex)
+        {
+            if (isHex)
+            {
+                var hexMatches = RegexHexadecimal.Matches(text);
+                return hexMatches.Count > 0 ? hexMatches[0].Value : text;
+            }
+
+            var matches = RegexNumber.Matches(text);
+            return matches.Count > 0 ? matches[0].Value : text;
         }
     }
 }
