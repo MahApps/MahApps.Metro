@@ -951,12 +951,23 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
+                    var value = newValue.Value;
+
+                    if (format.ToUpper().Contains("P") || format.Contains("%"))
+                    {
+                        value = value / 100d;
+                    }
+                    else if (format.Contains("‰"))
+                    {
+                        value = value / 1000d;
+                    }
+
                     if (!format.Contains("{"))
                     {
                         // then we may have a StringFormat of e.g. "N0"
-                        return newValue.Value.ToString(format, culture);
+                        return value.ToString(format, culture);
                     }
-                    return string.Format(culture, format, newValue.Value);
+                    return string.Format(culture, format, value);
                 }
             }
 

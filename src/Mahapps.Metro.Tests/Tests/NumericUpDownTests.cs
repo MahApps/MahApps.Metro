@@ -93,6 +93,77 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
+        public async Task ShouldConvertTextInputWithPercentStringFormat()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.All;
+
+            window.TheNUD.Culture = CultureInfo.CreateSpecificCulture("en-EN");
+
+            window.TheNUD.StringFormat = "{}{0:P0}";
+            SetText(textBox, "100");
+            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal("100 %", textBox.Text);
+
+            SetText(textBox, "100 %");
+            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal("100 %", textBox.Text);
+
+            SetText(textBox, "100%");
+            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal("100 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "{}{0:P1}";
+            SetText(textBox, "-0.39678");
+            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.Equal("-0.4 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "{}{0:0%}";
+            SetText(textBox, "100%");
+            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal("100%", textBox.Text);
+
+            window.TheNUD.StringFormat = "P0";
+            SetText(textBox, "50");
+            Assert.Equal(50d, window.TheNUD.Value);
+            Assert.Equal("50 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "P1";
+            SetText(textBox, "-0.39678");
+            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.Equal("-0.4 %", textBox.Text);
+
+            window.TheNUD.Culture = CultureInfo.InvariantCulture;
+
+            window.TheNUD.StringFormat = "{}{0:P0}";
+            SetText(textBox, "10");
+            Assert.Equal(10d, window.TheNUD.Value);
+            Assert.Equal("10 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "{}{0:P1}";
+            SetText(textBox, "-0.39678");
+            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.Equal("-0.4 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "P0";
+            SetText(textBox, "1");
+            Assert.Equal(1d, window.TheNUD.Value);
+            Assert.Equal("1 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "P1";
+            SetText(textBox, "-0.39678");
+            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.Equal("-0.4 %", textBox.Text);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         public async Task ShouldConvertDecimalTextInput()
         {
             await TestHost.SwitchToAppThread();
