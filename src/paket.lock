@@ -31,10 +31,10 @@ GROUP cake
 RESTRICTION: == net45
 NUGET
   remote: https://www.nuget.org/api/v2
-    Cake (0.25)
+    Cake (0.29)
     Cake.Figlet (1.1)
-    Cake.Paket (2.0)
-    Cake.Paket.Module (2.0)
+    Cake.Paket (4.0)
+    Cake.Paket.Module (4.0)
     gitreleasemanager (0.7.1)
     GitVersion.CommandLine (4.0.0-beta0012)
     xunit.runner.console (2.4.0-rc.1.build4038)

@@ -39,10 +39,10 @@ group cake
 	framework: net45
 	source https://nuget.org/api/v2
 	
-	nuget Cake < 0.26
+	nuget Cake
 	nuget Cake.Figlet
 	nuget Cake.Paket
 	nuget Cake.Paket.Module
-	nuget GitVersion.CommandLine 4.0.0-beta0012
+	nuget GitVersion.CommandLine prerelease
 	nuget gitreleasemanager
 	nuget xunit.runner.console prerelease
