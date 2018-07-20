@@ -141,6 +141,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
 
+        public static readonly DependencyProperty ParsingNumberStyleProperty = DependencyProperty.Register(
+            "ParsingNumberStyle", 
+            typeof(NumberStyles),
+            typeof(NumericUpDown),
+            new PropertyMetadata(NumberStyles.Any));
+
         private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue != e.NewValue && e.NewValue != null)
@@ -162,14 +168,15 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        private static readonly Regex RegexStringFormatNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
+        //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
+        private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
+        private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
         private const string ElementNumericUp = "PART_NumericUp";
         private const string ElementTextBox = "PART_TextBox";
-        private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
         private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
@@ -466,6 +473,17 @@ namespace MahApps.Metro.Controls
             set { SetValue(SnapToMultipleOfIntervalProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the parsing number style for the value from text to numeric.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(NumberStyles.Any)]
+        public NumberStyles ParsingNumberStyle
+        {
+            get { return (NumberStyles)GetValue(ParsingNumberStyleProperty); }
+            set { SetValue(ParsingNumberStyleProperty, value); }
+        }
+
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
@@ -656,82 +674,11 @@ namespace MahApps.Metro.Controls
         
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = true;
-            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
-            {
-                return;
-            }
-
-            TextBox textBox = (TextBox)sender;
-            CultureInfo equivalentCulture = SpecificCultureInfo;
-            NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-
-            string text = e.Text;
-
-            if (char.IsDigit(text[0]))
-            {
-                if (textBox.Text.IndexOf(numberFormatInfo.NegativeSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0
-                    && textBox.Text.IndexOf(numberFormatInfo.PositiveSign, textBox.SelectionStart + textBox.SelectionLength, StrComp) < 0)
-                {
-                    e.Handled = false;
-                }
-            }
-            else
-            {
-                bool allTextSelected = textBox.SelectedText == textBox.Text;
-
-                if (numberFormatInfo.NumberDecimalSeparator == text)
-                {
-                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
-                    {
-                        if (NumericInputMode.HasFlag(NumericInput.Decimal))
-                        {
-                            e.Handled = false;
-                        }
-                    }
-                }
-                else
-                {
-                    if (numberFormatInfo.NegativeSign == text ||
-                        text == numberFormatInfo.PositiveSign)
-                    {
-                        if (textBox.SelectionStart == 0)
-                        {
-                            // check if text already has a + or - sign
-                            if (textBox.Text.Length > 1)
-                            {
-                                if (allTextSelected || 
-                                    (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
-                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp)))
-                                {
-                                    e.Handled = false;
-                                }
-                            }
-                            else
-                            {
-                                e.Handled = false;
-                            }
-                        }
-                        else if (textBox.SelectionStart > 0)
-                        {
-                            string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp) && NumericInputMode.HasFlag(NumericInput.Decimal))
-                            {
-                                e.Handled = false;
-                            }
-                        }
-                    }
-                    else if (text.Equals(ScientificNotationChar, StrComp) &&
-                             NumericInputMode.HasFlag(NumericInput.Decimal) &&
-                             textBox.SelectionStart > 0 &&
-                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
-                    {
-                        e.Handled = false;
-                    }
-                }
-            }
-
-            this._manualChange = this._manualChange || !e.Handled;
+            var textBox = ((TextBox)sender);
+            var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
+            double convertedValue;
+            e.Handled = !ValidateText(fullText, out convertedValue);
+            this._manualChange = true;
         }
 
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
@@ -1004,12 +951,23 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
+                    var value = newValue.Value;
+
+                    if (format.ToUpper().Contains("P") || format.Contains("%"))
+                    {
+                        value = value / 100d;
+                    }
+                    else if (format.Contains("‰"))
+                    {
+                        value = value / 1000d;
+                    }
+
                     if (!format.Contains("{"))
                     {
                         // then we may have a StringFormat of e.g. "N0"
-                        return newValue.Value.ToString(format, culture);
+                        return value.ToString(format, culture);
                     }
-                    return string.Format(culture, format, newValue.Value);
+                    return string.Format(culture, format, value);
                 }
             }
 
@@ -1108,23 +1066,6 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             _manualChange = _manualChange || e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod;
-
-            if (NumericInputMode.HasFlag(NumericInput.Decimal) && (e.Key == Key.Decimal || e.Key == Key.OemPeriod))
-            {
-                TextBox textBox = sender as TextBox;
-
-                if (textBox.Text.Contains(this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator) == false)
-                {
-                    //the control doesn't contai the decimal separator
-                    //so we get the current caret index to insert the current culture decimal separator
-                    var caret = textBox.CaretIndex;
-                    //update the control text
-                    textBox.Text = textBox.Text.Insert(caret, this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator);
-                    //move the caret to the correct position
-                    textBox.CaretIndex = caret + 1;
-                }
-                e.Handled = true;
-            }
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
@@ -1194,8 +1135,8 @@ namespace MahApps.Metro.Controls
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
             string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
-            double number;
-            if (!ValidateText(newText, out number))
+            double convertedValue;
+            if (!ValidateText(newText, out convertedValue))
             {
                 e.CancelCommand();
             }
@@ -1224,19 +1165,84 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            text = GetAnyNumberFromText(text);
+            convertedValue = 0d;
 
-            return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
+            if (text == SpecificCultureInfo.NumberFormat.PositiveSign
+                || text == SpecificCultureInfo.NumberFormat.NegativeSign)
+            {
+                return true;
+            }
+
+            if (text.Count(c => c == SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 1
+                || text.Count(c => c == SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 1
+                || text.Count(c => c == SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1)
+            {
+                return false;
+            }
+
+            var isNumeric = NumericInputMode == NumericInput.Numbers
+                            || ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
+                            || ParsingNumberStyle == NumberStyles.HexNumber
+                            || ParsingNumberStyle == NumberStyles.Integer
+                            || ParsingNumberStyle == NumberStyles.Number;
+
+            var isHex = NumericInputMode == NumericInput.Numbers
+                        || ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
+                        || ParsingNumberStyle == NumberStyles.HexNumber;
+
+            text = TryGetNumberFromText(text, isHex);
+
+            // If we are only accepting numbers then attempt to parse as an integer.
+            if (isNumeric)
+            {
+                return ConvertNumber(text, out convertedValue);
+            }
+
+            if (text == SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
+                || text == SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
+                || text == SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
+            {
+                return true;
+            }
+
+            if (!double.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out convertedValue))
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        private string GetAnyNumberFromText(string text)
+        private bool ConvertNumber(string text, out double convertedValue)
         {
-            var matches = RegexStringFormatNumber.Matches(text);
-            if (matches.Count > 0)
+            if (text.Any(c => c == SpecificCultureInfo.NumberFormat.NumberDecimalSeparator[0]
+                              || c == SpecificCultureInfo.NumberFormat.PercentDecimalSeparator[0]
+                              || c == SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator[0]))
             {
-                return matches[0].Value;
+                convertedValue = 0d;
+                return false;
             }
-            return text;
+
+            if (!long.TryParse(text, ParsingNumberStyle, SpecificCultureInfo, out var convertedInt))
+            {
+                convertedValue = convertedInt;
+                return false;
+            }
+
+            convertedValue = convertedInt;
+            return true;
+        }
+
+        private string TryGetNumberFromText(string text, bool isHex)
+        {
+            if (isHex)
+            {
+                var hexMatches = RegexHexadecimal.Matches(text);
+                return hexMatches.Count > 0 ? hexMatches[0].Value : text;
+            }
+
+            var matches = RegexNumber.Matches(text);
+            return matches.Count > 0 ? matches[0].Value : text;
         }
     }
 }

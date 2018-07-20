@@ -86,7 +86,7 @@ Task("NuGet-Paket-Restore")
 Task("Update-SolutionInfo")
     .Does(() =>
 {
-	var solutionInfo = "./MahApps.Metro/MahApps.Metro/Properties/AssemblyInfo.cs";
+	var solutionInfo = "./MahApps.Metro/Properties/AssemblyInfo.cs";
 	GitVersion(new GitVersionSettings { UpdateAssemblyInfo = true, UpdateAssemblyInfoFilePath = solutionInfo});
 });
 

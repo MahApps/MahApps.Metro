@@ -368,7 +368,7 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         StringFormat="0,000.00"
-                                        Value="{Binding ElementName=test, Path=Value, Mode=TwoWay}" />
+                                        Value="5" />
 
                 <Label Content="Select all on focus" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"

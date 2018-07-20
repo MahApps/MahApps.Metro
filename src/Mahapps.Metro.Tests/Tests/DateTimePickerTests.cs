@@ -1,12 +1,12 @@
-﻿namespace MahApps.Metro.Tests
-{
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Tests.TestHelpers;
-    using Xunit;
+﻿using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using Xunit;
 
+namespace MahApps.Metro.Tests
+{
     public class DateTimePickerTests : AutomationTestBase
     {
         [Fact]
