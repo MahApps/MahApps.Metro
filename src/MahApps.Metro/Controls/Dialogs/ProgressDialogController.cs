@@ -74,6 +74,11 @@ namespace MahApps.Metro.Controls.Dialogs
             this.WrappedDialog.Invoke(() => this.WrappedDialog.IsCancelable = value);
         }
 
+        public void SetUpdateImage(bool value)
+        {
+            this.WrappedDialog.Invoke(() => this.WrappedDialog.ShowMessagePicture = value);
+        }
+
         /// <summary>
         /// Sets the dialog's progress bar value and sets IsIndeterminate to false.
         /// </summary>

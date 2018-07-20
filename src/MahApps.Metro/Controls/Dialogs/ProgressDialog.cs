@@ -35,6 +35,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty ShowMessagePictureProperty = DependencyProperty.Register("ShowMessagePicture", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) => { ((ProgressDialog)s).PART_UpdateImage.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
+
 
         public string Message
         {
@@ -46,6 +48,15 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (bool)this.GetValue(IsCancelableProperty); }
             set { this.SetValue(IsCancelableProperty, value); }
+        }
+
+        public bool ShowMessagePicture
+        {
+            get
+            {
+                return (bool)this.GetValue(ShowMessagePictureProperty);
+            }
+            set { this.SetValue(ShowMessagePictureProperty, value); }
         }
 
         public string NegativeButtonText
