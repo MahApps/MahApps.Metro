@@ -47,6 +47,11 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowModalMessageExternal(title, message, style, settings);
         }
 
+        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
+        {
+            var metroWindow = GetMetroWindow(context);
+            return metroWindow.Invoke(() => metroWindow.ShowProgressAsync(title, message, isCancelable, settings));
+        }
 
         public Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null)
         {
@@ -85,12 +90,5 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             return metroWindow;
         }
-
-        public Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool showMessagePicture = false, bool isCancelable = false, MetroDialogSettings settings = null)
-        {
-            var metroWindow = GetMetroWindow(context);
-            return metroWindow.Invoke(() => metroWindow.ShowProgressAsync(title, message, showMessagePicture, isCancelable, settings));
-        }
-
     }
 }

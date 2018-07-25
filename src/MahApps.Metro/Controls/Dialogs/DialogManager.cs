@@ -206,17 +206,23 @@ namespace MahApps.Metro.Controls.Dialogs
             }).Unwrap();
         }
 
-
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool showMessagePicture = false, bool isCancelable = false, MetroDialogSettings settings = null)
+        /// <summary>
+        /// Creates a ProgressDialog inside of the current window.
+        /// </summary>
+        /// <param name="window">The MetroWindow</param>
+        /// <param name="title">The title of the ProgressDialog.</param>
+        /// <param name="message">The message within the ProgressDialog.</param>
+        /// <param name="isCancelable">Determines if the cancel button is visible.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
+        /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-
+            settings = settings ?? window.MetroDialogOptions;
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                 {
-                    settings = settings ?? window.MetroDialogOptions;
-
                     //create the dialog control
                     var dialog = new ProgressDialog(window, settings)
                     {
@@ -263,8 +269,6 @@ namespace MahApps.Metro.Controls.Dialogs
                 })));
             }).Unwrap();
         }
-
-      
 
         private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
         {

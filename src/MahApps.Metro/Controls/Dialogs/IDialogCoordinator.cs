@@ -48,10 +48,6 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
         LoginDialogData ShowModalLoginExternal(object context, string title, string message, LoginDialogSettings settings = null);
 
-
-        Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message, bool showMessagePicture = false,
-            bool isCancelable = false, MetroDialogSettings settings = null);
-
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -74,6 +70,17 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task promising the result of which button was pressed.</returns>
         MessageDialogResult ShowModalMessageExternal(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null);
 
+        /// <summary>
+        /// Creates a ProgressDialog inside of the current window.
+        /// </summary>
+        /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
+        /// <param name="title">The title of the ProgressDialog.</param>
+        /// <param name="message">The message within the ProgressDialog.</param>
+        /// <param name="isCancelable">Determines if the cancel button is visible.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
+        /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
+        Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
+            bool isCancelable = false, MetroDialogSettings settings = null);
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.        
