@@ -7,6 +7,8 @@ using Xunit;
 
 namespace MahApps.Metro.Tests
 {
+    using System.Windows.Media;
+
     public class ThemeManagerTest : AutomationTestBase
     {
         [Fact]
@@ -140,29 +142,29 @@ namespace MahApps.Metro.Tests
             Assert.Equal("Dark.Blue", theme.Name);
         }
 
-        //[Fact]
-        //[DisplayTestMethodName]
-        //public async Task CreateDynamicAccentWithColor()
-        //{
-        //    await TestHost.SwitchToAppThread();
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task CreateDynamicAccentWithColor()
+        {
+            await TestHost.SwitchToAppThread();
 
-        //    var applicationTheme = ThemeManager.DetectAppStyle(Application.Current);
+            var applicationTheme = ThemeManager.DetectTheme(Application.Current);
 
-        //    var ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Red, "CustomAccentRed"));
-        //    Assert.Null(ex);
+            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red, "CustomAccentRed", changeImmediately: true));
+            Assert.Null(ex);
 
-        //    var detected = ThemeManager.DetectAppStyle(Application.Current);
-        //    Assert.NotNull(detected);
-        //    Assert.Equal("CustomAccentRed", detected.Item2.Name);
+            var detected = ThemeManager.DetectTheme(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentRed", detected.Name);
 
-        //    ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Green, "CustomAccentGreen"));
-        //    Assert.Null(ex);
+            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Green, "CustomAccentGreen", changeImmediately: true));
+            Assert.Null(ex);
 
-        //    detected = ThemeManager.DetectAppStyle(Application.Current);
-        //    Assert.NotNull(detected);
-        //    Assert.Equal("CustomAccentGreen", detected.Item2.Name);
+            detected = ThemeManager.DetectTheme(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentGreen", detected.Name);
 
-        //    ThemeManager.ChangeAppStyle(Application.Current, applicationTheme.Item2, applicationTheme.Item1);
-        //}
+            ThemeManager.ChangeTheme(Application.Current, applicationTheme);
+        }
     }
 }

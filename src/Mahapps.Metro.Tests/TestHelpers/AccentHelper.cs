@@ -4,87 +4,110 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
-    public static class AccentHelper
+    using System.IO;
+    using System.Linq;
+    using System.Web.Script.Serialization;
+    using System.Windows.Markup;
+    using System.Xml;
+    using XamlColorSchemeGenerator;
+
+    public class ThemeHelper
     {
-        public static void ApplyColor(Color color, string accentName = null)
+        public static ResourceDictionary CreateTheme(string baseColorScheme, Color accentBaseColor, string name = null, bool changeImmediately = false)
         {
-            // create a runtime accent resource dictionary
+            name = name ?? $"RuntimeTheme_{accentBaseColor.ToString().Replace("#", string.Empty)}";
 
-            var resDictName = accentName ?? $"ApplicationAccent_{color.ToString().Replace("#", string.Empty)}.xaml";
+            var generatorParameters = GetGeneratorParameters();
+            var themeTemplateContent = GetThemeTemplateContent();
 
-            var resourceDictionary = new ResourceDictionary();
+            var variant = generatorParameters.BaseColorSchemes.First(x => x.Name == baseColorScheme);
+            var colorScheme = new ColorScheme();
+            colorScheme.Name = accentBaseColor.ToString().Replace("#", string.Empty);
+            var values = colorScheme.Values;
+            values.Add("AccentBaseColor", accentBaseColor.ToString());
+            values.Add("AccentColor", Color.FromArgb(204, accentBaseColor.R, accentBaseColor.G, accentBaseColor.B).ToString());
+            values.Add("AccentColor2", Color.FromArgb(153, accentBaseColor.R, accentBaseColor.G, accentBaseColor.B).ToString());
+            values.Add("AccentColor3", Color.FromArgb(102, accentBaseColor.R, accentBaseColor.G, accentBaseColor.B).ToString());
+            values.Add("AccentColor4", Color.FromArgb(51, accentBaseColor.R, accentBaseColor.G, accentBaseColor.B).ToString());
 
-            resourceDictionary.Add("HighlightColor", color);
-            resourceDictionary.Add("AccentBaseColor", color);
-            resourceDictionary.Add("AccentColor", Color.FromArgb((byte)(204), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor2", Color.FromArgb((byte)(153), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor3", Color.FromArgb((byte)(102), color.R, color.G, color.B));
-            resourceDictionary.Add("AccentColor4", Color.FromArgb((byte)(51), color.R, color.G, color.B));
+            values.Add("HighlightColor", accentBaseColor.ToString());
+            values.Add("IdealForegroundColor", IdealTextColor(accentBaseColor).ToString());
 
-            resourceDictionary.Add("HighlightBrush", GetSolidColorBrush((Color)resourceDictionary["HighlightColor"]));
-            resourceDictionary.Add("AccentBaseColorBrush", GetSolidColorBrush((Color)resourceDictionary["AccentBaseColor"]));
-            resourceDictionary.Add("AccentColorBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
-            resourceDictionary.Add("AccentColorBrush2", GetSolidColorBrush((Color)resourceDictionary["AccentColor2"]));
-            resourceDictionary.Add("AccentColorBrush3", GetSolidColorBrush((Color)resourceDictionary["AccentColor3"]));
-            resourceDictionary.Add("AccentColorBrush4", GetSolidColorBrush((Color)resourceDictionary["AccentColor4"]));
+            var xamlContent = new ColorSchemeGenerator().GenerateColorSchemeFileContent(generatorParameters, variant, colorScheme, themeTemplateContent, name, name);
 
-            resourceDictionary.Add("WindowTitleColorBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
+            var resourceDictionary = (ResourceDictionary)XamlReader.Parse(xamlContent);
 
-            resourceDictionary.Add("ProgressBrush", new LinearGradientBrush(
-                                       new GradientStopCollection(new[]
-                                                                  {
-                                                                      new GradientStop((Color)resourceDictionary["HighlightColor"], 0),
-                                                                      new GradientStop((Color)resourceDictionary["AccentColor3"], 1)
-                                                                  }),
-                                       // StartPoint="1.002,0.5" EndPoint="0.001,0.5"
-                                       startPoint: new Point(1.002, 0.5), endPoint: new Point(0.001, 0.5)));
+            var newTheme = new Theme(resourceDictionary);
 
-            resourceDictionary.Add("CheckmarkFill", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
-            resourceDictionary.Add("RightArrowFill", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
+            ThemeManager.AddTheme(newTheme.Resources);
 
-            resourceDictionary.Add("IdealForegroundColor", IdealTextColor(color));
-            resourceDictionary.Add("IdealForegroundColorBrush", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"]));
-            resourceDictionary.Add("IdealForegroundDisabledBrush", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"], 0.4));
-            resourceDictionary.Add("AccentSelectedColorBrush", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"]));
+            // Apply theme
+            if (changeImmediately)
+            {
+                ThemeManager.ChangeTheme(Application.Current, newTheme);
+            }
 
-            resourceDictionary.Add("MetroDataGrid.HighlightBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
-            resourceDictionary.Add("MetroDataGrid.HighlightTextBrush", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"]));
-            resourceDictionary.Add("MetroDataGrid.MouseOverHighlightBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor3"]));
-            resourceDictionary.Add("MetroDataGrid.FocusBorderBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
-            resourceDictionary.Add("MetroDataGrid.InactiveSelectionHighlightBrush", GetSolidColorBrush((Color)resourceDictionary["AccentColor2"]));
-            resourceDictionary.Add("MetroDataGrid.InactiveSelectionHighlightTextBrush", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"]));
+            return resourceDictionary;
+        }
 
-            resourceDictionary.Add("MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10", GetSolidColorBrush((Color)resourceDictionary["AccentColor"]));
-            resourceDictionary.Add("MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchMouseOverBrush.Win10", GetSolidColorBrush((Color)resourceDictionary["AccentColor2"]));
-            resourceDictionary.Add("MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorCheckedBrush.Win10", GetSolidColorBrush((Color)resourceDictionary["IdealForegroundColor"]));
+        public static string GetResourceDictionaryContent(ResourceDictionary resourceDictionary)
+        {
+            using (var sw = new StringWriter())
+            {
+                using (var writer = XmlWriter.Create(sw, new XmlWriterSettings
+                                                               {
+                                                                   Indent = true,
+                                                                   IndentChars = "    "
+                                                               }))
+                {
+                    XamlWriter.Save(resourceDictionary, writer);
 
-            // applying theme to MahApps
-            ThemeManager.AddAccent(resDictName, resourceDictionary);
-            var newAccent = ThemeManager.GetAccent(resDictName);
-            // detect current application theme
-            Tuple<AppTheme, Accent> applicationTheme = ThemeManager.DetectAppStyle(Application.Current);
-            ThemeManager.ChangeAppStyle(Application.Current, newAccent, applicationTheme.Item1);
+                    return sw.ToString();
+                }
+            }
         }
 
         /// <summary>
-        /// Determining Ideal Text Color Based on Specified Background Color
-        /// http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx
+        ///     Determining Ideal Text Color Based on Specified Background Color
+        ///     http://www.codeproject.com/KB/GDI-plus/IdealTextColor.aspx
         /// </summary>
-        /// <param name = "color">The bg.</param>
+        /// <param name="color">The bg.</param>
         /// <returns></returns>
         private static Color IdealTextColor(Color color)
         {
             const int nThreshold = 105;
-            var bgDelta = System.Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) + (color.B * 0.114));
-            var foreColor = (255 - bgDelta < nThreshold) ? Colors.Black : Colors.White;
+            var bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) + (color.B * 0.114));
+            var foreColor = 255 - bgDelta < nThreshold
+                                ? Colors.Black
+                                : Colors.White;
             return foreColor;
         }
 
-        private static SolidColorBrush GetSolidColorBrush(Color color, double opacity = 1d)
+        private static string GetThemeTemplateContent()
         {
-            var brush = new SolidColorBrush(color) { Opacity = opacity };
-            brush.Freeze();
-            return brush;
+            using (var stream = typeof(ThemeManager).Assembly.GetManifestResourceStream("MahApps.Metro.Styles.Themes.Theme.Template.xaml"))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        private static GeneratorParameters GetGeneratorParameters()
+        {
+            return new JavaScriptSerializer().Deserialize<GeneratorParameters>(GetGeneratorParametersJson());
+        }
+
+        private static string GetGeneratorParametersJson()
+        {
+            using (var stream = typeof(ThemeManager).Assembly.GetManifestResourceStream("MahApps.Metro.Styles.Themes.GeneratorParameters.json"))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
     }
 }
