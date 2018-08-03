@@ -337,7 +337,11 @@ namespace MahApps.Metro
             {
                 resources.BeginInit();
 
-                var oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
+                ResourceDictionary oldThemeResource = null;
+                if (oldTheme != null)
+                {
+                    oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
+                }
 
                 resources.MergedDictionaries.Add(newTheme.Resources);
 
