@@ -1,12 +1,7 @@
 ﻿{
   "TemplateFile": "Theme.Template.xaml",
   "DefaultValues": {
-    "IdealForegroundColor": "White",
-    "Fluent.Ribbon.Colors.DarkIdealForegroundDisabledColor": "#ADADAD",
-    "Fluent.Ribbon.Colors.ExtremeHighlightColor": "#FFFFD232",
-    "Fluent.Ribbon.Colors.DarkExtremeHighlightColor": "#FFF29536",
-    "Fluent.Ribbon.Brushes.ApplicationMenuItem.CheckBox.Background": "#FFFCF1C2",
-    "Fluent.Ribbon.Brushes.ApplicationMenuItem.CheckBox.BorderBrush": "#FFF29536"
+    "IdealForegroundColor": "White"
   },
   "BaseColorSchemes": [
     {

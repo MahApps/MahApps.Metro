@@ -2,7 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="options">
+
+    <!-- Matadata -->
+    <system:String x:Key="Theme.Name">{{ThemeName}}</system:String>
+    <system:String x:Key="Theme.DisplayName">{{ThemeDisplayName}}</system:String>
+    <system:String x:Key="Theme.BaseColorScheme">{{BaseColorScheme}}</system:String>
+    <system:String x:Key="Theme.ColorScheme">{{ColorScheme}}</system:String>
+    <SolidColorBrush x:Key="Theme.ShowcaseBrush" Color="{{AccentBaseColor}}" options:Freeze="True" />
 
     <!--  *************COLORS START*************  -->
 
@@ -36,6 +44,8 @@
 
     <Color x:Key="GrayNormal">{{GrayNormal}}</Color>
     <Color x:Key="GrayHover">{{GrayHover}}</Color>
+
+    <Color x:Key="FlyoutColor">{{FlyoutColor}}</Color>
 
     <!--  CORE CONTROL COLORS  -->
     <Color x:Key="ProgressIndeterminateColor1">#33878787</Color>
@@ -217,6 +227,8 @@
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorCheckedBrush.Win10" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10" Color="{{MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10" Color="{{MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10}}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="MahApps.Metro.Brushes.Badged.DisabledBackgroundBrush" Color="{{MahApps.Metro.Brushes.Badged.DisabledBackgroundBrush}}" options:Freeze="True" />
 
     <!--  HamburgerMenu  -->
 

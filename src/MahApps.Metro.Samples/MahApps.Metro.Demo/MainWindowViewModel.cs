@@ -35,9 +35,8 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var accent = ThemeManager.GetAccent(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+            var theme = ThemeManager.DetectTheme(Application.Current);
+            ThemeManager.ChangeTheme(Application.Current, theme.BaseColorScheme + "." + this.Name);
         }
     }
 
@@ -45,9 +44,7 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var appTheme = ThemeManager.GetAppTheme(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
+            ThemeManager.ChangeThemeBaseColor(Application.Current.Resources, this.Name);
         }
     }
 
@@ -64,14 +61,18 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.Accents
-                                            .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
+            this.AccentColors = ThemeManager.Themes
+                                            .GroupBy(x => x.ColorScheme)
+                                            .Select(x => x.First())
+                                            .Select(a => new AccentColorMenuData { Name = a.ColorScheme, ColorBrush = a.ShowcaseBrush })
                                             .ToList();
 
             // create metro theme color menu items for the demo
-            this.AppThemes = ThemeManager.AppThemes
-                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
-                                           .ToList();
+            this.AppThemes = ThemeManager.Themes
+                                         .GroupBy(x => x.BaseColorScheme)
+                                         .Select(x => x.First())
+                                         .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                                         .ToList();
 
 
             Albums = SampleData.Albums;
