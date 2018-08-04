@@ -26,7 +26,7 @@ NUGET
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
     WpfAnalyzers (2.1.3.2)
-    XamlColorSchemeGenerator (2.0.0.22)
+    XamlColorSchemeGenerator (2.0.0.25)
 
 GROUP cake
 RESTRICTION: == net45
