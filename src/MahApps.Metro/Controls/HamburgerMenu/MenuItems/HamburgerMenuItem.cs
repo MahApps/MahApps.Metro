@@ -261,7 +261,7 @@ namespace MahApps.Metro.Controls
             return ((HamburgerMenuItem)d).CanExecute;
         }
 
-        private bool canExecute;
+        private bool canExecute = true;
 
         private bool CanExecute
         {
