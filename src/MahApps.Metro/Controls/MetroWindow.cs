@@ -983,7 +983,7 @@ namespace MahApps.Metro.Controls
 
         private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
         {
-            if (e.Accent != null)
+            if (e.Theme != null)
             {
                 var flyouts = this.Flyouts.GetFlyouts().ToList();
                 // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
@@ -1003,7 +1003,7 @@ namespace MahApps.Metro.Controls
 
                 foreach (var flyout in flyouts)
                 {
-                    flyout.ChangeFlyoutTheme(e.Accent, e.AppTheme);
+                    flyout.ChangeFlyoutTheme(e.Theme);
                 }
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }

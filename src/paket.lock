@@ -21,11 +21,12 @@ NUGET
     Microsoft.Bcl.Async (1.0.168)
       Microsoft.Bcl (>= 1.1.8)
     Microsoft.Bcl.Build (1.0.21) - import_targets: false
-    MSBuild.Sdk.Extras (1.3)
+    MSBuild.Sdk.Extras (1.6.46)
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
     WpfAnalyzers (2.1.3.2)
+    XamlColorSchemeGenerator (2.0.0.25)
 
 GROUP cake
 RESTRICTION: == net45

@@ -70,9 +70,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             Application.Current.Invoke(() =>
                 {
-                    var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
-                    var theme = ThemeManager.GetAppTheme("BaseLight");
-                    ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+                    ThemeManager.ChangeTheme(Application.Current, "Light.Blue");
                 });
         }
 
