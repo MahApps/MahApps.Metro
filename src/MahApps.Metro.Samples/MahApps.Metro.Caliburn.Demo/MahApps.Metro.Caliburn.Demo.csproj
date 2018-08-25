@@ -4,6 +4,7 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
+        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

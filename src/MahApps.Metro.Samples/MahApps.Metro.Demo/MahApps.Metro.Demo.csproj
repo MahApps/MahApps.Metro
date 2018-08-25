@@ -4,6 +4,7 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
+        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
         <DefaultItemExcludes Condition=" '$(TargetFramework)' == 'net40' ">$(DefaultItemExcludes);$(MSBuildProjectDirectory)/HamburgerMenuRipple/**</DefaultItemExcludes>
     </PropertyGroup>
     <PropertyGroup>
