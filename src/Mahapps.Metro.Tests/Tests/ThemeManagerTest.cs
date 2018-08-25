@@ -1,56 +1,56 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
 using Xunit;
 
 namespace MahApps.Metro.Tests
 {
+    using System.Windows.Media;
+
     public class ThemeManagerTest : AutomationTestBase
     {
         [Fact]
         [DisplayTestMethodName]
-        public async Task ChangeAppStyleForAppShouldThrowArgumentNullException()
+        public async Task ChangeThemeForAppShouldThrowArgumentNullException()
         {
             await TestHost.SwitchToAppThread();
 
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle((Application)null, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseLight")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("UnknownTheme")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("UnknownAccentColor"), ThemeManager.GetAppTheme("BaseLight")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme((Application)null, ThemeManager.GetTheme("Light.Red")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme(Application.Current, ThemeManager.GetTheme("UnknownTheme")));
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task ChangeAppStyleForWindowShouldThrowArgumentNullException()
+        public async Task ChangeThemeForWindowShouldThrowArgumentNullException()
         {
             await TestHost.SwitchToAppThread();
 
             await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle((Window)null, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseLight")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current.MainWindow, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("UnknownTheme")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeAppStyle(Application.Current.MainWindow, ThemeManager.GetAccent("UnknownAccentColor"), ThemeManager.GetAppTheme("BaseLight")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme((Window)null, ThemeManager.GetTheme("Light.Red")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme(Application.Current.MainWindow, ThemeManager.GetTheme("UnknownTheme")));
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task CanAddAccentBeforeGetterIsCalled()
+        public async Task CanAddThemeBeforeGetterIsCalled()
         {
             await TestHost.SwitchToAppThread();
 
-            Assert.True(ThemeManager.AddAccent("TestAccent", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")));
-        }
+            Assert.False(ThemeManager.AddTheme(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Cobalt.xaml")));
 
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task CanAddAppThemeBeforeGetterIsCalled()
-        {
-            await TestHost.SwitchToAppThread();
-
-            Assert.True(ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml")));
+            var resource = new ResourceDictionary
+                           {
+                               {
+                                   "Theme.Name", "Runtime"
+                               },
+                               {
+                                   "Theme.DisplayName", "Runtime"
+                               }
+                           };
+            Assert.True(ThemeManager.AddTheme(resource));
         }
 
         [Fact]
@@ -61,14 +61,12 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Teal");
-            AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseDark");
-            ThemeManager.ChangeAppStyle(Application.Current, expectedAccent, expectedTheme);
+            var expectedTheme = ThemeManager.GetTheme("Dark.Teal");
+            ThemeManager.ChangeTheme(Application.Current, expectedTheme);
 
-            var theme = ThemeManager.DetectAppStyle(window);
+            var theme = ThemeManager.DetectTheme(window);
 
-            Assert.Equal(expectedTheme, theme.Item1);
-            Assert.Equal(expectedAccent, theme.Item2);
+            Assert.Equal(expectedTheme, theme);
         }
 
         [Fact]
@@ -77,20 +75,20 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            AppTheme theme = ThemeManager.GetInverseAppTheme(ThemeManager.GetAppTheme("BaseLight"));
+            var theme = ThemeManager.GetInverseTheme(ThemeManager.GetTheme("Light.Blue"));
 
-            Assert.Equal("BaseDark", theme.Name);
+            Assert.Equal("Dark.Blue", theme.Name);
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task GetInverseAppThemeReturnsLightTheme()
+        public async Task GetInverseThemeReturnsLightTheme()
         {
             await TestHost.SwitchToAppThread();
 
-            AppTheme theme = ThemeManager.GetInverseAppTheme(ThemeManager.GetAppTheme("BaseDark"));
+            var theme = ThemeManager.GetInverseTheme(ThemeManager.GetTheme("Dark.Blue"));
 
-            Assert.Equal("BaseLight", theme.Name);
+            Assert.Equal("Light.Blue", theme.Name);            
         }
 
         [Fact]
@@ -99,69 +97,49 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var appTheme = new AppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"));
+            var resource = new ResourceDictionary
+                           {
+                               {
+                                   "Theme.Name", "Runtime"
+                               },
+                               {
+                                   "Theme.DisplayName", "Runtime"
+                               }
+                           };
+            var theme = new Theme(resource);
 
-            AppTheme theme = ThemeManager.GetInverseAppTheme(appTheme);
+            var inverseTheme = ThemeManager.GetInverseTheme(theme);
 
-            Assert.Null(theme);
+            Assert.Null(inverseTheme);
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task GetAppThemeIsCaseInsensitive()
+        public async Task GetThemeIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();
 
-            AppTheme theme = ThemeManager.GetAppTheme("basedark");
+            var theme = ThemeManager.GetTheme("dark.blue");
 
             Assert.NotNull(theme);
-            Assert.Equal(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"), theme.Resources.Source);
+            Assert.Equal(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml"), theme.Resources.Source);
         }
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task GetAppThemeWithUriIsCaseInsensitive()
+        public async Task GetThemeWithUriIsCaseInsensitive()
         {
             await TestHost.SwitchToAppThread();
 
             var dic = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/basedark.xaml")
-            };
+                      {
+                          Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/daRK.Blue.xaml")
+                      };
 
-            AppTheme detected = ThemeManager.GetAppTheme(dic);
+            var theme = ThemeManager.GetTheme(dic);
 
-            Assert.NotNull(detected);
-            Assert.Equal("BaseDark", detected.Name);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task GetAccentIsCaseInsensitive()
-        {
-            await TestHost.SwitchToAppThread();
-
-            Accent accent = ThemeManager.GetAccent("blue");
-
-            Assert.NotNull(accent);
-            Assert.Equal(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"), accent.Resources.Source);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task GetAccentWithUriIsCaseInsensitive()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var dic = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/blue.xaml")
-            };
-
-            Accent detected = ThemeManager.GetAccent(dic);
-
-            Assert.NotNull(detected);
-            Assert.Equal("Blue", detected.Name);
+            Assert.NotNull(theme);
+            Assert.Equal("Dark.Blue", theme.Name);
         }
 
         [Fact]
@@ -170,23 +148,23 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var applicationTheme = ThemeManager.DetectAppStyle(Application.Current);
+            var applicationTheme = ThemeManager.DetectTheme(Application.Current);
 
-            var ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Red, "CustomAccentRed"));
+            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red, "CustomAccentRed", changeImmediately: true));
             Assert.Null(ex);
-            
-            var detected = ThemeManager.DetectAppStyle(Application.Current);
-            Assert.NotNull(detected);
-            Assert.Equal("CustomAccentRed", detected.Item2.Name);
 
-            ex = Record.Exception(() => AccentHelper.ApplyColor(Colors.Green, "CustomAccentGreen"));
+            var detected = ThemeManager.DetectTheme(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentRed", detected.Name);
+
+            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Green, "CustomAccentGreen", changeImmediately: true));
             Assert.Null(ex);
-            
-            detected = ThemeManager.DetectAppStyle(Application.Current);
-            Assert.NotNull(detected);
-            Assert.Equal("CustomAccentGreen", detected.Item2.Name);
 
-            ThemeManager.ChangeAppStyle(Application.Current, applicationTheme.Item2, applicationTheme.Item1);
+            detected = ThemeManager.DetectTheme(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal("CustomAccentGreen", detected.Name);
+
+            ThemeManager.ChangeTheme(Application.Current, applicationTheme);
         }
     }
 }

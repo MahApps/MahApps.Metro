@@ -1,4 +1,5 @@
 JetBrains.Annotations
+XamlColorSchemeGenerator
 ExposedObject
 
 Microsoft.Bcl redirects: on, framework: net40

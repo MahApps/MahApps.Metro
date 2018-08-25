@@ -15,7 +15,7 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseLight").Resources["BlackBrush"]).Color;
+            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetTheme("Light.Blue").Resources["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
         }

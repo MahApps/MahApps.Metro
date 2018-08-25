@@ -1,9 +1,10 @@
 // Only the target frameworks that are used in projects.
-framework: auto-detect
+framework: >= net40
 source https://nuget.org/api/v2
 
-nuget MSBuild.Sdk.Extras 1.3.0
-nuget WpfAnalyzers
+nuget MSBuild.Sdk.Extras 1.6.46
+nuget XamlColorSchemeGenerator
+nuget WpfAnalyzers < 2.1.4
 nuget JetBrains.Annotations
 nuget gitlink
 nuget Fody

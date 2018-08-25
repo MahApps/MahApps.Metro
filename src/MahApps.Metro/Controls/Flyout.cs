@@ -10,7 +10,9 @@ using System.Windows.Threading;
 using ControlzEx;
 
 namespace MahApps.Metro.Controls
-{    
+{
+    using System.Linq;
+
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>
@@ -274,10 +276,9 @@ namespace MahApps.Metro.Controls
             {
                 var windowTheme = DetectTheme(this);
 
-                if (windowTheme?.Item2 != null)
+                if (windowTheme != null)
                 {
-                    var accent = windowTheme.Item2;
-                    this.ChangeFlyoutTheme(accent, windowTheme.Item1);
+                    this.ChangeFlyoutTheme(windowTheme);
                 }
 
                 // we must certain to get the right foreground for window commands and buttons
@@ -288,39 +289,39 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal void ChangeFlyoutTheme(Accent windowAccent, AppTheme windowTheme)
+        internal void ChangeFlyoutTheme(MahApps.Metro.Theme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.ChangeTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.ChangeTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
-                    AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
+                    var inverseTheme = ThemeManager.GetInverseTheme(windowTheme);
 
                     if (inverseTheme == null)
                         throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
+                    ThemeManager.ChangeTheme(this.Resources, inverseTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
+                    ThemeManager.ChangeTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == "Dark" && x.ColorScheme == windowTheme.ColorScheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
+                    ThemeManager.ChangeTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == "Light" && x.ColorScheme == windowTheme.ColorScheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
             }
@@ -373,15 +374,15 @@ namespace MahApps.Metro.Controls
             resources.EndInit();
         }
 
-        private static Tuple<AppTheme, Accent> DetectTheme(Flyout flyout)
+        private static MahApps.Metro.Theme DetectTheme(Flyout flyout)
         {
             if (flyout == null)
                 return null;
 
             // first look for owner
             var window = flyout.ParentWindow;
-            var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
-            if (theme?.Item2 != null)
+            var theme = window != null ? ThemeManager.DetectTheme(window) : null;
+            if (theme != null)
             {
                 return theme;
             }
@@ -390,15 +391,15 @@ namespace MahApps.Metro.Controls
             if (Application.Current != null)
             {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectAppStyle(mainWindow) : null;
-                if (theme?.Item2 != null)
+                theme = mainWindow != null ? ThemeManager.DetectTheme(mainWindow) : null;
+                if (theme != null)
                 {
                     return theme;
                 }
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectAppStyle(Application.Current);
-                if (theme?.Item2 != null)
+                theme = ThemeManager.DetectTheme(Application.Current);
+                if (theme != null)
                 {
                     return theme;
                 }

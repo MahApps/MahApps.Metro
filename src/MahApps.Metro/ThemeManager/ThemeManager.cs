@@ -1,258 +1,144 @@
 ﻿// ReSharper disable once CheckNamespace
 namespace MahApps.Metro
 {
-    using System.Security;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Security;
     using System.Windows;
     using JetBrains.Annotations;
+    using Microsoft.Win32;
 
     /// <summary>
-    /// A class that allows for the detection and alteration of a theme and accent.
+    /// A class that allows for the detection and alteration of a theme.
     /// </summary>
     public static class ThemeManager
     {
-        private static IList<Accent> _accents;
-        private static IList<AppTheme> _appThemes;
+        private const string BaseResourcePath = "pack://application:,,,/MahApps.Metro;component/Styles/Themes/";
 
-        /// <summary>
-        /// Gets a list of all of default accents.
-        /// </summary>
-        public static IEnumerable<Accent> Accents
-        {
-            get
-            {
-                if (_accents != null)
-                    return _accents;
+        private const string BaseColorLight = "Light";
+        private const string BaseColorDark = "Dark";
 
-                var colors = new[] {
-                                       "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
-                                       "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
-                                   };
-
-                _accents = new List<Accent>(colors.Length);
-
-                try
-                {
-                    foreach (var color in colors)
-                    {
-                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
-                        _accents.Add(new Accent(color, resourceAddress));
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new MahAppsException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
-                }
-
-                return _accents;
-            }
-        }
+        private static IList<Theme> themes;
 
         /// <summary>
         /// Gets a list of all default themes.
         /// </summary>
-        public static IEnumerable<AppTheme> AppThemes
+        public static IEnumerable<Theme> Themes
         {
             get
             {
-                if (_appThemes != null)
-                    return _appThemes;
+                if (themes != null)
+                {
+                    return themes;
+                }
 
-                var themes = new[] { "BaseLight", "BaseDark" };
+                var baseColors = new[] { BaseColorLight, BaseColorDark };
+                var colors = new[]
+                             {
+                                 "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
+                                 "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
+                             };
 
-                _appThemes = new List<AppTheme>(themes.Length);
+                themes = new List<Theme>(baseColors.Length + colors.Length);
 
                 try
                 {
-                    foreach (var color in themes)
+                    foreach (var baseColor in baseColors)
                     {
-                        var resourceAddress = new Uri($"pack://application:,,,/MahApps.Metro;component/Styles/Accents/{color}.xaml");
-                        _appThemes.Add(new AppTheme(color, resourceAddress));
+                        foreach (var color in colors)
+                        {
+                            var resourceAddress = new Uri($"{BaseResourcePath}{baseColor}.{color}.xaml");
+                            themes.Add(new Theme(resourceAddress));
+                        }
                     }
                 }
                 catch (Exception e)
                 {
-                    throw new MahAppsException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
+                    throw new InvalidOperationException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
                 }
 
-                return _appThemes;
+                return themes;
             }
         }
 
         /// <summary>
-        /// Adds an accent with the given name and uniform resource identfier.
+        /// Adds an theme.
         /// </summary>
-        /// <param name="name">The name of the new Accent.</param>
-        /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>
-        /// <returns>true if the accent does not exists and can be added.</returns>
-        public static bool AddAccent([NotNull] string name, [NotNull] Uri resourceAddress)
-        {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
-
-            var accentExists = GetAccent(name) != null;
-            if (accentExists)
-            {
-                return false;
-            }
-
-            _accents.Add(new Accent(name, resourceAddress));
-            return true;
-        }
-
-        /// <summary>
-        /// Adds an accent with the given name and resource dictionary.
-        /// </summary>
-        /// <param name="name">The name of the new Accent.</param>
-        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
-        /// <returns>true if the accent does not exists and can be added.</returns>
-        public static bool AddAccent(string name, ResourceDictionary resourceDictionary)
-        {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
-
-            var accentExists = GetAccent(name) != null;
-            if (accentExists)
-            {
-                return false;
-            }
-
-            _accents.Add(new Accent(name, resourceDictionary));
-            return true;
-        }
-
-        /// <summary>
-        /// Adds an app theme with the given name.
-        /// </summary>
-        /// <param name="name">The name of the new AppTheme.</param>
-        /// <param name="resourceAddress">The URI of the AppTheme ResourceDictionary.</param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddAppTheme([NotNull] string name, [NotNull] Uri resourceAddress)
+        public static bool AddTheme([NotNull] Uri resourceAddress)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (resourceAddress == null) throw new ArgumentNullException(nameof(resourceAddress));
+            var theme = new Theme(resourceAddress);
 
-            var appThemeExists = GetAppTheme(name) != null;
-            if (appThemeExists)
+            var themeExists = GetTheme(theme.Name) != null;
+            if (themeExists)
             {
                 return false;
             }
 
-            _appThemes.Add(new AppTheme(name, resourceAddress));
+            themes.Add(new Theme(resourceAddress));
             return true;
         }
 
         /// <summary>
-        /// Adds an app theme with the given name.
+        /// Adds an theme.
         /// </summary>
-        /// <param name="name">The name of the new AppTheme.</param>
-        /// <param name="resourceDictionary">The ResourceDictionary of the accent.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary of the theme.</param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddAppTheme([NotNull] string name, [NotNull] ResourceDictionary resourceDictionary)
+        public static bool AddTheme([NotNull] ResourceDictionary resourceDictionary)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
-            if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));
+            var theme = new Theme(resourceDictionary);
 
-            var appThemeExists = GetAppTheme(name) != null;
-            if (appThemeExists)
+            var themeExists = GetTheme(theme.Name) != null;
+            if (themeExists)
             {
                 return false;
             }
 
-            _appThemes.Add(new AppTheme(name, resourceDictionary));
+            themes.Add(theme);
             return true;
         }
 
         /// <summary>
-        /// Gets app theme with the given resource dictionary.
+        /// Gets the <see cref="Theme"/> with the given name.
+        /// </summary>
+        /// <returns>The <see cref="Theme"/> or <c>null</c>, if the theme wasn't found</returns>
+        public static Theme GetTheme([NotNull] string name)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return Themes.FirstOrDefault(x => x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// Gets the <see cref="Theme"/> with the given resource dictionary.
         /// </summary>
         /// <param name="resources"><see cref="ResourceDictionary"/> from which the theme should be retrieved.</param>
-        /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(ResourceDictionary resources)
+        /// <returns>The <see cref="Theme"/> or <c>null</c>, if the theme wasn't found.</returns>
+        public static Theme GetTheme([NotNull] ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException(nameof(resources));
-
-            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
-        }
-
-        /// <summary>
-        /// Gets app theme with the given name and theme type (light or dark).
-        /// </summary>
-        /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(string appThemeName)
-        {
-            if (appThemeName == null) throw new ArgumentNullException(nameof(appThemeName));
-
-            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        /// <summary>
-        /// Gets the inverse <see cref="AppTheme" /> of the given <see cref="AppTheme"/>.
-        /// This method relies on the "Dark" or "Light" affix to be present.
-        /// </summary>
-        /// <param name="appTheme">The app theme.</param>
-        /// <returns>The inverse <see cref="AppTheme"/> or <c>null</c> if it couldn't be found.</returns>
-        /// <remarks>
-        /// Returns BaseLight, if BaseDark is given or vice versa.
-        /// Custom Themes must end with "Dark" or "Light" for this to work, for example "CustomDark" and "CustomLight".
-        /// </remarks>
-        public static AppTheme GetInverseAppTheme([NotNull] AppTheme appTheme)
-        {
-            if (appTheme == null) throw new ArgumentNullException(nameof(appTheme));
-
-            if (appTheme.Name.EndsWith("dark", StringComparison.OrdinalIgnoreCase))
+            if (resources == null)
             {
-                return GetAppTheme(appTheme.Name.ToLower().Replace("dark", "light"));
+                throw new ArgumentNullException(nameof(resources));
             }
 
-            if (appTheme.Name.EndsWith("light", StringComparison.OrdinalIgnoreCase))
+            var builtInTheme = Themes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
+            if (builtInTheme != null)
             {
-                return GetAppTheme(appTheme.Name.ToLower().Replace("light", "dark"));
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="Accent"/> with the given name.
-        /// </summary>
-        /// <returns>The <see cref="Accent"/> or <c>null</c>, if the app theme wasn't found</returns>
-        public static Accent GetAccent(string accentName)
-        {
-            if (accentName == null) throw new ArgumentNullException(nameof(accentName));
-
-            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        /// <summary>
-        /// Gets the <see cref="Accent"/> with the given resource dictionary.
-        /// </summary>
-        /// <param name="resources"><see cref="ResourceDictionary"/> from which the accent should be retrieved.</param>
-        /// <returns>The <see cref="Accent"/> or <c>null</c>, if the accent wasn't found.</returns>
-        public static Accent GetAccent(ResourceDictionary resources)
-        {
-            if (resources == null) throw new ArgumentNullException(nameof(resources));
-
-            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
-            if (builtInAccent != null)
-            {
-                return builtInAccent;
+                return builtInTheme;
             }
 
             // support dynamically created runtime resource dictionaries
             if (resources.Source == null)
             {
-                if (IsAccentDictionary(resources))
+                if (IsThemeDictionary(resources))
                 {
-                    return new Accent
-                    {
-                        Name = "Runtime accent",
-                        Resources = resources,
-                    };
+                    return new Theme(resources);
                 }
             }
 
@@ -260,39 +146,64 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Determines whether the specified resource dictionary represents an <see cref="Accent"/>.
+        /// Gets the inverse <see cref="Theme" /> of the given <see cref="Theme"/>.
+        /// This method relies on the "Dark" or "Light" affix to be present.
+        /// </summary>
+        /// <param name="theme">The app theme.</param>
+        /// <returns>The inverse <see cref="Theme"/> or <c>null</c> if it couldn't be found.</returns>
+        /// <remarks>
+        /// Returns BaseLight, if BaseDark is given or vice versa.
+        /// Custom Themes must end with "Dark" or "Light" for this to work, for example "CustomDark" and "CustomLight".
+        /// </remarks>
+        public static Theme GetInverseTheme([NotNull] Theme theme)
+        {
+            if (theme == null)
+            {
+                throw new ArgumentNullException(nameof(theme));
+            }
+
+            if (theme.Name.StartsWith("dark.", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetTheme("Light." + theme.Name.Substring("dark.".Length));
+            }
+
+            if (theme.Name.StartsWith("light.", StringComparison.OrdinalIgnoreCase))
+            {
+                return GetTheme("Dark." + theme.Name.Substring("light.".Length));
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Determines whether the specified resource dictionary represents an <see cref="Theme"/>.
         /// <para />
-        /// This might include runtime accents which do not have a resource uri.
+        /// This might include runtime themes which do not have a resource uri.
         /// </summary>
         /// <param name="resources">The resources.</param>
-        /// <returns><c>true</c> if the resource dictionary is an <see cref="Accent"/>; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the resource dictionary is an <see cref="Theme"/>; otherwise, <c>false</c>.</returns>
         /// <exception cref="System.ArgumentNullException">resources</exception>
-        public static bool IsAccentDictionary(ResourceDictionary resources)
+        public static bool IsThemeDictionary([NotNull] ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException(nameof(resources));
+            if (resources == null)
+            {
+                throw new ArgumentNullException(nameof(resources));
+            }
 
             // Note: add more checks if these keys aren't sufficient
             var styleKeys = new List<string>(new[]
-            {
-                "HighlightColor",
-                "AccentBaseColor",
-                "AccentColor",
-                "AccentColor2",
-                "AccentColor3",
-                "AccentColor4",
-                "HighlightBrush",
-                "AccentBaseColorBrush",
-                "AccentColorBrush",
-                "AccentColorBrush2",
-                "AccentColorBrush3",
-                "AccentColorBrush4",
-            });
+                                             {
+                                                 "HighlightColor",
+                                                 "AccentBaseColor",
+                                                 "HighlightBrush",
+                                                 "AccentBaseColorBrush"
+                                             });
 
             foreach (var styleKey in styleKeys)
             {
                 // Note: do not use contains, because that will look in all merged dictionaries as well. We need to check
                 // out the actual keys of the current resource dictionary
-                if (!(from object resourceKey in resources.Keys 
+                if (!(from object resourceKey in resources.Keys
                      select resourceKey as string).Any(keyAsString => string.Equals(keyAsString, styleKey)))
                 {
                     return false;
@@ -310,24 +221,17 @@ namespace MahApps.Metro
         /// <returns>The resource object or null, if the resource wasn't found.</returns>
         public static object GetResourceFromAppStyle(Window window, string key)
         {
-            var appStyle = window != null ? DetectAppStyle(window) : DetectAppStyle(Application.Current);
-            if (appStyle == null && window != null)
+            var appStyle = window != null
+                               ? DetectTheme(window)
+                               : DetectTheme(Application.Current);
+
+            if (appStyle == null
+                && window != null)
             {
-                appStyle = DetectAppStyle(Application.Current); //no resources in the window's resources.
+                appStyle = DetectTheme(Application.Current); //no resources in the window's resources.
             }
 
-            if (appStyle == null)
-            {
-                // nothing to do here, we can't found an app style (make sure all custom themes are added!)
-                return null;
-            }
-
-            object resource = appStyle.Item1.Resources[key]; //check the theme first
-
-            //next check the accent
-            var accentResource = appStyle.Item2.Resources[key];
-            if (accentResource != null)
-                return accentResource;
+            var resource = appStyle?.Resources[key];
 
             return resource;
         }
@@ -335,140 +239,170 @@ namespace MahApps.Metro
         /// <summary>
         /// Change the theme for the whole application.
         /// </summary>
-        /// <param name="app"></param>
-        /// <param name="themeName"></param>
         [SecurityCritical]
-        public static void ChangeAppTheme(Application app, string themeName)
+        public static void ChangeTheme([NotNull] Application app, [NotNull] string themeName)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
-            if (themeName == null) throw new ArgumentNullException(nameof(themeName));
-
-            var oldTheme = DetectAppStyle(app);
-            AppTheme matched;
-            if ((matched = GetAppTheme(themeName)) != null)
+            if (app == null)
             {
-                ChangeAppStyle(app.Resources, oldTheme, oldTheme.Item2, matched);
+                throw new ArgumentNullException(nameof(app));
+            }
+
+            if (themeName == null)
+            {
+                throw new ArgumentNullException(nameof(themeName));
+            }
+
+            var oldTheme = DetectTheme(app);
+            Theme matched;
+            if ((matched = GetTheme(themeName)) != null)
+            {
+                ChangeTheme(app.Resources, oldTheme, matched);
             }
         }
 
         /// <summary>
         /// Change theme for the given window.
         /// </summary>
-        /// <param name="window"></param>
-        /// <param name="themeName"></param>
         [SecurityCritical]
-        public static void ChangeAppTheme(Window window, string themeName)
+        public static void ChangeTheme([NotNull] Window window, [NotNull] string themeName)
         {
-            if (window == null) throw new ArgumentNullException(nameof(window));
-            if (themeName == null) throw new ArgumentNullException(nameof(themeName));
-
-            var oldTheme = DetectAppStyle(window);
-            AppTheme matched;
-            if ((matched = GetAppTheme(themeName)) != null)
+            if (window == null)
             {
-                ChangeAppStyle(window.Resources, oldTheme, oldTheme.Item2, matched);
+                throw new ArgumentNullException(nameof(window));
+            }
+
+            if (themeName == null)
+            {
+                throw new ArgumentNullException(nameof(themeName));
+            }
+
+            var oldTheme = DetectTheme(window);
+            Theme matched;
+            if ((matched = GetTheme(themeName)) != null)
+            {
+                ChangeTheme(window.Resources, oldTheme, matched);
             }
         }
 
         /// <summary>
-        /// Change accent and theme for the whole application.
+        /// Change theme for the whole application.
         /// </summary>
         /// <param name="app">The instance of Application to change.</param>
-        /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeAppStyle([NotNull] Application app, [NotNull] Accent newAccent, [NotNull] AppTheme newTheme)
+        public static void ChangeTheme([NotNull] Application app, [NotNull] Theme newTheme)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
-            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
-            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
+            if (app == null)
+            {
+                throw new ArgumentNullException(nameof(app));
+            }
 
-            var oldTheme = DetectAppStyle(app);
-            ChangeAppStyle(app.Resources, oldTheme, newAccent, newTheme);
+            if (newTheme == null)
+            {
+                throw new ArgumentNullException(nameof(newTheme));
+            }
+
+            var oldTheme = DetectTheme(app);
+            ChangeTheme(app.Resources, oldTheme, newTheme);
         }
 
         /// <summary>
-        /// Change accent and theme for the given window.
+        /// Change theme for the given window.
         /// </summary>
         /// <param name="window">The Window to change.</param>
-        /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeAppStyle([NotNull] Window window, [NotNull] Accent newAccent, [NotNull] AppTheme newTheme)
+        public static void ChangeTheme([NotNull] Window window, [NotNull] Theme newTheme)
         {
-            if (window == null) throw new ArgumentNullException(nameof(window));
-            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
-            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
 
-            var oldTheme = DetectAppStyle(window);
-            ChangeAppStyle(window.Resources, oldTheme, newAccent, newTheme);
+            if (newTheme == null)
+            {
+                throw new ArgumentNullException(nameof(newTheme));
+            }
+
+            var oldTheme = DetectTheme(window);
+            ChangeTheme(window.Resources, oldTheme, newTheme);
         }
 
         [SecurityCritical]
-        private static void ChangeAppStyle(ResourceDictionary resources, Tuple<AppTheme, Accent> oldThemeInfo, Accent newAccent, AppTheme newTheme)
+        private static void ChangeTheme(ResourceDictionary resources, Theme oldTheme, Theme newTheme)
         {
             var themeChanged = false;
-            if (oldThemeInfo != null)
-            {
-                var oldAccent = oldThemeInfo.Item2;
-                if (oldAccent != null && oldAccent.Name != newAccent.Name)
-                {
-                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldAccent.Resources));
-                    if (oldAccentResource != null)
-                    {
-                        resources.MergedDictionaries.Remove(oldAccentResource);
-                    }
-                    
-                    resources.MergedDictionaries.Add(newAccent.Resources);
 
-                    themeChanged = true;
+            if (oldTheme != newTheme)
+            {
+                resources.BeginInit();
+
+                ResourceDictionary oldThemeResource = null;
+                if (oldTheme != null)
+                {
+                    oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
                 }
 
-                var oldTheme = oldThemeInfo.Item1;
-                if (oldTheme != null && oldTheme != newTheme)
+                resources.MergedDictionaries.Add(newTheme.Resources);
+
+                if (oldThemeResource != null)
                 {
-                    var oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
-                    if (oldThemeResource != null)
-                    {
-                        resources.MergedDictionaries.Remove(oldThemeResource);
-                    }
-
-                    resources.MergedDictionaries.Add(newTheme.Resources);
-
-                    themeChanged = true;
+                    resources.MergedDictionaries.Remove(oldThemeResource);
                 }
-            }
-            else
-            {
-                ChangeAppStyle(resources, newAccent, newTheme);
 
                 themeChanged = true;
+                resources.EndInit();
             }
 
             if (themeChanged)
             {
-                OnThemeChanged(newAccent, newTheme);
+                OnThemeChanged(newTheme);
             }
         }
 
         /// <summary>
-        /// Changes the accent and theme of a ResourceDictionary directly.
+        /// Changes the theme of a ResourceDictionary directly.
         /// </summary>
         /// <param name="resources">The ResourceDictionary to modify.</param>
-        /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
         /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeAppStyle(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
+        public static void ChangeTheme([NotNull] ResourceDictionary resources, [NotNull] Theme newTheme)
         {
-            if (resources == null) throw new ArgumentNullException(nameof(resources));
-            if (newAccent == null) throw new ArgumentNullException(nameof(newAccent));
-            if (newTheme == null) throw new ArgumentNullException(nameof(newTheme));
+            if (resources == null)
+            {
+                throw new ArgumentNullException(nameof(resources));
+            }
 
-            ApplyResourceDictionary(newAccent.Resources, resources);
+            if (newTheme == null)
+            {
+                throw new ArgumentNullException(nameof(newTheme));
+            }
+
             ApplyResourceDictionary(newTheme.Resources, resources);
         }
-        [SecurityCritical]
 
+        [SecurityCritical]
+        public static void ChangeThemeBaseColor([NotNull] ResourceDictionary resources, string baseColor)
+        {
+            var currentTheme = DetectTheme(resources);
+
+            if (currentTheme == null)
+            {
+                return;
+            }
+
+            var newTheme = Themes.FirstOrDefault(x => x.BaseColorScheme == baseColor && x.ColorScheme == currentTheme.ColorScheme);
+
+            if (newTheme == null)
+            {
+                Trace.TraceError($"Could not find a theme with base color scheme '{baseColor}' and color scheme '{currentTheme.ColorScheme}'.");
+                return;
+            }
+
+            ChangeTheme(resources, currentTheme, newTheme);
+        }
+
+        [SecurityCritical]
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
             oldRd.BeginInit();
@@ -476,7 +410,9 @@ namespace MahApps.Metro
             foreach (DictionaryEntry r in newRd)
             {
                 if (oldRd.Contains(r.Key))
+                {
                     oldRd.Remove(r.Key);
+                }
 
                 oldRd.Add(r.Key, r.Value);
             }
@@ -494,10 +430,17 @@ namespace MahApps.Metro
         /// or
         /// toRD
         /// </exception>
-        internal static void CopyResource(ResourceDictionary fromRD, ResourceDictionary toRD)
+        internal static void CopyResource([NotNull] ResourceDictionary fromRD, [NotNull] ResourceDictionary toRD)
         {
-            if (fromRD == null) throw new ArgumentNullException(nameof(fromRD));
-            if (toRD == null) throw new ArgumentNullException(nameof(toRD));
+            if (fromRD == null)
+            {
+                throw new ArgumentNullException(nameof(fromRD));
+            }
+
+            if (toRD == null)
+            {
+                throw new ArgumentNullException(nameof(toRD));
+            }
 
             ApplyResourceDictionary(fromRD, toRD);
             foreach (var rd in fromRD.MergedDictionaries)
@@ -507,89 +450,111 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Scans the window resources and returns it's accent and theme.
+        /// Scans the window resources and returns it's theme.
         /// </summary>
-        public static Tuple<AppTheme, Accent> DetectAppStyle()
+        [CanBeNull]
+        public static Theme DetectTheme()
         {
-            try
-            {
-                var style = DetectAppStyle(Application.Current.MainWindow);
+            var mainWindow = Application.Current?.MainWindow;
 
-                if (style != null)
+            if (mainWindow != null)
+            {
+                try
                 {
-                    return style;
+                    var style = DetectTheme(mainWindow);
+
+                    if (style != null)
+                    {
+                        return style;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine($"Failed to detect app style on main window.{Environment.NewLine}{ex}");
                 }
             }
-            catch (Exception ex)
-            {                
-                Trace.WriteLine($"Failed to detect app style on main window.{Environment.NewLine}{ex}");
-            }
 
-            return DetectAppStyle(Application.Current);
+            return DetectTheme(Application.Current);
         }
 
         /// <summary>
-        /// Scans the window resources and returns it's accent and theme.
+        /// Scans the window resources and returns it's theme.
         /// </summary>
         /// <param name="window">The Window to scan.</param>
-        public static Tuple<AppTheme, Accent> DetectAppStyle(Window window)
+        public static Theme DetectTheme([NotNull] Window window)
         {
-            if (window == null) throw new ArgumentNullException(nameof(window));
+            if (window == null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
 
-            var detectedStyle = DetectAppStyle(window.Resources);
+            var detectedStyle = DetectTheme(window.Resources);
             if (detectedStyle == null)
-                detectedStyle = DetectAppStyle(Application.Current.Resources);
+            {
+                detectedStyle = DetectTheme(Application.Current.Resources);
+            }
 
             return detectedStyle;
         }
 
         /// <summary>
-        /// Scans the application resources and returns it's accent and theme.
+        /// Scans the application resources and returns it's theme.
         /// </summary>
         /// <param name="app">The Application instance to scan.</param>
-        public static Tuple<AppTheme, Accent> DetectAppStyle(Application app)
+        [CanBeNull]
+        public static Theme DetectTheme([NotNull] Application app)
         {
-            if (app == null) throw new ArgumentNullException(nameof(app));
+            if (app == null)
+            {
+                throw new ArgumentNullException(nameof(app));
+            }
 
-            return DetectAppStyle(app.Resources);
+            return DetectTheme(app.Resources);
         }
 
         /// <summary>
-        /// Scans a resources and returns it's accent and theme.
+        /// Scans a resources and returns it's theme.
         /// </summary>
         /// <param name="resources">The ResourceDictionary to check.</param>
-        private static Tuple<AppTheme, Accent> DetectAppStyle(ResourceDictionary resources)
+        [CanBeNull]
+        private static Theme DetectTheme([NotNull] ResourceDictionary resources)
         {
-            if (resources == null) throw new ArgumentNullException(nameof(resources));
+            if (resources == null)
+            {
+                throw new ArgumentNullException(nameof(resources));
+            }
 
-            AppTheme currentTheme = null;
-            Tuple<AppTheme, Accent> detectedAccentTheme = null;
+            Theme currentTheme = null;
 
             if (DetectThemeFromResources(ref currentTheme, resources))
             {
-                if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
-                    return new Tuple<AppTheme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+                return currentTheme;
             }
 
             return null;
         }
 
-        internal static bool DetectThemeFromAppResources(out AppTheme detectedTheme)
+        internal static bool DetectThemeFromAppResources(out Theme detectedTheme)
         {
             detectedTheme = null;
 
             return DetectThemeFromResources(ref detectedTheme, Application.Current.Resources);
         }
 
-        private static bool DetectThemeFromResources(ref AppTheme detectedTheme, ResourceDictionary dict)
+        private static bool DetectThemeFromResources(ref Theme detectedTheme, ResourceDictionary dict)
         {
             var enumerator = dict.MergedDictionaries.Reverse().GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var currentRd = enumerator.Current;
 
-                AppTheme matched;
-                if ((matched = GetAppTheme(currentRd)) != null)
+                if (currentRd == null)
+                {
+                    continue;
+                }
+
+                Theme matched;
+                if ((matched = GetTheme(currentRd)) != null)
                 {
                     detectedTheme = matched;
                     enumerator.Dispose();
@@ -606,28 +571,8 @@ namespace MahApps.Metro
             return false;
         }
 
-        internal static bool GetThemeFromResources(AppTheme presetTheme, ResourceDictionary dict, ref Tuple<AppTheme, Accent> detectedAccentTheme)
-        {
-            AppTheme currentTheme = presetTheme;
-
-            Accent matched;
-            if ((matched = GetAccent(dict)) != null)
-            {
-                detectedAccentTheme = Tuple.Create(currentTheme, matched);
-                return true;
-            }
-
-            foreach (ResourceDictionary rd in dict.MergedDictionaries.Reverse())
-            {
-                if (GetThemeFromResources(presetTheme, rd, ref detectedAccentTheme))
-                    return true;
-            }
-
-            return false;
-        }
-
         /// <summary>
-        /// This event fires if accent color and theme was changed
+        /// This event fires if the theme was changed
         /// this should be using the weak event pattern, but for now it's enough
         /// </summary>
         public static event EventHandler<OnThemeChangedEventArgs> IsThemeChanged;
@@ -637,25 +582,28 @@ namespace MahApps.Metro
         /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
         /// </summary>
         [SecurityCritical]
-        private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
+        private static void OnThemeChanged(Theme newTheme)
         {
-            IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme, newAccent));
+            IsThemeChanged?.Invoke(Application.Current, new OnThemeChangedEventArgs(newTheme));
         }
 
         private static bool AreResourceDictionarySourcesEqual(ResourceDictionary first, ResourceDictionary second)
         {
-            if (first == null || second == null)
+            if (first == null
+                || second == null)
             {
                 return false;
             }
 
-            if (first.Source == null || second.Source == null)
+            if (first.Source == null
+                || second.Source == null)
             {
                 try
                 {
                     foreach (var key in first.Keys)
                     {
-                        var isTheSame = second.Contains(key) && Equals(first[key], second[key]);
+                        var isTheSame = second.Contains(key)
+                                        && Equals(first[key], second[key]);
                         if (!isTheSame)
                         {
                             return false;
@@ -673,6 +621,73 @@ namespace MahApps.Metro
 
             return Uri.Compare(first.Source, second.Source, UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
         }
+
+        #region WindowsAppModeSetting
+
+        /// <summary>
+        /// Synchronizes the current <see cref="Theme"/> with the "app mode" setting from windows.
+        /// </summary>
+        public static void SyncThemeWithWindowsAppModeSetting()
+        {
+            var baseColor = AppsUseLightTheme()
+                               ? BaseColorLight
+                               : BaseColorDark;
+
+            ChangeThemeBaseColor(Application.Current.Resources, baseColor);
+        }
+
+        private static bool isAutomaticWindowsAppModeSettingSyncEnabled;
+
+        /// <summary>
+        /// Gets or sets wether changes to the "app mode" setting from windows should be detected at runtime and the current <see cref="Theme"/> be changed accordingly.
+        /// </summary>
+        public static bool IsAutomaticWindowsAppModeSettingSyncEnabled
+        {
+            get { return isAutomaticWindowsAppModeSettingSyncEnabled; }
+
+            set
+            {
+                if (value == isAutomaticWindowsAppModeSettingSyncEnabled)
+                {
+                    return;
+                }
+
+                isAutomaticWindowsAppModeSettingSyncEnabled = value;
+
+                if (isAutomaticWindowsAppModeSettingSyncEnabled)
+                {
+                    SystemEvents.UserPreferenceChanged += HandleUserPreferenceChanged;
+                }
+                else
+                {
+                    SystemEvents.UserPreferenceChanged -= HandleUserPreferenceChanged;
+                }
+            }
+        }
+
+        private static void HandleUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            if (e.Category == UserPreferenceCategory.General)
+            {
+                SyncThemeWithWindowsAppModeSetting();
+            }
+        }
+
+        private static bool AppsUseLightTheme()
+        {
+            try
+            {
+                return Convert.ToBoolean(Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", true));
+            }
+            catch (Exception exception)
+            {
+                Trace.WriteLine(exception);
+            }
+
+            return true;
+        }
+
+        #endregion WindowsAppModeSetting
     }
 
     /// <summary>
@@ -683,20 +698,14 @@ namespace MahApps.Metro
         /// <summary>
         /// Creates a new instance of this class.
         /// </summary>
-        public OnThemeChangedEventArgs(AppTheme appTheme, Accent accent)
+        public OnThemeChangedEventArgs(Theme theme)
         {
-            this.AppTheme = appTheme;
-            this.Accent = accent;
+            this.Theme = theme;
         }
 
         /// <summary>
         /// The new theme.
         /// </summary>
-        public AppTheme AppTheme { get; set; }
-
-        /// <summary>
-        /// The new accent
-        /// </summary>
-        public Accent Accent { get; set; }
+        public Theme Theme { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 <Project Sdk="MSBuild.Sdk.Extras">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro</AssemblyName>
         <RootNamespace>MahApps.Metro</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <ExtrasDefaultPageExcludes>$(ExtrasDefaultPageExcludes);**\*.Template.xaml</ExtrasDefaultPageExcludes>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -13,10 +13,15 @@
     </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
+        <EmbeddedResource Include="**\*.Template.xaml" />
+        <EmbeddedResource Include="**\GeneratorParameters.json" />
         <None Include="paket.references" />
     </ItemGroup>
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
     </ItemGroup>
+    <Target Name="GenerateXamlFiles" AfterTargets="CollectPackageReferences">    
+        <Exec Command="&quot;$(MSBuildProjectDirectory)\..\packages\XamlColorSchemeGenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+    </Target>
     <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
