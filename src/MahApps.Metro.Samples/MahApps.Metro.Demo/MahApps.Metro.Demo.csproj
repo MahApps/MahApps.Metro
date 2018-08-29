@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras">
     <!-- Project properties -->
     <PropertyGroup>
@@ -6,6 +6,7 @@
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
         <DefaultItemExcludes Condition=" '$(TargetFramework)' == 'net40' ">$(DefaultItemExcludes);$(MSBuildProjectDirectory)/HamburgerMenuRipple/**</DefaultItemExcludes>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -16,6 +17,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+        <PackageReference Condition = "'$(TargetFramework)' != 'net40'" Include="MaterialDesignThemes" Version="2.5.0-ci*" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />

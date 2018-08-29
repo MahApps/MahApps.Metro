@@ -4,8 +4,6 @@ MahApps.Metro.IconPacks
 NHotkey
 NHotkey.Wpf
 
-MaterialDesignThemes framework: >= net45
-
 Microsoft.Bcl redirects: on, framework: net40
 Microsoft.Bcl.Async framework: net40
 Microsoft.Bcl.Build import_targets: true, framework: net40
