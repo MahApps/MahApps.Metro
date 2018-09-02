@@ -892,7 +892,6 @@ namespace MahApps.Metro.Controls
             StylizedBehaviors.SetBehaviors(this, collection);
         }
 
-#if NET4_5
         protected override async void OnClosing(CancelEventArgs e)
         {
             // Don't overwrite cancellation for close
@@ -905,20 +904,6 @@ namespace MahApps.Metro.Controls
 
             base.OnClosing(e);
         }
-#else
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            // Don't overwrite cancellation for close
-            if (e.Cancel == false)
-            {
-                // #2409: don't close window if there is a dialog still open
-                var dialog = this.Invoke(() => this.metroActiveDialogContainer?.Children.OfType<BaseMetroDialog>().LastOrDefault());
-                e.Cancel = dialog != null && (this.ShowDialogsOverTitleBar || dialog.DialogSettings == null || !dialog.DialogSettings.OwnerCanCloseWithDialog);
-            }
-
-            base.OnClosing(e);
-        }
-#endif
 
         private void MetroWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

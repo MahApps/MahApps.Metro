@@ -2,8 +2,5 @@ JetBrains.Annotations
 XamlColorSchemeGenerator
 ExposedObject
 
-group xunit40
-    xunit framework: net40
-
-group xunit45
-    xunit framework: >=net45
+group test
+    xunit

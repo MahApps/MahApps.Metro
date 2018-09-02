@@ -210,28 +210,13 @@ namespace MahApps.Metro.Controls
 
         private void UnhookCommand(ICommand command)
         {
-#if NET4
-            var handler = CommandHelpers.GetCanExecuteChangedHandler(this);
-            if (handler != null)
-            {
-                command.CanExecuteChanged -= handler;
-                CommandHelpers.SetCanExecuteChangedHandler(this, null);
-            }
-#else
             CanExecuteChangedEventManager.RemoveHandler(command, new EventHandler<EventArgs>(this.OnCanExecuteChanged));
-#endif
             this.UpdateCanExecute();
         }
 
         private void HookCommand(ICommand command)
         {
-#if NET4
-            EventHandler handler = new EventHandler(OnCanExecuteChanged);
-            CommandHelpers.SetCanExecuteChangedHandler(this, handler);
-            command.CanExecuteChanged += handler;
-#else            
             CanExecuteChangedEventManager.AddHandler(command, new EventHandler<EventArgs>(this.OnCanExecuteChanged));
-#endif
             this.UpdateCanExecute();
         }
 

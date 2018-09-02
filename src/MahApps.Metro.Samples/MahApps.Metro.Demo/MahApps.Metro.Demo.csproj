@@ -5,7 +5,6 @@
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
-        <DefaultItemExcludes Condition=" '$(TargetFramework)' == 'net40' ">$(DefaultItemExcludes);$(MSBuildProjectDirectory)/HamburgerMenuRipple/**</DefaultItemExcludes>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
     <PropertyGroup>
@@ -17,12 +16,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
-        <PackageReference Condition = "'$(TargetFramework)' != 'net40'" Include="MaterialDesignThemes" Version="2.5.0-ci*" />
-    </ItemGroup>
-    <ItemGroup Condition = "'$(TargetFramework)' == 'net40'">
-        <PackageReference Include="Microsoft.Bcl" Version="1.*" />
-        <PackageReference Include="Microsoft.Bcl.Async" Version="1.*" />
-        <PackageReference Include="Microsoft.Bcl.Build" Version="1.*" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />

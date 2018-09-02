@@ -1,7 +1,5 @@
 ﻿using System;
-#if NET4
 using System.Threading.Tasks;
-#endif
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -147,7 +145,7 @@ namespace MetroDemo
             dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
             dialog = dialog.ShowDialogExternally();
 
-            await TaskEx.Delay(5000);
+            await Task.Delay(5000);
 
             await dialog.RequestCloseAsync();
         }
@@ -201,12 +199,12 @@ namespace MetroDemo
             var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
             textBlock.Text = "A message box will appear in 3 seconds.";
 
-            await TaskEx.Delay(3000);
+            await Task.Delay(3000);
 
             await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() {OwnerCanCloseWithDialog = true});
 
             textBlock.Text = "The dialog will close in 2 seconds.";
-            await TaskEx.Delay(2000);
+            await Task.Delay(2000);
 
             await this.HideMetroDialogAsync(dialog);
         }
@@ -294,7 +292,7 @@ namespace MetroDemo
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
             controller.SetIndeterminate();
 
-            await TaskEx.Delay(5000);
+            await Task.Delay(5000);
 
             controller.SetCancelable(true);
 
@@ -310,7 +308,7 @@ namespace MetroDemo
 
                 i += 1.0;
 
-                await TaskEx.Delay(2000);
+                await Task.Delay(2000);
             }
 
             await controller.CloseAsync();

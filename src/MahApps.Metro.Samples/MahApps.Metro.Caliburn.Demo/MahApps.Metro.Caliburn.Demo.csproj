@@ -16,11 +16,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup Condition = "'$(TargetFramework)' == 'net40'">
-        <PackageReference Include="Microsoft.Bcl" Version="1.*" />
-        <PackageReference Include="Microsoft.Bcl.Async" Version="1.*" />
-        <PackageReference Include="Microsoft.Bcl.Build" Version="1.*" />
-    </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>

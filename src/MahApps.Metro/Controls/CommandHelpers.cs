@@ -1,7 +1,4 @@
-﻿#if NET4
-using System;
-#endif
-using System.Security;
+﻿using System.Security;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,24 +6,6 @@ namespace MahApps.Metro.Controls
 {
     internal static class CommandHelpers
     {
-#if NET4
-        internal static readonly DependencyProperty CanExecuteChangedHandlerProperty
-            = DependencyProperty.RegisterAttached(
-                "CanExecuteChangedHandler",
-                typeof(EventHandler),
-                typeof(CommandHelpers), new FrameworkPropertyMetadata(null));
-
-        internal static EventHandler GetCanExecuteChangedHandler(DependencyObject element)
-        {
-            return (EventHandler)element.GetValue(CanExecuteChangedHandlerProperty);
-        }
-
-        internal static void SetCanExecuteChangedHandler(DependencyObject element, EventHandler value)
-        {
-            element.SetValue(CanExecuteChangedHandlerProperty, value);
-        }
-#endif
-
         internal static bool CanExecuteCommandSource(ICommandSource commandSource)
         {
             var command = commandSource.Command;
