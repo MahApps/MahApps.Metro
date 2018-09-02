@@ -1,34 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras">
-  <!-- Project properties -->
-  <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
-    <AssemblyName>MahApps.Metro.Tests</AssemblyName>
-    <RootNamespace>MahApps.Metro.Tests</RootNamespace>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Extensions" />
-  </ItemGroup>
-  <!-- Items include -->
-  <ItemGroup>
-    <None Include="paket.references" />
-    <None Remove="App.config" />
-    <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-      <TargetPath>$(AssemblyName).config</TargetPath>
-    </AppConfigWithTargetPath>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
-  </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net45</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Tests</AssemblyName>
+        <RootNamespace>MahApps.Metro.Tests</RootNamespace>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+    <ItemGroup Condition = "'$(TargetFramework)' == 'net40'">
+        <PackageReference Include="Microsoft.Bcl" Version="1.*" />
+        <PackageReference Include="Microsoft.Bcl.Async" Version="1.*" />
+        <PackageReference Include="Microsoft.Bcl.Build" Version="1.*" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
+        <Reference Include="System.Web.Extensions" />
+    </ItemGroup>
+    <!-- Items include -->
+    <ItemGroup>
+        <None Include="paket.references" />
+        <None Remove="App.config" />
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+            <TargetPath>$(AssemblyName).config</TargetPath>
+        </AppConfigWithTargetPath>
+    </ItemGroup>
+    <ItemGroup>
+        <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+    </ItemGroup>
+    <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

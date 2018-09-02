@@ -19,6 +19,11 @@
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
         <PackageReference Condition = "'$(TargetFramework)' != 'net40'" Include="MaterialDesignThemes" Version="2.5.0-ci*" />
     </ItemGroup>
+    <ItemGroup Condition = "'$(TargetFramework)' == 'net40'">
+        <PackageReference Include="Microsoft.Bcl" Version="1.*" />
+        <PackageReference Include="Microsoft.Bcl.Async" Version="1.*" />
+        <PackageReference Include="Microsoft.Bcl.Build" Version="1.*" />
+    </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
