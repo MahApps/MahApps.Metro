@@ -9,6 +9,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class ComboBoxHelper
     {
+        // TODO remove this
         public static readonly DependencyProperty EnableVirtualizationWithGroupingProperty
             = DependencyProperty.RegisterAttached("EnableVirtualizationWithGrouping",
                                                   typeof(bool),
@@ -20,11 +21,9 @@ namespace MahApps.Metro.Controls
             var comboBox = dependencyObject as ComboBox;
             if (comboBox != null && e.NewValue != e.OldValue)
             {
-#if NET4_5
                 comboBox.SetCurrentValue(VirtualizingStackPanel.IsVirtualizingProperty, e.NewValue);
                 comboBox.SetCurrentValue(VirtualizingPanel.IsVirtualizingWhenGroupingProperty, e.NewValue);
                 comboBox.SetCurrentValue(ScrollViewer.CanContentScrollProperty, e.NewValue);
-#endif
             }
         }
 

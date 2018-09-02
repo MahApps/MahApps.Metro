@@ -177,11 +177,7 @@ namespace MahApps.Metro.Controls
             var resolvedProperty = ResolvePropertyFromBindingExpression(obj.GetBindingExpression(dependencyProperty));
             if (resolvedProperty != null)
             {
-#if NET4
-                var attribute = resolvedProperty.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault() as DisplayAttribute;
-#else
                 var attribute = resolvedProperty.GetCustomAttribute<DisplayAttribute>();
-#endif
                 if (attribute != null)
                 {
                     obj.SetCurrentValue(WatermarkProperty, attribute.GetPrompt());
@@ -198,22 +194,10 @@ namespace MahApps.Metro.Controls
                 {
                     return null;
                 }
-#if NET4
-                var propertyName = bindingExpression.ParentBinding.Path.Path;
-                if (propertyName != null && propertyName.Contains('.'))
-                {
-                    propertyName = propertyName.Substring(propertyName.LastIndexOf('.') + 1);
-                }
-#else
                 var propertyName = bindingExpression.ResolvedSourcePropertyName;
-#endif
                 if (!string.IsNullOrEmpty(propertyName))
                 {
-#if NET4
-                    var resolvedType = ResolveBinding(bindingExpression.DataItem.GetType(), bindingExpression.ParentBinding.Path.Path.Split('.'));
-#elif NET4_5
                     var resolvedType = bindingExpression.ResolvedSource?.GetType();
-#endif
                     if (resolvedType != null)
                     {
                         return resolvedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
@@ -223,39 +207,6 @@ namespace MahApps.Metro.Controls
             }
             return null;
         }
-
-#if NET4
-        [CanBeNull]
-        private static Type ResolveBinding(Type type, string[] paths)
-        {
-            if (type != null && paths != null)
-            {
-                if (paths.Length == 1)
-                {
-                    return type;
-                }
-                var propertyName = paths[0];
-
-                if (propertyName.Contains('[') && propertyName.EndsWith("]"))
-                {
-                    var indexOf = propertyName.IndexOf('[');
-                    propertyName = propertyName.Substring(0, indexOf);
-                }
-
-                var property = type.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance)?.PropertyType;
-                if (property != null)
-                {
-                    var remainingPath = paths.Skip(1).ToArray();
-                    if (property.IsArray)
-                    {
-                        return ResolveBinding(property.GetElementType(), remainingPath);
-                    }
-                    return ResolveBinding(property, remainingPath);
-                }
-            }
-            return null;
-        }
-#endif
 
         private static void IsSpellCheckContextMenuEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

@@ -4,13 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using Xunit;
-
-#if !NET40
-using System.Windows.Threading;
 using Xunit.Sdk;
-#endif
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
@@ -26,31 +23,21 @@ namespace MahApps.Metro.Tests.TestHelpers
         {
             // ... clean up
             GC.Collect();
-#if !NET40
             Dispatcher.ExitAllFrames();
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
-#endif
         }
     }
 
-#if !NET40
     [CollectionDefinition("ApplicationFixtureCollection")]
     public class ApplicationFixtureCollectionClass : ICollectionFixture<ApplicationFixture>
     {
     }
 
-#endif
-
     /// <summary>
     /// This is the base class for all of our UI tests.
     /// </summary>
-#if !NET40
     [Collection("ApplicationFixtureCollection")]
-#endif
     public class AutomationTestBase : IDisposable
-#if NET40
-        , IUseFixture<ApplicationFixture>
-#endif
     {
         public AutomationTestBase()
         {
@@ -73,14 +60,6 @@ namespace MahApps.Metro.Tests.TestHelpers
                     ThemeManager.ChangeTheme(Application.Current, "Light.Blue");
                 });
         }
-
-#if NET40
-        private ApplicationFixture fixture;
-        public void SetFixture(ApplicationFixture data)
-        {
-            this.fixture = data;
-        }
-#endif
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()

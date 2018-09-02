@@ -16,9 +16,7 @@ namespace MetroDemo.ExampleViews
         private void HamburgerMenuSample_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             this.Loaded -= HamburgerMenuSample_Loaded;
-#if NET4_5
             this.HamburgerTabControl.Items.Add(new TabItem() { Header = "Ripple Effect", Content = new HamburgerMenuRipple() { DataContext = new Binding() } });
-#endif
         }
     }
 }

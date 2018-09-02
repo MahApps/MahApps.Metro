@@ -422,7 +422,7 @@ namespace MetroDemo
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
             controller.SetIndeterminate();
 
-            await TaskEx.Delay(3000);
+            await Task.Delay(3000);
 
             await controller.CloseAsync();
         }
