@@ -335,7 +335,6 @@
                         <DockPanel x:Name="PaneHeader"
                                    Grid.Row="0"
                                    Height="{TemplateBinding HamburgerHeight}"
-                                   Margin="0 0 0 8"
                                    LastChildFill="True">
                             <Grid x:Name="PaneHeaderGap"
                                   Width="{TemplateBinding HamburgerWidth}"
