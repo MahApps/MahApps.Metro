@@ -1,5 +1,6 @@
-# configuration for develop and master branch
+# http://www.appveyor.com/docs/appveyor-yml
 
+# configuration for develop/CI and master/Release branch
 -
   branches:
     only:
@@ -26,3 +27,6 @@
 
   artifacts:
     - path: \src\Publish\*.*
+
+  nuget:
+    disable_publish_on_pr: true

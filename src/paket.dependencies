@@ -38,6 +38,7 @@ group cake
 	nuget Cake.Figlet
 	nuget Cake.Paket
 	nuget Cake.Paket.Module
+	nuget vswhere
 	nuget GitVersion.CommandLine prerelease
 	nuget gitreleasemanager
 	nuget xunit.runner.console prerelease
