@@ -34,6 +34,7 @@ NUGET
     Cake.Paket.Module (4.0)
     gitreleasemanager (0.7.1)
     GitVersion.CommandLine (4.0.0-beta0014)
+    vswhere (2.5.2)
     xunit.runner.console (2.4.1-pre.build.4059)
 
 GROUP test
