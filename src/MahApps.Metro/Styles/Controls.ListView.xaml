@@ -97,7 +97,7 @@
         <Setter Property="AlternationCount" Value="2" />
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="BorderThickness" Value="0 1 0 0" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />

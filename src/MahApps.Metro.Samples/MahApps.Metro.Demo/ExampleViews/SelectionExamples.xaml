@@ -11,28 +11,41 @@
              mc:Ignorable="d">
 
     <TabControl Margin="10" TabStripPlacement="Left">
+        <TabItem Header="ListBox">
+            <UniformGrid Columns="2" Rows="2">
+                <ListBox Margin="2"
+                         BorderThickness="1"
+                         DisplayMemberPath="Name"
+                         ItemsSource="{Binding Artists}"
+                         SelectedIndex="0"
+                         Style="{StaticResource VirtualisedMetroListBox}" />
+                <ListBox Margin="2"
+                         BorderThickness="1"
+                         DisplayMemberPath="Title"
+                         IsEnabled="False"
+                         ItemsSource="{Binding Albums}"
+                         SelectedIndex="0"
+                         Style="{StaticResource VirtualisedMetroListBox}" />
+
+                <ListBox Margin="2"
+                         SelectedIndex="0">
+                    <ListBoxItem Content="Item 1" />
+                    <ListBoxItem Content="Item 2" />
+                    <ListBoxItem Content="Item 3" />
+                </ListBox>
+                <ListBox Margin="2"
+                         IsEnabled="False"
+                         SelectedIndex="0">
+                    <ListBoxItem Content="Item 1" />
+                    <ListBoxItem Content="Item 2" />
+                    <ListBoxItem Content="Item 3" />
+                </ListBox>
+            </UniformGrid>
+        </TabItem>
+
         <TabItem Header="List/GridView">
             <UniformGrid Columns="2" Rows="2">
-                <ListView Margin="1"
-                          BorderThickness="0"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListViewItem>Test 1</ListViewItem>
-                    <ListViewItem>Test 2</ListViewItem>
-                    <ListViewItem>Test 3</ListViewItem>
-                    <ListViewItem>Test 4</ListViewItem>
-                </ListView>
-                <ListView Margin="1"
-                          BorderThickness="0"
-                          IsEnabled="False"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListViewItem>Test 1</ListViewItem>
-                    <ListViewItem>Test 2</ListViewItem>
-                    <ListViewItem>Test 3</ListViewItem>
-                    <ListViewItem>Test 4</ListViewItem>
-                </ListView>
-                <ListView Margin="1"
+                <ListView Margin="2"
                           BorderThickness="1"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0"
@@ -44,7 +57,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <ListView Margin="1"
+                <ListView Margin="2"
                           BorderThickness="1"
                           IsEnabled="False"
                           ItemsSource="{Binding Artists}"
@@ -56,12 +69,34 @@
                             <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
                         </GridView>
                     </ListView.View>
+                </ListView>
+                
+                <ListView Margin="2"
+                          SelectedIndex="0"
+                          Style="{StaticResource VirtualisedMetroListView}">
+                    <ListViewItem>Test 1</ListViewItem>
+                    <ListViewItem>Test 2</ListViewItem>
+                    <ListViewItem>Test 3</ListViewItem>
+                    <ListViewItem>Test 4</ListViewItem>
+                </ListView>
+                <ListView Margin="2"
+                          IsEnabled="False"
+                          SelectedIndex="0"
+                          Style="{StaticResource VirtualisedMetroListView}">
+                    <ListViewItem>Test 1</ListViewItem>
+                    <ListViewItem>Test 2</ListViewItem>
+                    <ListViewItem>Test 3</ListViewItem>
+                    <ListViewItem>Test 4</ListViewItem>
                 </ListView>
             </UniformGrid>
         </TabItem>
+
         <TabItem Header="TreeView">
-            <UniformGrid Rows="2">
-                <TreeView ItemsSource="{Binding Artists}" Style="{StaticResource VirtualisedMetroTreeView}">
+            <UniformGrid Columns="2" Rows="2">
+                <TreeView Margin="2"
+                          BorderThickness="1"
+                          ItemsSource="{Binding Artists}"
+                          Style="{StaticResource VirtualisedMetroTreeView}">
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
                             <TextBlock Text="{Binding Name}" />
@@ -73,7 +108,45 @@
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
                 </TreeView>
-                <TreeView IsEnabled="False">
+                <TreeView Margin="2"
+                          BorderThickness="1"
+                          IsEnabled="False"
+                          ItemsSource="{Binding Artists}"
+                          Style="{StaticResource VirtualisedMetroTreeView}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                            <TextBlock Text="{Binding Name}" />
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" />
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+
+                <TreeView Margin="2">
+                    <TreeViewItem Header="Item 1">
+                        <TreeViewItem Header="Item 1.1">
+                            <TreeViewItem Header="Item 1.1.1" />
+                            <TreeViewItem Header="Item 1.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 1.2" />
+                        <TreeViewItem Header="Item 1.3" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Item 22" />
+                    <TreeViewItem Header="Item 3"
+                                  IsExpanded="True"
+                                  IsSelected="True">
+                        <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                            <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
+                            <TreeViewItem Header="Item 3.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 3.2" />
+                        <TreeViewItem Header="Item 3.3" />
+                    </TreeViewItem>
+                </TreeView>
+                <TreeView Margin="2" IsEnabled="False">
                     <TreeViewItem Header="Item 1">
                         <TreeViewItem Header="Item 1.1">
                             <TreeViewItem Header="Item 1.1.1" />
@@ -96,36 +169,7 @@
                 </TreeView>
             </UniformGrid>
         </TabItem>
-        <TabItem Header="ListBox">
-            <UniformGrid Columns="2" Rows="2">
-                <ListBox Margin="1"
-                         DisplayMemberPath="Name"
-                         ItemsSource="{Binding Artists}"
-                         SelectedIndex="0"
-                         Style="{StaticResource VirtualisedMetroListBox}" />
-                <ListBox Margin="1"
-                         DisplayMemberPath="Title"
-                         IsEnabled="False"
-                         ItemsSource="{Binding Albums}"
-                         SelectedIndex="0"
-                         Style="{StaticResource VirtualisedMetroListBox}" />
-                <ListBox Margin="1"
-                         BorderThickness="1"
-                         SelectedIndex="0">
-                    <ListBoxItem Content="Item 1" />
-                    <ListBoxItem Content="Item 2" />
-                    <ListBoxItem Content="Item 3" />
-                </ListBox>
-                <ListBox Margin="1"
-                         BorderThickness="1"
-                         IsEnabled="False"
-                         SelectedIndex="0">
-                    <ListBoxItem Content="Item 1" />
-                    <ListBoxItem Content="Item 2" />
-                    <ListBoxItem Content="Item 3" />
-                </ListBox>
-            </UniformGrid>
-        </TabItem>
+
         <TabItem Header="ComboBox">
             <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
                 <ComboBox Width="200"
