@@ -445,7 +445,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ShowControlButtons()
         {
-            ExecuteWhenLoaded(this, () => this.DetectControlButtonsStatus());
+            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus());
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void HideControlButtons()
         {
-            ExecuteWhenLoaded(this, () => this.DetectControlButtonsStatus(Visibility.Hidden));
+            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus(Visibility.Hidden));
         }
 
         private void ShowBanner()
@@ -473,25 +473,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ExecuteWhenLoaded(FlipView flipview, Action body)
-        {
-            if (flipview.IsLoaded)
-            {
-                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
-            }
-            else
-            {
-                RoutedEventHandler handler = null;
-                handler = (o, a) =>
-                    {
-                        flipview.Loaded -= handler;
-                        System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
-                    };
-
-                flipview.Loaded += handler;
-            }
-        }
-
         public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
         public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
         public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
@@ -501,7 +482,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
         public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
-        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
         public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
         public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register("IsNavigationEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
@@ -634,7 +615,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                ExecuteWhenLoaded(this, () => { this.bannerLabel.Content = value ?? this.BannerText; });
+                this.ExecuteWhenLoaded(() => { this.bannerLabel.Content = value ?? this.BannerText; });
             }
         }
 
@@ -645,7 +626,7 @@ namespace MahApps.Metro.Controls
             if (!flipview.IsLoaded)
             {
                 //wait to be loaded?
-                ExecuteWhenLoaded(flipview, () =>
+                flipview.ExecuteWhenLoaded(() =>
                                       {
                                           flipview.ApplyTemplate();
 

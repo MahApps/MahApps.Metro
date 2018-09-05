@@ -56,6 +56,7 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
 
             this._underlineBorder = this.GetTemplateChild(UnderlineBorderPartName) as Border;
+
             this.ApplyBorderProperties();
         }
 
@@ -66,31 +67,37 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this._underlineBorder.Height = Double.NaN;
-            this._underlineBorder.Width = Double.NaN;
-            this._underlineBorder.BorderThickness = new Thickness();
-            switch (this.Placement)
-            {
-                case Dock.Left:
-                    this._underlineBorder.Width = this.LineExtent;
-                    this._underlineBorder.BorderThickness = new Thickness(this.LineThickness, 0d, 0d, 0d);
-                    break;
-                case Dock.Top:
-                    this._underlineBorder.Height = this.LineExtent;
-                    this._underlineBorder.BorderThickness = new Thickness(0d, this.LineThickness, 0d, 0d);
-                    break;
-                case Dock.Right:
-                    this._underlineBorder.Width = this.LineExtent;
-                    this._underlineBorder.BorderThickness = new Thickness(0d, 0d, this.LineThickness, 0d);
-                    break;
-                case Dock.Bottom:
-                    this._underlineBorder.Height = this.LineExtent;
-                    this._underlineBorder.BorderThickness = new Thickness(0d, 0d, 0d, this.LineThickness);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            this.InvalidateVisual();
+            Action applyAction = () =>
+                {
+                    this._underlineBorder.Height = Double.NaN;
+                    this._underlineBorder.Width = Double.NaN;
+                    this._underlineBorder.BorderThickness = new Thickness();
+                    switch (this.Placement)
+                    {
+                        case Dock.Left:
+                            this._underlineBorder.Width = this.LineExtent;
+                            this._underlineBorder.BorderThickness = new Thickness(this.LineThickness, 0d, 0d, 0d);
+                            break;
+                        case Dock.Top:
+                            this._underlineBorder.Height = this.LineExtent;
+                            this._underlineBorder.BorderThickness = new Thickness(0d, this.LineThickness, 0d, 0d);
+                            break;
+                        case Dock.Right:
+                            this._underlineBorder.Width = this.LineExtent;
+                            this._underlineBorder.BorderThickness = new Thickness(0d, 0d, this.LineThickness, 0d);
+                            break;
+                        case Dock.Bottom:
+                            this._underlineBorder.Height = this.LineExtent;
+                            this._underlineBorder.BorderThickness = new Thickness(0d, 0d, 0d, this.LineThickness);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    this.InvalidateVisual();
+                };
+
+            this.ExecuteWhenLoaded(applyAction);
         }
     }
 }
