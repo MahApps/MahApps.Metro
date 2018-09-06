@@ -867,7 +867,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
-            this.MetroDialogOptions = new MetroDialogSettings();
+            this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
