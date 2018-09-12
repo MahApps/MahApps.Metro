@@ -117,6 +117,7 @@ Task("Build")
 });
 
 Task("Paket-Pack")
+    .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
     EnsureDirectoryExists(Directory(publishDir));
@@ -127,6 +128,7 @@ Task("Paket-Pack")
 });
 
 Task("Zip-Demos")
+    .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
     EnsureDirectoryExists(Directory(publishDir));
@@ -146,6 +148,7 @@ Task("Unit-Tests")
 Task("CreateRelease")
     .WithCriteria(() => isReleaseBranch)
     .WithCriteria(() => !isTagged)
+    .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
     var username = EnvironmentVariable("GITHUB_USERNAME");

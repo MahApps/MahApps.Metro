@@ -36,11 +36,11 @@ namespace MahApps.Metro.Actions
                 }
             }
 
-            if (tabControl is MetroTabControl && tabItem is MetroTabItem)
+            if (tabControl is BaseMetroTabControl && tabItem is MetroTabItem)
             {
                 // run the command handler for the TabControl
                 // see #555
-                tabControl.BeginInvoke(() => ((MetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
+                tabControl.BeginInvoke(() => ((BaseMetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
             }
             else
             {
