@@ -28,6 +28,8 @@
         <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuItemStyle}" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
+        <Setter Property="PaneMargin" Value="0 0 0 8" />
+        <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
         <Setter Property="Template" Value="{StaticResource HamburgerMenuTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
