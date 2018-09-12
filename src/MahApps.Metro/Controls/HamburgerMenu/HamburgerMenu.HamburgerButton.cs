@@ -28,17 +28,17 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HamburgerVisibilityProperty = DependencyProperty.Register(nameof(HamburgerVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
-        /// Identifies the <see cref="HamburgerMenuTemplate"/> dependency property.
+        /// Identifies the <see cref="HamburgerMenuButtonTemplate"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty HamburgerMenuTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty HamburgerMenuButtonTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuButtonTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a template for the hamburger icon.
+        /// Gets or sets a template for the hamburger button.
         /// </summary>
-        public DataTemplate HamburgerMenuTemplate
+        public DataTemplate HamburgerMenuButtonTemplate
         {
-            get { return (DataTemplate)GetValue(HamburgerMenuTemplateProperty); }
-            set { SetValue(HamburgerMenuTemplateProperty, value); }
+            get { return (DataTemplate)GetValue(HamburgerMenuButtonTemplateProperty); }
+            set { SetValue(HamburgerMenuButtonTemplateProperty, value); }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HamburgerMenuHeaderTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuHeaderTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a template for the hamburger icon.
+        /// Gets or sets a template for the hamburger pane header.
         /// </summary>
         public DataTemplate HamburgerMenuHeaderTemplate
         {

@@ -9,7 +9,7 @@
     <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="HamburgerMenuTemplate">
+        <Setter Property="HamburgerMenuButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <!--  PackIconMaterial - Menu  -->
