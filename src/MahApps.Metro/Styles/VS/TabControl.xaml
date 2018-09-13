@@ -143,8 +143,6 @@
            BasedOn="{StaticResource MetroTabItem}"
            TargetType="{x:Type TabItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
-        <!--  special property for header font size  -->
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Controls:TabControlHelper.CloseButtonEnabled" Value="True" />
         <Setter Property="Padding" Value="12 5 12 5" />
         <Setter Property="Template">
@@ -167,7 +165,6 @@
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       DockPanel.Dock="Top"
                                                        FontFamily="{TemplateBinding FontFamily}"
                                                        FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                        FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"

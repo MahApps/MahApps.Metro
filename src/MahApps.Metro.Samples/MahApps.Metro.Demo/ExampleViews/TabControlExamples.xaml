@@ -57,24 +57,25 @@
                                   SelectedItem="{x:Static Dock.Top}" />
                     </StackPanel>
                     <TabControl Height="200"
+                                Controls:ControlsHelper.HeaderFontSize="18"
                                 Controls:TabControlHelper.Underlined="{Binding ElementName=UnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TabStripPlacement="{Binding ElementName=TabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _1">
+                        <TabItem Header="item _1">
                             <TextBlock FontSize="30" Text="Content" />
                         </TabItem>
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _2">
+                        <TabItem Header="item _2">
                             <TextBlock FontSize="30" Text="More content" />
                         </TabItem>
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _3">
+                        <TabItem Header="item _3">
                             <TextBlock FontSize="30" Text="More more content" />
                         </TabItem>
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _4">
+                        <TabItem Header="item _4">
                             <TextBlock FontSize="30" Text="So much content!" />
                         </TabItem>
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _5">
+                        <TabItem Header="item _5">
                             <TextBlock FontSize="30" Text="Content!" />
                         </TabItem>
-                        <TabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _6">
+                        <TabItem Header="item _6">
                             <TextBlock FontSize="30" Text="This is not content (it is)" />
                         </TabItem>
                     </TabControl>
