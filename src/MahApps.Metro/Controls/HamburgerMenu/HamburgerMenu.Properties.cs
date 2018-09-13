@@ -50,6 +50,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Identifies the <see cref="PaneMargin"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty PaneMarginProperty = DependencyProperty.Register(nameof(PaneMargin), typeof(Thickness), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="PaneHeaderMargin"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty PaneHeaderMarginProperty = DependencyProperty.Register(nameof(PaneHeaderMargin), typeof(Thickness), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="PaneBackground"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty PaneBackgroundProperty = DependencyProperty.Register(nameof(PaneBackground), typeof(Brush), typeof(HamburgerMenu), new PropertyMetadata(null));
@@ -168,6 +178,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (double)GetValue(CompactPaneLengthProperty); }
             set { SetValue(CompactPaneLengthProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the margin for the pane.
+        /// </summary>
+        public Thickness PaneMargin
+        {
+            get { return (Thickness)GetValue(PaneMarginProperty); }
+            set { SetValue(PaneMarginProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the margin for the pane header.
+        /// </summary>
+        public Thickness PaneHeaderMargin
+        {
+            get { return (Thickness)GetValue(PaneHeaderMarginProperty); }
+            set { SetValue(PaneHeaderMarginProperty, value); }
         }
 
         /// <summary>

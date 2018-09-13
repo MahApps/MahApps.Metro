@@ -28,17 +28,31 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HamburgerVisibilityProperty = DependencyProperty.Register(nameof(HamburgerVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
-        /// Identifies the <see cref="HamburgerMenuTemplate"/> dependency property.
+        /// Identifies the <see cref="HamburgerButtonStyle"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty HamburgerMenuTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty HamburgerButtonStyleProperty = DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a template for the hamburger icon.
+        /// Identifies the <see cref="HamburgerButtonTemplate"/> dependency property.
         /// </summary>
-        public DataTemplate HamburgerMenuTemplate
+        public static readonly DependencyProperty HamburgerButtonTemplateProperty = DependencyProperty.Register(nameof(HamburgerButtonTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the Style used for the hamburger button.
+        /// </summary>
+        public Style HamburgerButtonStyle
         {
-            get { return (DataTemplate)GetValue(HamburgerMenuTemplateProperty); }
-            set { SetValue(HamburgerMenuTemplateProperty, value); }
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a template for the hamburger button.
+        /// </summary>
+        public DataTemplate HamburgerButtonTemplate
+        {
+            get { return (DataTemplate)GetValue(HamburgerButtonTemplateProperty); }
+            set { SetValue(HamburgerButtonTemplateProperty, value); }
         }
 
         /// <summary>
@@ -47,7 +61,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HamburgerMenuHeaderTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuHeaderTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets a template for the hamburger icon.
+        /// Gets or sets a template for the hamburger pane header.
         /// </summary>
         public DataTemplate HamburgerMenuHeaderTemplate
         {
