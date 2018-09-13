@@ -343,10 +343,10 @@
                                     DockPanel.Dock="Left"
                                     Padding="{TemplateBinding HamburgerMargin}"
                                     AutomationProperties.Name="Main button"
-                                    ContentTemplate="{TemplateBinding HamburgerMenuButtonTemplate}"
+                                    ContentTemplate="{TemplateBinding HamburgerButtonTemplate}"
                                     Foreground="{TemplateBinding PaneForeground}"
                                     IsTabStop="{TemplateBinding IsTabStop}"
-                                    Style="{StaticResource HamburgerButtonStyle}"
+                                    Style="{TemplateBinding HamburgerButtonStyle}"
                                     TabIndex="0"
                                     Visibility="{TemplateBinding HamburgerVisibility}" />
                             <ContentControl x:Name="PaneHeaderContent"

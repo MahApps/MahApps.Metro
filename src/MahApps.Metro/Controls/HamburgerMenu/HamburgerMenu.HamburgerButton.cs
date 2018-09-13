@@ -28,17 +28,31 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HamburgerVisibilityProperty = DependencyProperty.Register(nameof(HamburgerVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
-        /// Identifies the <see cref="HamburgerMenuButtonTemplate"/> dependency property.
+        /// Identifies the <see cref="HamburgerButtonStyle"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty HamburgerMenuButtonTemplateProperty = DependencyProperty.Register(nameof(HamburgerMenuButtonTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty HamburgerButtonStyleProperty = DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the <see cref="HamburgerButtonTemplate"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HamburgerButtonTemplateProperty = DependencyProperty.Register(nameof(HamburgerButtonTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the Style used for the hamburger button.
+        /// </summary>
+        public Style HamburgerButtonStyle
+        {
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
 
         /// <summary>
         /// Gets or sets a template for the hamburger button.
         /// </summary>
-        public DataTemplate HamburgerMenuButtonTemplate
+        public DataTemplate HamburgerButtonTemplate
         {
-            get { return (DataTemplate)GetValue(HamburgerMenuButtonTemplateProperty); }
-            set { SetValue(HamburgerMenuButtonTemplateProperty, value); }
+            get { return (DataTemplate)GetValue(HamburgerButtonTemplateProperty); }
+            set { SetValue(HamburgerButtonTemplateProperty, value); }
         }
 
         /// <summary>

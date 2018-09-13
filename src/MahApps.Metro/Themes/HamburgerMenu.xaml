@@ -9,7 +9,8 @@
     <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="HamburgerMenuButtonTemplate">
+        <Setter Property="HamburgerButtonStyle" Value="{DynamicResource HamburgerButtonStyle}" />
+        <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <!--  PackIconMaterial - Menu  -->
@@ -30,7 +31,7 @@
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="PaneMargin" Value="0 0 0 8" />
         <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
-        <Setter Property="Template" Value="{StaticResource HamburgerMenuTemplate}" />
+        <Setter Property="Template" Value="{DynamicResource HamburgerMenuTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>
