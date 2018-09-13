@@ -16,11 +16,14 @@
   <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square">
   </a>
-  <a href="https://www.nuget.org/packages/MahApps.Metro/">
+  <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/v/MahApps.Metro.svg?style=flat-square">
   </a>
-  <a href="https://www.nuget.org/packages/MahApps.Metro/">
+  <a href="https://www.nuget.org/packages/MahApps.Metro">
     <img src="https://img.shields.io/nuget/vpre/MahApps.Metro.svg?style=flat-square&label=nuget-pre">
+  </a>
+  <a href="https://ci.appveyor.com/nuget/mahapps.metro">
+    <img src="https://img.shields.io/badge/nuget--pre-appveyor-green.svg?style=flat-square">
   </a>
   <a href="https://github.com/MahApps/MahApps.Metro/releases/latest">
     <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
