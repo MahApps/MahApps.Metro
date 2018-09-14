@@ -150,17 +150,16 @@
                     </MultiBinding>
                 </Button.Visibility>
                 <!--  normal state  -->
-                <Canvas Width="12"
-                        Height="12"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <Path x:Name="PART_MaxPath"
-                          Data="M2,2 2,10 10,10 10,2 2,2Z M1,11 1,1 11,1 11,11 1,11Z"
-                          Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                          RenderOptions.EdgeMode="Aliased"
-                          SnapsToDevicePixels="True"
-                          Stretch="Uniform" />
-                </Canvas>
+                <Path x:Name="PART_MaxPath"
+                      Width="10"
+                      Height="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="M6,6L6,90 90,90 90,6 6,6z M0,0L96,0 96,96 0,96 0,0z"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      RenderOptions.EdgeMode="Aliased"
+                      SnapsToDevicePixels="True"
+                      Stretch="Uniform" />
             </Button>
             <Button x:Name="PART_Close"
                     Width="46"
