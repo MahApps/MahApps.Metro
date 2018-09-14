@@ -23,8 +23,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        <Style TargetType="{x:Type Slider}" BasedOn="{StaticResource MahApps.Metro.Styles.Slider.Win10}" />
+
+        <Style BasedOn="{StaticResource MahApps.Metro.Styles.Slider.Win10}" TargetType="{x:Type Slider}" />
 
         <Style BasedOn="{StaticResource {x:Type Controls:MetroHeader}}" TargetType="{x:Type Controls:MetroHeader}">
             <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />

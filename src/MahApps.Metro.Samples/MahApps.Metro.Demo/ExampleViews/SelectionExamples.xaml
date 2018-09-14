@@ -27,8 +27,7 @@
                          SelectedIndex="0"
                          Style="{StaticResource VirtualisedMetroListBox}" />
 
-                <ListBox Margin="2"
-                         SelectedIndex="0">
+                <ListBox Margin="2" SelectedIndex="0">
                     <ListBoxItem Content="Item 1" />
                     <ListBoxItem Content="Item 2" />
                     <ListBoxItem Content="Item 3" />
@@ -70,7 +69,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                
+
                 <ListView Margin="2"
                           SelectedIndex="0"
                           Style="{StaticResource VirtualisedMetroListView}">

@@ -7,6 +7,8 @@
     <Style x:Key="MetroTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
+        <!--  special property for header font size  -->
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource GrayNormalBrush}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource GrayHoverBrush}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource HighlightBrush}" />
@@ -101,8 +103,10 @@
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay, FallbackValue=Transparent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <!--  special property for header font size  -->
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource TabItemFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:ControlsHelper.HeaderFontFamily), Mode=OneWay}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:ControlsHelper.HeaderFontSize), Mode=OneWay}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontStretch" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:ControlsHelper.HeaderFontStretch), Mode=OneWay}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:ControlsHelper.HeaderFontWeight), Mode=OneWay}" />
         <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineBrush), Mode=OneWay}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineMouseOverSelectedBrush), Mode=OneWay}" />
@@ -144,7 +148,7 @@
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       FontFamily="{TemplateBinding FontFamily}"
+                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
                                                        FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                        FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                        FontStyle="{TemplateBinding FontStyle}"
