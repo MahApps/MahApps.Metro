@@ -89,8 +89,8 @@
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
                              Margin="200 30 0 0"
-                             Controls:ControlsHelper.HeaderFontFamily="Segoe Script"
                              Controls:ControlsHelper.ContentCharacterCasing="Upper"
+                             Controls:ControlsHelper.HeaderFontFamily="Segoe Script"
                              AreAnimationsEnabled="True"
                              FocusedElement="{Binding ElementName=firstTB}"
                              Header="Settings"
