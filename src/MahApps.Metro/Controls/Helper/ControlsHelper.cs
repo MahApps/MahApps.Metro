@@ -66,8 +66,25 @@ namespace MahApps.Metro.Controls
             element.SetValue(ContentCharacterCasingProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderFontFamilyProperty =
+            DependencyProperty.RegisterAttached("HeaderFontFamily", typeof(FontFamily), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(Flyout))]
+        public static FontFamily GetHeaderFontFamily(UIElement element)
+        {
+            return (FontFamily)element.GetValue(HeaderFontFamilyProperty);
+        }
+
+        public static void SetHeaderFontFamily(UIElement element, FontFamily value)
+        {
+            element.SetValue(HeaderFontFamilyProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits));
+            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -84,7 +101,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontStretchProperty =
-            DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new FrameworkPropertyMetadata(TextElement.FontStretchProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits));
+            DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new FrameworkPropertyMetadata(TextElement.FontStretchProperty.DefaultMetadata.DefaultValue));
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
@@ -101,7 +118,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderFontWeightProperty =
-            DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits));
+            DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight));
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]

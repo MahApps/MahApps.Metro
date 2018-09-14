@@ -353,6 +353,7 @@
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
                                           ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                           DockPanel.Dock="Top"
+                                          FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
                                           FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                           FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                           FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
