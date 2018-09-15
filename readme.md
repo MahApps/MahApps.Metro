@@ -110,6 +110,10 @@ This is how we use the donations:
 * Infrastructure cost
 * Fees for money handling
 
+<h2>Hall-of-fame</h2>
+
+[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/0)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/0)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/1)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/1)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/2)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/2)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/3)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/3)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/4)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/4)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/5)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/5)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/6)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/6)[![](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/images/7)](https://sourcerer.io/fame/punker76/MahApps/MahApps.Metro/links/7)
+
 <h2>Backers</h2>
 
 [Become a backer](https://opencollective.com/mahappsmetro#backer) and get your image on our README on Github with a link to your site.
