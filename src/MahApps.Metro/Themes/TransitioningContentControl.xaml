@@ -12,7 +12,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="2">
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}">
                         <Grid>
                             <ContentPresenter x:Name="PreviousContentPresentationSite"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
