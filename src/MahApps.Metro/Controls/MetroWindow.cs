@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
@@ -296,7 +297,7 @@ namespace MahApps.Metro.Controls
         /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
         /// </summary>
         public static readonly DependencyProperty ResizeBorderThicknessProperty =
-            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(WindowChromeBehavior.GetDefaultResizeBorderThickness()));
+            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(new Thickness(6D)));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -873,20 +874,29 @@ namespace MahApps.Metro.Controls
             Loaded += this.MetroWindow_Loaded;
 
             // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
-            this.InitializeStylizedBehaviors();
+            this.InitializeBehaviors();
         }
 
         /// <summary>
         /// Initializes various behaviors for the window.
         /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
         /// </summary>
-        private void InitializeStylizedBehaviors()
+        private void InitializeBehaviors()
         {
+            var borderlessWindowBehavior = new BorderlessWindowBehavior();
+
+            var windowsSettingBehaviour = new WindowsSettingBehaviour();
+
+            var glowWindowBehavior = new GlowWindowBehavior();
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
+
             var collection = new StylizedBehaviorCollection
             {
-                new BorderlessWindowBehavior(),
-                new WindowsSettingBehaviour(),
-                new GlowWindowBehavior()
+                borderlessWindowBehavior,
+                windowsSettingBehaviour,
+                glowWindowBehavior
             };
 
             StylizedBehaviors.SetBehaviors(this, collection);
