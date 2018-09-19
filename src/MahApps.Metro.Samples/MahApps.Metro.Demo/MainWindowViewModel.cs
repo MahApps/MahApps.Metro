@@ -312,6 +312,10 @@ namespace MetroDemo
                 {
                     return "SHIFT-D is not allowed";
                 }
+                
+                if (columnName == "TimePickerDate" && this.TimePickerDate == null) {
+                    return "No time given!";
+                }
 
                 return null;
             }
@@ -319,6 +323,21 @@ namespace MetroDemo
 
         [Description("Test-Property")]
         public string Error { get { return string.Empty; } }
+        
+        DateTime? _timePickerDate;
+
+        [Display(Prompt = "Time needed...")]
+        public DateTime? TimePickerDate {
+            get { return this._timePickerDate; }
+            set {
+                if (Equals(value, _timePickerDate)) {
+                    return;
+                }
+
+                _timePickerDate = value;
+                RaisePropertyChanged("TimePickerDate");
+            }
+        }
 
         private ICommand singleCloseTabCommand;
 

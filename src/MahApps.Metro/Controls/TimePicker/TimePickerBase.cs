@@ -377,9 +377,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-
             UnSubscribeEvents();
+
+            base.OnApplyTemplate();
 
             _popup = GetTemplateChild(ElementPopup) as Popup;
             _button = GetTemplateChild(ElementButton) as Button;
@@ -461,7 +461,7 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.SelectedDateTime = this.SelectedDateTime.GetValueOrDefault().Date + this.GetSelectedTimeFromGUI();
+            this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + this.GetSelectedTimeFromGUI());
         }
 
         protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)

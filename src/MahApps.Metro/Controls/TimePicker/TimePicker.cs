@@ -24,13 +24,13 @@
             TimeSpan ts;
             if (TimeSpan.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, out ts))
             {
-                this.SelectedDateTime = this.SelectedDateTime.GetValueOrDefault().Date + ts;
+                this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + ts);
             }
             else
             {
                 if (string.IsNullOrEmpty(((DatePickerTextBox)sender).Text))
                 {
-                    this.SelectedDateTime = this.SelectedDateTime.GetValueOrDefault().Date;
+                    this.SetCurrentValue(SelectedDateTimeProperty, null);
                     WriteValueToTextBox(string.Empty);
                 }
                 else

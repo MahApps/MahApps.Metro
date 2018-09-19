@@ -237,29 +237,40 @@
                                                  SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
                                                  SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                         <GroupBox Header="Current time">
-                            <StackPanel>
-                                <Controls:DateTimePicker x:Name="DateTimePicker"
+                            <AdornerDecorator>
+                                <StackPanel>
+                                    <Controls:DateTimePicker x:Name="DateTimePicker"
+                                                             Margin="2"
+                                                             Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                             HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                             IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
+                                                             IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                             IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                             Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                             PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                             SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
+                                                             SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:DateTimeNowBehavior />
+                                        </i:Interaction.Behaviors>
+                                    </Controls:DateTimePicker>
+
+                                    <Controls:TimePicker Margin="2"
                                                          Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                          HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                         IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                          IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                          IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                         Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                          PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                         SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
-                                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:DateTimeNowBehavior />
-                                    </i:Interaction.Behaviors>
-                                </Controls:DateTimePicker>
-                                <Controls:TimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
-                                                     HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
-                                                     IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
-                                                     IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
-                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
-                                                     SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
-                                                     SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
-                            </StackPanel>
+                                                         SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
+                                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
+
+                                    <Controls:TimePicker Margin="2"
+                                                         Controls:TextBoxHelper.AutoWatermark="True"
+                                                         PickerVisibility="HourMinute"
+                                                         SelectedDateTime="{Binding TimePickerDate, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                                         SelectedTimeFormat="Short" />
+                                </StackPanel>
+                            </AdornerDecorator>
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
