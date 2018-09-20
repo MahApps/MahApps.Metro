@@ -21,7 +21,7 @@ NUGET
     WpfAnalyzers (2.1.3.2)
     XamlColorSchemeGenerator (2.0.0.25)
   remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (4.0.0-alpha0170)
+    ControlzEx (4.0.0-alpha0171)
 
 GROUP cake
 RESTRICTION: == net45

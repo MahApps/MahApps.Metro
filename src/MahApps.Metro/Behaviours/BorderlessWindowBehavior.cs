@@ -14,7 +14,6 @@
             BindingOperations.SetBinding(this, ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(MetroWindow.ResizeBorderThicknessProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, TryToBeFlickerFreeProperty, new Binding { Path = new PropertyPath(MetroWindow.TryToBeFlickerFreeProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, KeepBorderOnMaximizeProperty, new Binding { Path = new PropertyPath(MetroWindow.KeepBorderOnMaximizeProperty), Source = this.AssociatedObject });
-            BindingOperations.SetBinding(this, GlowBrushProperty, new Binding { Path = new PropertyPath(MetroWindow.GlowBrushProperty), Source = this.AssociatedObject });
 
             base.OnAttached();
         }
@@ -25,7 +24,6 @@
             BindingOperations.ClearBinding(this, ResizeBorderThicknessProperty);
             BindingOperations.ClearBinding(this, TryToBeFlickerFreeProperty);
             BindingOperations.ClearBinding(this, KeepBorderOnMaximizeProperty);
-            BindingOperations.ClearBinding(this, GlowBrushProperty);
 
             base.OnDetaching();
         }
