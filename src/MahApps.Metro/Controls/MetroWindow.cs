@@ -92,7 +92,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
-        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(default(MetroDialogSettings)));
@@ -276,7 +275,8 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets whether the window will ignore (and overlap) the taskbar when maximized.
+        /// Defines if the Taskbar should be ignored when maximizing a Window.
+        /// This only works with WindowStyle = None.
         /// </summary>
         public bool IgnoreTaskbarOnMaximize
         {
@@ -285,7 +285,12 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets resize border thickness
+        /// Identifies the <see cref="IgnoreTaskbarOnMaximize"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets or sets resize border thickness. This enables animation, styling, binding, etc...
         /// </summary>
         public Thickness ResizeBorderThickness
         {
@@ -294,10 +299,41 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Using a DependencyProperty as the backing store for ResizeBorderTickness.  This enables animation, styling, binding, etc...
+        /// <see cref="DependencyProperty"/> for <see cref="ResizeBorderThickness"/>.
         /// </summary>
-        public static readonly DependencyProperty ResizeBorderThicknessProperty =
-            DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(new Thickness(6D)));
+        public static readonly DependencyProperty ResizeBorderThicknessProperty = DependencyProperty.Register(nameof(ResizeBorderThickness), typeof(Thickness), typeof(MetroWindow), new PropertyMetadata(new Thickness(6D)));
+
+        /// <summary>
+        /// Gets/sets if the border thickness value should be kept on maximize
+        /// if the MaxHeight/MaxWidth of the window is less than the monitor resolution.
+        /// </summary>
+        public bool KeepBorderOnMaximize
+        {
+            get { return (bool)this.GetValue(KeepBorderOnMaximizeProperty); }
+            set { this.SetValue(KeepBorderOnMaximizeProperty, value); }
+        }
+
+        /// <summary>
+        /// <see cref="DependencyProperty"/> for <see cref="KeepBorderOnMaximize"/>.
+        /// </summary>
+        public static readonly DependencyProperty KeepBorderOnMaximizeProperty = DependencyProperty.Register(nameof(KeepBorderOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets wether the resizing of the window should be tried in a way that does not cause flicker/jitter, especially when resizing from the left side.
+        /// </summary>
+        /// <remarks>
+        /// Please note that setting this to <c>true</c> may cause resize lag and black areas appearing on some systems.
+        /// </remarks>
+        public bool TryToBeFlickerFree
+        {
+            get { return (bool)this.GetValue(TryToBeFlickerFreeProperty); }
+            set { this.SetValue(TryToBeFlickerFreeProperty, value); }
+        }
+
+        /// <summary>
+        /// <see cref="DependencyProperty"/> for <see cref="TryToBeFlickerFree"/>.
+        /// </summary>
+        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
