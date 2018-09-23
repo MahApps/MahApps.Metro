@@ -4,6 +4,7 @@ NUGET
     Caliburn.Micro (3.2)
       Caliburn.Micro.Core (3.2)
     Caliburn.Micro.Core (3.2)
+    ControlzEx (4.0.0-alpha0175)
     Costura.Fody (3.1.2)
       Fody (>= 3.2.4) - restriction: >= net46
     ExposedObject (1.2)
@@ -20,8 +21,6 @@ NUGET
       NHotkey (>= 1.2.1)
     WpfAnalyzers (2.1.3.2)
     XamlColorSchemeGenerator (2.0.0.25)
-  remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (4.0.0-alpha0171)
 
 GROUP cake
 RESTRICTION: == net45

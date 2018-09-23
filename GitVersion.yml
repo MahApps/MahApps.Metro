@@ -5,14 +5,13 @@ branches:
   master:
     mode: ContinuousDeployment
     tag: rc
-    increment: Patch
+    increment: Minor
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     is-release-branch: true
   develop:
     mode: ContinuousDeployment
     tag: alpha
-    increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: true
   pull-request:

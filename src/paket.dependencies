@@ -1,7 +1,7 @@
 framework: >= net45
 
-// source https://ci.appveyor.com/nuget/xamlcolorschemegenerator
-source https://ci.appveyor.com/nuget/controlzex
+//source https://ci.appveyor.com/nuget/xamlcolorschemegenerator
+//source https://ci.appveyor.com/nuget/controlzex
 source https://api.nuget.org/v3/index.json
 
 nuget Fody

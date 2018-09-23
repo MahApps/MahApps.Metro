@@ -38,8 +38,9 @@ var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin
 
 var local = BuildSystem.IsLocalBuild;
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
-var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", AppVeyor.Environment.Repository.Branch);
-var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", AppVeyor.Environment.Repository.Branch);
+var branchName = gitVersion.BranchName;
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Directories and Paths
@@ -67,6 +68,7 @@ Setup(ctx =>
     Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
     Information("NuGet           Version: {0}", gitVersion.NuGetVersion);
     Information("IsLocalBuild           : {0}", local);
+    Information("Branch                 : {0}", branchName);
     Information("Configuration          : {0}", configuration);
 });
 
@@ -83,7 +85,7 @@ Task("Clean")
     //.ContinueOnError()
     .Does(() =>
 {
-    var directoriesToDelete = GetDirectories("./**/obj").Concat(GetDirectories("./**/bin"));
+    var directoriesToDelete = GetDirectories("./**/obj").Concat(GetDirectories("./**/bin")).Concat(GetDirectories("./**/Publish"));
     DeleteDirectories(directoriesToDelete, new DeleteDirectorySettings { Recursive = true, Force = true });
 });
 
@@ -146,7 +148,6 @@ Task("Unit-Tests")
 });
 
 Task("CreateRelease")
-    .WithCriteria(() => isReleaseBranch)
     .WithCriteria(() => !isTagged)
     .WithCriteria(() => !isPullRequest)
     .Does(() =>
@@ -165,9 +166,9 @@ Task("CreateRelease")
 
     GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
         Milestone         = gitVersion.MajorMinorPatch,
-        Name              = gitVersion.MajorMinorPatch,
-        Prerelease        = false,
-        TargetCommitish   = "master",
+        Name              = gitVersion.SemVer,
+        Prerelease        = isDevelopBranch,
+        TargetCommitish   = branchName,
         WorkingDirectory  = "../"
     });
 });
@@ -189,10 +190,7 @@ Task("ExportReleaseNotes")
 
     EnsureDirectoryExists(Directory(publishDir));
     GitReleaseManagerExport(username, token, "MahApps", "MahApps.Metro", publishDir + "/releasenotes.md", new GitReleaseManagerExportSettings {
-        // TagName         = gitVersion.SemVer,
-        TagName         = "1.5.0",
-        TargetDirectory = publishDir,
-        LogFilePath     = publishDir + "/grm.log"
+        TagName         = gitVersion.SemVer
     });
 });
 
