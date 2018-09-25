@@ -4,7 +4,7 @@ NUGET
     Caliburn.Micro (3.2)
       Caliburn.Micro.Core (3.2)
     Caliburn.Micro.Core (3.2)
-    ControlzEx (4.0.0-alpha0175)
+    ControlzEx (4.0.0-alpha0176)
     Costura.Fody (3.1.2)
       Fody (>= 3.2.4) - restriction: >= net46
     ExposedObject (1.2)

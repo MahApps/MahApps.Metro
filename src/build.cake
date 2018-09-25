@@ -139,6 +139,7 @@ Task("Zip-Demos")
 });
 
 Task("Unit-Tests")
+    .WithCriteria(() => !local)
     .Does(() =>
 {
     XUnit2(
