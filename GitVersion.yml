@@ -1,4 +1,4 @@
-assembly-versioning-scheme: MajorMinorPatch
+assembly-versioning-scheme: Major
 assembly-file-versioning-scheme: MajorMinorPatchTag
 mode: ContinuousDeployment
 next-version: 2.0.0

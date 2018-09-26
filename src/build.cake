@@ -25,6 +25,12 @@ if (string.IsNullOrWhiteSpace(configuration))
     configuration = "Release";
 }
 
+var verbosity = Argument("verbosity", Verbosity.Normal);
+if (string.IsNullOrWhiteSpace(configuration))
+{
+    verbosity = Verbosity.Normal;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // PREPARATION
 ///////////////////////////////////////////////////////////////////////////////
@@ -32,7 +38,8 @@ if (string.IsNullOrWhiteSpace(configuration))
 var local = BuildSystem.IsLocalBuild;
 
 // Set build version
-if (local == false)
+if (local == false
+    || verbosity == Verbosity.Verbose)
 {
     GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
 }
@@ -93,32 +100,37 @@ Task("Clean")
     DeleteDirectories(directoriesToDelete, new DeleteDirectorySettings { Recursive = true, Force = true });
 });
 
-Task("NuGet-Paket-Restore")
+Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
 {
     PaketRestore();
 
-    var msBuildSettings = new MSBuildSettings() { ToolPath = msBuildPath };
-    MSBuild(solution, msBuildSettings.SetVerbosity(Verbosity.Normal).WithTarget("restore"));
+    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath };
+    MSBuild(solution, msBuildSettings
+            .SetConfiguration(configuration)
+            .SetVerbosity(Verbosity.Normal)
+            .WithTarget("restore")
+            );
 });
 
 Task("Build")
-    .IsDependentOn("NuGet-Paket-Restore")
+    .IsDependentOn("Restore")
     .Does(() =>
 {
-  var msBuildSettings = new MSBuildSettings() { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
-  MSBuild(solution, msBuildSettings.SetMaxCpuCount(0)
-                                   .SetVerbosity(Verbosity.Normal)
-                                   //.WithRestore() only with cake 0.28.x
-                                   .SetConfiguration(configuration)
-                                   .WithProperty("AssemblyVersion", $"{gitVersion.Major}.0.0.0")
-                                   .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
-                                   .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
-                                   );
+    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
+    MSBuild(solution, msBuildSettings
+            .SetMaxCpuCount(0)
+            .SetConfiguration(configuration)
+            .SetVerbosity(Verbosity.Normal)
+            //.WithRestore() only with cake 0.28.x            
+            .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
+            .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
+            .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
+            );
 });
 
-Task("Paket-Pack")
+Task("PaketPack")
     .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
@@ -129,7 +141,7 @@ Task("Paket-Pack")
         });
 });
 
-Task("Zip-Demos")
+Task("Zip")
     .WithCriteria(() => !isPullRequest)
     .Does(() =>
 {
@@ -138,8 +150,7 @@ Task("Zip-Demos")
     Zip("./MahApps.Metro.Samples/MahApps.Metro.Caliburn.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Caliburn.Demo-v" + gitVersion.NuGetVersion + ".zip");
 });
 
-Task("Unit-Tests")
-    //.WithCriteria(() => !local)
+Task("Tests")
     .Does(() =>
 {
     XUnit2(
@@ -167,7 +178,7 @@ Task("CreateRelease")
 
     GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
         Milestone         = gitVersion.MajorMinorPatch,
-        Name              = gitVersion.SemVer,
+        Name              = gitVersion.AssemblySemFileVer,
         Prerelease        = isDevelopBranch,
         TargetCommitish   = branchName,
         WorkingDirectory  = "../"
@@ -204,9 +215,9 @@ Task("Default")
 
 Task("appveyor")
     .IsDependentOn("Build")
-    .IsDependentOn("Unit-Tests")
-    .IsDependentOn("Paket-Pack")
-    .IsDependentOn("Zip-Demos");
+    .IsDependentOn("Tests")
+    .IsDependentOn("PaketPack")
+    .IsDependentOn("Zip");
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION
