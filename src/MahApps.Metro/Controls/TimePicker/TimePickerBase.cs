@@ -175,7 +175,7 @@ namespace MahApps.Metro.Controls
             EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnCultureChanged));
+            LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnLanguageChanged));
         }
 
         protected TimePickerBase()
@@ -586,18 +586,17 @@ namespace MahApps.Metro.Controls
         {
             var timePartPickerBase = (TimePickerBase)d;
 
-            if (e.NewValue is XmlLanguage)
-            {
-                timePartPickerBase.Language = (XmlLanguage)e.NewValue;
-            }
-            else if (e.NewValue is CultureInfo)
-            {
-                timePartPickerBase.Language = XmlLanguage.GetLanguage(((CultureInfo)e.NewValue).IetfLanguageTag);
-            }
-            else
-            {
-                timePartPickerBase.Language = XmlLanguage.Empty;
-            }
+            var info = e.NewValue as CultureInfo;
+            timePartPickerBase.Language = info != null ? XmlLanguage.GetLanguage(info.IetfLanguageTag) : XmlLanguage.Empty;
+
+            timePartPickerBase.ApplyCulture();
+        }
+
+        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePartPickerBase = (TimePickerBase)d;
+
+            timePartPickerBase.Language = e.NewValue as XmlLanguage ?? XmlLanguage.Empty;
 
             timePartPickerBase.ApplyCulture();
         }
