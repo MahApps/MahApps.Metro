@@ -58,11 +58,11 @@ namespace MetroDemo.ExampleViews
 
     public static class ShowAboutCommand
     {
-        public static readonly RoutedCommand Command = new RoutedCommand();
+        public static readonly RoutedCommand Command = new RoutedCommand("Command", typeof(ShowAboutCommand));
 
         static ShowAboutCommand()
         {
-            Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute, CanExecute));
+            Application.Current.MainWindow?.CommandBindings.Add(new CommandBinding(Command, Execute, CanExecute));
         }
 
         private static void CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -74,7 +74,7 @@ namespace MetroDemo.ExampleViews
         private static async void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var menuItem = e.Parameter as HamburgerMenuItem;
-            await ((MainWindow)sender).ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
+            await ((MainWindow)sender).ShowMessageAsync("", $"You clicked on {menuItem?.Label} button");
         }
     }
 }
