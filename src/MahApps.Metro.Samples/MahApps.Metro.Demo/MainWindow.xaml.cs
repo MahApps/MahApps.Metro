@@ -9,7 +9,7 @@ using MetroDemo.ExampleWindows;
 
 namespace MetroDemo
 {
-    public partial class MainWindow
+    public partial class MainWindow : MetroWindow
     {
         private bool _shutdown;
         private readonly MainWindowViewModel _viewModel;
@@ -47,22 +47,22 @@ namespace MetroDemo
 
         private static void OnToggleFullScreenChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var metroWindow = (MetroWindow)dependencyObject;
             if (e.OldValue != e.NewValue)
             {
+                var window = (MainWindow)dependencyObject;
                 var fullScreen = (bool)e.NewValue;
                 if (fullScreen)
                 {
-                    metroWindow.IgnoreTaskbarOnMaximize = true;
-                    metroWindow.WindowState = WindowState.Maximized;
-                    metroWindow.UseNoneWindowStyle = true;
+                    window.SetCurrentValue(IgnoreTaskbarOnMaximizeProperty, true);
+                    window.SetCurrentValue(WindowStateProperty, WindowState.Maximized);
+                    window.SetCurrentValue(UseNoneWindowStyleProperty, true);
                 }
                 else
                 {
-                    metroWindow.WindowState = WindowState.Normal;
-                    metroWindow.UseNoneWindowStyle = false;
-                    metroWindow.ShowTitleBar = true; // <-- this must be set to true
-                    metroWindow.IgnoreTaskbarOnMaximize = false;
+                    window.SetCurrentValue(WindowStateProperty, WindowState.Normal);
+                    window.SetCurrentValue(UseNoneWindowStyleProperty, false);
+                    window.SetCurrentValue(ShowTitleBarProperty, true); // <-- this must be set to true
+                    window.SetCurrentValue(IgnoreTaskbarOnMaximizeProperty, false);
                 }
             }
         }
@@ -81,11 +81,11 @@ namespace MetroDemo
 
         private static void OnUseAccentForDialogsChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var metroWindow = (MetroWindow)dependencyObject;
             if (e.OldValue != e.NewValue)
             {
+                var window = (MainWindow)dependencyObject;
                 var useAccentForDialogs = (bool)e.NewValue;
-                metroWindow.MetroDialogOptions.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+                window.MetroDialogOptions.ColorScheme = useAccentForDialogs ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
             }
         }
 
