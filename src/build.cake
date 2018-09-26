@@ -112,7 +112,7 @@ Task("Build")
                                    .SetVerbosity(Verbosity.Normal)
                                    //.WithRestore() only with cake 0.28.x
                                    .SetConfiguration(configuration)
-                                   .WithProperty("AssemblyVersion", gitVersion.Major.ToString())
+                                   .WithProperty("AssemblyVersion", $"{gitVersion.Major}.0.0.0")
                                    .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
                                    .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
                                    );
@@ -139,7 +139,7 @@ Task("Zip-Demos")
 });
 
 Task("Unit-Tests")
-    .WithCriteria(() => !local)
+    //.WithCriteria(() => !local)
     .Does(() =>
 {
     XUnit2(
