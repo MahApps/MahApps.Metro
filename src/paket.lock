@@ -16,11 +16,13 @@ NUGET
     MaterialDesignColors (1.1.3)
     MaterialDesignThemes (2.5.0-ci1169)
       MaterialDesignColors (>= 1.1)
+    Newtonsoft.Json (11.0.2)
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
-    WpfAnalyzers (2.1.3.2)
-    XamlColorSchemeGenerator (2.0.0.25)
+    WpfAnalyzers (2.1.7.1)
+    XamlColorSchemeGenerator (3.0.0.31)
+      Newtonsoft.Json (>= 10.1)
 
 GROUP cake
 RESTRICTION: == net45
