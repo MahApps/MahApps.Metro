@@ -43,9 +43,9 @@ namespace MetroDemo
             DependencyProperty.Register("ToggleFullScreen",
                                         typeof(bool),
                                         typeof(MainWindow),
-                                        new PropertyMetadata(default(bool), ToggleFullScreenPropertyChangedCallback));
+                                        new PropertyMetadata(default(bool), OnToggleFullScreenChanged));
 
-        private static void ToggleFullScreenPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnToggleFullScreenChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var metroWindow = (MetroWindow)dependencyObject;
             if (e.OldValue != e.NewValue)
@@ -77,9 +77,9 @@ namespace MetroDemo
             DependencyProperty.Register("UseAccentForDialogs",
                                         typeof(bool),
                                         typeof(MainWindow),
-                                        new PropertyMetadata(default(bool), ToggleUseAccentForDialogsPropertyChangedCallback));
+                                        new PropertyMetadata(default(bool), OnUseAccentForDialogsChanged));
 
-        private static void ToggleUseAccentForDialogsPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnUseAccentForDialogsChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var metroWindow = (MetroWindow)dependencyObject;
             if (e.OldValue != e.NewValue)
