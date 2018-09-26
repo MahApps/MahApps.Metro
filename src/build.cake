@@ -29,14 +29,18 @@ if (string.IsNullOrWhiteSpace(configuration))
 // PREPARATION
 ///////////////////////////////////////////////////////////////////////////////
 
+var local = BuildSystem.IsLocalBuild;
+
 // Set build version
-GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
+if (local == false)
+{
+    GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
+}
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
 var latestInstallationPath = VSWhereProducts("*", new VSWhereProductSettings { Version = "[\"15.0\",\"16.0\"]" }).FirstOrDefault();
 var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
 
-var local = BuildSystem.IsLocalBuild;
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var branchName = gitVersion.BranchName;
 var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
@@ -99,13 +103,6 @@ Task("NuGet-Paket-Restore")
     MSBuild(solution, msBuildSettings.SetVerbosity(Verbosity.Normal).WithTarget("restore"));
 });
 
-Task("Update-SolutionInfo")
-    .Does(() =>
-{
-	var solutionInfo = "./MahApps.Metro/Properties/AssemblyInfo.cs";
-	GitVersion(new GitVersionSettings { UpdateAssemblyInfo = true, UpdateAssemblyInfoFilePath = solutionInfo});
-});
-
 Task("Build")
     .IsDependentOn("NuGet-Paket-Restore")
     .Does(() =>
@@ -115,6 +112,9 @@ Task("Build")
                                    .SetVerbosity(Verbosity.Normal)
                                    //.WithRestore() only with cake 0.28.x
                                    .SetConfiguration(configuration)
+                                   .WithProperty("AssemblyVersion", gitVersion.Major.ToString())
+                                   .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
+                                   .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
                                    );
 });
 
@@ -203,7 +203,6 @@ Task("Default")
     .IsDependentOn("Build");
 
 Task("appveyor")
-    .IsDependentOn("Update-SolutionInfo")
     .IsDependentOn("Build")
     .IsDependentOn("Unit-Tests")
     .IsDependentOn("Paket-Pack")

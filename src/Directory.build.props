@@ -5,9 +5,19 @@
     <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
     <ExtrasDefaultResourceIncludes>Resources\*.xaml</ExtrasDefaultResourceIncludes>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+  </PropertyGroup>
+  <!-- AssemblyInfo -->
+  <PropertyGroup>
+    <Company>MahApps</Company>
+    <Product>MahApps.Metro</Product>
+    <Copyright>Copyright © 2011 - $([System.DateTime]::Today.ToString(yyyy)) MahApps.Metro</Copyright>
+    <Description>A toolkit for creating Metro / Modern UI styled WPF apps.</Description>
+    <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">2.0.0.0</AssemblyVersion>
+    <FileVersion Condition="'$(FileVersion)' == ''">2.0.0.0</FileVersion>
+    <InformationalVersion Condition="'$(InformationalVersion)' == ''">2.0.0.0</InformationalVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
