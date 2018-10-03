@@ -4,27 +4,25 @@ NUGET
     Caliburn.Micro (3.2)
       Caliburn.Micro.Core (3.2)
     Caliburn.Micro.Core (3.2)
-    Costura.Fody (3.1.3)
-      Fody (>= 3.2.4) - restriction: >= net46
+    ControlzEx (4.0.0-alpha0189)
+    Costura.Fody (3.1.4)
+      Fody (>= 3.2.6) - restriction: >= net46
     ExposedObject (1.2)
-    Fody (3.2.4)
-    gitlink (3.1)
-    JetBrains.Annotations (2018.2.1) - copy_local: false
+    Fody (3.2.7)
+    gitlink (3.2.0-unstable0040) - copy_local: true
+    JetBrains.Annotations (2018.2.1) - copy_local: true
+    MahApps.Metro.IconPacks (3.0.0-alpha0035)
+      ControlzEx (>= 4.0.0-alpha0189)
     MaterialDesignColors (1.1.3)
-    MaterialDesignThemes (2.5.0-ci1169)
+    MaterialDesignThemes (2.5.0-ci1176)
       MaterialDesignColors (>= 1.1)
     Newtonsoft.Json (11.0.2)
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)
-    WpfAnalyzers (2.1.7.1)
+    WpfAnalyzers (2.1.7.1) - copy_local: true
     XamlColorSchemeGenerator (3.0.0.31)
       Newtonsoft.Json (>= 10.1)
-  remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (4.0.0-alpha0188)
-  remote: https://ci.appveyor.com/nuget/mahapps-metro-iconpacks
-    MahApps.Metro.IconPacks (3.0.0-alpha0032)
-      ControlzEx (>= 4.0.0-alpha0188)
 
 GROUP cake
 RESTRICTION: == net45

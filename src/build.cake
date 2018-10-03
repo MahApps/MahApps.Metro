@@ -106,10 +106,10 @@ Task("Restore")
 {
     PaketRestore();
 
-    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath };
+    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
     MSBuild(solution, msBuildSettings
-            .SetConfiguration(configuration)
-            .SetVerbosity(Verbosity.Normal)
+            //.SetConfiguration(configuration)
+            .SetVerbosity(Verbosity.Minimal)
             .WithTarget("restore")
             );
 });
@@ -124,6 +124,7 @@ Task("Build")
             .SetConfiguration(configuration)
             .SetVerbosity(Verbosity.Normal)
             //.WithRestore() only with cake 0.28.x            
+            .WithProperty("Description", "A toolkit for creating Metro / Modern UI styled WPF apps.")
             .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
             .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
             .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
@@ -141,6 +142,30 @@ Task("PaketPack")
         });
 });
 
+Task("Pack")
+  .WithCriteria(() => !isPullRequest)
+    .Does(() =>
+{
+    EnsureDirectoryExists(Directory(publishDir));
+
+    var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath };
+    var project = "./MahApps.Metro/MahApps.Metro.csproj";
+
+    MSBuild(project, msBuildSettings
+      .SetConfiguration(configuration)
+      .SetVerbosity(Verbosity.Normal)
+      .WithTarget("pack")
+      .WithProperty("PackageOutputPath", "../" + publishDir)
+      .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
+      .WithProperty("RepositoryBranch", branchName)
+      .WithProperty("RepositoryCommit", gitVersion.Sha)
+      .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
+      .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
+      .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
+      .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
+    );
+});
+
 Task("Zip")
     .WithCriteria(() => !isPullRequest)
     .Does(() =>
@@ -151,6 +176,7 @@ Task("Zip")
 });
 
 Task("Tests")
+    .WithCriteria(() => !local)
     .Does(() =>
 {
     XUnit2(
@@ -216,7 +242,8 @@ Task("Default")
 Task("appveyor")
     .IsDependentOn("Build")
     .IsDependentOn("Tests")
-    .IsDependentOn("PaketPack")
+    //.IsDependentOn("PaketPack")
+    .IsDependentOn("Pack")
     .IsDependentOn("Zip");
 
 ///////////////////////////////////////////////////////////////////////////////
