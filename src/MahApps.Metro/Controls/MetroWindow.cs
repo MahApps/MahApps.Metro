@@ -333,7 +333,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// <see cref="DependencyProperty"/> for <see cref="TryToBeFlickerFree"/>.
         /// </summary>
-        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.

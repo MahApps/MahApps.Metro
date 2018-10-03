@@ -1,17 +1,17 @@
 framework: >= net45
 
 //source https://ci.appveyor.com/nuget/xamlcolorschemegenerator
-source https://ci.appveyor.com/nuget/controlzex
-source https://ci.appveyor.com/nuget/mahapps-metro-iconpacks
+//source https://ci.appveyor.com/nuget/controlzex
+//source https://ci.appveyor.com/nuget/mahapps-metro-iconpacks
 source https://api.nuget.org/v3/index.json
 
 nuget Fody
 nuget Costura.Fody
 
-nuget WpfAnalyzers
-nuget JetBrains.Annotations copy_local:false
+nuget WpfAnalyzers copy_local: true // => PrivateAssets=All, mean all these type of assets are private of the project (so no need to add the deps in the nupkg dep list)
+nuget JetBrains.Annotations copy_local: true // => PrivateAssets=All, mean all these type of assets are private of the project (so no need to add the deps in the nupkg dep list)
 nuget XamlColorSchemeGenerator
-nuget gitlink
+nuget gitlink prerelease copy_local: true // => PrivateAssets=All, mean all these type of assets are private of the project (so no need to add the deps in the nupkg dep list)
 nuget Caliburn.Micro ~> 3.0
 
 nuget ControlzEx prerelease

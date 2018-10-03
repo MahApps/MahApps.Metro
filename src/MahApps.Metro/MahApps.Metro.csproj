@@ -3,9 +3,21 @@
     <!-- Project properties -->
     <PropertyGroup>
         <AssemblyName>MahApps.Metro</AssemblyName>
+        <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <ExtrasDefaultPageExcludes>$(ExtrasDefaultPageExcludes);**\*.Template.xaml</ExtrasDefaultPageExcludes>
+    </PropertyGroup>
+    <!-- NuGet -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <Authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</Authors>
+        <PackageLicenseUrl>https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/mahapps.metro.logo.png</PackageIconUrl>
+        <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
     <!-- Sign assembly -->
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
