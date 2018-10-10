@@ -122,7 +122,7 @@ namespace MahApps.Metro.Tests
             var theme = ThemeManager.GetTheme("dark.blue");
 
             Assert.NotNull(theme);
-            Assert.Equal(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml"), theme.Resources.Source);
+            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.Resources.Source.ToString().ToLower());
         }
 
         [Fact]

@@ -1,4 +1,4 @@
-﻿// ReSharper disable once CheckNamespace
+// ReSharper disable once CheckNamespace
 namespace MahApps.Metro
 {
     using System;
@@ -6,6 +6,8 @@ namespace MahApps.Metro
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Reflection;
+    using System.Resources;
     using System.Security;
     using System.Windows;
     using JetBrains.Annotations;
@@ -16,12 +18,15 @@ namespace MahApps.Metro
     /// </summary>
     public static class ThemeManager
     {
-        private const string BaseResourcePath = "pack://application:,,,/MahApps.Metro;component/Styles/Themes/";
-
         private const string BaseColorLight = "Light";
         private const string BaseColorDark = "Dark";
 
-        private static IList<Theme> themes;
+        // ReSharper disable once InconsistentNaming
+#pragma warning disable SA1307 // Accessible fields must begin with upper-case letter
+#pragma warning disable SA1401 // Fields must be private
+        internal static IList<Theme> themes;
+#pragma warning restore SA1401 // Fields must be private
+#pragma warning restore SA1307 // Accessible fields must begin with upper-case letter
 
         /// <summary>
         /// Gets a list of all default themes.
@@ -35,25 +40,63 @@ namespace MahApps.Metro
                     return themes;
                 }
 
-                var baseColors = new[] { BaseColorLight, BaseColorDark };
-                var colors = new[]
-                             {
-                                 "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
-                                 "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
-                             };
-
-                themes = new List<Theme>(baseColors.Length + colors.Length);
+                themes = new List<Theme>();
 
                 try
                 {
-                    foreach (var baseColor in baseColors)
+                    var assembly = typeof(ThemeManager).Assembly;
+                    var assemblyName = assembly.GetName().Name;
+                    var resourceDictionaries = assembly.GetManifestResourceNames();
+
+                    foreach (var resourceName in resourceDictionaries)
                     {
-                        foreach (var color in colors)
+                        if (resourceName.EndsWith(".g.resources", StringComparison.OrdinalIgnoreCase) == false)
                         {
-                            var resourceAddress = new Uri($"{BaseResourcePath}{baseColor}.{color}.xaml");
-                            themes.Add(new Theme(resourceAddress));
+                            continue;
+                        }
+
+                        var info = assembly.GetManifestResourceInfo(resourceName);
+                        if (info == null
+                            || info.ResourceLocation == ResourceLocation.ContainedInAnotherAssembly)
+                        {
+                            continue;
+                        }
+
+                        var resourceStream = assembly.GetManifestResourceStream(resourceName);
+
+                        if (resourceStream == null)
+                        {
+                            continue;
+                        }
+
+                        using (var reader = new ResourceReader(resourceStream))
+                        {
+                            foreach (DictionaryEntry entry in reader)
+                            {
+                                var stringKey = entry.Key as string;
+                                if (stringKey == null
+                                    || stringKey.IndexOf("/themes/", StringComparison.OrdinalIgnoreCase) == -1
+                                    || stringKey.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) == false
+                                    || stringKey.EndsWith("generic.baml", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    continue;
+                                }
+
+                                var resourceDictionary = new ResourceDictionary
+                                                         {
+                                                             Source = new Uri($"pack://application:,,,/{assemblyName};component/{stringKey.Replace(".baml", ".xaml")}")
+                                                         };
+
+                                if (resourceDictionary.MergedDictionaries.Count == 0
+                                    && resourceDictionary.Contains(Theme.ThemeNameKey))
+                                {
+                                    themes.Add(new Theme(resourceDictionary));
+                                }
+                            }
                         }
                     }
+
+                    themes = themes.OrderBy(x => x.DisplayName).ToList();
                 }
                 catch (Exception e)
                 {
@@ -381,6 +424,11 @@ namespace MahApps.Metro
             ApplyResourceDictionary(newTheme.Resources, resources);
         }
 
+        /// <summary>
+        /// Changes the theme of a ResourceDictionary directly.
+        /// </summary>
+        /// <param name="resources">The ResourceDictionary to modify.</param>
+        /// <param name="baseColor">The basecolor to apply to the ResourceDictionary.</param>
         [SecurityCritical]
         public static void ChangeThemeBaseColor([NotNull] ResourceDictionary resources, string baseColor)
         {
@@ -639,7 +687,7 @@ namespace MahApps.Metro
         private static bool isAutomaticWindowsAppModeSettingSyncEnabled;
 
         /// <summary>
-        /// Gets or sets wether changes to the "app mode" setting from windows should be detected at runtime and the current <see cref="Theme"/> be changed accordingly.
+        /// Gets or sets whether changes to the "app mode" setting from windows should be detected at runtime and the current <see cref="Theme"/> be changed accordingly.
         /// </summary>
         public static bool IsAutomaticWindowsAppModeSettingSyncEnabled
         {
