@@ -44,9 +44,9 @@
         /// <returns>
         ///     The date to display. The default is <see cref="DateTime.Today" />.
         /// </returns>
-        public DateTime? DisplayDate
+        public DateTime DisplayDate
         {
-            get { return (DateTime?)GetValue(DisplayDateProperty); }
+            get { return (DateTime)GetValue(DisplayDateProperty); }
             set { SetValue(DisplayDateProperty, value); }
         }
 
@@ -270,7 +270,7 @@
             var dateTime = GetSelectedDateTimeFromGUI();
             if (dateTime != null)
             {
-                DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
+                DisplayDate = dateTime.Value > DateTime.MinValue && dateTime.Value < DateTime.MaxValue ? dateTime.Value : DateTime.Today;
                 if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
                 {
                     this.SetCurrentValue(SelectedDateTimeProperty, DisplayDate);
