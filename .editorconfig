@@ -5,7 +5,7 @@ root = true
 end_of_line = CRLF
 
 ; 4-column tab indentation
-[*.{cs,csproj,xaml,xml}]
+[*.{cs,csproj,xaml,xml,props,targets}]
 indent_style = space
 indent_size = 4
 

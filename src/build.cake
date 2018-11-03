@@ -35,6 +35,7 @@ if (string.IsNullOrWhiteSpace(configuration))
 // PREPARATION
 ///////////////////////////////////////////////////////////////////////////////
 
+var repoName = "MahApps.Metro";
 var local = BuildSystem.IsLocalBuild;
 
 // Set build version
@@ -68,10 +69,10 @@ Setup(ctx =>
 
     if (!IsRunningOnWindows())
     {
-        throw new NotImplementedException("MahApps.Metro will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
+        throw new NotImplementedException($"{repoName} will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
     }
 
-    Information(Figlet("MahApps.Metro"));
+    Information(Figlet(repoName));
 
     Information("Informational   Version: {0}", gitVersion.InformationalVersion);
     Information("SemVer          Version: {0}", gitVersion.SemVer);
@@ -93,7 +94,7 @@ Teardown(ctx =>
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Clean")
-    //.ContinueOnError()
+    .ContinueOnError()
     .Does(() =>
 {
     var directoriesToDelete = GetDirectories("./**/obj").Concat(GetDirectories("./**/bin")).Concat(GetDirectories("./**/Publish"));
@@ -101,7 +102,6 @@ Task("Clean")
 });
 
 Task("Restore")
-    .IsDependentOn("Clean")
     .Does(() =>
 {
     PaketRestore();
@@ -115,7 +115,6 @@ Task("Restore")
 });
 
 Task("Build")
-    .IsDependentOn("Restore")
     .Does(() =>
 {
     var msBuildSettings = new MSBuildSettings { ToolPath = msBuildPath, ArgumentCustomization = args => args.Append("/m") };
@@ -125,21 +124,11 @@ Task("Build")
             .SetVerbosity(Verbosity.Normal)
             //.WithRestore() only with cake 0.28.x            
             .WithProperty("Description", "A toolkit for creating Metro / Modern UI styled WPF apps.")
+            .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
             .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
             .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
             .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
             );
-});
-
-Task("PaketPack")
-    .WithCriteria(() => !isPullRequest)
-    .Does(() =>
-{
-    EnsureDirectoryExists(Directory(publishDir));
-    PaketPack(publishDir, new PaketPackSettings {
-        Version = isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion,
-        BuildConfig = configuration
-        });
 });
 
 Task("Pack")
@@ -156,10 +145,10 @@ Task("Pack")
       .SetVerbosity(Verbosity.Normal)
       .WithTarget("pack")
       .WithProperty("PackageOutputPath", "../" + publishDir)
-      .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
       .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
+      .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
       .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
       .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
       .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
@@ -176,6 +165,7 @@ Task("Zip")
 });
 
 Task("Tests")
+    .ContinueOnError()
     .Does(() =>
 {
     XUnit2(
@@ -201,7 +191,7 @@ Task("CreateRelease")
         throw new Exception("The GITHUB_TOKEN environment variable is not defined.");
     }
 
-    GitReleaseManagerCreate(username, token, "MahApps", "MahApps.Metro", new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(username, token, "MahApps", repoName, new GitReleaseManagerCreateSettings {
         Milestone         = gitVersion.MajorMinorPatch,
         Name              = gitVersion.AssemblySemFileVer,
         Prerelease        = isDevelopBranch,
@@ -226,7 +216,7 @@ Task("ExportReleaseNotes")
     }
 
     EnsureDirectoryExists(Directory(publishDir));
-    GitReleaseManagerExport(username, token, "MahApps", "MahApps.Metro", publishDir + "/releasenotes.md", new GitReleaseManagerExportSettings {
+    GitReleaseManagerExport(username, token, "MahApps", repoName, publishDir + "/releasenotes.md", new GitReleaseManagerExportSettings {
         TagName         = gitVersion.SemVer
     });
 });
@@ -236,12 +226,13 @@ Task("ExportReleaseNotes")
 ///////////////////////////////////////////////////////////////////////////////
 
 Task("Default")
-    .IsDependentOn("Build");
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
+    .IsDependentOn("Build")
+    .IsDependentOn("Tests");
 
 Task("appveyor")
-    .IsDependentOn("Build")
-    .IsDependentOn("Tests")
-    //.IsDependentOn("PaketPack")
+    .IsDependentOn("Default")
     .IsDependentOn("Pack")
     .IsDependentOn("Zip");
 

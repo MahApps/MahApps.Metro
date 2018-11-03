@@ -162,7 +162,7 @@
                                                   Height="60"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
-                                                  Kind="Cupcake" />
+                                                  Kind="FoodCupcake" />
                     </Grid>
                     <Grid Background="#00A600">
                         <iconPacks:PackIconModern Width="60"

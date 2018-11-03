@@ -5,7 +5,6 @@
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

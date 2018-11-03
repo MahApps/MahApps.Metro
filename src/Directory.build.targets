@@ -1,22 +1,30 @@
 <Project>
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-	  <DefineConstants>$(DefineConstants)</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
-	  <DefineConstants>$(DefineConstants)</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
-	  <DefineConstants>$(DefineConstants)</DefineConstants>
-	</PropertyGroup>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants)</DefineConstants>
+    </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<NoWarn>1591</NoWarn>
-		<DebugType>full</DebugType>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<NoWarn>1591</NoWarn>
-		<DebugType>pdbonly</DebugType>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-	</PropertyGroup>
+    <!-- AssemblyInfo -->
+    <PropertyGroup>
+        <Company>MahApps</Company>
+        <Product>MahApps.Metro</Product>
+        <Copyright>Copyright © 2011 - $([System.DateTime]::Today.ToString(yyyy)) MahApps.Metro</Copyright>
+        <Description>A toolkit for creating Metro / Modern UI styled WPF apps.</Description>
+
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <Version>2.0.0.0</Version>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <FileVersion>2.0.0.0</FileVersion>
+        <InformationalVersion>2.0.0.0</InformationalVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <NoWarn>1591</NoWarn>
+        <DebugType>full</DebugType>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <NoWarn>1591</NoWarn>
+        <DebugType>pdbonly</DebugType>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    </PropertyGroup>
 </Project>
