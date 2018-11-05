@@ -11,9 +11,9 @@ NUGET
     Fody (3.2.16)
     gitlink (3.2.0-unstable0040) - copy_local: true
     JetBrains.Annotations (2018.2.1) - copy_local: true
-    MahApps.Metro.IconPacks (3.0.0-alpha0086)
+    MahApps.Metro.IconPacks (3.0.0-alpha0087)
     MaterialDesignColors (1.1.3)
-    MaterialDesignThemes (2.5.1-ci1222)
+    MaterialDesignThemes (2.5.1-ci1224)
       MaterialDesignColors (>= 1.1)
     Newtonsoft.Json (11.0.2)
     NHotkey (1.2.1)
