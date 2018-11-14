@@ -262,4 +262,4 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 !src/MahApps.Metro/Styles/Themes/Theme.Template.exe
 
 # cake
-src/tools/
+tools/

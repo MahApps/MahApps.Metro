@@ -17,16 +17,13 @@
     do_not_increment_build_number: false
 
   build_script:
-    - ps: cd src
-    - ps: .\build.ps1 -Target appveyor
-    - ps: cd..
+    - ps: .\build.ps1 -target appveyor
 
   cache:
     - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
 
   artifacts:
-    - path: \src\Publish\*.*
+    - path: \Publish\*.*
 
   nuget:
     disable_publish_on_pr: true

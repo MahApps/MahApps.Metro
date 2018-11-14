@@ -52,7 +52,7 @@ var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchNa
 var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Directories and Paths
-var solution = "MahApps.Metro.sln";
+var solution = "./src/MahApps.Metro.sln";
 var publishDir = "./Publish";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -145,11 +145,11 @@ Task("Pack")
         Configuration = configuration
         // PlatformTarget = PlatformTarget.MSIL
     };
-    var project = "./MahApps.Metro/MahApps.Metro.csproj";
+    var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
 
     MSBuild(project, msBuildSettings
       .WithTarget("pack")
-      .WithProperty("PackageOutputPath", "../" + publishDir)
+      .WithProperty("PackageOutputPath", "../../" + publishDir)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
       .WithProperty("Description", "The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a 'Modern' UI for their WPF apps (>= .Net 4.5), with minimal effort.")
@@ -165,8 +165,8 @@ Task("Zip")
 {
     EnsureDirectoryExists(Directory(publishDir));
 
-    Zip("./MahApps.Metro.Samples/MahApps.Metro.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Demo-v" + gitVersion.NuGetVersion + ".zip");
-    Zip("./MahApps.Metro.Samples/MahApps.Metro.Caliburn.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Caliburn.Demo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip("./src/MahApps.Metro.Samples/MahApps.Metro.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Demo-v" + gitVersion.NuGetVersion + ".zip");
+    Zip("./src/MahApps.Metro.Samples/MahApps.Metro.Caliburn.Demo/bin/" + configuration, publishDir + "/MahApps.Metro.Caliburn.Demo-v" + gitVersion.NuGetVersion + ".zip");
 });
 
 Task("Tests")
@@ -174,7 +174,7 @@ Task("Tests")
     .Does(() =>
 {
     XUnit2(
-        "./Mahapps.Metro.Tests/bin/" + configuration + "/**/*.Tests.dll",
+        "./src/Mahapps.Metro.Tests/bin/" + configuration + "/**/*.Tests.dll",
         new XUnit2Settings { ToolTimeout = TimeSpan.FromMinutes(5) }
     );
 });
@@ -201,7 +201,7 @@ Task("CreateRelease")
         Name              = gitVersion.AssemblySemFileVer,
         Prerelease        = isDevelopBranch,
         TargetCommitish   = branchName,
-        WorkingDirectory  = "../"
+        WorkingDirectory  = "."
     });
 });
 
