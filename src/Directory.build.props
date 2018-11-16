@@ -1,13 +1,15 @@
 <Project>
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47;net46;net45</TargetFrameworks>
+        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
         <ExtrasDefaultResourceIncludes>Resources\*.xaml</ExtrasDefaultResourceIncludes>
 
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences>
+        <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
         <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
@@ -30,5 +32,18 @@
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2018.*" PrivateAssets="All" />
         <PackageReference Include="WpfAnalyzers" Version="2.2.*" PrivateAssets="All" />
+    </ItemGroup>
+
+    <!-- Set the reference for the other targets -->
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="System" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Xaml" />
+        <Reference Include="WindowsBase" />
     </ItemGroup>
 </Project>
