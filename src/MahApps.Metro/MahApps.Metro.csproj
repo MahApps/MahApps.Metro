@@ -12,6 +12,10 @@
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
+    <!-- reference includes -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta*" PrivateAssets="All"/>
+    </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
         <EmbeddedResource Include="**\*.Template.xaml" />

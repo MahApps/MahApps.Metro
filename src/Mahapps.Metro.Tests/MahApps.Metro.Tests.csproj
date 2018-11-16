@@ -10,9 +10,7 @@
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <!-- Items include -->
@@ -22,9 +20,6 @@
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
-    </ItemGroup>
-    <ItemGroup>
-        <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
     </ItemGroup>
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />

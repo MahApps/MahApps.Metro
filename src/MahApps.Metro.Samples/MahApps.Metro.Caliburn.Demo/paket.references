@@ -1,5 +1,3 @@
-Costura.Fody content: once
-JetBrains.Annotations
 MahApps.Metro.IconPacks
 Caliburn.Micro
   exclude System.Windows.Interactivity

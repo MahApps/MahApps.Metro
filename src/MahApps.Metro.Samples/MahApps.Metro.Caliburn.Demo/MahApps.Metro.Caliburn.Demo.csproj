@@ -4,7 +4,6 @@
     <PropertyGroup>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
-        <DisableFody>true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

@@ -17,11 +17,11 @@
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Fody" Version="3.2.*" PrivateAssets="All" />
+        <PackageReference Include="Costura.Fody" Version="3.1.*" PrivateAssets="All" />
+    </ItemGroup>
+    <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Windows.Forms" />
         <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
     <ItemGroup>

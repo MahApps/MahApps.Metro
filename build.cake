@@ -104,7 +104,6 @@ Task("Restore")
         Verbosity = Verbosity.Minimal,
         ToolVersion = MSBuildToolVersion.VS2017,
         Configuration = configuration,
-        // PlatformTarget = PlatformTarget.MSIL,
         // Restore = true, // only with cake 0.28.x
         ArgumentCustomization = args => args.Append("/m")
     };
@@ -119,7 +118,6 @@ Task("Build")
         Verbosity = Verbosity.Normal,
         ToolVersion = MSBuildToolVersion.VS2017,
         Configuration = configuration,
-        // PlatformTarget = PlatformTarget.MSIL,
         // Restore = true, // only with cake 0.28.x     
         ArgumentCustomization = args => args.Append("/m")
     };
