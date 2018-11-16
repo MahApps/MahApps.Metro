@@ -2,6 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras">
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
@@ -16,9 +17,13 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
+    <!-- reference includes -->
     <ItemGroup>
         <PackageReference Include="Fody" Version="3.2.*" PrivateAssets="All" />
         <PackageReference Include="Costura.Fody" Version="3.1.*" PrivateAssets="All" />
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
+        <PackageReference Include="MaterialDesignThemes" Version="2.5.*" />
+        <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -26,7 +31,6 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />
-        <None Include="paket.references" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
@@ -35,5 +39,4 @@
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
     </ItemGroup>
-    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

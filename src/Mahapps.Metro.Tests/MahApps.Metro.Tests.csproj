@@ -9,13 +9,20 @@
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
+    <!-- reference includes -->
+    <ItemGroup>
+        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
+        <PackageReference Include="ExposedObject" Version="1.2.*" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Web.Extensions" />
     </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
-        <None Include="paket.references" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
@@ -24,5 +31,4 @@
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

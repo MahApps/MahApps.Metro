@@ -6,13 +6,13 @@
         <AssemblyName>MahApps.Metro</AssemblyName>
         <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
-        <!-- <ExtrasDefaultPageExcludes>$(ExtrasDefaultPageExcludes);**\*.Template.xaml</ExtrasDefaultPageExcludes> -->
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <!-- reference includes -->
     <ItemGroup>
         <PackageReference Include="ControlzEx" Version="4.0.0-alpha*" />
+        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta*" PrivateAssets="All" />
     </ItemGroup>
     <!-- Items include -->
@@ -20,7 +20,11 @@
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
-    <Target Name="GenerateXamlFiles" AfterTargets="CollectPackageReferences">    
-        <Exec Command="&quot;$(MSBuildProjectDirectory)\..\packages\XamlColorSchemeGenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+    <Target Name="GenerateXamlFiles" AfterTargets="CollectPackageReferences">
+        <PropertyGroup>
+            <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+            <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
+        </PropertyGroup>
+        <Exec Command="&quot;$(NuGetPackageRoot)XamlColorSchemeGenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
     </Target>
 </Project>
