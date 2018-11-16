@@ -25,6 +25,6 @@
             <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
             <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
         </PropertyGroup>
-        <Exec Command="&quot;$(NuGetPackageRoot)XamlColorSchemeGenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
     </Target>
 </Project>
