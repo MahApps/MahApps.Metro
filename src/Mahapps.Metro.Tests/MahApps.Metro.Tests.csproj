@@ -11,7 +11,8 @@
     </ItemGroup>
     <!-- reference includes -->
     <ItemGroup>
-        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
+        <PackageReference Include="Newtonsoft.Json" Version="11.*" />
+        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" />
         <PackageReference Include="ExposedObject" Version="1.2.*" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
