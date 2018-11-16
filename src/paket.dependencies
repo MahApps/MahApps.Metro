@@ -8,7 +8,6 @@ source https://api.nuget.org/v3/index.json
 nuget XamlColorSchemeGenerator
 nuget Caliburn.Micro ~> 3.0
 
-nuget ControlzEx prerelease
 nuget MahApps.Metro.IconPacks prerelease
 nuget MaterialDesignThemes prerelease
 
