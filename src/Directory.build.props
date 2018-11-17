@@ -1,13 +1,10 @@
 <Project>
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
-        <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
-        <ExtrasDefaultResourceIncludes>Resources\*.xaml</ExtrasDefaultResourceIncludes>
-
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <LangVersion>latest</LangVersion>
         <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences>
         <UseWpf>true</UseWpf>
     </PropertyGroup>
