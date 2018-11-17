@@ -19,12 +19,16 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <NoWarn>1591</NoWarn>
+        <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <NoWarn>1591</NoWarn>
+        <DebugSymbols>true</DebugSymbols>
         <DebugType>pdbonly</DebugType>
+        <Optimize>true</Optimize>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     </PropertyGroup>
 </Project>

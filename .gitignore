@@ -260,3 +260,6 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 
 # Allowed files
 !src/MahApps.Metro/Styles/Themes/Theme.Template.exe
+
+# cake
+tools/

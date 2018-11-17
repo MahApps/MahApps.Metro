@@ -1,0 +1,753 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Irony</name>
+    </assembly>
+    <members>
+        <member name="T:Irony.Parsing.PrecedenceHint">
+            <summary> A hint to use precedence. </summary>
+            <remarks>
+            Not used directly in grammars; injected automatically by system in states having conflicts on operator symbols. 
+            The purpose of the hint is make handling precedence similar to other conflict resolution methods - through hints
+            activated during parser construction. The hint code analyzes the conflict and resolves it by adding custom or general action
+            for a conflicting input. 
+            </remarks>
+        </member>
+        <member name="T:Irony.Parsing.ReduceParserAction">
+            <summary>Base class for more specific reduce actions. </summary>
+        </member>
+        <member name="M:Irony.Parsing.ReduceParserAction.Create(Irony.Parsing.Production)">
+            <summary>Factory method for creating a proper type of reduce parser action. </summary>
+            <param name="production">A Production to reduce.</param>
+            <returns>Reduce action.</returns>
+        </member>
+        <member name="T:Irony.Parsing.ReduceTransientParserAction">
+            <summary>Reduces non-terminal marked as Transient by MarkTransient method. </summary>
+        </member>
+        <member name="T:Irony.Parsing.ReduceListBuilderParserAction">
+            <summary>Reduces list created by MakePlusRule or MakeListRule methods. </summary>
+        </member>
+        <member name="T:Irony.Parsing.ISourceStream">
+            <summary>
+            Interface for Terminals to access the source stream and produce tokens.
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.Text">
+            <summary>
+            Returns the source text
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.Location">
+            <summary>
+            Gets or sets the start location (position, row, column) of the new token
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.Position">
+            <summary>
+            Gets or sets the current position in the source file. When reading the value, returns Location.Position value. 
+            When a new value is assigned, the Location is modified accordingly. 
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.PreviewPosition">
+            <summary>
+            Gets or sets the current preview position in the source file. Must be greater or equal to Location.Position
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.PreviewChar">
+            <summary>
+            Gets a char at preview position
+            </summary>
+        </member>
+        <member name="P:Irony.Parsing.ISourceStream.NextPreviewChar">
+            <summary>
+            Gets the char at position next after the PrevewPosition 
+            </summary>
+        </member>
+        <member name="M:Irony.Parsing.ISourceStream.CreateToken(Irony.Parsing.Terminal)">
+            <summary>
+            Creates a new token based on current preview position.
+            </summary>
+            <param name="terminal">A terminal associated with the token.</param>
+            <returns>New token.</returns>
+        </member>
+        <member name="M:Irony.Parsing.ISourceStream.CreateToken(Irony.Parsing.Terminal,System.Object)">
+            <summary>
+            Creates a new token based on current preview position and sets its Value field.
+            </summary>
+            <param name="terminal">A terminal associated with the token.</param>
+            <param name="value">The value associated with the token.</param>
+            <returns>New token.</returns>
+        </member>
+        <member name="M:Irony.Parsing.ISourceStream.MatchSymbol(System.String)">
+            <summary>Tries to match the symbol with the text at current preview position. </summary>
+            <param name="symbol">A symbol to match</param>
+            <returns>True if there is a match; otherwise, false.</returns>
+        </member>
+        <member name="M:Irony.Parsing.ParseTreeNode.IsPunctuationOrEmptyTransient">
+            <summary>Returns true if the node is punctuation or it is transient with empty child list.</summary>
+            <returns>True if parser can safely ignore this node.</returns>
+        </member>
+        <member name="F:Irony.Parsing.SourceLocation.Line">
+            <summary>Source line number, 0-based.</summary>
+        </member>
+        <member name="F:Irony.Parsing.SourceLocation.Column">
+            <summary>Source column number, 0-based.</summary>
+        </member>
+        <member name="M:Irony.Parsing.GrammarHint.Apply(Irony.Parsing.LanguageData,Irony.Parsing.Construction.LRItem)">
+            <summary> Gives a chance to a custom code in hint to interfere in parser automaton construction.</summary>
+            <param name="language">The LanguageData instance.</param>
+            <param name="owner">The LRItem that "owns" the hint. </param>
+            <remarks>
+            The most common purpose of this method (it's overrides) is to resolve the conflicts
+            by adding specific actions into State.Actions dictionary. 
+            The owner parameter represents the position in the grammar expression where the hint
+            is found. The parser state is available through owner.State property. 
+            </remarks>
+        </member>
+        <member name="F:Irony.Parsing.Grammar.CaseSensitive">
+            <summary>
+            Gets case sensitivity of the grammar. Read-only, true by default. 
+            Can be set to false only through a parameter to grammar constructor.
+            </summary>
+        </member>
+        <member name="F:Irony.Parsing.Grammar.Root">
+            <summary>
+            The main root entry for the grammar. 
+            </summary>
+        </member>
+        <member name="F:Irony.Parsing.Grammar.SnippetRoots">
+            <summary>
+            Alternative roots for parsing code snippets.
+            </summary>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.OnScannerSelectTerminal(Irony.Parsing.ParsingContext)">
+            <summary>
+            Override this method to help scanner select a terminal to create token when there are more than one candidates
+            for an input char. context.CurrentTerminals contains candidate terminals; leave a single terminal in this list
+            as the one to use.
+            </summary>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.SkipWhitespace(Irony.Parsing.ISourceStream)">
+            <summary>Skips whitespace characters in the input stream. </summary>
+            <remarks>Override this method if your language has non-standard whitespace characters.</remarks>
+            <param name="source">Source stream.</param>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.IsWhitespaceOrDelimiter(System.Char)">
+            <summary>Returns true if a character is whitespace or delimiter. Used in quick-scanning versions of some terminals. </summary>
+            <param name="ch">The character to check.</param>
+            <returns>True if a character is whitespace or delimiter; otherwise, false.</returns>
+            <remarks>Does not have to be completely accurate, should recognize most common characters that are special chars by themselves
+            and may never be part of other multi-character tokens. </remarks>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.AddTermsReportGroup(System.String,System.String[])">
+            <summary>
+            Creates a terminal reporting group, so all terminals in the group will be reported as a single "alias" in syntex error messages like
+            "Syntax error, expected: [list of terms]"
+            </summary>
+            <param name="alias">An alias for all terminals in the group.</param>
+            <param name="symbols">Symbols to be included into the group.</param>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.AddTermsReportGroup(System.String,Irony.Parsing.Terminal[])">
+            <summary>
+            Creates a terminal reporting group, so all terminals in the group will be reported as a single "alias" in syntex error messages like
+            "Syntax error, expected: [list of terms]"
+            </summary>
+            <param name="alias">An alias for all terminals in the group.</param>
+            <param name="terminals">Terminals to be included into the group.</param>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.AddToNoReportGroup(System.String[])">
+            <summary>
+            Adds symbols to a group with no-report type, so symbols will not be shown in expected lists in syntax error messages. 
+            </summary>
+            <param name="symbols">Symbols to exclude.</param>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.AddToNoReportGroup(Irony.Parsing.Terminal[])">
+            <summary>
+            Adds symbols to a group with no-report type, so symbols will not be shown in expected lists in syntax error messages. 
+            </summary>
+            <param name="symbols">Symbols to exclude.</param>
+        </member>
+        <member name="M:Irony.Parsing.Grammar.AddOperatorReportGroup(System.String)">
+            <summary>
+            Adds a group and an alias for all operator symbols used in the grammar.
+            </summary>
+            <param name="alias">An alias for operator symbols.</param>
+        </member>
+        <member name="T:Irony.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ConsoleNoChars">
+            <summary>
+              Looks up a localized string similar to Nn.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ConsoleYesChars">
+            <summary>
+              Looks up a localized string similar to Yy.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrAmbigGrammarRR">
+            <summary>
+              Looks up a localized string similar to Ambiguous grammar, unresolvable reduce-reduce conflicts. State {0}, lookaheads [{1}].
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrAmbigGrammarSR">
+            <summary>
+              Looks up a localized string similar to Ambiguous grammar, unresolvable shift-reduce conflicts. State {0}, lookaheads [{1}].
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrArgListNotFound">
+            <summary>
+              Looks up a localized string similar to Argument list not found in the stack. Expected: ValueList, found: {0}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrAssignLiteralValue">
+            <summary>
+              Looks up a localized string similar to Invalid operation, attempt to assign to a constant or literal value..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrBadChar">
+            <summary>
+              Looks up a localized string similar to Invalid length of char literal - should be a single character..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrBadStrLiteral">
+            <summary>
+              Looks up a localized string similar to Mal-formed  string literal - cannot find termination symbol..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrBadUnEscape">
+            <summary>
+              Looks up a localized string similar to Invalid unicode escape ({0}), expected {1} hex digits..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrBadXEscape">
+            <summary>
+              Looks up a localized string similar to Invalid \x escape, at least one digit expected..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrCannotConvertValue">
+            <summary>
+              Looks up a localized string similar to Cannot convert value from type {0} to type {1}, type converter not defined..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrCannotConvertValueToType">
+            <summary>
+              Looks up a localized string similar to Cannot convert literal {0} to type {1}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrCannotMoveBackInSource">
+            <summary>
+              Looks up a localized string similar to Fatal error in parser: attempt to move back in the source..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrConflictMsgTemplate">
+            <summary>
+              Looks up a localized string similar to {0} State {1} on inputs: {2}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrConsoleFatalError">
+            <summary>
+              Looks up a localized string similar to Fatal error:.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrConstructNotSupported">
+            <summary>
+              Looks up a localized string similar to Construct &apos;{0}&apos; is not supported (yet) by language implementation..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrDsvNoClosingQuote">
+            <summary>
+              Looks up a localized string similar to Could not find a closing quote for quoted value..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrDupRegexSwitch">
+            <summary>
+              Looks up a localized string similar to Duplicate switch &apos;{0}&apos; for regular expression..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrDupStartSymbolStr">
+            <summary>
+              Looks up a localized string similar to Duplicate start symbol {0} in string literal [{1}]..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrFailedCreateNode">
+            <summary>
+              Looks up a localized string similar to Failed to create AST node for non-terminal [{0}], error: {1}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrFreeTextNoEndTag">
+            <summary>
+              Looks up a localized string similar to Failed to find the ending tag &apos;{0}&apos; for a text literal. .
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrImpliedOpUseParserLink">
+            <summary>
+              Looks up a localized string similar to ImpliedSymbolTerminal cannot be used in grammar with DisableScannerParserLink flag set.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInternalErrDataPopFailed">
+            <summary>
+              Looks up a localized string similar to Interpreter error, DataStack.Pop() operation failed - stack is empty..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInterpreterIsBusy">
+            <summary>
+              Looks up a localized string similar to Interpreter is busy..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvalidArgsForIncDec">
+            <summary>
+              Looks up a localized string similar to Invalid arguments for IncDecNode AST node: either first or second argument should be &apos;--&apos; or &apos;++&apos;..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvalidAstMode">
+            <summary>
+              Looks up a localized string similar to Invalid AstMode value in call to Evaluate method. Node: {0}, mode: {1}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvalidChar">
+            <summary>
+              Looks up a localized string similar to Invalid character: &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvalidEmbeddedPrefix">
+            <summary>
+              Looks up a localized string similar to Invalid embedded expression. .
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvDedent">
+            <summary>
+              Looks up a localized string similar to Invalid dedent level, no previous matching indent found..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvEscape">
+            <summary>
+              Looks up a localized string similar to Invalid escape sequence: \{0}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvEscSeq">
+            <summary>
+              Looks up a localized string similar to Invalid escape sequence..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvEscSymbol">
+            <summary>
+              Looks up a localized string similar to Invalid escape symbol, expected &apos;u&apos; or &apos;U&apos; only..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvNumber">
+            <summary>
+              Looks up a localized string similar to Invalid number..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvRegexSwitch">
+            <summary>
+              Looks up a localized string similar to Invalid switch &apos;{0}&apos; for regular expression.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrInvStrDef">
+            <summary>
+              Looks up a localized string similar to Error in string literal [{0}]: No start/end symbols specified..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrLastTermOfErrorProd">
+            <summary>
+              Looks up a localized string similar to The last term of production containing SyntaxError must be a terminal. NonTerminal: {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrListCannotBeTransient">
+            <summary>
+              Looks up a localized string similar to List non-terminals cannot be marked transient; list: ({0}).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNewLineExpected">
+            <summary>
+              Looks up a localized string similar to Expected new line symbol..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoClosingBrace">
+            <summary>
+              Looks up a localized string similar to No closing pair for opening symbol {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNodeTypeNotSetOn">
+            <summary>
+              Looks up a localized string similar to AstNodeType or AstNodeCreator is not set on non-terminals: {0}. Either set Term.AstConfig.NodeType, or provide default values in AstContext..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoEndForRegex">
+            <summary>
+              Looks up a localized string similar to No end symbol for regex literal..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoEndTagInEmbExpr">
+            <summary>
+              Looks up a localized string similar to No ending tag &apos;{0}&apos; found in embedded expression..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoImplForUnaryOp">
+            <summary>
+              Looks up a localized string similar to UnExprNode: no implementation for unary operator &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoLetterAfterNum">
+            <summary>
+              Looks up a localized string similar to Number cannot be followed by a letter..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNoLkhds">
+            <summary>
+              Looks up a localized string similar to ParserDataBuilder error: inadequate state {0}, reduce item &apos;{1}&apos; has no lookaheads..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNtRuleIsNull">
+            <summary>
+              Looks up a localized string similar to Non-terminal {0} has uninitialized Rule property..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrNullNodeEval">
+            <summary>
+              Looks up a localized string similar to Attempt to evaluate NULL AST node. The AST node for term &apos;{0}&apos; was not created during parsing..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrOpNotDefinedForType">
+            <summary>
+              Looks up a localized string similar to Operator &apos;{0}&apos; is not defined for types {1}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrOpNotDefinedForTypes">
+            <summary>
+              Looks up a localized string similar to Operator &apos;{0}&apos; is not defined for types {1} and {2}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrOpNotImplemented">
+            <summary>
+              Looks up a localized string similar to Operator &apos;{0} not imlemented..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrOutErrorPrintFormat">
+            <summary>
+              Looks up a localized string similar to {0}: {1}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrOutlineFilterContSymbol">
+            <summary>
+              Looks up a localized string similar to CodeOutlineFilter: line continuation symbol &apos;{0}&apos; should be added to Grammar.NonGrammarTerminals list..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrParserUnexpectedInput">
+            <summary>
+              Looks up a localized string similar to Syntax error, unexpected input..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrParseTreeNull">
+            <summary>
+              Looks up a localized string similar to Parsed tree is null, cannot evaluate..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrParseTreeRootNull">
+            <summary>
+              Looks up a localized string similar to Parse tree root is null, cannot evaluate..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRootAstNodeNull">
+            <summary>
+              Looks up a localized string similar to Root AST node is null, cannot evaluate..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRootAstNoInterface">
+            <summary>
+              Looks up a localized string similar to Root AST node does not implement IInterpretedAstNode interface, cannot evaluate..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRootNotRegistered">
+            <summary>
+              Looks up a localized string similar to ({0}) term passed as &apos;root&apos; paramater to parserr is not Root or snippet root of the grammar. Add it to SnippetRoots set in grammar constructor..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRootNotSet">
+            <summary>
+              Looks up a localized string similar to Root property of the grammar is not set..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRRConflict">
+            <summary>
+              Looks up a localized string similar to Reduce-reduce conflict. State {0}, lookaheads: {1}. Selected reduce on first production in conflict set..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrRuleContainsNull">
+            <summary>
+              Looks up a localized string similar to Rule for NonTerminal {0} contains null as an operand in position {1} in one of productions..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrSRConflict">
+            <summary>
+              Looks up a localized string similar to Shift-reduce conflict. State {0}, lookaheads [{1}]. Selected shift as preferred action..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrSyntaxErrorExpected">
+            <summary>
+              Looks up a localized string similar to Syntax error, expected: {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrSyntaxErrorNoInfo">
+            <summary>
+              Looks up a localized string similar to Syntax error..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrTemplExprNotRoot">
+            <summary>
+              Looks up a localized string similar to Expression root non-terminal in template settings (AstNodeConfig property) in templated string literal [{0}] is not added to Roots set. Add it to SnippetRoots in grammar constructor..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrTemplMissingExprRoot">
+            <summary>
+              Looks up a localized string similar to Expression root is not specified in template settings (AstNodeConfig property) in templated string literal [{0}]. .
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrTemplNoSettings">
+            <summary>
+              Looks up a localized string similar to Error in string literal [{0}]: IsTemplate flag is set, but TemplateSettings is not provided in AstNodeConfig property..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrTerminalHasEmptyPrefix">
+            <summary>
+              Looks up a localized string similar to A terminal {0} has empty prefix..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrTransientNtMustHaveOneTerm">
+            <summary>
+              Looks up a localized string similar to Transient non-terminal must have zero or one non-punctuation child nodes; non-terminals: {0}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrUnclosedComment">
+            <summary>
+              Looks up a localized string similar to Unclosed comment block.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrUnexpEof">
+            <summary>
+              Looks up a localized string similar to Unexpected end of file..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrUnexpIndent">
+            <summary>
+              Looks up a localized string similar to Unexpected indentation..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrUnmatchedCloseBrace">
+            <summary>
+              Looks up a localized string similar to Unmatched closing brace &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrVarIsNotCallable">
+            <summary>
+              Looks up a localized string similar to Variable {0} is not a callable function..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrVarNotDefined">
+            <summary>
+              Looks up a localized string similar to Variable {0} not defined..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.ErrWrongArgCount">
+            <summary>
+              Looks up a localized string similar to Invalid number of arguments. Expected {0}, found {1}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.FmtRowCol">
+            <summary>
+              Looks up a localized string similar to ({0}:{1}).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelActionAccept">
+            <summary>
+              Looks up a localized string similar to Accept.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelActionOp">
+            <summary>
+              Looks up a localized string similar to Operator, shift to {0}/reduce on {1}..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelActionReduce">
+            <summary>
+              Looks up a localized string similar to Reduce on {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelActionShift">
+            <summary>
+              Looks up a localized string similar to Shift to {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelActionUnknown">
+            <summary>
+              Looks up a localized string similar to (Unknown action type).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelEofMark">
+            <summary>
+              Looks up a localized string similar to (EOF).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelEosLabel">
+            <summary>
+              Looks up a localized string similar to [end-of-statement].
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelInitialState">
+            <summary>
+              Looks up a localized string similar to (INITIAL STATE).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelKeySymbol">
+            <summary>
+              Looks up a localized string similar to (Key symbol).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelKeyword">
+            <summary>
+              Looks up a localized string similar to (Keyword).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelLineBreak">
+            <summary>
+              Looks up a localized string similar to [line break].
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelLocation">
+            <summary>
+              Looks up a localized string similar to Location:.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelNone">
+            <summary>
+              Looks up a localized string similar to None.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelSrcHaveMore">
+            <summary>
+              Looks up a localized string similar to ....
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.LabelUnnamed">
+            <summary>
+              Looks up a localized string similar to (unnamed).
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgAbortScriptYN">
+            <summary>
+              Looks up a localized string similar to Abort script(y/n)?.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgDefaultConsoleGreeting">
+            <summary>
+              Looks up a localized string similar to {0} Console.\r\nPress Ctrl-C to exit the program.\r\n.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgDefaultConsoleTitle">
+            <summary>
+              Looks up a localized string similar to Console.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgErrorCustomActionDidNotAdvance">
+            <summary>
+              Looks up a localized string similar to Custom action did not execute: parser state or input did not change..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgExitConsoleYN">
+            <summary>
+              Looks up a localized string similar to Exit console (y/n)?.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgNLALRAdvice">
+            <summary>
+              Looks up a localized string similar to NLALR transform: Add WrapTail() in &apos;.&apos; position to [{0}]..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgPressAnyKeyToExit">
+            <summary>
+              Looks up a localized string similar to Press any key to end the program..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgSrcPosToString">
+            <summary>
+              Looks up a localized string similar to &quot;[{0}], at {1}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceConflictResolved">
+            <summary>
+              Looks up a localized string similar to Parsing conflict resolved in code..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceExecCustomAction">
+            <summary>
+              Looks up a localized string similar to Executing custom action.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceOpResolved">
+            <summary>
+              Looks up a localized string similar to Operator - resolved to {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTracePoppedState">
+            <summary>
+              Looks up a localized string similar to Popped state from stack, pushing {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverAction">
+            <summary>
+              Looks up a localized string similar to RECOVERING: {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverFailed">
+            <summary>
+              Looks up a localized string similar to FAILED TO RECOVER.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverFoundState">
+            <summary>
+              Looks up a localized string similar to RECOVERING: Found state with shift on error : {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecovering">
+            <summary>
+              Looks up a localized string similar to RECOVERING: popping stack, looking for state with error shift.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverReducing">
+            <summary>
+              Looks up a localized string similar to RECOVERING: Reached end of error production, reducing..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverShiftError">
+            <summary>
+              Looks up a localized string similar to RECOVERING: Shifting Error term, {0}.
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverShiftTillEnd">
+            <summary>
+              Looks up a localized string similar to RECOVERING: shifting until the end of error production..
+            </summary>
+        </member>
+        <member name="P:Irony.Resources.MsgTraceRecoverSuccess">
+            <summary>
+              Looks up a localized string similar to RECOVERED.
+            </summary>
+        </member>
+    </members>
+</doc>

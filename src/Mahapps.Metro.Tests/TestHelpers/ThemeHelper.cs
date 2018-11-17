@@ -1,14 +1,13 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media;
-
-namespace MahApps.Metro.Tests.TestHelpers
+﻿namespace MahApps.Metro.Tests.TestHelpers
 {
+    using System;
     using System.IO;
     using System.Linq;
-    using System.Web.Script.Serialization;
+    using System.Windows;
     using System.Windows.Markup;
+    using System.Windows.Media;
     using System.Xml;
+    using Newtonsoft.Json;
     using XamlColorSchemeGenerator;
 
     public class ThemeHelper
@@ -96,7 +95,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 
         private static GeneratorParameters GetGeneratorParameters()
         {
-            return new JavaScriptSerializer().Deserialize<GeneratorParameters>(GetGeneratorParametersJson());
+            return JsonConvert.DeserializeObject<GeneratorParameters>(GetGeneratorParametersJson());
         }
 
         private static string GetGeneratorParametersJson()

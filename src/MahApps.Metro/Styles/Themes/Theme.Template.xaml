@@ -5,7 +5,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="options">
 
-    <!-- Matadata -->
+    <!--  Matadata  -->
     <system:String x:Key="Theme.Name">{{ThemeName}}</system:String>
     <system:String x:Key="Theme.DisplayName">{{ThemeDisplayName}}</system:String>
     <system:String x:Key="Theme.BaseColorScheme">{{BaseColorScheme}}</system:String>
