@@ -1,13 +1,20 @@
 <Project>
     <!-- Project properties -->
     <PropertyGroup>
+        <TargetFrameworks>net45;net46;net47;netcoreapp3.0</TargetFrameworks>
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <LangVersion>latest</LangVersion>
         <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences>
-        <UseWpf>true</UseWpf>
+        
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+        <NoWarn>1591</NoWarn>
+        
+        <UseWPF>true</UseWPF>
     </PropertyGroup>
+
     <ItemGroup>
         <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
         <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
