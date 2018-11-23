@@ -1,11 +1,12 @@
-﻿namespace MetroDemo.ExampleViews
-{
-    using MahApps.Metro.Controls;
+﻿using System.Windows.Controls;
+using MahApps.Metro.Controls;
 
+namespace MetroDemo.ExampleViews
+{
     /// <summary>
     ///     Interaction logic for SplitViewExamples.xaml
     /// </summary>
-    public partial class SplitViewExamples
+    public partial class SplitViewExamples : UserControl
     {
         public SplitViewExamples()
         {
