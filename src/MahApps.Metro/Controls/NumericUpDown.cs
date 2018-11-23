@@ -1038,6 +1038,25 @@ namespace MahApps.Metro.Controls
         private void ChangeValueBy(double difference)
         {
             var newValue = Value.GetValueOrDefault() + difference;
+            SetValueTo(newValue);
+        }
+
+        private void SetValueTo(double newValue)
+        {
+            if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
+            {
+                newValue = Math.Round(newValue / Interval) * Interval;
+            }
+
+            if (newValue > Maximum)
+            {
+                newValue = this.Maximum;
+            }
+            else if (newValue < Minimum)
+            {
+                newValue = this.Minimum;
+            }
+
             SetCurrentValue(ValueProperty, CoerceValue(this, newValue));
         }
 
@@ -1083,21 +1102,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(tb.Text, out convertedValue))
                 {
-                    if (SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
-                    {
-                        convertedValue = Math.Round(convertedValue / Interval) * Interval;
-                    }
-
-                    if (convertedValue > Maximum)
-                    {
-                        convertedValue = this.Maximum;
-                    }
-                    else if (convertedValue < Minimum)
-                    {
-                        convertedValue = this.Minimum;
-                    }
-
-                    SetCurrentValue(ValueProperty, convertedValue);
+                    SetValueTo(convertedValue);
                 }
             }
 

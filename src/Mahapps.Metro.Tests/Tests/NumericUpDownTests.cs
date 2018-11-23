@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -11,6 +12,40 @@ namespace MahApps.Metro.Tests
 {
     public class NumericUpDownTests : AutomationTestBase
     {
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertTextInputWithSnapToMultipleOfInterval()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            var numUp = window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
+            Assert.NotNull(numUp);
+            var numDown = window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
+            Assert.NotNull(numDown);
+
+            window.TheNUD.Interval = 0.1;
+            window.TheNUD.SnapToMultipleOfInterval = true;
+
+            window.TheNUD.Value = 0;
+            for (int i = 1; i < 15; i++)
+            {
+                numUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                Assert.Equal(0d + 0.1 * i, window.TheNUD.Value);
+            }
+
+            window.TheNUD.Value = 0;
+            for (int i = 1; i < 15; i++)
+            {
+                numDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                Assert.Equal(0d - 0.1 * i, window.TheNUD.Value);
+            }
+        }
+
         [Fact]
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInput()
@@ -104,25 +139,25 @@ namespace MahApps.Metro.Tests
 
             window.TheNUD.NumericInputMode = NumericInput.All;
 
-            window.TheNUD.Culture = CultureInfo.CreateSpecificCulture("en-EN");
+            window.TheNUD.Culture = CultureInfo.GetCultureInfo("en-EN");
 
             window.TheNUD.StringFormat = "{}{0:P0}";
             SetText(textBox, "100");
             Assert.Equal(100d, window.TheNUD.Value);
-            Assert.Equal("100 %", textBox.Text);
+            Assert.Equal("100%", textBox.Text);
 
             SetText(textBox, "100 %");
             Assert.Equal(100d, window.TheNUD.Value);
-            Assert.Equal("100 %", textBox.Text);
+            Assert.Equal("100%", textBox.Text);
 
             SetText(textBox, "100%");
             Assert.Equal(100d, window.TheNUD.Value);
-            Assert.Equal("100 %", textBox.Text);
+            Assert.Equal("100%", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:P1}";
             SetText(textBox, "-0.39678");
             Assert.Equal(-0.39678d, window.TheNUD.Value);
-            Assert.Equal("-0.4 %", textBox.Text);
+            Assert.Equal("-0.4%", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:0%}";
             SetText(textBox, "100%");
@@ -132,12 +167,12 @@ namespace MahApps.Metro.Tests
             window.TheNUD.StringFormat = "P0";
             SetText(textBox, "50");
             Assert.Equal(50d, window.TheNUD.Value);
-            Assert.Equal("50 %", textBox.Text);
+            Assert.Equal("50%", textBox.Text);
 
             window.TheNUD.StringFormat = "P1";
             SetText(textBox, "-0.39678");
             Assert.Equal(-0.39678d, window.TheNUD.Value);
-            Assert.Equal("-0.4 %", textBox.Text);
+            Assert.Equal("-0.4%", textBox.Text);
 
             window.TheNUD.Culture = CultureInfo.InvariantCulture;
 
