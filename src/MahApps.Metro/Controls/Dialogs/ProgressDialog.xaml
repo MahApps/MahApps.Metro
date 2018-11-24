@@ -34,12 +34,9 @@
     </Dialogs:BaseMetroDialog.Content>
     <Dialogs:BaseMetroDialog.DialogBottom>
         <Controls:MetroProgressBar x:Name="PART_ProgressBar"
-                                   Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                                   Height="6"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Bottom"
                                    Panel.ZIndex="5"
-                                   EllipseDiameter="5"
                                    Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                                    Maximum="1.0"
                                    Minimum="0.0" />
