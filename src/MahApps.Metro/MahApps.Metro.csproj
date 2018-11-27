@@ -9,13 +9,6 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-    <!-- reference includes -->
-    <ItemGroup>
-        <PackageReference Include="ControlzEx" Version="4.0.0-alpha*" />
-        <PackageReference Include="Newtonsoft.Json" Version="11.*" PrivateAssets="All" />
-        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta*" PrivateAssets="All" />
-    </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
         <EmbeddedResource Include="**\*.Template.xaml" />
@@ -27,9 +20,12 @@
     </ItemGroup>
     <Target Name="GenerateXamlFiles" BeforeTargets="CheckForDuplicateItems">
         <PropertyGroup>
-            <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+            <!-- <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot> -->
+            <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot>
             <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
         </PropertyGroup>
-        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+        <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
+        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
     </Target>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
