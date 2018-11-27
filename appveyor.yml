@@ -8,7 +8,7 @@
       - master
 
   skip_tags: true
-  image: Visual Studio 2017 Preview
+  image: Visual Studio 2017
   configuration: Release
   platform: Any CPU
   test: off
