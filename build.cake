@@ -102,7 +102,7 @@ Task("Restore")
 {
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Minimal,
-        //ToolVersion = MSBuildToolVersion.VS2017,
+        ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration,
         // Restore = true, // only with cake 0.28.x
         ArgumentCustomization = args => args.Append("/m")
@@ -116,7 +116,7 @@ Task("Build")
 {
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
-        //ToolVersion = MSBuildToolVersion.VS2017,
+        ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration,
         // Restore = true, // only with cake 0.28.x     
         ArgumentCustomization = args => args.Append("/m")
@@ -139,7 +139,7 @@ Task("Pack")
 
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
-        //ToolVersion = MSBuildToolVersion.VS2017,
+        ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration
         // PlatformTarget = PlatformTarget.MSIL
     };
