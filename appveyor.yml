@@ -8,7 +8,8 @@ branches:
     - master
 
 skip_tags: true
-image: Visual Studio 2017 Preview
+image: Visual Studio 2017
+configuration: Release
 test: off
 
 # Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
