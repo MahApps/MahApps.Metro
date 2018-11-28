@@ -5,6 +5,7 @@
 #tool GitVersion.CommandLine
 #tool gitreleasemanager
 #tool xunit.runner.console
+#tool vswhere
 #addin Cake.Figlet
 #addin Cake.Paket
 
@@ -45,6 +46,9 @@ if (local == false
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
+var latestInstallationPath = VSWhereProducts("*", new VSWhereProductSettings { Version = "[\"15.0\",\"16.0\"]" }).FirstOrDefault();
+var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
+
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var branchName = gitVersion.BranchName;
 var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
@@ -78,6 +82,7 @@ Setup(ctx =>
     Information("IsLocalBuild           : {0}", local);
     Information("Branch                 : {0}", branchName);
     Information("Configuration          : {0}", configuration);
+    Information("MSBuildPath            : {0}", msBuildPath);
 });
 
 Teardown(ctx =>
@@ -102,6 +107,7 @@ Task("Restore")
 {
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Minimal,
+        ToolPath = msBuildPath,
         ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration,
         // Restore = true, // only with cake 0.28.x
@@ -116,6 +122,7 @@ Task("Build")
 {
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
+        ToolPath = msBuildPath,
         ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration,
         // Restore = true, // only with cake 0.28.x     
@@ -139,9 +146,9 @@ Task("Pack")
 
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
+        ToolPath = msBuildPath,
         ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration
-        // PlatformTarget = PlatformTarget.MSIL
     };
     var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
 

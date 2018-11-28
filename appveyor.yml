@@ -1,31 +1,29 @@
 # http://www.appveyor.com/docs/appveyor-yml
 
 # configuration for develop/CI and master/Release branch
--
-  branches:
-    only:
-      - develop
-      - master
 
-  skip_tags: true
-  image: Visual Studio 2017 Preview
-  configuration: Release
-  platform: Any CPU
-  test: off
+branches:
+  only:
+    - develop
+    - master
 
-  # Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
-  install:
-    - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
-    - ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+skip_tags: true
+image: Visual Studio 2017 Preview
+test: off
 
-  pull_requests:
-    do_not_increment_build_number: false
+# Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
+install:
+  - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
+  - ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
 
-  build_script:
-    - ps: .\build.ps1 -target appveyor
+pull_requests:
+  do_not_increment_build_number: false
 
-  artifacts:
-    - path: \Publish\*.*
+build_script:
+  - ps: .\build.ps1 -target appveyor
 
-  nuget:
-    disable_publish_on_pr: true
+artifacts:
+  - path: \Publish\*.*
+
+nuget:
+  disable_publish_on_pr: true
