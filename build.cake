@@ -46,7 +46,7 @@ if (local == false
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
-var latestInstallationPath = VSWhereProducts("*", new VSWhereProductSettings { Version = "[\"15.0\",\"16.0\"]" }).FirstOrDefault();
+var latestInstallationPath = VSWhereLatest();
 var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
 
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
