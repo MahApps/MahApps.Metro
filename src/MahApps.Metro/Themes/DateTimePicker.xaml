@@ -130,7 +130,7 @@
                     <Grid>
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{DynamicResource ControlBorderBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
