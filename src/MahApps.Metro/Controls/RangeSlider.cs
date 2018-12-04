@@ -2062,7 +2062,7 @@ namespace MahApps.Metro.Controls
             return basevalue;
         }
 
-        private static object CoerceLowerValue(DependencyObject d, object basevalue)
+        internal static object CoerceLowerValue(DependencyObject d, object basevalue)
         {
             var rs = (RangeSlider)d;
             var value = (double)basevalue;
@@ -2079,7 +2079,7 @@ namespace MahApps.Metro.Controls
             return basevalue;
         }
 
-        private static object CoerceUpperValue(DependencyObject d, object basevalue)
+        internal static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
             var rs = (RangeSlider)d;
             var value = (double)basevalue;

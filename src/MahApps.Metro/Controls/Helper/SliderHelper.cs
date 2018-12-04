@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -461,6 +462,24 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        internal static object ConstrainToRange(RangeBase rangeBase, double value)
+        {
+            double minimum = rangeBase.Minimum;
+            double num = value;
+            if (num < minimum)
+            {
+                return minimum;
+            }
+
+            double maximum = rangeBase.Maximum;
+            if (num > maximum)
+            {
+                return maximum;
+            }
+
+            return value;
+        }
+
         private static void OnSliderPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             var slider = sender as Slider;
@@ -469,14 +488,10 @@ namespace MahApps.Metro.Controls
                 var changeType = (MouseWheelChange)slider.GetValue(ChangeValueByProperty);
                 var difference = changeType == MouseWheelChange.LargeChange ? slider.LargeChange : slider.SmallChange;
 
-                if (e.Delta > 0)
-                {
-                    slider.Value += difference;
-                }
-                else
-                {
-                    slider.Value -= difference;
-                }
+                var currentValue = slider.Value;
+                var newValue = ConstrainToRange(slider, e.Delta > 0 ? currentValue + difference : currentValue - difference);
+
+                slider.SetCurrentValue(Slider.ValueProperty, newValue);
 
                 e.Handled = true;
             }
@@ -492,13 +507,13 @@ namespace MahApps.Metro.Controls
 
                 if (e.Delta > 0)
                 {
-                    rangeSlider.LowerValue += difference;
-                    rangeSlider.UpperValue += difference;
+                    rangeSlider.SetCurrentValue(RangeSlider.UpperValueProperty, RangeSlider.CoerceUpperValue(rangeSlider, rangeSlider.UpperValue + difference));
+                    rangeSlider.SetCurrentValue(RangeSlider.LowerValueProperty, RangeSlider.CoerceLowerValue(rangeSlider, rangeSlider.LowerValue + difference));
                 }
                 else
                 {
-                    rangeSlider.LowerValue -= difference;
-                    rangeSlider.UpperValue -= difference;
+                    rangeSlider.SetCurrentValue(RangeSlider.LowerValueProperty, RangeSlider.CoerceLowerValue(rangeSlider, rangeSlider.LowerValue - difference));
+                    rangeSlider.SetCurrentValue(RangeSlider.UpperValueProperty, RangeSlider.CoerceUpperValue(rangeSlider, rangeSlider.UpperValue - difference));
                 }
 
                 e.Handled = true;
