@@ -1353,16 +1353,20 @@ namespace MahApps.Metro.Controls
                             Mouse.Capture(thumb, CaptureMode.Element);
                         }
                     };
+                window.StateChanged -= windowOnStateChanged;
                 window.StateChanged += windowOnStateChanged;
             }
 
             var criticalHandle = window.CriticalHandle;
-            // DragMove works too
-            // window.DragMove();
-            // instead this 2 lines
 #pragma warning disable 618
-            NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
-            NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+            // these lines are from DragMove
+            // NativeMethods.SendMessage(criticalHandle, WM.SYSCOMMAND, (IntPtr)SC.MOUSEMOVE, IntPtr.Zero);
+            // NativeMethods.SendMessage(criticalHandle, WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+
+            var wpfPoint = window.PointToScreen(Mouse.GetPosition(window));
+            var x = (int)wpfPoint.X;
+            var y = (int)wpfPoint.Y;
+            NativeMethods.SendMessage(criticalHandle, WM.NCLBUTTONDOWN, (IntPtr)HT.CAPTION, new IntPtr(x | (y << 16)));
 #pragma warning restore 618
         }
 
