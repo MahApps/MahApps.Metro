@@ -6,7 +6,6 @@
     using System.Windows;
     using System.Windows.Markup;
     using System.Windows.Media;
-    using System.Xml;
     using Newtonsoft.Json;
     using XamlColorSchemeGenerator;
 
@@ -47,23 +46,6 @@
             }
 
             return resourceDictionary;
-        }
-
-        public static string GetResourceDictionaryContent(ResourceDictionary resourceDictionary)
-        {
-            using (var sw = new StringWriter())
-            {
-                using (var writer = XmlWriter.Create(sw, new XmlWriterSettings
-                                                               {
-                                                                   Indent = true,
-                                                                   IndentChars = "    "
-                                                               }))
-                {
-                    XamlWriter.Save(resourceDictionary, writer);
-
-                    return sw.ToString();
-                }
-            }
         }
 
         /// <summary>
