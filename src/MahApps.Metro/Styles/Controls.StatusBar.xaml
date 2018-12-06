@@ -33,13 +33,16 @@
         <Setter Property="Background" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="MinWidth" Value="1" />
+        <Setter Property="Opacity" Value="0.75" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="True" />
+                            Opacity="{TemplateBinding Opacity}"
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -51,7 +54,6 @@
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
         <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="ItemContainerStyle" Value="{DynamicResource MetroStatusBarItem}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type StatusBar}">
