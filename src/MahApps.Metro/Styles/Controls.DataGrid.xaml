@@ -102,7 +102,7 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="10 4 4 7" />
+        <Setter Property="Padding" Value="10 0 4 0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -119,6 +119,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" />
 
                         <Controls:ContentControlEx x:Name="HeaderContent"
+                                                   Margin="{TemplateBinding BorderThickness}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
