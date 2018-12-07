@@ -19,12 +19,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}">
                         <ContentControl x:Name="PART_Arrow"
                                         Width="12"
                                         Height="12"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
                                         Content="{TemplateBinding Content}"
                                         Foreground="{TemplateBinding Foreground}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -89,7 +89,7 @@
     <ControlTemplate x:Key="ScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid>
             <ScrollBar x:Name="PART_HorizontalScrollBar"
-                       Height="14"
+                       Height="Auto"
                        AutomationProperties.AutomationId="HorizontalScrollBar"
                        Cursor="Arrow"
                        Maximum="{TemplateBinding ScrollableWidth}"
@@ -100,7 +100,7 @@
                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             <ScrollBar x:Name="PART_VerticalScrollBar"
-                       Width="14"
+                       Width="Auto"
                        AutomationProperties.AutomationId="VerticalScrollBar"
                        Cursor="Arrow"
                        Maximum="{TemplateBinding ScrollableHeight}"
