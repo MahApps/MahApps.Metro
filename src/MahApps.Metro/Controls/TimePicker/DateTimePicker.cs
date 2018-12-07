@@ -140,6 +140,7 @@
 
             if (_calendar != null)
             {
+                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateTimeProperty));
                 _calendar.SetBinding(Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
                 _calendar.SetBinding(Calendar.DisplayDateStartProperty, GetBinding(DisplayDateStartProperty));
                 _calendar.SetBinding(Calendar.DisplayDateEndProperty, GetBinding(DisplayDateEndProperty));
@@ -270,7 +271,7 @@
             var dateTime = GetSelectedDateTimeFromGUI();
             if (dateTime != null)
             {
-                DisplayDate = dateTime.Value > DateTime.MinValue && dateTime.Value < DateTime.MaxValue ? dateTime.Value : DateTime.Today;
+                this.SetCurrentValue(DisplayDateProperty, dateTime.Value > DateTime.MinValue && dateTime.Value < DateTime.MaxValue ? dateTime.Value : DateTime.Today);
                 if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
                 {
                     this.SetCurrentValue(SelectedDateTimeProperty, DisplayDate);
