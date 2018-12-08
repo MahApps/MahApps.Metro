@@ -21,16 +21,16 @@
     <PaketExePath Condition=" '$(PaketExePath)' == '' AND Exists('$(PaketToolsPath)paket')">$(PaketToolsPath)paket</PaketExePath>
     <PaketExePath Condition=" '$(PaketExePath)' == '' AND Exists('$(PaketRootPath)paket.exe')">$(PaketRootPath)paket.exe</PaketExePath>
 
-    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' == 'Windows_NT' ">$(PaketToolsPath)paket.exe</PaketExePath>
-    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' != 'Windows_NT' AND '$(PaketExeImage)' == 'assembly' ">$(PaketToolsPath)paket.exe</PaketExePath>
-    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' != 'Windows_NT' AND '$(PaketExeImage)' == 'native' ">$(PaketToolsPath)paket</PaketExePath>
+    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' == 'Windows_NT' AND Exists('$(PaketToolsPath)paket.exe')">$(PaketToolsPath)paket.exe</PaketExePath>
+    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' != 'Windows_NT' AND '$(PaketExeImage)' == 'assembly' AND Exists('$(PaketToolsPath)paket.exe') ">$(PaketToolsPath)paket.exe</PaketExePath>
+    <PaketExePath Condition=" '$(PaketExePath)' == '' AND '$(OS)' != 'Windows_NT' AND '$(PaketExeImage)' == 'native' AND Exists('$(PaketToolsPath)paket')  ">$(PaketToolsPath)paket</PaketExePath>
+    <PaketExePath Condition=" '$(PaketExePath)' == '' ">paket</PaketExePath>
 
     <!-- Paket command -->
     <_PaketExeExtension>$([System.IO.Path]::GetExtension("$(PaketExePath)"))</_PaketExeExtension>
     <PaketCommand Condition=" '$(PaketCommand)' == '' AND '$(_PaketExeExtension)' == '.dll' ">dotnet "$(PaketExePath)"</PaketCommand>
-    <PaketCommand Condition=" '$(PaketCommand)' == '' AND '$(OS)' == 'Windows_NT'">"$(PaketExePath)"</PaketCommand>
     <PaketCommand Condition=" '$(PaketCommand)' == '' AND '$(OS)' != 'Windows_NT' AND '$(_PaketExeExtension)' == '.exe' ">$(MonoPath) --runtime=v4.0.30319 "$(PaketExePath)"</PaketCommand>
-    <PaketCommand Condition=" '$(PaketCommand)' == '' AND '$(OS)' != 'Windows_NT'">"$(PaketExePath)"</PaketCommand>
+    <PaketCommand Condition=" '$(PaketCommand)' == '' ">"$(PaketExePath)"</PaketCommand>
 
     <PaketBootStrapperExePath Condition=" '$(PaketBootStrapperExePath)' == '' AND Exists('$(PaketRootPath)paket.bootstrapper.exe')">$(PaketRootPath)paket.bootstrapper.exe</PaketBootStrapperExePath>
     <PaketBootStrapperExePath Condition=" '$(PaketBootStrapperExePath)' == '' ">$(PaketToolsPath)paket.bootstrapper.exe</PaketBootStrapperExePath>
