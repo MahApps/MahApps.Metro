@@ -106,6 +106,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
 
+        public static readonly DependencyProperty FlyoutOverlayBrushProperty = DependencyProperty.Register("FlyoutOverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+
         /// <summary>
         /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
         /// </summary>
@@ -695,6 +697,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (double)GetValue(OverlayOpacityProperty); }
             set { SetValue(OverlayOpacityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the brush used for the Flyouts overlay.
+        /// </summary>
+        public Brush FlyoutOverlayBrush
+        {
+            get { return (Brush)GetValue(FlyoutOverlayBrushProperty); }
+            set { SetValue(FlyoutOverlayBrushProperty, value); }
         }
 
         /// <summary>

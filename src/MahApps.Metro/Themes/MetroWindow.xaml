@@ -142,8 +142,7 @@
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Grid.ColumnSpan="5"
-                               Fill="{DynamicResource BlackColorBrush}"
-                               Opacity="0.5"
+                               Fill="{TemplateBinding FlyoutOverlayBrush}"
                                Visibility="Hidden" />
                     <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
                                          Grid.Row="1"
@@ -399,8 +398,7 @@
                                Grid.RowSpan="2"
                                Grid.Column="1"
                                Grid.ColumnSpan="5"
-                               Fill="{DynamicResource BlackColorBrush}"
-                               Opacity="0.5"
+                               Fill="{TemplateBinding FlyoutOverlayBrush}"
                                Visibility="Hidden" />
                     <Controls:MetroThumb x:Name="PART_FlyoutModalDragMoveThumb"
                                          Grid.Row="1"
@@ -561,6 +559,11 @@
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FlyoutOverlayBrush">
+            <Setter.Value>
+                <SolidColorBrush Opacity="0.5" Color="{DynamicResource BlackColor}" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource NonActiveBorderColorBrush}" />
         <Setter Property="NonActiveGlowBrush" Value="{DynamicResource BlackColorBrush}" />
