@@ -18,5 +18,8 @@
         <DelaySign>false</DelaySign>
         <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     </PropertyGroup>
-    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.build.targets', '$(MSBuildThisFileDirectory)../'))"/>
+    <PropertyGroup>
+        <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.Targets', '$(MSBuildThisFileDirectory)../'))"/>
 </Project>
