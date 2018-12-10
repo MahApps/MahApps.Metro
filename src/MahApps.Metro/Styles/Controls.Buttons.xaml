@@ -394,21 +394,6 @@
         </Style.Triggers>
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroBaseWindowButtonStyle"
-           BasedOn="{StaticResource BaseMetroWindowButtonStyle}"
-           TargetType="{x:Type Button}" />
-    <!--  obsolete  -->
-    <Style x:Key="MetroWindowButtonStyle"
-           BasedOn="{StaticResource MetroBaseWindowButtonStyle}"
-           TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="MaxHeight" Value="34" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Width" Value="34" />
-    </Style>
-
     <!--  light button style for min, max and close window buttons  -->
     <Style x:Key="LightMetroWindowButtonStyle"
            BasedOn="{StaticResource BaseMetroWindowButtonStyle}"
