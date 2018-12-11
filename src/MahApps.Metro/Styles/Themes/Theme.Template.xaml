@@ -107,8 +107,6 @@
     <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush" Color="{StaticResource BlackColor}" options:Freeze="True" />
-    <!--  obsolete  -->
-    <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{StaticResource Gray4}" options:Freeze="True" />
     <SolidColorBrush x:Key="ComboBoxPopupBorderBrush" Color="{StaticResource Gray4}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource Gray6}" options:Freeze="True" />
@@ -117,9 +115,6 @@
         <GradientStop Offset="0" Color="{StaticResource Gray7}" />
         <GradientStop Offset="1" Color="{StaticResource WhiteColor}" />
     </LinearGradientBrush>
-
-    <!--  obsolete  -->
-    <SolidColorBrush x:Key="MenuItemDisabledBrush" Color="{StaticResource Gray3}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{StaticResource Gray5}" options:Freeze="True" />
 
