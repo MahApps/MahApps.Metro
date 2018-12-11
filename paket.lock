@@ -69,7 +69,7 @@ NUGET
     NETStandard.Library (2.0.3) - restriction: || (== net45) (&& (== net46) (< net452)) (&& (== net46) (>= netcoreapp1.0)) (&& (== net47) (< net452)) (&& (== net47) (>= netcoreapp1.0)) (== netcoreapp3.0)
       Microsoft.NETCore.Platforms (>= 1.1)
       System.Runtime.InteropServices.RuntimeInformation (>= 4.3) - restriction: || (== net45) (== net46) (&& (== net47) (< net45)) (&& (== net47) (< netstandard1.0)) (&& (== net47) (< netstandard1.3)) (&& (== net47) (< netstandard1.4)) (&& (== net47) (>= uap10.0)) (&& (== netcoreapp3.0) (< netstandard1.0)) (&& (== netcoreapp3.0) (< netstandard1.2)) (&& (== netcoreapp3.0) (< netstandard1.3)) (&& (== netcoreapp3.0) (< netstandard1.4)) (&& (== netcoreapp3.0) (< netstandard1.5)) (&& (== netcoreapp3.0) (< netstandard1.6)) (&& (== netcoreapp3.0) (< netstandard2.0)) (&& (== netcoreapp3.0) (>= uap10.0))
-    Newtonsoft.Json (12.0.1)
+    Newtonsoft.Json (12.0.1) - copy_local: true
     NHotkey (1.2.1)
     NHotkey.Wpf (1.2.1)
       NHotkey (>= 1.2.1)

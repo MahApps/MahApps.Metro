@@ -14,7 +14,6 @@ nuget Microsoft.SourceLink.GitHub prerelease copy_local: true
 nuget WpfAnalyzers copy_local: true
 
 nuget ControlzEx prerelease
-nuget Newtonsoft.Json
 nuget XamlColorSchemeGenerator copy_local: true
 nuget MahApps.Metro.IconPacks prerelease
 nuget MaterialDesignThemes prerelease
