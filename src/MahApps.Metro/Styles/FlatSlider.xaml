@@ -16,11 +16,6 @@
         </Setter>
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="SliderButtonStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.FlatSlider.Track}"
-           TargetType="{x:Type RepeatButton}" />
-
     <Style x:Key="MahApps.Metro.Styles.FlatSlider.Thumb" TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -32,11 +27,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <!--  obsolete  -->
-    <Style x:Key="SliderThumbStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.FlatSlider.Thumb}"
-           TargetType="{x:Type Thumb}" />
 
     <Style x:Key="MahApps.Metro.Styles.FlatSlider.TickBar" TargetType="TickBar">
         <Setter Property="Fill" Value="{DynamicResource SliderThumbDisabled}" />
@@ -61,11 +51,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <!--  obsolete  -->
-    <Style x:Key="SliderTickBarStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.FlatSlider.TickBar}"
-           TargetType="TickBar" />
 
     <ControlTemplate x:Key="MahApps.Metro.Styles.FlatSlider.HorizontalTemplate" TargetType="{x:Type Slider}">
         <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -97,54 +82,6 @@
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
                                   Style="{DynamicResource MahApps.Metro.Styles.FlatSlider.Track}" />
-                </Track.IncreaseRepeatButton>
-            </Track>
-        </Grid>
-        <ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement" Value="TopLeft">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-            <Trigger Property="TickPlacement" Value="BottomRight">
-                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-            <Trigger Property="TickPlacement" Value="Both">
-                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <!--  obsolete  -->
-    <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
-        <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <TickBar x:Name="TopTick"
-                     Grid.Row="0"
-                     Placement="Top"
-                     Style="{StaticResource SliderTickBarStyle}" />
-            <TickBar x:Name="BottomTick"
-                     Grid.Row="2"
-                     Placement="Bottom"
-                     Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track" Grid.Row="1">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
-                                  Command="Slider.DecreaseLarge"
-                                  Style="{StaticResource SliderButtonStyle}" />
-                </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{StaticResource SliderThumbStyle}" />
-                </Track.Thumb>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Background="{TemplateBinding Slider.Background}"
-                                  Command="Slider.IncreaseLarge"
-                                  Style="{StaticResource SliderButtonStyle}" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
@@ -209,54 +146,6 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!--  obsolete  -->
-    <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
-        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TickBar x:Name="TopTick"
-                     Grid.Column="0"
-                     Placement="Left"
-                     Style="{StaticResource SliderTickBarStyle}" />
-            <TickBar x:Name="BottomTick"
-                     Grid.Column="2"
-                     Placement="Right"
-                     Style="{StaticResource SliderTickBarStyle}" />
-            <Track x:Name="PART_Track" Grid.Column="1">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
-                                  Command="Slider.DecreaseLarge"
-                                  Style="{StaticResource SliderButtonStyle}" />
-                </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
-                                         Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{StaticResource SliderThumbStyle}" />
-                </Track.Thumb>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Background="{TemplateBinding Slider.Background}"
-                                  Command="Slider.IncreaseLarge"
-                                  Style="{StaticResource SliderButtonStyle}" />
-                </Track.IncreaseRepeatButton>
-            </Track>
-        </Grid>
-        <ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement" Value="TopLeft">
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-            <Trigger Property="TickPlacement" Value="BottomRight">
-                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-            <Trigger Property="TickPlacement" Value="Both">
-                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
-                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
     <Style x:Key="MahApps.Metro.Styles.FlatSlider" TargetType="{x:Type Slider}">
         <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
@@ -291,10 +180,5 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <!--  obsolete  -->
-    <Style x:Key="FlatSlider"
-           BasedOn="{StaticResource MahApps.Metro.Styles.FlatSlider}"
-           TargetType="{x:Type Slider}" />
 
 </ResourceDictionary>
