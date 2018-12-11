@@ -2,14 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <!--  obsolete  -->
-    <ExponentialEase x:Key="ExpoEaseIn"
-                     EasingMode="EaseIn"
-                     Exponent="2" />
-    <!--  obsolete  -->
-    <ExponentialEase x:Key="ExpoEaseOut"
-                     EasingMode="EaseOut"
-                     Exponent="2" />
     <ExponentialEase x:Key="ExpoEaseInOut"
                      EasingMode="EaseInOut"
                      Exponent="2" />
