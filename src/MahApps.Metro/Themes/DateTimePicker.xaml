@@ -3,7 +3,7 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>

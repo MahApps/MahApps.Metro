@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:actions="clr-namespace:MahApps.Metro.Actions"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
 
     <DataTemplate x:Key="HeaderTemplate" x:Shared="False">
         <DockPanel x:Name="dpHeader"

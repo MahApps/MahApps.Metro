@@ -11,9 +11,8 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Interactivity;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviours
 {

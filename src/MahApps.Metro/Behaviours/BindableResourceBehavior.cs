@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Interactivity;
 using System.Windows.Shapes;
+using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviours
 {
