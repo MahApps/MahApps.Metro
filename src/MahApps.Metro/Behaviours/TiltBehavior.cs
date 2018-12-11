@@ -3,9 +3,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
+using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviours
 {

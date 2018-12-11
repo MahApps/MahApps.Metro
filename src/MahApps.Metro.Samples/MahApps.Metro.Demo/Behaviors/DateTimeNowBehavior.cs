@@ -1,10 +1,10 @@
-﻿namespace MetroDemo.Behaviors
-{
-    using System;
-    using System.Windows.Interactivity;
-    using System.Windows.Threading;
-    using MahApps.Metro.Controls;
+﻿using System;
+using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using Microsoft.Xaml.Behaviors;
 
+namespace MetroDemo.Behaviors
+{
     public class DateTimeNowBehavior : Behavior<DateTimePicker>
     {
         private DispatcherTimer _dispatcherTimer;

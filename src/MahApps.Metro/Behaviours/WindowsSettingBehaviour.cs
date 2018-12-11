@@ -1,11 +1,11 @@
 using System;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Interactivity;
 using System.Windows.Interop;
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using MahApps.Metro.Controls;
+using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviours
 {

@@ -5,6 +5,7 @@
         <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
+        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
