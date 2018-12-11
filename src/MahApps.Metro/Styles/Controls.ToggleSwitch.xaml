@@ -7,30 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--  Metro style  -->
-
-    <!--  obsolete  -->
-    <Style x:Key="MetroToggleSwitchButton"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
-           TargetType="{x:Type Controls:ToggleSwitchButton}" />
-
-    <!--  obsolete  -->
-    <Style x:Key="MetroToggleSwitch"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
-           TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <TextBlock HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Opacity="0.65"
-                               Text="{Binding Mode=OneWay}"
-                               TextWrapping="Wrap" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <!--  Win10 style  -->
 
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" TakeThicknessSide="Left" />
@@ -173,13 +149,12 @@
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton.Win10}" />
-        <!--  for v1.5.0 or later  -->
-        <!--        <Setter Property="ContentPadding" Value="0 0 10 0" />-->
-        <!--        <Style.Triggers>-->
-        <!--            <Trigger Property="ContentDirection" Value="RightToLeft">-->
-        <!--                <Setter Property="ContentPadding" Value="10 0 0 0" />-->
-        <!--            </Trigger>-->
-        <!--        </Style.Triggers>-->
+        <Setter Property="ContentPadding" Value="0 0 10 0" />
+        <Style.Triggers>
+            <Trigger Property="ContentDirection" Value="RightToLeft">
+                <Setter Property="ContentPadding" Value="10 0 0 0" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

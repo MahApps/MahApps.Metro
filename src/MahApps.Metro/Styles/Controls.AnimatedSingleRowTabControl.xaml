@@ -150,43 +150,6 @@
         </Grid>
     </ControlTemplate>
 
-    <!--  obsolete  -->
-    <ControlTemplate x:Key="VerticalScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <ScrollBar x:Name="PART_VerticalScrollBar"
-                       Grid.Row="0"
-                       Grid.Column="0"
-                       Width="14"
-                       AutomationProperties.AutomationId="VerticalScrollBar"
-                       Cursor="Arrow"
-                       Maximum="{TemplateBinding ScrollableHeight}"
-                       Minimum="0"
-                       Orientation="Vertical"
-                       Template="{DynamicResource VerticalScrollBarTemplate}"
-                       ViewportSize="{TemplateBinding ViewportHeight}"
-                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Margin="2 14 2 14"
-                                    HorizontalAlignment="Center"
-                                    CanContentScroll="{TemplateBinding CanContentScroll}"
-                                    CanHorizontallyScroll="False"
-                                    CanVerticallyScroll="False"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
-        </Grid>
-    </ControlTemplate>
-
     <ControlTemplate x:Key="HorizontalAnimatedSingleRowTabControl" TargetType="{x:Type TabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>

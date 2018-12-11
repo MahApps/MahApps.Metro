@@ -505,18 +505,20 @@ namespace MetroDemo
 
         private IEnumerable<string> FindBrushResources()
         {
-            var rd = new ResourceDictionary
-                {
-                    Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
-                };
+            if (Application.Current.MainWindow != null)
+            {
+                var theme = ThemeManager.DetectTheme(Application.Current.MainWindow);
 
-            var resources = rd.Keys.Cast<object>()
-                    .Where(key => rd[key] is SolidColorBrush)
-                    .Select(key => key.ToString())
-                    .OrderBy(s => s)
-                    .ToList();
+                var resources = theme.Resources.Keys.Cast<object>()
+                                     .Where(key => theme.Resources[key] is SolidColorBrush)
+                                     .Select(key => key.ToString())
+                                     .OrderBy(s => s)
+                                     .ToList();
 
-            return resources;
+                return resources;
+            }
+
+            return Enumerable.Empty<string>();
         }
 
         public Uri[] FlipViewImages

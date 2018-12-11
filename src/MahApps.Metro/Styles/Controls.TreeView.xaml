@@ -64,22 +64,6 @@
         <Setter Property="Width" Value="16" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="TreeViewItemFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="0"
-                               Opacity="0"
-                               SnapsToDevicePixels="True"
-                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                               StrokeDashArray="1 2"
-                               StrokeThickness="5" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
     <Style x:Key="MetroTreeViewItem" TargetType="{x:Type TreeViewItem}">

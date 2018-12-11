@@ -140,6 +140,7 @@ Task("Build")
 });
 
 Task("Pack")
+    .ContinueOnError()
     .Does(() =>
 {
     EnsureDirectoryExists(Directory(publishDir));

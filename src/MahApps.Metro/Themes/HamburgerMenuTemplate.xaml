@@ -266,11 +266,6 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="HamburgerListBoxItemStyle"
-           BasedOn="{StaticResource HamburgerMenuItemStyle}"
-           TargetType="{x:Type ListBoxItem}" />
-
     <Style x:Key="HamburgerMenuListStyle"
            BasedOn="{StaticResource MetroListBox}"
            TargetType="{x:Type ListBox}">
@@ -308,11 +303,6 @@
         </Setter>
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
     </Style>
-
-    <!--  obsolete  -->
-    <Style x:Key="HamburgerListBoxStyle"
-           BasedOn="{StaticResource HamburgerMenuListStyle}"
-           TargetType="{x:Type ListBox}" />
 
     <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>

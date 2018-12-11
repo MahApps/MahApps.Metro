@@ -4,7 +4,6 @@
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Underline.xaml" />

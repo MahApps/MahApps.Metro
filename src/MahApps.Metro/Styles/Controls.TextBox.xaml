@@ -497,11 +497,6 @@
         </Setter>
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="ButtonCommandMetroTextBox"
-           BasedOn="{StaticResource MetroButtonTextBox}"
-           TargetType="{x:Type TextBox}" />
-
     <Style x:Key="SearchMetroTextBox"
            BasedOn="{StaticResource MetroButtonTextBox}"
            TargetType="{x:Type TextBox}">

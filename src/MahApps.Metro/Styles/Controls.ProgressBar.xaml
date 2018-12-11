@@ -123,9 +123,4 @@
         </Setter>
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroProgressBar"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}"
-           TargetType="ProgressBar" />
-
 </ResourceDictionary>

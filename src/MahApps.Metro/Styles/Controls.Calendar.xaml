@@ -145,11 +145,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroCalendarDayButtonStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendarDayButtonStyle}"
-           TargetType="{x:Type CalendarDayButton}" />
-
     <Style x:Key="MahApps.Metro.Styles.MetroCalendarItemStyle" TargetType="{x:Type CalendarItem}">
         <Setter Property="Margin" Value="0 3" />
         <Setter Property="Padding" Value="2" />
@@ -413,11 +408,6 @@
         </Setter>
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroCalendarItemStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendarItemStyle}"
-           TargetType="{x:Type CalendarItem}" />
-
     <!--  Style for Month and Year buttons  -->
     <Style x:Key="MahApps.Metro.Styles.MetroCalendarButtonStyle" TargetType="{x:Type CalendarButton}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
@@ -542,11 +532,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroCalendarButtonStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendarButtonStyle}"
-           TargetType="{x:Type CalendarButton}" />
-
     <Style x:Key="MahApps.Metro.Styles.BaseMetroCalendar" TargetType="{x:Type Calendar}">
         <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
@@ -582,8 +567,4 @@
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="MetroCalendar"
-           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCalendar}"
-           TargetType="{x:Type Calendar}" />
 </ResourceDictionary>
