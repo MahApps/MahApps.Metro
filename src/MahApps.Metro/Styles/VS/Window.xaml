@@ -8,6 +8,7 @@
 
     <Style x:Key="VSWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="GlowBrush" Value="{DynamicResource WindowGlowBrush}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="ShowTitleBar" Value="True" />
         <Setter Property="TitleForeground" Value="{DynamicResource WindowTitleForeground}" />
     </Style>
