@@ -13,6 +13,7 @@
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource ClearTextButtonFontSize}" />
@@ -46,6 +47,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Column="0"
+                                     ContextMenu="{TemplateBinding ContextMenu}"
                                      MinWidth="20"
                                      MinHeight="0"
                                      Margin="0 0 -2 0"
