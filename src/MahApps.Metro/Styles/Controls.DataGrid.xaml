@@ -6,7 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <Style x:Key="MetroDataGridCheckBox"
            BasedOn="{StaticResource MetroCheckBox}"
@@ -213,7 +213,7 @@
                                          Focusable="False"
                                          SnapsToDevicePixels="False"
                                          Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
-                                         Visibility="{Binding (Validation.HasError), Converter={StaticResource bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+                                         Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
                             </Grid>
                         </Border>
                         <Thumb x:Name="PART_TopHeaderGripper"
