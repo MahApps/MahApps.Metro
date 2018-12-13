@@ -1,4 +1,4 @@
-framework: net45, net46, net47, netcoreapp3.0
+framework: net45, net452, net46, net47, netcoreapp3.0
 
 //source https://ci.appveyor.com/nuget/xamlcolorschemegenerator
 //source https://ci.appveyor.com/nuget/controlzex
