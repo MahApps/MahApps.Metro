@@ -14,10 +14,6 @@
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
-    <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
-    </ItemGroup>
     <Target Name="GenerateXamlFiles" BeforeTargets="CheckForDuplicateItems">
         <PropertyGroup>
             <!-- <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot> -->
@@ -26,6 +22,20 @@
         </PropertyGroup>
         <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
         <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+    </Target>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
+    </ItemGroup>
+    <!--
+    Workaround to fix IntelliSense file generation for XAML projects
+    ISSUE: https://github.com/dotnet/project-system/issues/2488
+  -->
+    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
+        <PropertyGroup>
+            <BuildingProject>false</BuildingProject>
+            <DesignTimeBuild>true</DesignTimeBuild>
+        </PropertyGroup>
     </Target>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
