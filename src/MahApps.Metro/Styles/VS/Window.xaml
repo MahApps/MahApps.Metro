@@ -33,4 +33,43 @@
         <Setter Property="LightMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
     </Style>
 
+    <SolidColorBrush x:Key="NotificationButtonForegroundBrush" Color="#000000" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundBrush" Color="#FFCC00" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundOverBrush" Color="#FFDF66" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundPressedBrush" Color="#C59E00" />
+
+    <SolidColorBrush x:Key="QuickLaunchTextBoxBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="QuickLaunchTextBoxFocusedBorderBrush" Color="#007ACC" />
+
+    <Style x:Key="VSWindowNotificationButtonStyle" BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+        <Setter Property="Padding" Value="9 5 9 5" />
+        <Setter Property="Margin" Value="0 0 12 0" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundOverBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundPressedBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="VSWindowQuickLaunchTextBoxStyle" BasedOn="{StaticResource MetroButtonTextBox}" TargetType="{x:Type TextBox}">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="MaxWidth" Value="300" />
+        <Setter Property="Margin" Value="0 2" />
+        <Setter Property="Padding" Value="0 1 0 0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource QuickLaunchTextBoxFocusedBorderBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

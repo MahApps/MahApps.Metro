@@ -3,11 +3,13 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:System="clr-namespace:System;assembly=mscorlib"
+                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       Title="Visual Studio 2012 Style Demo"
                       Width="1000"
                       Height="800"
                       Style="{DynamicResource VSWindowStyleKey}"
-                      WindowStartupLocation="CenterScreen">
+                      WindowStartupLocation="CenterScreen"
+                      x:Name="MainWindow">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -18,6 +20,22 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="Q" Command="{Binding QuickLaunchBarFocusCommand, ElementName=MainWindow}"></KeyBinding>
+    </Window.InputBindings>
+    
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands ShowSeparators="False">
+            <Button ToolTip="1 Notification" Style="{StaticResource VSWindowNotificationButtonStyle}">
+                <iconPacks:PackIconEntypo Width="16" Height="16" Kind="Flag" />
+            </Button>
+            <TextBox Name="QuickLaunchBar" 
+                     Controls:TextBoxHelper.Watermark="Quick Launch (Ctrl+Q)"
+                     Controls:TextBoxHelper.ButtonContent="{iconPacks:Modern Magnify, Width=12, Height=12}" 
+                     Style="{DynamicResource VSWindowQuickLaunchTextBoxStyle}" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    
     <DockPanel>
         <Menu Margin="2 0 0 0"
               DockPanel.Dock="Top"
@@ -26,7 +44,7 @@
                 <MenuItem Header="Rocket slot 1">
                     <MenuItem Header="Fire slot" />
                     <Separator />
-                    <MenuItem Header="Relaod slot" />
+                    <MenuItem Header="Reload slot" />
                     <MenuItem Header="Report damage to control room" />
                 </MenuItem>
                 <MenuItem Header="Rocket slot 2">
