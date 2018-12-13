@@ -88,4 +88,14 @@
     <!--  Scroll Bar  -->
     <SolidColorBrush x:Key="ScrollBarPageButtonBackgroundHighlighted" Color="#05FFFFFF" options:Freeze="True" />
 
+    <!-- Notification Button -->
+    <SolidColorBrush x:Key="NotificationButtonForegroundBrush" Color="#000000" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundBrush" Color="#FFCC00" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundOverBrush" Color="#FFDF66" />
+    <SolidColorBrush x:Key="NotificationButtonBackgroundPressedBrush" Color="#C59E00" />
+
+    <!-- Quick Launch TextBox -->
+    <SolidColorBrush x:Key="QuickLaunchTextBoxBorderBrush" Color="#3F3F46" />
+    <SolidColorBrush x:Key="QuickLaunchTextBoxFocusedBorderBrush" Color="#007ACC" />
+
 </ResourceDictionary>

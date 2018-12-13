@@ -33,14 +33,6 @@
         <Setter Property="LightMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
     </Style>
 
-    <SolidColorBrush x:Key="NotificationButtonForegroundBrush" Color="#000000" />
-    <SolidColorBrush x:Key="NotificationButtonBackgroundBrush" Color="#FFCC00" />
-    <SolidColorBrush x:Key="NotificationButtonBackgroundOverBrush" Color="#FFDF66" />
-    <SolidColorBrush x:Key="NotificationButtonBackgroundPressedBrush" Color="#C59E00" />
-
-    <SolidColorBrush x:Key="QuickLaunchTextBoxBorderBrush" Color="#3F3F46" />
-    <SolidColorBrush x:Key="QuickLaunchTextBoxFocusedBorderBrush" Color="#007ACC" />
-
     <Style x:Key="VSWindowNotificationButtonStyle" BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
@@ -56,6 +48,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
     <Style x:Key="VSWindowQuickLaunchTextBoxStyle" BasedOn="{StaticResource MetroButtonTextBox}" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
