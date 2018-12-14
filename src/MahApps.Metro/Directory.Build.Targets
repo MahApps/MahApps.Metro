@@ -1,0 +1,25 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- NuGet -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <Authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</Authors>
+        <PackageLicenseUrl>https://github.com/MahApps/MahApps.Metro/blob/develop/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/MahApps/MahApps.Metro</PackageProjectUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/develop/mahapps.metro.logo.png</PackageIconUrl>
+        <PackageTags>WPF;UI;Metro;Modern;Material;XAML;Toolkit;Library;.NET;OSS;OpenSource</PackageTags>
+        <PackageReleaseNotes>https://github.com/MahApps/MahApps.Metro/releases</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/MahApps/MahApps.Metro.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    </PropertyGroup>
+    <!-- Sign assembly -->
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <SignAssembly>True</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildProjectDirectory)\..\mahapps.public.snk</AssemblyOriginatorKeyFile>
+        <DelaySign>false</DelaySign>
+        <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.Targets', '$(MSBuildThisFileDirectory)../'))"/>
+</Project>

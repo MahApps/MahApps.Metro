@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net452</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Tests</AssemblyName>
+        <RootNamespace>MahApps.Metro.Tests</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj"/>
+    </ItemGroup>
+    <!-- Items include -->
+    <ItemGroup>
+        <None Remove="App.config"/>
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+            <TargetPath>$(AssemblyName).config</TargetPath>
+        </AppConfigWithTargetPath>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+    </ItemGroup>
+    <!--
+    Workaround to fix IntelliSense file generation for XAML projects
+    ISSUE: https://github.com/dotnet/project-system/issues/2488
+  -->
+    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
+        <PropertyGroup>
+            <BuildingProject>false</BuildingProject>
+            <DesignTimeBuild>true</DesignTimeBuild>
+        </PropertyGroup>
+    </Target>
+    <Import Project="..\..\.paket\Paket.Restore.targets"/>
+</Project>

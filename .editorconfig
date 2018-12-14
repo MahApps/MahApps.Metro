@@ -5,16 +5,10 @@ root = true
 end_of_line = CRLF
 
 ; 4-column tab indentation
-[*.cs]
+[*.{cs,csproj,xaml,xml,props,targets}]
 indent_style = space
 indent_size = 4
 
-; 4-column tab indentation
-[*.xaml]
+[*.{md,yml}]
 indent_style = space
-indent_size = 4
-
-; 4-column tab indentation
-[*.xml]
-indent_style = space
-indent_size = 4
+indent_size = 2

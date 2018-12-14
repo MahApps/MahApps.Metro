@@ -1,0 +1,7 @@
+JetBrains.Annotations
+Newtonsoft.Json
+XamlColorSchemeGenerator
+ExposedObject
+xunit
+xunit.runner.visualstudio
+Microsoft.NET.Test.Sdk

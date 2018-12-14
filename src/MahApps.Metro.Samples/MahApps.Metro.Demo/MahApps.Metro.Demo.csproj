@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Demo</AssemblyName>
+        <RootNamespace>MetroDemo</RootNamespace>
+        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
+    </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <NoWarn>SA1652</NoWarn>
+        <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="WindowsFormsIntegration"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="app.manifest"/>
+        <None Remove="App.config"/>
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+            <TargetPath>$(AssemblyName).config</TargetPath>
+        </AppConfigWithTargetPath>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+    </ItemGroup>
+    <Import Project="..\..\..\.paket\Paket.Restore.targets"/>
+</Project>

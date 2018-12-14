@@ -1,79 +1,30 @@
-# configuration for develop/CI branch
+# http://www.appveyor.com/docs/appveyor-yml
 
--
-  branches:
-    only:
-      - develop
+# configuration for develop/CI and master/Release branch
 
-  skip_tags: true
-  image: Visual Studio 2017
-  configuration: Release
-  platform: Any CPU
+branches:
+  only:
+    - develop
+    - master
 
-  pull_requests:
-    do_not_increment_build_number: false
+skip_tags: true
+image: Visual Studio 2017
+configuration: Release
+test: off
 
-  install:
-    - choco install gitversion.portable -pre -y
+# Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
+install:
+  - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
+  - ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
 
-  before_build:
-    - ps: cd src
-    - ps: .paket\paket restore
-    - ps: cd..
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
+pull_requests:
+  do_not_increment_build_number: false
 
-  build:
-    verbosity: minimal
+build_script:
+  - ps: .\build.ps1 -target appveyor
 
-  after_build:
-    - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
-    - ps: cd..
+artifacts:
+  - path: \Publish\*.*
 
-  cache:
-    - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
-
-  artifacts:
-    - path: \src\bin\MahApps.Metro.*.nupkg
-    - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
-      type: zip
-
-# configuration for master/Release branch
--
-  branches:
-    only:
-      - master
-
-  skip_tags: true
-  image: Visual Studio 2017
-  configuration: Release
-  platform: Any CPU
-
-  install:
-    - choco install gitversion.portable -pre -y
-
-  before_build:
-    - ps: cd src
-    - ps: .paket\paket restore
-    - ps: cd..
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-
-  build:
-    verbosity: minimal
-
-  after_build:
-    - ps: cd src
-    - ps: .paket\paket pack --version $env:GitVersion_LegacySemVerPadded bin
-    - ps: cd..
-
-  cache:
-    - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
-
-  artifacts:
-    - path: \src\bin\MahApps.Metro.*.nupkg
-    - path: \src\bin\MetroDemo\
-      name: MetroDemo.$(GitVersion_LegacySemVerPadded)
-      type: zip
+nuget:
+  disable_publish_on_pr: true
