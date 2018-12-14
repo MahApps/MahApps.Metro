@@ -47,7 +47,6 @@
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Column="0"
-                                     ContextMenu="{TemplateBinding ContextMenu}"
                                      MinWidth="20"
                                      MinHeight="0"
                                      Margin="0 0 -2 0"
@@ -71,6 +70,7 @@
                                      Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                      Background="{x:Null}"
                                      BorderThickness="0"
+                                     ContextMenu="{TemplateBinding ContextMenu}"
                                      FocusVisualStyle="{x:Null}"
                                      Focusable="{TemplateBinding Focusable}"
                                      FontFamily="{TemplateBinding FontFamily}"
