@@ -27,8 +27,11 @@ namespace MahApps.Metro.Controls
     public static class Spelling
     {
         public static ResourceKey SuggestionMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SuggestionMenuItemStyle);
+
         public static ResourceKey IgnoreAllMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.IgnoreAllMenuItemStyle);
+
         public static ResourceKey NoSuggestionsMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.NoSuggestionsMenuItemStyle);
+
         public static ResourceKey SeparatorStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SeparatorStyle);
     }
 
@@ -66,11 +69,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata(new FontFamilyConverter().ConvertFromString("Marlett")));
         public static readonly DependencyProperty ButtonFontSizeProperty = DependencyProperty.RegisterAttached("ButtonFontSize", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
-        
+
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false));
 
-        public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof (bool), typeof (TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(default(bool), IsSpellCheckContextMenuEnabledChanged));
 
@@ -194,6 +197,7 @@ namespace MahApps.Metro.Controls
                 {
                     return null;
                 }
+
                 var propertyName = bindingExpression.ResolvedSourcePropertyName;
                 if (!string.IsNullOrEmpty(propertyName))
                 {
@@ -203,8 +207,8 @@ namespace MahApps.Metro.Controls
                         return resolvedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
                     }
                 }
-
             }
+
             return null;
         }
 
@@ -352,7 +356,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsWaitingForDataProperty, value);
         }
-        
+
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -509,7 +513,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
-        
+
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
@@ -541,11 +545,13 @@ namespace MahApps.Metro.Controls
 
                     txtBox.TextChanged += TextChanged;
                     txtBox.GotFocus += TextBoxGotFocus;
+                    txtBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
                 }
                 else
                 {
                     txtBox.TextChanged -= TextChanged;
                     txtBox.GotFocus -= TextBoxGotFocus;
+                    txtBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
             else if (d is PasswordBox)
@@ -558,11 +564,13 @@ namespace MahApps.Metro.Controls
 
                     passBox.PasswordChanged += PasswordChanged;
                     passBox.GotFocus += PasswordGotFocus;
+                    passBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
                 }
                 else
                 {
                     passBox.PasswordChanged -= PasswordChanged;
                     passBox.GotFocus -= PasswordGotFocus;
+                    passBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
             else if (d is NumericUpDown)
@@ -574,12 +582,10 @@ namespace MahApps.Metro.Controls
                     numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
 
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    //numericUpDown.GotFocus += NumericUpDownGotFocus;
                 }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
-                    //numericUpDown.GotFocus -= NumericUpDownGotFocus;
                 }
             }
             else if (d is TimePickerBase)
@@ -607,8 +613,9 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-        
-        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
+
+        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength)
+            where TDependencyObject : DependencyObject
         {
             if (sender != null)
             {
@@ -648,9 +655,14 @@ namespace MahApps.Metro.Controls
             ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll());
         }
 
-        private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
+        private static void UIElementPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll());
+            if (sender is UIElement uiElement && !uiElement.IsKeyboardFocusWithin && GetSelectAllOnFocus(uiElement))
+            {
+                // always SelectAllOnFocus
+                uiElement.Focus();
+                e.Handled = true;
+            }
         }
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
@@ -658,7 +670,8 @@ namespace MahApps.Metro.Controls
             ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll());
         }
 
-        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action) where TDependencyObject : DependencyObject
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action)
+            where TDependencyObject : DependencyObject
         {
             if (sender != null)
             {
@@ -848,7 +861,7 @@ namespace MahApps.Metro.Controls
             var button = (Button)sender;
 
             var parent = button.GetAncestors().FirstOrDefault(a => a is TextBox || a is PasswordBox || a is ComboBox);
-            
+
             var command = GetButtonCommand(parent);
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
             if (command != null && command.CanExecute(commandParameter))
@@ -875,6 +888,7 @@ namespace MahApps.Metro.Controls
                         ((ComboBox)parent).Text = string.Empty;
                         ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
+
                     ((ComboBox)parent).SelectedItem = null;
                     ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
@@ -894,6 +908,7 @@ namespace MahApps.Metro.Controls
                     TextChanged(textbox, new RoutedEventArgs());
                 }
             }
+
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
@@ -905,6 +920,7 @@ namespace MahApps.Metro.Controls
                     PasswordChanged(passbox, new RoutedEventArgs());
                 }
             }
+
             var combobox = d as ComboBox;
             if (combobox != null)
             {
