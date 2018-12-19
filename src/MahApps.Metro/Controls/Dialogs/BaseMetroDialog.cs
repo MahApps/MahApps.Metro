@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -17,8 +18,8 @@ namespace MahApps.Metro.Controls.Dialogs
     public abstract class BaseMetroDialog : ContentControl
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
-        public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, UpdateLogicalChild));
+        public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, UpdateLogicalChild));
         public static readonly DependencyProperty DialogTitleFontSizeProperty = DependencyProperty.Register("DialogTitleFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(26D));
         public static readonly DependencyProperty DialogMessageFontSizeProperty = DependencyProperty.Register("DialogMessageFontSize", typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(15D));
 
@@ -98,6 +99,51 @@ namespace MahApps.Metro.Controls.Dialogs
         protected BaseMetroDialog()
             : this(null, new MetroDialogSettings())
         {
+        }
+
+        private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(dependencyObject is BaseMetroDialog dialog))
+            {
+                return;
+            }
+
+            if (e.OldValue is FrameworkElement oldChild)
+            {
+                dialog.RemoveLogicalChild(oldChild);
+            }
+
+            if (e.NewValue is FrameworkElement newChild)
+            {
+                dialog.AddLogicalChild(newChild);
+                newChild.DataContext = dialog.DataContext;
+            }
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerator LogicalChildren
+        {
+            get
+            {
+                // cheat, make a list with all logical content and return the enumerator
+                ArrayList children = new ArrayList();
+                if (this.DialogTop != null)
+                {
+                    children.Add(this.DialogTop);
+                }
+
+                if (this.Content != null)
+                {
+                    children.Add(this.Content);
+                }
+
+                if (this.DialogBottom != null)
+                {
+                    children.Add(this.DialogBottom);
+                }
+
+                return children.GetEnumerator();
+            }
         }
 
         /// <summary>
