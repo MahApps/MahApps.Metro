@@ -7,6 +7,42 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public partial class InputDialog : BaseMetroDialog
     {
+        /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
+        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
+
+        public string Message
+        {
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Input"/> dependency property.</summary>
+        public static readonly DependencyProperty InputProperty = DependencyProperty.Register(nameof(Input), typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
+
+        public string Input
+        {
+            get { return (string)this.GetValue(InputProperty); }
+            set { this.SetValue(InputProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register(nameof(AffirmativeButtonText), typeof(string), typeof(InputDialog), new PropertyMetadata("OK"));
+
+        public string AffirmativeButtonText
+        {
+            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
+            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(InputDialog), new PropertyMetadata("Cancel"));
+
+        public string NegativeButtonText
+        {
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
+        }
+
         internal InputDialog()
             : this(null)
         {
@@ -26,10 +62,10 @@ namespace MahApps.Metro.Controls.Dialogs
         internal Task<string> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
-                                                       {
-                                                           this.Focus();
-                                                           this.PART_TextBox.Focus();
-                                                       }));
+                {
+                    this.Focus();
+                    this.PART_TextBox.Focus();
+                }));
 
             var tcs = new TaskCompletionSource<string>();
 
@@ -44,10 +80,10 @@ namespace MahApps.Metro.Controls.Dialogs
             Action cleanUpHandlers = null;
 
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
-                                                                                                   {
-                                                                                                       cleanUpHandlers();
-                                                                                                       tcs.TrySetResult(null);
-                                                                                                   });
+                {
+                    cleanUpHandlers();
+                    tcs.TrySetResult(null);
+                });
 
             cleanUpHandlers = () =>
                 {
@@ -138,35 +174,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "TextBoxFocusBorderBrush");
                     break;
             }
-        }
-
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(string), typeof(InputDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(InputDialog), new PropertyMetadata("OK"));
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(InputDialog), new PropertyMetadata("Cancel"));
-
-        public string Message
-        {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
-        }
-
-        public string Input
-        {
-            get { return (string)this.GetValue(InputProperty); }
-            set { this.SetValue(InputProperty, value); }
-        }
-
-        public string AffirmativeButtonText
-        {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
-        }
-
-        public string NegativeButtonText
-        {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
         }
     }
 }

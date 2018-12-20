@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                 window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
                             }
 
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
                             return closingTask.ContinueWith(a =>
                             {
                                 return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
@@ -122,7 +122,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                 window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
                             }
 
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
                             return closingTask.ContinueWith(a =>
                             {
                                 return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
@@ -188,7 +188,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                 window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
                             }
 
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
                             return closingTask.ContinueWith(a =>
                             {
                                 return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
@@ -252,7 +252,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                 window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
                             }
 
-                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForCloseAsync()));
                             return closingTask.ContinueWith(a =>
                             {
                                 return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
@@ -439,7 +439,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             dialog.OnClose();
 
-            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(dialog._WaitForCloseAsync));
+            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(dialog.WaitForCloseAsync));
             return closingTask.ContinueWith(a =>
             {
                 if (DialogClosed != null)

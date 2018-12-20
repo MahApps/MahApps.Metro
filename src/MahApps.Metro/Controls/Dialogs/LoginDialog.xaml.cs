@@ -8,6 +8,123 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public partial class LoginDialog : BaseMetroDialog
     {
+        /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
+        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+
+        public string Message
+        {
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Username"/> dependency property.</summary>
+        public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register(nameof(Username), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+
+        public string Username
+        {
+            get { return (string)this.GetValue(UsernameProperty); }
+            set { this.SetValue(UsernameProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="UsernameWatermark"/> dependency property.</summary>
+        public static readonly DependencyProperty UsernameWatermarkProperty = DependencyProperty.Register(nameof(UsernameWatermark), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+
+        public string UsernameWatermark
+        {
+            get { return (string)this.GetValue(UsernameWatermarkProperty); }
+            set { this.SetValue(UsernameWatermarkProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="UsernameCharacterCasing"/> dependency property.</summary>
+        public static readonly DependencyProperty UsernameCharacterCasingProperty = DependencyProperty.Register(nameof(UsernameCharacterCasing), typeof(CharacterCasing), typeof(LoginDialog), new PropertyMetadata(default(CharacterCasing)));
+
+        public CharacterCasing UsernameCharacterCasing
+        {
+            get { return (CharacterCasing)this.GetValue(UsernameCharacterCasingProperty); }
+            set { this.SetValue(UsernameCharacterCasingProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Password"/> dependency property.</summary>
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register(nameof(Password), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+
+        public string Password
+        {
+            get { return (string)this.GetValue(PasswordProperty); }
+            set { this.SetValue(PasswordProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="PasswordWatermark"/> dependency property.</summary>
+        public static readonly DependencyProperty PasswordWatermarkProperty = DependencyProperty.Register(nameof(PasswordWatermark), typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
+
+        public string PasswordWatermark
+        {
+            get { return (string)this.GetValue(PasswordWatermarkProperty); }
+            set { this.SetValue(PasswordWatermarkProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register(nameof(AffirmativeButtonText), typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
+
+        public string AffirmativeButtonText
+        {
+            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
+            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
+
+        public string NegativeButtonText
+        {
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="NegativeButtonButtonVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register(nameof(NegativeButtonButtonVisibility), typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
+
+        public Visibility NegativeButtonButtonVisibility
+        {
+            get { return (Visibility)this.GetValue(NegativeButtonButtonVisibilityProperty); }
+            set { this.SetValue(NegativeButtonButtonVisibilityProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="ShouldHideUsername"/> dependency property.</summary>
+        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register(nameof(ShouldHideUsername), typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
+
+        public bool ShouldHideUsername
+        {
+            get { return (bool)this.GetValue(ShouldHideUsernameProperty); }
+            set { this.SetValue(ShouldHideUsernameProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="RememberCheckBoxVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty RememberCheckBoxVisibilityProperty = DependencyProperty.Register(nameof(RememberCheckBoxVisibility), typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
+
+        public Visibility RememberCheckBoxVisibility
+        {
+            get { return (Visibility)this.GetValue(RememberCheckBoxVisibilityProperty); }
+            set { this.SetValue(RememberCheckBoxVisibilityProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="RememberCheckBoxText"/> dependency property.</summary>
+        public static readonly DependencyProperty RememberCheckBoxTextProperty = DependencyProperty.Register(nameof(RememberCheckBoxText), typeof(string), typeof(LoginDialog), new PropertyMetadata("Remember"));
+
+        public string RememberCheckBoxText
+        {
+            get { return (string)this.GetValue(RememberCheckBoxTextProperty); }
+            set { this.SetValue(RememberCheckBoxTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="RememberCheckBoxChecked"/> dependency property.</summary>
+        public static readonly DependencyProperty RememberCheckBoxCheckedProperty = DependencyProperty.Register(nameof(RememberCheckBoxChecked), typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
+
+        public bool RememberCheckBoxChecked
+        {
+            get { return (bool)this.GetValue(RememberCheckBoxCheckedProperty); }
+            set { this.SetValue(RememberCheckBoxCheckedProperty, value); }
+        }
+
         internal LoginDialog()
             : this(null)
         {
@@ -36,17 +153,17 @@ namespace MahApps.Metro.Controls.Dialogs
         internal Task<LoginDialogData> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
-                                                       {
-                                                           this.Focus();
-                                                           if (string.IsNullOrEmpty(this.PART_TextBox.Text) && !this.ShouldHideUsername)
-                                                           {
-                                                               this.PART_TextBox.Focus();
-                                                           }
-                                                           else
-                                                           {
-                                                               this.PART_TextBox2.Focus();
-                                                           }
-                                                       }));
+                {
+                    this.Focus();
+                    if (string.IsNullOrEmpty(this.PART_TextBox.Text) && !this.ShouldHideUsername)
+                    {
+                        this.PART_TextBox.Focus();
+                    }
+                    else
+                    {
+                        this.PART_TextBox2.Focus();
+                    }
+                }));
 
             TaskCompletionSource<LoginDialogData> tcs = new TaskCompletionSource<LoginDialogData>();
 
@@ -61,10 +178,10 @@ namespace MahApps.Metro.Controls.Dialogs
             Action cleanUpHandlers = null;
 
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
-                                                                                                   {
-                                                                                                       cleanUpHandlers();
-                                                                                                       tcs.TrySetResult(null);
-                                                                                                   });
+                {
+                    cleanUpHandlers();
+                    tcs.TrySetResult(null);
+                });
 
             cleanUpHandlers = () =>
                 {
@@ -178,98 +295,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_TextBox2.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     break;
             }
-        }
-
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty UsernameWatermarkProperty = DependencyProperty.Register("UsernameWatermark", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty UsernameCharacterCasingProperty = DependencyProperty.Register("UsernameCharacterCasing", typeof(CharacterCasing), typeof(LoginDialog), new PropertyMetadata(default(CharacterCasing)));
-        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty PasswordWatermarkProperty = DependencyProperty.Register("PasswordWatermark", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonButtonVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
-        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register("ShouldHideUsername", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
-        public static readonly DependencyProperty RememberCheckBoxVisibilityProperty = DependencyProperty.Register("RememberCheckBoxVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
-        public static readonly DependencyProperty RememberCheckBoxTextProperty = DependencyProperty.Register("RememberCheckBoxText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Remember"));
-        public static readonly DependencyProperty RememberCheckBoxCheckedProperty = DependencyProperty.Register("RememberCheckBoxChecked", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
-
-        public string Message
-        {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
-        }
-
-        public string Username
-        {
-            get { return (string)this.GetValue(UsernameProperty); }
-            set { this.SetValue(UsernameProperty, value); }
-        }
-
-        public string Password
-        {
-            get { return (string)this.GetValue(PasswordProperty); }
-            set { this.SetValue(PasswordProperty, value); }
-        }
-
-        public string UsernameWatermark
-        {
-            get { return (string)this.GetValue(UsernameWatermarkProperty); }
-            set { this.SetValue(UsernameWatermarkProperty, value); }
-        }
-
-        public CharacterCasing UsernameCharacterCasing
-        {
-            get { return (CharacterCasing)this.GetValue(UsernameCharacterCasingProperty); }
-            set { this.SetValue(UsernameCharacterCasingProperty, value); }
-        }
-
-        public string PasswordWatermark
-        {
-            get { return (string)this.GetValue(PasswordWatermarkProperty); }
-            set { this.SetValue(PasswordWatermarkProperty, value); }
-        }
-
-        public string AffirmativeButtonText
-        {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
-        }
-
-        public string NegativeButtonText
-        {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
-        }
-
-        public Visibility NegativeButtonButtonVisibility
-        {
-            get { return (Visibility)this.GetValue(NegativeButtonButtonVisibilityProperty); }
-            set { this.SetValue(NegativeButtonButtonVisibilityProperty, value); }
-        }
-
-        public bool ShouldHideUsername
-        {
-            get { return (bool)this.GetValue(ShouldHideUsernameProperty); }
-            set { this.SetValue(ShouldHideUsernameProperty, value); }
-        }
-
-        public Visibility RememberCheckBoxVisibility
-        {
-            get { return (Visibility)this.GetValue(RememberCheckBoxVisibilityProperty); }
-            set { this.SetValue(RememberCheckBoxVisibilityProperty, value); }
-        }
-
-        public string RememberCheckBoxText
-        {
-            get { return (string)this.GetValue(RememberCheckBoxTextProperty); }
-            set { this.SetValue(RememberCheckBoxTextProperty, value); }
-        }
-
-        public bool RememberCheckBoxChecked
-        {
-            get { return (bool)this.GetValue(RememberCheckBoxCheckedProperty); }
-            set { this.SetValue(RememberCheckBoxCheckedProperty, value); }
         }
     }
 }

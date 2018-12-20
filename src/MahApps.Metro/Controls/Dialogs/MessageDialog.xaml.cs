@@ -11,6 +11,68 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class MessageDialog : BaseMetroDialog
     {
+        /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
+        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
+
+        public string Message
+        {
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="AffirmativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register(nameof(AffirmativeButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("OK"));
+
+        public string AffirmativeButtonText
+        {
+            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
+            set { this.SetValue(AffirmativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+
+        public string NegativeButtonText
+        {
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="FirstAuxiliaryButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(FirstAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+
+        public string FirstAuxiliaryButtonText
+        {
+            get { return (string)this.GetValue(FirstAuxiliaryButtonTextProperty); }
+            set { this.SetValue(FirstAuxiliaryButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="SecondAuxiliaryButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register(nameof(SecondAuxiliaryButtonText), typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+
+        public string SecondAuxiliaryButtonText
+        {
+            get { return (string)this.GetValue(SecondAuxiliaryButtonTextProperty); }
+            set { this.SetValue(SecondAuxiliaryButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="ButtonStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register(nameof(ButtonStyle), typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, ButtonStylePropertyChangedCallback));
+
+        private static void ButtonStylePropertyChangedCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            if (o is MessageDialog dialog)
+            {
+                SetButtonState(dialog);
+            }
+        }
+
+        public MessageDialogStyle ButtonStyle
+        {
+            get { return (MessageDialogStyle)this.GetValue(ButtonStyleProperty); }
+            set { this.SetValue(ButtonStyleProperty, value); }
+        }
+
         internal MessageDialog()
             : this(null)
         {
@@ -32,40 +94,40 @@ namespace MahApps.Metro.Controls.Dialogs
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
-                                                       {
-                                                           this.Focus();
+                {
+                    this.Focus();
 
-                                                           var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
+                    var defaultButtonFocus = this.DialogSettings.DefaultButtonFocus;
 
-                                                           //Ensure it's a valid option
-                                                           if (!this.IsApplicable(defaultButtonFocus))
-                                                           {
-                                                               defaultButtonFocus = this.ButtonStyle == MessageDialogStyle.Affirmative
-                                                                   ? MessageDialogResult.Affirmative
-                                                                   : MessageDialogResult.Negative;
-                                                           }
+                    //Ensure it's a valid option
+                    if (!this.IsApplicable(defaultButtonFocus))
+                    {
+                        defaultButtonFocus = this.ButtonStyle == MessageDialogStyle.Affirmative
+                            ? MessageDialogResult.Affirmative
+                            : MessageDialogResult.Negative;
+                    }
 
-                                                           //kind of acts like a selective 'IsDefault' mechanism.
-                                                           switch (defaultButtonFocus)
-                                                           {
-                                                               case MessageDialogResult.Affirmative:
-                                                                   this.PART_AffirmativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
-                                                                   KeyboardNavigationEx.Focus(this.PART_AffirmativeButton);
-                                                                   break;
-                                                               case MessageDialogResult.Negative:
-                                                                   this.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
-                                                                   KeyboardNavigationEx.Focus(this.PART_NegativeButton);
-                                                                   break;
-                                                               case MessageDialogResult.FirstAuxiliary:
-                                                                   this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
-                                                                   KeyboardNavigationEx.Focus(this.PART_FirstAuxiliaryButton);
-                                                                   break;
-                                                               case MessageDialogResult.SecondAuxiliary:
-                                                                   this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
-                                                                   KeyboardNavigationEx.Focus(this.PART_SecondAuxiliaryButton);
-                                                                   break;
-                                                           }
-                                                       }));
+                    //kind of acts like a selective 'IsDefault' mechanism.
+                    switch (defaultButtonFocus)
+                    {
+                        case MessageDialogResult.Affirmative:
+                            this.PART_AffirmativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            KeyboardNavigationEx.Focus(this.PART_AffirmativeButton);
+                            break;
+                        case MessageDialogResult.Negative:
+                            this.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            KeyboardNavigationEx.Focus(this.PART_NegativeButton);
+                            break;
+                        case MessageDialogResult.FirstAuxiliary:
+                            this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            KeyboardNavigationEx.Focus(this.PART_FirstAuxiliaryButton);
+                            break;
+                        case MessageDialogResult.SecondAuxiliary:
+                            this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            KeyboardNavigationEx.Focus(this.PART_SecondAuxiliaryButton);
+                            break;
+                    }
+                }));
 
             TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
 
@@ -86,10 +148,10 @@ namespace MahApps.Metro.Controls.Dialogs
             Action cleanUpHandlers = null;
 
             var cancellationTokenRegistration = this.DialogSettings.CancellationToken.Register(() =>
-                                                                                                   {
-                                                                                                       cleanUpHandlers?.Invoke();
-                                                                                                       tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
-                                                                                                   });
+                {
+                    cleanUpHandlers?.Invoke();
+                    tcs.TrySetResult(this.ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+                });
 
             cleanUpHandlers = () =>
                 {
@@ -215,20 +277,6 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("OK"));
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register("FirstAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register("SecondAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
-        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, new PropertyChangedCallback(ButtonStylePropertyChangedCallback)));
-
-        private static void ButtonStylePropertyChangedCallback(DependencyObject s, DependencyPropertyChangedEventArgs e)
-        {
-            MessageDialog md = (MessageDialog)s;
-
-            SetButtonState(md);
-        }
-
         private static void SetButtonState(MessageDialog md)
         {
             if (md.PART_AffirmativeButton == null)
@@ -283,42 +331,6 @@ namespace MahApps.Metro.Controls.Dialogs
         protected override void OnLoaded()
         {
             SetButtonState(this);
-        }
-
-        public MessageDialogStyle ButtonStyle
-        {
-            get { return (MessageDialogStyle)this.GetValue(ButtonStyleProperty); }
-            set { this.SetValue(ButtonStyleProperty, value); }
-        }
-
-        public string Message
-        {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
-        }
-
-        public string AffirmativeButtonText
-        {
-            get { return (string)this.GetValue(AffirmativeButtonTextProperty); }
-            set { this.SetValue(AffirmativeButtonTextProperty, value); }
-        }
-
-        public string NegativeButtonText
-        {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
-        }
-
-        public string FirstAuxiliaryButtonText
-        {
-            get { return (string)this.GetValue(FirstAuxiliaryButtonTextProperty); }
-            set { this.SetValue(FirstAuxiliaryButtonTextProperty, value); }
-        }
-
-        public string SecondAuxiliaryButtonText
-        {
-            get { return (string)this.GetValue(SecondAuxiliaryButtonTextProperty); }
-            set { this.SetValue(SecondAuxiliaryButtonTextProperty, value); }
         }
 
         private void OnKeyCopyExecuted(object sender, ExecutedRoutedEventArgs e)
