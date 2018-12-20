@@ -116,73 +116,63 @@ This is how we use the donations:
 
 <h2>Backers</h2>
 
-[Become a backer](https://opencollective.com/mahappsmetro#backer) and get your image on our README on Github with a link to your site.
+[Become a backer](https://opencollective.com/mahappsmetro#backer) and show your support to our open source project.
 
-<a href="https://opencollective.com/mahappsmetro/backer/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/0/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/1/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/2/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/2/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/3/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/3/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/4/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/4/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/5/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/5/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/6/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/6/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/7/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/7/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/8/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/8/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/9/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/9/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/10/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/10/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/11/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/11/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/12/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/12/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/13/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/13/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/14/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/14/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/15/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/15/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/16/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/16/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/17/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/17/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/18/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/18/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/19/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/19/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/20/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/20/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/21/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/21/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/22/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/22/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/23/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/23/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/24/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/24/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/25/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/25/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/26/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/26/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/27/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/27/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/28/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/28/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/backer/29/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/29/avatar"></a>
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/0/avatar)](https://opencollective.com/mahappsmetro/backer/0/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/1/avatar)](https://opencollective.com/mahappsmetro/backer/1/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/2/avatar)](https://opencollective.com/mahappsmetro/backer/2/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/3/avatar)](https://opencollective.com/mahappsmetro/backer/3/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/4/avatar)](https://opencollective.com/mahappsmetro/backer/4/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/5/avatar)](https://opencollective.com/mahappsmetro/backer/5/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/6/avatar)](https://opencollective.com/mahappsmetro/backer/6/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/7/avatar)](https://opencollective.com/mahappsmetro/backer/7/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/8/avatar)](https://opencollective.com/mahappsmetro/backer/8/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/9/avatar)](https://opencollective.com/mahappsmetro/backer/9/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/10/avatar)](https://opencollective.com/mahappsmetro/backer/10/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/11/avatar)](https://opencollective.com/mahappsmetro/backer/11/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/12/avatar)](https://opencollective.com/mahappsmetro/backer/12/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/13/avatar)](https://opencollective.com/mahappsmetro/backer/13/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/14/avatar)](https://opencollective.com/mahappsmetro/backer/14/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/15/avatar)](https://opencollective.com/mahappsmetro/backer/15/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/16/avatar)](https://opencollective.com/mahappsmetro/backer/16/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/17/avatar)](https://opencollective.com/mahappsmetro/backer/17/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/18/avatar)](https://opencollective.com/mahappsmetro/backer/18/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/19/avatar)](https://opencollective.com/mahappsmetro/backer/19/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/20/avatar)](https://opencollective.com/mahappsmetro/backer/20/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/21/avatar)](https://opencollective.com/mahappsmetro/backer/21/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/22/avatar)](https://opencollective.com/mahappsmetro/backer/22/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/23/avatar)](https://opencollective.com/mahappsmetro/backer/23/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/24/avatar)](https://opencollective.com/mahappsmetro/backer/24/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/25/avatar)](https://opencollective.com/mahappsmetro/backer/25/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/26/avatar)](https://opencollective.com/mahappsmetro/backer/26/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/27/avatar)](https://opencollective.com/mahappsmetro/backer/27/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/28/avatar)](https://opencollective.com/mahappsmetro/backer/28/website)
+[![MahApps Backer](https://opencollective.com/mahappsmetro/backer/29/avatar)](https://opencollective.com/mahappsmetro/backer/29/website)
 
 <h2>Sponsors</h2>
 
-[Become a sponsor](https://opencollective.com/mahappsmetro#sponsor) and get your logo on our README on Github with a link to your site.
+Does your company use MahApps.Metro?  Ask your manager or marketing team if your company would be interested in supporting our project.  Support will allow the maintainers to dedicate more time for maintenance and new features for everyone.  Also, your company's logo will show [on GitHub](https://github.com/MahApps/MahApps.Metro#readme) and on [our site](https://mahapps.com) - who doesn't want a little extra exposure?
 
-<a href="https://opencollective.com/mahappsmetro/sponsor/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/0/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/1/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/2/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/2/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/3/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/3/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/4/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/4/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/5/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/5/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/6/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/6/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/7/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/7/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/8/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/8/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/9/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/9/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/10/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/10/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/11/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/11/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/12/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/12/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/13/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/13/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/14/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/14/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/15/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/15/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/16/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/16/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/17/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/17/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/18/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/18/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/19/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/19/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/20/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/20/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/21/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/21/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/22/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/22/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/23/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/23/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/24/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/24/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/25/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/25/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/26/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/26/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/27/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/27/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/28/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/28/avatar"></a>
-<a href="https://opencollective.com/mahappsmetro/sponsor/29/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/sponsor/29/avatar"></a>
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/0/avatar)](https://opencollective.com/mahappsmetro/sponsor/0/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/1/avatar)](https://opencollective.com/mahappsmetro/sponsor/1/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/2/avatar)](https://opencollective.com/mahappsmetro/sponsor/2/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/3/avatar)](https://opencollective.com/mahappsmetro/sponsor/3/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/4/avatar)](https://opencollective.com/mahappsmetro/sponsor/4/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/5/avatar)](https://opencollective.com/mahappsmetro/sponsor/5/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/6/avatar)](https://opencollective.com/mahappsmetro/sponsor/6/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/7/avatar)](https://opencollective.com/mahappsmetro/sponsor/7/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/8/avatar)](https://opencollective.com/mahappsmetro/sponsor/8/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/9/avatar)](https://opencollective.com/mahappsmetro/sponsor/9/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/10/avatar)](https://opencollective.com/mahappsmetro/sponsor/10/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/11/avatar)](https://opencollective.com/mahappsmetro/sponsor/11/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/12/avatar)](https://opencollective.com/mahappsmetro/sponsor/12/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/13/avatar)](https://opencollective.com/mahappsmetro/sponsor/13/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/14/avatar)](https://opencollective.com/mahappsmetro/sponsor/14/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/15/avatar)](https://opencollective.com/mahappsmetro/sponsor/15/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/16/avatar)](https://opencollective.com/mahappsmetro/sponsor/16/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/17/avatar)](https://opencollective.com/mahappsmetro/sponsor/17/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/18/avatar)](https://opencollective.com/mahappsmetro/sponsor/18/website)
+[![MahApps Sponsor](https://opencollective.com/mahappsmetro/sponsor/19/avatar)](https://opencollective.com/mahappsmetro/sponsor/19/website)
 
 <h2>Screenshots</h2>
 
