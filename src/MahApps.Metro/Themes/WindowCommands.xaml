@@ -100,7 +100,42 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type Controls:WindowCommands}">
+    <Style x:Key="MahApps.Metro.Styles.WindowCommandsItem" TargetType="{x:Type Controls:WindowCommandsItem}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="1 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
+                    <StackPanel HorizontalAlignment="{Binding HorizontalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                VerticalAlignment="{Binding VerticalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                Orientation="Horizontal">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Rectangle x:Name="PART_Separator"
+                                   Width="1"
+                                   Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                   Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                   IsHitTestVisible="False"
+                                   Opacity="0.25"
+                                   SnapsToDevicePixels="True"
+                                   UseLayoutRounding="True" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSeparatorVisible" Value="False">
+                            <Setter TargetName="PART_Separator" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Metro.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
@@ -108,43 +143,6 @@
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type Controls:WindowCommandsItem}">
-                    <Setter Property="IsTabStop" Value="False" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
-                                <StackPanel HorizontalAlignment="{Binding HorizontalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                            VerticalAlignment="{Binding VerticalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                            Orientation="Horizontal">
-                                    <ContentPresenter x:Name="PART_ContentPresenter"
-                                                      Margin="1 0"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    <Rectangle x:Name="PART_Separator"
-                                               Width="1"
-                                               Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                               Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                               IsHitTestVisible="False"
-                                               Opacity="0.25"
-                                               SnapsToDevicePixels="True"
-                                               UseLayoutRounding="True" />
-                                </StackPanel>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSeparatorVisible" Value="False">
-                                        <Setter TargetName="PART_Separator" Property="Visibility" Value="Collapsed" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
