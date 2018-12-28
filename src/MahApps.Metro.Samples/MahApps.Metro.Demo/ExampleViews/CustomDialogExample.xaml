@@ -43,6 +43,7 @@
                 Margin="8 8 0 8"
                 HorizontalAlignment="Right"
                 Command="{Binding CloseCommand}"
-                Content="OK" />
+                Content="OK"
+                Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
     </Grid>
 </UserControl>

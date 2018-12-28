@@ -11,6 +11,9 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class MessageDialog : BaseMetroDialog
     {
+        private const string ACCENT_BUTTON_STYLE = "MahApps.Metro.Styles.Dialogs.AccentButton";
+        private const string ACCENT_HIGHLIGHT_BUTTON_STYLE = "MahApps.Metro.Styles.Dialogs.AccentHighlightButton";
+
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
 
@@ -111,19 +114,19 @@ namespace MahApps.Metro.Controls.Dialogs
                     switch (defaultButtonFocus)
                     {
                         case MessageDialogResult.Affirmative:
-                            this.PART_AffirmativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            this.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
                             KeyboardNavigationEx.Focus(this.PART_AffirmativeButton);
                             break;
                         case MessageDialogResult.Negative:
-                            this.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            this.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
                             KeyboardNavigationEx.Focus(this.PART_NegativeButton);
                             break;
                         case MessageDialogResult.FirstAuxiliary:
-                            this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            this.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
                             KeyboardNavigationEx.Focus(this.PART_FirstAuxiliaryButton);
                             break;
                         case MessageDialogResult.SecondAuxiliary:
-                            this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogSquareButton");
+                            this.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_BUTTON_STYLE);
                             KeyboardNavigationEx.Focus(this.PART_SecondAuxiliaryButton);
                             break;
                     }
@@ -320,10 +323,10 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (md.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    md.PART_AffirmativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
-                    md.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
-                    md.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
-                    md.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
+                    md.PART_AffirmativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                    md.PART_NegativeButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                    md.PART_FirstAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
+                    md.PART_SecondAuxiliaryButton.SetResourceReference(StyleProperty, ACCENT_HIGHLIGHT_BUTTON_STYLE);
                     break;
             }
         }

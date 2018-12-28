@@ -27,7 +27,7 @@
                         Margin="5 0 0 0"
                         Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Cursor="Arrow"
-                        Style="{DynamicResource AccentedDialogSquareButton}"
+                        Style="{DynamicResource MahApps.Metro.Styles.Dialogs.AccentButton}"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>
