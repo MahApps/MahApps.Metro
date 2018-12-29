@@ -169,7 +169,7 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (this.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "AccentedDialogHighlightedSquareButton");
+                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Metro.Styles.Dialogs.AccentHighlightButton");
                     this.PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     this.PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "TextBoxFocusBorderBrush");
                     break;
