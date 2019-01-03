@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -14,7 +14,7 @@
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
-    <Target Name="GenerateXamlFiles" BeforeTargets="CheckForDuplicateItems">
+    <Target Name="GenerateXamlFilesInner">
         <PropertyGroup>
             <!-- <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot> -->
             <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot>
@@ -22,6 +22,12 @@
         </PropertyGroup>
         <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
         <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+    </Target>
+    <!-- Key to generating the xaml files at the right point in time is to do this before DispatchToInnerBuilds -->
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
+        <!--TargetFramework=once is critical here, as it will not execute task from same project with same properties multiple times. 
+        We need to unify TargetFramework between empty, net45, netcoreapp3.0 etc.-->
+        <MSBuild Projects="$(MSBuildProjectFile)" Targets="GenerateXamlFilesInner" Properties="TargetFramework=once" />
     </Target>
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
