@@ -35,8 +35,7 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.BaseColorScheme + "." + this.Name);
+            ThemeManager.ChangeThemeColorScheme(Application.Current, this.Name);
         }
     }
 
@@ -44,7 +43,7 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            ThemeManager.ChangeThemeBaseColor(Application.Current.Resources, this.Name);
+            ThemeManager.ChangeThemeBaseColor(Application.Current, this.Name);
         }
     }
 
@@ -61,10 +60,8 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.Themes
-                                            .GroupBy(x => x.ColorScheme)
-                                            .Select(x => x.First())
-                                            .Select(a => new AccentColorMenuData { Name = a.ColorScheme, ColorBrush = a.ShowcaseBrush })
+            this.AccentColors = ThemeManager.ColorSchemes
+                                            .Select(a => new AccentColorMenuData { Name = a.Name, ColorBrush = a.ShowcaseBrush })
                                             .ToList();
 
             // create metro theme color menu items for the demo

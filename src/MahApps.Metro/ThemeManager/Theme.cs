@@ -10,7 +10,7 @@ namespace MahApps.Metro
     /// <summary>
     /// Represents the background theme of the application.
     /// </summary>
-    [DebuggerDisplay("DisplayName={DisplayName}, Name={Name}, Source={Resources.Source}")]
+    [DebuggerDisplay("DisplayName={" + nameof(DisplayName) + "}, Name={" + nameof(Name) + "}, Source={Resources.Source}")]
     public class Theme
     {
         /// <summary>
@@ -18,10 +18,25 @@ namespace MahApps.Metro
         /// </summary>
         public const string ThemeNameKey = "Theme.Name";
 
-        private const string ThemeDisplayNameKey = "Theme.DisplayName";
-        private const string ThemeBaseColorSchemeKey = "Theme.BaseColorScheme";
-        private const string ThemeColorSchemeKey = "Theme.ColorScheme";
-        private const string ThemeShowcaseBrushKey = "Theme.ShowcaseBrush";
+        /// <summary>
+        /// Gets the key for the theme display name.
+        /// </summary>
+        public const string ThemeDisplayNameKey = "Theme.DisplayName";
+
+        /// <summary>
+        /// Gets the key for the theme base color scheme.
+        /// </summary>
+        public const string ThemeBaseColorSchemeKey = "Theme.BaseColorScheme";
+
+        /// <summary>
+        /// Gets the key for the theme color scheme.
+        /// </summary>
+        public const string ThemeColorSchemeKey = "Theme.ColorScheme";
+
+        /// <summary>
+        /// Gets the key for the theme showcase brush.
+        /// </summary>
+        public const string ThemeShowcaseBrushKey = "Theme.ShowcaseBrush";
 
         /// <summary>
         /// Initializes a new instance.
