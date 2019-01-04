@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
@@ -295,12 +295,12 @@ namespace MahApps.Metro.Controls
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ChangeTheme(this.Resources, windowTheme);
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ChangeTheme(this.Resources, windowTheme);
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
@@ -311,17 +311,17 @@ namespace MahApps.Metro.Controls
                         throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
-                    ThemeManager.ChangeTheme(this.Resources, inverseTheme);
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
-                    ThemeManager.ChangeTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == "Dark" && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorDark && x.ColorScheme == windowTheme.ColorScheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
-                    ThemeManager.ChangeTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == "Light" && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorLight && x.ColorScheme == windowTheme.ColorScheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
             }

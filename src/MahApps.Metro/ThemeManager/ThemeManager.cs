@@ -3,108 +3,227 @@ namespace MahApps.Metro
 {
     using System;
     using System.Collections;
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
     using System.Resources;
+    using System.Runtime.CompilerServices;
     using System.Security;
     using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Media;
     using JetBrains.Annotations;
     using Microsoft.Win32;
 
     /// <summary>
     /// A class that allows for the detection and alteration of a theme.
     /// </summary>
-    public static class ThemeManager
+    public static partial class ThemeManager
     {
-        private const string BaseColorLight = "Light";
-        private const string BaseColorDark = "Dark";
-
-        // ReSharper disable once InconsistentNaming
-#pragma warning disable SA1307 // Accessible fields must begin with upper-case letter
-#pragma warning disable SA1401 // Fields must be private
-        internal static IList<Theme> themes;
-#pragma warning restore SA1401 // Fields must be private
-#pragma warning restore SA1307 // Accessible fields must begin with upper-case letter
+        /// <summary>
+        /// Gets the name for the light base color.
+        /// </summary>
+        public static readonly string BaseColorLight = "Light";
 
         /// <summary>
-        /// Gets a list of all default themes.
+        /// Gets the name for the dark base color.
         /// </summary>
-        public static IEnumerable<Theme> Themes
+        public static readonly string BaseColorDark = "Dark";
+
+        private static readonly ObservableCollection<Theme> themesInternal;
+        private static readonly ReadOnlyObservableCollection<Theme> themes;
+
+        private static readonly ObservableCollection<string> baseColorsInternal;
+        private static readonly ReadOnlyObservableCollection<string> baseColors;
+
+        private static readonly ObservableCollection<ColorScheme> colorSchemesInternal;
+        private static readonly ReadOnlyObservableCollection<ColorScheme> colorSchemes;
+
+        static ThemeManager()
+        {
+            {
+                themesInternal = new ObservableCollection<Theme>();
+                themes = new ReadOnlyObservableCollection<Theme>(themesInternal);
+
+                var collectionView = CollectionViewSource.GetDefaultView(themes);
+                collectionView.SortDescriptions.Add(new SortDescription(nameof(Theme.DisplayName), ListSortDirection.Ascending));
+
+                themesInternal.CollectionChanged += ThemesInternalCollectionChanged;
+            }
+
+            {
+                baseColorsInternal = new ObservableCollection<string>();
+                baseColors = new ReadOnlyObservableCollection<string>(baseColorsInternal);
+
+                var collectionView = CollectionViewSource.GetDefaultView(baseColors);
+                collectionView.SortDescriptions.Add(new SortDescription(null, ListSortDirection.Ascending));
+            }
+
+            {
+                colorSchemesInternal = new ObservableCollection<ColorScheme>();
+                colorSchemes = new ReadOnlyObservableCollection<ColorScheme>(colorSchemesInternal);
+
+                var collectionView = CollectionViewSource.GetDefaultView(colorSchemes);
+                collectionView.SortDescriptions.Add(new SortDescription(nameof(ColorScheme.Name), ListSortDirection.Ascending));
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all themes.
+        /// </summary>
+        public static ReadOnlyObservableCollection<Theme> Themes
         {
             get
             {
-                if (themes != null)
-                {
-                    return themes;
-                }
-
-                themes = new List<Theme>();
-
-                try
-                {
-                    var assembly = typeof(ThemeManager).Assembly;
-                    var assemblyName = assembly.GetName().Name;
-                    var resourceDictionaries = assembly.GetManifestResourceNames();
-
-                    foreach (var resourceName in resourceDictionaries)
-                    {
-                        if (resourceName.EndsWith(".g.resources", StringComparison.OrdinalIgnoreCase) == false)
-                        {
-                            continue;
-                        }
-
-                        var info = assembly.GetManifestResourceInfo(resourceName);
-                        if (info == null
-                            || info.ResourceLocation == ResourceLocation.ContainedInAnotherAssembly)
-                        {
-                            continue;
-                        }
-
-                        var resourceStream = assembly.GetManifestResourceStream(resourceName);
-
-                        if (resourceStream == null)
-                        {
-                            continue;
-                        }
-
-                        using (var reader = new ResourceReader(resourceStream))
-                        {
-                            foreach (DictionaryEntry entry in reader)
-                            {
-                                var stringKey = entry.Key as string;
-                                if (stringKey == null
-                                    || stringKey.IndexOf("/themes/", StringComparison.OrdinalIgnoreCase) == -1
-                                    || stringKey.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) == false
-                                    || stringKey.EndsWith("generic.baml", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    continue;
-                                }
-
-                                var resourceDictionary = new ResourceDictionary
-                                                         {
-                                                             Source = new Uri($"pack://application:,,,/{assemblyName};component/{stringKey.Replace(".baml", ".xaml")}")
-                                                         };
-
-                                if (resourceDictionary.MergedDictionaries.Count == 0
-                                    && resourceDictionary.Contains(Theme.ThemeNameKey))
-                                {
-                                    themes.Add(new Theme(resourceDictionary));
-                                }
-                            }
-                        }
-                    }
-
-                    themes = themes.OrderBy(x => x.DisplayName).ToList();
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidOperationException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
-                }
+                EnsureThemes();
 
                 return themes;
             }
+        }
+
+        /// <summary>
+        /// Gets a list of all available base colors.
+        /// </summary>
+        public static ReadOnlyObservableCollection<string> BaseColors
+        {
+            get
+            {
+                EnsureThemes(); 
+
+                return baseColors; 
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all available color schemes.
+        /// </summary>
+        public static ReadOnlyObservableCollection<ColorScheme> ColorSchemes
+        {
+            get 
+            { 
+                EnsureThemes(); 
+
+                return colorSchemes; 
+            }
+        }
+
+        private static void EnsureThemes()
+        {
+            if (themes.Count > 0)
+            {
+                return;
+            }
+
+            try
+            {
+                var assembly = typeof(ThemeManager).Assembly;
+                var assemblyName = assembly.GetName().Name;
+                var resourceNames = assembly.GetManifestResourceNames();
+
+                foreach (var resourceName in resourceNames)
+                {
+                    if (resourceName.EndsWith(".g.resources", StringComparison.OrdinalIgnoreCase) == false)
+                    {
+                        continue;
+                    }
+
+                    var info = assembly.GetManifestResourceInfo(resourceName);
+                    if (info.IsNull()
+                        || info.ResourceLocation == ResourceLocation.ContainedInAnotherAssembly)
+                    {
+                        continue;
+                    }
+
+                    var resourceStream = assembly.GetManifestResourceStream(resourceName);
+
+                    if (resourceStream.IsNull())
+                    {
+                        continue;
+                    }
+
+                    using (var reader = new ResourceReader(resourceStream))
+                    {
+                        foreach (DictionaryEntry entry in reader)
+                        {
+                            var stringKey = entry.Key as string;
+                            if (stringKey.IsNull()
+                                || stringKey.IndexOf("/themes/", StringComparison.OrdinalIgnoreCase) == -1
+                                || stringKey.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) == false
+                                || stringKey.EndsWith("generic.baml", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            var resourceDictionary = new ResourceDictionary
+                            {
+                                Source = new Uri($"pack://application:,,,/{assemblyName};component/{stringKey.Replace(".baml", ".xaml")}")
+                            };
+
+                            if (resourceDictionary.MergedDictionaries.Count == 0
+                                && resourceDictionary.Contains(Theme.ThemeNameKey))
+                            {
+                                themesInternal.Add(new Theme(resourceDictionary));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
+            }
+        }
+
+        private static void ThemesInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var newItem in e.NewItems.OfType<Theme>())
+                    {
+                        if (baseColorsInternal.Contains(newItem.BaseColorScheme) == false)
+                        {
+                            baseColorsInternal.Add(newItem.BaseColorScheme);
+                        }
+
+                        if (colorSchemesInternal.Any(x => x.Name == newItem.ColorScheme) == false)
+                        {
+                            colorSchemesInternal.Add(new ColorScheme(newItem));
+                        }
+                    }
+
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var newItem in e.OldItems.OfType<Theme>())
+                    {
+                        baseColorsInternal.Remove(newItem.BaseColorScheme);
+
+                        var colorScheme = colorSchemesInternal.FirstOrDefault(x => x.Name == newItem.ColorScheme);
+                        if (colorScheme != null)
+                        {
+                            colorSchemesInternal.Remove(colorScheme);
+                        }
+                    }
+
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    baseColorsInternal.Clear();
+                    colorSchemesInternal.Clear();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Clears the internal themes list.
+        /// </summary>
+        public static void ClearThemes()
+        {
+            themesInternal?.Clear();
         }
 
         /// <summary>
@@ -115,13 +234,13 @@ namespace MahApps.Metro
         {
             var theme = new Theme(resourceAddress);
 
-            var themeExists = GetTheme(theme.Name) != null;
+            var themeExists = GetTheme(theme.Name).IsNotNull();
             if (themeExists)
             {
                 return false;
             }
 
-            themes.Add(new Theme(resourceAddress));
+            themesInternal.Add(new Theme(resourceAddress));
             return true;
         }
 
@@ -134,13 +253,13 @@ namespace MahApps.Metro
         {
             var theme = new Theme(resourceDictionary);
 
-            var themeExists = GetTheme(theme.Name) != null;
+            var themeExists = GetTheme(theme.Name).IsNotNull();
             if (themeExists)
             {
                 return false;
             }
 
-            themes.Add(theme);
+            themesInternal.Add(theme);
             return true;
         }
 
@@ -150,7 +269,7 @@ namespace MahApps.Metro
         /// <returns>The <see cref="Theme"/> or <c>null</c>, if the theme wasn't found</returns>
         public static Theme GetTheme([NotNull] string name)
         {
-            if (name == null)
+            if (name.IsNull())
             {
                 throw new ArgumentNullException(nameof(name));
             }
@@ -165,19 +284,19 @@ namespace MahApps.Metro
         /// <returns>The <see cref="Theme"/> or <c>null</c>, if the theme wasn't found.</returns>
         public static Theme GetTheme([NotNull] ResourceDictionary resources)
         {
-            if (resources == null)
+            if (resources.IsNull())
             {
                 throw new ArgumentNullException(nameof(resources));
             }
 
             var builtInTheme = Themes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources, resources));
-            if (builtInTheme != null)
+            if (builtInTheme.IsNotNull())
             {
                 return builtInTheme;
             }
 
             // support dynamically created runtime resource dictionaries
-            if (resources.Source == null)
+            if (resources.Source.IsNull())
             {
                 if (IsThemeDictionary(resources))
                 {
@@ -200,7 +319,7 @@ namespace MahApps.Metro
         /// </remarks>
         public static Theme GetInverseTheme([NotNull] Theme theme)
         {
-            if (theme == null)
+            if (theme.IsNull())
             {
                 throw new ArgumentNullException(nameof(theme));
             }
@@ -228,26 +347,17 @@ namespace MahApps.Metro
         /// <exception cref="System.ArgumentNullException">resources</exception>
         public static bool IsThemeDictionary([NotNull] ResourceDictionary resources)
         {
-            if (resources == null)
+            if (resources.IsNull())
             {
                 throw new ArgumentNullException(nameof(resources));
             }
-
-            // Note: add more checks if these keys aren't sufficient
-            var styleKeys = new List<string>(new[]
-                                             {
-                                                 "HighlightColor",
-                                                 "AccentBaseColor",
-                                                 "HighlightBrush",
-                                                 "AccentBaseColorBrush"
-                                             });
 
             foreach (var styleKey in styleKeys)
             {
                 // Note: do not use contains, because that will look in all merged dictionaries as well. We need to check
                 // out the actual keys of the current resource dictionary
                 if (!(from object resourceKey in resources.Keys
-                     select resourceKey as string).Any(keyAsString => string.Equals(keyAsString, styleKey)))
+                      select resourceKey as string).Any(keyAsString => string.Equals(keyAsString, styleKey, StringComparison.Ordinal)))
                 {
                     return false;
                 }
@@ -264,15 +374,10 @@ namespace MahApps.Metro
         /// <returns>The resource object or null, if the resource wasn't found.</returns>
         public static object GetResourceFromAppStyle(Window window, string key)
         {
-            var appStyle = window != null
-                               ? DetectTheme(window)
-                               : DetectTheme(Application.Current);
-
-            if (appStyle == null
-                && window != null)
-            {
-                appStyle = DetectTheme(Application.Current); //no resources in the window's resources.
-            }
+            var appStyle = (window.IsNull()
+                                ? DetectTheme(Application.Current)
+                                : DetectTheme(window))
+                           ?? DetectTheme(Application.Current);
 
             var resource = appStyle?.Resources[key];
 
@@ -283,48 +388,52 @@ namespace MahApps.Metro
         /// Change the theme for the whole application.
         /// </summary>
         [SecurityCritical]
-        public static void ChangeTheme([NotNull] Application app, [NotNull] string themeName)
+        public static Theme ChangeTheme([NotNull] Application app, [NotNull] string themeName)
         {
-            if (app == null)
+            if (app.IsNull())
             {
                 throw new ArgumentNullException(nameof(app));
             }
 
-            if (themeName == null)
+            if (themeName.IsNull())
             {
                 throw new ArgumentNullException(nameof(themeName));
             }
 
             var oldTheme = DetectTheme(app);
             Theme matched;
-            if ((matched = GetTheme(themeName)) != null)
+            if ((matched = GetTheme(themeName)).IsNotNull())
             {
-                ChangeTheme(app.Resources, oldTheme, matched);
+                return ChangeTheme(app.Resources, oldTheme, matched);
             }
+
+            return oldTheme;
         }
 
         /// <summary>
         /// Change theme for the given window.
         /// </summary>
         [SecurityCritical]
-        public static void ChangeTheme([NotNull] Window window, [NotNull] string themeName)
+        public static Theme ChangeTheme([NotNull] Window window, [NotNull] string themeName)
         {
-            if (window == null)
+            if (window.IsNull())
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
-            if (themeName == null)
+            if (themeName.IsNull())
             {
                 throw new ArgumentNullException(nameof(themeName));
             }
 
             var oldTheme = DetectTheme(window);
             Theme matched;
-            if ((matched = GetTheme(themeName)) != null)
+            if ((matched = GetTheme(themeName)).IsNotNull())
             {
-                ChangeTheme(window.Resources, oldTheme, matched);
+                return ChangeTheme(window.Resources, oldTheme, matched);
             }
+
+            return oldTheme;
         }
 
         /// <summary>
@@ -333,20 +442,20 @@ namespace MahApps.Metro
         /// <param name="app">The instance of Application to change.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme([NotNull] Application app, [NotNull] Theme newTheme)
+        public static Theme ChangeTheme([NotNull] Application app, [NotNull] Theme newTheme)
         {
-            if (app == null)
+            if (app.IsNull())
             {
                 throw new ArgumentNullException(nameof(app));
             }
 
-            if (newTheme == null)
+            if (newTheme.IsNull())
             {
                 throw new ArgumentNullException(nameof(newTheme));
             }
 
             var oldTheme = DetectTheme(app);
-            ChangeTheme(app.Resources, oldTheme, newTheme);
+            return ChangeTheme(app.Resources, oldTheme, newTheme);
         }
 
         /// <summary>
@@ -355,24 +464,46 @@ namespace MahApps.Metro
         /// <param name="window">The Window to change.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme([NotNull] Window window, [NotNull] Theme newTheme)
+        public static Theme ChangeTheme([NotNull] Window window, [NotNull] Theme newTheme)
         {
-            if (window == null)
+            if (window.IsNull())
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
-            if (newTheme == null)
+            if (newTheme.IsNull())
             {
                 throw new ArgumentNullException(nameof(newTheme));
             }
 
             var oldTheme = DetectTheme(window);
-            ChangeTheme(window.Resources, oldTheme, newTheme);
+            return ChangeTheme(window.Resources, oldTheme, newTheme);
+        }
+
+        /// <summary>
+        /// Change theme for the given ResourceDictionary.
+        /// </summary>
+        /// <param name="resourceDictionary">The Window to change.</param>
+        /// <param name="newTheme">The theme to apply.</param>
+        [SecurityCritical]
+        public static Theme ChangeTheme([NotNull] ResourceDictionary resourceDictionary, [NotNull] Theme newTheme)
+        {
+            if (resourceDictionary.IsNull())
+            {
+                throw new ArgumentNullException(nameof(resourceDictionary));
+            }
+
+            if (newTheme.IsNull())
+            {
+                throw new ArgumentNullException(nameof(newTheme));
+            }
+
+            var oldTheme = DetectTheme(resourceDictionary);
+            return ChangeTheme(resourceDictionary, oldTheme, newTheme);
         }
 
         [SecurityCritical]
-        private static void ChangeTheme(ResourceDictionary resources, Theme oldTheme, Theme newTheme)
+        private static Theme ChangeTheme(ResourceDictionary resources, Theme oldTheme, Theme newTheme)
         {
             var themeChanged = false;
 
@@ -381,14 +512,14 @@ namespace MahApps.Metro
                 resources.BeginInit();
 
                 ResourceDictionary oldThemeResource = null;
-                if (oldTheme != null)
+                if (oldTheme.IsNotNull())
                 {
                     oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => AreResourceDictionarySourcesEqual(d, oldTheme.Resources));
                 }
 
                 resources.MergedDictionaries.Add(newTheme.Resources);
 
-                if (oldThemeResource != null)
+                if (oldThemeResource.IsNotNull())
                 {
                     resources.MergedDictionaries.Remove(oldThemeResource);
                 }
@@ -401,6 +532,193 @@ namespace MahApps.Metro
             {
                 OnThemeChanged(newTheme);
             }
+
+            return newTheme;
+        }
+
+        /// <summary>
+        /// Change base color and color scheme of for the given application.
+        /// </summary>
+        /// <param name="app">The application to modify.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeTheme([NotNull] Application app, [NotNull] string baseColor, [NotNull] string colorScheme)
+        {
+            var currentTheme = DetectTheme(app);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            var newTheme = Themes.FirstOrDefault(x => x.BaseColorScheme == baseColor && x.ColorScheme == colorScheme);
+
+            if (newTheme.IsNull())
+            {
+                Trace.TraceError($"Could not find a theme with base color scheme '{baseColor}' and color scheme '{currentTheme.ColorScheme}'.");
+                return null;
+            }
+
+            return ChangeTheme(app.Resources, currentTheme, newTheme);
+        }
+
+        /// <summary>
+        /// Change base color and color scheme of for the given window.
+        /// </summary>
+        /// <param name="window">The window to modify.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeTheme([NotNull] Window window, [NotNull] string baseColor, [NotNull] string colorScheme)
+        {
+            var currentTheme = DetectTheme(window);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            var newTheme = Themes.FirstOrDefault(x => x.BaseColorScheme == baseColor && x.ColorScheme == colorScheme);
+
+            if (newTheme.IsNull())
+            {
+                Trace.TraceError($"Could not find a theme with base color scheme '{baseColor}' and color scheme '{currentTheme.ColorScheme}'.");
+                return null;
+            }
+
+            return ChangeTheme(window.Resources, currentTheme, newTheme);
+        }
+
+        /// <summary>
+        /// Change base color and color scheme of for the given ResourceDictionary.
+        /// </summary>
+        /// <param name="resources">The ResourceDictionary to modify.</param>
+        /// <param name="oldTheme">The old/current theme.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeTheme([NotNull] ResourceDictionary resources, Theme oldTheme, [NotNull] string baseColor, [NotNull] string colorScheme)
+        {
+            var newTheme = Themes.FirstOrDefault(x => x.BaseColorScheme == baseColor && x.ColorScheme == colorScheme);
+
+            if (newTheme.IsNull())
+            {
+                Trace.TraceError($"Could not find a theme with base color scheme '{baseColor}' and color scheme '{oldTheme.ColorScheme}'.");
+                return null;
+            }
+
+            return ChangeTheme(resources, oldTheme, newTheme);
+        }
+
+        /// <summary>
+        /// Change base color for the given application.
+        /// </summary>
+        /// <param name="app">The application to change.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeBaseColor([NotNull] Application app, [NotNull] string baseColor)
+        {
+            var currentTheme = DetectTheme(app);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(app.Resources, currentTheme, baseColor, currentTheme.ColorScheme);
+        }
+
+        /// <summary>
+        /// Change base color for the given window.
+        /// </summary>
+        /// <param name="window">The Window to change.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeBaseColor([NotNull] Window window, [NotNull] string baseColor)
+        {
+            var currentTheme = DetectTheme(window);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(window.Resources, currentTheme, baseColor, currentTheme.ColorScheme);
+        }
+
+        /// <summary>
+        /// Change base color of for the given ResourceDictionary.
+        /// </summary>
+        /// <param name="resources">The ResourceDictionary to modify.</param>
+        /// <param name="oldTheme">The old/current theme.</param>
+        /// <param name="baseColor">The base color to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeBaseColor([NotNull] ResourceDictionary resources, [CanBeNull] Theme oldTheme, [NotNull] string baseColor)
+        {
+            var currentTheme = oldTheme ?? DetectTheme(resources);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(resources, currentTheme, baseColor, currentTheme.ColorScheme);
+        }
+
+        /// <summary>
+        /// Change color scheme for the given application.
+        /// </summary>
+        /// <param name="app">The application to change.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeColorScheme([NotNull] Application app, [NotNull] string colorScheme)
+        {
+            var currentTheme = DetectTheme(app);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(app.Resources, currentTheme, currentTheme.BaseColorScheme, colorScheme);
+        }
+
+        /// <summary>
+        /// Change color scheme for the given window.
+        /// </summary>
+        /// <param name="window">The Window to change.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeColorScheme([NotNull] Window window, [NotNull] string colorScheme)
+        {
+            var currentTheme = DetectTheme(window);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(window.Resources, currentTheme, currentTheme.BaseColorScheme, colorScheme);
+        }
+
+        /// <summary>
+        /// Change color scheme for the given ResourceDictionary.
+        /// </summary>
+        /// <param name="resources">The ResourceDictionary to modify.</param>
+        /// <param name="oldTheme">The old/current theme.</param>
+        /// <param name="colorScheme">The color scheme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static Theme ChangeThemeColorScheme([NotNull] ResourceDictionary resources, [CanBeNull] Theme oldTheme, [NotNull] string colorScheme)
+        {
+            var currentTheme = oldTheme ?? DetectTheme(resources);
+
+            if (currentTheme.IsNull())
+            {
+                return null;
+            }
+
+            return ChangeTheme(resources, currentTheme, currentTheme.BaseColorScheme, colorScheme);
         }
 
         /// <summary>
@@ -409,45 +727,19 @@ namespace MahApps.Metro
         /// <param name="resources">The ResourceDictionary to modify.</param>
         /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeTheme([NotNull] ResourceDictionary resources, [NotNull] Theme newTheme)
+        public static void ApplyThemeResourcesFromTheme([NotNull] ResourceDictionary resources, [NotNull] Theme newTheme)
         {
-            if (resources == null)
+            if (resources.IsNull())
             {
                 throw new ArgumentNullException(nameof(resources));
             }
 
-            if (newTheme == null)
+            if (newTheme.IsNull())
             {
                 throw new ArgumentNullException(nameof(newTheme));
             }
 
             ApplyResourceDictionary(newTheme.Resources, resources);
-        }
-
-        /// <summary>
-        /// Changes the theme of a ResourceDictionary directly.
-        /// </summary>
-        /// <param name="resources">The ResourceDictionary to modify.</param>
-        /// <param name="baseColor">The basecolor to apply to the ResourceDictionary.</param>
-        [SecurityCritical]
-        public static void ChangeThemeBaseColor([NotNull] ResourceDictionary resources, string baseColor)
-        {
-            var currentTheme = DetectTheme(resources);
-
-            if (currentTheme == null)
-            {
-                return;
-            }
-
-            var newTheme = Themes.FirstOrDefault(x => x.BaseColorScheme == baseColor && x.ColorScheme == currentTheme.ColorScheme);
-
-            if (newTheme == null)
-            {
-                Trace.TraceError($"Could not find a theme with base color scheme '{baseColor}' and color scheme '{currentTheme.ColorScheme}'.");
-                return;
-            }
-
-            ChangeTheme(resources, currentTheme, newTheme);
         }
 
         [SecurityCritical]
@@ -469,49 +761,21 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Copies all resource keys from one resource to another.
-        /// </summary>
-        /// <param name="fromRD">The source resource dictionary.</param>
-        /// <param name="toRD">The destination resource dictionary.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// fromRD
-        /// or
-        /// toRD
-        /// </exception>
-        internal static void CopyResource([NotNull] ResourceDictionary fromRD, [NotNull] ResourceDictionary toRD)
-        {
-            if (fromRD == null)
-            {
-                throw new ArgumentNullException(nameof(fromRD));
-            }
-
-            if (toRD == null)
-            {
-                throw new ArgumentNullException(nameof(toRD));
-            }
-
-            ApplyResourceDictionary(fromRD, toRD);
-            foreach (var rd in fromRD.MergedDictionaries)
-            {
-                CopyResource(rd, toRD);
-            }
-        }
-
-        /// <summary>
         /// Scans the window resources and returns it's theme.
         /// </summary>
+        /// <remarks>If the theme can't be detected from the <see cref="Application.MainWindow"/> we try to detect it from <see cref="Application.Current"/>.</remarks>
         [CanBeNull]
         public static Theme DetectTheme()
         {
             var mainWindow = Application.Current?.MainWindow;
 
-            if (mainWindow != null)
+            if (mainWindow.IsNotNull())
             {
                 try
                 {
                     var style = DetectTheme(mainWindow);
 
-                    if (style != null)
+                    if (style.IsNotNull())
                     {
                         return style;
                     }
@@ -522,6 +786,7 @@ namespace MahApps.Metro
                 }
             }
 
+            // ReSharper disable once AssignNullToNotNullAttribute
             return DetectTheme(Application.Current);
         }
 
@@ -529,18 +794,17 @@ namespace MahApps.Metro
         /// Scans the window resources and returns it's theme.
         /// </summary>
         /// <param name="window">The Window to scan.</param>
+        /// <remarks>If the theme can't be detected from the <paramref name="window"/> we try to detect it from <see cref="Application.Current"/>.</remarks>
+        [CanBeNull]
         public static Theme DetectTheme([NotNull] Window window)
         {
-            if (window == null)
+            if (window.IsNull())
             {
                 throw new ArgumentNullException(nameof(window));
             }
 
-            var detectedStyle = DetectTheme(window.Resources);
-            if (detectedStyle == null)
-            {
-                detectedStyle = DetectTheme(Application.Current.Resources);
-            }
+            var detectedStyle = DetectTheme(window.Resources)
+                                ?? DetectTheme(Application.Current.Resources);
 
             return detectedStyle;
         }
@@ -552,7 +816,7 @@ namespace MahApps.Metro
         [CanBeNull]
         public static Theme DetectTheme([NotNull] Application app)
         {
-            if (app == null)
+            if (app.IsNull())
             {
                 throw new ArgumentNullException(nameof(app));
             }
@@ -563,18 +827,16 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans a resources and returns it's theme.
         /// </summary>
-        /// <param name="resources">The ResourceDictionary to check.</param>
+        /// <param name="resourceDictionary">The ResourceDictionary to scan.</param>
         [CanBeNull]
-        private static Theme DetectTheme([NotNull] ResourceDictionary resources)
+        public static Theme DetectTheme([NotNull] ResourceDictionary resourceDictionary)
         {
-            if (resources == null)
+            if (resourceDictionary.IsNull())
             {
-                throw new ArgumentNullException(nameof(resources));
+                throw new ArgumentNullException(nameof(resourceDictionary));
             }
 
-            Theme currentTheme = null;
-
-            if (DetectThemeFromResources(ref currentTheme, resources))
+            if (DetectThemeFromResources(out var currentTheme, resourceDictionary))
             {
                 return currentTheme;
             }
@@ -582,40 +844,34 @@ namespace MahApps.Metro
             return null;
         }
 
-        internal static bool DetectThemeFromAppResources(out Theme detectedTheme)
+        private static bool DetectThemeFromResources(out Theme detectedTheme, ResourceDictionary dict)
         {
-            detectedTheme = null;
-
-            return DetectThemeFromResources(ref detectedTheme, Application.Current.Resources);
-        }
-
-        private static bool DetectThemeFromResources(ref Theme detectedTheme, ResourceDictionary dict)
-        {
-            var enumerator = dict.MergedDictionaries.Reverse().GetEnumerator();
-            while (enumerator.MoveNext())
+            using (var enumerator = dict.MergedDictionaries.Reverse().GetEnumerator())
             {
-                var currentRd = enumerator.Current;
-
-                if (currentRd == null)
+                while (enumerator.MoveNext())
                 {
-                    continue;
-                }
+                    var currentRd = enumerator.Current;
 
-                Theme matched;
-                if ((matched = GetTheme(currentRd)) != null)
-                {
-                    detectedTheme = matched;
-                    enumerator.Dispose();
-                    return true;
-                }
+                    if (currentRd.IsNull())
+                    {
+                        continue;
+                    }
 
-                if (DetectThemeFromResources(ref detectedTheme, currentRd))
-                {
-                    return true;
+                    Theme matched;
+                    if ((matched = GetTheme(currentRd)).IsNotNull())
+                    {
+                        detectedTheme = matched;
+                        return true;
+                    }
+
+                    if (DetectThemeFromResources(out detectedTheme, currentRd))
+                    {
+                        return true;
+                    }
                 }
             }
 
-            enumerator.Dispose();
+            detectedTheme = null;
             return false;
         }
 
@@ -637,14 +893,14 @@ namespace MahApps.Metro
 
         private static bool AreResourceDictionarySourcesEqual(ResourceDictionary first, ResourceDictionary second)
         {
-            if (first == null
-                || second == null)
+            if (first.IsNull()
+                || second.IsNull())
             {
                 return false;
             }
 
-            if (first.Source == null
-                || second.Source == null)
+            if (first.Source.IsNull()
+                || second.Source.IsNull())
             {
                 try
                 {
@@ -670,7 +926,7 @@ namespace MahApps.Metro
             return Uri.Compare(first.Source, second.Source, UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        #region WindowsAppModeSetting
+#region WindowsAppModeSetting
 
         /// <summary>
         /// Synchronizes the current <see cref="Theme"/> with the "app mode" setting from windows.
@@ -681,7 +937,7 @@ namespace MahApps.Metro
                                ? BaseColorLight
                                : BaseColorDark;
 
-            ChangeThemeBaseColor(Application.Current.Resources, baseColor);
+            ChangeThemeBaseColor(Application.Current, baseColor);
         }
 
         private static bool isAutomaticWindowsAppModeSettingSyncEnabled;
@@ -726,10 +982,8 @@ namespace MahApps.Metro
             try
             {
                 var registryValue = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", true);
-                if (registryValue != null)
-                {
-                    return Convert.ToBoolean(registryValue);
-                }
+                return registryValue.IsNull()
+                       || Convert.ToBoolean(registryValue);
             }
             catch (Exception exception)
             {
@@ -739,7 +993,23 @@ namespace MahApps.Metro
             return true;
         }
 
-        #endregion WindowsAppModeSetting
+#endregion WindowsAppModeSetting
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure]
+        [ContractAnnotation("obj:null => true")]
+        private static bool IsNull(this object obj)
+        {
+            return obj is null;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure]
+        [ContractAnnotation("obj:null => false")]
+        private static bool IsNotNull(this object obj)
+        {
+            return obj is null == false;
+        }
     }
 
     /// <summary>
@@ -759,5 +1029,39 @@ namespace MahApps.Metro
         /// The new theme.
         /// </summary>
         public Theme Theme { get; set; }
+    }
+
+    /// <summary>
+    /// Helper class for displaying color schemes.
+    /// </summary>
+    [DebuggerDisplay("Name={" + nameof(Name) + "}")]
+    public class ColorScheme
+    {
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        public ColorScheme(Theme theme)
+            : this(theme.ColorScheme, theme.ShowcaseBrush)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        public ColorScheme(string name, Brush showcaseBrush)
+        {
+            this.Name = name;
+            this.ShowcaseBrush = showcaseBrush;
+        }
+
+        /// <summary>
+        /// Gets the name for this color scheme.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets the showcase brush for this color scheme.
+        /// </summary>
+        public Brush ShowcaseBrush { get; }
     }
 }
