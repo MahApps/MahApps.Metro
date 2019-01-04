@@ -51,7 +51,7 @@ namespace MahApps.Metro
                 var collectionView = CollectionViewSource.GetDefaultView(themes);
                 collectionView.SortDescriptions.Add(new SortDescription(nameof(Theme.DisplayName), ListSortDirection.Ascending));
 
-                themesInternal.CollectionChanged += ThemesInternal_CollectionChanged;
+                themesInternal.CollectionChanged += ThemesInternalCollectionChanged;
             }
 
             {
@@ -78,69 +78,7 @@ namespace MahApps.Metro
         {
             get
             {
-                if (themes.Count > 0)
-                {
-                    return themes;
-                }
-
-                try
-                {
-                    var assembly = typeof(ThemeManager).Assembly;
-                    var assemblyName = assembly.GetName().Name;
-                    var resourceNames = assembly.GetManifestResourceNames();
-
-                    foreach (var resourceName in resourceNames)
-                    {
-                        if (resourceName.EndsWith(".g.resources", StringComparison.OrdinalIgnoreCase) == false)
-                        {
-                            continue;
-                        }
-
-                        var info = assembly.GetManifestResourceInfo(resourceName);
-                        if (info.IsNull()
-                            || info.ResourceLocation == ResourceLocation.ContainedInAnotherAssembly)
-                        {
-                            continue;
-                        }
-
-                        var resourceStream = assembly.GetManifestResourceStream(resourceName);
-
-                        if (resourceStream.IsNull())
-                        {
-                            continue;
-                        }
-
-                        using (var reader = new ResourceReader(resourceStream))
-                        {
-                            foreach (DictionaryEntry entry in reader)
-                            {
-                                var stringKey = entry.Key as string;
-                                if (stringKey.IsNull()
-                                    || stringKey.IndexOf("/themes/", StringComparison.OrdinalIgnoreCase) == -1
-                                    || stringKey.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) == false
-                                    || stringKey.EndsWith("generic.baml", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    continue;
-                                }
-
-                                var resourceDictionary = new ResourceDictionary
-                                {
-                                    Source = new Uri($"pack://application:,,,/{assemblyName};component/{stringKey.Replace(".baml", ".xaml")}")
-                                };
-
-                                if (resourceDictionary.MergedDictionaries.Count == 0
-                                    && resourceDictionary.Contains(Theme.ThemeNameKey))
-                                {
-                                    themesInternal.Add(new Theme(resourceDictionary));
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidOperationException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
-                }
+                EnsureThemes();
 
                 return themes;
             }
@@ -149,14 +87,97 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets a list of all available base colors.
         /// </summary>
-        public static ReadOnlyObservableCollection<string> BaseColors => baseColors;
+        public static ReadOnlyObservableCollection<string> BaseColors
+        {
+            get
+            {
+                EnsureThemes(); 
+
+                return baseColors; 
+            }
+        }
 
         /// <summary>
         /// Gets a list of all available color schemes.
         /// </summary>
-        public static ReadOnlyObservableCollection<ColorScheme> ColorSchemes => colorSchemes;
+        public static ReadOnlyObservableCollection<ColorScheme> ColorSchemes
+        {
+            get 
+            { 
+                EnsureThemes(); 
 
-        private static void ThemesInternal_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+                return colorSchemes; 
+            }
+        }
+
+        private static void EnsureThemes()
+        {
+            if (themes.Count > 0)
+            {
+                return;
+            }
+
+            try
+            {
+                var assembly = typeof(ThemeManager).Assembly;
+                var assemblyName = assembly.GetName().Name;
+                var resourceNames = assembly.GetManifestResourceNames();
+
+                foreach (var resourceName in resourceNames)
+                {
+                    if (resourceName.EndsWith(".g.resources", StringComparison.OrdinalIgnoreCase) == false)
+                    {
+                        continue;
+                    }
+
+                    var info = assembly.GetManifestResourceInfo(resourceName);
+                    if (info.IsNull()
+                        || info.ResourceLocation == ResourceLocation.ContainedInAnotherAssembly)
+                    {
+                        continue;
+                    }
+
+                    var resourceStream = assembly.GetManifestResourceStream(resourceName);
+
+                    if (resourceStream.IsNull())
+                    {
+                        continue;
+                    }
+
+                    using (var reader = new ResourceReader(resourceStream))
+                    {
+                        foreach (DictionaryEntry entry in reader)
+                        {
+                            var stringKey = entry.Key as string;
+                            if (stringKey.IsNull()
+                                || stringKey.IndexOf("/themes/", StringComparison.OrdinalIgnoreCase) == -1
+                                || stringKey.EndsWith(".baml", StringComparison.OrdinalIgnoreCase) == false
+                                || stringKey.EndsWith("generic.baml", StringComparison.OrdinalIgnoreCase))
+                            {
+                                continue;
+                            }
+
+                            var resourceDictionary = new ResourceDictionary
+                            {
+                                Source = new Uri($"pack://application:,,,/{assemblyName};component/{stringKey.Replace(".baml", ".xaml")}")
+                            };
+
+                            if (resourceDictionary.MergedDictionaries.Count == 0
+                                && resourceDictionary.Contains(Theme.ThemeNameKey))
+                            {
+                                themesInternal.Add(new Theme(resourceDictionary));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
+            }
+        }
+
+        private static void ThemesInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

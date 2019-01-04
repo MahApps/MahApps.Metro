@@ -369,6 +369,28 @@
 
         [Fact]
         [DisplayTestMethodName]
+        public async Task GetBaseColors()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.ClearThemes();
+
+            Assert.NotEmpty(ThemeManager.BaseColors);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task GetColorSchemes()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.ClearThemes();
+
+            Assert.NotEmpty(ThemeManager.ColorSchemes);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         public async Task CreateDynamicAccentWithColor()
         {
             await TestHost.SwitchToAppThread();
