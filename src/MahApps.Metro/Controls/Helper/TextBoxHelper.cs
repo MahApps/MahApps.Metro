@@ -860,7 +860,7 @@ namespace MahApps.Metro.Controls
         {
             var button = (Button)sender;
 
-            var parent = button.GetAncestors().FirstOrDefault(a => a is TextBox || a is PasswordBox || a is ComboBox);
+            var parent = button.GetAncestors().FirstOrDefault(a => a is RichTextBox || a is TextBox || a is PasswordBox || a is ComboBox);
 
             var command = GetButtonCommand(parent);
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
@@ -871,26 +871,31 @@ namespace MahApps.Metro.Controls
 
             if (GetClearTextButton(parent))
             {
-                if (parent is TextBox)
+                if (parent is RichTextBox richTextBox)
                 {
-                    ((TextBox)parent).Clear();
-                    ((TextBox)parent).GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    richTextBox.Document?.Blocks?.Clear();
+                    richTextBox.Selection?.Select(richTextBox.CaretPosition, richTextBox.CaretPosition);
                 }
-                else if (parent is PasswordBox)
+                else if (parent is TextBox textBox)
                 {
-                    ((PasswordBox)parent).Clear();
-                    ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                    textBox.Clear();
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 }
-                else if (parent is ComboBox)
+                else if (parent is PasswordBox passwordBox)
                 {
-                    if (((ComboBox)parent).IsEditable)
+                    passwordBox.Clear();
+                    passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                }
+                else if (parent is ComboBox comboBox)
+                {
+                    if (comboBox.IsEditable)
                     {
-                        ((ComboBox)parent).Text = string.Empty;
-                        ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                        comboBox.Text = string.Empty;
+                        comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
 
-                    ((ComboBox)parent).SelectedItem = null;
-                    ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+                    comboBox.SelectedItem = null;
+                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
             }
         }
