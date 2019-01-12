@@ -531,6 +531,7 @@
                     </Trigger>
                     <Trigger Property="IsEnabled" Value="True">
                         <Setter Property="Cursor" Value="Hand" />
+                        <Setter Property="ForceCursor" Value="True" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
