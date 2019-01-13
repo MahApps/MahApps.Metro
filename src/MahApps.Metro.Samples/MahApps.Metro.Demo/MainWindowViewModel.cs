@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MahApps.Metro;
 using MetroDemo.Models;
@@ -243,13 +244,19 @@ namespace MetroDemo
                         {
                             await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
                         }
+                        else if (x is RichTextBox)
+                        {
+                            var richTextBox = x as RichTextBox;
+                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text);
+                        }
                         else if (x is TextBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", ((TextBox) x).Text);
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", ((PasswordBox) x).Password);
                         }
                     }
                 });
