@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -25,6 +26,12 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_BannerLabel", Type = typeof(Label))]
     public class FlipView : Selector
     {
+        public static readonly DependencyProperty NaviButtonsPositionProperty = DependencyProperty.Register(
+           "NaviButtonsPosition",
+           typeof(NaviButtonsPosition),
+           typeof(FlipView),
+           new FrameworkPropertyMetadata(NaviButtonsPosition.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_ForwardButton = "PART_ForwardButton";
@@ -95,6 +102,15 @@ namespace MahApps.Metro.Controls
         public FlipView()
         {
             this.Loaded += this.FlipViewLoaded;
+        }
+
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(NaviButtonsPosition.Inside)]
+        public NaviButtonsPosition NaviButtonsPosition
+        {
+            get { return (NaviButtonsPosition)GetValue(NaviButtonsPositionProperty); }
+            set { SetValue(NaviButtonsPositionProperty, value); }
         }
 
         /// <summary>

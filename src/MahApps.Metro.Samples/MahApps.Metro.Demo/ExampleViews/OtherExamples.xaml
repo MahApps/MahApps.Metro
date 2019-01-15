@@ -147,9 +147,15 @@
                 <ComboBox x:Name="Orientation"
                           Grid.Row="2"
                           Grid.Column="0"
-                          Grid.ColumnSpan="2"
+                          Grid.ColumnSpan="1"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
                           SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue=Horizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox x:Name="NaviButtonsPosition"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="1"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Controls:NaviButtonsPosition}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=NaviButtonsPosition, FallbackValue=Inside, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Controls:FlipView x:Name="FlipView1st"
                                Height="200"
@@ -206,7 +212,8 @@
                                ItemTemplate="{StaticResource ImageDataTemplate}"
                                ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
                                MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
-                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" 
+                               NaviButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}" />
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
