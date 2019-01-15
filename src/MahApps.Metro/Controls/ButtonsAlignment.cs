@@ -4,6 +4,6 @@
    {
       Left,
       Right,
-      OpposingSides
-   }
+      Opposite
+    }
 }

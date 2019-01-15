@@ -144,7 +144,7 @@
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="OpposingSides" />
+                                <Condition Property="ButtonsAlignment" Value="Opposite" />
                                 <Condition Property="SwitchUpDownButtons" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
@@ -176,7 +176,7 @@
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="OpposingSides" />
+                                <Condition Property="ButtonsAlignment" Value="Opposite" />
                                 <Condition Property="SwitchUpDownButtons" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />

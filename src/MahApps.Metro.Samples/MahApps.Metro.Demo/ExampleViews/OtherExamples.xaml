@@ -211,7 +211,7 @@
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                        ButtonsAlignment="OpposingSides"
+                                        ButtonsAlignment="Opposite"
                                         Interval="1"
                                         Maximum="{Binding Path=Items.Count, Mode=OneWay}"
                                         Minimum="1"
