@@ -164,6 +164,13 @@
                 <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.Watermark="Type something in..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True" />
+                <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Need some input..."
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
@@ -175,6 +182,7 @@
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
                              Padding="5"
+                             Controls:TextBoxHelper.SelectAllOnFocus="True"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True">
                     <FlowDocument>
