@@ -159,6 +159,38 @@
                 <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
             </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Orientation" Value="Vertical" />
+                    <Condition Property="NaviButtonsPosition" Value="Inside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
+
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Orientation" Value="Horizontal" />
+                    <Condition Property="NaviButtonsPosition" Value="Inside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Visible" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
+
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
         <ControlTemplate.Resources>
             <Style x:Key="ControlButton" TargetType="Button">
