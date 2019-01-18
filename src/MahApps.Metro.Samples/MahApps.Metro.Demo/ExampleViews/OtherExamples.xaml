@@ -212,8 +212,8 @@
                                ItemTemplate="{StaticResource ImageDataTemplate}"
                                ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
                                MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
-                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" 
-                               NaviButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}" />
+                               NaviButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}"
+                               Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">

@@ -12,25 +12,24 @@
                     BorderThickness="{TemplateBinding MouseHoverBorderThickness}"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid Margin="{TemplateBinding Padding}">
-                    <Grid x:Name="ControlGrid">
+                    <Grid x:Name="ControlGrid" Panel.ZIndex="7">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <Button x:Name="PART_BackButton"
-                                Grid.Column="1"
                                 Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}"
-                                Panel.ZIndex="7">
+                                Style="{DynamicResource ControlButton}">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -40,12 +39,11 @@
                                   Stretch="Fill" />
                         </Button>
                         <Button x:Name="PART_ForwardButton"
-                                Grid.Column="1"
                                 Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}"
-                                Panel.ZIndex="7">
+                                Style="{DynamicResource ControlButton}">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -54,15 +52,14 @@
                                   Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
-                        
+
                         <Button x:Name="PART_UpButton"
-                                Grid.Column="1"
                                 Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 Style="{DynamicResource ControlButton}"
-                                Visibility="Hidden"
-                                Panel.ZIndex="7">
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -70,15 +67,14 @@
                                   Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z "
                                   Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
-                        </Button>                        
+                        </Button>
                         <Button x:Name="PART_DownButton"
-                                Grid.Column="1"
                                 Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
                                 Style="{DynamicResource ControlButton}"
-                                Visibility="Hidden"
-                                Panel.ZIndex="7">
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -87,32 +83,32 @@
                                   Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
-                        
+
                         <Grid x:Name="PART_BannerGrid"
-                          Grid.Column="1"
-                          Grid.Row="1"
-                          Height="0"
-                          VerticalAlignment="Bottom"
-                          Panel.ZIndex="6"
-                          Background="{DynamicResource BlackBrush}"
-                          Opacity="0.85">
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              Height="0"
+                              VerticalAlignment="Bottom"
+                              Panel.ZIndex="6"
+                              Background="{DynamicResource BlackBrush}"
+                              Opacity="0.85">
                             <Label x:Name="PART_BannerLabel"
-                               FontFamily="{TemplateBinding FontFamily}"
-                               FontSize="{TemplateBinding FontSize}"
-                               Foreground="{DynamicResource WhiteBrush}"
-                               IsTabStop="False" />
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{DynamicResource WhiteBrush}"
+                                   IsTabStop="False" />
                         </Grid>
-                        
+
                         <Controls:TransitioningContentControl x:Name="PART_Presenter"
-                                                          Grid.Column="1"
-                                                          Grid.Row="1"
-                                                          Panel.ZIndex="1"
-                                                          Content="{TemplateBinding SelectedItem}"
-                                                          ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                          ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                          IsTabStop="False" />
-                    </Grid>                    
+                                                              Grid.Row="1"
+                                                              Grid.Column="1"
+                                                              Panel.ZIndex="1"
+                                                              Content="{TemplateBinding SelectedItem}"
+                                                              ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                              ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                              IsTabStop="False" />
+                    </Grid>
                 </Grid>
             </Border>
         </Border>
@@ -124,8 +120,16 @@
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_HoverBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseHoverBorderBrush, Mode=OneWay}" />
             </MultiTrigger>
+
             <Trigger Property="MouseHoverBorderEnabled" Value="False">
                 <Setter TargetName="PART_HoverBorder" Property="BorderThickness" Value="0" />
+            </Trigger>
+
+            <Trigger Property="NaviButtonsPosition" Value="Inside">
+                <Setter TargetName="PART_BackButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_DownButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_ForwardButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_UpButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
             </Trigger>
 
             <MultiTrigger>
@@ -133,68 +137,36 @@
                     <Condition Property="Orientation" Value="Vertical" />
                     <Condition Property="NaviButtonsPosition" Value="Outside" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
                 <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
 
                 <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="0" />
                 <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
-                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="2" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
             </MultiTrigger>
-            
+
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="Orientation" Value="Horizontal" />
                     <Condition Property="NaviButtonsPosition" Value="Outside" />
                 </MultiTrigger.Conditions>
-                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Visible" />
-                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="2" />
-
-                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Hidden" />
-                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
-            </MultiTrigger>
-
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Orientation" Value="Vertical" />
-                    <Condition Property="NaviButtonsPosition" Value="Inside" />
-                </MultiTrigger.Conditions>
-                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
-                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
-                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
-
-                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
-                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
-            </MultiTrigger>
-
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="Orientation" Value="Horizontal" />
-                    <Condition Property="NaviButtonsPosition" Value="Inside" />
-                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_BackButton" Property="Visibility" Value="Visible" />
-                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="2" />
                 <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Visible" />
-                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
 
                 <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
                 <Setter TargetName="PART_UpButton" Property="Visibility" Value="Hidden" />
-                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
         <ControlTemplate.Resources>
             <Style x:Key="ControlButton" TargetType="Button">
-                <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Focusable" Value="True" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                 <Setter Property="Height" Value="30" />
