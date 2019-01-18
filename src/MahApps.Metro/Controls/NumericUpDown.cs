@@ -147,6 +147,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(NumberStyles.Any));
 
+        public static readonly DependencyProperty SwitchUpDownButtonsProperty = DependencyProperty.Register(
+            "SwitchUpDownButtons",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(false));
+
         private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue != e.NewValue && e.NewValue != null)
@@ -482,6 +488,17 @@ namespace MahApps.Metro.Controls
         {
             get { return (NumberStyles)GetValue(ParsingNumberStyleProperty); }
             set { SetValue(ParsingNumberStyleProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the up down buttons are switched.
+        /// </summary>
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool SwitchUpDownButtons
+        {
+            get { return (bool)GetValue(SwitchUpDownButtonsProperty); }
+            set { SetValue(SwitchUpDownButtonsProperty, value); }
         }
 
         /// <summary> 

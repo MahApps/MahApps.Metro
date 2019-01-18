@@ -163,7 +163,26 @@
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.Watermark="Type something in..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True" />
+                <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Need some input..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True" />
+                <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.ButtonContent="s"
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True"
+                             Style="{StaticResource MahApps.Metro.Styles.ButtonRichTextBox}" />
+                <RichTextBox Height="120"
+                             Margin="{StaticResource ControlMargin}"
                              Padding="5"
+                             Controls:TextBoxHelper.SelectAllOnFocus="True"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True">
                     <FlowDocument>
@@ -176,7 +195,8 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox Margin="{StaticResource ControlMargin}"
+                <RichTextBox Height="120"
+                             Margin="{StaticResource ControlMargin}"
                              Padding="5"
                              IsDocumentEnabled="True"
                              IsReadOnly="True">
@@ -190,7 +210,8 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox Margin="{StaticResource ControlMargin}"
+                <RichTextBox Height="120"
+                             Margin="{StaticResource ControlMargin}"
                              Padding="5"
                              IsDocumentEnabled="True"
                              IsEnabled="False">
