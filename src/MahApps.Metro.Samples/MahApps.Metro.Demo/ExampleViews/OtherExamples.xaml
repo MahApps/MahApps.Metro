@@ -211,15 +211,12 @@
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                        ButtonsAlignment="Left"
+                                        ButtonsAlignment="Opposite"
                                         Interval="1"
                                         Maximum="{Binding Path=Items.Count, Mode=OneWay}"
                                         Minimum="1"
+                                        SwitchUpDownButtons="True"
                                         Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
-                <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
-                    <Run Text="/" />
-                    <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
-                </TextBlock>
             </StackPanel>
         </StackPanel>
 
