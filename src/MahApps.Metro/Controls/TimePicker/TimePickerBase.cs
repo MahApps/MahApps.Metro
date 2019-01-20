@@ -96,6 +96,12 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new PropertyMetadata(TimePickerFormat.Long, OnSelectedTimeFormatChanged));
 
+        public static readonly DependencyProperty HoursItemStringFormatProperty = DependencyProperty.Register(nameof(HoursItemStringFormat), typeof(string), typeof(TimePickerBase), new FrameworkPropertyMetadata(null));
+
+        public static readonly DependencyProperty MinutesItemStringFormatProperty = DependencyProperty.Register(nameof(MinutesItemStringFormat), typeof(string), typeof(TimePickerBase), new FrameworkPropertyMetadata(null));
+
+        public static readonly DependencyProperty SecondsItemStringFormatProperty = DependencyProperty.Register(nameof(SecondsItemStringFormat), typeof(string), typeof(TimePickerBase), new FrameworkPropertyMetadata(null));
+
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementHourHand = "PART_HourHand";
@@ -302,6 +308,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (TimePickerFormat)GetValue(SelectedTimeFormatProperty); }
             set { SetValue(SelectedTimeFormatProperty, value); }
+        }
+
+        public string HoursItemStringFormat
+        {
+            get { return (string)GetValue(HoursItemStringFormatProperty); }
+            set { SetValue(HoursItemStringFormatProperty, value); }
+        }
+
+        public string MinutesItemStringFormat
+        {
+            get { return (string)GetValue(MinutesItemStringFormatProperty); }
+            set { SetValue(MinutesItemStringFormatProperty, value); }
+        }
+
+        public string SecondsItemStringFormat
+        {
+            get { return (string)GetValue(SecondsItemStringFormatProperty); }
+            set { SetValue(SecondsItemStringFormatProperty, value); }
         }
 
         /// <summary>

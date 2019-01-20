@@ -337,6 +337,7 @@
                                                           Grid.Column="0"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding HoursItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceHours}" />
                                                 <Label Grid.Column="1"
                                                        Content=":"
@@ -345,6 +346,7 @@
                                                           Grid.Column="2"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding MinutesItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceMinutes}" />
                                                 <Label Grid.Column="3"
                                                        Content=":"
@@ -353,6 +355,7 @@
                                                           Grid.Column="4"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding SecondsItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceSeconds}" />
                                                 <ComboBox x:Name="PART_AmPmSwitcher"
                                                           Grid.Column="5"
