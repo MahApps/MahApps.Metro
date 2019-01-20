@@ -1,6 +1,6 @@
 ﻿namespace MahApps.Metro.Controls
 {
-    public enum NaviButtonsPosition
+    public enum NavigationButtonsPosition
     {
         Inside,
         Outside

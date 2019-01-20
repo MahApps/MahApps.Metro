@@ -29,7 +29,8 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}">
+                                Style="{DynamicResource FlipViewNavigationButton}"
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -43,7 +44,8 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}">
+                                Style="{DynamicResource FlipViewNavigationButton}"
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -58,7 +60,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
-                                Style="{DynamicResource ControlButton}"
+                                Style="{DynamicResource FlipViewNavigationButton}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
@@ -73,7 +75,7 @@
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
-                                Style="{DynamicResource ControlButton}"
+                                Style="{DynamicResource FlipViewNavigationButton}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
@@ -89,7 +91,7 @@
                               Grid.Column="1"
                               Height="0"
                               VerticalAlignment="Bottom"
-                              Panel.ZIndex="6"
+                              Panel.ZIndex="5"
                               Background="{DynamicResource BlackBrush}"
                               Opacity="0.85">
                             <Label x:Name="PART_BannerLabel"
@@ -125,7 +127,7 @@
                 <Setter TargetName="PART_HoverBorder" Property="BorderThickness" Value="0" />
             </Trigger>
 
-            <Trigger Property="NaviButtonsPosition" Value="Inside">
+            <Trigger Property="NavigationButtonsPosition" Value="Inside">
                 <Setter TargetName="PART_BackButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter TargetName="PART_DownButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter TargetName="PART_ForwardButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
@@ -134,60 +136,53 @@
 
             <MultiTrigger>
                 <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
                     <Condition Property="Orientation" Value="Vertical" />
-                    <Condition Property="NaviButtonsPosition" Value="Outside" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
                 <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="2" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
-                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
-
                 <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="0" />
-                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
             </MultiTrigger>
 
             <MultiTrigger>
                 <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
                     <Condition Property="Orientation" Value="Horizontal" />
-                    <Condition Property="NaviButtonsPosition" Value="Outside" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="0" />
-                <Setter TargetName="PART_BackButton" Property="Visibility" Value="Visible" />
                 <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_DownButton" Property="Visibility" Value="Hidden" />
                 <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="2" />
-                <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Visible" />
-
                 <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
-                <Setter TargetName="PART_UpButton" Property="Visibility" Value="Hidden" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
         <ControlTemplate.Resources>
-            <Style x:Key="ControlButton" TargetType="Button">
+            <Style x:Key="FlipViewNavigationButton" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
                 <Setter Property="Focusable" Value="True" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                 <Setter Property="Height" Value="30" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="IsTabStop" Value="True" />
                 <Setter Property="Opacity" Value="0.4" />
-                <Setter Property="Panel.ZIndex" Value="5" />
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Panel.ZIndex" Value="6" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border Padding="1"
-                                    BorderBrush="{TemplateBinding Background}"
-                                    CornerRadius="4">
-                                <Grid Background="{TemplateBinding Background}">
-                                    <Label HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontFamily="Marlett"
-                                           FontSize="17"
-                                           Foreground="{TemplateBinding Foreground}">
-                                        <ContentPresenter ContentSource="Content" />
-                                    </Label>
-                                </Grid>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter x:Name="PART_ContentPresenter"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -197,6 +192,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Width" Value="50" />
             </Style>
             <Storyboard x:Key="ShowBannerStoryboard">

@@ -75,19 +75,19 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(CircularNavigationProperty, value);
         }
 
-        /// <summary>Identifies the <see cref="NaviButtonsPosition"/> dependency property.</summary>
-        public static readonly DependencyProperty NaviButtonsPositionProperty = DependencyProperty.Register(nameof(NaviButtonsPosition), typeof(NaviButtonsPosition), typeof(FlipView), new FrameworkPropertyMetadata(NaviButtonsPosition.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        /// <summary>Identifies the <see cref="NavigationButtonsPosition"/> dependency property.</summary>
+        public static readonly DependencyProperty NavigationButtonsPositionProperty = DependencyProperty.Register(nameof(NavigationButtonsPosition), typeof(NavigationButtonsPosition), typeof(FlipView), new FrameworkPropertyMetadata(NavigationButtonsPosition.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
 
         /// <summary>
         /// Gets or sets the position of the navigation buttons.
         /// </summary>
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue(NaviButtonsPosition.Inside)]
-        public NaviButtonsPosition NaviButtonsPosition
+        [DefaultValue(NavigationButtonsPosition.Inside)]
+        public NavigationButtonsPosition NavigationButtonsPosition
         {
-            get => (NaviButtonsPosition)GetValue(NaviButtonsPositionProperty);
-            set => SetValue(NaviButtonsPositionProperty, value);
+            get => (NavigationButtonsPosition)GetValue(NavigationButtonsPositionProperty);
+            set => SetValue(NavigationButtonsPositionProperty, value);
         }
 
         /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
