@@ -183,7 +183,6 @@ namespace MahApps.Metro.Controls
         private const string ElementNumericDown = "PART_NumericDown";
         private const string ElementNumericUp = "PART_NumericUp";
         private const string ElementTextBox = "PART_TextBox";
-        private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
         private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
@@ -1132,7 +1131,7 @@ namespace MahApps.Metro.Controls
             {
                 Value = null;
             }
-            else if (_manualChange)
+            else if (_manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
             {
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
