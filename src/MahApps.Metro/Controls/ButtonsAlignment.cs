@@ -3,6 +3,7 @@
    public enum ButtonsAlignment
    {
       Left,
-      Right
-   }
+      Right,
+      Opposite
+    }
 }

@@ -9,6 +9,42 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class ProgressDialog : BaseMetroDialog
     {
+        /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
+        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
+
+        public string Message
+        {
+            get { return (string)this.GetValue(MessageProperty); }
+            set { this.SetValue(MessageProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="IsCancelable"/> dependency property.</summary>
+        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register(nameof(IsCancelable), typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
+
+        public bool IsCancelable
+        {
+            get { return (bool)this.GetValue(IsCancelableProperty); }
+            set { this.SetValue(IsCancelableProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="NegativeButtonText"/> dependency property.</summary>
+        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register(nameof(NegativeButtonText), typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
+
+        public string NegativeButtonText
+        {
+            get { return (string)this.GetValue(NegativeButtonTextProperty); }
+            set { this.SetValue(NegativeButtonTextProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="ProgressBarForeground"/> dependency property.</summary>
+        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register(nameof(ProgressBarForeground), typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public Brush ProgressBarForeground
+        {
+            get { return (Brush)this.GetValue(ProgressBarForegroundProperty); }
+            set { this.SetValue(ProgressBarForegroundProperty, value); }
+        }
+
         internal ProgressDialog()
             : this(null)
         {
@@ -29,35 +65,6 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
             this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "AccentColorBrush" : "BlackBrush");
-        }
-
-        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), (s, e) => { ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden; }));
-        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
-
-        public string Message
-        {
-            get { return (string)this.GetValue(MessageProperty); }
-            set { this.SetValue(MessageProperty, value); }
-        }
-
-        public bool IsCancelable
-        {
-            get { return (bool)this.GetValue(IsCancelableProperty); }
-            set { this.SetValue(IsCancelableProperty, value); }
-        }
-
-        public string NegativeButtonText
-        {
-            get { return (string)this.GetValue(NegativeButtonTextProperty); }
-            set { this.SetValue(NegativeButtonTextProperty, value); }
-        }
-
-        public Brush ProgressBarForeground
-        {
-            get { return (Brush)this.GetValue(ProgressBarForegroundProperty); }
-            set { this.SetValue(ProgressBarForegroundProperty, value); }
         }
 
         internal CancellationToken CancellationToken => this.DialogSettings.CancellationToken;

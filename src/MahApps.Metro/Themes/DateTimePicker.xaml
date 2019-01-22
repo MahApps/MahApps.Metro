@@ -146,13 +146,13 @@
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Grid.Row="1"
                                                Grid.Column="0"
-                                               ContextMenu="{TemplateBinding ContextMenu}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                                Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                                CaretBrush="{DynamicResource BlackBrush}"
+                                               ContextMenu="{TemplateBinding ContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontFamily="{TemplateBinding FontFamily}"
                                                FontSize="{TemplateBinding FontSize}"
@@ -337,6 +337,7 @@
                                                           Grid.Column="0"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding HoursItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceHours}" />
                                                 <Label Grid.Column="1"
                                                        Content=":"
@@ -345,6 +346,7 @@
                                                           Grid.Column="2"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding MinutesItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceMinutes}" />
                                                 <Label Grid.Column="3"
                                                        Content=":"
@@ -353,6 +355,7 @@
                                                           Grid.Column="4"
                                                           FontFamily="{TemplateBinding FontFamily}"
                                                           FontSize="{TemplateBinding FontSize}"
+                                                          ItemStringFormat="{TemplateBinding SecondsItemStringFormat}"
                                                           ItemsSource="{TemplateBinding SourceSeconds}" />
                                                 <ComboBox x:Name="PART_AmPmSwitcher"
                                                           Grid.Column="5"

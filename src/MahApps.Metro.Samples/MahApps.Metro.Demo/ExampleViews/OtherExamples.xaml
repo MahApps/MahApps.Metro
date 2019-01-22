@@ -5,6 +5,7 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/shared"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mx="clr-namespace:MetroDemo.Markup"
              xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
@@ -24,7 +25,7 @@
             </Style>
 
             <DataTemplate x:Key="ImageDataTemplate" x:Shared="False">
-                <Image Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" Stretch="Fill" />
+                <Image Source="{Binding Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}, Converter={mah:NullToUnsetValueConverter}}" Stretch="Fill" />
             </DataTemplate>
 
         </ResourceDictionary>
@@ -147,9 +148,15 @@
                 <ComboBox x:Name="Orientation"
                           Grid.Row="2"
                           Grid.Column="0"
-                          Grid.ColumnSpan="2"
+                          Grid.ColumnSpan="1"
                           ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Orientation}}, Mode=OneTime}"
                           SelectedValue="{Binding ElementName=FlipView1st, Path=Orientation, FallbackValue=Horizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox x:Name="NaviButtonsPosition"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="1"
+                          ItemsSource="{Binding Source={mx:EnumBindingSource {x:Type Controls:NavigationButtonsPosition}}, Mode=OneTime}"
+                          SelectedValue="{Binding ElementName=FlipView1st, Path=NavigationButtonsPosition, FallbackValue=Inside, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Controls:FlipView x:Name="FlipView1st"
                                Height="200"
@@ -197,7 +204,7 @@
 
             <Separator Margin="0 5" />
             <Controls:FlipView x:Name="FlipView2nd"
-                               Height="200"
+                               Height="300"
                                Margin="0 0 5 0"
                                BannerText="Databound Items"
                                CircularNavigation="{Binding ElementName=CircularNaviCheckBox, Path=IsChecked, Mode=OneWay}"
@@ -206,20 +213,18 @@
                                ItemTemplate="{StaticResource ImageDataTemplate}"
                                ItemsSource="{Binding FlipViewImages, Mode=OneWay}"
                                MouseHoverBorderEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, Mode=OneWay}"
+                               NavigationButtonsPosition="{Binding ElementName=NaviButtonsPosition, Path=SelectedValue, Mode=OneWay}"
                                Orientation="{Binding ElementName=Orientation, Path=SelectedValue, Mode=OneWay}" />
             <StackPanel HorizontalAlignment="Center"
                         DataContext="{Binding ElementName=FlipView2nd, Mode=OneWay}"
                         Orientation="Horizontal">
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                        ButtonsAlignment="Left"
+                                        ButtonsAlignment="Opposite"
                                         Interval="1"
                                         Maximum="{Binding Path=Items.Count, Mode=OneWay}"
                                         Minimum="1"
+                                        SwitchUpDownButtons="True"
                                         Value="{Binding Path=SelectedIndex, Mode=TwoWay, Converter={vc:Int32IndexToNumberConverter}}" />
-                <TextBlock Margin="8 0 0 0" VerticalAlignment="Center">
-                    <Run Text="/" />
-                    <Run Text="{Binding Path=Items.Count, Mode=OneWay}" />
-                </TextBlock>
             </StackPanel>
         </StackPanel>
 

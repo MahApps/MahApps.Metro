@@ -27,8 +27,11 @@ namespace MahApps.Metro.Controls
     public static class Spelling
     {
         public static ResourceKey SuggestionMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SuggestionMenuItemStyle);
+
         public static ResourceKey IgnoreAllMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.IgnoreAllMenuItemStyle);
+
         public static ResourceKey NoSuggestionsMenuItemStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.NoSuggestionsMenuItemStyle);
+
         public static ResourceKey SeparatorStyleKey { get; } = new ComponentResourceKey(typeof(Spelling), SpellingResourceKeyId.SeparatorStyle);
     }
 
@@ -66,11 +69,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata(new FontFamilyConverter().ConvertFromString("Marlett")));
         public static readonly DependencyProperty ButtonFontSizeProperty = DependencyProperty.RegisterAttached("ButtonFontSize", typeof(double), typeof(TextBoxHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
-        
+
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false));
 
-        public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof (bool), typeof (TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(default(bool), IsSpellCheckContextMenuEnabledChanged));
 
@@ -194,6 +197,7 @@ namespace MahApps.Metro.Controls
                 {
                     return null;
                 }
+
                 var propertyName = bindingExpression.ResolvedSourcePropertyName;
                 if (!string.IsNullOrEmpty(propertyName))
                 {
@@ -203,8 +207,8 @@ namespace MahApps.Metro.Controls
                         return resolvedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
                     }
                 }
-
             }
+
             return null;
         }
 
@@ -352,7 +356,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsWaitingForDataProperty, value);
         }
-        
+
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -509,7 +513,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
-        
+
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
@@ -531,26 +535,44 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is TextBox)
+            if (d is RichTextBox richTextBox)
             {
-                var txtBox = (TextBox)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
-                    txtBox.BeginInvoke(() => TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None)));
+                    richTextBox.BeginInvoke(() => RichTextBox_TextChanged(richTextBox, new TextChangedEventArgs(RichTextBox.TextChangedEvent, UndoAction.None)));
 
-                    txtBox.TextChanged += TextChanged;
-                    txtBox.GotFocus += TextBoxGotFocus;
+                    richTextBox.TextChanged += RichTextBox_TextChanged;
+                    richTextBox.GotFocus += TextBoxGotFocus;
+                    richTextBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
                 }
                 else
                 {
-                    txtBox.TextChanged -= TextChanged;
-                    txtBox.GotFocus -= TextBoxGotFocus;
+                    richTextBox.TextChanged -= RichTextBox_TextChanged;
+                    richTextBox.GotFocus -= TextBoxGotFocus;
+                    richTextBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
-            else if (d is PasswordBox)
+            else if (d is TextBox textBox)
             {
-                var passBox = (PasswordBox)d;
+                if ((bool)e.NewValue)
+                {
+                    // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
+                    textBox.BeginInvoke(() => TextChanged(textBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None)));
+
+                    textBox.TextChanged += TextChanged;
+                    textBox.GotFocus += TextBoxGotFocus;
+                    textBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
+                }
+                else
+                {
+                    textBox.TextChanged -= TextChanged;
+                    textBox.GotFocus -= TextBoxGotFocus;
+                    textBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
+                }
+            }
+            else if (d is PasswordBox passBox)
+            {
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
@@ -558,33 +580,31 @@ namespace MahApps.Metro.Controls
 
                     passBox.PasswordChanged += PasswordChanged;
                     passBox.GotFocus += PasswordGotFocus;
+                    passBox.PreviewMouseLeftButtonDown += UIElementPreviewMouseLeftButtonDown;
                 }
                 else
                 {
                     passBox.PasswordChanged -= PasswordChanged;
                     passBox.GotFocus -= PasswordGotFocus;
+                    passBox.PreviewMouseLeftButtonDown -= UIElementPreviewMouseLeftButtonDown;
                 }
             }
-            else if (d is NumericUpDown)
+            else if (d is NumericUpDown numericUpDown)
             {
-                var numericUpDown = (NumericUpDown)d;
                 if ((bool)e.NewValue)
                 {
                     // Fixes #1343 and #2514: also triggers the show of the floating watermark if necessary
                     numericUpDown.BeginInvoke(() => OnNumericUpDownValueChaged(numericUpDown, new RoutedEventArgs(NumericUpDown.ValueChangedEvent, numericUpDown)));
 
                     numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    //numericUpDown.GotFocus += NumericUpDownGotFocus;
                 }
                 else
                 {
                     numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
-                    //numericUpDown.GotFocus -= NumericUpDownGotFocus;
                 }
             }
-            else if (d is TimePickerBase)
+            else if (d is TimePickerBase timePicker)
             {
-                var timePicker = (TimePickerBase)d;
                 if ((bool)e.NewValue)
                 {
                     timePicker.SelectedDateTimeChanged += OnTimePickerBaseSelectedDateTimeChanged;
@@ -594,21 +614,29 @@ namespace MahApps.Metro.Controls
                     timePicker.SelectedDateTimeChanged -= OnTimePickerBaseSelectedDateTimeChanged;
                 }
             }
-            else if (d is DatePicker)
+            else if (d is DatePicker datePicker)
             {
-                var timePicker = (DatePicker)d;
                 if ((bool)e.NewValue)
                 {
-                    timePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
+                    datePicker.SelectedDateChanged += OnDatePickerBaseSelectedDateChanged;
                 }
                 else
                 {
-                    timePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
+                    datePicker.SelectedDateChanged -= OnDatePickerBaseSelectedDateChanged;
                 }
             }
         }
-        
-        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
+
+        private static void RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is RichTextBox richTextBox)
+            {
+                SetRichTextBoxTextLength(richTextBox);
+            }
+        }
+
+        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength)
+            where TDependencyObject : DependencyObject
         {
             if (sender != null)
             {
@@ -645,12 +673,17 @@ namespace MahApps.Metro.Controls
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll());
+            ControlGotFocus(sender as TextBoxBase, textBox => textBox.SelectAll());
         }
 
-        private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
+        private static void UIElementPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll());
+            if (sender is UIElement uiElement && !uiElement.IsKeyboardFocusWithin && GetSelectAllOnFocus(uiElement))
+            {
+                // always SelectAllOnFocus
+                uiElement.Focus();
+                e.Handled = true;
+            }
         }
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
@@ -658,7 +691,8 @@ namespace MahApps.Metro.Controls
             ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll());
         }
 
-        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action) where TDependencyObject : DependencyObject
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action)
+            where TDependencyObject : DependencyObject
         {
             if (sender != null)
             {
@@ -847,8 +881,8 @@ namespace MahApps.Metro.Controls
         {
             var button = (Button)sender;
 
-            var parent = button.GetAncestors().FirstOrDefault(a => a is TextBox || a is PasswordBox || a is ComboBox);
-            
+            var parent = button.GetAncestors().FirstOrDefault(a => a is RichTextBox || a is TextBox || a is PasswordBox || a is ComboBox);
+
             var command = GetButtonCommand(parent);
             var commandParameter = GetButtonCommandParameter(parent) ?? parent;
             if (command != null && command.CanExecute(commandParameter))
@@ -858,70 +892,105 @@ namespace MahApps.Metro.Controls
 
             if (GetClearTextButton(parent))
             {
-                if (parent is TextBox)
+                if (parent is RichTextBox richTextBox)
                 {
-                    ((TextBox)parent).Clear();
-                    ((TextBox)parent).GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                    richTextBox.Document?.Blocks?.Clear();
+                    richTextBox.Selection?.Select(richTextBox.CaretPosition, richTextBox.CaretPosition);
                 }
-                else if (parent is PasswordBox)
+                else if (parent is TextBox textBox)
                 {
-                    ((PasswordBox)parent).Clear();
-                    ((PasswordBox)parent).GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                    textBox.Clear();
+                    textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 }
-                else if (parent is ComboBox)
+                else if (parent is PasswordBox passwordBox)
                 {
-                    if (((ComboBox)parent).IsEditable)
+                    passwordBox.Clear();
+                    passwordBox.GetBindingExpression(PasswordBoxBindingBehavior.PasswordProperty)?.UpdateSource();
+                }
+                else if (parent is ComboBox comboBox)
+                {
+                    if (comboBox.IsEditable)
                     {
-                        ((ComboBox)parent).Text = string.Empty;
-                        ((ComboBox)parent).GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
+                        comboBox.Text = string.Empty;
+                        comboBox.GetBindingExpression(ComboBox.TextProperty)?.UpdateSource();
                     }
-                    ((ComboBox)parent).SelectedItem = null;
-                    ((ComboBox)parent).GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
+
+                    comboBox.SelectedItem = null;
+                    comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
             }
         }
 
         private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var textbox = d as TextBox;
-            if (textbox != null)
+            if (d is RichTextBox richTextBox)
             {
-                // only one loaded event
-                textbox.Loaded -= TextChanged;
-                textbox.Loaded += TextChanged;
-                if (textbox.IsLoaded)
+                richTextBox.Loaded -= RichTextBoxLoaded;
+                richTextBox.Loaded += RichTextBoxLoaded;
+                if (richTextBox.IsLoaded)
                 {
-                    TextChanged(textbox, new RoutedEventArgs());
+                    RichTextBoxLoaded(richTextBox, new RoutedEventArgs());
                 }
             }
-            var passbox = d as PasswordBox;
-            if (passbox != null)
+            else if (d is TextBox textBox)
             {
                 // only one loaded event
-                passbox.Loaded -= PasswordChanged;
-                passbox.Loaded += PasswordChanged;
-                if (passbox.IsLoaded)
+                textBox.Loaded -= TextChanged;
+                textBox.Loaded += TextChanged;
+                if (textBox.IsLoaded)
                 {
-                    PasswordChanged(passbox, new RoutedEventArgs());
+                    TextChanged(textBox, new RoutedEventArgs());
                 }
             }
-            var combobox = d as ComboBox;
-            if (combobox != null)
+            else if (d is PasswordBox passwordBox)
             {
                 // only one loaded event
-                combobox.Loaded -= ComboBoxLoaded;
-                combobox.Loaded += ComboBoxLoaded;
-                if (combobox.IsLoaded)
+                passwordBox.Loaded -= PasswordChanged;
+                passwordBox.Loaded += PasswordChanged;
+                if (passwordBox.IsLoaded)
                 {
-                    ComboBoxLoaded(combobox, new RoutedEventArgs());
+                    PasswordChanged(passwordBox, new RoutedEventArgs());
+                }
+            }
+            else if (d is ComboBox comboBox)
+            {
+                // only one loaded event
+                comboBox.Loaded -= ComboBoxLoaded;
+                comboBox.Loaded += ComboBoxLoaded;
+                if (comboBox.IsLoaded)
+                {
+                    ComboBoxLoaded(comboBox, new RoutedEventArgs());
                 }
             }
         }
 
-        static void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        private static void RichTextBoxLoaded(object sender, RoutedEventArgs e)
         {
-            var comboBox = sender as ComboBox;
-            if (comboBox != null)
+            if (sender is RichTextBox richTextBox)
+            {
+                SetRichTextBoxTextLength(richTextBox);
+            }
+        }
+
+        private static void SetRichTextBoxTextLength(RichTextBox richTextBox)
+        {
+            SetTextLength(richTextBox, rtb =>
+                {
+                    var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                    var text = textRange.Text;
+                    var lastIndexOfNewLine = text.LastIndexOf(Environment.NewLine, StringComparison.InvariantCulture);
+                    if (lastIndexOfNewLine >= 0)
+                    {
+                        text = text.Remove(lastIndexOfNewLine);
+                    }
+
+                    return text.Length;
+                });
+        }
+
+        private static void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
             {
                 comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
             }

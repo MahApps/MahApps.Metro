@@ -7,13 +7,19 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="AccentedDialogSquareButton"
+    <Style x:Key="MahApps.Metro.Styles.Dialogs.Button"
+           BasedOn="{StaticResource SquareButtonStyle}"
+           TargetType="{x:Type Button}">
+        <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+    </Style>
+
+    <Style x:Key="MahApps.Metro.Styles.Dialogs.AccentButton"
            BasedOn="{StaticResource AccentedSquareButtonStyle}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
-    <Style x:Key="AccentedDialogHighlightedSquareButton"
+    <Style x:Key="MahApps.Metro.Styles.Dialogs.AccentHighlightButton"
            BasedOn="{StaticResource HighlightedSquareButtonStyle}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
@@ -94,11 +100,6 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Metro.Styles.MetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
-        <Style.Resources>
-            <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type Button}">
-                <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-            </Style>
-        </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="DialogMessageFontSize" Value="{DynamicResource DialogMessageFontSize}" />
         <Setter Property="DialogTitleFontSize" Value="{DynamicResource DialogTitleFontSize}" />

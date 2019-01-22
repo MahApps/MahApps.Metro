@@ -29,7 +29,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+    <ScrollViewer Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+                  HorizontalScrollBarVisibility="Visible"
+                  VerticalScrollBarVisibility="Disabled">
         <Grid Background="{DynamicResource AccentColorBrush4}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />

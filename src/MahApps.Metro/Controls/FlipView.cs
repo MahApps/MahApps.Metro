@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -14,44 +16,232 @@ namespace MahApps.Metro.Controls
     }
 
     /// <summary>
-    /// A control that imitate a slideshow with back/forward buttons.
+    /// A control that imitate a slide show with back/forward buttons.
     /// </summary>
-    [TemplatePart(Name = "PART_Presenter", Type = typeof(TransitioningContentControl))]
-    [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_ForwardButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_UpButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_DownButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_BannerGrid", Type = typeof(Grid))]
-    [TemplatePart(Name = "PART_BannerLabel", Type = typeof(Label))]
+    [TemplatePart(Name = PART_Presenter, Type = typeof(TransitioningContentControl))]
+    [TemplatePart(Name = PART_BackButton, Type = typeof(Button))]
+    [TemplatePart(Name = PART_ForwardButton, Type = typeof(Button))]
+    [TemplatePart(Name = PART_UpButton, Type = typeof(Button))]
+    [TemplatePart(Name = PART_DownButton, Type = typeof(Button))]
+    [TemplatePart(Name = PART_BannerGrid, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_BannerLabel, Type = typeof(Label))]
     public class FlipView : Selector
     {
-        private const string PART_Presenter = "PART_Presenter";
+        /// <summary>Identifies the <see cref="MouseHoverBorderBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register(nameof(MouseHoverBorderBrush), typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
+
+        /// <summary>
+        /// Gets or sets the border brush of the mouse hover effect.
+        /// </summary>
+        public Brush MouseHoverBorderBrush
+        {
+            get => (Brush)this.GetValue(MouseHoverBorderBrushProperty);
+            set => this.SetValue(MouseHoverBorderBrushProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="MouseHoverBorderEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register(nameof(MouseHoverBorderEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the border for mouse over effect is enabled or not.
+        /// </summary>
+        public bool MouseHoverBorderEnabled
+        {
+            get => (bool)this.GetValue(MouseHoverBorderEnabledProperty);
+            set => this.SetValue(MouseHoverBorderEnabledProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="MouseHoverBorderThickness"/> dependency property.</summary>
+        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register(nameof(MouseHoverBorderThickness), typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
+
+        /// <summary>
+        /// Gets or sets the border thickness for the border of the mouse hover effect.
+        /// </summary>
+        public Thickness MouseHoverBorderThickness
+        {
+            get => (Thickness)this.GetValue(MouseHoverBorderThicknessProperty);
+            set => this.SetValue(MouseHoverBorderThicknessProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="CircularNavigation"/> dependency property.</summary>
+        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register(nameof(CircularNavigation), typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the navigation is circular, so you get the first after last and the last before first.
+        /// </summary>
+        public bool CircularNavigation
+        {
+            get => (bool)this.GetValue(CircularNavigationProperty);
+            set => this.SetValue(CircularNavigationProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="NavigationButtonsPosition"/> dependency property.</summary>
+        public static readonly DependencyProperty NavigationButtonsPositionProperty = DependencyProperty.Register(nameof(NavigationButtonsPosition), typeof(NavigationButtonsPosition), typeof(FlipView), new FrameworkPropertyMetadata(NavigationButtonsPosition.Inside, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+
+        /// <summary>
+        /// Gets or sets the position of the navigation buttons.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(NavigationButtonsPosition.Inside)]
+        public NavigationButtonsPosition NavigationButtonsPosition
+        {
+            get => (NavigationButtonsPosition)GetValue(NavigationButtonsPositionProperty);
+            set => SetValue(NavigationButtonsPositionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(nameof(Orientation), typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+
+        /// <summary>
+        /// Gets or sets the orientation of the navigation.
+        /// </summary>
+        public Orientation Orientation
+        {
+            get => (Orientation)this.GetValue(OrientationProperty);
+            set => this.SetValue(OrientationProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="LeftTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register(nameof(LeftTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
+
+        /// <summary>
+        /// Gets or sets the transition of the left navigation.
+        /// </summary>
+        public TransitionType LeftTransition
+        {
+            get => (TransitionType)this.GetValue(LeftTransitionProperty);
+            set => this.SetValue(LeftTransitionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="RightTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register(nameof(RightTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
+
+        /// <summary>
+        /// Gets or sets the transition of the right navigation.
+        /// </summary>
+        public TransitionType RightTransition
+        {
+            get => (TransitionType)this.GetValue(RightTransitionProperty);
+            set => this.SetValue(RightTransitionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="UpTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register(nameof(UpTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
+
+        /// <summary>
+        /// Gets or sets the transition of the up navigation.
+        /// </summary>
+        public TransitionType UpTransition
+        {
+            get => (TransitionType)this.GetValue(UpTransitionProperty);
+            set => this.SetValue(UpTransitionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="DownTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register(nameof(DownTransition), typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
+
+        /// <summary>
+        /// Gets or sets the transition of the down navigation.
+        /// </summary>
+        public TransitionType DownTransition
+        {
+            get => (TransitionType)this.GetValue(DownTransitionProperty);
+            set => this.SetValue(DownTransitionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IsBannerEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register(nameof(IsBannerEnabled), typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
+
+        /// <summary>
+        /// Gets or sets whether the banner is visible or not.
+        /// </summary>
+        public bool IsBannerEnabled
+        {
+            get => (bool)this.GetValue(IsBannerEnabledProperty);
+            set => this.SetValue(IsBannerEnabledProperty, value);
+        }
+
+        private static void OnIsBannerEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var flipView = (FlipView)d;
+
+            void ChangeFlipViewBannerVisibility()
+            {
+                if ((bool)e.NewValue)
+                {
+                    flipView.ChangeBannerText(flipView.BannerText);
+                    flipView.ShowBanner();
+                }
+                else
+                {
+                    flipView.HideBanner();
+                }
+            }
+
+            if (flipView.IsLoaded)
+            {
+                ChangeFlipViewBannerVisibility();
+            }
+            else
+            {
+                //wait to be loaded?
+                flipView.ExecuteWhenLoaded(() =>
+                    {
+                        flipView.ApplyTemplate();
+                        ChangeFlipViewBannerVisibility();
+                    });
+            }
+        }
+
+        /// <summary>Identifies the <see cref="IsNavigationEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register(nameof(IsNavigationEnabled), typeof(bool), typeof(FlipView), new PropertyMetadata(true, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
+
+        /// <summary>
+        /// Gets or sets whether the navigation button are visible or not.
+        /// </summary>
+        public bool IsNavigationEnabled
+        {
+            get => (bool)this.GetValue(IsNavigationEnabledProperty);
+            set => this.SetValue(IsNavigationEnabledProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="BannerText"/> dependency property.</summary>
+        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register(nameof(BannerText), typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+
+        /// <summary>
+        /// Gets or sets the banner text.
+        /// </summary>
+        public string BannerText
+        {
+            get => (string)this.GetValue(BannerTextProperty);
+            set => this.SetValue(BannerTextProperty, value);
+        }
+
         private const string PART_BackButton = "PART_BackButton";
-        private const string PART_ForwardButton = "PART_ForwardButton";
-        private const string PART_UpButton = "PART_UpButton";
-        private const string PART_DownButton = "PART_DownButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
-
-        private TransitioningContentControl presenter;
+        private const string PART_DownButton = "PART_DownButton";
+        private const string PART_ForwardButton = "PART_ForwardButton";
+        private const string PART_Presenter = "PART_Presenter";
+        private const string PART_UpButton = "PART_UpButton";
+        private bool allowSelectedIndexChangedCallback = true;
         private Button backButton;
-        private Button forwardButton;
-        private Button upButton;
-        private Button downButton;
         private Grid bannerGrid;
         private Label bannerLabel;
-
-        private Storyboard showBannerStoryboard;
+        private Button downButton;
+        private Button forwardButton;
         private Storyboard hideBannerStoryboard;
         private Storyboard hideControlStoryboard;
-        private Storyboard showControlStoryboard;
-
         private EventHandler hideControlStoryboardCompletedHandler;
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
         private bool loaded;
-        private bool allowSelectedIndexChangedCallback = true;
+        private TransitioningContentControl presenter;
+        private Storyboard showBannerStoryboard;
+        private Storyboard showControlStoryboard;
+        private Button upButton;
 
         static FlipView()
         {
@@ -86,6 +276,7 @@ namespace MahApps.Metro.Controls
                                                                        value = ((CoerceValueCallback)item)(d, value);
                                                                    }
                                                                }
+
                                                                /* ...'til our new one. */
                                                                return CoerceSelectedIndexProperty(d, value);
                                                            }
@@ -105,13 +296,284 @@ namespace MahApps.Metro.Controls
         /// <returns>The coerced value (with appropriate type). </returns>
         private static object CoerceSelectedIndexProperty(DependencyObject d, object value)
         {
-            var flipView = d as FlipView;
             // call ComputeTransition only if SelectedIndex is changed from outside and not from GoBack or GoForward
-            if (flipView != null && flipView.allowSelectedIndexChangedCallback)
+            if (d is FlipView flipView && flipView.allowSelectedIndexChangedCallback)
             {
                 flipView.ComputeTransition(flipView.SelectedIndex, value as int? ?? flipView.SelectedIndex);
             }
+
             return value;
+        }
+
+        /// <summary>
+        /// Changes the current slide to the previous item.
+        /// </summary>
+        public void GoBack()
+        {
+            this.allowSelectedIndexChangedCallback = false;
+            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
+            if (this.SelectedIndex > 0)
+            {
+                this.SelectedIndex--;
+            }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    this.SelectedIndex = this.Items.Count - 1;
+                }
+            }
+
+            this.allowSelectedIndexChangedCallback = true;
+        }
+
+        /// <summary>
+        /// Changes the current to the next item.
+        /// </summary>
+        public void GoForward()
+        {
+            this.allowSelectedIndexChangedCallback = false;
+            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
+            if (this.SelectedIndex < this.Items.Count - 1)
+            {
+                this.SelectedIndex++;
+            }
+            else
+            {
+                if (this.CircularNavigation)
+                {
+                    this.SelectedIndex = 0;
+                }
+            }
+
+            this.allowSelectedIndexChangedCallback = true;
+        }
+
+        /// <summary>
+        /// Brings the control buttons (next/previous) into view.
+        /// </summary>
+        public void ShowControlButtons()
+        {
+            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus());
+        }
+
+        /// <summary>
+        /// Removes the control buttons (next/previous) from view.
+        /// </summary>
+        public void HideControlButtons()
+        {
+            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus(Visibility.Hidden));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.showBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
+            this.hideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
+
+            this.showControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
+            this.hideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
+
+            this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
+
+            if (this.forwardButton != null)
+            {
+                this.forwardButton.Click -= this.NextButtonClick;
+            }
+
+            if (this.backButton != null)
+            {
+                this.backButton.Click -= this.PrevButtonClick;
+            }
+
+            if (this.upButton != null)
+            {
+                this.upButton.Click -= this.PrevButtonClick;
+            }
+
+            if (this.downButton != null)
+            {
+                this.downButton.Click -= this.NextButtonClick;
+            }
+
+            this.forwardButton = this.GetTemplateChild(PART_ForwardButton) as Button;
+            this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
+            this.upButton = this.GetTemplateChild(PART_UpButton) as Button;
+            this.downButton = this.GetTemplateChild(PART_DownButton) as Button;
+
+            this.bannerGrid = this.GetTemplateChild(PART_BannerGrid) as Grid;
+            this.bannerLabel = this.GetTemplateChild(PART_BannerLabel) as Label;
+
+            if (this.forwardButton != null)
+            {
+                this.forwardButton.Click += this.NextButtonClick;
+            }
+
+            if (this.backButton != null)
+            {
+                this.backButton.Click += this.PrevButtonClick;
+            }
+
+            if (this.upButton != null)
+            {
+                this.upButton.Click += this.PrevButtonClick;
+            }
+
+            if (this.downButton != null)
+            {
+                this.downButton.Click += this.NextButtonClick;
+            }
+
+            if (this.bannerLabel != null)
+            {
+                this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
+            }
+        }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new FlipViewItem() { HorizontalAlignment = HorizontalAlignment.Stretch };
+        }
+
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is FlipViewItem;
+        }
+
+        protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+            this.DetectControlButtonsStatus();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            var isHorizontal = this.Orientation == Orientation.Horizontal;
+            var isVertical = this.Orientation == Orientation.Vertical;
+            var canGoPrev = (e.Key == Key.Left && isHorizontal && this.backButton != null && this.backButton.Visibility == Visibility.Visible && this.backButton.IsEnabled)
+                            || (e.Key == Key.Up && isVertical && this.upButton != null && this.upButton.Visibility == Visibility.Visible && this.upButton.IsEnabled);
+            var canGoNext = (e.Key == Key.Right && isHorizontal && this.forwardButton != null && this.forwardButton.Visibility == Visibility.Visible && this.forwardButton.IsEnabled)
+                            || (e.Key == Key.Down && isVertical && this.downButton != null && this.downButton.Visibility == Visibility.Visible && this.downButton.IsEnabled);
+
+            if (canGoPrev)
+            {
+                this.GoBack();
+                e.Handled = true;
+                this.Focus();
+            }
+            else if (canGoNext)
+            {
+                this.GoForward();
+                e.Handled = true;
+                this.Focus();
+            }
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+            this.Focus();
+        }
+
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            base.OnSelectionChanged(e);
+            this.DetectControlButtonsStatus();
+        }
+
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            if (element != item)
+            {
+                element.SetValue(DataContextProperty, item); // don't want to set the DataContext to itself.
+            }
+
+            base.PrepareContainerForItemOverride(element, item);
+        }
+
+        /// <summary>
+        /// Applies actions to navigation buttons.
+        /// </summary>
+        /// <param name="prevButtonApply">Action applied to the previous button.</param>
+        /// <param name="nextButtonApply">Action applied to the next button.</param>
+        /// <param name="inactiveButtonsApply">Action applied to the inactive buttons.</param>
+        /// <exception cref="ArgumentNullException">Any action is null.</exception>
+        private void ApplyToNavigationButtons(Action<Button> prevButtonApply, Action<Button> nextButtonApply, Action<Button> inactiveButtonsApply)
+        {
+            if (prevButtonApply == null)
+            {
+                throw new ArgumentNullException(nameof(prevButtonApply));
+            }
+
+            if (nextButtonApply == null)
+            {
+                throw new ArgumentNullException(nameof(nextButtonApply));
+            }
+
+            if (inactiveButtonsApply == null)
+            {
+                throw new ArgumentNullException(nameof(inactiveButtonsApply));
+            }
+
+            this.GetNavigationButtons(out var prevButton, out var nextButton, out var inactiveButtons);
+
+            foreach (var button in inactiveButtons.Where(b => !(b is null)))
+            {
+                inactiveButtonsApply(button);
+            }
+
+            if (prevButton != null)
+            {
+                prevButtonApply(prevButton);
+            }
+
+            if (nextButton != null)
+            {
+                nextButtonApply(nextButton);
+            }
+        }
+
+        private void ChangeBannerText(string value = null)
+        {
+            if (this.IsBannerEnabled)
+            {
+                var newValue = value ?? this.BannerText;
+                if (newValue == null || this.hideControlStoryboard == null)
+                {
+                    return;
+                }
+
+                if (this.hideControlStoryboardCompletedHandler != null)
+                {
+                    this.hideControlStoryboard.Completed -= this.hideControlStoryboardCompletedHandler;
+                }
+
+                this.hideControlStoryboardCompletedHandler = (sender, e) =>
+                    {
+                        try
+                        {
+                            this.hideControlStoryboard.Completed -= this.hideControlStoryboardCompletedHandler;
+
+                            this.bannerLabel.Content = newValue;
+
+                            this.bannerLabel.BeginStoryboard(this.showControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    };
+
+                this.hideControlStoryboard.Completed += this.hideControlStoryboardCompletedHandler;
+
+                this.bannerLabel.BeginStoryboard(this.hideControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+            }
+            else
+            {
+                this.ExecuteWhenLoaded(() => { this.bannerLabel.Content = value ?? this.BannerText; });
+            }
         }
 
         /// <summary>
@@ -135,93 +597,6 @@ namespace MahApps.Metro.Controls
                 {
                     this.presenter.Transition = TransitionType.Default;
                 }
-            }
-        }
-
-        protected override bool IsItemItsOwnContainerOverride(object item)
-        {
-            return item is FlipViewItem;
-        }
-
-        protected override DependencyObject GetContainerForItemOverride()
-        {
-            return new FlipViewItem() { HorizontalAlignment = HorizontalAlignment.Stretch };
-        }
-
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-        {
-            if (element != item)
-            {
-                element.SetValue(DataContextProperty, item); //dont want to set the datacontext to itself.
-            }
-
-            base.PrepareContainerForItemOverride(element, item);
-        }
-
-        /// <summary>
-        /// Gets the navigation buttons.
-        /// </summary>
-        /// <param name="prevButton">Previous button.</param>
-        /// <param name="nextButton">Next button.</param>
-        /// <param name="inactiveButtons">Inactive buttons.</param>
-        private void GetNavigationButtons(out Button prevButton, out Button nextButton, out IEnumerable<Button> inactiveButtons)
-        {
-            if (this.Orientation == Orientation.Horizontal)
-            {
-                prevButton = this.backButton;
-                nextButton = this.forwardButton;
-                inactiveButtons = new Button[] { this.upButton, this.downButton };
-            }
-            else
-            {
-                prevButton = this.upButton;
-                nextButton = this.downButton;
-                inactiveButtons = new Button[] { this.backButton, this.forwardButton };
-            }
-        }
-
-        /// <summary>
-        /// Applies actions to navigation buttons.
-        /// </summary>
-        /// <param name="prevButtonApply">Action applied to the previous button.</param>
-        /// <param name="nextButtonApply">Action applied to the next button.</param>
-        /// <param name="inactiveButtonsApply">Action applied to the inactive buttons.</param>
-        /// <exception cref="ArgumentNullException">Any action is null.</exception>
-        private void ApplyToNavigationButtons(Action<Button> prevButtonApply, Action<Button> nextButtonApply, Action<Button> inactiveButtonsApply)
-        {
-            if (prevButtonApply == null)
-            {
-                throw new ArgumentNullException(nameof(prevButtonApply));
-            }
-            if (nextButtonApply == null)
-            {
-                throw new ArgumentNullException(nameof(nextButtonApply));
-            }
-            if (inactiveButtonsApply == null)
-            {
-                throw new ArgumentNullException(nameof(inactiveButtonsApply));
-            }
-
-            Button prevButton = null;
-            Button nextButton = null;
-            IEnumerable<Button> inactiveButtons = null;
-            this.GetNavigationButtons(out prevButton, out nextButton, out inactiveButtons);
-
-            foreach (var button in inactiveButtons)
-            {
-                if (button != null)
-                {
-                    inactiveButtonsApply(button);
-                }
-            }
-
-            if (prevButton != null)
-            {
-                prevButtonApply(prevButton);
-            }
-            if (nextButton != null)
-            {
-                nextButtonApply(nextButton);
             }
         }
 
@@ -266,6 +641,7 @@ namespace MahApps.Metro.Controls
             {
                 this.SelectedIndex = 0;
             }
+
             this.DetectControlButtonsStatus();
 
             this.ShowBanner();
@@ -285,182 +661,25 @@ namespace MahApps.Metro.Controls
             this.loaded = false;
         }
 
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            base.OnSelectionChanged(e);
-            this.DetectControlButtonsStatus();
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-
-            var isHorizontal = this.Orientation == Orientation.Horizontal;
-            var isVertical = this.Orientation == Orientation.Vertical;
-            var canGoPrev = (e.Key == Key.Left && isHorizontal && this.backButton != null && this.backButton.Visibility == Visibility.Visible && this.backButton.IsEnabled)
-                            || (e.Key == Key.Up && isVertical && this.upButton != null && this.upButton.Visibility == Visibility.Visible && this.upButton.IsEnabled);
-            var canGoNext = (e.Key == Key.Right && isHorizontal && this.forwardButton != null && this.forwardButton.Visibility == Visibility.Visible && this.forwardButton.IsEnabled)
-                            || (e.Key == Key.Down && isVertical && this.downButton != null && this.downButton.Visibility == Visibility.Visible && this.downButton.IsEnabled);
-
-            if (canGoPrev)
-            {
-                this.GoBack();
-                e.Handled = true;
-                this.Focus();
-            }
-            else if (canGoNext)
-            {
-                this.GoForward();
-                e.Handled = true;
-                this.Focus();
-            }
-        }
-
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseDown(e);
-            this.Focus();
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            this.showBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
-            this.hideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
-
-            this.showControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
-            this.hideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
-
-            this.presenter = this.GetTemplateChild(PART_Presenter) as TransitioningContentControl;
-
-            if (this.forwardButton != null)
-            {
-                this.forwardButton.Click -= this.NextButtonClick;
-            }
-            if (this.backButton != null)
-            {
-                this.backButton.Click -= this.PrevButtonClick;
-            }
-            if (this.upButton != null)
-            {
-                this.upButton.Click -= this.PrevButtonClick;
-            }
-            if (this.downButton != null)
-            {
-                this.downButton.Click -= this.NextButtonClick;
-            }
-
-            this.forwardButton = this.GetTemplateChild(PART_ForwardButton) as Button;
-            this.backButton = this.GetTemplateChild(PART_BackButton) as Button;
-            this.upButton = this.GetTemplateChild(PART_UpButton) as Button;
-            this.downButton = this.GetTemplateChild(PART_DownButton) as Button;
-
-            this.bannerGrid = this.GetTemplateChild(PART_BannerGrid) as Grid;
-            this.bannerLabel = this.GetTemplateChild(PART_BannerLabel) as Label;
-
-            if (this.forwardButton != null)
-            {
-                this.forwardButton.Click += this.NextButtonClick;
-            }
-            if (this.backButton != null)
-            {
-                this.backButton.Click += this.PrevButtonClick;
-            }
-            if (this.upButton != null)
-            {
-                this.upButton.Click += this.PrevButtonClick;
-            }
-            if (this.downButton != null)
-            {
-                this.downButton.Click += this.NextButtonClick;
-            }
-
-            if (this.bannerLabel != null)
-            {
-                this.bannerLabel.Opacity = this.IsBannerEnabled ? 1d : 0d;
-            }
-        }
-
-        protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            base.OnItemsChanged(e);
-            this.DetectControlButtonsStatus();
-        }
-
-        private void NextButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.GoForward();
-        }
-
-        private void PrevButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.GoBack();
-        }
-
         /// <summary>
-        /// Changes the current slide to the previous item.
+        /// Gets the navigation buttons.
         /// </summary>
-        public void GoBack()
+        /// <param name="prevButton">Previous button.</param>
+        /// <param name="nextButton">Next button.</param>
+        /// <param name="inactiveButtons">Inactive buttons.</param>
+        private void GetNavigationButtons(out Button prevButton, out Button nextButton, out IEnumerable<Button> inactiveButtons)
         {
-            this.allowSelectedIndexChangedCallback = false;
-            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.RightTransition : this.UpTransition;
-            if (this.SelectedIndex > 0)
+            if (this.Orientation == Orientation.Horizontal)
             {
-                this.SelectedIndex--;
+                prevButton = this.backButton;
+                nextButton = this.forwardButton;
+                inactiveButtons = new[] { this.upButton, this.downButton };
             }
             else
             {
-                if (this.CircularNavigation)
-                {
-                    this.SelectedIndex = this.Items.Count - 1;
-                }
-            }
-            this.allowSelectedIndexChangedCallback = true;
-        }
-
-        /// <summary>
-        /// Changes the current to the next item.
-        /// </summary>
-        public void GoForward()
-        {
-            this.allowSelectedIndexChangedCallback = false;
-            this.presenter.Transition = this.Orientation == Orientation.Horizontal ? this.LeftTransition : this.DownTransition;
-            if (this.SelectedIndex < this.Items.Count - 1)
-            {
-                this.SelectedIndex++;
-            }
-            else
-            {
-                if (this.CircularNavigation)
-                {
-                    this.SelectedIndex = 0;
-                }
-            }
-            this.allowSelectedIndexChangedCallback = true;
-        }
-
-        /// <summary>
-        /// Brings the control buttons (next/previous) into view.
-        /// </summary>
-        public void ShowControlButtons()
-        {
-            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus());
-        }
-
-        /// <summary>
-        /// Removes the control buttons (next/previous) from view.
-        /// </summary>
-        public void HideControlButtons()
-        {
-            this.ExecuteWhenLoaded(() => this.DetectControlButtonsStatus(Visibility.Hidden));
-        }
-
-        private void ShowBanner()
-        {
-            if (this.IsBannerEnabled)
-            {
-                this.bannerGrid?.BeginStoryboard(this.showBannerStoryboard);
+                prevButton = this.upButton;
+                nextButton = this.downButton;
+                inactiveButtons = new[] { this.backButton, this.forwardButton };
             }
         }
 
@@ -473,185 +692,21 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
-        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
-        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
-        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
-        public static readonly DependencyProperty MouseHoverBorderEnabledProperty = DependencyProperty.Register("MouseHoverBorderEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
-        public static readonly DependencyProperty MouseHoverBorderBrushProperty = DependencyProperty.Register("MouseHoverBorderBrush", typeof(Brush), typeof(FlipView), new PropertyMetadata(Brushes.LightGray));
-        public static readonly DependencyProperty MouseHoverBorderThicknessProperty = DependencyProperty.Register("MouseHoverBorderThickness", typeof(Thickness), typeof(FlipView), new PropertyMetadata(new Thickness(4)));
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
-        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
-        public static readonly DependencyProperty BannerTextProperty = DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).ExecuteWhenLoaded(() => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
-        public static readonly DependencyProperty CircularNavigationProperty = DependencyProperty.Register("CircularNavigation", typeof(bool), typeof(FlipView), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
-        public static readonly DependencyProperty IsNavigationEnabledProperty = DependencyProperty.Register("IsNavigationEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true, (d, e) => ((FlipView)d).DetectControlButtonsStatus()));
-
-        public TransitionType UpTransition
+        private void NextButtonClick(object sender, RoutedEventArgs e)
         {
-            get { return (TransitionType)this.GetValue(UpTransitionProperty); }
-            set { this.SetValue(UpTransitionProperty, value); }
+            this.GoForward();
         }
 
-        public TransitionType DownTransition
+        private void PrevButtonClick(object sender, RoutedEventArgs e)
         {
-            get { return (TransitionType)this.GetValue(DownTransitionProperty); }
-            set { this.SetValue(DownTransitionProperty, value); }
+            this.GoBack();
         }
 
-        public TransitionType LeftTransition
-        {
-            get { return (TransitionType)this.GetValue(LeftTransitionProperty); }
-            set { this.SetValue(LeftTransitionProperty, value); }
-        }
-
-        public TransitionType RightTransition
-        {
-            get { return (TransitionType)this.GetValue(RightTransitionProperty); }
-            set { this.SetValue(RightTransitionProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the border for mouse over state is enabled or not.
-        /// </summary>
-        public bool MouseHoverBorderEnabled
-        {
-            get { return (bool)this.GetValue(MouseHoverBorderEnabledProperty); }
-            set { this.SetValue(MouseHoverBorderEnabledProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the mouse hover border brush.
-        /// </summary>
-        public Brush MouseHoverBorderBrush
-        {
-            get { return (Brush)this.GetValue(MouseHoverBorderBrushProperty); }
-            set { this.SetValue(MouseHoverBorderBrushProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the mouse hover border thickness.
-        /// </summary>
-        public Thickness MouseHoverBorderThickness
-        {
-            get { return (Thickness)this.GetValue(MouseHoverBorderThicknessProperty); }
-            set { this.SetValue(MouseHoverBorderThicknessProperty, value); }
-        }
-
-        public Orientation Orientation
-        {
-            get { return (Orientation)this.GetValue(OrientationProperty); }
-            set { this.SetValue(OrientationProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the text that is displayed in the FlipView's banner.
-        /// </summary>
-        public string BannerText
-        {
-            get { return (string)this.GetValue(BannerTextProperty); }
-            set { this.SetValue(BannerTextProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether the FlipView's banner is visible.
-        /// </summary>
-        public bool IsBannerEnabled
-        {
-            get { return (bool)this.GetValue(IsBannerEnabledProperty); }
-            set { this.SetValue(IsBannerEnabledProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the navigation is circular, so you get the first after last and the last before first.
-        /// </summary>
-        public bool CircularNavigation
-        {
-            get { return (bool)this.GetValue(CircularNavigationProperty); }
-            set { this.SetValue(CircularNavigationProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets whether the FlipView's NavigationButton is visible.
-        /// </summary>
-        public bool IsNavigationEnabled
-        {
-            get { return (bool)this.GetValue(IsNavigationEnabledProperty); }
-            set { this.SetValue(IsNavigationEnabledProperty, value); }
-        }
-
-        private void ChangeBannerText(string value = null)
+        private void ShowBanner()
         {
             if (this.IsBannerEnabled)
             {
-                var newValue = value ?? this.BannerText;
-                if (newValue == null || this.hideControlStoryboard == null)
-                {
-                    return;
-                }
-
-                if (this.hideControlStoryboardCompletedHandler != null)
-                {
-                    this.hideControlStoryboard.Completed -= this.hideControlStoryboardCompletedHandler;
-                }
-
-                this.hideControlStoryboardCompletedHandler = (sender, e) =>
-                    {
-                        try
-                        {
-                            this.hideControlStoryboard.Completed -= this.hideControlStoryboardCompletedHandler;
-
-                            this.bannerLabel.Content = newValue;
-
-                            this.bannerLabel.BeginStoryboard(this.showControlStoryboard, HandoffBehavior.SnapshotAndReplace);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    };
-
-                this.hideControlStoryboard.Completed += this.hideControlStoryboardCompletedHandler;
-
-                this.bannerLabel.BeginStoryboard(this.hideControlStoryboard, HandoffBehavior.SnapshotAndReplace);
-            }
-            else
-            {
-                this.ExecuteWhenLoaded(() => { this.bannerLabel.Content = value ?? this.BannerText; });
-            }
-        }
-
-        private static void OnIsBannerEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var flipview = ((FlipView)d);
-
-            if (!flipview.IsLoaded)
-            {
-                //wait to be loaded?
-                flipview.ExecuteWhenLoaded(() =>
-                                      {
-                                          flipview.ApplyTemplate();
-
-                                          if ((bool)e.NewValue)
-                                          {
-                                              flipview.ChangeBannerText(flipview.BannerText);
-                                              flipview.ShowBanner();
-                                          }
-                                          else
-                                          {
-                                              flipview.HideBanner();
-                                          }
-                                      });
-            }
-            else
-            {
-                if ((bool)e.NewValue)
-                {
-                    flipview.ChangeBannerText(flipview.BannerText);
-                    flipview.ShowBanner();
-                }
-                else
-                {
-                    flipview.HideBanner();
-                }
+                this.bannerGrid?.BeginStoryboard(this.showBannerStoryboard);
             }
         }
     }

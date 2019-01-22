@@ -8,14 +8,17 @@ branches:
     - master
 
 skip_tags: true
-image: Visual Studio 2017
+# image: Visual Studio 2017
+image: Visual Studio 2019 Preview
 configuration: Release
 test: off
 
 # Install dotnet core 3.0 latest (alpha!!), as this is not provided on AppVeyor yet
 install:
-  - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
-  - ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  #- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
+  #- ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.0.100-preview-010096/dotnet-sdk-3.0.100-preview-010096-win-x64.exe'
+  - ps: Start-Process .\dotnet-sdk-3.0.100-preview-010096-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
 
 pull_requests:
   do_not_increment_build_number: false

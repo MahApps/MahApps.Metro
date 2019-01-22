@@ -24,7 +24,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:HotKeyBox}">
                     <TextBox x:Name="PART_TextBox"
-                             ContextMenu="{TemplateBinding ContextMenu}"
                              MinHeight="{TemplateBinding MinHeight}"
                              Padding="{TemplateBinding Padding}"
                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -47,6 +46,7 @@
                              Background="{TemplateBinding Background}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
+                             ContextMenu="{TemplateBinding ContextMenu}"
                              Focusable="{TemplateBinding Focusable}"
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"

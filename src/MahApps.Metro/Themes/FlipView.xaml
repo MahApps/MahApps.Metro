@@ -13,10 +13,24 @@
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <Grid Margin="{TemplateBinding Padding}">
                     <Grid x:Name="ControlGrid" Panel.ZIndex="7">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
                         <Button x:Name="PART_BackButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}">
+                                Style="{DynamicResource FlipViewNavigationButton}"
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -26,9 +40,12 @@
                                   Stretch="Fill" />
                         </Button>
                         <Button x:Name="PART_ForwardButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Style="{DynamicResource ControlButton}">
+                                Style="{DynamicResource FlipViewNavigationButton}"
+                                Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
                                   Width="16"
@@ -39,9 +56,11 @@
                         </Button>
 
                         <Button x:Name="PART_UpButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
-                                Style="{DynamicResource ControlButton}"
+                                Style="{DynamicResource FlipViewNavigationButton}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
@@ -52,9 +71,11 @@
                                   Stretch="Fill" />
                         </Button>
                         <Button x:Name="PART_DownButton"
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
-                                Style="{DynamicResource ControlButton}"
+                                Style="{DynamicResource FlipViewNavigationButton}"
                                 Visibility="Hidden">
                             <Path Canvas.Left="15.9063"
                                   Canvas.Top="14.75"
@@ -64,28 +85,32 @@
                                   Fill="{DynamicResource BlackBrush}"
                                   Stretch="Fill" />
                         </Button>
-                    </Grid>
 
-                    <Grid x:Name="PART_BannerGrid"
-                          Height="0"
-                          VerticalAlignment="Bottom"
-                          Panel.ZIndex="6"
-                          Background="{DynamicResource BlackBrush}"
-                          Opacity="0.85">
-                        <Label x:Name="PART_BannerLabel"
-                               FontFamily="{TemplateBinding FontFamily}"
-                               FontSize="{TemplateBinding FontSize}"
-                               Foreground="{DynamicResource WhiteBrush}"
-                               IsTabStop="False" />
-                    </Grid>
+                        <Grid x:Name="PART_BannerGrid"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              Height="0"
+                              VerticalAlignment="Bottom"
+                              Panel.ZIndex="5"
+                              Background="{DynamicResource BlackBrush}"
+                              Opacity="0.85">
+                            <Label x:Name="PART_BannerLabel"
+                                   FontFamily="{TemplateBinding FontFamily}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Foreground="{DynamicResource WhiteBrush}"
+                                   IsTabStop="False" />
+                        </Grid>
 
-                    <Controls:TransitioningContentControl x:Name="PART_Presenter"
-                                                          Panel.ZIndex="1"
-                                                          Content="{TemplateBinding SelectedItem}"
-                                                          ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                          ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                          IsTabStop="False" />
+                        <Controls:TransitioningContentControl x:Name="PART_Presenter"
+                                                              Grid.Row="1"
+                                                              Grid.Column="1"
+                                                              Panel.ZIndex="1"
+                                                              Content="{TemplateBinding SelectedItem}"
+                                                              ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                              ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                              IsTabStop="False" />
+                    </Grid>
                 </Grid>
             </Border>
         </Border>
@@ -97,44 +122,67 @@
                 </MultiTrigger.Conditions>
                 <Setter TargetName="PART_HoverBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MouseHoverBorderBrush, Mode=OneWay}" />
             </MultiTrigger>
+
             <Trigger Property="MouseHoverBorderEnabled" Value="False">
                 <Setter TargetName="PART_HoverBorder" Property="BorderThickness" Value="0" />
             </Trigger>
 
-            <Trigger Property="Orientation" Value="Vertical">
-                <Trigger.Setters>
-                    <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
-
-                    <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
-                    <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
-                </Trigger.Setters>
+            <Trigger Property="NavigationButtonsPosition" Value="Inside">
+                <Setter TargetName="PART_BackButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_DownButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_ForwardButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
+                <Setter TargetName="PART_UpButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
             </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
+                    <Condition Property="Orientation" Value="Vertical" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="1" />
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="0" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsNavigationEnabled" Value="True" />
+                    <Condition Property="Orientation" Value="Horizontal" />
+                    <Condition Property="NavigationButtonsPosition" Value="Outside" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_BackButton" Property="Grid.Column" Value="0" />
+                <Setter TargetName="PART_DownButton" Property="Grid.Row" Value="1" />
+                <Setter TargetName="PART_ForwardButton" Property="Grid.Column" Value="2" />
+                <Setter TargetName="PART_UpButton" Property="Grid.Row" Value="1" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
         <ControlTemplate.Resources>
-            <Style x:Key="ControlButton" TargetType="Button">
-                <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+            <Style x:Key="FlipViewNavigationButton" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
                 <Setter Property="Focusable" Value="True" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
                 <Setter Property="Height" Value="30" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="IsTabStop" Value="True" />
                 <Setter Property="Opacity" Value="0.4" />
-                <Setter Property="Panel.ZIndex" Value="5" />
+                <Setter Property="Padding" Value="1" />
+                <Setter Property="Panel.ZIndex" Value="6" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border Padding="1"
-                                    BorderBrush="{TemplateBinding Background}"
-                                    CornerRadius="4">
-                                <Grid Background="{TemplateBinding Background}">
-                                    <Label HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontFamily="Marlett"
-                                           FontSize="17"
-                                           Foreground="{TemplateBinding Foreground}">
-                                        <ContentPresenter ContentSource="Content" />
-                                    </Label>
-                                </Grid>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter x:Name="PART_ContentPresenter"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -144,6 +192,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Width" Value="50" />
             </Style>
             <Storyboard x:Key="ShowBannerStoryboard">

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MahApps.Metro;
 using MetroDemo.Models;
@@ -35,8 +36,7 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.BaseColorScheme + "." + this.Name);
+            ThemeManager.ChangeThemeColorScheme(Application.Current, this.Name);
         }
     }
 
@@ -44,7 +44,7 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            ThemeManager.ChangeThemeBaseColor(Application.Current.Resources, this.Name);
+            ThemeManager.ChangeThemeBaseColor(Application.Current, this.Name);
         }
     }
 
@@ -61,10 +61,8 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.Themes
-                                            .GroupBy(x => x.ColorScheme)
-                                            .Select(x => x.First())
-                                            .Select(a => new AccentColorMenuData { Name = a.ColorScheme, ColorBrush = a.ShowcaseBrush })
+            this.AccentColors = ThemeManager.ColorSchemes
+                                            .Select(a => new AccentColorMenuData { Name = a.Name, ColorBrush = a.ShowcaseBrush })
                                             .ToList();
 
             // create metro theme color menu items for the demo
@@ -80,9 +78,9 @@ namespace MetroDemo
 
             FlipViewImages = new Uri[]
                              {
-                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/landscapes/mountains/painted-desert.jpg", UriKind.Absolute),
-                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-3/landscapes/forest/breaking-the-clouds-on-winter-day.jpg", UriKind.Absolute),
-                                 new Uri("http://www.public-domain-photos.com/free-stock-photos-4/travel/bodie/bodie-streets.jpg", UriKind.Absolute)
+                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Home.jpg", UriKind.RelativeOrAbsolute),
+                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Privat.jpg", UriKind.RelativeOrAbsolute),
+                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
                              };
 
             BrushResources = FindBrushResources();
@@ -246,13 +244,19 @@ namespace MetroDemo
                         {
                             await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
                         }
+                        else if (x is RichTextBox)
+                        {
+                            var richTextBox = x as RichTextBox;
+                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text);
+                        }
                         else if (x is TextBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", string.Format("Text: {0}", ((TextBox) x).Text));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", ((TextBox) x).Text);
                         }
                         else if (x is PasswordBox)
                         {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", string.Format("Password: {0}", ((PasswordBox) x).Password));
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", ((PasswordBox) x).Password);
                         }
                     }
                 });

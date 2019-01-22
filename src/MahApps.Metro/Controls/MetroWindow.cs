@@ -1118,28 +1118,38 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <inheritdoc />
         protected override IEnumerator LogicalChildren
         {
             get
             {
                 // cheat, make a list with all logical content and return the enumerator
-                ArrayList children = new ArrayList { this.Content };
+                ArrayList children = new ArrayList();
+                if (this.Content != null)
+                {
+                    children.Add(this.Content);
+                }
+
                 if (this.LeftWindowCommands != null)
                 {
                     children.Add(this.LeftWindowCommands);
                 }
+
                 if (this.RightWindowCommands != null)
                 {
                     children.Add(this.RightWindowCommands);
                 }
+
                 if (this.WindowButtonCommands != null)
                 {
                     children.Add(this.WindowButtonCommands);
                 }
+
                 if (this.Flyouts != null)
                 {
                     children.Add(this.Flyouts);
                 }
+
                 return children.GetEnumerator();
             }
         }
