@@ -499,7 +499,18 @@
                                                   Orientation="Horizontal"
                                                   SmallChange="1"
                                                   Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
-                                                  UpperValue="40" />
+                                                  UpperValue="60">
+                                <Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
+                                    <DataTemplate DataType="Controls:RangeSliderAutoTooltipValues">
+                                        <UniformGrid Columns="2" Rows="2">
+                                            <TextBlock Text="From:" HorizontalAlignment="Right" />
+                                            <TextBlock Text="{Binding LowerValue, StringFormat='{}{0:N2}'}" HorizontalAlignment="Right" />
+                                            <TextBlock Text="To:" HorizontalAlignment="Right" />
+                                            <TextBlock Text="{Binding UpperValue, StringFormat='{}{0:N2}'}" HorizontalAlignment="Right" />
+                                        </UniformGrid>
+                                    </DataTemplate>
+                                </Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
+                            </Controls:RangeSlider>
                             <Controls:RangeSlider Width="200"
                                                   Margin="4"
                                                   Controls:SliderHelper.EnableMouseWheel="MouseHover"
