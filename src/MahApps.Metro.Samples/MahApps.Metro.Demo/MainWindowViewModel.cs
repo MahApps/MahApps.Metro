@@ -110,6 +110,23 @@ namespace MetroDemo
         public List<AppThemeMenuData> AppThemes { get; set; }
         public List<CultureInfo> CultureInfos { get; set; }
 
+        private ICommand endOfScrollReachedCmdWithParameter;
+
+        public ICommand EndOfScrollReachedCmdWithParameter
+        {
+            get
+            {
+                return this.endOfScrollReachedCmdWithParameter ?? (this.endOfScrollReachedCmdWithParameter = new SimpleCommand
+                                                                                                             {
+                                                                                                                 CanExecuteDelegate = x => true,
+                                                                                                                 ExecuteDelegate = async x =>
+                                                                                                                     {
+                                                                                                                         await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("End of scroll reached!", $"Parameter: {x}");
+                                                                                                                     }
+                                                                                                             });
+            }
+        }
+
         public int? IntegerGreater10Property
         {
             get { return this._integerGreater10Property; }

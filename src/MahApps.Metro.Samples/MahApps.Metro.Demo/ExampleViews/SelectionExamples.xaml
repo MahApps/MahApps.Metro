@@ -18,6 +18,7 @@
                          DisplayMemberPath="Name"
                          ItemsSource="{Binding Artists}"
                          SelectedIndex="0"
+                         Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                          Style="{StaticResource VirtualisedMetroListBox}" />
                 <ListBox Margin="2"
                          BorderThickness="1"
