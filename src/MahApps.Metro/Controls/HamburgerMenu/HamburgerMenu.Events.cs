@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
@@ -42,8 +41,20 @@ namespace MahApps.Metro.Controls
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseItemCommand();
 
+            RaiseItemEvents(selectedItem);
+        }
+
+        private bool RaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null || (ItemClick is null && ItemInvoked is null))
+            {
+                return false;
+            }
+
             ItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
             ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = false });
+
+            return true;
         }
 
         private void OnOptionsItemClick()
@@ -58,52 +69,27 @@ namespace MahApps.Metro.Controls
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseOptionsItemCommand();
 
+            RaiseOptionsItemEvents(selectedItem);
+        }
+
+        private bool RaiseOptionsItemEvents(object selectedItem)
+        {
+            if (selectedItem is null || (OptionsItemClick is null && ItemInvoked is null))
+            {
+                return false;
+            }
+
             OptionsItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
             ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = true });
-        }
 
-        private ListBoxItem GetClickedListBoxItem(ItemsControl itemsControl, DependencyObject dependencyObject)
-        {
-            if (itemsControl == null || dependencyObject == null)
-            {
-                return null;
-            }
-            var item = ItemsControl.ContainerFromElement(itemsControl, dependencyObject) as ListBoxItem;
-            return item;
-        }
-
-        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
-        {
-            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
-            if (item != null)
-            {
-                // ListBox item clicked - do some cool things here
-                OnItemClick();
-            }
-        }
-
-        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
-        {
-            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
-            if (item != null)
-            {
-                // ListBox item clicked - do some cool things here
-                OnOptionsItemClick();
-            }
+            return true;
         }
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                if (Keyboard.IsKeyToggled(Key.Space) ||
-                    Keyboard.IsKeyToggled(Key.Up) ||
-                    Keyboard.IsKeyToggled(Key.PageUp) ||
-                    Keyboard.IsKeyToggled(Key.Down) ||
-                    Keyboard.IsKeyToggled(Key.PageDown))
-                {
-                    OnItemClick();
-                }
+                OnItemClick();
             }
         }
 
@@ -111,14 +97,7 @@ namespace MahApps.Metro.Controls
         {
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                if (Keyboard.IsKeyToggled(Key.Space) ||
-                    Keyboard.IsKeyToggled(Key.Up) ||
-                    Keyboard.IsKeyToggled(Key.PageUp) ||
-                    Keyboard.IsKeyToggled(Key.Down) ||
-                    Keyboard.IsKeyToggled(Key.PageDown))
-                {
-                    OnOptionsItemClick();
-                }
+                OnOptionsItemClick();
             }
         }
     }
