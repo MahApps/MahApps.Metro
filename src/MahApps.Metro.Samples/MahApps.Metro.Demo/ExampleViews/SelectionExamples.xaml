@@ -14,11 +14,11 @@
         <TabItem Header="ListBox">
             <UniformGrid Columns="2" Rows="2">
                 <ListBox Margin="2"
+                         Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                          BorderThickness="1"
                          DisplayMemberPath="Name"
                          ItemsSource="{Binding Artists}"
                          SelectedIndex="0"
-                         Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                          Style="{StaticResource VirtualisedMetroListBox}" />
                 <ListBox Margin="2"
                          BorderThickness="1"

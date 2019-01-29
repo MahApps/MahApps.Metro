@@ -503,10 +503,10 @@
                                 <Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
                                     <DataTemplate DataType="Controls:RangeSliderAutoTooltipValues">
                                         <UniformGrid Columns="2" Rows="2">
-                                            <TextBlock Text="From:" HorizontalAlignment="Right" />
-                                            <TextBlock Text="{Binding LowerValue, StringFormat='{}{0:N2}'}" HorizontalAlignment="Right" />
-                                            <TextBlock Text="To:" HorizontalAlignment="Right" />
-                                            <TextBlock Text="{Binding UpperValue, StringFormat='{}{0:N2}'}" HorizontalAlignment="Right" />
+                                            <TextBlock HorizontalAlignment="Right" Text="From:" />
+                                            <TextBlock HorizontalAlignment="Right" Text="{Binding LowerValue, StringFormat='{}{0:N2}'}" />
+                                            <TextBlock HorizontalAlignment="Right" Text="To:" />
+                                            <TextBlock HorizontalAlignment="Right" Text="{Binding UpperValue, StringFormat='{}{0:N2}'}" />
                                         </UniformGrid>
                                     </DataTemplate>
                                 </Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
