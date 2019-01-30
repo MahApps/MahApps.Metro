@@ -413,5 +413,31 @@
 
             ThemeManager.ChangeTheme(Application.Current, applicationTheme);
         }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task CreateDynamicAccentWithColorAndChangeBaseColorScheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var applicationTheme = ThemeManager.DetectTheme(Application.Current);
+
+            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red));
+            Assert.Null(ex);
+            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Red, changeImmediately: true));
+            Assert.Null(ex);
+
+            var detected = ThemeManager.DetectTheme(Application.Current);
+            Assert.NotNull(detected);
+            Assert.Equal(Colors.Red.ToString().Replace("#", string.Empty), detected.ColorScheme);
+
+            var newTheme = ThemeManager.ChangeThemeBaseColor(Application.Current, "Dark");
+            Assert.NotNull(newTheme);
+
+            newTheme = ThemeManager.ChangeThemeBaseColor(Application.Current, "Light");
+            Assert.NotNull(newTheme);
+
+            ThemeManager.ChangeTheme(Application.Current, applicationTheme);
+        }
     }
 }
