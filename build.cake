@@ -112,25 +112,24 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
-//    var msBuildSettings = new MSBuildSettings {
-//        Verbosity = Verbosity.Minimal,
-//        ToolPath = msBuildPath,
-//        ToolVersion = MSBuildToolVersion.Default,
-//        Configuration = configuration,
-//        // Restore = true, // only with cake 0.28.x
-//        ArgumentCustomization = args => args.Append("/m")
-//    };
-//
-//    MSBuild(solution, msBuildSettings.WithTarget("restore"));
+    var msBuildSettings = new MSBuildSettings {
+        Verbosity = Verbosity.Minimal,
+        ToolPath = msBuildPathExe,
+        ToolVersion = MSBuildToolVersion.Default,
+        Configuration = configuration,
+        ArgumentCustomization = args => args.Append("/m")
+    };
 
-    StartProcess("nuget", new ProcessSettings {
-        Arguments = new ProcessArgumentBuilder()
-            .Append("restore")
-            .Append(solution)
-            .Append("-msbuildpath")
-            .AppendQuoted(msBuildPath.ToString())
-        }
-    );
+    MSBuild(solution, msBuildSettings.WithTarget("restore"));
+
+//    StartProcess("nuget", new ProcessSettings {
+//        Arguments = new ProcessArgumentBuilder()
+//            .Append("restore")
+//            .Append(solution)
+//            .Append("-msbuildpath")
+//            .AppendQuoted(msBuildPath.ToString())
+//        }
+//    );
 });
 
 Task("Build")
