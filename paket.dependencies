@@ -3,6 +3,7 @@ framework: net45, net452, net46, net47, netcoreapp3.0
 //source https://ci.appveyor.com/nuget/xamlcolorschemegenerator
 //source https://ci.appveyor.com/nuget/controlzex
 //source https://ci.appveyor.com/nuget/mahapps-metro-iconpacks
+source https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
 source https://api.nuget.org/v3/index.json
 
 nuget Fody

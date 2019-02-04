@@ -48,7 +48,13 @@ GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVers
 
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
 //var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
-var msBuildPath = latestInstallationPath?.CombineWithFilePath("./MSBuild/Current/Bin/MSBuild.exe");
+var msBuildPath = latestInstallationPath.Combine("./MSBuild/Current/Bin");
+var msBuildPathExe = msBuildPath.CombineWithFilePath("./MSBuild.exe");
+
+if (FileExists(msBuildPathExe) == false)
+{
+    throw new NotImplementedException("You need at least Visual Studio 2019 to build this project.");
+}
 
 var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
 var branchName = gitVersion.BranchName;
@@ -106,16 +112,25 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
-    var msBuildSettings = new MSBuildSettings {
-        Verbosity = Verbosity.Minimal,
-        ToolPath = msBuildPath,
-        ToolVersion = MSBuildToolVersion.Default,
-        Configuration = configuration,
-        // Restore = true, // only with cake 0.28.x
-        ArgumentCustomization = args => args.Append("/m")
-    };
+//    var msBuildSettings = new MSBuildSettings {
+//        Verbosity = Verbosity.Minimal,
+//        ToolPath = msBuildPath,
+//        ToolVersion = MSBuildToolVersion.Default,
+//        Configuration = configuration,
+//        // Restore = true, // only with cake 0.28.x
+//        ArgumentCustomization = args => args.Append("/m")
+//    };
+//
+//    MSBuild(solution, msBuildSettings.WithTarget("restore"));
 
-    MSBuild(solution, msBuildSettings.WithTarget("restore"));
+    StartProcess("nuget", new ProcessSettings {
+        Arguments = new ProcessArgumentBuilder()
+            .Append("restore")
+            .Append(solution)
+            .Append("-msbuildpath")
+            .AppendQuoted(msBuildPath.ToString())
+        }
+    );
 });
 
 Task("Build")
@@ -123,7 +138,7 @@ Task("Build")
 {
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
-        ToolPath = msBuildPath,
+        ToolPath = msBuildPathExe,
         ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration,
         // Restore = true, // only with cake 0.28.x     
@@ -148,7 +163,7 @@ Task("Pack")
 
     var msBuildSettings = new MSBuildSettings {
         Verbosity = Verbosity.Normal,
-        ToolPath = msBuildPath,
+        ToolPath = msBuildPathExe,
         ToolVersion = MSBuildToolVersion.Default,
         Configuration = configuration
     };
