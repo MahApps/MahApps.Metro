@@ -19,6 +19,7 @@ using ControlzEx.Standard;
 using JetBrains.Annotations;
 using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Controls
 {
@@ -915,13 +916,61 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
+            this.InitializeWindowChromeBehavior();
+            this.InitializeSettingsBehavior();
+            // Using ContentRendered causes the window startup animation to show and then shows the glow
+            this.ContentRendered += this.MetroWindow_ContentRendered;
+
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
+        }
 
-            // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
-            this.InitializeBehaviors();
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowTransitionsEnabled)
+            {
+                VisualStateManager.GoToState(this, "AfterLoaded", true);
+            }
+
+            if (this.Flyouts == null)
+            {
+                this.Flyouts = new FlyoutsControl();
+            }
+
+            this.ResetAllWindowCommandsBrush();
+
+            ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
+            this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
+        }
+
+        private void MetroWindow_ContentRendered(object sender, EventArgs e)
+        {
+            this.ContentRendered -= this.MetroWindow_ContentRendered;
+            this.InitializeGlowWindowBehavior();
+        }
+
+        private void InitializeWindowChromeBehavior()
+        {
+            var behavior = new BorderlessWindowBehavior();
+            Interaction.GetBehaviors(this).Add(behavior);
+        }
+
+        private void InitializeGlowWindowBehavior()
+        {
+            var glowWindowBehavior = new GlowWindowBehavior();
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
+            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
+            Interaction.GetBehaviors(this).Add(glowWindowBehavior);
+        }
+
+        private void InitializeSettingsBehavior()
+        {
+            var behaviour = new WindowsSettingBehaviour();
+            Interaction.GetBehaviors(this).Add(behaviour);
         }
 
         /// <summary>
@@ -930,23 +979,23 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private void InitializeBehaviors()
         {
-            var borderlessWindowBehavior = new BorderlessWindowBehavior();
-
-            var windowsSettingBehaviour = new WindowsSettingBehaviour();
-
-            var glowWindowBehavior = new GlowWindowBehavior();
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
-            BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
-
-            var collection = new StylizedBehaviorCollection
-            {
-                borderlessWindowBehavior,
-                windowsSettingBehaviour,
-                glowWindowBehavior
-            };
-
-            StylizedBehaviors.SetBehaviors(this, collection);
+            // var borderlessWindowBehavior = new BorderlessWindowBehavior();
+            //
+            // var windowsSettingBehaviour = new WindowsSettingBehaviour();
+            //
+            // var glowWindowBehavior = new GlowWindowBehavior();
+            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
+            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.GlowBrushProperty, new Binding { Path = new PropertyPath(GlowBrushProperty), Source = this });
+            // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.NonActiveGlowBrushProperty, new Binding { Path = new PropertyPath(NonActiveGlowBrushProperty), Source = this });
+            //
+            // var collection = new StylizedBehaviorCollection
+            // {
+            //     borderlessWindowBehavior,
+            //     windowsSettingBehaviour,
+            //     glowWindowBehavior
+            // };
+            //
+            // StylizedBehaviors.SetBehaviors(this, collection);
         }
 
         protected override async void OnClosing(CancelEventArgs e)
@@ -970,24 +1019,6 @@ namespace MahApps.Metro.Controls
             if (this.RightWindowCommands != null) this.RightWindowCommands.DataContext = this.DataContext;
             if (this.WindowButtonCommands != null) this.WindowButtonCommands.DataContext = this.DataContext;
             if (this.Flyouts != null) this.Flyouts.DataContext = this.DataContext;
-        }
-
-        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowTransitionsEnabled)
-            {
-                VisualStateManager.GoToState(this, "AfterLoaded", true);
-            }
-
-            if (this.Flyouts == null)
-            {
-                this.Flyouts = new FlyoutsControl();
-            }
-
-            this.ResetAllWindowCommandsBrush();
-
-            ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
-            this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
         }
 
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
