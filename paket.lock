@@ -4,6 +4,8 @@ NUGET
     Caliburn.Micro (3.2)
       Caliburn.Micro.Core (3.2)
     Caliburn.Micro.Core (3.2)
+    ControlzEx (4.0.0-alpha0222)
+      Microsoft.Xaml.Behaviors.Wpf (>= 1.0.1)
     Costura.Fody (3.3.2)
       Fody (>= 3.3.5) - restriction: || (== net45) (== net452) (== net46) (== net47) (&& (== netcoreapp3.0) (>= net40))
     ExposedObject (1.2)
@@ -33,6 +35,7 @@ NUGET
     Microsoft.NET.Test.Sdk (15.9)
       Microsoft.CodeCoverage (>= 15.9)
       Microsoft.TestPlatform.TestHost (>= 15.9) - restriction: || (&& (== net45) (>= netcoreapp1.0)) (&& (== net452) (>= netcoreapp1.0)) (&& (== net46) (>= netcoreapp1.0)) (&& (== net47) (>= netcoreapp1.0)) (== netcoreapp3.0)
+    Microsoft.NETCore.Platforms (2.2) - restriction: || (== net45) (&& (== net452) (== net46) (>= wpa81)) (&& (== net452) (== net47) (>= wpa81)) (&& (== net452) (>= netcoreapp2.0)) (&& (== net46) (< net45)) (&& (== net46) (< net452)) (&& (== net46) (>= netcoreapp2.0)) (&& (== net46) (< netstandard1.0)) (&& (== net46) (< netstandard1.3) (>= wpa81)) (&& (== net46) (< portable-net45+win8+wpa81)) (&& (== net46) (>= uap10.0)) (&& (== net46) (>= wp8)) (&& (== net47) (< net45)) (&& (== net47) (< net452)) (&& (== net47) (>= netcoreapp2.0)) (&& (== net47) (< netstandard1.0)) (&& (== net47) (< netstandard1.3) (>= wpa81)) (&& (== net47) (< portable-net45+win8+wpa81)) (&& (== net47) (>= uap10.0)) (&& (== net47) (>= wp8)) (== netcoreapp3.0)
     Microsoft.NETCore.Targets (2.1) - restriction: || (&& (== net45) (>= netcoreapp1.0)) (&& (== net452) (>= netcoreapp1.0)) (&& (== net46) (>= netcoreapp1.0)) (&& (== net47) (>= netcoreapp1.0)) (== netcoreapp3.0)
     Microsoft.SourceLink.Common (1.0.0-beta2-18618-05) - copy_local: true
     Microsoft.SourceLink.GitHub (1.0.0-beta2-18618-05) - copy_local: true
@@ -482,9 +485,3 @@ NUGET
       xunit.extensibility.core (2.4.1)
     xunit.runner.visualstudio (2.4.1)
       Microsoft.NET.Test.Sdk (>= 15.0) - restriction: || (&& (== net45) (>= netcoreapp1.0)) (&& (== net452) (>= netcoreapp1.0)) (&& (== net46) (>= netcoreapp1.0)) (&& (== net47) (>= netcoreapp1.0)) (== netcoreapp3.0)
-  remote: https://ci.appveyor.com/nuget/controlzex
-    ControlzEx (4.0.0-alpha0230)
-      Microsoft.NETCore.Platforms (>= 3.0.0-preview.19073.11) - restriction: || (&& (== net45) (>= netcoreapp3.0)) (&& (== net452) (>= netcoreapp3.0)) (&& (== net46) (>= netcoreapp3.0)) (&& (== net47) (>= netcoreapp3.0)) (== netcoreapp3.0)
-      Microsoft.Xaml.Behaviors.Wpf (>= 1.0.1)
-  remote: https://dotnet.myget.org/F/dotnet-core/api/v3/index.json
-    Microsoft.NETCore.Platforms (3.0.0-preview1-27018-01) - restriction: || (== net45) (&& (== net452) (== net46) (>= wpa81)) (&& (== net452) (== net47) (>= wpa81)) (&& (== net452) (>= netcoreapp3.0)) (&& (== net46) (< net45)) (&& (== net46) (< net452)) (&& (== net46) (>= netcoreapp2.0)) (&& (== net46) (>= netcoreapp3.0)) (&& (== net46) (< netstandard1.0)) (&& (== net46) (< netstandard1.3) (>= wpa81)) (&& (== net46) (< portable-net45+win8+wpa81)) (&& (== net46) (>= uap10.0)) (&& (== net46) (>= wp8)) (&& (== net47) (< net45)) (&& (== net47) (< net452)) (&& (== net47) (>= netcoreapp2.0)) (&& (== net47) (>= netcoreapp3.0)) (&& (== net47) (< netstandard1.0)) (&& (== net47) (< netstandard1.3) (>= wpa81)) (&& (== net47) (< portable-net45+win8+wpa81)) (&& (== net47) (>= uap10.0)) (&& (== net47) (>= wp8)) (== netcoreapp3.0)

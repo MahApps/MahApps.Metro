@@ -112,24 +112,23 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
-    var msBuildSettings = new MSBuildSettings {
-        Verbosity = Verbosity.Minimal,
-        ToolPath = msBuildPathExe,
-        ToolVersion = MSBuildToolVersion.Default,
-        Configuration = configuration,
-        ArgumentCustomization = args => args.Append("/m")
-    };
-
-    MSBuild(solution, msBuildSettings.WithTarget("restore"));
-
-//    StartProcess("nuget", new ProcessSettings {
-//        Arguments = new ProcessArgumentBuilder()
-//            .Append("restore")
-//            .Append(solution)
-//            .Append("-msbuildpath")
-//            .AppendQuoted(msBuildPath.ToString())
-//        }
-//    );
+    // var msBuildSettings = new MSBuildSettings {
+    //     Verbosity = Verbosity.Minimal,
+    //     ToolPath = msBuildPathExe,
+    //     ToolVersion = MSBuildToolVersion.Default,
+    //     Configuration = configuration,
+    //     ArgumentCustomization = args => args.Append("/m")
+    // };
+    // MSBuild(solution, msBuildSettings.WithTarget("restore"));
+    
+    StartProcess("nuget", new ProcessSettings {
+        Arguments = new ProcessArgumentBuilder()
+            .Append("restore")
+            .Append(solution)
+            .Append("-msbuildpath")
+            .AppendQuoted(msBuildPath.ToString())
+       }
+   );
 });
 
 Task("Build")
