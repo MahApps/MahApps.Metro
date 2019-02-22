@@ -221,10 +221,7 @@ namespace MahApps.Metro.Controls
                 {
                     OnClick();
                 }
-                else
-                {
-                    UpdateThumb();
-                }
+                UpdateThumb();
             }
         }
 
