@@ -7,47 +7,30 @@
 #tool xunit.runner.console
 #tool vswhere
 #addin Cake.Figlet
-#addin Cake.Paket
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-if (string.IsNullOrWhiteSpace(target))
-{
-    target = "Default";
-}
-
 var configuration = Argument("configuration", "Release");
-if (string.IsNullOrWhiteSpace(configuration))
-{
-    configuration = "Release";
-}
-
-var verbosity = Argument("verbosity", Verbosity.Normal);
-if (string.IsNullOrWhiteSpace(configuration))
-{
-    verbosity = Verbosity.Normal;
-}
+var verbosity = Argument("verbosity", Verbosity.Minimal);
 
 ///////////////////////////////////////////////////////////////////////////////
 // PREPARATION
 ///////////////////////////////////////////////////////////////////////////////
 
 var repoName = "MahApps.Metro";
-var local = BuildSystem.IsLocalBuild;
+var isLocal = BuildSystem.IsLocalBuild;
 
 // Set build version
-if (local == false
-    || verbosity == Verbosity.Verbose)
+if (isLocal == false || verbosity == Verbosity.Verbose)
 {
     GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.BuildServer });
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
-//var msBuildPath = latestInstallationPath.CombineWithFilePath("./MSBuild/15.0/Bin/MSBuild.exe");
 var msBuildPath = latestInstallationPath.Combine("./MSBuild/Current/Bin");
 var msBuildPathExe = msBuildPath.CombineWithFilePath("./MSBuild.exe");
 
@@ -86,7 +69,7 @@ Setup(ctx =>
     Information("AssemblySemVer  Version: {0}", gitVersion.AssemblySemVer);
     Information("MajorMinorPatch Version: {0}", gitVersion.MajorMinorPatch);
     Information("NuGet           Version: {0}", gitVersion.NuGetVersion);
-    Information("IsLocalBuild           : {0}", local);
+    Information("IsLocalBuild           : {0}", isLocal);
     Information("Branch                 : {0}", branchName);
     Information("Configuration          : {0}", configuration);
     Information("MSBuildPath            : {0}", msBuildPath);
@@ -105,7 +88,9 @@ Task("Clean")
     .ContinueOnError()
     .Does(() =>
 {
-    var directoriesToDelete = GetDirectories("./**/obj").Concat(GetDirectories("./**/bin")).Concat(GetDirectories("./**/Publish"));
+    var directoriesToDelete = GetDirectories("./**/obj")
+        .Concat(GetDirectories("./**/bin"))
+        .Concat(GetDirectories("./**/Publish"));
     DeleteDirectories(directoriesToDelete, new DeleteDirectorySettings { Recursive = true, Force = true });
 });
 
@@ -115,7 +100,6 @@ Task("Restore")
     // var msBuildSettings = new MSBuildSettings {
     //     Verbosity = Verbosity.Minimal,
     //     ToolPath = msBuildPathExe,
-    //     ToolVersion = MSBuildToolVersion.Default,
     //     Configuration = configuration,
     //     ArgumentCustomization = args => args.Append("/m")
     // };
@@ -135,14 +119,12 @@ Task("Build")
     .Does(() =>
 {
     var msBuildSettings = new MSBuildSettings {
-        Verbosity = Verbosity.Normal,
-        ToolPath = msBuildPathExe,
-        ToolVersion = MSBuildToolVersion.Default,
-        Configuration = configuration,
-        // Restore = true, // only with cake 0.28.x     
-        ArgumentCustomization = args => args.Append("/m")
-    };
-
+        Verbosity = verbosity
+        , ToolPath = msBuildPathExe
+        , Configuration = configuration
+        , ArgumentCustomization = args => args.Append("/m")
+        , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
+        };
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
             .WithProperty("Description", "A toolkit for creating Metro / Modern UI styled WPF apps.")
@@ -160,10 +142,9 @@ Task("Pack")
     EnsureDirectoryExists(Directory(publishDir));
 
     var msBuildSettings = new MSBuildSettings {
-        Verbosity = Verbosity.Normal,
-        ToolPath = msBuildPathExe,
-        ToolVersion = MSBuildToolVersion.Default,
-        Configuration = configuration
+        Verbosity = verbosity
+        , ToolPath = msBuildPathExe
+        , Configuration = configuration
     };
     var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
 
