@@ -1,7 +1,4 @@
 <Project>
-    <PropertyGroup>
-        <DefineConstants>$(DefineConstants)</DefineConstants>
-    </PropertyGroup>
 
     <!-- AssemblyInfo -->
     <PropertyGroup>
@@ -16,16 +13,5 @@
         <FileVersion>2.0.0.0</FileVersion>
         <InformationalVersion>2.0.0.0</InformationalVersion>
     </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <Optimize>false</Optimize>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <Optimize>true</Optimize>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <Page Update="@(Page)" SubType="Designer" Generator="MSBuild:Compile" />
-    </ItemGroup>
 
 </Project>

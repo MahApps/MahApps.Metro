@@ -1,4 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
     <!-- NuGet -->
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <Authors>Jan Karger, Dennis Daume, Brendan Forster, Paul Jenkins, Jake Ginnivan, Alex Mitchell</Authors>
@@ -18,8 +19,6 @@
         <DelaySign>false</DelaySign>
         <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     </PropertyGroup>
-    <PropertyGroup>
-        <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
-    </PropertyGroup>
+
     <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.Targets', '$(MSBuildThisFileDirectory)../'))"/>
 </Project>

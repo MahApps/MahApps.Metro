@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="MSBuild.Sdk.Extras">
     <!-- Project properties -->
     <PropertyGroup>
         <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
-        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
+        <DisableFody Condition="'$(Configuration)' == 'Debug' or '$(TargetFramework)' == 'netcoreapp3.0'">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -15,6 +15,12 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
+        <PackageReference Include="Caliburn.Micro" Version="3.*" />
+        <PackageReference Include="Fody" Version="4.*" />
+        <PackageReference Include="Costura.Fody" Version="3.*" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.ComponentModel.Composition"/>
@@ -30,15 +36,4 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
     </ItemGroup>
-    <!--
-    Workaround to fix IntelliSense file generation for XAML projects
-    ISSUE: https://github.com/dotnet/project-system/issues/2488
-  -->
-    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-            <DesignTimeBuild>true</DesignTimeBuild>
-        </PropertyGroup>
-    </Target>
-    <Import Project="..\..\..\.paket\Paket.Restore.targets"/>
 </Project>
