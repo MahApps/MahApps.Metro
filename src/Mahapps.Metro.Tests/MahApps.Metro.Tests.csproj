@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net452;net46;net47</TargetFrameworks>
+        <TargetFrameworks>net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Tests</AssemblyName>
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
     </PropertyGroup>
