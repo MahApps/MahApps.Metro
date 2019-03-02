@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ControlzEx;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
@@ -26,7 +27,7 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// A base class for every MetroTabControl (Pivot).
     /// </summary>
-    public abstract class BaseMetroTabControl : TabControl
+    public abstract class BaseMetroTabControl : TabControlEx
     {
         public BaseMetroTabControl()
         {
