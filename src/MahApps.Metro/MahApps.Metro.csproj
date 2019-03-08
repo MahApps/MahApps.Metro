@@ -9,6 +9,10 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.Configuration"/>
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="ControlzEx" Version="4.0.0-alpha*" />
         <PackageReference Include="Newtonsoft.Json" Version="11.*" PrivateAssets="All" />

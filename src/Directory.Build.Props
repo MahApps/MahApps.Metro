@@ -5,7 +5,7 @@
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences>
+        <!-- <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences> -->
         <LangVersion>latest</LangVersion>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <!-- Set the reference for the other targets -->
-    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+    <!-- <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
         <Reference Include="Microsoft.CSharp"/>
         <Reference Include="PresentationCore"/>
         <Reference Include="PresentationFramework"/>
@@ -31,7 +31,7 @@
         <Reference Include="System.Core"/>
         <Reference Include="System.Xaml"/>
         <Reference Include="WindowsBase"/>
-    </ItemGroup>
+    </ItemGroup> -->
 
     <ItemGroup>
         <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
