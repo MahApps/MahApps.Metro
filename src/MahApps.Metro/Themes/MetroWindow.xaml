@@ -611,15 +611,6 @@
             <Trigger Property="TitleAlignment" Value="Center">
                 <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
             </Trigger>
-            <!--
-                #1823 try to fix another nasty issue
-                WindowState = Maximized
-                ResizeMode = NoResize
-            -->
-            <Trigger Property="ResizeMode" Value="NoResize">
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="ResizeBorderThickness" Value="0" />
-            </Trigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
