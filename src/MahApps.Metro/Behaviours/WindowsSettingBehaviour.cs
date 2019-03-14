@@ -26,16 +26,6 @@ namespace MahApps.Metro.Behaviours
             base.OnDetaching();
         }
 
-        private void AssociatedObject_Closed(object sender, EventArgs e)
-        {
-            this.CleanUp("from AssociatedObject closed event");
-        }
-
-        private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.SaveWindowState();
-        }
-
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             this.LoadWindowState();
@@ -51,6 +41,23 @@ namespace MahApps.Metro.Behaviours
             window.StateChanged += this.AssociatedObject_StateChanged;
             window.Closing += this.AssociatedObject_Closing;
             window.Closed += this.AssociatedObject_Closed;
+
+            Application.Current.SessionEnding += this.CurrentApplicationSessionEnding;
+        }
+
+        private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.SaveWindowState();
+        }
+
+        private void AssociatedObject_Closed(object sender, EventArgs e)
+        {
+            this.CleanUp("from AssociatedObject closed event");
+        }
+
+        private void CurrentApplicationSessionEnding(object sender, SessionEndingCancelEventArgs e)
+        {
+            this.SaveWindowState();
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
@@ -73,12 +80,14 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            Trace.TraceInformation($"{this}: Clean up {fromWhere}.");
+            Debug.WriteLine($"{this}: Clean up {fromWhere}.");
 
             window.StateChanged -= this.AssociatedObject_StateChanged;
             window.Closing -= this.AssociatedObject_Closing;
             window.Closed -= this.AssociatedObject_Closed;
             window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
+
+            Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding;
         }
 
 #pragma warning disable 618
