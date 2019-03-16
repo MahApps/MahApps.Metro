@@ -920,7 +920,8 @@ namespace MahApps.Metro.Controls
             this.InitializeWindowChromeBehavior();
             this.InitializeSettingsBehavior();
             // Using ContentRendered causes the window startup animation to show and then shows the glow
-            this.ContentRendered += this.MetroWindow_ContentRendered;
+            // this.ContentRendered += this.MetroWindow_ContentRendered;
+            this.InitializeGlowWindowBehavior();
 
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
