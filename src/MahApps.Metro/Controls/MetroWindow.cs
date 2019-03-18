@@ -916,14 +916,12 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
+
             // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
             this.InitializeWindowChromeBehavior();
             this.InitializeSettingsBehavior();
-            // Using ContentRendered causes the window startup animation to show and then shows the glow
-            // this.ContentRendered += this.MetroWindow_ContentRendered;
             this.InitializeGlowWindowBehavior();
-
-            this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
             DataContextChanged += MetroWindow_DataContextChanged;
             Loaded += this.MetroWindow_Loaded;
@@ -931,11 +929,6 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.WindowTransitionsEnabled)
-            {
-                VisualStateManager.GoToState(this, "AfterLoaded", true);
-            }
-
             if (this.Flyouts == null)
             {
                 this.Flyouts = new FlyoutsControl();
@@ -945,12 +938,6 @@ namespace MahApps.Metro.Controls
 
             ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
             this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
-        }
-
-        private void MetroWindow_ContentRendered(object sender, EventArgs e)
-        {
-            this.ContentRendered -= this.MetroWindow_ContentRendered;
-            this.InitializeGlowWindowBehavior();
         }
 
         private void InitializeWindowChromeBehavior()
