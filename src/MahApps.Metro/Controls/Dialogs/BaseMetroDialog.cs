@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -338,16 +339,24 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (this.OnRequestClose())
             {
-                //Technically, the Dialog is /always/ inside of a MetroWindow.
-                //If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
+                // Technically, the Dialog is /always/ inside of a MetroWindow.
+                // If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
                 if (this.ParentDialogWindow == null)
                 {
-                    //This is from a user-created MetroWindow
-                    return DialogManager.HideMetroDialogAsync(this.OwningWindow, this);
+                    // this is very bad, or the user called the close event before we can do this
+                    if (this.OwningWindow == null)
+                    {
+                        Trace.TraceWarning($"{this}: Can not request async closing, because the OwningWindow is already null. This can maybe happen if the dialog was closed manually.");
+                        return Task.Factory.StartNew(() => { });
+                    }
+
+                    // This is from a user-created MetroWindow
+                    return this.OwningWindow.HideMetroDialogAsync(this);
                 }
 
-                //This is from a MetroWindow created by the external dialog APIs.
-                return this.WaitForCloseAsync().ContinueWith(x => { this.ParentDialogWindow.Dispatcher.Invoke(new Action(() => { this.ParentDialogWindow.Close(); })); });
+                // This is from a MetroWindow created by the external dialog APIs.
+                return this.WaitForCloseAsync()
+                           .ContinueWith(x => { this.ParentDialogWindow.Dispatcher.Invoke(() => { this.ParentDialogWindow.Close(); }); });
             }
 
             return Task.Factory.StartNew(() => { });
