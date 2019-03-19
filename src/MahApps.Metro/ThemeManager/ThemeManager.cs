@@ -91,9 +91,9 @@ namespace MahApps.Metro
         {
             get
             {
-                EnsureThemes(); 
+                EnsureThemes();
 
-                return baseColors; 
+                return baseColors;
             }
         }
 
@@ -102,11 +102,11 @@ namespace MahApps.Metro
         /// </summary>
         public static ReadOnlyObservableCollection<ColorScheme> ColorSchemes
         {
-            get 
-            { 
-                EnsureThemes(); 
+            get
+            {
+                EnsureThemes();
 
-                return colorSchemes; 
+                return colorSchemes;
             }
         }
 
