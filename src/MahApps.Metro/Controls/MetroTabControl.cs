@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls
 
         // Using a DependencyProperty as the backing store for TabStripMargin.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TabStripMarginProperty =
-            DependencyProperty.Register("TabStripMargin", typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
+            DependencyProperty.Register(nameof(TabStripMargin), typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(CloseTabCommand), typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
         public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
 
