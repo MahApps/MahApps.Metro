@@ -24,9 +24,16 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event EventHandler<HamburgerMenuItemInvokedEventArgs> ItemInvoked;
 
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Event raised when the hamburger button is clicked
+        /// </summary>
+        public event EventHandler<ItemClickEventArgs> HamburgerButtonClick;
+
+        private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
         {
             IsPaneOpen = !IsPaneOpen;
+
+            HamburgerButtonClick?.Invoke(this, new ItemClickEventArgs(_hamburgerButton));
         }
 
         private void OnItemClick()
