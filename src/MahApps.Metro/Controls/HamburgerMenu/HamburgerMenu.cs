@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         {
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click -= HamburgerButton_Click;
+                _hamburgerButton.Click -= this.OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
@@ -49,7 +49,7 @@ namespace MahApps.Metro.Controls
 
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click += HamburgerButton_Click;
+                _hamburgerButton.Click += this.OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
