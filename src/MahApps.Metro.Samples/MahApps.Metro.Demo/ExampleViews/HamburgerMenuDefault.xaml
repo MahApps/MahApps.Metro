@@ -181,6 +181,7 @@
                 BorderThickness="1">
 
             <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                    DisplayMode="CompactOverlay"
                                     HamburgerWidth="48"
                                     IsPaneOpen="{Binding IsHamburgerMenuPaneOpen}"
                                     ItemClick="HamburgerMenu_OnItemClick"
