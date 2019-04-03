@@ -7,9 +7,9 @@ using ControlzEx.Standard;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
-    public class WindowsSettingBehaviour : Behavior<MetroWindow>
+    public class WindowsSettingBehavior : Behavior<MetroWindow>
     {
         /// <inheritdoc />
         protected override void OnAttached()

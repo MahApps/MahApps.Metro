@@ -14,7 +14,7 @@ using System.Windows.Documents;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
     {

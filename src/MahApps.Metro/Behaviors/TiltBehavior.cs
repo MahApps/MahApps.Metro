@@ -7,7 +7,7 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     public class TiltBehavior : Behavior<FrameworkElement>
     {

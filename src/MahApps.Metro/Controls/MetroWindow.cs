@@ -17,7 +17,7 @@ using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using JetBrains.Annotations;
-using MahApps.Metro.Behaviours;
+using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Xaml.Behaviors;
 
@@ -957,19 +957,19 @@ namespace MahApps.Metro.Controls
 
         private void InitializeSettingsBehavior()
         {
-            var behaviour = new WindowsSettingBehaviour();
-            Interaction.GetBehaviors(this).Add(behaviour);
+            var behavior = new WindowsSettingBehavior();
+            Interaction.GetBehaviors(this).Add(behavior);
         }
 
         /// <summary>
         /// Initializes various behaviors for the window.
-        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehaviour"/> and <see cref="GlowWindowBehavior"/>.
+        /// For example <see cref="BorderlessWindowBehavior"/>, <see cref="WindowsSettingBehavior"/> and <see cref="GlowWindowBehavior"/>.
         /// </summary>
         private void InitializeBehaviors()
         {
             // var borderlessWindowBehavior = new BorderlessWindowBehavior();
             //
-            // var windowsSettingBehaviour = new WindowsSettingBehaviour();
+            // var windowsSettingBehavior = new WindowsSettingBehavior();
             //
             // var glowWindowBehavior = new GlowWindowBehavior();
             // BindingOperations.SetBinding(glowWindowBehavior, GlowWindowBehavior.ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(ResizeBorderThicknessProperty), Source = this });
@@ -979,7 +979,7 @@ namespace MahApps.Metro.Controls
             // var collection = new StylizedBehaviorCollection
             // {
             //     borderlessWindowBehavior,
-            //     windowsSettingBehaviour,
+            //     windowsSettingBehavior,
             //     glowWindowBehavior
             // };
             //

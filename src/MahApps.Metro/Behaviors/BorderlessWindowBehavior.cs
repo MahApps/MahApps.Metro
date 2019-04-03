@@ -1,4 +1,4 @@
-﻿namespace MahApps.Metro.Behaviours
+﻿namespace MahApps.Metro.Behaviors
 {
     using System.Windows;
     using System.Windows.Data;
