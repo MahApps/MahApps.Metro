@@ -15,23 +15,27 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <x:Array x:Key="DataGridSelectionUnitArray" Type="DataGridSelectionUnit">
-                <DataGridSelectionUnit>FullRow</DataGridSelectionUnit>
-                <DataGridSelectionUnit>CellOrRowHeader</DataGridSelectionUnit>
-                <DataGridSelectionUnit>Cell</DataGridSelectionUnit>
-            </x:Array>
-            <x:Array x:Key="DataGridGridLinesVisibilityArray" Type="DataGridGridLinesVisibility">
-                <DataGridGridLinesVisibility>All</DataGridGridLinesVisibility>
-                <DataGridGridLinesVisibility>Horizontal</DataGridGridLinesVisibility>
-                <DataGridGridLinesVisibility>Vertical</DataGridGridLinesVisibility>
-                <DataGridGridLinesVisibility>None</DataGridGridLinesVisibility>
-            </x:Array>
-            <x:Array x:Key="DataGridHeadersVisibilityArray" Type="DataGridHeadersVisibility">
-                <DataGridHeadersVisibility>All</DataGridHeadersVisibility>
-                <DataGridHeadersVisibility>Row</DataGridHeadersVisibility>
-                <DataGridHeadersVisibility>Column</DataGridHeadersVisibility>
-                <DataGridHeadersVisibility>None</DataGridHeadersVisibility>
-            </x:Array>
+            <ObjectDataProvider x:Key="DataGridSelectionUnitArray"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type DataGridSelectionUnit}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="DataGridSelectionUnit" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="DataGridGridLinesVisibilityArray"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type DataGridGridLinesVisibility}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="DataGridGridLinesVisibility" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider x:Key="DataGridHeadersVisibilityArray"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type DataGridHeadersVisibility}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="DataGridHeadersVisibility" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
 
             <ControlTemplate x:Key="ConfigDataTemplate">
                 <Grid d:DataContext="{d:DesignInstance DataGrid}" Grid.IsSharedSizeScope="True">
@@ -82,7 +86,7 @@
                               Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
-                              ItemsSource="{StaticResource DataGridSelectionUnitArray}"
+                              ItemsSource="{Binding Source={StaticResource DataGridSelectionUnitArray}}"
                               SelectedValue="{Binding SelectionUnit}" />
 
                     <TextBlock Grid.Row="3"
@@ -95,7 +99,7 @@
                               Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
-                              ItemsSource="{StaticResource DataGridGridLinesVisibilityArray}"
+                              ItemsSource="{Binding Source={StaticResource DataGridGridLinesVisibilityArray}}"
                               SelectedValue="{Binding GridLinesVisibility}" />
 
                     <TextBlock Grid.Row="4"
@@ -108,7 +112,7 @@
                               Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
-                              ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
+                              ItemsSource="{Binding Source={StaticResource DataGridHeadersVisibilityArray}}"
                               SelectedValue="{Binding HeadersVisibility}" />
 
                     <TextBlock Grid.Row="5"

@@ -5,7 +5,6 @@
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <!-- <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences> -->
         <LangVersion>latest</LangVersion>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
@@ -19,19 +18,6 @@
         <PackageReference Include="JetBrains.Annotations" Version="2018.*" PrivateAssets="All" />
         <PackageReference Include="WpfAnalyzers" Version="2.2.*" PrivateAssets="All" />
     </ItemGroup>
-
-    <!-- Set the reference for the other targets -->
-    <!-- <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
-        <Reference Include="System"/>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Xaml"/>
-        <Reference Include="WindowsBase"/>
-    </ItemGroup> -->
 
     <ItemGroup>
         <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
