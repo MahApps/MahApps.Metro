@@ -1,7 +1,7 @@
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     public class StylizedBehaviorCollection : FreezableCollection<Behavior>
     {

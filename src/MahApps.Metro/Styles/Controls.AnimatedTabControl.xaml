@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
@@ -47,7 +47,7 @@
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Controls:TransitioningContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                            <Controls:TransitioningContentControl Behaviors:ReloadBehavior.OnSelectedTabChanged="True"
                                                                   RestartTransitionOnContentChange="True"
                                                                   Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
                                                                   UseLayoutRounding="True">

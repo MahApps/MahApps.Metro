@@ -17,7 +17,7 @@ using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
 using JetBrains.Annotations;
-using MahApps.Metro.Behaviours;
+using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Xaml.Behaviors;
 

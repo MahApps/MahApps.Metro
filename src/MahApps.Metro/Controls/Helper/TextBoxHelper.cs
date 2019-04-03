@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Data;
 using JetBrains.Annotations;
-using MahApps.Metro.Behaviours;
+using MahApps.Metro.Behaviors;
 
 namespace MahApps.Metro.Controls
 {

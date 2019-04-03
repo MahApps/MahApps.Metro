@@ -7,7 +7,7 @@ using ControlzEx.Standard;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     public class WindowsSettingBehavior : Behavior<MetroWindow>
     {

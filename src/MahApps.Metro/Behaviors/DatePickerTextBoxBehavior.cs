@@ -4,7 +4,7 @@ using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
 
     public class DatePickerTextBoxBehavior : Behavior<DatePickerTextBox>
