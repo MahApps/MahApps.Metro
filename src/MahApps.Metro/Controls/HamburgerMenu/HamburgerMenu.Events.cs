@@ -9,6 +9,8 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public partial class HamburgerMenu
     {
+        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(HamburgerMenu));
+
         /// <summary>
         /// Event raised when an item is clicked
         /// </summary>
@@ -27,13 +29,27 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Event raised when the hamburger button is clicked
         /// </summary>
-        public event EventHandler<ItemClickEventArgs> HamburgerButtonClick;
+        public event RoutedEventHandler HamburgerButtonClick
+        {
+            add
+            {
+                this.AddHandler(HamburgerMenu.HamburgerButtonClickEvent, value);
+            }
+            remove
+            {
+                this.RemoveHandler(HamburgerMenu.HamburgerButtonClickEvent, value);
+            }
+        }
 
         private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
         {
-            IsPaneOpen = !IsPaneOpen;
+            var args = new RoutedEventArgs(HamburgerMenu.HamburgerButtonClickEvent, sender);
+            this.RaiseEvent(args);
 
-            HamburgerButtonClick?.Invoke(this, new ItemClickEventArgs(_hamburgerButton));
+            if (!args.Handled)
+            {
+                IsPaneOpen = !IsPaneOpen;
+            }
         }
 
         private void OnItemClick()
