@@ -9,7 +9,7 @@ using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviours
 {
-    public class WindowsSettingBehaviour : Behavior<MetroWindow>
+    public class WindowsSettingBehavior : Behavior<MetroWindow>
     {
         /// <inheritdoc />
         protected override void OnAttached()
