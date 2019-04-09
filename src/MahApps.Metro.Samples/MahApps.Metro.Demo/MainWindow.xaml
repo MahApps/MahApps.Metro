@@ -227,6 +227,13 @@
                           Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
+                <Separator />
+                <MenuItem Header="ShowSystemMenu"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenu}" />
+                <MenuItem Header="ShowSystemMenuOnRightClick"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenuOnRightClick}" />
             </MenuItem>
         </Menu>
 

@@ -84,6 +84,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
 
+        public static readonly DependencyProperty ShowSystemMenuProperty = DependencyProperty.Register("ShowSystemMenu", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register("TitleBarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
@@ -549,7 +550,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the the system menu should popup on right click.
+        /// Gets or sets a value that indicates whether the system menu should popup with left mouse click on the window icon.
+        /// </summary>
+        public bool ShowSystemMenu
+        {
+            get { return (bool)GetValue(ShowSystemMenuProperty); }
+            set { SetValue(ShowSystemMenuProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the system menu should popup with right mouse click if the mouse position is on title bar or on the entire window if it has no title bar (and no title bar height).
         /// </summary>
         public bool ShowSystemMenuOnRightClick
         {
@@ -1307,7 +1317,7 @@ namespace MahApps.Metro.Controls
                 {
                     Close();
                 }
-                else
+                else if (this.ShowSystemMenu)
                 {
                     ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitleBarHeight)));
                 }
