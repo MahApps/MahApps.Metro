@@ -209,7 +209,8 @@
                                       Grid.Column="1"
                                       VerticalAlignment="Center"
                                       Controls:TextBoxHelper.ClearTextButton="True"
-                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}">
+                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                                      SelectedItem="{Binding CurrentCulture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type globalization:CultureInfo}">
                                         <StackPanel Orientation="Horizontal">
@@ -227,6 +228,7 @@
                             </ComboBox>
                         </Grid>
                         <Controls:DateTimePicker Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                                 Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -234,21 +236,13 @@
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                  SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
-                                                 SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
-                            <Controls:DateTimePicker.Culture>
-                                <Binding ElementName="DateTimePickerCulture"
-                                         Path="SelectedItem">
-                                    <Binding.TargetNullValue>
-                                        {x:Static globalization:CultureInfo.CurrentCulture}
-                                    </Binding.TargetNullValue>
-                                </Binding>
-                            </Controls:DateTimePicker.Culture>
-                        </Controls:DateTimePicker>
+                                                 SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
                         <GroupBox Header="Current time">
                             <AdornerDecorator>
                                 <StackPanel>
                                     <Controls:DateTimePicker x:Name="DateTimePicker"
                                                              Margin="2"
+                                                             Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                              HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                              IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                              IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -257,35 +251,19 @@
                                                              PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                              SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
                                                              SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
-                                        <Controls:DateTimePicker.Culture>
-                                            <Binding ElementName="DateTimePickerCulture"
-                                                     Path="SelectedItem">
-                                                <Binding.TargetNullValue>
-                                                    {x:Static globalization:CultureInfo.CurrentCulture}
-                                                </Binding.TargetNullValue>
-                                            </Binding>
-                                        </Controls:DateTimePicker.Culture>
                                         <i:Interaction.Behaviors>
                                             <behaviors:DateTimeNowBehavior />
                                         </i:Interaction.Behaviors>
                                     </Controls:DateTimePicker>
 
                                     <Controls:TimePicker Margin="2"
+                                                         Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                          HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                          IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                          IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                          PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                          SelectedDateTime="{Binding Path=SelectedDateTime, ElementName=DateTimePicker}"
-                                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}">
-                                        <Controls:TimePicker.Culture>
-                                            <Binding ElementName="DateTimePickerCulture"
-                                                     Path="SelectedItem">
-                                                <Binding.TargetNullValue>
-                                                    {x:Static globalization:CultureInfo.CurrentCulture}
-                                                </Binding.TargetNullValue>
-                                            </Binding>
-                                        </Controls:TimePicker.Culture>
-                                    </Controls:TimePicker>
+                                                         SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
 
                                     <Controls:TimePicker Margin="2"
                                                          Controls:TextBoxHelper.AutoWatermark="True"

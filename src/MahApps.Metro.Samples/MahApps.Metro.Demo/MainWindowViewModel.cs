@@ -108,7 +108,20 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
         public List<AppThemeMenuData> AppThemes { get; set; }
+
         public List<CultureInfo> CultureInfos { get; set; }
+
+        private CultureInfo currentCulture = CultureInfo.CurrentCulture;
+        public CultureInfo CurrentCulture
+        {
+            get { return currentCulture; }
+            set
+            {
+                if (Equals(value, this.currentCulture)) return;
+                currentCulture = value;
+                RaisePropertyChanged("CurrentCulture");
+            }
+        }
 
         private ICommand endOfScrollReachedCmdWithParameter;
 
@@ -166,7 +179,7 @@ namespace MetroDemo
             get { return _quitConfirmationEnabled; }
             set
             {
-                if (value.Equals(_quitConfirmationEnabled)) return;
+                if (Equals(value, _quitConfirmationEnabled)) return;
                 _quitConfirmationEnabled = value;
                 RaisePropertyChanged("QuitConfirmationEnabled");
             }
@@ -178,7 +191,7 @@ namespace MetroDemo
             get { return showMyTitleBar; }
             set
             {
-                if (value.Equals(showMyTitleBar)) return;
+                if (Equals(value, showMyTitleBar)) return;
                 showMyTitleBar = value;
                 RaisePropertyChanged("ShowMyTitleBar");
             }
