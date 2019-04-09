@@ -247,14 +247,13 @@
                 <ComboBox x:Name="groupingComboBox"
                           Width="200"
                           Margin="0 10 0 0"
-                          Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True"
-                          Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
+                          Controls:TextBoxHelper.Watermark="Autocompletion with grouping"
                           DisplayMemberPath="Title"
                           IsEditable="True"
                           IsEnabled="True"
                           ItemsSource="{Binding Albums}"
-                          Text="{Binding Path=Title}"
-                          ToolTip="grouping/virtualization works only with .NET 4.5">
+                          Style="{DynamicResource VirtualisedMetroComboBox}"
+                          Text="{Binding Path=Title}">
                     <ComboBox.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
