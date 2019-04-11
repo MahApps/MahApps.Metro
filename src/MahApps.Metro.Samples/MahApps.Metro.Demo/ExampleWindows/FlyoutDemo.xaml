@@ -380,7 +380,8 @@
                     Margin="5"
                     HorizontalAlignment="Center">
             <Button Margin="2"
-                    Command="{Binding ElementName=flyoutsDemo, Path=OpenFirstFlyoutCommand}"
+                    Command="{Binding OpenFirstFlyoutCommand}"
+                    CommandParameter="{Binding ElementName=settingsFlyout}"
                     Content="Show 1" />
             <Button Margin="2"
                     Click="ShowSecond"

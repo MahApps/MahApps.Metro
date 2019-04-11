@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
+using MetroDemo.Core;
 
 namespace MetroDemo.Models
 {
-    public class Artist : INotifyPropertyChanged
+    public class Artist : ViewModelBase
     {
         private int _artistId;
         private string _name;
@@ -13,44 +11,20 @@ namespace MetroDemo.Models
 
         public int ArtistId
         {
-            get { return _artistId; }
-            set
-            {
-                if (value == _artistId) return;
-                _artistId = value;
-                OnPropertyChanged();
-            }
+            get => this._artistId;
+            set => this.Set(ref this._artistId, value);
         }
 
         public string Name
         {
-            get { return _name; }
-            set
-            {
-                if (value == _name) return;
-                _name = value;
-                OnPropertyChanged();
-            }
+            get => this._name;
+            set => this.Set(ref this._name, value);
         }
 
         public List<Album> Albums
         {
-            get { return _albums; }
-            set
-            {
-                if (Equals(value, _albums)) return;
-                _albums = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            get => this._albums;
+            set => this.Set(ref this._albums, value);
         }
     }
 }

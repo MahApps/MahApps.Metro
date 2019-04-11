@@ -1,58 +1,39 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using JetBrains.Annotations;
+using MetroDemo.Core;
 
 namespace MetroDemo.Models
 {
-    public class CustomDialogExampleContent : INotifyPropertyChanged
+    public class CustomDialogExampleContent : ViewModelBase
     {
-        private readonly ICommand _closeCommand;
-
         private string _firstName;
         private string _lastName;
 
         public CustomDialogExampleContent(Action<CustomDialogExampleContent> closeHandler)
         {
-            _closeCommand = new SimpleCommand
-            {
-                ExecuteDelegate = o => closeHandler(this)
-            };
+            this.CloseCommand = new SimpleCommand(o => true, o => closeHandler(this));
         }
 
         public string FirstName
         {
-            get { return _firstName; }
+            get => this._firstName;
             set
             {
-                _firstName = value;
-                OnPropertyChanged();
+                this._firstName = value;
+                this.OnPropertyChanged();
             }
         }
 
         public string LastName
         {
-            get { return _lastName; }
+            get => this._lastName;
             set
             {
-                _lastName = value;
-                OnPropertyChanged();
+                this._lastName = value;
+                this.OnPropertyChanged();
             }
         }
 
-        public ICommand CloseCommand
-        {
-            get { return _closeCommand; }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public ICommand CloseCommand { get; }
     }
 }
