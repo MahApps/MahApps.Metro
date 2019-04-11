@@ -153,10 +153,10 @@
                                     Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                     <!--  flyouts  -->
-                    <ContentControl Grid.Row="0"
-                                    Grid.RowSpan="3"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="7"
+                    <ContentControl Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="5"
                                     VerticalAlignment="Stretch"
                                     Panel.ZIndex="2"
                                     Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
