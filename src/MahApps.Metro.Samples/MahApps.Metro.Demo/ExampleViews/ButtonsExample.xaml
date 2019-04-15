@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:MetroDemo.Models"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="737.288"
              d:DesignWidth="800"
@@ -324,6 +325,31 @@
 
             <Label Content="DropDownButton" Style="{DynamicResource DescriptionHeaderStyle}" />
 
+            <Controls:DropDownButton Margin="5"
+                                     Command="{Binding ArtistsDropDownCommand}"
+                                     Content="Artists"
+                                     DisplayMemberPath="Name"
+                                     ItemsSource="{Binding Source={x:Static models:SampleData.Artists}}">
+                <Controls:DropDownButton.Icon>
+                    <iconPacks:PackIconMaterial Margin="6" Kind="Artist" />
+                </Controls:DropDownButton.Icon>
+            </Controls:DropDownButton>
+
+            <Controls:DropDownButton Margin="5"
+                                     Content="Genres"
+                                     DisplayMemberPath="Name"
+                                     ItemsSource="{Binding Source={x:Static models:SampleData.Genres}}">
+                <Controls:DropDownButton.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:DropDownButton}}, Path=DataContext.GenreDropDownMenuItemCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding Name}" />
+                    </Style>
+                </Controls:DropDownButton.ItemContainerStyle>
+                <Controls:DropDownButton.Icon>
+                    <iconPacks:PackIconMaterial Margin="6" Kind="Audiobook" />
+                </Controls:DropDownButton.Icon>
+            </Controls:DropDownButton>
+
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
@@ -350,28 +376,25 @@
 
             <Label Content="SplitButton" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:SplitButton Name="SplitButton0"
-                                  Width="130"
-                                  Margin="{StaticResource ControlMargin}"
-                                  HorizontalAlignment="Center"
+            <Controls:SplitButton Margin="5"
                                   HorizontalContentAlignment="Left"
-                                  DisplayMemberPath="Title"
-                                  ItemsSource="{Binding Albums}"
+                                  Command="{Binding ArtistsDropDownCommand}"
+                                  DisplayMemberPath="Name"
+                                  ItemsSource="{Binding Source={x:Static models:SampleData.Artists}}"
                                   SelectedIndex="2"
                                   SelectionChanged="SplitButton_OnSelectionChanged">
                 <Controls:SplitButton.Icon>
-                    <iconPacks:PackIconModern Margin="6" Kind="Alert" />
+                    <iconPacks:PackIconMaterial Margin="6" Kind="Audiobook" />
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
 
-            <Controls:SplitButton Name="SplitButton1"
-                                  Width="130"
-                                  Margin="{StaticResource ControlMargin}"
-                                  HorizontalAlignment="Center"
-                                  DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
-                                  ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}"
+            <Controls:SplitButton Margin="5"
+                                  Command="{Binding GenreSplitButtonItemCommand}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Name}"
+                                  DisplayMemberPath="Name"
+                                  ItemsSource="{Binding Source={x:Static models:SampleData.Genres}}"
                                   Orientation="Vertical"
-                                  SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}">
+                                  SelectedIndex="1">
                 <Controls:SplitButton.Icon>
                     <iconPacks:PackIconModern Margin="6" Kind="Book" />
                 </Controls:SplitButton.Icon>

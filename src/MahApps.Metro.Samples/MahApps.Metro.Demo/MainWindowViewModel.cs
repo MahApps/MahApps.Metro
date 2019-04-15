@@ -160,7 +160,25 @@ namespace MetroDemo
             this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
 
             this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => (o as Flyout).IsOpen = !(o as Flyout).IsOpen);
+
+            this.ArtistsDropDownCommand = new SimpleCommand(o => false);
+
+            this.GenreDropDownMenuItemCommand = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
+                );
+
+            this.GenreSplitButtonItemCommand = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
+                );
         }
+
+        public ICommand ArtistsDropDownCommand { get; }
+
+        public ICommand GenreDropDownMenuItemCommand { get; }
+
+        public ICommand GenreSplitButtonItemCommand { get; }
 
         public ICommand OpenFirstFlyoutCommand { get; }
 

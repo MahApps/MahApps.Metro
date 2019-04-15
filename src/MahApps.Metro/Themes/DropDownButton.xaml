@@ -134,11 +134,18 @@
                             <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
                             <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-                        </Trigger>
+                        </MultiTrigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".55" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
