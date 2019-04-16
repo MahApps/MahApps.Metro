@@ -25,15 +25,13 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultEditingElementStyle == null)
                 {
-                    Style style = new Style(typeof(NumericUpDown));
+                    var numericUpDown = new NumericUpDown();
 
-                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0.0)));
-                    style.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(0.0)));
-                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
+                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
-                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
-                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
 
                     style.Seal();
                     _defaultEditingElementStyle = style;
@@ -49,19 +47,16 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultElementStyle == null)
                 {
-                    Style style = new Style(typeof(NumericUpDown));
+                    var numericUpDown = new NumericUpDown();
 
-                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
-                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
-                    style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
-                    style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
-                    style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
-                    style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
+                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
-                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
-                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
                     style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
+
+                    style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
+                    style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -85,7 +80,7 @@ namespace MahApps.Metro.Controls
 
         private void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
-            Style style = PickStyle(isEditing, defaultToElementStyle);
+            Style style = this.PickStyle(isEditing, defaultToElementStyle);
             if (style != null)
             {
                 element.Style = style;
@@ -94,14 +89,12 @@ namespace MahApps.Metro.Controls
 
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            return GenerateNumericUpDown(true, cell);
+            return this.GenerateNumericUpDown(true, cell);
         }
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            NumericUpDown generateNumericUpDown = GenerateNumericUpDown(false, cell);
-            generateNumericUpDown.HideUpDownButtons = true;
-            return generateNumericUpDown;
+            return this.GenerateNumericUpDown(false, cell);
         }
 
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
@@ -112,32 +105,32 @@ namespace MahApps.Metro.Controls
                 numericUpDown = new NumericUpDown();
             }
 
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontFamilyProperty, TextElement.FontFamilyProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontSizeProperty, TextElement.FontSizeProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontStyleProperty, TextElement.FontStyleProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontWeightProperty, TextElement.FontWeightProperty);
+            SyncColumnProperty(this, numericUpDown, FontFamilyProperty, TextElement.FontFamilyProperty);
+            SyncColumnProperty(this, numericUpDown, FontSizeProperty, TextElement.FontSizeProperty);
+            SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
+            SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
 
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.StringFormatProperty, NumericUpDown.StringFormatProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MinimumProperty, NumericUpDown.MinimumProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MaximumProperty, NumericUpDown.MaximumProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.IntervalProperty, NumericUpDown.IntervalProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
+            SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
+            SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
+            SyncColumnProperty(this, numericUpDown, MaximumProperty, NumericUpDown.MaximumProperty);
+            SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
+            SyncColumnProperty(this, numericUpDown, HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
+            SyncColumnProperty(this, numericUpDown, UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
 
             if (isEditing)
             {
-                SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.ForegroundProperty, TextElement.ForegroundProperty);
+                SyncColumnProperty(this, numericUpDown, ForegroundProperty, TextElement.ForegroundProperty);
             }
             else
             {
-                if (!SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.ForegroundProperty, TextElement.ForegroundProperty))
+                if (!SyncColumnProperty(this, numericUpDown, ForegroundProperty, TextElement.ForegroundProperty))
                 {
                     ApplyBinding(new Binding(Control.ForegroundProperty.Name) { Source = cell, Mode = BindingMode.OneWay }, numericUpDown, TextElement.ForegroundProperty);
                 }
             }
 
-            ApplyStyle(isEditing, true, numericUpDown);
-            ApplyBinding(Binding, numericUpDown, NumericUpDown.ValueProperty);
+            this.ApplyStyle(isEditing, true, numericUpDown);
+            ApplyBinding(this.Binding, numericUpDown, NumericUpDown.ValueProperty);
 
             numericUpDown.InterceptArrowKeys = true;
             numericUpDown.InterceptMouseWheel = true;
@@ -161,6 +154,7 @@ namespace MahApps.Metro.Controls
                 numericUpDown.SelectAll();
                 return numericUpDown.Value;
             }
+
             return null;
         }
 
@@ -191,11 +185,12 @@ namespace MahApps.Metro.Controls
 
         private Style PickStyle(bool isEditing, bool defaultToElementStyle)
         {
-            Style style = isEditing ? EditingElementStyle : ElementStyle;
+            Style style = isEditing ? this.EditingElementStyle : this.ElementStyle;
             if (isEditing && defaultToElementStyle && (style == null))
             {
-                style = ElementStyle;
+                style = this.ElementStyle;
             }
+
             return style;
         }
 
@@ -215,8 +210,8 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         public string StringFormat
         {
-            get { return (string)GetValue(StringFormatProperty); }
-            set { SetValue(StringFormatProperty, value); }
+            get { return (string)this.GetValue(StringFormatProperty); }
+            set { this.SetValue(StringFormatProperty, value); }
         }
 
         /// <summary>
@@ -229,8 +224,8 @@ namespace MahApps.Metro.Controls
 
         public double Minimum
         {
-            get { return (double)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get { return (double)this.GetValue(MinimumProperty); }
+            set { this.SetValue(MinimumProperty, value); }
         }
 
         /// <summary>
@@ -243,8 +238,8 @@ namespace MahApps.Metro.Controls
 
         public double Maximum
         {
-            get { return (double)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get { return (double)this.GetValue(MaximumProperty); }
+            set { this.SetValue(MaximumProperty, value); }
         }
 
         /// <summary>
@@ -257,8 +252,8 @@ namespace MahApps.Metro.Controls
 
         public double Interval
         {
-            get { return (double)GetValue(IntervalProperty); }
-            set { SetValue(IntervalProperty, value); }
+            get { return (double)this.GetValue(IntervalProperty); }
+            set { this.SetValue(IntervalProperty, value); }
         }
 
         /// <summary>
@@ -271,8 +266,8 @@ namespace MahApps.Metro.Controls
 
         public bool HideUpDownButtons
         {
-            get { return (bool)GetValue(HideUpDownButtonsProperty); }
-            set { SetValue(HideUpDownButtonsProperty, value); }
+            get { return (bool)this.GetValue(HideUpDownButtonsProperty); }
+            set { this.SetValue(HideUpDownButtonsProperty, value); }
         }
 
         /// <summary>
@@ -285,8 +280,8 @@ namespace MahApps.Metro.Controls
 
         public double UpDownButtonsWidth
         {
-            get { return (double)GetValue(UpDownButtonsWidthProperty); }
-            set { SetValue(UpDownButtonsWidthProperty, value); }
+            get { return (double)this.GetValue(UpDownButtonsWidthProperty); }
+            set { this.SetValue(UpDownButtonsWidthProperty, value); }
         }
 
         /// <summary>
@@ -303,8 +298,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontFamily FontFamily
         {
-            get { return (FontFamily)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
+            get { return (FontFamily)this.GetValue(FontFamilyProperty); }
+            set { this.SetValue(FontFamilyProperty, value); }
         }
 
         /// <summary>
@@ -323,8 +318,8 @@ namespace MahApps.Metro.Controls
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double)GetValue(FontSizeProperty); }
-            set { SetValue(FontSizeProperty, value); }
+            get { return (double)this.GetValue(FontSizeProperty); }
+            set { this.SetValue(FontSizeProperty, value); }
         }
 
         /// <summary> 
@@ -341,8 +336,8 @@ namespace MahApps.Metro.Controls
         /// </summary> 
         public FontStyle FontStyle
         {
-            get { return (FontStyle)GetValue(FontStyleProperty); }
-            set { SetValue(FontStyleProperty, value); }
+            get { return (FontStyle)this.GetValue(FontStyleProperty); }
+            set { this.SetValue(FontStyleProperty, value); }
         }
 
         /// <summary> 
@@ -359,8 +354,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
-            set { SetValue(FontWeightProperty, value); }
+            get { return (FontWeight)this.GetValue(FontWeightProperty); }
+            set { this.SetValue(FontWeightProperty, value); }
         }
 
         /// <summary>
@@ -377,8 +372,8 @@ namespace MahApps.Metro.Controls
         /// </summary> 
         public Brush Foreground
         {
-            get { return (Brush)GetValue(ForegroundProperty); }
-            set { SetValue(ForegroundProperty, value); }
+            get { return (Brush)this.GetValue(ForegroundProperty); }
+            set { this.SetValue(ForegroundProperty, value); }
         }
 
         /// <summary>
@@ -403,38 +398,39 @@ namespace MahApps.Metro.Controls
             {
                 switch (propertyName)
                 {
-                    case nameof(FontFamily):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontFamilyProperty, TextElement.FontFamilyProperty);
+                    case nameof(this.FontFamily):
+                        SyncColumnProperty(this, numericUpDown, FontFamilyProperty, TextElement.FontFamilyProperty);
                         break;
-                    case nameof(FontSize):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontSizeProperty, TextElement.FontSizeProperty);
+                    case nameof(this.FontSize):
+                        SyncColumnProperty(this, numericUpDown, FontSizeProperty, TextElement.FontSizeProperty);
                         break;
-                    case nameof(FontStyle):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontStyleProperty, TextElement.FontStyleProperty);
+                    case nameof(this.FontStyle):
+                        SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
                         break;
-                    case nameof(FontWeight):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontWeightProperty, TextElement.FontWeightProperty);
+                    case nameof(this.FontWeight):
+                        SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
                         break;
-                    case nameof(StringFormat):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.StringFormatProperty, NumericUpDown.StringFormatProperty);
+                    case nameof(this.StringFormat):
+                        SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
                         break;
-                    case nameof(Minimum):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MinimumProperty, NumericUpDown.MinimumProperty);
+                    case nameof(this.Minimum):
+                        SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
                         break;
-                    case nameof(Maximum):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MaximumProperty, NumericUpDown.MaximumProperty);
+                    case nameof(this.Maximum):
+                        SyncColumnProperty(this, numericUpDown, MaximumProperty, NumericUpDown.MaximumProperty);
                         break;
-                    case nameof(Interval):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.IntervalProperty, NumericUpDown.IntervalProperty);
+                    case nameof(this.Interval):
+                        SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
                         break;
-                    case nameof(HideUpDownButtons):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
+                    case nameof(this.HideUpDownButtons):
+                        SyncColumnProperty(this, numericUpDown, HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
                         break;
-                    case nameof(UpDownButtonsWidth):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
+                    case nameof(this.UpDownButtonsWidth):
+                        SyncColumnProperty(this, numericUpDown, UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
                         break;
                 }
             }
+
             base.RefreshCellContent(element, propertyName);
         }
     }
