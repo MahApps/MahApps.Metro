@@ -26,6 +26,25 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle"
+           BasedOn="{StaticResource {x:Type Controls:NumericUpDown}}"
+           TargetType="{x:Type Controls:NumericUpDown}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HideUpDownButtons" Value="True" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle"
+           BasedOn="{StaticResource MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle}"
+           TargetType="{x:Type Controls:NumericUpDown}">
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="HideUpDownButtons" Value="False" />
+    </Style>
+
     <Style x:Key="{ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
