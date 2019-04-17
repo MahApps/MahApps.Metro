@@ -150,38 +150,75 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderMarginProperty, value);
         }
 
-        public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-
-        /// <summary>
-        /// Sets the brush used to draw the focus border.
-        /// </summary>
-        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
-        {
-            obj.SetValue(FocusBorderBrushProperty, value);
-        }
+        public static readonly DependencyProperty FocusBorderBrushProperty
+            = DependencyProperty.RegisterAttached("FocusBorderBrush",
+                                                  typeof(Brush),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the focus border.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static Brush GetFocusBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(FocusBorderBrushProperty);
         }
 
         /// <summary>
-        /// Sets the brush used to draw the mouse over brush.
+        /// Sets the brush used to draw the focus border.
         /// </summary>
-        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
         {
-            obj.SetValue(MouseOverBorderBrushProperty, value);
+            obj.SetValue(FocusBorderBrushProperty, value);
         }
+
+        public static readonly DependencyProperty FocusBorderThicknessProperty
+            = DependencyProperty.RegisterAttached("FocusBorderThickness",
+                                                  typeof(Thickness),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the brush used to draw the focus border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static Thickness GetFocusBorderThickness(DependencyObject obj)
+        {
+            return (Thickness)obj.GetValue(FocusBorderThicknessProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the focus border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static void SetFocusBorderThickness(DependencyObject obj, Thickness value)
+        {
+            obj.SetValue(FocusBorderThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseOverBorderBrushProperty
+            = DependencyProperty.RegisterAttached("MouseOverBorderBrush",
+                                                  typeof(Brush),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the mouse over brush.
@@ -196,6 +233,21 @@ namespace MahApps.Metro.Controls
         public static Brush GetMouseOverBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the mouse over brush.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(Tile))]
+        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(MouseOverBorderBrushProperty, value);
         }
 
         /// <summary>
