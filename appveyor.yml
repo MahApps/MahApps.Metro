@@ -18,8 +18,8 @@ install:
   #- ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
   #- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.0.100-preview4-010538/dotnet-sdk-3.0.100-preview4-010538-win-x64.exe'
   #- ps: Start-Process .\dotnet-sdk-3.0.100-preview4-010538-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
-  - ps: Start-FileDownload 'https://download.visualstudio.microsoft.com/download/pr/31b5b67f-b787-4f73-a728-5ec61f10a4de/be6430bcd9a62f610cd9f12f8cc2c736/dotnet-sdk-3.0.100-preview3-010431-win-x64.exe'
-  - ps: Start-Process .\dotnet-sdk-3.0.100-preview3-010431-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  - ps: Start-FileDownload 'https://download.visualstudio.microsoft.com/download/pr/4032ceb5-61cd-495a-ab25-475aa2232f28/7eb614e777d87ef0d49f86be4fc8bbde/dotnet-sdk-3.0.100-preview4-011223-win-x64.exe'
+  - ps: Start-Process .\dotnet-sdk-3.0.100-preview4-011223-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
 
 pull_requests:
   do_not_increment_build_number: false
