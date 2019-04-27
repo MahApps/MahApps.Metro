@@ -18,9 +18,18 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroTabControl class.
         /// </summary>
-        public MetroTabControl()
+        static MetroTabControl()
         {
-            DefaultStyleKey = typeof(MetroTabControl);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroTabControl), new FrameworkPropertyMetadata(typeof(MetroTabControl)));
+        }
+
+        /// <summary>Identifies the <see cref="KeepVisualTreeInMemoryWhenChangingTabs"/> dependency property.</summary>
+        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs), typeof(bool), typeof(MetroTabControl), new PropertyMetadata(true));
+
+        public bool KeepVisualTreeInMemoryWhenChangingTabs
+        {
+            get { return (bool)GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty); }
+            set { SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, value); }
         }
     }
 
@@ -29,8 +38,9 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public abstract class BaseMetroTabControl : TabControlEx
     {
-        public BaseMetroTabControl()
+        static BaseMetroTabControl()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroTabControl), new FrameworkPropertyMetadata(typeof(BaseMetroTabControl)));
         }
 
         public Thickness TabStripMargin

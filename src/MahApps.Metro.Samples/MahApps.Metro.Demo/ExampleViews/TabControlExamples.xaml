@@ -369,6 +369,14 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Margin="5 5"
                                    VerticalAlignment="Center"
+                                   Text="Keep VisualTree in memory" />
+                        <CheckBox x:Name="KeepVisualTreeInMemoryCheckBox"
+                                  Margin="5 5"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding ElementName=MetroTabControl, Path=KeepVisualTreeInMemoryWhenChangingTabs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Margin="5 5"
+                                   VerticalAlignment="Center"
                                    Text="Underlined type" />
                         <ComboBox x:Name="MetroTabControlUnderlinedComboBox"
                                   Margin="5 5"
@@ -387,11 +395,15 @@
                                   ItemsSource="{Binding Source={StaticResource TabStripPlacementEnumValues}}"
                                   SelectedItem="{x:Static Dock.Top}" />
                     </StackPanel>
-                    <Controls:MetroTabControl Height="200"
+                    <Controls:MetroTabControl x:Name="MetroTabControl"
+                                              Height="200"
                                               Controls:TabControlHelper.Underlined="{Binding ElementName=MetroTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               TabStripPlacement="{Binding ElementName=MetroTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _1">
-                            <TextBlock FontSize="30" Text="Content" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontSize="30" Text="Load-Count: " />
+                                <TextBlock FontSize="30" Text="0" Loaded="TextBlock_OnLoaded" />
+                            </StackPanel>
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _2 more">
                             <TextBlock FontSize="30" Text="More content" />
