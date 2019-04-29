@@ -172,6 +172,8 @@ namespace MetroDemo
                 o => true,
                 async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
                 );
+
+            this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -179,6 +181,8 @@ namespace MetroDemo
         public ICommand GenreDropDownMenuItemCommand { get; }
 
         public ICommand GenreSplitButtonItemCommand { get; }
+
+        public ICommand ShowHamburgerAboutCommand { get; }
 
         public ICommand OpenFirstFlyoutCommand { get; }
 
