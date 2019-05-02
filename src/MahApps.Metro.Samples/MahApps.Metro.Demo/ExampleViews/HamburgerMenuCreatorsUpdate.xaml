@@ -187,6 +187,7 @@
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
+                        <Controls:HamburgerMenuSeparatorItem />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
                     </Controls:HamburgerMenuItemCollection>
