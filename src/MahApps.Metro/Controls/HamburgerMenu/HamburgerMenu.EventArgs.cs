@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 
 namespace MahApps.Metro.Controls
@@ -8,9 +7,21 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class ItemClickEventArgs : RoutedEventArgs
     {
-        public ItemClickEventArgs(object clickedObject)
+        /// <inheritdoc />
+        public ItemClickEventArgs()
         {
-            ClickedItem = clickedObject;
+        }
+
+        /// <inheritdoc />
+        public ItemClickEventArgs(RoutedEvent routedEvent)
+            : base(routedEvent)
+        {
+        }
+
+        /// <inheritdoc />
+        public ItemClickEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
         }
 
         /// <summary>
@@ -19,13 +30,28 @@ namespace MahApps.Metro.Controls
         public object ClickedItem { get; internal set; }
     }
 
-    public delegate void ItemClickEventHandler(object sender, ItemClickEventArgs e);
-
     /// <summary>
     /// EventArgs used for the <see cref="HamburgerMenu"/> ItemInvoked event.
     /// </summary>
-    public class HamburgerMenuItemInvokedEventArgs : EventArgs
+    public class HamburgerMenuItemInvokedEventArgs : RoutedEventArgs
     {
+        /// <inheritdoc />
+        public HamburgerMenuItemInvokedEventArgs()
+        {
+        }
+
+        /// <inheritdoc />
+        public HamburgerMenuItemInvokedEventArgs(RoutedEvent routedEvent)
+            : base(routedEvent)
+        {
+        }
+
+        /// <inheritdoc />
+        public HamburgerMenuItemInvokedEventArgs(RoutedEvent routedEvent, object source)
+            : base(routedEvent, source)
+        {
+        }
+
         /// <summary>
         /// Gets the invoked item
         /// </summary>
