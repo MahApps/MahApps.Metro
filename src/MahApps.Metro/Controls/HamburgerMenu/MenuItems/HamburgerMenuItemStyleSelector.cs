@@ -5,6 +5,9 @@ namespace MahApps.Metro.Controls
 {
     public class HamburgerMenuItemStyleSelector : StyleSelector
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether which item container style will be used for the HamburgerMenuItem.
+        /// </summary>
         public bool IsItemOptions { get; set; }
 
         /// <inheritdoc />
@@ -25,7 +28,7 @@ namespace MahApps.Metro.Controls
                     }
                     else if (item is HamburgerMenuItem)
                     {
-                        var itemContainerStyle = this.IsItemOptions ? hamburgerMenu.ItemContainerStyle : hamburgerMenu.OptionsItemContainerStyle;
+                        var itemContainerStyle = this.IsItemOptions ? hamburgerMenu.OptionsItemContainerStyle : hamburgerMenu.ItemContainerStyle;
                         if (itemContainerStyle != null)
                         {
                             return itemContainerStyle;
