@@ -93,6 +93,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ItemContainerStyleProperty = DependencyProperty.Register(nameof(ItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="SeparatorItemContainerStyle"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SeparatorItemContainerStyleProperty = DependencyProperty.Register(nameof(SeparatorItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="ItemTemplate"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
@@ -241,6 +246,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)GetValue(ItemContainerStyleProperty); }
             set { SetValue(ItemContainerStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the Style used for each separator item.
+        /// </summary>
+        public Style SeparatorItemContainerStyle
+        {
+            get { return (Style)GetValue(SeparatorItemContainerStyleProperty); }
+            set { SetValue(SeparatorItemContainerStyleProperty, value); }
         }
 
         /// <summary>

@@ -3,9 +3,9 @@
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// The HamburgerMenuItemCollection provides typed collection of HamburgerMenuItem.
+    /// The HamburgerMenuItemCollection provides typed collection of HamburgerMenuItemBase.
     /// </summary>
-    public class HamburgerMenuItemCollection : FreezableCollection<HamburgerMenuItem>
+    public class HamburgerMenuItemCollection : FreezableCollection<HamburgerMenuItemBase>
     {
         protected override Freezable CreateInstanceCore()
         {

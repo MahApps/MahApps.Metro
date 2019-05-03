@@ -16,6 +16,8 @@
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeHeight">24</system:Double>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <Controls:HamburgerMenuItemStyleSelector x:Key="HamburgerMenuItemStyleSelector" />
+    <Controls:HamburgerMenuItemStyleSelector x:Key="HamburgerMenuItemOptionsStyleSelector" IsItemOptions="True" />
 
     <Style x:Key="HamburgerButtonStyle"
            BasedOn="{StaticResource ChromelessButtonStyle}"
@@ -177,20 +179,26 @@
                    UseLayoutRounding="True" />
     </ControlTemplate>
 
-    <Style x:Key="HamburgerMenuItemStyle"
+    <Style x:Key="HamburgerMenuItemBaseStyle"
            BasedOn="{StaticResource MetroListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
-        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="HamburgerMenuItemStyle"
+           BasedOn="{StaticResource HamburgerMenuItemBaseStyle}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
+        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -263,7 +271,28 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="HamburgerMenuSeparatorItemStyle"
+           BasedOn="{StaticResource HamburgerMenuItemBaseStyle}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="0 5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Separator Margin="{TemplateBinding Padding}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="HamburgerMenuListStyle"
@@ -354,7 +383,7 @@
                                  AutomationProperties.Name="Menu items"
                                  Foreground="{TemplateBinding PaneForeground}"
                                  IsTextSearchEnabled="False"
-                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemStyleSelector}"
                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding ItemsSource}"
@@ -372,7 +401,7 @@
                                  AutomationProperties.Name="Option items"
                                  Foreground="{TemplateBinding PaneForeground}"
                                  IsTextSearchEnabled="False"
-                                 ItemContainerStyle="{TemplateBinding OptionsItemContainerStyle}"
+                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemOptionsStyleSelector}"
                                  ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding OptionsItemsSource}"

@@ -31,6 +31,7 @@
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
         <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
         <Setter Property="PaneMargin" Value="0 0 0 8" />
+        <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource HamburgerMenuSeparatorItemStyle}" />
         <Setter Property="Template" Value="{DynamicResource HamburgerMenuTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
