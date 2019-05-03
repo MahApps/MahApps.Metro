@@ -161,6 +161,62 @@ Task("Pack")
     );
 });
 
+Task("Sign")
+    .WithCriteria(() => AppVeyor.IsRunningOnAppVeyor)
+    .ContinueOnError()
+    .Does(() =>
+{
+    if (!DirectoryExists(Directory(publishDir)))
+    {
+        return;
+    }
+
+    StartProcess("dotnet", new ProcessSettings {
+        Arguments = new ProcessArgumentBuilder()
+            .Append("tool")
+            .Append("restore")
+       }
+    );
+
+    var files = GetFiles(publishDir + "/*.nupkg");
+    foreach(var file in files)
+    {
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(file.ToString())
+                .Append("--force")
+                .Append("--file-digest sha256")
+                .Append("--timestamp-rfc3161 http://timestamp.digicert.com")
+                .Append("--timestamp-digest sha256")
+                .Append("--azure-key-vault-url").Append(EnvironmentVariable("azure-key-vault-url"))
+                .Append("--azure-key-vault-client-id").Append(EnvironmentVariable("azure-key-vault-client-id"))
+                .Append("--azure-key-vault-client-secret").Append(EnvironmentVariable("azure-key-vault-client-secret"))
+                .Append("--azure-key-vault-certificate").Append(EnvironmentVariable("azure-key-vault-certificate"))
+        };
+
+        using(var process = StartAndReturnProcess("NuGetKeyVaultSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
+});
+
 Task("Zip")
     .Does(() =>
 {
@@ -240,6 +296,7 @@ Task("Default")
 Task("appveyor")
     .IsDependentOn("Default")
     .IsDependentOn("Pack")
+    .IsDependentOn("Sign")
     .IsDependentOn("Zip");
 
 ///////////////////////////////////////////////////////////////////////////////
