@@ -2,6 +2,9 @@
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
+#module nuget:?package=Cake.DotNetTool.Module
+
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
 #tool GitVersion.CommandLine
 #tool gitreleasemanager
 #tool xunit.runner.console
@@ -162,7 +165,6 @@ Task("Pack")
 });
 
 Task("Sign")
-    .WithCriteria(() => AppVeyor.IsRunningOnAppVeyor)
     .ContinueOnError()
     .Does(() =>
 {
@@ -171,12 +173,29 @@ Task("Sign")
         return;
     }
 
-    StartProcess("dotnet", new ProcessSettings {
-        Arguments = new ProcessArgumentBuilder()
-            .Append("tool")
-            .Append("restore")
-       }
-    );
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
 
     var files = GetFiles(publishDir + "/*.nupkg");
     foreach(var file in files)
@@ -186,18 +205,18 @@ Task("Sign")
             RedirectStandardError = true,
             Arguments = new ProcessArgumentBuilder()
                 .Append("sign")
-                .Append(file.ToString())
+                .Append(MakeAbsolute(file).FullPath)
                 .Append("--force")
-                .Append("--file-digest sha256")
-                .Append("--timestamp-rfc3161 http://timestamp.digicert.com")
-                .Append("--timestamp-digest sha256")
-                .Append("--azure-key-vault-url").Append(EnvironmentVariable("azure-key-vault-url"))
-                .Append("--azure-key-vault-client-id").Append(EnvironmentVariable("azure-key-vault-client-id"))
-                .Append("--azure-key-vault-client-secret").Append(EnvironmentVariable("azure-key-vault-client-secret"))
-                .Append("--azure-key-vault-certificate").Append(EnvironmentVariable("azure-key-vault-certificate"))
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
         };
 
-        using(var process = StartAndReturnProcess("NuGetKeyVaultSignTool", processSettings))
+        using(var process = StartAndReturnProcess("tools/NuGetKeyVaultSignTool", processSettings))
         {
             process.WaitForExit();
 
