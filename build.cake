@@ -3,8 +3,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #module nuget:?package=Cake.DotNetTool.Module
-
 #tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
+#tool "dotnet:?package=AzureSignTool&version=2.0.17"
+
 #tool GitVersion.CommandLine
 #tool gitreleasemanager
 #tool xunit.runner.console
@@ -130,7 +131,7 @@ Task("Build")
         };
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
-            .WithProperty("Description", "A toolkit for creating Metro / Modern UI styled WPF apps.")
+            .WithProperty("Description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
             .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
             .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
             .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
@@ -153,6 +154,8 @@ Task("Pack")
 
     MSBuild(project, msBuildSettings
       .WithTarget("pack")
+      .WithProperty("NoBuild", "true")
+      .WithProperty("IncludeBuildOutput", "true")
       .WithProperty("PackageOutputPath", "../../" + publishDir)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
@@ -164,7 +167,7 @@ Task("Pack")
     );
 });
 
-Task("Sign")
+Task("SignFiles")
     .ContinueOnError()
     .Does(() =>
 {
@@ -197,9 +200,86 @@ Task("Sign")
         return;
     }
 
-    var files = GetFiles(publishDir + "/*.nupkg");
+    var files = GetFiles("./src/MahApps.Metro/bin/**/MahApps.Metro.dll")
+        .Concat(GetFiles("./src/MahApps.Metro.Samples/**/*.exe"));
     foreach(var file in files)
     {
+        Information($"Sign file: {file}");
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(MakeAbsolute(file).FullPath)
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
+                .AppendSwitchQuoted("--description-url", "https://github.com/MahApps/MahApps.Metro")
+                .Append("--no-page-hashing")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+        };
+
+        using(var process = StartAndReturnProcess("tools/AzureSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
+});
+
+Task("SignNuGet")
+    .ContinueOnError()
+    .Does(() =>
+{
+    if (!DirectoryExists(Directory(publishDir)))
+    {
+        return;
+    }
+
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
+
+    var nugetFiles = GetFiles(publishDir + "/*.nupkg");
+    foreach(var file in nugetFiles)
+    {
+        Information($"Sign file: {file}");
         var processSettings = new ProcessSettings {
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -314,8 +394,9 @@ Task("Default")
 
 Task("appveyor")
     .IsDependentOn("Default")
+    .IsDependentOn("SignFiles")
     .IsDependentOn("Pack")
-    .IsDependentOn("Sign")
+    .IsDependentOn("SignNuGet")
     .IsDependentOn("Zip");
 
 ///////////////////////////////////////////////////////////////////////////////
