@@ -129,6 +129,7 @@ Task("Build")
         , ArgumentCustomization = args => args.Append("/m")
         , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
         };
+
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
             .WithProperty("Description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
@@ -150,8 +151,8 @@ Task("Pack")
         , ToolPath = msBuildPathExe
         , Configuration = configuration
     };
-    var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
 
+    var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
     MSBuild(project, msBuildSettings
       .WithTarget("pack")
       .WithProperty("NoBuild", "true")
@@ -167,15 +168,8 @@ Task("Pack")
     );
 });
 
-Task("SignFiles")
-    .ContinueOnError()
-    .Does(() =>
+void SignFiles(IEnumerable<FilePath> files, string description)
 {
-    if (!DirectoryExists(Directory(publishDir)))
-    {
-        return;
-    }
-
     var vurl = EnvironmentVariable("azure-key-vault-url");
     if(string.IsNullOrWhiteSpace(vurl)) {
         Error("Could not resolve signing url.");
@@ -200,8 +194,6 @@ Task("SignFiles")
         return;
     }
 
-    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro.dll")
-        .Concat(GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe"));
     foreach(var file in files)
     {
         Information($"Sign file: {file}");
@@ -212,7 +204,7 @@ Task("SignFiles")
                 .Append("sign")
                 .Append(MakeAbsolute(file).FullPath)
                 .AppendSwitchQuoted("--file-digest", "sha256")
-                .AppendSwitchQuoted("--description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
+                .AppendSwitchQuoted("--description", description)
                 .AppendSwitchQuoted("--description-url", "https://github.com/MahApps/MahApps.Metro")
                 .Append("--no-page-hashing")
                 .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
@@ -241,6 +233,17 @@ Task("SignFiles")
             Information("Exit code: {0}", process.GetExitCode());
         }
     }
+}
+
+Task("Sign")
+    .ContinueOnError()
+    .Does(() =>
+{
+    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro.dll");
+    SignFiles(files, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+
+    files = GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe");
+    SignFiles(files, "Demo application of MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
 });
 
 Task("SignNuGet")
@@ -394,10 +397,11 @@ Task("Default")
 
 Task("appveyor")
     .IsDependentOn("Default")
-    .IsDependentOn("SignFiles")
+    .IsDependentOn("Sign")
     .IsDependentOn("Pack")
     .IsDependentOn("SignNuGet")
-    .IsDependentOn("Zip");
+    .IsDependentOn("Zip")
+    ;
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION
