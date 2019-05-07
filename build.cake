@@ -200,8 +200,8 @@ Task("SignFiles")
         return;
     }
 
-    var files = GetFiles("./src/MahApps.Metro/bin/**/MahApps.Metro.dll")
-        .Concat(GetFiles("./src/MahApps.Metro.Samples/**/*.exe"));
+    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro.dll")
+        .Concat(GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe"));
     foreach(var file in files)
     {
         Information($"Sign file: {file}");
