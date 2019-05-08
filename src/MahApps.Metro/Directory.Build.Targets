@@ -13,7 +13,7 @@
         <GenerateLibraryLayout>true</GenerateLibraryLayout>
     </PropertyGroup>
     <!-- Sign assembly -->
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PropertyGroup>
         <SignAssembly>True</SignAssembly>
         <AssemblyOriginatorKeyFile>$(MSBuildProjectDirectory)\..\mahapps.public.snk</AssemblyOriginatorKeyFile>
         <DelaySign>false</DelaySign>
