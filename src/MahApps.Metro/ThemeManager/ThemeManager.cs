@@ -973,6 +973,14 @@ namespace MahApps.Metro
         {
             if (e.Category == UserPreferenceCategory.General)
             {
+                if (Application.Current.IsNull())
+                {
+#if DEBUG
+                    Trace.TraceWarning("ThemeManager (UserPreferenceChanged): Can not sync theme with windows app mode settings, because the current application is NULL!");
+#endif
+                    return;
+                }
+
                 SyncThemeWithWindowsAppModeSetting();
             }
         }
