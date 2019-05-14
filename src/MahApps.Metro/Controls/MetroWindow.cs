@@ -487,7 +487,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the minimize button is visible.
+        /// Gets or sets whether if the minimize button is visible and the minimize system menu is enabled.
         /// </summary>
         public bool ShowMinButton
         {
@@ -496,7 +496,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the Maximize/Restore button is visible.
+        /// Gets or sets whether if the maximize/restore button is visible and the maximize/restore system menu is enabled.
         /// </summary>
         public bool ShowMaxRestoreButton
         {
@@ -505,7 +505,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the close button is visible.
+        /// Gets or sets whether if the close button is visible.
         /// </summary>
         public bool ShowCloseButton
         {

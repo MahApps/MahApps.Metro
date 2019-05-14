@@ -14,6 +14,8 @@
             BindingOperations.SetBinding(this, ResizeBorderThicknessProperty, new Binding { Path = new PropertyPath(MetroWindow.ResizeBorderThicknessProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, TryToBeFlickerFreeProperty, new Binding { Path = new PropertyPath(MetroWindow.TryToBeFlickerFreeProperty), Source = this.AssociatedObject });
             BindingOperations.SetBinding(this, KeepBorderOnMaximizeProperty, new Binding { Path = new PropertyPath(MetroWindow.KeepBorderOnMaximizeProperty), Source = this.AssociatedObject });
+            BindingOperations.SetBinding(this, EnableMinimizeProperty, new Binding { Path = new PropertyPath(MetroWindow.ShowMinButtonProperty), Source = this.AssociatedObject });
+            BindingOperations.SetBinding(this, EnableMaxRestoreProperty, new Binding { Path = new PropertyPath(MetroWindow.ShowMaxRestoreButtonProperty), Source = this.AssociatedObject });
 
             base.OnAttached();
         }
@@ -24,6 +26,8 @@
             BindingOperations.ClearBinding(this, ResizeBorderThicknessProperty);
             BindingOperations.ClearBinding(this, TryToBeFlickerFreeProperty);
             BindingOperations.ClearBinding(this, KeepBorderOnMaximizeProperty);
+            BindingOperations.ClearBinding(this, EnableMinimizeProperty);
+            BindingOperations.ClearBinding(this, EnableMaxRestoreProperty);
 
             base.OnDetaching();
         }
