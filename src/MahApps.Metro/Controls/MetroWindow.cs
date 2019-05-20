@@ -1040,16 +1040,16 @@ namespace MahApps.Metro.Controls
 
             var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
             var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
-            if ((dLeft < halfDistance) && (dRight < halfDistance))
-            {
-                Grid.SetColumn(this.titleBar, 0);
-                Grid.SetColumnSpan(this.titleBar, 7);
-            }
-            else
-            {
-                Grid.SetColumn(this.titleBar, 3);
-                Grid.SetColumnSpan(this.titleBar, 1);
-            }
+            // if ((dLeft < halfDistance) && (dRight < halfDistance))
+            // {
+            //     Grid.SetColumn(this.titleBar, 0);
+            //     Grid.SetColumnSpan(this.titleBar, 3);
+            // }
+            // else
+            // {
+            //     Grid.SetColumn(this.titleBar, 1);
+            //     Grid.SetColumnSpan(this.titleBar, 1);
+            // }
         }
 
         private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)

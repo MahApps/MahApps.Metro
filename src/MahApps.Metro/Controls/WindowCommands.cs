@@ -11,7 +11,7 @@ using ControlzEx;
 namespace MahApps.Metro.Controls
 {
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(WindowCommands))]
-    public class WindowCommands : ItemsControl, INotifyPropertyChanged
+    public class WindowCommands : ToolBar, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ThemeProperty =
             DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowCommands),
@@ -270,6 +270,13 @@ namespace MahApps.Metro.Controls
         private void WindowCommands_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= WindowCommands_Loaded;
+
+            var contentPresenter = this.TryFindParent<ContentPresenter>();
+            if (contentPresenter != null)
+            {
+                this.SetCurrentValue(DockPanel.DockProperty, contentPresenter.GetValue(DockPanel.DockProperty));
+            }
+
             var parentWindow = this.ParentWindow;
             if (null == parentWindow)
             {
