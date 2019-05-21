@@ -321,6 +321,31 @@
                                     Style="{StaticResource WindowTitleThumbStyle}"
                                     UseLayoutRounding="True" />
 
+                    <!--  the title bar  -->
+                    <mah:MetroThumbContentControl x:Name="PART_TitleBar"
+                                                  Grid.Row="1"
+                                                  Grid.Column="0"
+                                                  Grid.ColumnSpan="5"
+                                                  Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                  HorizontalAlignment="{TemplateBinding TitleAlignment}"
+                                                  HorizontalContentAlignment="Center"
+                                                  VerticalContentAlignment="Center"
+                                                  Content="{TemplateBinding Title}"
+                                                  ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
+                                                  ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                  Focusable="False">
+                        <ContentControl.Foreground>
+                            <MultiBinding Converter="{x:Static converters:BackgroundToForegroundConverter.Instance}">
+                                <Binding ElementName="PART_WindowTitleBackground"
+                                         Mode="OneWay"
+                                         Path="Fill" />
+                                <Binding Mode="OneWay"
+                                         Path="TitleForeground"
+                                         RelativeSource="{RelativeSource TemplatedParent}" />
+                            </MultiBinding>
+                        </ContentControl.Foreground>
+                    </mah:MetroThumbContentControl>
+
                     <DockPanel Grid.Row="1"
                                Grid.Column="2"
                                Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -341,27 +366,8 @@
                                           Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                           DockPanel.Dock="Right"
                                           Focusable="False" />
-                        <!--  the title bar  -->
-                        <mah:MetroThumbContentControl x:Name="PART_TitleBar"
-                                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                      HorizontalAlignment="{TemplateBinding TitleAlignment}"
-                                                      HorizontalContentAlignment="Center"
-                                                      VerticalContentAlignment="Center"
-                                                      Content="{TemplateBinding Title}"
-                                                      ContentCharacterCasing="{TemplateBinding TitleCharacterCasing}"
-                                                      ContentTemplate="{TemplateBinding TitleTemplate}"
-                                                      Focusable="False">
-                            <ContentControl.Foreground>
-                                <MultiBinding Converter="{x:Static converters:BackgroundToForegroundConverter.Instance}">
-                                    <Binding ElementName="PART_WindowTitleBackground"
-                                             Mode="OneWay"
-                                             Path="Fill" />
-                                    <Binding Mode="OneWay"
-                                             Path="TitleForeground"
-                                             RelativeSource="{RelativeSource TemplatedParent}" />
-                                </MultiBinding>
-                            </ContentControl.Foreground>
-                        </mah:MetroThumbContentControl>
+                        <!--  the fake title bar  -->
+                        <Grid />
                     </DockPanel>
 
                     <!--  the window button commands  -->

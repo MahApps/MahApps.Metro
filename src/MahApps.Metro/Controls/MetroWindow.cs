@@ -1030,7 +1030,8 @@ namespace MahApps.Metro.Controls
             // Half of this MetroWindow
             var halfDistance = this.ActualWidth / 2;
             // Distance between center and left/right
-            var distanceToCenter = this.titleBar.DesiredSize.Width / 2;
+            var margin = (Thickness)this.titleBar.GetValue(MarginProperty);
+            var distanceToCenter = (this.titleBar.DesiredSize.Width - margin.Left - margin.Right) / 2;
             // Distance between right edge from LeftWindowCommands to left window side
             var distanceFromLeft = this.icon.ActualWidth + this.LeftWindowCommands.ActualWidth;
             // Distance between left edge from RightWindowCommands to right window side
@@ -1040,16 +1041,18 @@ namespace MahApps.Metro.Controls
 
             var dLeft = distanceFromLeft + distanceToCenter + horizontalMargin;
             var dRight = distanceFromRight + distanceToCenter + horizontalMargin;
-            // if ((dLeft < halfDistance) && (dRight < halfDistance))
-            // {
-            //     Grid.SetColumn(this.titleBar, 0);
-            //     Grid.SetColumnSpan(this.titleBar, 3);
-            // }
-            // else
-            // {
-            //     Grid.SetColumn(this.titleBar, 1);
-            //     Grid.SetColumnSpan(this.titleBar, 1);
-            // }
+            if ((dLeft < halfDistance) && (dRight < halfDistance))
+            {
+                this.titleBar.SetCurrentValue(MarginProperty, default(Thickness));
+                Grid.SetColumn(this.titleBar, 0);
+                Grid.SetColumnSpan(this.titleBar, 5);
+            }
+            else
+            {
+                this.titleBar.SetCurrentValue(MarginProperty, new Thickness(this.LeftWindowCommands.ActualWidth, 0, this.RightWindowCommands.ActualWidth, 0));
+                Grid.SetColumn(this.titleBar, 2);
+                Grid.SetColumnSpan(this.titleBar, 1);
+            }
         }
 
         private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
