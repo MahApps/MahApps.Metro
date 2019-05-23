@@ -331,9 +331,28 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsSeparatorVisibleProperty, value); }
         }
 
+        public static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey = DependencyProperty.RegisterReadOnly(nameof(ParentWindowCommands), typeof(WindowCommands), typeof(WindowCommandsItem), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ParentWindowCommandsProperty = ParentWindowCommandsPropertyKey.DependencyProperty;
+
+        public WindowCommands ParentWindowCommands
+        {
+            get { return (WindowCommands)GetValue(ParentWindowCommandsProperty); }
+            private set { SetValue(ParentWindowCommandsPropertyKey, value); }
+        }
+
         static WindowCommandsItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommandsItem), new FrameworkPropertyMetadata(typeof(WindowCommandsItem)));
+        }
+
+        /// <inheritdoc />
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            var windowCommands = ItemsControl.ItemsControlFromItemContainer(this) as WindowCommands;
+            this.SetValue(WindowCommandsItem.ParentWindowCommandsPropertyKey, windowCommands);
         }
     }
 }

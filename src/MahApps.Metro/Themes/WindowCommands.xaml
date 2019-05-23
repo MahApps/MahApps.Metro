@@ -9,7 +9,7 @@
                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Content="{TemplateBinding Content}"
-                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing), Mode=OneWay}"
                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
@@ -31,7 +31,7 @@
                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Content="{TemplateBinding Content}"
-                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}, Path=(Controls:ControlsHelper.ContentCharacterCasing), Mode=OneWay}"
                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
@@ -51,7 +51,7 @@
 
     <Style x:Key="WindowCommandsControlStyle" TargetType="{x:Type Control}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="Foreground" Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="8 0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -63,34 +63,38 @@
     </Style>
 
     <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Name="Bd"
-                            Background="Transparent"
-                            SnapsToDevicePixels="true">
-                        <Grid>
-                            <Path Name="Arrow"
-                                  Margin="4"
-                                  VerticalAlignment="Bottom"
-                                  Data="M -0.5 3 L 5.5 3 L 2.5 6 Z"
-                                  Fill="Black" />
-                            <ContentPresenter />
-                        </Grid>
-                    </Border>
+                    <Grid Name="Bd"
+                          Background="{TemplateBinding Background}"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Path Name="Arrow"
+                              Margin="4"
+                              VerticalAlignment="Bottom"
+                              Data="M 0 0 L 6 0 3 3 Z"
+                              Fill="{TemplateBinding Foreground}" />
+                        <ContentPresenter />
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource GrayBrush4}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -103,14 +107,14 @@
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
-                          IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                          IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
                           Style="{StaticResource ToolBarOverflowButtonStyle}"
                           Visibility="Collapsed">
                 <Popup x:Name="OverflowPopup"
                        AllowsTransparency="true"
                        Focusable="false"
-                       IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                       IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen}"
                        Placement="Bottom"
                        PopupAnimation="Slide"
                        StaysOpen="false">
@@ -167,14 +171,14 @@
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
-                          IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                          IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
                           Style="{StaticResource ToolBarOverflowButtonStyle}"
                           Visibility="Collapsed">
                 <Popup x:Name="OverflowPopup"
                        AllowsTransparency="true"
                        Focusable="false"
-                       IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                       IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen}"
                        Placement="Bottom"
                        PopupAnimation="Slide"
                        StaysOpen="false">
@@ -247,14 +251,15 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Metro.Styles.WindowCommandsItem" TargetType="{x:Type Controls:WindowCommandsItem}">
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.Foreground, Mode=OneWay}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="MinHeight" Value="{Binding ParentWindow.TitleBarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
+        <Setter Property="MinHeight" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.ParentWindow.TitleBarHeight, Mode=OneWay}" />
         <Setter Property="Padding" Value="1 0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
-                    <StackPanel HorizontalAlignment="{Binding HorizontalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                VerticalAlignment="{Binding VerticalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                    <StackPanel HorizontalAlignment="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommandsItem}}, Path=ParentWindowCommands.HorizontalContentAlignment, Mode=OneWay}"
+                                VerticalAlignment="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommandsItem}}, Path=ParentWindowCommands.VerticalContentAlignment, Mode=OneWay}"
                                 Orientation="Horizontal">
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
@@ -265,8 +270,8 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Rectangle x:Name="PART_Separator"
                                    Width="1"
-                                   Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                                   Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                   Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommandsItem}}, Path=ParentWindowCommands.SeparatorHeight, Mode=OneWay}"
+                                   Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommandsItem}}, Path=ParentWindowCommands.Foreground, Mode=OneWay}"
                                    IsHitTestVisible="False"
                                    Opacity="0.25"
                                    SnapsToDevicePixels="True"
@@ -294,7 +299,7 @@
         <Setter Property="Template" Value="{StaticResource LightWindowCommandsTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindow.ShowTitleBar}" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
         </Style.Triggers>
