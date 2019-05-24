@@ -11,7 +11,7 @@ using ControlzEx;
 namespace MahApps.Metro.Controls
 {
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(WindowCommands))]
-    public class WindowCommands : ItemsControl, INotifyPropertyChanged
+    public class WindowCommands : ToolBar, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ThemeProperty =
             DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowCommands),
@@ -270,6 +270,13 @@ namespace MahApps.Metro.Controls
         private void WindowCommands_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= WindowCommands_Loaded;
+
+            var contentPresenter = this.TryFindParent<ContentPresenter>();
+            if (contentPresenter != null)
+            {
+                this.SetCurrentValue(DockPanel.DockProperty, contentPresenter.GetValue(DockPanel.DockProperty));
+            }
+
             var parentWindow = this.ParentWindow;
             if (null == parentWindow)
             {
@@ -312,21 +319,48 @@ namespace MahApps.Metro.Controls
         internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
 
         public static readonly DependencyProperty IsSeparatorVisibleProperty =
-            DependencyProperty.Register("IsSeparatorVisible", typeof(bool), typeof(WindowCommandsItem),
-                                        new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits|FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(
+                nameof(IsSeparatorVisible),
+                typeof(bool),
+                typeof(WindowCommandsItem),
+                new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets or sets the value indicating whether to show the separator.
         /// </summary>
         public bool IsSeparatorVisible
         {
-            get { return (bool)GetValue(IsSeparatorVisibleProperty); }
-            set { SetValue(IsSeparatorVisibleProperty, value); }
+            get { return (bool)this.GetValue(IsSeparatorVisibleProperty); }
+            set { this.SetValue(IsSeparatorVisibleProperty, value); }
+        }
+
+        public static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey =
+            DependencyProperty.RegisterReadOnly(
+                nameof(ParentWindowCommands),
+                typeof(WindowCommands),
+                typeof(WindowCommandsItem),
+                new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ParentWindowCommandsProperty = ParentWindowCommandsPropertyKey.DependencyProperty;
+
+        public WindowCommands ParentWindowCommands
+        {
+            get { return (WindowCommands)this.GetValue(ParentWindowCommandsProperty); }
+            private set { this.SetValue(ParentWindowCommandsPropertyKey, value); }
         }
 
         static WindowCommandsItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommandsItem), new FrameworkPropertyMetadata(typeof(WindowCommandsItem)));
+        }
+
+        /// <inheritdoc />
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            var windowCommands = ItemsControl.ItemsControlFromItemContainer(this) as WindowCommands;
+            this.SetValue(WindowCommandsItem.ParentWindowCommandsPropertyKey, windowCommands);
         }
     }
 }
