@@ -319,26 +319,34 @@ namespace MahApps.Metro.Controls
         internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
 
         public static readonly DependencyProperty IsSeparatorVisibleProperty =
-            DependencyProperty.Register("IsSeparatorVisible", typeof(bool), typeof(WindowCommandsItem),
-                                        new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits|FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(
+                nameof(IsSeparatorVisible),
+                typeof(bool),
+                typeof(WindowCommandsItem),
+                new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets or sets the value indicating whether to show the separator.
         /// </summary>
         public bool IsSeparatorVisible
         {
-            get { return (bool)GetValue(IsSeparatorVisibleProperty); }
-            set { SetValue(IsSeparatorVisibleProperty, value); }
+            get { return (bool)this.GetValue(IsSeparatorVisibleProperty); }
+            set { this.SetValue(IsSeparatorVisibleProperty, value); }
         }
 
-        public static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey = DependencyProperty.RegisterReadOnly(nameof(ParentWindowCommands), typeof(WindowCommands), typeof(WindowCommandsItem), new PropertyMetadata(null));
+        public static readonly DependencyPropertyKey ParentWindowCommandsPropertyKey =
+            DependencyProperty.RegisterReadOnly(
+                nameof(ParentWindowCommands),
+                typeof(WindowCommands),
+                typeof(WindowCommandsItem),
+                new PropertyMetadata(null));
 
         public static readonly DependencyProperty ParentWindowCommandsProperty = ParentWindowCommandsPropertyKey.DependencyProperty;
 
         public WindowCommands ParentWindowCommands
         {
-            get { return (WindowCommands)GetValue(ParentWindowCommandsProperty); }
-            private set { SetValue(ParentWindowCommandsPropertyKey, value); }
+            get { return (WindowCommands)this.GetValue(ParentWindowCommandsProperty); }
+            private set { this.SetValue(ParentWindowCommandsPropertyKey, value); }
         }
 
         static WindowCommandsItem()
