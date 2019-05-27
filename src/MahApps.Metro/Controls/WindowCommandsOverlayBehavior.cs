@@ -6,7 +6,21 @@ namespace MahApps.Metro.Controls
     public enum WindowCommandsOverlayBehavior
     {
         /// <summary>
-        /// Doesn't overlay flyouts nor a hidden TitleBar.
+        /// Doesn't overlay a hidden TitleBar.
+        /// </summary>
+        Never = 0,
+
+        /// <summary>
+        /// Overlays a hidden TitleBar.
+        /// </summary>
+        HiddenTitleBar = 1 << 0
+    }
+
+    [Flags]
+    public enum OverlayBehavior
+    {
+        /// <summary>
+        /// Doesn't overlay Flyouts nor a hidden TitleBar.
         /// </summary>
         Never = 0,
 
