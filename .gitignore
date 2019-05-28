@@ -263,3 +263,6 @@ src/MahApps.Metro/Styles/Themes/*.xaml
 
 # cake
 tools/
+
+# MSBuild
+*.binlog
