@@ -41,8 +41,8 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             Assert.Equal(OverlayBehavior.Never, window.IconOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.HiddenTitleBar, window.LeftWindowCommandsOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.HiddenTitleBar, window.RightWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.LeftWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.RightWindowCommandsOverlayBehavior);
             Assert.Equal(OverlayBehavior.Always, window.WindowButtonCommandsOverlayBehavior);
         }
 
