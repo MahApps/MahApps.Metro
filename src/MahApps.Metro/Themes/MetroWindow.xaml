@@ -68,7 +68,6 @@
 
                     <DockPanel Grid.Row="1"
                                Grid.Column="2"
-                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                VerticalAlignment="Top"
                                Panel.ZIndex="1"
                                Focusable="False">
@@ -348,7 +347,6 @@
 
                     <DockPanel Grid.Row="1"
                                Grid.Column="2"
-                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                VerticalAlignment="Top"
                                Panel.ZIndex="1"
                                Focusable="False">
