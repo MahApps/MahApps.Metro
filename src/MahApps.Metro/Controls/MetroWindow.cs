@@ -640,7 +640,7 @@ namespace MahApps.Metro.Controls
             if (window != null)
             {
                 window.SizeChanged -= window.MetroWindow_SizeChanged;
-                if (e.NewValue is HorizontalAlignment && (HorizontalAlignment)e.NewValue == HorizontalAlignment.Center)
+                if (e.NewValue is HorizontalAlignment && (HorizontalAlignment)e.NewValue == HorizontalAlignment.Center && window.titleBar != null)
                 {
                     window.SizeChanged += window.MetroWindow_SizeChanged;
                 }
@@ -1032,10 +1032,16 @@ namespace MahApps.Metro.Controls
             // Distance between center and left/right
             var margin = (Thickness)this.titleBar.GetValue(MarginProperty);
             var distanceToCenter = (this.titleBar.DesiredSize.Width - margin.Left - margin.Right) / 2;
+
+            var iconWidth = this.icon?.ActualWidth ?? 0;
+            var leftWindowCommandsWidth = this.LeftWindowCommands?.ActualWidth ?? 0;
+            var rightWindowCommandsWidth = this.RightWindowCommands?.ActualWidth ?? 0;
+            var windowButtonCommandsWith = this.WindowButtonCommands?.ActualWidth ?? 0;
+
             // Distance between right edge from LeftWindowCommands to left window side
-            var distanceFromLeft = this.icon.ActualWidth + this.LeftWindowCommands.ActualWidth;
+            var distanceFromLeft = iconWidth + leftWindowCommandsWidth;
             // Distance between left edge from RightWindowCommands to right window side
-            var distanceFromRight = this.WindowButtonCommands.ActualWidth + this.RightWindowCommands.ActualWidth;
+            var distanceFromRight = rightWindowCommandsWidth + windowButtonCommandsWith;
             // Margin
             const double horizontalMargin = 5.0;
 
@@ -1049,7 +1055,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                this.titleBar.SetCurrentValue(MarginProperty, new Thickness(this.LeftWindowCommands.ActualWidth, 0, this.RightWindowCommands.ActualWidth, 0));
+                this.titleBar.SetCurrentValue(MarginProperty, new Thickness(leftWindowCommandsWidth, 0, rightWindowCommandsWidth, 0));
                 Grid.SetColumn(this.titleBar, 2);
                 Grid.SetColumnSpan(this.titleBar, 1);
             }
