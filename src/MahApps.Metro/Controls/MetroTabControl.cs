@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="KeepVisualTreeInMemoryWhenChangingTabs"/> dependency property.</summary>
-        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs), typeof(bool), typeof(MetroTabControl), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs), typeof(bool), typeof(MetroTabControl), new PropertyMetadata(false));
 
         public bool KeepVisualTreeInMemoryWhenChangingTabs
         {

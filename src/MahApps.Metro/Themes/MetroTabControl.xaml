@@ -165,12 +165,12 @@
            TargetType="{x:Type Controls:MetroTabControl}"
            BasedOn="{StaticResource MetroTabControl}">
         <Setter Property="Template"
-                Value="{StaticResource MahApps.Metro.Templates.MetroTabControl.KeepVisualTreeInMemoryWhenChangingTabs}" />
+                Value="{StaticResource MahApps.Metro.Templates.MetroTabControl.DoNotKeepVisualTreeInMemoryWhenChangingTabs}" />
         <Style.Triggers>
             <Trigger Property="KeepVisualTreeInMemoryWhenChangingTabs"
-                     Value="False">
+                     Value="True">
                 <Setter Property="Template"
-                        Value="{StaticResource MahApps.Metro.Templates.MetroTabControl.DoNotKeepVisualTreeInMemoryWhenChangingTabs}" />
+                        Value="{StaticResource MahApps.Metro.Templates.MetroTabControl.KeepVisualTreeInMemoryWhenChangingTabs}" />
             </Trigger>
         </Style.Triggers>
     </Style>

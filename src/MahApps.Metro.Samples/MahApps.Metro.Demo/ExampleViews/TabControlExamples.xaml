@@ -397,6 +397,7 @@
                     </StackPanel>
                     <Controls:MetroTabControl x:Name="MetroTabControl"
                                               Height="200"
+                                              KeepVisualTreeInMemoryWhenChangingTabs="True"
                                               Controls:TabControlHelper.Underlined="{Binding ElementName=MetroTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               TabStripPlacement="{Binding ElementName=MetroTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Controls:MetroTabItem Controls:ControlsHelper.HeaderFontSize="18" Header="item _1">
