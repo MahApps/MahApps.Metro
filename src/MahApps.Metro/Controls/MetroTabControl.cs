@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using ControlzEx;
+using ControlzEx.Controls;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
