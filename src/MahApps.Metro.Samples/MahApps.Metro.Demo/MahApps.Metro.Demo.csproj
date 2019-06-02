@@ -14,10 +14,10 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
@@ -28,18 +28,19 @@
     </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Globalization" />
-        <Reference Include="System.Windows.Forms"/>
-        <Reference Include="WindowsFormsIntegration"/>
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Remove="App.config" />
+        <None Remove="ExampleViews\AddCustomAccentDialog.xaml" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
 </Project>

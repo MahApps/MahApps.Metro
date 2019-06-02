@@ -19,10 +19,11 @@ using MetroDemo.Core;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
+using System.Collections.ObjectModel;
 
 namespace MetroDemo
 {
-    public class AccentColorMenuData
+    public class AccentColorMenuData : ViewModelBase
     {
         public string Name { get; set; }
 
@@ -200,6 +201,8 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
+
+        public static ObservableCollection<AccentColorMenuData> CustomAccentColors { get; set; } = new ObservableCollection<AccentColorMenuData>();
 
         public List<AppThemeMenuData> AppThemes { get; set; }
 

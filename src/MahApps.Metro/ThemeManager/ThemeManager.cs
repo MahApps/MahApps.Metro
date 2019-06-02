@@ -248,20 +248,54 @@ namespace MahApps.Metro
         /// Adds an theme.
         /// </summary>
         /// <param name="resourceDictionary">The ResourceDictionary of the theme.</param>
+        /// <param name="replaceExsisting">If true the new Theme will replace any existing Theme with the given name</param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddTheme([NotNull] ResourceDictionary resourceDictionary)
+        public static bool AddTheme([NotNull] ResourceDictionary resourceDictionary, bool replaceExsisting = false)
         {
             var theme = new Theme(resourceDictionary);
 
-            var themeExists = GetTheme(theme.Name).IsNotNull();
-            if (themeExists)
+            var exisitingTheme = GetTheme(theme.Name);
+            if (exisitingTheme != null)
             {
-                return false;
+                if (replaceExsisting)
+                {
+                    themesInternal.Remove(exisitingTheme);
+                }
+                else
+                {
+                    return false;
+                }   
             }
 
             themesInternal.Add(theme);
             return true;
         }
+
+        /// <summary>
+        /// Adds userdefined Themes at runtime.
+        /// </summary>
+        /// <param name="AccentBaseColor">The AccentBaseColor which the user prefers</param>
+        /// <param name="HighlightColor">The HighlightColor, if the parameter is omitted the AccentBaseColor will be used</param>
+        /// <param name="AccentName">A Custom Name for the Theme </param>
+        public static string AddUserDefinedTheme(Color AccentBaseColor, Color? HighlightColor = null, string AccentName = "Custom" )
+        {
+            ResourceDictionary resourceDictionary;
+
+            if (string.IsNullOrWhiteSpace(AccentName))
+            {
+                AccentName = "Custom" + (ColorSchemes.Count(x => x.Name.StartsWith("Custom")) + 1);
+            }
+
+            // Add a new Theme for each BaseColor
+            foreach (var baseColorScheme in baseColors.ToArray())
+            {
+                resourceDictionary = ThemeManagerHelper.GetThemeResourceDictionary(baseColorScheme, AccentBaseColor, HighlightColor, AccentName);
+                AddTheme(resourceDictionary, true);
+            }
+
+            return AccentName;
+        }
+
 
         /// <summary>
         /// Gets the <see cref="Theme"/> with the given name.
