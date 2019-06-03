@@ -251,7 +251,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             escapeKeyHandler = (sender, e) =>
                 {
-                    if (e.Key == Key.Escape)
+                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                     {
                         cleanUpHandlers();
 
