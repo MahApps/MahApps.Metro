@@ -8,6 +8,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:Converters="http://metro.mahapps.com/winfx/xaml/shared"
                       Title="MahApps.Metro - Demo Application"
                       Width="900"
                       Height="600"
@@ -237,7 +238,34 @@
             </MenuItem>
         </Menu>
 
-        <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">
+        <UniformGrid Rows="5" Grid.Row="1">
+            <Grid x:Name="MyGrid" Background="{DynamicResource AccentBaseColorBrush}">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding ElementName=MyGrid, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+            </Grid>
+
+            <Grid x:Name="MyGrid1" Background="{DynamicResource AccentColorBrush}">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding ElementName=MyGrid1, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+            </Grid>
+
+            <Grid x:Name="MyGrid2" Background="{DynamicResource AccentColorBrush2}">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding ElementName=MyGrid2, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+            </Grid>
+
+            <Grid x:Name="MyGrid3" Background="{DynamicResource AccentColorBrush3}">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding ElementName=MyGrid3, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+            </Grid>
+
+            <Grid x:Name="MyGrid4" Background="{DynamicResource AccentColorBrush4}">
+                <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding ElementName=MyGrid4, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+            </Grid>
+        </UniformGrid>
+
+        <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1" Visibility="Collapsed">
             <TabItem Header="buttons">
                 <exampleViews:ButtonsExample DataContext="{Binding}" />
             </TabItem>

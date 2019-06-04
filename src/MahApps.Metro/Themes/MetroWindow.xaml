@@ -574,7 +574,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
         <Setter Property="TextElement.FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <!-- <Setter Property="TitleForeground" Value="{DynamicResource IdealForegroundColorBrush}" /> -->
         <Setter Property="TitleTemplate">
             <Setter.Value>
                 <DataTemplate>
