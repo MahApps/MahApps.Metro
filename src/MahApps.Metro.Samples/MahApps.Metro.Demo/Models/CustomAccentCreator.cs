@@ -61,7 +61,11 @@ namespace MetroDemo.Models
             var name = ThemeManager.AddUserDefinedTheme(accentColor, highlightColor, AccentName);
 
             var exisitingAccentMenuItem = MainWindowViewModel.CustomAccentColors.FirstOrDefault(x => x.Name == AccentName);
-            var newAccentMenuItem = new AccentColorMenuData() { Name = name, ColorBrush = new SolidColorBrush(accentColor) };
+            var newAccentMenuItem = new AccentColorMenuData()
+            {
+                Name = name,
+                ColorBrush = new SolidColorBrush(accentColor)
+            };
 
             if (exisitingAccentMenuItem != null)
             {
@@ -72,7 +76,7 @@ namespace MetroDemo.Models
             newAccentMenuItem.ChangeAccentCommand.Execute(null);
         }
 
-        private Color? TryGetColor (string Name)
+        private static Color? TryGetColor (string Name)
         {
             try
             {
@@ -87,7 +91,7 @@ namespace MetroDemo.Models
         public ICommand CloseCommand { get; }
 
         #region IDataErrorInfo
-        public string Error => throw new NotImplementedException();
+        public string Error => TryGetColor(AccentColorName).HasValue ? null : "At least one colorname is not valid";
 
         public string this[string columnName]
         {
@@ -96,15 +100,10 @@ namespace MetroDemo.Models
                 switch (columnName)
                 {
                     case "AccentColorName":
-                        try
-                        {
-                            ColorConverter.ConvertFromString(AccentColorName);
-                            return null;
-                        }
-                        catch (Exception)
-                        {
-                            return "This is not a valid color.";
-                        }
+                        return TryGetColor(AccentColorName).HasValue ? null : "This is not a valid color.";
+
+                    case "HighlightColorName":
+                        return string.IsNullOrWhiteSpace(HighlightColorName) || TryGetColor(HighlightColorName).HasValue ? null : "This is not a valid color.";
                     default:
                         return null;
                 }

@@ -10,11 +10,20 @@
              d:DesignHeight="600"
              d:DesignWidth="800"
              mc:Ignorable="d">
-
+    
         <ScrollViewer Margin="15">
-            <ItemsControl Margin="5"
+
+        <ScrollViewer.Background>
+            <LinearGradientBrush Opacity="0.3" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="{DynamicResource AccentColor3}" />
+                <GradientStop Color="{DynamicResource HighlightColor}" Offset="1" />
+            </LinearGradientBrush>
+        </ScrollViewer.Background>
+
+        <ItemsControl Margin="5"
                       Grid.IsSharedSizeScope="True"
                       ItemsSource="{Binding BrushResources}">
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid MinHeight="40"

@@ -4,14 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MetroDemo.ExampleViews"
+             xmlns:converter="clr-namespace:MetroDemo.ValueConverter"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" >
-    <Grid FocusManager.FocusedElement="{Binding ElementName=FirstNameTextBox}" Grid.IsSharedSizeScope="True">
+    <UserControl.Resources>
+        <converter:ColorNameToSolidColorBrushConverter x:Key="ColorNameToBrush"/>
+    </UserControl.Resources>
+    <Grid Grid.IsSharedSizeScope="True">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="LabelCol" />
             <ColumnDefinition />
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,8 +29,8 @@
                    Grid.Column="0" 
                    VerticalAlignment="Center"
                    Text="Accent Name:" />
-        <TextBox x:Name="FirstNameTextBox"
-                 Grid.Row="0"
+        
+        <TextBox Grid.Row="0"
                  Grid.Column="1"
                  mah:TextBoxHelper.Watermark="Give your new theme a name"
                  Margin="4 8 0 4"
@@ -35,22 +40,38 @@
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="Accent Base Color:" />
+        
         <TextBox Grid.Row="1"
                  Grid.Column="1"
                  mah:TextBoxHelper.Watermark="Enter any vaild color tag, eg.: red, blue, white or #FFA1B2C3"
                  Margin="4 8 0 4"
                  Text="{Binding AccentColorName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
+        <Ellipse Grid.Row="1"
+                 Grid.Column="2"
+                 Width="20"
+                 Height="20"
+                 Stroke="{DynamicResource GrayBrush5}"
+                 Fill="{Binding AccentColorName, Converter={StaticResource ColorNameToBrush}}" />
+        
         <TextBlock Grid.Row="2"
                    Grid.Column="0"
                    VerticalAlignment="Center"
                    Text="Highlight Color:" />
+        
         <TextBox Grid.Row="2"
                  Grid.Column="1"
                  mah:TextBoxHelper.Watermark="Enter any vaild color tag, eg.: red, blue, white or #FFA1B2C3"
                  Margin="4 8 0 4"
                  Text="{Binding HighlightColorName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-        
+
+        <Ellipse Grid.Row="2"
+                 Grid.Column="2"
+                 Width="20"
+                 Height="20"
+                 Stroke="{DynamicResource GrayBrush5}"
+                 Fill="{Binding HighlightColorName, Converter={StaticResource ColorNameToBrush}}" />
+
         <Button Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
