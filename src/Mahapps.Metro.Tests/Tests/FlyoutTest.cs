@@ -73,14 +73,14 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
+            window.IconOverlayBehavior = OverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
             var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.icon);
+            int iconZIndex = Panel.GetZIndex(exposedWindow.icon);
             int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            Assert.True(flyoutindex < iconZIndex);
         }
 
         [Fact]

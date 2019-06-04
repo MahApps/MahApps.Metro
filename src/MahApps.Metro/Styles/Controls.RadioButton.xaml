@@ -24,7 +24,9 @@
                             <ColumnDefinition x:Name="LeftCol" Width="18" />
                             <ColumnDefinition x:Name="RightCol" Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid x:Name="PART_CHECKBOX">
+                        <Grid x:Name="PART_CHECKBOX"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Rectangle Margin="-6 0" Fill="{DynamicResource TransparentWhiteBrush}" />
                             <Ellipse x:Name="normal"
                                      Width="18"

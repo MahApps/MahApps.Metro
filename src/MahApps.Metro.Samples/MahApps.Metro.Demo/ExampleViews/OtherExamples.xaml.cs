@@ -19,6 +19,11 @@ namespace MetroDemo.ExampleViews
 
         void Tick(object sender, EventArgs e)
         {
+            if (this.IsVisible == false)
+            {
+                return;
+            }
+
             var dateTime = DateTime.Now;
             transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
             customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };

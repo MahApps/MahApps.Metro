@@ -40,10 +40,10 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.IconOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.Flyouts, window.LeftWindowCommandsOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.Flyouts, window.RightWindowCommandsOverlayBehavior);
-            Assert.Equal(WindowCommandsOverlayBehavior.Always, window.WindowButtonCommandsOverlayBehavior);
+            Assert.Equal(OverlayBehavior.Never, window.IconOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.LeftWindowCommandsOverlayBehavior);
+            Assert.Equal(WindowCommandsOverlayBehavior.Never, window.RightWindowCommandsOverlayBehavior);
+            Assert.Equal(OverlayBehavior.Always, window.WindowButtonCommandsOverlayBehavior);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => {
-                                                                                         w.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
+                                                                                         w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
                                                                                          w.ShowTitleBar = false;
                                                                                      });
             var icon = window.FindChild<ContentControl>("PART_Icon");
@@ -120,7 +120,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-            window.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
+            window.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
             window.ShowTitleBar = false;
             var icon = window.FindChild<ContentControl>("PART_Icon");
 
