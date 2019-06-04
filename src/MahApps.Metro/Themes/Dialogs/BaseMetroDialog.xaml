@@ -54,9 +54,9 @@
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*" />
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="25*" />
+                    <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    <ColumnDefinition Width="{Binding DialogContentWidth, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    <ColumnDefinition Width="{Binding DialogContentMargin, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 </Grid.ColumnDefinitions>
                 <!--  Content area  -->
                 <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">
