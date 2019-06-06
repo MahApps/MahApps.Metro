@@ -148,7 +148,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.ShouldHideUsername = settings.ShouldHideUsername;
             this.RememberCheckBoxVisibility = settings.RememberCheckBoxVisibility;
             this.RememberCheckBoxText = settings.RememberCheckBoxText;
-            this.RememberCheckBoxChecked = settings.InitialRememberCheckBoxChecked;
+            this.RememberCheckBoxChecked = settings.RememberCheckBoxChecked;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
