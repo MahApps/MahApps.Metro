@@ -403,6 +403,26 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         Value="500" />
+
+                <Label Content="Focusing / Value changing" />
+                <CheckBox Margin="0 4 0 0"
+                          Content="Focusable Up / Down Buttons"
+                          IsChecked="{Binding UpDownButtonsFocusable, ElementName=numericUpDownFocus, Mode=TwoWay}" />
+                <Slider Margin="{StaticResource ControlMargin}"
+                        Interval="1"
+                        IsSnapToTickEnabled="True"
+                        LargeChange="5"
+                        Maximum="20"
+                        Minimum="0"
+                        SmallChange="1"
+                        TickFrequency="1"
+                        TickPlacement="BottomRight"
+                        Value="{Binding ElementName=numericUpDownFocus, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Controls:NumericUpDown x:Name="numericUpDownFocus"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Maximum="20"
+                                        Minimum="0"
+                                        Value="0" />
             </StackPanel>
 
             <StackPanel Grid.Row="1"

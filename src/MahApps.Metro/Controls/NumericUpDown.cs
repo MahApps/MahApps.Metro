@@ -111,6 +111,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(20d));
 
+        public static readonly DependencyProperty UpDownButtonsFocusableProperty = DependencyProperty.Register(
+            "UpDownButtonsFocusable",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
+
         public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
             "InterceptManualEnter",
             typeof(bool),
@@ -355,6 +361,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(UpDownButtonsWidthProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets weather the up and down buttons will got the focus when using them.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool UpDownButtonsFocusable
+        {
+            get { return (bool)GetValue(UpDownButtonsFocusableProperty); }
+            set { SetValue(UpDownButtonsFocusableProperty, value); }
+        }
+
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue(ButtonsAlignment.Right)]
@@ -553,8 +571,26 @@ namespace MahApps.Metro.Controls
 
             this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
 
-            _repeatUp.Click += (o, e) => ChangeValueWithSpeedUp(true);
-            _repeatDown.Click += (o, e) => ChangeValueWithSpeedUp(false);
+            _repeatUp.Click += (o, e) =>
+                {
+                    this.ChangeValueWithSpeedUp(true);
+
+                    if (!this.UpDownButtonsFocusable)
+                    {
+                        _manualChange = false;
+                        InternalSetText(Value);
+                    }
+                };
+            _repeatDown.Click += (o, e) =>
+                {
+                    this.ChangeValueWithSpeedUp(false);
+
+                    if (!this.UpDownButtonsFocusable)
+                    {
+                        _manualChange = false;
+                        InternalSetText(Value);
+                    }
+                };
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
