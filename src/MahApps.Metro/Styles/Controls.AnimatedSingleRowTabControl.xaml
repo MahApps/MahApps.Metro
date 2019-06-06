@@ -212,7 +212,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Top" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Top" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -223,7 +223,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Top" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Top" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -234,7 +234,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Bottom" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Bottom" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -245,7 +245,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Bottom" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Bottom" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -256,7 +256,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Left" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Left" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -267,7 +267,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Left" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Left" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -278,7 +278,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Right" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Right" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Top" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -289,7 +289,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Right" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Right" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Bottom" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
@@ -360,7 +360,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Top" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Top" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -371,7 +371,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Top" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Top" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
@@ -382,7 +382,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Bottom" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Bottom" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -393,7 +393,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Bottom" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Bottom" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
@@ -404,7 +404,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Left" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Left" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -415,7 +415,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Left" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Left" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -426,7 +426,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Right" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Right" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Left" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
@@ -437,7 +437,7 @@
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePosition)}" Value="Right" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, Path=(Controls:TabControlHelper.UnderlinePlacement)}" Value="Right" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=TabStripPlacement}" Value="Right" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
