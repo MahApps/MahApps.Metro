@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+    <!-- Project properties -->
+    <PropertyGroup>
+        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
+        <AssemblyName>MahApps.Metro.Demo</AssemblyName>
+        <RootNamespace>MetroDemo</RootNamespace>
+        <DisableFody Condition="'$(Configuration)' == 'Debug' or '$(TargetFramework)' == 'netcoreapp3.0'">true</DisableFody>
+    </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <NoWarn>SA1652</NoWarn>
+        <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
+        <PackageReference Include="MaterialDesignThemes" Version="2.*" />
+        <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
+        <PackageReference Include="Fody" Version="5.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Globalization" />
+        <Reference Include="System.Windows.Forms"/>
+        <Reference Include="WindowsFormsIntegration"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="app.manifest"/>
+        <None Remove="App.config"/>
+        <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
+            <TargetPath>$(AssemblyName).config</TargetPath>
+        </AppConfigWithTargetPath>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+    </ItemGroup>
+</Project>
