@@ -55,7 +55,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="1" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
-                <Setter TargetName="Underline" Property="Placement" Value="Top" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Left">
                 <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
@@ -66,7 +65,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                <Setter TargetName="Underline" Property="Placement" Value="Right" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Right">
                 <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
@@ -77,7 +75,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                <Setter TargetName="Underline" Property="Placement" Value="Left" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -132,7 +129,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="1" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="Auto" />
-                <Setter TargetName="Underline" Property="Placement" Value="Top" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Left">
                 <Setter TargetName="ColumnDefinition0" Property="Width" Value="Auto" />
@@ -143,7 +139,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                <Setter TargetName="Underline" Property="Placement" Value="Right" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Right">
                 <Setter TargetName="ColumnDefinition0" Property="Width" Value="*" />
@@ -154,7 +149,6 @@
                 <Setter TargetName="HeaderPanelGrid" Property="Grid.Row" Value="0" />
                 <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                 <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
-                <Setter TargetName="Underline" Property="Placement" Value="Left" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
