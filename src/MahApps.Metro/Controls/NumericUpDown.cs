@@ -123,6 +123,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(true, InterceptManualEnterChangedCallback));
 
+        public static readonly DependencyProperty ChangeValueOnTextChangedProperty = DependencyProperty.Register(
+            "ChangeValueOnTextChanged",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
+
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
             typeof(CultureInfo),
@@ -318,6 +324,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        ///     Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed event or when using the Enter key.
+        /// </summary>
+        [Category("Behavior")]
+        public bool ChangeValueOnTextChanged
+        {
+            get { return (bool)GetValue(ChangeValueOnTextChangedProperty); }
+            set { SetValue(ChangeValueOnTextChangedProperty, value); }
+        }
+
+        /// <summary>
         ///     Gets or sets a value indicating the culture to be used in string formatting operations.
         /// </summary>
         [Category("Behavior")]
@@ -364,7 +380,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets weather the up and down buttons will got the focus when using them.
+        /// Gets or sets whether the up and down buttons will got the focus when using them.
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -668,6 +684,13 @@ namespace MahApps.Metro.Controls
 
             switch (e.Key)
             {
+                case Key.Enter:
+                    if (!this.ChangeValueOnTextChanged)
+                    {
+                        this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
+                    }
+
+                    break;
                 case Key.Up:
                     this.ChangeValueWithSpeedUp(true);
                     e.Handled = true;
@@ -1147,18 +1170,22 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (!this.InterceptManualEnter)
+            this.ChangeValueFromTextInput(sender as TextBox);
+        }
+
+        private void ChangeValueFromTextInput(TextBox textBox)
+        {
+            if (!this.InterceptManualEnter || textBox is null)
             {
                 return;
             }
 
             if (this.manualChange)
             {
-                TextBox tb = (TextBox)sender;
                 this.manualChange = false;
 
                 double convertedValue;
-                if (this.ValidateText(tb.Text, out convertedValue))
+                if (this.ValidateText(textBox.Text, out convertedValue))
                 {
                     this.SetValueTo(convertedValue);
                 }
@@ -1169,6 +1196,11 @@ namespace MahApps.Metro.Controls
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (!this.ChangeValueOnTextChanged)
+            {
+                return;
+            }
+
             if (string.IsNullOrEmpty(((TextBox)sender).Text))
             {
                 this.Value = null;

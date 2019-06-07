@@ -405,9 +405,12 @@
                                         Value="500" />
 
                 <Label Content="Focusing / Value changing" />
-                <CheckBox Margin="0 4 0 0"
-                          Content="Focusable Up / Down Buttons"
+                <CheckBox Margin="1"
+                          Content="Up / Down Buttons are focusable"
                           IsChecked="{Binding UpDownButtonsFocusable, ElementName=numericUpDownFocus, Mode=TwoWay}" />
+                <CheckBox Margin="1"
+                          Content="Change value directly on TextChanged event"
+                          IsChecked="{Binding ChangeValueOnTextChanged, ElementName=numericUpDownFocus, Mode=TwoWay}" />
                 <Slider Margin="{StaticResource ControlMargin}"
                         Interval="1"
                         IsSnapToTickEnabled="True"
