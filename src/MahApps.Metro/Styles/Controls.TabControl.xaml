@@ -12,8 +12,8 @@
         <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource GrayNormalBrush}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource GrayHoverBrush}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Controls:TabControlHelper.UnderlinePlacement" Value="Bottom" />
         <Setter Property="Controls:TabControlHelper.UnderlineSelectedBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:TabControlHelper.UnderlinePlacement" Value="Bottom"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -91,8 +91,6 @@
                             <Setter TargetName="RowDefinition0" Property="Height" Value="*" />
                             <Setter TargetName="RowDefinition1" Property="Height" Value="0" />
                         </Trigger>
-
-                       
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -158,8 +156,8 @@
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                        UseLayoutRounding="False" />
                             <Controls:Underline x:Name="Underline"
-                                                Grid.Column="0"
                                                 Grid.Row="1"
+                                                Grid.Column="0"
                                                 HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Background="{TemplateBinding Background}"
@@ -236,9 +234,6 @@
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
                         </DataTrigger>-->
 
-
-
-
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
@@ -300,9 +295,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -311,9 +306,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -322,9 +317,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -333,9 +328,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Top" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Top" />
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -345,9 +340,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -356,9 +351,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -367,9 +362,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -378,9 +373,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="Underline" Property="Placement" Value="Bottom" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Bottom" />
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -390,9 +385,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="Underline" Property="Placement" Value="Left" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -401,9 +396,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="Underline" Property="Placement" Value="Left" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -412,9 +407,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="Underline" Property="Placement" Value="Left" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -423,9 +418,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left" />
                             <Setter TargetName="Underline" Property="Placement" Value="Left" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Left"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -435,9 +430,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -446,9 +441,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="1" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -457,9 +452,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="0" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -468,9 +463,9 @@
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="Underline" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Underline" Property="Grid.Row" Value="0" />
+                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="Underline" Property="Placement" Value="Right" />
-                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch"/>
-                            <Setter TargetName="Underline" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="Underline" Property="VerticalAlignment" Value="Stretch" />
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
