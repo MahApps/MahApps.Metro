@@ -88,6 +88,7 @@
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}"
                                           Delay="{TemplateBinding Delay}"
+                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Foreground="{TemplateBinding Foreground}"
                                           IsTabStop="False"
                                           Style="{DynamicResource ChromelessButtonStyle}">
@@ -104,6 +105,7 @@
                                           Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}"
                                           VerticalContentAlignment="Center"
                                           Delay="{TemplateBinding Delay}"
+                                          Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Foreground="{TemplateBinding Foreground}"
                                           IsTabStop="False"
                                           Style="{DynamicResource ChromelessButtonStyle}">
