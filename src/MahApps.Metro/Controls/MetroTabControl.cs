@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using ControlzEx.Controls;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
@@ -17,19 +18,29 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroTabControl class.
         /// </summary>
-        public MetroTabControl()
+        static MetroTabControl()
         {
-            DefaultStyleKey = typeof(MetroTabControl);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroTabControl), new FrameworkPropertyMetadata(typeof(MetroTabControl)));
+        }
+
+        /// <summary>Identifies the <see cref="KeepVisualTreeInMemoryWhenChangingTabs"/> dependency property.</summary>
+        public static readonly DependencyProperty KeepVisualTreeInMemoryWhenChangingTabsProperty = DependencyProperty.Register(nameof(KeepVisualTreeInMemoryWhenChangingTabs), typeof(bool), typeof(MetroTabControl), new PropertyMetadata(false));
+
+        public bool KeepVisualTreeInMemoryWhenChangingTabs
+        {
+            get { return (bool)GetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty); }
+            set { SetValue(KeepVisualTreeInMemoryWhenChangingTabsProperty, value); }
         }
     }
 
     /// <summary>
     /// A base class for every MetroTabControl (Pivot).
     /// </summary>
-    public abstract class BaseMetroTabControl : TabControl
+    public abstract class BaseMetroTabControl : TabControlEx
     {
-        public BaseMetroTabControl()
+        static BaseMetroTabControl()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroTabControl), new FrameworkPropertyMetadata(typeof(BaseMetroTabControl)));
         }
 
         public Thickness TabStripMargin
@@ -40,7 +51,7 @@ namespace MahApps.Metro.Controls
 
         // Using a DependencyProperty as the backing store for TabStripMargin.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TabStripMarginProperty =
-            DependencyProperty.Register("TabStripMargin", typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
+            DependencyProperty.Register(nameof(TabStripMargin), typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -72,7 +83,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(CloseTabCommand), typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
         public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
 

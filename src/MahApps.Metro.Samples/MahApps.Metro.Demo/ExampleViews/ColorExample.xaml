@@ -11,43 +11,41 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
 
-    <ScrollViewer Margin="15">
-        <ItemsControl Margin="5"
-                      Grid.IsSharedSizeScope="True"
-                      ItemsSource="{Binding BrushResources}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid MinHeight="40"
-                          Margin="0 5"
-                          ToolTip="{Binding}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="BrushHex" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Ellipse x:Name="BrushResource"
-                                 Grid.Column="0"
-                                 Width="30"
-                                 Height="30"
-                                 Stroke="{DynamicResource GrayBrush2}">
-                            <i:Interaction.Behaviors>
-                                <behaviors:BindableResourceBehavior ResourceName="{Binding}" Property="{x:Static Shape.FillProperty}" />
-                            </i:Interaction.Behaviors>
-                        </Ellipse>
-                        <TextBlock Grid.Column="1"
-                                   Margin="10"
-                                   VerticalAlignment="Center"
-                                   FontSize="{DynamicResource NormalFontSize}"
-                                   Text="{Binding ElementName=BrushResource, Path=(Shape.Fill)}" />
-                        <TextBlock Grid.Column="2"
-                                   Margin="10"
-                                   VerticalAlignment="Center"
-                                   FontSize="{DynamicResource NormalFontSize}"
-                                   Text="{Binding}" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+    <ItemsControl Margin="10"
+                  Grid.IsSharedSizeScope="True"
+                  ItemsSource="{Binding BrushResources}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Grid MinHeight="40"
+                      Margin="0 5"
+                      ToolTip="{Binding}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="BrushHex" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Ellipse x:Name="BrushResource"
+                             Grid.Column="0"
+                             Width="30"
+                             Height="30"
+                             Stroke="{DynamicResource GrayBrush2}">
+                        <i:Interaction.Behaviors>
+                            <behaviors:BindableResourceBehavior ResourceName="{Binding}" Property="{x:Static Shape.FillProperty}" />
+                        </i:Interaction.Behaviors>
+                    </Ellipse>
+                    <TextBlock Grid.Column="1"
+                               Margin="10"
+                               VerticalAlignment="Center"
+                               FontSize="{DynamicResource NormalFontSize}"
+                               Text="{Binding ElementName=BrushResource, Path=(Shape.Fill)}" />
+                    <TextBlock Grid.Column="2"
+                               Margin="10"
+                               VerticalAlignment="Center"
+                               FontSize="{DynamicResource NormalFontSize}"
+                               Text="{Binding}" />
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 
 </UserControl>

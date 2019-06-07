@@ -185,7 +185,12 @@
                              Controls:TextBoxHelper.SelectAllOnFocus="True"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True">
-                    <FlowDocument>
+                    <!--
+                        Workaround for: RichTextBox behaves oddly inside a ScrollViewer
+                        
+                        The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
+                    -->
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Normal" />
@@ -200,7 +205,7 @@
                              Padding="5"
                              IsDocumentEnabled="True"
                              IsReadOnly="True">
-                    <FlowDocument>
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="ReadOnly" />
@@ -215,7 +220,7 @@
                              Padding="5"
                              IsDocumentEnabled="True"
                              IsEnabled="False">
-                    <FlowDocument>
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
                         <Paragraph>
                             <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
                                 <Run Text="Disabled" />
@@ -398,6 +403,29 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         Value="500" />
+
+                <Label Content="Focusing / Value changing" />
+                <CheckBox Margin="1"
+                          Content="Up / Down Buttons are focusable"
+                          IsChecked="{Binding UpDownButtonsFocusable, ElementName=numericUpDownFocus, Mode=TwoWay}" />
+                <CheckBox Margin="1"
+                          Content="Change value directly on TextChanged event"
+                          IsChecked="{Binding ChangeValueOnTextChanged, ElementName=numericUpDownFocus, Mode=TwoWay}" />
+                <Slider Margin="{StaticResource ControlMargin}"
+                        Interval="1"
+                        IsSnapToTickEnabled="True"
+                        LargeChange="5"
+                        Maximum="20"
+                        Minimum="0"
+                        SmallChange="1"
+                        TickFrequency="1"
+                        TickPlacement="BottomRight"
+                        Value="{Binding ElementName=numericUpDownFocus, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Controls:NumericUpDown x:Name="numericUpDownFocus"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Maximum="20"
+                                        Minimum="0"
+                                        Value="0" />
             </StackPanel>
 
             <StackPanel Grid.Row="1"

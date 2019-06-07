@@ -18,6 +18,30 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
     {
+        /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentMarginProperty = DependencyProperty.Register(nameof(DialogContentMargin), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(25, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the left and right margin for the dialog content.
+        /// </summary>
+        public GridLength DialogContentMargin
+        {
+            get { return (GridLength)this.GetValue(DialogContentMarginProperty); }
+            set { this.SetValue(DialogContentMarginProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="DialogContentWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentWidthProperty = DependencyProperty.Register(nameof(DialogContentWidth), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(50, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the width for the dialog content.
+        /// </summary>
+        public GridLength DialogContentWidth
+        {
+            get { return (GridLength)this.GetValue(DialogContentWidthProperty); }
+            set { this.SetValue(DialogContentWidthProperty, value); }
+        }
+
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
 

@@ -4,7 +4,7 @@ NUGET
     Caliburn.Micro (3.2)
       Caliburn.Micro.Core (3.2)
     Caliburn.Micro.Core (3.2)
-    ControlzEx (4.0.0-alpha0222)
+    ControlzEx (4.0.0-alpha0232)
       Microsoft.Xaml.Behaviors.Wpf (>= 1.0.1)
     Costura.Fody (3.3.2)
       Fody (>= 3.3.5) - restriction: || (== net45) (== net452) (== net46) (== net47) (&& (== netcoreapp3.0) (>= net40))
