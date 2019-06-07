@@ -329,8 +329,8 @@ namespace MahApps.Metro.Controls
         [Category("Behavior")]
         public bool ChangeValueOnTextChanged
         {
-            get { return (bool)GetValue(ChangeValueOnTextChangedProperty); }
-            set { SetValue(ChangeValueOnTextChangedProperty, value); }
+            get { return (bool)this.GetValue(ChangeValueOnTextChangedProperty); }
+            set { this.SetValue(ChangeValueOnTextChangedProperty, value); }
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace MahApps.Metro.Controls
 
             if (this.repeatUp == null || this.repeatDown == null || this.valueTextBox == null)
             {
-                throw new InvalidOperationException(string.Format("You have missed to specify {0}, {1} or {2} in your template", PART_NumericUp, PART_NumericDown, PART_TextBox));
+                throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
             this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
@@ -1059,13 +1059,14 @@ namespace MahApps.Metro.Controls
         private ScrollViewer TryFindScrollViewer()
         {
             this.valueTextBox.ApplyTemplate();
-            var scrollViewer = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
-            if (scrollViewer != null)
+
+            var scrollViewerFromTemplate = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
+            if (scrollViewerFromTemplate != null)
             {
                 this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
 
-            return scrollViewer;
+            return scrollViewerFromTemplate;
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
@@ -1124,21 +1125,23 @@ namespace MahApps.Metro.Controls
 
         private void SetValueTo(double newValue)
         {
+            var value = newValue;
+
             if (this.SnapToMultipleOfInterval && Math.Abs(this.Interval) > 0)
             {
-                newValue = Math.Round(newValue / this.Interval) * this.Interval;
+                value = Math.Round(newValue / this.Interval) * this.Interval;
             }
 
-            if (newValue > this.Maximum)
+            if (value > this.Maximum)
             {
-                newValue = this.Maximum;
+                value = this.Maximum;
             }
-            else if (newValue < this.Minimum)
+            else if (value < this.Minimum)
             {
-                newValue = this.Minimum;
+                value = this.Minimum;
             }
 
-            this.SetCurrentValue(ValueProperty, CoerceValue(this, newValue));
+            this.SetCurrentValue(ValueProperty, CoerceValue(this, value));
         }
 
         private void EnableDisableDown()
@@ -1175,7 +1178,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueFromTextInput(TextBox textBox)
         {
-            if (!this.InterceptManualEnter || textBox is null)
+            if (textBox is null || !this.InterceptManualEnter)
             {
                 return;
             }
@@ -1285,22 +1288,22 @@ namespace MahApps.Metro.Controls
                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
-            text = this.TryGetNumberFromText(text, isHex);
+            var number = this.TryGetNumberFromText(text, isHex);
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
             {
-                return this.ConvertNumber(text, out convertedValue);
+                return this.ConvertNumber(number, out convertedValue);
             }
 
-            if (text == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
-                || text == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
-                || text == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
+            if (number == this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator
+                || number == this.SpecificCultureInfo.NumberFormat.CurrencyDecimalSeparator
+                || number == this.SpecificCultureInfo.NumberFormat.PercentDecimalSeparator)
             {
                 return true;
             }
 
-            if (!double.TryParse(text, this.ParsingNumberStyle, this.SpecificCultureInfo, out convertedValue))
+            if (!double.TryParse(number, this.ParsingNumberStyle, this.SpecificCultureInfo, out convertedValue))
             {
                 return false;
             }
