@@ -32,8 +32,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(ToggleSwitch), new PropertyMetadata(SystemFonts.MessageFontFamily));
 
-        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
-        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
+        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("On"));
+        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Off"));
+        public static readonly DependencyProperty IntermediateLabelProperty = DependencyProperty.Register("IntermediateLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Undefined"));
 
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
@@ -63,7 +64,25 @@ namespace MahApps.Metro.Controls
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
         public event EventHandler<RoutedEventArgs> Indeterminate;
-        public event EventHandler<RoutedEventArgs> Click;
+        public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ToggleSwitch));
+
+        public event RoutedEventHandler Click
+        {
+            add { AddHandler(ClickEvent, value); }
+            remove { RemoveHandler(ClickEvent, value); }
+        }
+
+        protected virtual void OnClick()
+        {
+            RoutedEventArgs args = new RoutedEventArgs(ClickEvent, this);
+            RaiseEvent(args);
+        }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+            OnClick();
+        }
 
         /// <summary>
         /// Gets/sets the font family of the header.
@@ -78,7 +97,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the text to display when the control is in it's On state.
         /// </summary>
-        public string OnLabel
+        public object OnLabel
         {
             get { return (string)GetValue(OnLabelProperty); }
             set { SetValue(OnLabelProperty, value); }
@@ -87,10 +106,19 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the text to display when the control is in it's Off state.
         /// </summary>
-        public string OffLabel
+        public object OffLabel
         {
             get { return (string)GetValue(OffLabelProperty); }
             set { SetValue(OffLabelProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the text to display when the control is in it's intermediate state.
+        /// </summary>
+        public object IntermediateLabel
+        {
+            get { return (string)GetValue(IntermediateLabelProperty); }
+            set { SetValue(IntermediateLabelProperty, value); }
         }
 
         /// <summary>
@@ -295,7 +323,7 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Checked -= CheckedHandler;
                 _toggleButton.Unchecked -= UncheckedHandler;
                 _toggleButton.Indeterminate -= IndeterminateHandler;
-                _toggleButton.Click -= ClickHandler;
+                //_toggleButton.Click -= ClickHandler;
                 BindingOperations.ClearBinding(_toggleButton, ToggleButton.IsCheckedProperty);
 
                 _toggleButton.IsEnabledChanged -= IsEnabledHandler;
@@ -308,7 +336,7 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Checked += CheckedHandler;
                 _toggleButton.Unchecked += UncheckedHandler;
                 _toggleButton.Indeterminate += IndeterminateHandler;
-                _toggleButton.Click += ClickHandler;
+                //_toggleButton.Click += ClickHandler;
                 var binding = new Binding("IsChecked") { Source = this };
                 _toggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
 
@@ -358,10 +386,11 @@ namespace MahApps.Metro.Controls
             SafeRaise.Raise(Indeterminate, this, e);
         }
 
-        private void ClickHandler(object sender, RoutedEventArgs e)
-        {
-            SafeRaise.Raise(Click, this, e);
-        }
+        //private void ClickHandler(object sender, RoutedEventArgs e)
+        //{
+        //    SafeRaise.Raise(Click, this, e);
+        //    _toggleButton.IsChecked = null;
+        //}
 
         public override string ToString()
         {

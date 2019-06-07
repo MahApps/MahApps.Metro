@@ -193,7 +193,7 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Stretch">
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
                        BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
@@ -213,11 +213,11 @@
             <Label Content="Toggle switch" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    Header="ToggleSwitch Header"
-                                   IsChecked="True"
+                                   IsChecked="{x:Null}"
                                    ToggleSwitchButtonStyle="{StaticResource CustomMetroToggleSwitchButton}" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True"
-                                   Style="{DynamicResource CustomMetroToggleSwitch}" />
+            <Controls:ToggleSwitchButton Margin="{StaticResource ControlMargin}"
+                                   IsChecked="True" 
+                                         Content="Click me :-)"/>
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"
                                    IsEnabled="False" />
@@ -226,7 +226,7 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Stretch">
             <StackPanel.Resources>
                 <BooleanToVisibilityConverter x:Key="btv" />
             </StackPanel.Resources>
@@ -234,7 +234,7 @@
             <Controls:ToggleSwitch x:Name="enabledSwitch"
                                    Margin="{StaticResource ControlMargin}"
                                    Header="Win10 Style"
-                                   IsChecked="True"
+                                   IsChecked="{x:Null}"
                                    OffLabel="Disabled"
                                    OnLabel="Enabled"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
@@ -250,7 +250,7 @@
                                    Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
 
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True"
+                                   IsChecked="{x:Null}"
                                    IsEnabled="False"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"

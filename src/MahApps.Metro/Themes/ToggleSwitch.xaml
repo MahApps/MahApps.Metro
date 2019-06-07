@@ -5,7 +5,8 @@
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton" TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Height" Value="35" />
+        <Setter Property="SwitchHeight" Value="30" />
+        <Setter Property="SwitchWidth" Value="100" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
@@ -15,7 +16,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Grid>
-                        <Grid x:Name="PART_SwitchTrack" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid x:Name="PART_SwitchTrack" Margin="5"
+                              Grid.Column="0"
+                              Height="{TemplateBinding SwitchHeight}"
+                              Width="{TemplateBinding SwitchWidth}">
                             <Border Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}">
@@ -47,6 +55,9 @@
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
+
+                        <ContentPresenter Grid.Column="1" Content="{TemplateBinding Content}"/>
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -85,7 +96,6 @@
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
-        <Setter Property="Width" Value="70" />
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
@@ -114,12 +124,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="firstCol" Width="*" />
-                                <ColumnDefinition x:Name="secCol" Width="Auto" />
-                            </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
-                                            Grid.ColumnSpan="2"
                                             Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
                                             Content="{TemplateBinding Header}"
                                             ContentStringFormat="{TemplateBinding HeaderStringFormat}"
@@ -129,22 +134,10 @@
                                             FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                             FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                             IsTabStop="False" />
-                            <ContentControl x:Name="Content"
-                                            Grid.Row="1"
-                                            Margin="{TemplateBinding ContentPadding}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            Content="{TemplateBinding Content}"
-                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                            FontFamily="{TemplateBinding FontFamily}"
-                                            FontSize="{TemplateBinding FontSize}"
-                                            IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Row="1"
-                                                         Grid.Column="1"
                                                          VerticalAlignment="Center"
+                                                         HorizontalAlignment="Stretch"
                                                          Background="{TemplateBinding Background}"
                                                          FocusVisualStyle="{x:Null}"
                                                          IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -154,7 +147,8 @@
                                                          Style="{TemplateBinding ToggleSwitchButtonStyle}"
                                                          ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
                                                          ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
-                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}" />
+                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
+                                                         Content="{TemplateBinding Content}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -162,10 +156,6 @@
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="Header"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="0.3"
-                                                         Duration="0" />
-                                        <DoubleAnimation Storyboard.TargetName="Content"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          To="0.3"
                                                          Duration="0" />
@@ -184,7 +174,7 @@
                                 <Condition Property="IsChecked" Value="True" />
                                 <Condition Property="Content" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Content" Property="Content">
+                            <Setter TargetName="Switch" Property="Content">
                                 <Setter.Value>
                                     <Binding Mode="TwoWay"
                                              Path="OnLabel"
@@ -197,7 +187,7 @@
                                 <Condition Property="IsChecked" Value="False" />
                                 <Condition Property="Content" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Content" Property="Content">
+                            <Setter TargetName="Switch" Property="Content">
                                 <Setter.Value>
                                     <Binding Mode="TwoWay"
                                              Path="OffLabel"
@@ -205,16 +195,28 @@
                                 </Setter.Value>
                             </Setter>
                         </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Switch" Property="Content">
+                                <Setter.Value>
+                                    <Binding Mode="TwoWay"
+                                             Path="IntermediateLabel"
+                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}" Value="{x:Null}">
                             <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <Trigger Property="ContentDirection" Value="RightToLeft">
+                        <!--<Trigger Property="ContentDirection" Value="RightToLeft">
                             <Setter Property="ContentPadding" Value="4 0 0 0" />
-                            <Setter TargetName="Content" Property="Grid.Column" Value="1" />
                             <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
                             <Setter TargetName="firstCol" Property="Width" Value="Auto" />
                             <Setter TargetName="secCol" Property="Width" Value="*" />
-                        </Trigger>
+                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

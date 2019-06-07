@@ -10,8 +10,8 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Configuration" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="ControlzEx" Version="[4.0.0-alpha0290, 5.0)" />
@@ -42,5 +42,8 @@
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Update="WpfAnalyzers" Version="2.2.0.2" />
     </ItemGroup>
 </Project>
