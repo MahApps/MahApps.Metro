@@ -9,40 +9,40 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public partial class HamburgerMenu
     {
-        public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Bubble, typeof(EventHandler<ItemClickEventArgs>), typeof(HamburgerMenu));
+        public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is clicked
         /// </summary>
-        public event EventHandler<ItemClickEventArgs> ItemClick
+        public event ItemClickRoutedEventHandler ItemClick
         {
             add { this.AddHandler(HamburgerMenu.ItemClickEvent, value); }
             remove { this.RemoveHandler(HamburgerMenu.ItemClickEvent, value); }
         }
 
-        public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Bubble, typeof(EventHandler<ItemClickEventArgs>), typeof(HamburgerMenu));
+        public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an options' item is clicked
         /// </summary>
-        public event EventHandler<ItemClickEventArgs> OptionsItemClick
+        public event ItemClickRoutedEventHandler OptionsItemClick
         {
             add { this.AddHandler(HamburgerMenu.OptionsItemClickEvent, value); }
             remove { this.RemoveHandler(HamburgerMenu.OptionsItemClickEvent, value); }
         }
 
-        public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Bubble, typeof(EventHandler<HamburgerMenuItemInvokedEventArgs>), typeof(HamburgerMenu));
+        public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Direct, typeof(HamburgerMenuItemInvokedRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is invoked
         /// </summary>
-        public event EventHandler<HamburgerMenuItemInvokedEventArgs> ItemInvoked
+        public event HamburgerMenuItemInvokedRoutedEventHandler ItemInvoked
         {
             add { this.AddHandler(HamburgerMenu.ItemInvokedEvent, value); }
             remove { this.RemoveHandler(HamburgerMenu.ItemInvokedEvent, value); }
         }
 
-        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(HamburgerMenu));
+        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when the hamburger button is clicked
