@@ -5,7 +5,6 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:valueConverter="clr-namespace:MetroDemo.ValueConverter"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -59,7 +58,6 @@
                 <TabControl Height="200"
                             Controls:ControlsHelper.HeaderFontFamily="Segoe Script"
                             Controls:ControlsHelper.HeaderFontSize="18"
-                            Controls:TabControlHelper.UnderlinePlacement="{Binding ElementName=TabStripPlacementComboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Converter={valueConverter:PlacementToOppositePlacementConverter}}"
                             Controls:TabControlHelper.Underlined="{Binding ElementName=UnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TabStripPlacement="{Binding ElementName=TabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TabItem Header="Item _1">
@@ -112,7 +110,6 @@
                         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                     </Grid.Resources>
                     <TabControl Height="150"
-                                Controls:TabControlHelper.UnderlinePlacement="{Binding ElementName=AnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Converter={valueConverter:PlacementToOppositePlacementConverter}}"
                                 Controls:TabControlHelper.Underlined="{Binding ElementName=AnimatedTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TabStripPlacement="{Binding ElementName=AnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <TabItem Header="this tabcontrol">
@@ -157,7 +154,6 @@
                         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                     </Grid.Resources>
                     <TabControl Height="150"
-                                Controls:TabControlHelper.UnderlinePlacement="{Binding ElementName=AnimatedSingleRowTabControlTabStripPlacementComboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Converter={valueConverter:PlacementToOppositePlacementConverter}}"
                                 Controls:TabControlHelper.Underlined="{Binding ElementName=AnimatedSingleRowTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 TabStripPlacement="{Binding ElementName=AnimatedSingleRowTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <TabItem Header="these tabs">
@@ -206,7 +202,6 @@
                               SelectedItem="{x:Static Dock.Top}" />
                 </StackPanel>
                 <Controls:MetroAnimatedTabControl Height="150"
-                                                  Controls:TabControlHelper.UnderlinePlacement="{Binding ElementName=MetroAnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Converter={valueConverter:PlacementToOppositePlacementConverter}}"
                                                   Controls:TabControlHelper.Underlined="{Binding ElementName=MetroAnimatedTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   TabStripPlacement="{Binding ElementName=MetroAnimatedTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TabItem Header="this tabcontrol">
@@ -246,7 +241,6 @@
                               SelectedItem="{x:Static Dock.Top}" />
                 </StackPanel>
                 <Controls:MetroAnimatedSingleRowTabControl Height="150"
-                                                           Controls:TabControlHelper.UnderlinePlacement="{Binding ElementName=MetroAnimatedSingleRowTabControlTabStripPlacementComboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Converter={valueConverter:PlacementToOppositePlacementConverter}}"
                                                            Controls:TabControlHelper.Underlined="{Binding ElementName=MetroAnimatedSingleRowTabControlUnderlinedComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                            TabStripPlacement="{Binding ElementName=MetroAnimatedSingleRowTabControlTabStripPlacementComboBox, Path=SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TabItem Header="these tabs">

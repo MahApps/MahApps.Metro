@@ -279,18 +279,18 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty UnderlinePlacementProperty =
             DependencyProperty.RegisterAttached("UnderlinePlacement",
-                                                typeof(Dock),
+                                                typeof(Dock?),
                                                 typeof(TabControlHelper),
-                                                new PropertyMetadata(Dock.Bottom));
+                                                new PropertyMetadata(null));
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        public static Dock GetUnderlinePlacement(UIElement element)
+        public static Dock? GetUnderlinePlacement(UIElement element)
         {
-            return (Dock)element.GetValue(UnderlinePlacementProperty);
+            return (Dock?)element.GetValue(UnderlinePlacementProperty);
         }
 
-        public static void SetUnderlinePlacement(UIElement element, Dock value)
+        public static void SetUnderlinePlacement(UIElement element, Dock? value)
         {
             element.SetValue(UnderlinePlacementProperty, value);
         }
