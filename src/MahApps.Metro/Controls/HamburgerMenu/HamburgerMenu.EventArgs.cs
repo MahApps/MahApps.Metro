@@ -31,6 +31,11 @@ namespace MahApps.Metro.Controls
     }
 
     /// <summary>
+    /// RoutedEventHandler used for the <see cref="HamburgerMenu"/> ItemClick and OptionsItemClick event.
+    /// </summary>
+    public delegate void ItemClickRoutedEventHandler(object sender, ItemClickEventArgs args);
+
+    /// <summary>
     /// EventArgs used for the <see cref="HamburgerMenu"/> ItemInvoked event.
     /// </summary>
     public class HamburgerMenuItemInvokedEventArgs : RoutedEventArgs
@@ -62,4 +67,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool IsItemOptions { get; internal set; }
     }
+
+    /// <summary>
+    /// RoutedEventHandler used for the <see cref="HamburgerMenu"/> ItemInvoked event.
+    /// </summary>
+    public delegate void HamburgerMenuItemInvokedRoutedEventHandler(object sender, HamburgerMenuItemInvokedEventArgs args);
 }
