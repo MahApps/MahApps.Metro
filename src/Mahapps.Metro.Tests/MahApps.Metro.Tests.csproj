@@ -9,6 +9,18 @@
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj"/>
     </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
+        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
+        <PackageReference Include="ExposedObject" Version="1.2.*" PrivateAssets="All" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
+    </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
         <None Remove="TestApp.config"/>
@@ -20,15 +32,4 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
     </ItemGroup>
-    <!--
-    Workaround to fix IntelliSense file generation for XAML projects
-    ISSUE: https://github.com/dotnet/project-system/issues/2488
-  -->
-    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-            <DesignTimeBuild>true</DesignTimeBuild>
-        </PropertyGroup>
-    </Target>
-    <Import Project="..\..\.paket\Paket.Restore.targets"/>
 </Project>

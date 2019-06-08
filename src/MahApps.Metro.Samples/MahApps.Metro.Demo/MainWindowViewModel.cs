@@ -15,6 +15,7 @@ using MetroDemo.Models;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.Core;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
@@ -24,15 +25,17 @@ namespace MetroDemo
     public class AccentColorMenuData
     {
         public string Name { get; set; }
+
         public Brush BorderColorBrush { get; set; }
+
         public Brush ColorBrush { get; set; }
 
-        private ICommand changeAccentCommand;
-
-        public ICommand ChangeAccentCommand
+        public AccentColorMenuData()
         {
-            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => this.DoChangeTheme(x) }); }
+            this.ChangeAccentCommand = new SimpleCommand(o => true, this.DoChangeTheme);
         }
+
+        public ICommand ChangeAccentCommand { get; }
 
         protected virtual void DoChangeTheme(object sender)
         {
@@ -48,7 +51,7 @@ namespace MetroDemo
         }
     }
 
-    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo, IDisposable
+    public class MainWindowViewModel : ViewModelBase, IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
@@ -57,7 +60,7 @@ namespace MetroDemo
         public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
             this.Title = "Flyout Binding Test";
-            _dialogCoordinator = dialogCoordinator;
+            this._dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
             // create accent color menu items for the demo
@@ -72,30 +75,116 @@ namespace MetroDemo
                                          .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
                                          .ToList();
 
+            this.Albums = SampleData.Albums;
+            this.Artists = SampleData.Artists;
 
-            Albums = SampleData.Albums;
-            Artists = SampleData.Artists;
+            this.FlipViewImages = new Uri[]
+                                  {
+                                      new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Home.jpg", UriKind.RelativeOrAbsolute),
+                                      new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Privat.jpg", UriKind.RelativeOrAbsolute),
+                                      new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
+                                  };
 
-            FlipViewImages = new Uri[]
-                             {
-                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Home.jpg", UriKind.RelativeOrAbsolute),
-                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Privat.jpg", UriKind.RelativeOrAbsolute),
-                                 new Uri("pack://application:,,,/MahApps.Metro.Demo;component/Assets/Photos/Settings.jpg", UriKind.RelativeOrAbsolute)
-                             };
+            this.BrushResources = this.FindBrushResources();
 
-            BrushResources = FindBrushResources();
-
-            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
+            this.CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).OrderBy(c => c.DisplayName).ToList();
 
             try
             {
-                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                HotkeyManager.Current.AddOrReplace("demo", this.HotKey.Key, this.HotKey.ModifierKeys, (sender, e) => this.OnHotKey(sender, e));
             }
             catch (HotkeyAlreadyRegisteredException exception)
             {
                 System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
             }
+
+            this.EndOfScrollReachedCmdWithParameter = new SimpleCommand(o => true, async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("End of scroll reached!", $"Parameter: {x}"); });
+
+            this.CloseCmd = new SimpleCommand(o => this.CanCloseFlyout, x => ((Flyout)x).IsOpen = false);
+
+            this.TextBoxButtonCmd = new SimpleCommand(
+                o => true,
+                async x =>
+                    {
+                        if (x is string s)
+                        {
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", s);
+                        }
+                        else if (x is RichTextBox richTextBox)
+                        {
+                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text);
+                        }
+                        else if (x is TextBox textBox)
+                        {
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", textBox.Text);
+                        }
+                        else if (x is PasswordBox passwordBox)
+                        {
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", passwordBox.Password);
+                        }
+                    }
+            );
+
+            this.TextBoxButtonCmdWithParameter = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!", $"Parameter: {x}"); }
+            );
+
+            this.SingleCloseTabCommand = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Closing tab!", $"You are now closing the '{x}' tab"); }
+            );
+
+            this.NeverCloseTabCommand = new SimpleCommand(o => false);
+
+            this.ShowInputDialogCommand = new SimpleCommand(
+                o => true,
+                async x => { await this._dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result)); }
+            );
+
+            this.ShowLoginDialogCommand = new SimpleCommand(
+                o => true,
+                async x => { await this._dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result)); }
+            );
+
+            this.ShowMessageDialogCommand = new SimpleCommand(
+                o => true,
+                x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
+            );
+
+            this.ShowProgressDialogCommand = new SimpleCommand(o => true, x => this.RunProgressFromVm());
+
+            this.ShowCustomDialogCommand = new SimpleCommand(o => true, x => this.RunCustomFromVm());
+
+            this.ToggleIconScalingCommand = new SimpleCommand(o => true, this.ToggleIconScaling);
+
+            this.OpenFirstFlyoutCommand = new SimpleCommand(o => true, o => (o as Flyout).IsOpen = !(o as Flyout).IsOpen);
+
+            this.ArtistsDropDownCommand = new SimpleCommand(o => false);
+
+            this.GenreDropDownMenuItemCommand = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
+                );
+
+            this.GenreSplitButtonItemCommand = new SimpleCommand(
+                o => true,
+                async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
+                );
+
+            this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
         }
+
+        public ICommand ArtistsDropDownCommand { get; }
+
+        public ICommand GenreDropDownMenuItemCommand { get; }
+
+        public ICommand GenreSplitButtonItemCommand { get; }
+
+        public ICommand ShowHamburgerAboutCommand { get; }
+
+        public ICommand OpenFirstFlyoutCommand { get; }
 
         public void Dispose()
         {
@@ -103,221 +192,111 @@ namespace MetroDemo
         }
 
         public string Title { get; set; }
+
         public int SelectedIndex { get; set; }
+
         public List<Album> Albums { get; set; }
+
         public List<Artist> Artists { get; set; }
+
         public List<AccentColorMenuData> AccentColors { get; set; }
+
         public List<AppThemeMenuData> AppThemes { get; set; }
+
         public List<CultureInfo> CultureInfos { get; set; }
+
+        private CultureInfo currentCulture = CultureInfo.CurrentCulture;
+
+        public CultureInfo CurrentCulture
+        {
+            get => this.currentCulture;
+            set => this.Set(ref this.currentCulture, value);
+        }
+
+        public ICommand EndOfScrollReachedCmdWithParameter { get; }
 
         public int? IntegerGreater10Property
         {
-            get { return this._integerGreater10Property; }
-            set
-            {
-                if (Equals(value, _integerGreater10Property))
-                {
-                    return;
-                }
-
-                _integerGreater10Property = value;
-                RaisePropertyChanged("IntegerGreater10Property");
-            }
+            get => this._integerGreater10Property;
+            set => this.Set(ref this._integerGreater10Property, value);
         }
 
-        DateTime? _datePickerDate;
+        private DateTime? _datePickerDate;
 
         [Display(Prompt = "Auto resolved Watermark")]
         public DateTime? DatePickerDate
         {
-            get { return this._datePickerDate; }
-            set
-            {
-                if (Equals(value, _datePickerDate))
-                {
-                    return;
-                }
-
-                _datePickerDate = value;
-                RaisePropertyChanged("DatePickerDate");
-            }
+            get => this._datePickerDate;
+            set => this.Set(ref this._datePickerDate, value);
         }
 
         private bool _quitConfirmationEnabled;
+
         public bool QuitConfirmationEnabled
         {
-            get { return _quitConfirmationEnabled; }
-            set
-            {
-                if (value.Equals(_quitConfirmationEnabled)) return;
-                _quitConfirmationEnabled = value;
-                RaisePropertyChanged("QuitConfirmationEnabled");
-            }
+            get => this._quitConfirmationEnabled;
+            set => this.Set(ref this._quitConfirmationEnabled, value);
         }
 
         private bool showMyTitleBar = true;
+
         public bool ShowMyTitleBar
         {
-            get { return showMyTitleBar; }
-            set
-            {
-                if (value.Equals(showMyTitleBar)) return;
-                showMyTitleBar = value;
-                RaisePropertyChanged("ShowMyTitleBar");
-            }
+            get => this.showMyTitleBar;
+            set => this.Set(ref this.showMyTitleBar, value);
         }
 
         private bool canCloseFlyout = true;
 
         public bool CanCloseFlyout
         {
-            get { return this.canCloseFlyout; }
-            set
-            {
-                if (Equals(value, this.canCloseFlyout))
-                {
-                    return;
-                }
-                this.canCloseFlyout = value;
-                this.RaisePropertyChanged("CanCloseFlyout");
-            }
+            get => this.canCloseFlyout;
+            set => this.Set(ref this.canCloseFlyout, value);
         }
 
-        private ICommand closeCmd;
-
-        public ICommand CloseCmd
-        {
-            get
-            {
-                return this.closeCmd ?? (this.closeCmd = new SimpleCommand
-                                                         {
-                                                             CanExecuteDelegate = x => this.CanCloseFlyout,
-                                                             ExecuteDelegate = x => ((Flyout)x).IsOpen = false
-                                                         });
-            }
-        }
+        public ICommand CloseCmd { get; }
 
         private bool canShowHamburgerAboutCommand = true;
 
         public bool CanShowHamburgerAboutCommand
         {
-            get { return this.canShowHamburgerAboutCommand; }
-            set
-            {
-                if (Equals(value, this.canShowHamburgerAboutCommand))
-                {
-                    return;
-                }
-                this.canShowHamburgerAboutCommand = value;
-                this.RaisePropertyChanged("CanShowHamburgerAboutCommand");
-            }
+            get => this.canShowHamburgerAboutCommand;
+            set => this.Set(ref this.canShowHamburgerAboutCommand, value);
         }
 
         private bool isHamburgerMenuPaneOpen;
 
         public bool IsHamburgerMenuPaneOpen
         {
-            get { return this.isHamburgerMenuPaneOpen; }
-            set
-            {
-                if (Equals(value, this.isHamburgerMenuPaneOpen))
-                {
-                    return;
-                }
-                this.isHamburgerMenuPaneOpen = value;
-                this.RaisePropertyChanged("IsHamburgerMenuPaneOpen");
-            }
+            get => this.isHamburgerMenuPaneOpen;
+            set => this.Set(ref this.isHamburgerMenuPaneOpen, value);
         }
 
-        private ICommand textBoxButtonCmd;
+        public ICommand TextBoxButtonCmd { get; }
 
-        public ICommand TextBoxButtonCmd
-        {
-            get
-            {
-                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        if (x is string)
-                        {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", (string)x);
-                        }
-                        else if (x is RichTextBox)
-                        {
-                            var richTextBox = x as RichTextBox;
-                            var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text);
-                        }
-                        else if (x is TextBox)
-                        {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", ((TextBox) x).Text);
-                        }
-                        else if (x is PasswordBox)
-                        {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", ((PasswordBox) x).Password);
-                        }
-                    }
-                });
-            }
-        }
-
-        private ICommand textBoxButtonCmdWithParameter;
-
-        public ICommand TextBoxButtonCmdWithParameter
-        {
-            get
-            {
-                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        if (x is String)
-                        {
-                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
-                                                                                                  string.Format("Parameter: {0}", x));
-                        }
-                    }
-                });
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Raises the PropertyChanged event if needed.
-        /// </summary>
-        /// <param name="propertyName">The name of the property that changed.</param>
-        protected virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        public ICommand TextBoxButtonCmdWithParameter { get; }
 
         public string this[string columnName]
         {
             get
             {
-                if (columnName == "IntegerGreater10Property" && this.IntegerGreater10Property < 10)
+                if (columnName == nameof(IntegerGreater10Property) && this.IntegerGreater10Property < 10)
                 {
                     return "Number is not greater than 10!";
                 }
 
-                if (columnName == "DatePickerDate" && this.DatePickerDate == null)
+                if (columnName == nameof(DatePickerDate) && this.DatePickerDate == null)
                 {
                     return "No date given!";
                 }
 
-                if (columnName == "HotKey" && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                if (columnName == nameof(HotKey) && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
                 {
                     return "SHIFT-D is not allowed";
                 }
-                
-                if (columnName == "TimePickerDate" && this.TimePickerDate == null) {
+
+                if (columnName == nameof(TimePickerDate) && this.TimePickerDate == null)
+                {
                     return "No time given!";
                 }
 
@@ -326,123 +305,42 @@ namespace MetroDemo
         }
 
         [Description("Test-Property")]
-        public string Error { get { return string.Empty; } }
-        
-        DateTime? _timePickerDate;
+        public string Error => string.Empty;
+
+        private DateTime? _timePickerDate;
 
         [Display(Prompt = "Time needed...")]
-        public DateTime? TimePickerDate {
-            get { return this._timePickerDate; }
-            set {
-                if (Equals(value, _timePickerDate)) {
-                    return;
-                }
-
-                _timePickerDate = value;
-                RaisePropertyChanged("TimePickerDate");
-            }
-        }
-
-        private ICommand singleCloseTabCommand;
-
-        public ICommand SingleCloseTabCommand
+        public DateTime? TimePickerDate
         {
-            get
-            {
-                return this.singleCloseTabCommand ?? (this.singleCloseTabCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
-                    }
-                });
-            }
+            get => this._timePickerDate;
+            set => this.Set(ref this._timePickerDate, value);
         }
 
-        private ICommand neverCloseTabCommand;
+        public ICommand SingleCloseTabCommand { get; }
 
-        public ICommand NeverCloseTabCommand
-        {
-            get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
-        }
+        public ICommand NeverCloseTabCommand { get; }
 
+        public ICommand ShowInputDialogCommand { get; }
 
-        private ICommand showInputDialogCommand;
+        public ICommand ShowLoginDialogCommand { get; }
 
-        public ICommand ShowInputDialogCommand
-        {
-            get
-            {
-                return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
-                });
-            }
-        }
-
-        private ICommand showLoginDialogCommand;
-
-        public ICommand ShowLoginDialogCommand
-        {
-            get
-            {
-                return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = async x =>
-                    {
-                        await _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
-                    }
-                });
-            }
-        }
-
-        private ICommand showMessageDialogCommand;
-
-        public ICommand ShowMessageDialogCommand
-        {
-            get
-            {
-                return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => PerformDialogCoordinatorAction(this.ShowMessage((string)x), (string)x == "DISPATCHER_THREAD")
-                });
-            }
-        }
+        public ICommand ShowMessageDialogCommand { get; }
 
         private Action ShowMessage(string startingThread)
         {
             return () =>
-                       {
-                           var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
-                                         $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
-                           this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
-                       };
-        }
-
-        private ICommand showProgressDialogCommand;
-
-        public ICommand ShowProgressDialogCommand
-        {
-            get
-            {
-                return this.showProgressDialogCommand ?? (this.showProgressDialogCommand = new SimpleCommand
                 {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => RunProgressFromVm()
-                });
-            }
+                    var message = $"MVVM based messages!\n\nThis dialog was created by {startingThread} Thread with ID=\"{Thread.CurrentThread.ManagedThreadId}\"\n" +
+                                  $"The current DISPATCHER_THREAD Thread has the ID=\"{Application.Current.Dispatcher.Thread.ManagedThreadId}\"";
+                    this._dialogCoordinator.ShowMessageAsync(this, $"Message from VM created by {startingThread}", message).ContinueWith(t => Console.WriteLine(t.Result));
+                };
         }
+
+        public ICommand ShowProgressDialogCommand { get; }
 
         private async void RunProgressFromVm()
         {
-            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+            var controller = await this._dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
             controller.SetIndeterminate();
 
             await Task.Delay(3000);
@@ -462,49 +360,28 @@ namespace MetroDemo
             }
         }
 
-
-        private ICommand showCustomDialogCommand;
-
-        public ICommand ShowCustomDialogCommand
-        {
-            get
-            {
-                return this.showCustomDialogCommand ?? (this.showCustomDialogCommand = new SimpleCommand
-                {
-                    CanExecuteDelegate = x => true,
-                    ExecuteDelegate = x => RunCustomFromVm()
-                });
-            }
-        }
+        public ICommand ShowCustomDialogCommand { get; }
 
         private async void RunCustomFromVm()
         {
             var customDialog = new CustomDialog() { Title = "Custom Dialog" };
 
             var dataContext = new CustomDialogExampleContent(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                System.Diagnostics.Debug.WriteLine(instance.FirstName);
-            });
-            customDialog.Content = new CustomDialogExample { DataContext = dataContext};
+                {
+                    this._dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                    System.Diagnostics.Debug.WriteLine(instance.FirstName);
+                });
+            customDialog.Content = new CustomDialogExample { DataContext = dataContext };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await this._dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
 
         public bool AnimateOnPositionChange
         {
-            get
-            {
-                return _animateOnPositionChange;
-            }
-            set
-            {
-                if (Equals(_animateOnPositionChange, value)) return;
-                _animateOnPositionChange = value;
-                RaisePropertyChanged("AnimateOnPositionChange");
-            }
+            get => this._animateOnPositionChange;
+            set => this.Set(ref this._animateOnPositionChange, value);
         }
 
         private IEnumerable<string> FindBrushResources()
@@ -525,12 +402,7 @@ namespace MetroDemo
             return Enumerable.Empty<string>();
         }
 
-        public Uri[] FlipViewImages
-        {
-            get;
-            set;
-        }
-
+        public Uri[] FlipViewImages { get; set; }
 
         public class RandomDataTemplateSelector : DataTemplateSelector
         {
@@ -538,7 +410,7 @@ namespace MetroDemo
 
             public override DataTemplate SelectTemplate(object item, DependencyObject container)
             {
-                return TemplateOne;
+                return this.TemplateOne;
             }
         }
 
@@ -546,21 +418,19 @@ namespace MetroDemo
 
         public HotKey HotKey
         {
-            get { return _hotKey; }
+            get => this._hotKey;
             set
             {
-                if (_hotKey != value)
+                if (this.Set(ref this._hotKey, value))
                 {
-                    _hotKey = value;
-                    if (_hotKey != null && _hotKey.Key != Key.None)
+                    if (value != null && value.Key != Key.None)
                     {
-                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                        HotkeyManager.Current.AddOrReplace("demo", value.Key, value.ModifierKeys, async (sender, e) => await this.OnHotKey(sender, e));
                     }
                     else
                     {
                         HotkeyManager.Current.Remove("demo");
                     }
-                    RaisePropertyChanged("HotKey");
                 }
             }
         }
@@ -569,30 +439,21 @@ namespace MetroDemo
         {
             await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
                 "Hotkey pressed",
-                "You pressed the hotkey '" + HotKey + "' registered with the name '" + e.Name + "'");
+                "You pressed the hotkey '" + this.HotKey + "' registered with the name '" + e.Name + "'");
         }
 
-        private ICommand toggleIconScalingCommand;
+        public ICommand ToggleIconScalingCommand { get; }
 
-        public ICommand ToggleIconScalingCommand
+        private void ToggleIconScaling(object obj)
         {
-            get {
-                return toggleIconScalingCommand ?? (toggleIconScalingCommand = new SimpleCommand
-                {
-                    ExecuteDelegate = ToggleIconScaling
-                });
-            }
-        }
-
-        private void ToggleIconScaling(object obj) {
             var multiFrameImageMode = (MultiFrameImageMode)obj;
             ((MetroWindow)Application.Current.MainWindow).IconScalingMode = multiFrameImageMode;
-            RaisePropertyChanged("IsScaleDownLargerFrame");
-            RaisePropertyChanged("IsNoScaleSmallerFrame");
+            this.OnPropertyChanged(nameof(IsScaleDownLargerFrame));
+            this.OnPropertyChanged(nameof(IsNoScaleSmallerFrame));
         }
 
-        public bool IsScaleDownLargerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame; } }
+        public bool IsScaleDownLargerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame;
 
-        public bool IsNoScaleSmallerFrame { get { return ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame; } }
+        public bool IsNoScaleSmallerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame;
     }
 }

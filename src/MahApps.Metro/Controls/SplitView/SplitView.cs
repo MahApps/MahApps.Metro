@@ -38,7 +38,7 @@
         {
             var sender = d as SplitView;
             sender?.TemplateSettings?.Update();
-            sender?.ChangeVisualState();
+            sender?.ChangeVisualState(true, true);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@
             }
         }
 
-        protected virtual void ChangeVisualState(bool animated = true)
+        protected virtual void ChangeVisualState(bool animated = true, bool reset = false)
         {
             if (this.paneClipRectangle != null)
             {
@@ -364,7 +364,11 @@
                 }
             }
 
-            VisualStateManager.GoToState(this, "None", animated);
+            if (reset)
+            {
+                VisualStateManager.GoToState(this, "None", animated);
+            }
+
             VisualStateManager.GoToState(this, state, animated);
         }
 

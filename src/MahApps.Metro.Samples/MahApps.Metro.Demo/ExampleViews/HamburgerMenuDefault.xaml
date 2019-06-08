@@ -4,7 +4,6 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metroDemo="clr-namespace:MetroDemo"
@@ -44,12 +43,12 @@
                 </DataTemplate.Triggers>
             </DataTemplate>
 
-            <!--  This is the template for all option menu items.  -->
-            <DataTemplate x:Key="HamburgerOptionsMenuItem" DataType="{x:Type Controls:HamburgerMenuItem}">
+            <!--  This is the template for the option menu item  -->
+            <DataTemplate x:Key="HamburgerOptionsMenuItem" DataType="{x:Type Controls:HamburgerMenuIconItem}">
                 <DockPanel Height="48" LastChildFill="True">
                     <ContentControl x:Name="IconPart"
                                     Width="48"
-                                    Content="{Binding Tag}"
+                                    Content="{Binding Icon}"
                                     DockPanel.Dock="Left"
                                     Focusable="False"
                                     IsTabStop="False" />
@@ -181,11 +180,11 @@
                 BorderThickness="1">
 
             <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                                    DisplayMode="CompactOverlay"
                                     HamburgerWidth="48"
                                     IsPaneOpen="{Binding IsHamburgerMenuPaneOpen}"
-                                    ItemClick="HamburgerMenu_OnItemClick"
+                                    ItemInvoked="HamburgerMenuControl_OnItemInvoked"
                                     ItemTemplate="{StaticResource HamburgerMenuItem}"
-                                    OptionsItemClick="HamburgerMenu_OnItemClick"
                                     OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
                                     SelectedIndex="1"
                                     VerticalScrollBarOnLeftSide="False">
@@ -212,15 +211,27 @@
                 <!--  Options  -->
                 <Controls:HamburgerMenu.OptionsItemsSource>
                     <Controls:HamburgerMenuItemCollection>
-                        <Controls:HamburgerMenuGlyphItem Command="{x:Static exampleViews:ShowAboutCommand.Command}" Label="About">
-                            <Controls:HamburgerMenuGlyphItem.Tag>
+
+                        <Controls:HamburgerMenuIconItem x:Name="AboutOption"
+                                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:HamburgerMenu}, Path=DataContext.ShowHamburgerAboutCommand}"
+                                                        Label="About">
+                            <Controls:HamburgerMenuIconItem.Icon>
                                 <iconPacks:PackIconMaterial Width="22"
                                                             Height="22"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             Kind="Help" />
-                            </Controls:HamburgerMenuGlyphItem.Tag>
-                        </Controls:HamburgerMenuGlyphItem>
+                            </Controls:HamburgerMenuIconItem.Icon>
+                            <Controls:HamburgerMenuIconItem.Tag>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="28"
+                                           FontWeight="Bold">
+                                    About
+                                </TextBlock>
+                            </Controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+
                     </Controls:HamburgerMenuItemCollection>
                 </Controls:HamburgerMenu.OptionsItemsSource>
 
@@ -243,14 +254,19 @@
                                            Text="{Binding Label}" />
                             </Border>
                             <Controls:TransitioningContentControl Grid.Row="1"
-                                                                  Content="{Binding Glyph}"
+                                                                  Content="{Binding}"
                                                                   RestartTransitionOnContentChange="True"
                                                                   Transition="Default">
-                                <Controls:TransitioningContentControl.ContentTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
+                                <Controls:TransitioningContentControl.Resources>
+                                    <DataTemplate DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
+                                        <Image Source="{Binding Glyph, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                                     </DataTemplate>
-                                </Controls:TransitioningContentControl.ContentTemplate>
+                                    <DataTemplate DataType="{x:Type Controls:HamburgerMenuIconItem}">
+                                        <ContentControl Content="{Binding Tag, Mode=OneWay}"
+                                                        Focusable="True"
+                                                        IsTabStop="False" />
+                                    </DataTemplate>
+                                </Controls:TransitioningContentControl.Resources>
                             </Controls:TransitioningContentControl>
                         </Grid>
                     </DataTemplate>

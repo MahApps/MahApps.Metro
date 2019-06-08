@@ -14,11 +14,13 @@ namespace MetroDemo.ExampleViews
             this.InitializeComponent();
         }
 
-        private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
+        [UsedImplicitly]
+        // Another option to handle the menu item click
+        private void HamburgerMenuControl_OnItemClick(object sender, ItemClickEventArgs e)
         {
             // instead using binding Content="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay, Path=SelectedItem}"
             // we can do this
-            HamburgerMenuControl.Content = e.ClickedItem;
+            this.HamburgerMenuControl.Content = e.ClickedItem;
 
             // close the menu if a item was selected
             if (this.HamburgerMenuControl.IsPaneOpen)
@@ -27,12 +29,23 @@ namespace MetroDemo.ExampleViews
             }
         }
 
-        // Another option to handle the options menu item click
         [UsedImplicitly]
-        private async void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)
+        // Another option to handle the options menu item click
+        private async void HamburgerMenuControl_OnOptionsItemClick(object sender, ItemClickEventArgs e)
         {
             var menuItem = e.ClickedItem as HamburgerMenuItem;
             await this.TryFindParent<MetroWindow>().ShowMessageAsync("", $"You clicked on {menuItem.Label} button");
+        }
+
+        private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
+        {
+            this.HamburgerMenuControl.Content = e.InvokedItem;
+
+            if (!e.IsItemOptions && this.HamburgerMenuControl.IsPaneOpen)
+            {
+                // close the menu if a item was selected
+                this.HamburgerMenuControl.IsPaneOpen = false;
+            }
         }
     }
 
@@ -46,8 +59,8 @@ namespace MetroDemo.ExampleViews
 
         public object Data
         {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get { return (object)this.GetValue(DataProperty); }
+            set { this.SetValue(DataProperty, value); }
         }
 
         protected override Freezable CreateInstanceCore()

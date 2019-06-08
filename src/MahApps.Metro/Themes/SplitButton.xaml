@@ -113,11 +113,19 @@
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-            </Trigger>
+            </MultiTrigger>
             <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".55" />
+                <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -233,11 +241,19 @@
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-            </Trigger>
+            </MultiTrigger>
             <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+            </Trigger>
+            <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".55" />
+                <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

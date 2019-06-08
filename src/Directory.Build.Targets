@@ -1,7 +1,4 @@
 <Project>
-    <PropertyGroup>
-        <DefineConstants>$(DefineConstants)</DefineConstants>
-    </PropertyGroup>
 
     <!-- AssemblyInfo -->
     <PropertyGroup>
@@ -15,13 +12,6 @@
         <AssemblyVersion>2.0.0.0</AssemblyVersion>
         <FileVersion>2.0.0.0</FileVersion>
         <InformationalVersion>2.0.0.0</InformationalVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <Optimize>false</Optimize>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <Optimize>true</Optimize>
     </PropertyGroup>
 
     <ItemGroup>

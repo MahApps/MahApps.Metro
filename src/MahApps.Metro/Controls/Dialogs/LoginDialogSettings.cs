@@ -20,6 +20,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.EnablePasswordPreview = false;
             this.RememberCheckBoxVisibility = Visibility.Collapsed;
             this.RememberCheckBoxText = DefaultRememberCheckBoxText;
+            this.RememberCheckBoxChecked = false;
         }
 
         public string InitialUsername { get; set; }
@@ -41,5 +42,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public Visibility RememberCheckBoxVisibility { get; set; }
 
         public string RememberCheckBoxText { get; set; }
+
+        public bool RememberCheckBoxChecked { get; set; }
     }
 }

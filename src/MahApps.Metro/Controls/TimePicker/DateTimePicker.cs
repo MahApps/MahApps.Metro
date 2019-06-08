@@ -238,7 +238,7 @@
              */
             dateTimePicker._deactivateWriteValueToTextBox = true;
 
-            var dt = (DateTime?)e.AddedItems[0];
+            var dt =  e.AddedItems.Count > 0 ? (DateTime?)e.AddedItems[0] : default;
             if (dt.HasValue)
             {
                 dateTimePicker.SetCurrentValue(SelectedDateTimeProperty, dt.Value.Date + dateTimePicker.GetSelectedTimeFromGUI());

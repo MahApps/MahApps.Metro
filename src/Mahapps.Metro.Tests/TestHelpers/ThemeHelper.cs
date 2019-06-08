@@ -13,7 +13,7 @@
     {
         public static ResourceDictionary CreateTheme(string baseColorScheme, Color accentBaseColor, string name = null, bool changeImmediately = false)
         {
-            name = name ?? $"RuntimeTheme_{accentBaseColor.ToString().Replace("#", string.Empty)}";
+            name = name ?? $"RuntimeTheme_{baseColorScheme}_{accentBaseColor.ToString().Replace("#", string.Empty)}";
 
             var generatorParameters = GetGeneratorParameters();
             var themeTemplateContent = GetThemeTemplateContent();

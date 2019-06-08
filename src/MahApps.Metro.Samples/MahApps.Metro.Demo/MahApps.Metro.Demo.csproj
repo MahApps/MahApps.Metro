@@ -5,7 +5,7 @@
         <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DisableFody Condition="'$(Configuration)' == 'Debug'">true</DisableFody>
+        <DisableFody Condition="'$(Configuration)' == 'Debug' or '$(TargetFramework)' == 'netcoreapp3.0'">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -16,7 +16,22 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
     </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+    </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
+        <PackageReference Include="MaterialDesignThemes" Version="2.*" />
+        <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
+        <PackageReference Include="Fody" Version="5.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Globalization" />
+        <Reference Include="System.Windows.Forms"/>
         <Reference Include="WindowsFormsIntegration"/>
     </ItemGroup>
     <ItemGroup>
@@ -30,5 +45,4 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
     </ItemGroup>
-    <Import Project="..\..\..\.paket\Paket.Restore.targets"/>
 </Project>

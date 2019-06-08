@@ -91,9 +91,9 @@ namespace MahApps.Metro
         {
             get
             {
-                EnsureThemes(); 
+                EnsureThemes();
 
-                return baseColors; 
+                return baseColors;
             }
         }
 
@@ -102,11 +102,11 @@ namespace MahApps.Metro
         /// </summary>
         public static ReadOnlyObservableCollection<ColorScheme> ColorSchemes
         {
-            get 
-            { 
-                EnsureThemes(); 
+            get
+            {
+                EnsureThemes();
 
-                return colorSchemes; 
+                return colorSchemes;
             }
         }
 
@@ -973,6 +973,14 @@ namespace MahApps.Metro
         {
             if (e.Category == UserPreferenceCategory.General)
             {
+                if (Application.Current.IsNull())
+                {
+#if DEBUG
+                    Trace.TraceWarning("ThemeManager (UserPreferenceChanged): Can not sync theme with windows app mode settings, because the current application is NULL!");
+#endif
+                    return;
+                }
+
                 SyncThemeWithWindowsAppModeSetting();
             }
         }

@@ -227,48 +227,94 @@
                           Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
+                <Separator />
+                <MenuItem Header="ShowSystemMenu"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenu}" />
+                <MenuItem Header="ShowSystemMenuOnRightClick"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenuOnRightClick}" />
             </MenuItem>
         </Menu>
 
         <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">
             <TabItem Header="buttons">
-                <exampleViews:ButtonsExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ButtonsExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="text">
-                <exampleViews:TextExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:TextExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="dates">
-                <exampleViews:DateExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:DateExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="selection">
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="sliders">
-                <exampleViews:Sliders DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:Sliders DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="progress">
-                <exampleViews:ProgressBars DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ProgressBars DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="splitview">
-                <exampleViews:SplitViewExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2" VerticalScrollBarVisibility="Auto">
+                    <exampleViews:SplitViewExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="hamburger">
                 <exampleViews:HamburgerMenuSample DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="tabcontrol">
-                <exampleViews:TabControlExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:TabControlExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="datagrid">
                 <exampleViews:DataGridExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="tiles">
-                <exampleViews:TilesExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+                              HorizontalScrollBarVisibility="Visible"
+                              VerticalScrollBarVisibility="Disabled">
+                    <exampleViews:TilesExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="colors">
-                <exampleViews:ColorExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ColorExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="others">
-                <exampleViews:OtherExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:OtherExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
         </Controls:MetroAnimatedSingleRowTabControl>
 

@@ -533,9 +533,15 @@ namespace MahApps.Metro.Controls.Dialogs
             window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, window.metroActiveDialogContainer.Children.Count > 0);
         }
 
-        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog)
+        /// <summary>
+        /// Create and show an external dialog.
+        /// </summary>
+        /// <param name="dialog">The dialog which will be shown externally.</param>
+        /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
+        /// <returns>The given dialog.</returns>
+        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
-            Window win = SetupExternalDialogWindow(dialog);
+            Window win = SetupExternalDialogWindow(dialog, windowOwner);
 
             dialog.OnShown();
             win.Show();
@@ -543,9 +549,15 @@ namespace MahApps.Metro.Controls.Dialogs
             return dialog;
         }
 
-        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog)
+        /// <summary>
+        /// Create and show an external modal dialog.
+        /// </summary>
+        /// <param name="dialog">The dialog which will be shown externally.</param>
+        /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
+        /// <returns>The given dialog.</returns>
+        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
-            Window win = SetupExternalDialogWindow(dialog);
+            Window win = SetupExternalDialogWindow(dialog, windowOwner);
 
             dialog.OnShown();
             win.ShowDialog();
@@ -569,9 +581,10 @@ namespace MahApps.Metro.Controls.Dialogs
             };
         }
 
-        private static Window SetupExternalDialogWindow(BaseMetroDialog dialog)
+        private static Window SetupExternalDialogWindow(BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
             var win = CreateExternalWindow();
+            win.Owner = windowOwner ?? Application.Current.MainWindow;
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
             win.SizeToContent = SizeToContent.Height;

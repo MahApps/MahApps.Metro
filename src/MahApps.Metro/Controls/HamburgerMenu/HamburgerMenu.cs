@@ -30,18 +30,16 @@ namespace MahApps.Metro.Controls
         {
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click -= HamburgerButton_Click;
+                _hamburgerButton.Click -= this.OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
             {
-                _buttonsListView.MouseUp -= ButtonsListView_ItemClick;
                 _buttonsListView.SelectionChanged -= ButtonsListView_SelectionChanged;
             }
 
             if (_optionsListView != null)
             {
-                _optionsListView.MouseUp -= OptionsListView_ItemClick;
                 _optionsListView.SelectionChanged -= OptionsListView_SelectionChanged;
             }
 
@@ -51,18 +49,16 @@ namespace MahApps.Metro.Controls
 
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click += HamburgerButton_Click;
+                _hamburgerButton.Click += this.OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
             {
-                _buttonsListView.MouseUp += ButtonsListView_ItemClick;
                 _buttonsListView.SelectionChanged += ButtonsListView_SelectionChanged;
             }
 
             if (_optionsListView != null)
             {
-                _optionsListView.MouseUp += OptionsListView_ItemClick;
                 _optionsListView.SelectionChanged += OptionsListView_SelectionChanged;
             }
 
@@ -77,6 +73,16 @@ namespace MahApps.Metro.Controls
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
             if (GetValue(ContentProperty) != null)
+            {
+                return;
+            }
+
+            if (RaiseItemEvents(_buttonsListView?.SelectedItem))
+            {
+                return;
+            }
+
+            if (RaiseOptionsItemEvents(_optionsListView?.SelectedItem))
             {
                 return;
             }

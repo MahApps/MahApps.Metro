@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     using System.ComponentModel;
 

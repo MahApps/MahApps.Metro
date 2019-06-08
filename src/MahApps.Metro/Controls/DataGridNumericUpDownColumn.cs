@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,15 +26,13 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultEditingElementStyle == null)
                 {
-                    Style style = new Style(typeof(NumericUpDown));
+                    var numericUpDown = new NumericUpDown();
 
-                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0.0)));
-                    style.Setters.Add(new Setter(Control.PaddingProperty, new Thickness(0.0)));
-                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
+                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
-                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
-                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
 
                     style.Seal();
                     _defaultEditingElementStyle = style;
@@ -49,19 +48,16 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultElementStyle == null)
                 {
-                    Style style = new Style(typeof(NumericUpDown));
+                    var numericUpDown = new NumericUpDown();
 
-                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
-                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
-                    style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
-                    style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
-                    style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
-                    style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
+                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
-                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
-                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
                     style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
+
+                    style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
+                    style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -85,7 +81,7 @@ namespace MahApps.Metro.Controls
 
         private void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
-            Style style = PickStyle(isEditing, defaultToElementStyle);
+            Style style = this.PickStyle(isEditing, defaultToElementStyle);
             if (style != null)
             {
                 element.Style = style;
@@ -94,14 +90,12 @@ namespace MahApps.Metro.Controls
 
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            return GenerateNumericUpDown(true, cell);
+            return this.GenerateNumericUpDown(true, cell);
         }
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            NumericUpDown generateNumericUpDown = GenerateNumericUpDown(false, cell);
-            generateNumericUpDown.HideUpDownButtons = true;
-            return generateNumericUpDown;
+            return this.GenerateNumericUpDown(false, cell);
         }
 
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
@@ -112,32 +106,43 @@ namespace MahApps.Metro.Controls
                 numericUpDown = new NumericUpDown();
             }
 
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontFamilyProperty, TextElement.FontFamilyProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontSizeProperty, TextElement.FontSizeProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontStyleProperty, TextElement.FontStyleProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontWeightProperty, TextElement.FontWeightProperty);
+            SyncColumnProperty(this, numericUpDown, FontFamilyProperty, TextElement.FontFamilyProperty);
+            SyncColumnProperty(this, numericUpDown, FontSizeProperty, TextElement.FontSizeProperty);
+            SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
+            SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
 
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.StringFormatProperty, NumericUpDown.StringFormatProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MinimumProperty, NumericUpDown.MinimumProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MaximumProperty, NumericUpDown.MaximumProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.IntervalProperty, NumericUpDown.IntervalProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
-            SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
+            SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
+            SyncColumnProperty(this, numericUpDown, CultureProperty, NumericUpDown.CultureProperty);
+            SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
+            SyncColumnProperty(this, numericUpDown, MaximumProperty, NumericUpDown.MaximumProperty);
+            SyncColumnProperty(this, numericUpDown, NumericInputModeProperty, NumericUpDown.NumericInputModeProperty);
+            SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
+            SyncColumnProperty(this, numericUpDown, DelayProperty, NumericUpDown.DelayProperty);
+            SyncColumnProperty(this, numericUpDown, SpeedupProperty, NumericUpDown.SpeedupProperty);
+            SyncColumnProperty(this, numericUpDown, SnapToMultipleOfIntervalProperty, NumericUpDown.SnapToMultipleOfIntervalProperty);
+            SyncColumnProperty(this, numericUpDown, InterceptArrowKeysProperty, NumericUpDown.InterceptArrowKeysProperty);
+            SyncColumnProperty(this, numericUpDown, InterceptManualEnterProperty, NumericUpDown.InterceptManualEnterProperty);
+            SyncColumnProperty(this, numericUpDown, InterceptMouseWheelProperty, NumericUpDown.InterceptMouseWheelProperty);
+            SyncColumnProperty(this, numericUpDown, TrackMouseWheelWhenMouseOverProperty, NumericUpDown.TrackMouseWheelWhenMouseOverProperty);
+            SyncColumnProperty(this, numericUpDown, HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
+            SyncColumnProperty(this, numericUpDown, SwitchUpDownButtonsProperty, NumericUpDown.SwitchUpDownButtonsProperty);
+            SyncColumnProperty(this, numericUpDown, ButtonsAlignmentProperty, NumericUpDown.ButtonsAlignmentProperty);
+            SyncColumnProperty(this, numericUpDown, UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
 
             if (isEditing)
             {
-                SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.ForegroundProperty, TextElement.ForegroundProperty);
+                SyncColumnProperty(this, numericUpDown, ForegroundProperty, TextElement.ForegroundProperty);
             }
             else
             {
-                if (!SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.ForegroundProperty, TextElement.ForegroundProperty))
+                if (!SyncColumnProperty(this, numericUpDown, ForegroundProperty, TextElement.ForegroundProperty))
                 {
                     ApplyBinding(new Binding(Control.ForegroundProperty.Name) { Source = cell, Mode = BindingMode.OneWay }, numericUpDown, TextElement.ForegroundProperty);
                 }
             }
 
-            ApplyStyle(isEditing, true, numericUpDown);
-            ApplyBinding(Binding, numericUpDown, NumericUpDown.ValueProperty);
+            this.ApplyStyle(isEditing, true, numericUpDown);
+            ApplyBinding(this.Binding, numericUpDown, NumericUpDown.ValueProperty);
 
             numericUpDown.InterceptArrowKeys = true;
             numericUpDown.InterceptMouseWheel = true;
@@ -161,6 +166,7 @@ namespace MahApps.Metro.Controls
                 numericUpDown.SelectAll();
                 return numericUpDown.Value;
             }
+
             return null;
         }
 
@@ -191,17 +197,16 @@ namespace MahApps.Metro.Controls
 
         private Style PickStyle(bool isEditing, bool defaultToElementStyle)
         {
-            Style style = isEditing ? EditingElementStyle : ElementStyle;
+            Style style = isEditing ? this.EditingElementStyle : this.ElementStyle;
             if (isEditing && defaultToElementStyle && (style == null))
             {
-                style = ElementStyle;
+                style = this.ElementStyle;
             }
+
             return style;
         }
 
-        /// <summary>
-        /// The DependencyProperty for the StringFormat property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="StringFormat"/> dependency property.</summary>
         public static readonly DependencyProperty StringFormatProperty =
             NumericUpDown.StringFormatProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -215,13 +220,23 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         public string StringFormat
         {
-            get { return (string)GetValue(StringFormatProperty); }
-            set { SetValue(StringFormatProperty, value); }
+            get { return (string)this.GetValue(StringFormatProperty); }
+            set { this.SetValue(StringFormatProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the Minimum property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
+        public static readonly DependencyProperty CultureProperty =
+            NumericUpDown.CultureProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((CultureInfo)NumericUpDown.CultureProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public CultureInfo Culture
+        {
+            get { return (CultureInfo)this.GetValue(CultureProperty); }
+            set { this.SetValue(CultureProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty =
             NumericUpDown.MinimumProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -229,13 +244,11 @@ namespace MahApps.Metro.Controls
 
         public double Minimum
         {
-            get { return (double)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get { return (double)this.GetValue(MinimumProperty); }
+            set { this.SetValue(MinimumProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the Maximum property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty =
             NumericUpDown.MaximumProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -243,13 +256,23 @@ namespace MahApps.Metro.Controls
 
         public double Maximum
         {
-            get { return (double)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get { return (double)this.GetValue(MaximumProperty); }
+            set { this.SetValue(MaximumProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the Interval property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="NumericInputMode"/> dependency property.</summary>
+        public static readonly DependencyProperty NumericInputModeProperty =
+            NumericUpDown.NumericInputModeProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((NumericInput)NumericUpDown.NumericInputModeProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public NumericInput NumericInputMode
+        {
+            get { return (NumericInput)this.GetValue(NumericInputModeProperty); }
+            set { this.SetValue(NumericInputModeProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Interval"/> dependency property.</summary>
         public static readonly DependencyProperty IntervalProperty =
             NumericUpDown.IntervalProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -257,13 +280,95 @@ namespace MahApps.Metro.Controls
 
         public double Interval
         {
-            get { return (double)GetValue(IntervalProperty); }
-            set { SetValue(IntervalProperty, value); }
+            get { return (double)this.GetValue(IntervalProperty); }
+            set { this.SetValue(IntervalProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the HideUpDownButtons property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="Delay"/> dependency property.</summary>
+        public static readonly DependencyProperty DelayProperty =
+            NumericUpDown.DelayProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((int)NumericUpDown.DelayProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public int Delay
+        {
+            get { return (int)this.GetValue(DelayProperty); }
+            set { this.SetValue(DelayProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="Speedup"/> dependency property.</summary>
+        public static readonly DependencyProperty SpeedupProperty =
+            NumericUpDown.SpeedupProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.SpeedupProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool Speedup
+        {
+            get { return (bool)this.GetValue(SpeedupProperty); }
+            set { this.SetValue(SpeedupProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="SnapToMultipleOfInterval"/> dependency property.</summary>
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty =
+            NumericUpDown.SnapToMultipleOfIntervalProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.SnapToMultipleOfIntervalProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool SnapToMultipleOfInterval
+        {
+            get { return (bool)this.GetValue(SnapToMultipleOfIntervalProperty); }
+            set { this.SetValue(SnapToMultipleOfIntervalProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="InterceptArrowKeys"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptArrowKeysProperty =
+            NumericUpDown.InterceptArrowKeysProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.InterceptArrowKeysProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool InterceptArrowKeys
+        {
+            get { return (bool)this.GetValue(InterceptArrowKeysProperty); }
+            set { this.SetValue(InterceptArrowKeysProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="InterceptManualEnter"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptManualEnterProperty =
+            NumericUpDown.InterceptManualEnterProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.InterceptManualEnterProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool InterceptManualEnter
+        {
+            get { return (bool)this.GetValue(InterceptManualEnterProperty); }
+            set { this.SetValue(InterceptManualEnterProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="InterceptMouseWheel"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptMouseWheelProperty =
+            NumericUpDown.InterceptMouseWheelProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.InterceptMouseWheelProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool InterceptMouseWheel
+        {
+            get { return (bool)this.GetValue(InterceptMouseWheelProperty); }
+            set { this.SetValue(InterceptMouseWheelProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="TrackMouseWheelWhenMouseOver"/> dependency property.</summary>
+        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty =
+            NumericUpDown.TrackMouseWheelWhenMouseOverProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.TrackMouseWheelWhenMouseOverProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool TrackMouseWheelWhenMouseOver
+        {
+            get { return (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty); }
+            set { this.SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="HideUpDownButtons"/> dependency property.</summary>
         public static readonly DependencyProperty HideUpDownButtonsProperty =
             NumericUpDown.HideUpDownButtonsProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -271,13 +376,35 @@ namespace MahApps.Metro.Controls
 
         public bool HideUpDownButtons
         {
-            get { return (bool)GetValue(HideUpDownButtonsProperty); }
-            set { SetValue(HideUpDownButtonsProperty, value); }
+            get { return (bool)this.GetValue(HideUpDownButtonsProperty); }
+            set { this.SetValue(HideUpDownButtonsProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the UpDownButtonsWidth property. 
-        /// </summary> 
+        /// <summary>Identifies the <see cref="SwitchUpDownButtons"/> dependency property.</summary>
+        public static readonly DependencyProperty SwitchUpDownButtonsProperty =
+            NumericUpDown.SwitchUpDownButtonsProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((bool)NumericUpDown.SwitchUpDownButtonsProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public bool SwitchUpDownButtons
+        {
+            get { return (bool)this.GetValue(SwitchUpDownButtonsProperty); }
+            set { this.SetValue(SwitchUpDownButtonsProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonsAlignmentProperty =
+            NumericUpDown.ButtonsAlignmentProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((ButtonsAlignment)NumericUpDown.ButtonsAlignmentProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public ButtonsAlignment ButtonsAlignment
+        {
+            get { return (ButtonsAlignment)this.GetValue(ButtonsAlignmentProperty); }
+            set { this.SetValue(ButtonsAlignmentProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="UpDownButtonsWidth"/> dependency property.</summary>
         public static readonly DependencyProperty UpDownButtonsWidthProperty =
             NumericUpDown.UpDownButtonsWidthProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -285,14 +412,11 @@ namespace MahApps.Metro.Controls
 
         public double UpDownButtonsWidth
         {
-            get { return (double)GetValue(UpDownButtonsWidthProperty); }
-            set { SetValue(UpDownButtonsWidthProperty, value); }
+            get { return (double)this.GetValue(UpDownButtonsWidthProperty); }
+            set { this.SetValue(UpDownButtonsWidthProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the FontFamily property. 
-        /// Default Value: SystemFonts.MessageFontFamily
-        /// </summary> 
+        /// <summary>Identifies the <see cref="FontFamily"/> dependency property.</summary>
         public static readonly DependencyProperty FontFamilyProperty =
             TextElement.FontFamilyProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -303,14 +427,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontFamily FontFamily
         {
-            get { return (FontFamily)GetValue(FontFamilyProperty); }
-            set { SetValue(FontFamilyProperty, value); }
+            get { return (FontFamily)this.GetValue(FontFamilyProperty); }
+            set { this.SetValue(FontFamilyProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the FontSize property. 
-        /// Default Value: SystemFonts.MessageFontSize
-        /// </summary>
+        /// <summary>Identifies the <see cref="FontSize"/> dependency property.</summary>
         public static readonly DependencyProperty FontSizeProperty =
             TextElement.FontSizeProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -323,14 +444,11 @@ namespace MahApps.Metro.Controls
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double)GetValue(FontSizeProperty); }
-            set { SetValue(FontSizeProperty, value); }
+            get { return (double)this.GetValue(FontSizeProperty); }
+            set { this.SetValue(FontSizeProperty, value); }
         }
 
-        /// <summary> 
-        /// The DependencyProperty for the FontStyle property.
-        /// Default Value: SystemFonts.MessageFontStyle 
-        /// </summary>
+        /// <summary>Identifies the <see cref="FontStyle"/> dependency property.</summary>
         public static readonly DependencyProperty FontStyleProperty =
             TextElement.FontStyleProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -341,14 +459,11 @@ namespace MahApps.Metro.Controls
         /// </summary> 
         public FontStyle FontStyle
         {
-            get { return (FontStyle)GetValue(FontStyleProperty); }
-            set { SetValue(FontStyleProperty, value); }
+            get { return (FontStyle)this.GetValue(FontStyleProperty); }
+            set { this.SetValue(FontStyleProperty, value); }
         }
 
-        /// <summary> 
-        /// The DependencyProperty for the FontWeight property.
-        /// Default Value: SystemFonts.MessageFontWeight
-        /// </summary>
+        /// <summary>Identifies the <see cref="FontWeight"/> dependency property.</summary>
         public static readonly DependencyProperty FontWeightProperty =
             TextElement.FontWeightProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -359,14 +474,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight)GetValue(FontWeightProperty); }
-            set { SetValue(FontWeightProperty, value); }
+            get { return (FontWeight)this.GetValue(FontWeightProperty); }
+            set { this.SetValue(FontWeightProperty, value); }
         }
 
-        /// <summary>
-        /// The DependencyProperty for the Foreground property.
-        /// Default Value: SystemColors.ControlTextBrush 
-        /// </summary>
+        /// <summary>Identifies the <see cref="Foreground"/> dependency property.</summary>
         public static readonly DependencyProperty ForegroundProperty =
             TextElement.ForegroundProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
@@ -377,8 +489,8 @@ namespace MahApps.Metro.Controls
         /// </summary> 
         public Brush Foreground
         {
-            get { return (Brush)GetValue(ForegroundProperty); }
-            set { SetValue(ForegroundProperty, value); }
+            get { return (Brush)this.GetValue(ForegroundProperty); }
+            set { this.SetValue(ForegroundProperty, value); }
         }
 
         /// <summary>
@@ -403,38 +515,72 @@ namespace MahApps.Metro.Controls
             {
                 switch (propertyName)
                 {
-                    case nameof(FontFamily):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontFamilyProperty, TextElement.FontFamilyProperty);
+                    case nameof(this.FontFamily):
+                        SyncColumnProperty(this, numericUpDown, FontFamilyProperty, TextElement.FontFamilyProperty);
                         break;
-                    case nameof(FontSize):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontSizeProperty, TextElement.FontSizeProperty);
+                    case nameof(this.FontSize):
+                        SyncColumnProperty(this, numericUpDown, FontSizeProperty, TextElement.FontSizeProperty);
                         break;
-                    case nameof(FontStyle):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontStyleProperty, TextElement.FontStyleProperty);
+                    case nameof(this.FontStyle):
+                        SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
                         break;
-                    case nameof(FontWeight):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.FontWeightProperty, TextElement.FontWeightProperty);
+                    case nameof(this.FontWeight):
+                        SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
                         break;
-                    case nameof(StringFormat):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.StringFormatProperty, NumericUpDown.StringFormatProperty);
+                    case nameof(this.StringFormat):
+                        SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
                         break;
-                    case nameof(Minimum):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MinimumProperty, NumericUpDown.MinimumProperty);
+                    case nameof(this.Culture):
+                        SyncColumnProperty(this, numericUpDown, CultureProperty, NumericUpDown.CultureProperty);
                         break;
-                    case nameof(Maximum):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.MaximumProperty, NumericUpDown.MaximumProperty);
+                    case nameof(this.Minimum):
+                        SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
                         break;
-                    case nameof(Interval):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.IntervalProperty, NumericUpDown.IntervalProperty);
+                    case nameof(this.Maximum):
+                        SyncColumnProperty(this, numericUpDown, MaximumProperty, NumericUpDown.MaximumProperty);
                         break;
-                    case nameof(HideUpDownButtons):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
+                    case nameof(this.NumericInputMode):
+                        SyncColumnProperty(this, numericUpDown, NumericInputModeProperty, NumericUpDown.NumericInputModeProperty);
                         break;
-                    case nameof(UpDownButtonsWidth):
-                        SyncColumnProperty(this, numericUpDown, DataGridNumericUpDownColumn.UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
+                    case nameof(this.Interval):
+                        SyncColumnProperty(this, numericUpDown, IntervalProperty, NumericUpDown.IntervalProperty);
+                        break;
+                    case nameof(this.Delay):
+                        SyncColumnProperty(this, numericUpDown, DelayProperty, NumericUpDown.DelayProperty);
+                        break;
+                    case nameof(this.Speedup):
+                        SyncColumnProperty(this, numericUpDown, SpeedupProperty, NumericUpDown.SpeedupProperty);
+                        break;
+                    case nameof(this.SnapToMultipleOfInterval):
+                        SyncColumnProperty(this, numericUpDown, SnapToMultipleOfIntervalProperty, NumericUpDown.SnapToMultipleOfIntervalProperty);
+                        break;
+                    case nameof(this.InterceptArrowKeys):
+                        SyncColumnProperty(this, numericUpDown, InterceptArrowKeysProperty, NumericUpDown.InterceptArrowKeysProperty);
+                        break;
+                    case nameof(this.InterceptManualEnter):
+                        SyncColumnProperty(this, numericUpDown, InterceptManualEnterProperty, NumericUpDown.InterceptManualEnterProperty);
+                        break;
+                    case nameof(this.InterceptMouseWheel):
+                        SyncColumnProperty(this, numericUpDown, InterceptMouseWheelProperty, NumericUpDown.InterceptMouseWheelProperty);
+                        break;
+                    case nameof(this.TrackMouseWheelWhenMouseOver):
+                        SyncColumnProperty(this, numericUpDown, TrackMouseWheelWhenMouseOverProperty, NumericUpDown.TrackMouseWheelWhenMouseOverProperty);
+                        break;
+                    case nameof(this.HideUpDownButtons):
+                        SyncColumnProperty(this, numericUpDown, HideUpDownButtonsProperty, NumericUpDown.HideUpDownButtonsProperty);
+                        break;
+                    case nameof(this.SwitchUpDownButtons):
+                        SyncColumnProperty(this, numericUpDown, SwitchUpDownButtonsProperty, NumericUpDown.SwitchUpDownButtonsProperty);
+                        break;
+                    case nameof(this.ButtonsAlignment):
+                        SyncColumnProperty(this, numericUpDown, ButtonsAlignmentProperty, NumericUpDown.ButtonsAlignmentProperty);
+                        break;
+                    case nameof(this.UpDownButtonsWidth):
+                        SyncColumnProperty(this, numericUpDown, UpDownButtonsWidthProperty, NumericUpDown.UpDownButtonsWidthProperty);
                         break;
                 }
             }
+
             base.RefreshCellContent(element, propertyName);
         }
     }

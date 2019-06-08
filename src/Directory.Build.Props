@@ -6,12 +6,18 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <LangVersion>latest</LangVersion>
-        <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
-        <NoWarn>1591</NoWarn>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+        <NoError>$(NoError);CS1591</NoError>
         <UseWPF>true</UseWPF>
     </PropertyGroup>
+
+    <!-- Add the references for all projects and targets -->
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2019.*" PrivateAssets="All" />
+        <PackageReference Include="WpfAnalyzers" Version="2.2.*" PrivateAssets="All" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
@@ -19,7 +25,7 @@
     </ItemGroup>
 
     <!-- SourceLink -->
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PropertyGroup>
         <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
@@ -30,16 +36,4 @@
         <!-- <EmbedAllSources>true</EmbedAllSources>-->
     </PropertyGroup>
 
-    <!-- Set the reference for the other targets -->
-    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
-        <Reference Include="System"/>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Xaml"/>
-        <Reference Include="WindowsBase"/>
-    </ItemGroup>
 </Project>

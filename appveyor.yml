@@ -7,8 +7,17 @@ branches:
     - develop
     - master
 
+environment:
+  azure-key-vault-url:
+    secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
+  azure-key-vault-client-id:
+    secure: JfSqzmsJdXB6uIxttCRoQw1NygwxqXHDj9uIqQnWOb9VCnQYlRPlAnxgW0yTSX4b
+  azure-key-vault-client-secret:
+    secure: CUpRJxMLeUZwNPMcqI0wECaWfy5AMnWn1UZhBd9WnQ3Z16lJP1Vzrkf24mccbhUD
+  azure-key-vault-certificate:
+    secure: BSPdW2TgnQtoQXXbeDECug==
+
 skip_tags: true
-# image: Visual Studio 2017
 image: Visual Studio 2019 Preview
 configuration: Release
 test: off
@@ -17,13 +26,17 @@ test: off
 install:
   #- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/master/dotnet-sdk-latest-win-x64.exe'
   #- ps: Start-Process .\dotnet-sdk-latest-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
-  - ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.0.100-preview-010096/dotnet-sdk-3.0.100-preview-010096-win-x64.exe'
-  - ps: Start-Process .\dotnet-sdk-3.0.100-preview-010096-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  #- ps: Start-FileDownload 'https://dotnetcli.blob.core.windows.net/dotnet/Sdk/3.0.100-preview4-010538/dotnet-sdk-3.0.100-preview4-010538-win-x64.exe'
+  #- ps: Start-Process .\dotnet-sdk-3.0.100-preview4-010538-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  #- ps: Start-FileDownload 'https://download.visualstudio.microsoft.com/download/pr/4032ceb5-61cd-495a-ab25-475aa2232f28/7eb614e777d87ef0d49f86be4fc8bbde/dotnet-sdk-3.0.100-preview4-011223-win-x64.exe'
+  #- ps: Start-Process .\dotnet-sdk-3.0.100-preview4-011223-win-x64.exe "/install /norestart /quiet /log sdkinstall.log" -NoNewWindow -Wait
+  - cinst dotnetcore-sdk --pre
 
 pull_requests:
   do_not_increment_build_number: false
 
 build_script:
+  - ps: .\build.ps1 --bootstrap
   - ps: .\build.ps1 -target appveyor
 
 artifacts:

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -17,6 +18,30 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
     {
+        /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentMarginProperty = DependencyProperty.Register(nameof(DialogContentMargin), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(25, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the left and right margin for the dialog content.
+        /// </summary>
+        public GridLength DialogContentMargin
+        {
+            get { return (GridLength)this.GetValue(DialogContentMarginProperty); }
+            set { this.SetValue(DialogContentMarginProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="DialogContentWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentWidthProperty = DependencyProperty.Register(nameof(DialogContentWidth), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(50, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the width for the dialog content.
+        /// </summary>
+        public GridLength DialogContentWidth
+        {
+            get { return (GridLength)this.GetValue(DialogContentWidthProperty); }
+            set { this.SetValue(DialogContentWidthProperty, value); }
+        }
+
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
 
@@ -338,16 +363,24 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (this.OnRequestClose())
             {
-                //Technically, the Dialog is /always/ inside of a MetroWindow.
-                //If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
+                // Technically, the Dialog is /always/ inside of a MetroWindow.
+                // If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
                 if (this.ParentDialogWindow == null)
                 {
-                    //This is from a user-created MetroWindow
-                    return DialogManager.HideMetroDialogAsync(this.OwningWindow, this);
+                    // this is very bad, or the user called the close event before we can do this
+                    if (this.OwningWindow == null)
+                    {
+                        Trace.TraceWarning($"{this}: Can not request async closing, because the OwningWindow is already null. This can maybe happen if the dialog was closed manually.");
+                        return Task.Factory.StartNew(() => { });
+                    }
+
+                    // This is from a user-created MetroWindow
+                    return this.OwningWindow.HideMetroDialogAsync(this);
                 }
 
-                //This is from a MetroWindow created by the external dialog APIs.
-                return this.WaitForCloseAsync().ContinueWith(x => { this.ParentDialogWindow.Dispatcher.Invoke(new Action(() => { this.ParentDialogWindow.Close(); })); });
+                // This is from a MetroWindow created by the external dialog APIs.
+                return this.WaitForCloseAsync()
+                           .ContinueWith(x => { this.ParentDialogWindow.Dispatcher.Invoke(() => { this.ParentDialogWindow.Close(); }); });
             }
 
             return Task.Factory.StartNew(() => { });

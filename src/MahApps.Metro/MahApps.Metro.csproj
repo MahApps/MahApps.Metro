@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -9,6 +9,16 @@
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.Configuration"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ControlzEx" Version="[4.0.0-alpha*, 5.0)" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
+        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />
+    </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
         <EmbeddedResource Include="**\*.Template.xaml" />
@@ -17,11 +27,11 @@
     <Target Name="GenerateXamlFilesInner">
         <PropertyGroup>
             <!-- <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot> -->
-            <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot>
+            <!-- <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot> -->
             <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
         </PropertyGroup>
-        <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
-        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+        <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
     </Target>
     <!-- Key to generating the xaml files at the right point in time is to do this before DispatchToInnerBuilds -->
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
@@ -33,15 +43,4 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <!--
-    Workaround to fix IntelliSense file generation for XAML projects
-    ISSUE: https://github.com/dotnet/project-system/issues/2488
-  -->
-    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-            <DesignTimeBuild>true</DesignTimeBuild>
-        </PropertyGroup>
-    </Target>
-    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

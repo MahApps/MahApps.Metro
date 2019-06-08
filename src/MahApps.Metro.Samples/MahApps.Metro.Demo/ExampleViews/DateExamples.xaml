@@ -209,7 +209,8 @@
                                       Grid.Column="1"
                                       VerticalAlignment="Center"
                                       Controls:TextBoxHelper.ClearTextButton="True"
-                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}">
+                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                                      SelectedItem="{Binding CurrentCulture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="{x:Type globalization:CultureInfo}">
                                         <StackPanel Orientation="Horizontal">
@@ -227,7 +228,7 @@
                             </ComboBox>
                         </Grid>
                         <Controls:DateTimePicker Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                                 Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                 Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -241,7 +242,7 @@
                                 <StackPanel>
                                     <Controls:DateTimePicker x:Name="DateTimePicker"
                                                              Margin="2"
-                                                             Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                             Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                              HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                              IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
                                                              IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
@@ -256,7 +257,7 @@
                                     </Controls:DateTimePicker>
 
                                     <Controls:TimePicker Margin="2"
-                                                         Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                         Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                          HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                          IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                          IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
