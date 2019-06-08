@@ -290,6 +290,7 @@
             <Trigger Property="TabStripPlacement" Value="Right">
                 <Setter Property="Template" Value="{StaticResource VerticalAnimatedSingleRowTabControl}" />
             </Trigger>
+
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
