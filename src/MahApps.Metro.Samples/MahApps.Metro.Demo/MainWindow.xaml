@@ -235,6 +235,9 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenuOnRightClick}" />
             </MenuItem>
+            <MenuItem Header="Popup Dialogs">
+                <MenuItem Header="Show Dialog" Command="{Binding ShowPopupDialogCommand}"/>
+            </MenuItem>
         </Menu>
 
         <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">

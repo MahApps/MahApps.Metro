@@ -174,6 +174,7 @@ namespace MetroDemo
                 );
 
             this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
+            this.ShowPopupDialogCommand = new SimpleCommand(o => true, x => MahApps.Metro.Controls.MessageBox.Show("This is a Popup MessageBox", "Message Header"));
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -185,6 +186,8 @@ namespace MetroDemo
         public ICommand ShowHamburgerAboutCommand { get; }
 
         public ICommand OpenFirstFlyoutCommand { get; }
+
+        public ICommand ShowPopupDialogCommand { get; }
 
         public void Dispose()
         {
