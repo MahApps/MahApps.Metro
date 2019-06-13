@@ -14,7 +14,10 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
@@ -26,17 +29,14 @@
         <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="System.ComponentModel.Composition"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
 </Project>
