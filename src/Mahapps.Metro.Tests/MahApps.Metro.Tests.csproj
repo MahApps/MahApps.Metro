@@ -7,11 +7,11 @@
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
@@ -23,13 +23,13 @@
     </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
-        <None Remove="TestApp.config"/>
+        <None Remove="TestApp.config" />
         <AppConfigWithTargetPath Include="TestApp.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
 </Project>
