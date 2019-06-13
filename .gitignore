@@ -261,10 +261,7 @@ paket-files/
 src/MahApps.Metro/Styles/Themes/*.xaml
 
 # Allowed files
-!src/MahApps.Metro/Styles/Themes/Theme.Template.exe
+!src/MahApps.Metro/Styles/Themes/Theme.Template.xaml
 
 # cake
 tools/
-
-# MSBuild
-*.binlog
