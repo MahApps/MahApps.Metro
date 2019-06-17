@@ -117,7 +117,7 @@ The core team members, MahApps.Metro contributors and contributors in the ecosys
 
 [Become a backer](https://opencollective.com/mahappsmetro#backer) and show your support to our open source project.
 
-### Monthly Backer
+### :pray: Backer's who support us monthly :heart:
 
   <a href="https://opencollective.com/mahappsmetro/tiers/backer/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/backer/0/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/tiers/backer/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/backer/1/avatar"></a>
@@ -141,7 +141,7 @@ The core team members, MahApps.Metro contributors and contributors in the ecosys
   <a href="https://opencollective.com/mahappsmetro/tiers/backer/19/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/backer/19/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/tiers/backer/20/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/backer/20/avatar"></a>
 
-### All Backer
+### :pray: All Backer :heart:
 
   <a href="https://opencollective.com/mahappsmetro/backer/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/0/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/backer/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/backer/1/avatar"></a>
@@ -177,6 +177,8 @@ The core team members, MahApps.Metro contributors and contributors in the ecosys
 ## Sponsors
 
 Does your company use MahApps.Metro?  Ask your manager or marketing team if your company would be interested in supporting our project.  Support will allow the maintainers to dedicate more time for maintenance and new features for everyone.  Also, your company's logo will show [on GitHub](https://github.com/MahApps/MahApps.Metro#readme) and on [our site](https://mahapps.com) - who doesn't want a little extra exposure?
+
+### :pray: Sponsor's who support us monthly :heart:
 
   <a href="https://opencollective.com/mahappsmetro/tiers/sponsor/0/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/sponsor/0/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/tiers/sponsor/1/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/sponsor/1/avatar"></a>
