@@ -12,7 +12,7 @@ using ControlzEx;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// A Button that allows the user to toggle between two states.
+    /// A Button that allows the user to toggle between two or three states.
     /// </summary>
     [TemplatePart(Name = PART_BackgroundTranslate, Type = typeof(TranslateTransform))]
     [TemplatePart(Name = PART_DraggingThumb, Type = typeof(Thumb))]
@@ -42,7 +42,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OffBorderBrushProperty = DependencyProperty.Register("OffBorderBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty IntermediateBorderBrushProperty = DependencyProperty.Register("IntermediateBorderBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
 
-        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorOnBrushProperty = DependencyProperty.Register("ThumbIndicatorOnBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorOffBrushProperty = DependencyProperty.Register("ThumbIndicatorOffBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorIntermediateBrushProperty = DependencyProperty.Register("ThumbIndicatorIntermediateBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+
         public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
 
@@ -105,12 +108,30 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the brush used for the thumb indicator.
+        /// Gets/sets the brush used for the thumb indicator (on).
         /// </summary>
-        public Brush ThumbIndicatorBrush
+        public Brush ThumbIndicatorOnBrush
         {
-            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
-            set { SetValue(ThumbIndicatorBrushProperty, value); }
+            get { return (Brush)GetValue(ThumbIndicatorOnBrushProperty); }
+            set { SetValue(ThumbIndicatorOnBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator (off).
+        /// </summary>
+        public Brush ThumbIndicatorOffBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorOffBrushProperty); }
+            set { SetValue(ThumbIndicatorOffBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator (intermeidate).
+        /// </summary>
+        public Brush ThumbIndicatorIntermediateBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorIntermediateBrushProperty); }
+            set { SetValue(ThumbIndicatorIntermediateBrushProperty, value); }
         }
 
         /// <summary>
@@ -283,58 +304,52 @@ namespace MahApps.Metro.Controls
         {
             SetIsPressed(false);
             _lastDragPosition = null;
+            double _currentXPos = 0;
+            double _switchTrackWidth = _SwitchTrack.ActualWidth;
+
             if (!_isDragging)
             {
                 // Get the currentMousePosition 
-                var MousePos = Mouse.GetPosition(_SwitchTrack);
-                if (MousePos.X < _SwitchTrack.ActualWidth / 3)
-                {
-                    IsChecked = false;
-                }
-                else if (MousePos.X > _SwitchTrack.ActualWidth / 3 * 2)
-                {
-                    IsChecked = true;
-                }
-                else
-                {
-                    IsChecked = null;
-                }
+                _currentXPos = Mouse.GetPosition(_SwitchTrack).X;
             }
             else if (_ThumbTranslate != null && _SwitchTrack != null)
             {
-                if (_ThumbTranslate.X + ThumbIndicatorWidth / 2 >= (_SwitchTrack.ActualWidth - ThumbIndicatorWidth) / 3 * 2)
+                // Get the currentThumbPosition 
+                _currentXPos = _ThumbTranslate.X + ThumbIndicatorWidth / 2;
+                _switchTrackWidth = _SwitchTrack.ActualWidth - ThumbIndicatorWidth / 2;
+            }
+
+            // Is ThreeStateAllowed or not?
+            if (IsThreeState)
+            {
+                if (_currentXPos < _switchTrackWidth / 3)
+                {
+                    IsChecked = false;
+                }
+                else if (_currentXPos > _switchTrackWidth / 3 * 2)
                 {
                     IsChecked = true;
                 }
-                else if (_ThumbTranslate.X + ThumbIndicatorWidth / 2 <= (_SwitchTrack.ActualWidth - ThumbIndicatorWidth) / 3)
+                else
+                {
+                    IsChecked = null;
+                } 
+            }
+            else
+            {
+                if (_currentXPos < _switchTrackWidth / 2)
                 {
                     IsChecked = false;
                 }
                 else
                 {
-                    IsChecked = null;
-                }
-
-                UpdateThumb();
-            }
-        }
-
-        //TODO: Implement ON-Click event
-        protected override void OnClick()
-        {
-            switch (IsChecked)
-            {
-                case true:
-                    IsChecked = null;
-                    break;
-                case false:
                     IsChecked = true;
-                    break;
-                case null:
-                    IsChecked = false;
-                    break;
+                }
             }
+
+            UpdateThumb();
         }
+
 
         void _SwitchTrack_SizeChanged(object sender, SizeChangedEventArgs e)
         {

@@ -6,7 +6,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="SwitchHeight" Value="30" />
-        <Setter Property="SwitchWidth" Value="100" />
+        <Setter Property="SwitchWidth" Value="60" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
@@ -42,7 +42,7 @@
                             <Rectangle x:Name="PART_ThumbIndicator"
                                        Width="{TemplateBinding ThumbIndicatorWidth}"
                                        HorizontalAlignment="Left"
-                                       Fill="{TemplateBinding ThumbIndicatorBrush}">
+                                       Fill="{TemplateBinding ThumbIndicatorOnBrush}">
                                 <Rectangle.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate" />
                                 </Rectangle.RenderTransform>
@@ -93,7 +93,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
     </Style>
@@ -140,12 +140,13 @@
                                                          HorizontalAlignment="Stretch"
                                                          Background="{TemplateBinding Background}"
                                                          FocusVisualStyle="{x:Null}"
-                                                         IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         IsChecked="{TemplateBinding IsChecked}"
+                                                         IsThreeState="{TemplateBinding IsThreeState}"
                                                          OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
                                                          OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                          Style="{TemplateBinding ToggleSwitchButtonStyle}"
-                                                         ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
+                                                         ThumbIndicatorOnBrush="{TemplateBinding ThumbIndicatorBrush}"
                                                          ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
                                                          ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
                                                          Content="{TemplateBinding Content}" />

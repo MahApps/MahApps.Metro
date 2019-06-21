@@ -34,7 +34,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Off"));
-        public static readonly DependencyProperty IntermediateLabelProperty = DependencyProperty.Register("IntermediateLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Undefined"));
 
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
@@ -44,6 +43,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
 
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, OnIsCheckedChanged));
+        public static readonly DependencyProperty IsThreeStateProperty = DependencyProperty.Register("IsThreeState", typeof(bool), typeof(ToggleSwitch), new PropertyMetadata(false));
 
         public static readonly DependencyProperty CheckChangedCommandProperty = DependencyProperty.Register("CheckChangedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
         /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.ToggleSwitch.ContentPadding" /> dependency property.
+        /// Identifies the <see cref="P:MahApps.Metro.Controls.ToggleSwitch.ContentPadding" /> dependency property.
         /// </summary>
         public static readonly DependencyProperty ContentPaddingProperty = DependencyProperty.Register(nameof(ContentPadding), typeof(Thickness), typeof(ToggleSwitch), new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsParentMeasure));
         public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -64,25 +64,7 @@ namespace MahApps.Metro.Controls
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
         public event EventHandler<RoutedEventArgs> Indeterminate;
-        public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ToggleSwitch));
-
-        public event RoutedEventHandler Click
-        {
-            add { AddHandler(ClickEvent, value); }
-            remove { RemoveHandler(ClickEvent, value); }
-        }
-
-        protected virtual void OnClick()
-        {
-            RoutedEventArgs args = new RoutedEventArgs(ClickEvent, this);
-            RaiseEvent(args);
-        }
-
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            OnClick();
-        }
+        public event EventHandler<RoutedEventArgs> Click;
 
         /// <summary>
         /// Gets/sets the font family of the header.
@@ -110,15 +92,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (string)GetValue(OffLabelProperty); }
             set { SetValue(OffLabelProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the text to display when the control is in it's intermediate state.
-        /// </summary>
-        public object IntermediateLabel
-        {
-            get { return (string)GetValue(IntermediateLabelProperty); }
-            set { SetValue(IntermediateLabelProperty, value); }
         }
 
         /// <summary>
@@ -203,6 +176,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool?)GetValue(IsCheckedProperty); }
             set { SetValue(IsCheckedProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether the control allows IsThreeState or not.
+        /// </summary>
+        public bool IsThreeState
+        {
+            get { return (bool)GetValue(IsThreeStateProperty); }
+            set { SetValue(IsThreeStateProperty, value); }
         }
 
         /// <summary>
@@ -323,12 +305,12 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Checked -= CheckedHandler;
                 _toggleButton.Unchecked -= UncheckedHandler;
                 _toggleButton.Indeterminate -= IndeterminateHandler;
-                //_toggleButton.Click -= ClickHandler;
+                _toggleButton.Click -= ClickHandler;
                 BindingOperations.ClearBinding(_toggleButton, ToggleButton.IsCheckedProperty);
 
                 _toggleButton.IsEnabledChanged -= IsEnabledHandler;
 
-                _toggleButton.PreviewMouseUp -= this.ToggleButtonPreviewMouseUp;
+                //_toggleButton.PreviewMouseUp -= this.ToggleButtonPreviewMouseUp;
             }
             _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
             if (_toggleButton != null)
@@ -342,7 +324,7 @@ namespace MahApps.Metro.Controls
 
                 _toggleButton.IsEnabledChanged += IsEnabledHandler;
 
-                _toggleButton.PreviewMouseUp += this.ToggleButtonPreviewMouseUp;
+                //_toggleButton.PreviewMouseUp += this.ToggleButtonPreviewMouseUp;
             }
             ChangeVisualState(false);
         }
@@ -365,7 +347,7 @@ namespace MahApps.Metro.Controls
             {
                 command.Execute(commandParameter);
             }
-            
+
             SafeRaise.Raise(Checked, this, e);
         }
 
@@ -386,11 +368,10 @@ namespace MahApps.Metro.Controls
             SafeRaise.Raise(Indeterminate, this, e);
         }
 
-        //private void ClickHandler(object sender, RoutedEventArgs e)
-        //{
-        //    SafeRaise.Raise(Click, this, e);
-        //    _toggleButton.IsChecked = null;
-        //}
+        private void ClickHandler(object sender, RoutedEventArgs e)
+        {
+            SafeRaise.Raise(Click, this, e);
+        }
 
         public override string ToString()
         {
@@ -403,5 +384,3 @@ namespace MahApps.Metro.Controls
         }
     }
 }
-
-

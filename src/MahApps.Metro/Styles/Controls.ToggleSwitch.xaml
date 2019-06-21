@@ -23,6 +23,9 @@
         <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush9}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />
         <Setter Property="IntermediateSwitchBrush" Value="{DynamicResource GrayTransparentBrush}" />
+        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="ThumbIndicatorOffBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorIntermediateBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
@@ -57,7 +60,7 @@
                                 <Ellipse x:Name="PART_ThumbIndicatorInner"
                                          Width="{TemplateBinding ThumbIndicatorWidth}"
                                          Height="{TemplateBinding ThumbIndicatorWidth}"
-                                         Fill="{TemplateBinding ThumbIndicatorBrush}" />
+                                         Fill="{TemplateBinding ThumbIndicatorOffBrush}" />
                             </Grid>
                         </Grid>
                         <Thumb x:Name="PART_DraggingThumb" 
@@ -86,11 +89,15 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OnSwitchBrush}" />
                             <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OnBorderBrush}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource WhiteBrush}" />
+                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=ThumbIndicatorOnBrush}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OffSwitchBrush}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource WhiteBrush}" />
+                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=ThumbIndicatorOffBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OffSwitchBrush}" />
+                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=ThumbIndicatorIntermediateBrush}" />
                         </Trigger>
                         <!--  MouseOver  -->
                         <MultiTrigger>
@@ -137,7 +144,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorBrush.Win10}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
     </Style>
