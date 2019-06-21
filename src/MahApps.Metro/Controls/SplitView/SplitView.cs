@@ -250,12 +250,6 @@
         {
             this.DefaultStyleKey = typeof(SplitView);
             this.TemplateSettings = new SplitViewTemplateSettings(this);
-
-            this.Loaded += (s, args) =>
-                {
-                    this.TemplateSettings.Update();
-                    this.ChangeVisualState(false);
-                };
         }
 
         /// <summary>
@@ -279,6 +273,12 @@
             {
                 this.lightDismissLayer.MouseDown += this.OnLightDismiss;
             }
+
+            this.ExecuteWhenLoaded(() =>
+                {
+                    this.TemplateSettings.Update();
+                    this.ChangeVisualState(false);
+                });
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
