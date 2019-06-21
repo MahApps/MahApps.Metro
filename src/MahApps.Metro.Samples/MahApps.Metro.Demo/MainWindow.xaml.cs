@@ -25,18 +25,6 @@ namespace MetroDemo
             flyoutDemo = new FlyoutDemo();
             flyoutDemo.ApplyTemplate();
             flyoutDemo.Closed += (o, e) => flyoutDemo = null;
-
-            Closing += (s, e) =>
-                {
-                    if (!e.Cancel && flyoutDemo != null)
-                    {
-                        flyoutDemo.Dispose();
-                    }
-                    if (!e.Cancel)
-                    {
-                        _viewModel.Dispose();
-                    }
-                };
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
@@ -365,20 +353,32 @@ namespace MetroDemo
             navWin.Navigate(new Navigation.HomePage());
         }
 
-        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (e.Cancel)
             {
                 return;
             }
 
-            e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
-            if (!e.Cancel)
+            if (_viewModel.QuitConfirmationEnabled
+                && _shutdown == false)
             {
-                return;
-            }
+                e.Cancel = true;
 
-            var mySettings = new MetroDialogSettings()
+                // We have to delay the execution through BeginInvoke to prevent potential re-entrancy
+                Dispatcher.BeginInvoke(new Action(async () => await this.ConfirmShutdown()));
+            }
+            else
+            {
+                flyoutDemo?.Dispose();
+
+                _viewModel.Dispose();
+            }
+        }
+
+        private async Task ConfirmShutdown()
+        {
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Quit",
                                  NegativeButtonText = "Cancel",
