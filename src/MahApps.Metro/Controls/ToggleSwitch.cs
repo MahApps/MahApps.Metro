@@ -34,11 +34,20 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Off"));
+        public static readonly DependencyProperty IntermediateLabelProperty = DependencyProperty.Register("IntermediateLabel", typeof(object), typeof(ToggleSwitch), new PropertyMetadata("Undefined"));
 
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty IntermediateSwitchBrushProperty = DependencyProperty.Register("IntermediateSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
 
-        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty OnBorderBrushProperty = DependencyProperty.Register("OnBorderBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty OffBorderBrushProperty = DependencyProperty.Register("OffBorderBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty IntermediateBorderBrushProperty = DependencyProperty.Register("IntermediateBorderBrush", typeof(Brush), typeof(ToggleSwitch), null);
+
+        public static readonly DependencyProperty ThumbIndicatorOnBrushProperty = DependencyProperty.Register("ThumbIndicatorOnBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorOffBrushProperty = DependencyProperty.Register("ThumbIndicatorOffBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorIntermediateBrushProperty = DependencyProperty.Register("ThumbIndicatorIntermediateBrush", typeof(Brush), typeof(ToggleSwitch), null);
+
         public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
 
@@ -94,6 +103,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(OffLabelProperty, value); }
         }
 
+
+        /// <summary>
+        /// Gets/sets the text to display when the control is in it's Intermediate state.
+        /// </summary>
+        public object IntermediateLabel
+        {
+            get { return (string)GetValue(IntermediateLabelProperty); }
+            set { SetValue(IntermediateLabelProperty , value); }
+        }
+
         /// <summary>
         /// Gets/sets the brush used for the on-switch's foreground.
         /// </summary>
@@ -113,12 +132,67 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the brush used for the thumb indicator.
+        /// Gets/sets the brush used for the intermediate-switch's foreground.
         /// </summary>
-        public Brush ThumbIndicatorBrush
+        public Brush IntermediateSwitchBrush
         {
-            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
-            set { SetValue(ThumbIndicatorBrushProperty, value); }
+            get { return (Brush)GetValue(IntermediateSwitchBrushProperty); }
+            set { SetValue(IntermediateSwitchBrushProperty, value); }
+        }
+
+
+        /// <summary>
+        /// Gets/sets the brush used for the on-switch's foreground.
+        /// </summary>
+        public Brush OnBorderBrush
+        {
+            get { return (Brush)GetValue(OnBorderBrushProperty); }
+            set { SetValue(OnBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the off-switch's foreground.
+        /// </summary>
+        public Brush OffBorderBrush
+        {
+            get { return (Brush)GetValue(OffBorderBrushProperty); }
+            set { SetValue(OffBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the intermediate-switch's foreground.
+        /// </summary>
+        public Brush IntermediateBorderBrush
+        {
+            get { return (Brush)GetValue(IntermediateBorderBrushProperty); }
+            set { SetValue(IntermediateBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator (on).
+        /// </summary>
+        public Brush ThumbIndicatorOnBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorOnBrushProperty); }
+            set { SetValue(ThumbIndicatorOnBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator (off).
+        /// </summary>
+        public Brush ThumbIndicatorOffBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorOffBrushProperty); }
+            set { SetValue(ThumbIndicatorOffBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator (intermeidate).
+        /// </summary>
+        public Brush ThumbIndicatorIntermediateBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorIntermediateBrushProperty); }
+            set { SetValue(ThumbIndicatorIntermediateBrushProperty, value); }
         }
 
         /// <summary>

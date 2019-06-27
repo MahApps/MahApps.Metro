@@ -214,10 +214,10 @@
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    Header="ToggleSwitch Header"
                                    IsChecked="{x:Null}"
+                                   IsThreeState="True"
                                    ToggleSwitchButtonStyle="{StaticResource CustomMetroToggleSwitchButton}" />
-            <Controls:ToggleSwitchButton Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True" 
-                                         Content="Click me :-)"/>
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
+                                    IsChecked="True" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="True"
                                    IsEnabled="False" />
@@ -235,6 +235,7 @@
                                    Margin="{StaticResource ControlMargin}"
                                    Header="Win10 Style"
                                    IsChecked="{x:Null}"
+                                   IsThreeState="True"
                                    OffLabel="Disabled"
                                    OnLabel="Enabled"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />

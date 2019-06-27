@@ -52,6 +52,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SwitchWidthProperty = DependencyProperty.Register("SwitchWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(44d));
         public static readonly DependencyProperty SwitchHeightProperty = DependencyProperty.Register("SwitchHeight", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(20d));
 
+        public static readonly DependencyProperty ContentPaddingProperty = DependencyProperty.Register("ContentPadding", typeof(Thickness), typeof(ToggleSwitchButton), new FrameworkPropertyMetadata(new Thickness(4,0,0,0)));
+
         /// <summary>
         /// Gets/sets the brush used for the on-switch's foreground.
         /// </summary>
@@ -170,6 +172,14 @@ namespace MahApps.Metro.Controls
             set { SetValue(SwitchHeightProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the content padding
+        /// </summary>
+        public Thickness ContentPadding
+        {
+            get { return (Thickness)GetValue(ContentPaddingProperty); }
+            set { SetValue(ContentPaddingProperty, value); }
+        }
         static ToggleSwitchButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitchButton), new FrameworkPropertyMetadata(typeof(ToggleSwitchButton)));

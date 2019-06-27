@@ -15,14 +15,16 @@
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton.Win10"
            BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
            TargetType="{x:Type Controls:ToggleSwitchButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10}" />
+        <Setter Property="OffBorderBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10}" />
+        <Setter Property="OnBorderBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />
+        <Setter Property="IntermediateBorderBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="SwitchHeight" Value="20" />
         <Setter Property="SwitchWidth" Value="44" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush9}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush1}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />
-        <Setter Property="IntermediateSwitchBrush" Value="{DynamicResource GrayTransparentBrush}" />
+        <Setter Property="IntermediateSwitchBrush" Value="{x:Null}" />
         <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="ThumbIndicatorOffBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorIntermediateBrush" Value="{DynamicResource BlackBrush}" />
@@ -32,8 +34,8 @@
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition x:Name="FirstCol" Width="Auto" />
+                            <ColumnDefinition x:Name="SecondCol" Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_SwitchTrack" 
                               Grid.Column="0"
@@ -49,6 +51,15 @@
                                        RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SwitchHeight, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
                                        Stroke="{TemplateBinding BorderBrush}"
                                        StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDouble}}" />
+
+                            <Rectangle x:Name="PART_BackgroundOverlay"
+                                       Fill="{DynamicResource WhiteBrush}"
+                                       RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SwitchHeight, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
+                                       RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SwitchHeight, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
+                                       Stroke="{DynamicResource WhiteBrush}"
+                                       StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDouble}}" 
+                                       Opacity="0" />
+
                             <Grid x:Name="PART_ThumbIndicator"
                                   Width="{TemplateBinding SwitchHeight}"
                                   Height="{TemplateBinding SwitchHeight}"
@@ -73,14 +84,34 @@
                         </Thumb>
 
                         <ContentPresenter Content="{TemplateBinding Content}" 
+                                          Margin="{TemplateBinding ContentPadding}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Grid.Column="1"/>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Pressed" />
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_BackgroundOverlay" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                <DiscreteDoubleKeyFrame KeyTime="0" Value="0.5" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_BackgroundOverlay" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                <DiscreteDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_BackgroundOverlay" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.4" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
@@ -93,53 +124,21 @@
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OffSwitchBrush}" />
+                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OffBorderBrush}" />
                             <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=ThumbIndicatorOffBrush}" />
+                            <Setter TargetName="PART_BackgroundOverlay" Property="Fill" Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=OffSwitchBrush}" />
+                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=IntermediateSwitchBrush}" />
+                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=IntermediateBorderBrush}" />
                             <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Controls:ToggleSwitchButton}, Path=ThumbIndicatorIntermediateBrush}" />
+                            <Setter TargetName="PART_BackgroundOverlay" Property="Fill" Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
-                        <!--  MouseOver  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                                <Condition Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffMouseOverBorderBrush.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOverBrush.Win10}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="True" />
-                                <Condition Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchMouseOverBrush.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOverBrush.Win10}" />
-                        </MultiTrigger>
                         <!--  Pressed  -->
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.PressedBrush.Win10}" />
                             <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorPressedBrush.Win10}" />
                         </Trigger>
-                        <!--  Disabled  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsChecked" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Fill" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchDisabledBrush.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffDisabledBorderBrush.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -151,17 +150,18 @@
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch.Win10"
            BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="ContentDirection" Value="RightToLeft" />
-        <Setter Property="ContentPadding" Value="0 0 10 0" />
+        <Setter Property="ContentPadding" Value="4 0 0 0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize.Win10}" />
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize.Win10}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily.Win10}" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush8}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorBrush.Win10}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
+        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="OffBorderBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="OffSwitchBrush" Value="{x:Null}" />
+        <Setter Property="IntermediateSwitchBrush" Value="{x:Null}" />
+        <Setter Property="IntermediateBorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton.Win10}" />
         <Style.Triggers>
             <Trigger Property="ContentDirection" Value="RightToLeft">
