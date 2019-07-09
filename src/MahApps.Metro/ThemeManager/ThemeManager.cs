@@ -374,10 +374,21 @@ namespace MahApps.Metro
         /// <returns>The resource object or null, if the resource wasn't found.</returns>
         public static object GetResourceFromAppStyle(Window window, string key)
         {
-            var appStyle = (window.IsNull()
+            Theme appStyle;
+
+            if (Application.Current.IsNull()) // In case the Window is hosted in a WinForm app
+            {
+                appStyle = !window.IsNull()
+                                ? DetectTheme(window)
+                                : null;
+            }
+            else
+            {
+                appStyle = (window.IsNull()
                                 ? DetectTheme(Application.Current)
                                 : DetectTheme(window))
-                           ?? DetectTheme(Application.Current);
+                            ?? DetectTheme(Application.Current);
+            }
 
             var resource = appStyle?.Resources[key];
 
@@ -786,8 +797,9 @@ namespace MahApps.Metro
                 }
             }
 
-            // ReSharper disable once AssignNullToNotNullAttribute
-            return DetectTheme(Application.Current);
+            return Application.Current != null // In case the Window is hosted in a WinForm app
+                ? DetectTheme(Application.Current)
+                : null;
         }
 
         /// <summary>
@@ -804,7 +816,9 @@ namespace MahApps.Metro
             }
 
             var detectedStyle = DetectTheme(window.Resources)
-                                ?? DetectTheme(Application.Current.Resources);
+                                ?? (Application.Current != null // In case the Window is hosted in a WinForm app
+                                        ? DetectTheme(Application.Current.Resources)
+                                        : null);
 
             return detectedStyle;
         }
@@ -937,7 +951,10 @@ namespace MahApps.Metro
                                ? BaseColorLight
                                : BaseColorDark;
 
-            ChangeThemeBaseColor(Application.Current, baseColor);
+            if (Application.Current != null) // In case the Window is hosted in a WinForm app
+            {
+                ChangeThemeBaseColor(Application.Current, baseColor);
+            }
         }
 
         private static bool isAutomaticWindowsAppModeSettingSyncEnabled;
