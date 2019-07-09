@@ -42,7 +42,10 @@ namespace MahApps.Metro.Behaviors
             window.Closing += this.AssociatedObject_Closing;
             window.Closed += this.AssociatedObject_Closed;
 
-            Application.Current.SessionEnding += this.CurrentApplicationSessionEnding;
+            if (Application.Current != null) // In case the Window is hosted in a WinForm app
+            {
+                Application.Current.SessionEnding += this.CurrentApplicationSessionEnding;
+            }
         }
 
         private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -63,7 +66,7 @@ namespace MahApps.Metro.Behaviors
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
         {
             // save the settings on this state change, because hidden windows gets no window placements
-            // all the saving stuff could be so much easier with ReactiveUI :-D 
+            // all the saving stuff could be so much easier with ReactiveUI :-D
             if (this.AssociatedObject?.WindowState == WindowState.Minimized)
             {
                 this.SaveWindowState();
@@ -87,7 +90,10 @@ namespace MahApps.Metro.Behaviors
             window.Closed -= this.AssociatedObject_Closed;
             window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
-            Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding;
+            if (Application.Current != null) // In case the Window is hosted in a WinForm app
+            {
+                Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding;
+            }
         }
 
 #pragma warning disable 618
