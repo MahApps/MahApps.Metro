@@ -139,7 +139,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-       
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -584,7 +584,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private static Window SetupExternalDialogWindow(BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
             var win = CreateExternalWindow();
-            win.Owner = windowOwner ?? Application.Current.MainWindow;
+            win.Owner = windowOwner ?? Application.Current?.MainWindow;
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
             win.SizeToContent = SizeToContent.Height;
@@ -618,7 +618,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Width = window.ActualWidth;
             win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
-            
+
             return win;
         }
 
@@ -644,7 +644,7 @@ namespace MahApps.Metro.Controls.Dialogs
             };
 
             SetDialogFontSizes(settings, dialog);
-            
+
             win.Content = dialog;
 
             LoginDialogData result = null;
