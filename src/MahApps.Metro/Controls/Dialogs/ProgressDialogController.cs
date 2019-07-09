@@ -92,7 +92,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        ///  Gets/Sets the minimum restriction of the progress Value property
+        ///  Gets/Sets the minimum restriction of the progress Value property.
         /// </summary>
         public double Minimum
         {
@@ -101,7 +101,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        ///  Gets/Sets the maximum restriction of the progress Value property
+        ///  Gets/Sets the maximum restriction of the progress Value property.
         /// </summary>
         public double Maximum
         {
@@ -128,9 +128,9 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Sets the dialog's progress bar brush
+        /// Sets the dialog's progress bar brush.
         /// </summary>
-        /// <param name="brush">The brush to use for the progress bar's foreground</param>
+        /// <param name="brush">The brush to use for the progress bar's foreground.</param>
         public void SetProgressBarForegroundBrush(Brush brush)
         {
             this.WrappedDialog.Invoke(() => this.WrappedDialog.ProgressBarForeground = brush);
