@@ -18,15 +18,13 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
-        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty = DependencyProperty.Register("CloseOnMouseLeftButtonDown", typeof(bool), typeof(CustomValidationPopup), new PropertyMetadata(true));
-
         private Window hostWindow;
 
-        public CustomValidationPopup()
-        {
-            this.Loaded += this.CustomValidationPopup_Loaded;
-            this.Opened += this.CustomValidationPopup_Opened;
-        }
+        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
+            = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown),
+                                          typeof(bool),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(true));
 
         /// <summary>
         /// Gets/sets if the popup can be closed by left mouse button down.
@@ -35,6 +33,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(CloseOnMouseLeftButtonDownProperty); }
             set { SetValue(CloseOnMouseLeftButtonDownProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
+            = DependencyProperty.RegisterAttached(nameof(ShowValidationErrorOnMouseOver),
+                                                  typeof(bool),
+                                                  typeof(CustomValidationPopup),
+                                                  new PropertyMetadata(false));
+
+        public bool ShowValidationErrorOnMouseOver
+        {
+            get { return (bool)GetValue(ShowValidationErrorOnMouseOverProperty); }
+            set { SetValue(ShowValidationErrorOnMouseOverProperty, value); }
+        }
+
+        public CustomValidationPopup()
+        {
+            this.Loaded += this.CustomValidationPopup_Loaded;
+            this.Opened += this.CustomValidationPopup_Opened;
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -98,6 +114,7 @@ namespace MahApps.Metro.Controls
             {
                 target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             }
+
             if (this.hostWindow != null)
             {
                 this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
@@ -106,6 +123,7 @@ namespace MahApps.Metro.Controls
                 this.hostWindow.Activated -= this.hostWindow_Activated;
                 this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
             }
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Opened -= this.CustomValidationPopup_Opened;
             this.hostWindow = null;
@@ -157,6 +175,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var hwnd = hwndSource.Handle;
 
 #pragma warning disable 618

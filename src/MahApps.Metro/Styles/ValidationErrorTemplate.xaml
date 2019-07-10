@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MetroValidationPopup" TargetType="{x:Type Controls:CustomValidationPopup}">
+    <Style x:Key="MetroValidationPopup" TargetType="{x:Type mah:CustomValidationPopup}">
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="HorizontalOffset" Value="0" />
         <Setter Property="Placement" Value="Right" />
@@ -22,7 +22,7 @@
                         BorderThickness="1"
                         DataContext="{Binding ElementName=placeholder}">
 
-                    <Grid x:Name="RedTriangle" 
+                    <Grid x:Name="RedTriangle"
                           Width="12"
                           Height="12"
                           Margin="1 -4 -4 0"
@@ -38,10 +38,10 @@
                     </Grid>
                 </Border>
 
-                <Controls:CustomValidationPopup x:Name="ValidationPopup"
-                                                AllowsTransparency="True"
-                                                IsOpen="False"
-                                                PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}">
+                <mah:CustomValidationPopup x:Name="ValidationPopup"
+                                           AllowsTransparency="True"
+                                           IsOpen="False"
+                                           PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}">
                     <Grid x:Name="Root" Margin="4">
                         <Grid.Resources>
                             <Style TargetType="Border">
@@ -114,7 +114,7 @@
                             <ItemsControl ItemsSource="{Binding}" />
                         </Border>
                     </Grid>
-                </Controls:CustomValidationPopup>
+                </mah:CustomValidationPopup>
             </Grid>
         </AdornedElementPlaceholder>
 
@@ -130,6 +130,15 @@
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding ElementName=RedTriangle, Path=IsMouseOver, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(mah:ValidationHelper.ShowValidationErrorOnMouseOver), Mode=OneWay}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=RedTriangle, Path=IsMouseOver, Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
+                    <Condition Binding="{Binding ElementName=ValidationPopup, Path=ShowValidationErrorOnMouseOver, Mode=OneWay}" Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="ValidationPopup" Property="IsOpen" Value="True" />
             </MultiDataTrigger>

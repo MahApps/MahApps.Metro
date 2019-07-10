@@ -239,6 +239,7 @@
                                    OnLabel="Enabled"
                                    Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
+                                   Controls:ValidationHelper.ShowValidationErrorOnMouseOver="True"
                                    Margin="{StaticResource ControlMargin}"
                                    IsChecked="{Binding IsToggleSwitchVisible, ValidatesOnDataErrors=True}"
                                    OffLabel="Collapsed"
