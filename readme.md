@@ -96,22 +96,17 @@ We use these awesome tools to build and develop MahApps.Metro.
   </a>
 </div>
 
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+
+<a href="https://github.com/MahApps/MahApps.Metro/graphs/contributors"><img src="https://opencollective.com/mahappsmetro/contributors.svg?width=890&button=false" /></a>
+
 ## Sponsorship
 
 This framework is free and can be used for free, open source and commercial applications. MahApps.Metro (all code, NuGets and binaries) are under the [MIT License (MIT)](./LICENSE). It's tested, used and contributed by many awesome people. So hit the magic :star: button, we appreciate it!!! :pray: Thx! :squirrel:
 
 The core team members, MahApps.Metro contributors and contributors in the ecosystem do this open source work in their free time. If you use MahApps.Metro a serious task, and you'd like us to invest more time on it, please donate. This project increases your income/productivity/usabilty too.
-
-## Why charge/sponsor for open source?
-
- * [Open-Source Maintainers are Jerks! | Nick Randolph & Geoffrey Huntley](https://vimeo.com/296579853)
- * [FOSS is free as in toilet | Geoffroy Couprie](http://unhandledexpression.com/general/2018/11/27/foss-is-free-as-in-toilet.html)
- * [How to Charge for your Open Source | Mike Perham](https://www.mikeperham.com/2015/11/23/how-to-charge-for-your-open-source/)
- * [Sustain OSS: The Report](https://sustainoss.org/assets/pdf/SustainOSS-west-2017-report.pdf)
- * [Open Source Maintainers Owe You Nothing | Mike McQuaid](https://mikemcquaid.com/2018/03/19/open-source-maintainers-owe-you-nothing/)
- * [Who should fund open source projects? | Jane Elizabeth](https://jaxenter.com/who-funds-open-source-projects-133222.html)
- * [Apply at OSS Inc today| Ryan Chenkie](https://twitter.com/ryanchenkie/status/1067801413974032385)
- * [The Ethics of Unpaid Labor and the OSS Community | Ashe Dryden](https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community)
 
 ## Backers
 
@@ -185,6 +180,17 @@ Does your company use MahApps.Metro?  Ask your manager or marketing team if your
   <a href="https://opencollective.com/mahappsmetro/tiers/sponsor/2/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/sponsor/2/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/tiers/sponsor/3/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/sponsor/3/avatar"></a>
   <a href="https://opencollective.com/mahappsmetro/tiers/sponsor/4/website" target="_blank"><img src="https://opencollective.com/mahappsmetro/tiers/sponsor/4/avatar"></a>
+
+## Why charge/sponsor for open source?
+
+ * [Open-Source Maintainers are Jerks! | Nick Randolph & Geoffrey Huntley](https://vimeo.com/296579853)
+ * [FOSS is free as in toilet | Geoffroy Couprie](http://unhandledexpression.com/general/2018/11/27/foss-is-free-as-in-toilet.html)
+ * [How to Charge for your Open Source | Mike Perham](https://www.mikeperham.com/2015/11/23/how-to-charge-for-your-open-source/)
+ * [Sustain OSS: The Report](https://sustainoss.org/assets/pdf/SustainOSS-west-2017-report.pdf)
+ * [Open Source Maintainers Owe You Nothing | Mike McQuaid](https://mikemcquaid.com/2018/03/19/open-source-maintainers-owe-you-nothing/)
+ * [Who should fund open source projects? | Jane Elizabeth](https://jaxenter.com/who-funds-open-source-projects-133222.html)
+ * [Apply at OSS Inc today| Ryan Chenkie](https://twitter.com/ryanchenkie/status/1067801413974032385)
+ * [The Ethics of Unpaid Labor and the OSS Community | Ashe Dryden](https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community)
 
 ## Examples
 
