@@ -11,11 +11,11 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonPressedBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -26,11 +26,11 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonPressedBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
             </Trigger>
         </Style.Triggers>
     </Style>

@@ -339,12 +339,12 @@ namespace MahApps.Metro.Controls
 
             var newBrush = new SolidColorBrush(fromColor);
             newBrush.Freeze();
-            resources["FlyoutBackgroundBrush"] = newBrush;
-            resources["ControlBackgroundBrush"] = newBrush;
-            resources["WhiteBrush"] = newBrush;
-            resources["WhiteColorBrush"] = newBrush;
-            resources["DisabledWhiteBrush"] = newBrush;
-            resources["WindowBackgroundBrush"] = newBrush;
+            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
+            resources["MahApps.Brushes.Control.Background"] = newBrush;
+            resources["MahApps.Brushes.White"] = newBrush;
+            resources["MahApps.Brushes.WhiteColor"] = newBrush;
+            resources["MahApps.Brushes.DisabledWhite"] = newBrush;
+            resources["MahApps.Brushes.Window.Background"] = newBrush;
             resources[SystemColors.WindowBrushKey] = newBrush;
 
             if (accent)
@@ -352,9 +352,9 @@ namespace MahApps.Metro.Controls
                 fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
-                resources["FlyoutForegroundBrush"] = newBrush;
-                resources["TextBrush"] = newBrush;
-                resources["LabelTextBrush"] = newBrush;
+                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
+                resources["MahApps.Brushes.Text"] = newBrush;
+                resources["MahApps.Brushes.Label.Text"] = newBrush;
 
                 if (resources.Contains("MahApps.Colors.AccentBase"))
                 {
@@ -368,7 +368,7 @@ namespace MahApps.Metro.Controls
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["HighlightBrush"] = newBrush;
+                resources["MahApps.Brushes.Highlight"] = newBrush; resources["MahApps.Brushes.Highlight"] = newBrush;
             }
 
             resources.EndInit();

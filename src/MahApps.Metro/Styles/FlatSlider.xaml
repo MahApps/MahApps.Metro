@@ -29,7 +29,7 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.FlatSlider.TickBar" TargetType="TickBar">
-        <Setter Property="Fill" Value="{DynamicResource SliderThumbDisabled}" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.SliderThumb.Disabled}" />
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
             <Trigger Property="Placement" Value="Top">
@@ -147,9 +147,9 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Metro.Styles.FlatSlider" TargetType="{x:Type Slider}">
-        <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SliderTrack.Normal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
@@ -160,13 +160,13 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="{DynamicResource SliderTrackDisabled}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource SliderThumbDisabled}" />
-                <Setter Property="Foreground" Value="{DynamicResource SliderValueDisabled}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SliderTrack.Disabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.SliderThumb.Disabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.SliderValue.Disabled}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource SliderTrackHover}" />
-                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SliderTrack.Hover}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent2}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinHeight" Value="12" />

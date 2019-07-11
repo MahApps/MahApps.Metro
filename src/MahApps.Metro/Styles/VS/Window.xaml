@@ -7,10 +7,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="VSWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="GlowBrush" Value="{DynamicResource WindowGlowBrush}" />
-        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Window.Glow}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ShowTitleBar" Value="True" />
-        <Setter Property="TitleForeground" Value="{DynamicResource WindowTitleForeground}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.WindowTitle.Foreground}" />
     </Style>
 
     <Style x:Key="VSWindowButtonStyle"
@@ -19,7 +19,7 @@
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -36,17 +36,17 @@
     <Style x:Key="VSWindowNotificationButtonStyle"
            BasedOn="{StaticResource MetroFlatButton}"
            TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NotificationButton.Foreground}" />
         <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Padding" Value="9 5 9 5" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundOverBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.BackgroundOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundPressedBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.BackgroundPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NotificationButton.Foreground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -54,9 +54,9 @@
     <Style x:Key="VSWindowQuickLaunchTextBoxStyle"
            BasedOn="{StaticResource MetroButtonTextBox}"
            TargetType="{x:Type TextBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource QuickLaunchTextBoxFocusedBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.FocusedBorder}" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Margin" Value="0 2" />
         <Setter Property="MaxWidth" Value="300" />
@@ -65,7 +65,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Background" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
             </Trigger>
         </Style.Triggers>
     </Style>

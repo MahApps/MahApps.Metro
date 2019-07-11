@@ -8,7 +8,7 @@
 
     <Style x:Key="StandardGroupBox" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource GroupBoxHeaderThemeFontSize}" />

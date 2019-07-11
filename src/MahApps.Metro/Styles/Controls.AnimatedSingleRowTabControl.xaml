@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="0" />
@@ -35,10 +35,10 @@
                             <Setter TargetName="PART_Arrow" Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray1}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

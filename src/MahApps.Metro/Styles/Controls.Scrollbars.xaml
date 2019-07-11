@@ -42,7 +42,7 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=OneWay}"
-                                  Fill="{DynamicResource GrayBrush3}"
+                                  Fill="{DynamicResource MahApps.Brushes.Gray3}"
                                   Stretch="Uniform" />
                         </Viewbox>
                     </Grid>
@@ -51,10 +51,10 @@
                             <Setter TargetName="ArrowBox" Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray1}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -82,7 +82,7 @@
     </Style>
 
     <Style x:Key="MetroScrollBarThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource ThumbBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Thumb}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -95,12 +95,12 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="MouseOverRectangle"
-                                   Fill="{DynamicResource BlackBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Black}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="PressedRectangle"
-                                   Fill="{DynamicResource BlackBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Black}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />

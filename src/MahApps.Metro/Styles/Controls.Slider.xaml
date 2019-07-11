@@ -257,21 +257,21 @@
 
     <!--  Slider Style  -->
     <Style x:Key="MahApps.Metro.Styles.Slider" TargetType="{x:Type Slider}">
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource GrayBrush2}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource GrayBrush5}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource GrayBrush2}" />
-        <Setter Property="Controls:SliderHelper.TrackFillBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush1}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Controls:SliderHelper.TrackFillBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
@@ -510,21 +510,21 @@
 
     <!--  Slider Win10 Style  -->
     <Style x:Key="MahApps.Metro.Styles.Slider.Win10" TargetType="{x:Type Slider}">
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource GrayBrush1}" />
-        <Setter Property="Controls:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.TrackFillBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource GrayBrush2}" />
-        <Setter Property="Controls:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource GrayBrush6}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-        <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
+        <Setter Property="Controls:SliderHelper.ThumbFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.TrackFillBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:SliderHelper.TrackFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.TrackFillHoverBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Controls:SliderHelper.TrackFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillHoverBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="Maximum" Value="100" />

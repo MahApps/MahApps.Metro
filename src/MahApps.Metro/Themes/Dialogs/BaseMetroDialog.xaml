@@ -109,11 +109,11 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Metro.Styles.MetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
         <Setter Property="DialogMessageFontSize" Value="{DynamicResource DialogMessageFontSize}" />
         <Setter Property="DialogTitleFontSize" Value="{DynamicResource DialogTitleFontSize}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />

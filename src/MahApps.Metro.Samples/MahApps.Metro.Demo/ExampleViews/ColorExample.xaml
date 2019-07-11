@@ -28,7 +28,7 @@
                              Grid.Column="0"
                              Width="30"
                              Height="30"
-                             Stroke="{DynamicResource GrayBrush2}">
+                             Stroke="{DynamicResource MahApps.Brushes.Gray2}">
                         <i:Interaction.Behaviors>
                             <behaviors:BindableResourceBehavior ResourceName="{Binding}" Property="{x:Static Shape.FillProperty}" />
                         </i:Interaction.Behaviors>

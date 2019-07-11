@@ -18,7 +18,7 @@
                            DataContext="{Binding ElementName=placeholder}"
                            StrokeThickness="0" />
                 <Border x:Name="ValidationErrorElement"
-                        BorderBrush="{DynamicResource ControlsValidationBrush}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Controls.Validation}"
                         BorderThickness="1"
                         DataContext="{Binding ElementName=placeholder}">
 
@@ -31,10 +31,10 @@
                           Background="Transparent">
                         <Path Margin="1 3 0 0"
                               Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z"
-                              Fill="{DynamicResource ValidationBrush5}" />
+                              Fill="{DynamicResource MahApps.Brushes.Validation5}" />
                         <Path Margin="1 3 0 0"
                               Data="M 0,0 L2,0 L 8,6 L8,8"
-                              Fill="{DynamicResource WhiteColorBrush}" />
+                              Fill="{DynamicResource MahApps.Brushes.WhiteColor}" />
                     </Grid>
                 </Border>
 
@@ -70,18 +70,18 @@
                             </Style>
                         </Grid.Resources>
                         <Border Margin="4 4 -4 -4"
-                                Background="{DynamicResource ValidationBrush1}"
+                                Background="{DynamicResource MahApps.Brushes.Validation1}"
                                 CornerRadius="5" />
                         <Border Margin="3 3 -3 -3"
-                                Background="{DynamicResource ValidationBrush2}"
+                                Background="{DynamicResource MahApps.Brushes.Validation2}"
                                 CornerRadius="4" />
                         <Border Margin="2 2 -2 -2"
-                                Background="{DynamicResource ValidationBrush3}"
+                                Background="{DynamicResource MahApps.Brushes.Validation3}"
                                 CornerRadius="3" />
                         <Border Margin="1 1 -1 -1"
-                                Background="{DynamicResource ValidationBrush4}"
+                                Background="{DynamicResource MahApps.Brushes.Validation4}"
                                 CornerRadius="2" />
-                        <Border Background="{DynamicResource ValidationBrush5}" CornerRadius="2">
+                        <Border Background="{DynamicResource MahApps.Brushes.Validation5}" CornerRadius="2">
                             <!--
                                 from Josh Smith
 
@@ -105,7 +105,7 @@
                                 <DataTemplate DataType="{x:Type ValidationError}">
                                     <TextBlock MaxWidth="250"
                                                Margin="8 4 8 4"
-                                               Foreground="{DynamicResource ValidationTextBrush}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Text.Validation}"
                                                Text="{Binding ErrorContent}"
                                                TextWrapping="Wrap"
                                                UseLayoutRounding="False" />

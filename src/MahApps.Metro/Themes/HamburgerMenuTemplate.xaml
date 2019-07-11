@@ -22,7 +22,7 @@
     <Style x:Key="HamburgerButtonStyle"
            BasedOn="{StaticResource ChromelessButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -195,7 +195,7 @@
     <Style x:Key="HamburgerMenuItemStyle"
            BasedOn="{StaticResource HamburgerMenuItemBaseStyle}"
            TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
         <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />

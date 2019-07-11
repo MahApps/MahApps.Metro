@@ -16,7 +16,7 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       Closing="MetroWindow_Closing"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Icon="mahapps.metro.logo2.ico"
                       NonActiveGlowBrush="#CDFF0000"
                       ShowIconOnTitleBar="True"
@@ -67,7 +67,7 @@
                                  Title="This dialog allows arbitrary content.">
                 <TextBlock x:Name="MessageTextBlock"
                            Height="200"
-                           Foreground="{DynamicResource AccentColorBrush}"
+                           Foreground="{DynamicResource MahApps.Brushes.Accent}"
                            Text="{Binding Artists[0].Name}" />
             </Dialog:CustomDialog>
 
@@ -77,7 +77,7 @@
 
                 <StackPanel>
                     <TextBlock Height="30"
-                               Foreground="{DynamicResource AccentColorBrush}"
+                               Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog"

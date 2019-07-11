@@ -50,20 +50,20 @@
     </ControlTemplate>
 
     <Style x:Key="WindowCommandsControlStyle" TargetType="{x:Type Control}">
-        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="8 0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource GrayBrush4}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray4}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -83,18 +83,18 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="Arrow" Property="Fill" Value="White" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
                             <Setter TargetName="Arrow" Property="Fill" Value="White" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
                             <Setter TargetName="Arrow" Property="Fill" Value="White" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -213,7 +213,7 @@
                     <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -221,7 +221,7 @@
                     <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -232,7 +232,7 @@
                     <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -242,7 +242,7 @@
                     <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -288,11 +288,11 @@
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
-        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="LightTemplate" Value="{StaticResource LightWindowCommandsTemplate}" />
@@ -300,7 +300,7 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindow.ShowTitleBar}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

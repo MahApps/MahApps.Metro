@@ -13,8 +13,8 @@ namespace MahApps.Metro
                                                                           {
                                                                               "MahApps.Colors.Highlight",
                                                                               "MahApps.Colors.AccentBase",
-                                                                              "HighlightBrush",
-                                                                              "AccentBaseColorBrush"
+                                                                              "MahApps.Brushes.Highlight",
+                                                                              "MahApps.Brushes.AccentBase"
                                                                           });
     }
 }

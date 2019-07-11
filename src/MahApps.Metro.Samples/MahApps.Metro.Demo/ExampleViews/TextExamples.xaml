@@ -437,7 +437,7 @@
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                     HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 <TextBlock Margin="{StaticResource ControlMargin}"
-                           Foreground="{DynamicResource DarkIdealForegroundDisabledBrush}"
+                           Foreground="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}"
                            Text="Try SHIFT+D to demonstrate validation" />
                 <CheckBox x:Name="ModifierKeysRequired"
                           Margin="{StaticResource ControlMargin}"

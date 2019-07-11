@@ -146,13 +146,13 @@
                     <Style x:Key="AccentCircleButtonStyle"
                            BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
                            TargetType="{x:Type ButtonBase}">
-                        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -177,7 +177,7 @@
                 <Button Width="48"
                         Height="48"
                         Margin="4"
-                        Foreground="{DynamicResource AccentColorBrush}"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
                         IsEnabled="False"
                         Style="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                     <Button.ContentTemplate>

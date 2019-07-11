@@ -41,7 +41,7 @@
     <Style x:Key="MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle"
            BasedOn="{StaticResource MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle}"
            TargetType="{x:Type Controls:NumericUpDown}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="HideUpDownButtons" Value="False" />
     </Style>
 
@@ -50,19 +50,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Rectangle x:Name="Border" Fill="{DynamicResource GrayBrush7}" />
+                        <Rectangle x:Name="Border" Fill="{DynamicResource MahApps.Brushes.Gray7}" />
                         <Polygon x:Name="Arrow"
                                  Margin="8 8 3 3"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Bottom"
-                                 Fill="{DynamicResource GrayBrush1}"
+                                 Fill="{DynamicResource MahApps.Brushes.Gray1}"
                                  Opacity="0.15"
                                  Points="0,10 10,10 10,0"
                                  Stretch="Uniform" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Fill" Value="{DynamicResource AccentColorBrush2}" />
+                            <Setter TargetName="Border" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent2}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Arrow" Property="Visibility" Value="Collapsed" />
@@ -74,7 +74,7 @@
     </Style>
 
     <Style x:Key="MetroColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -92,7 +92,7 @@
     </Style>
 
     <Style x:Key="MetroRowHeaderGripperStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeNS" />
         <Setter Property="Height" Value="6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -110,13 +110,13 @@
     </Style>
 
     <Style x:Key="MetroDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
@@ -156,7 +156,7 @@
                               Height="10"
                               Margin="0 0 8 2"
                               VerticalAlignment="Center"
-                              Fill="{DynamicResource GrayBrush2}"
+                              Fill="{DynamicResource MahApps.Brushes.Gray2}"
                               RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
                               Visibility="Collapsed" />
@@ -195,7 +195,7 @@
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="SortDirection" Value="{x:Null}" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
@@ -205,7 +205,7 @@
 
     <Style x:Key="MetroDataGridRowHeader" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderThickness" Value="0 0 1 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
@@ -249,7 +249,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -284,15 +284,15 @@
         <Style.Triggers>
             <!--  IsSelected  -->
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.HighlightText}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
             </MultiTrigger>
 
             <!--  IsKeyboardFocusWithin  -->
@@ -301,7 +301,7 @@
                     <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
                     <Condition Property="IsKeyboardFocusWithin" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.FocusBorderBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.FocusBorder}" />
             </MultiTrigger>
 
             <!--  IsSelected and Selector.IsSelectionActive  -->
@@ -310,7 +310,7 @@
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightTextBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlightText}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -318,8 +318,8 @@
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
             </MultiTrigger>
 
             <!--  IsMouseOver  -->
@@ -328,8 +328,8 @@
                     <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
             </MultiTrigger>
 
             <!--  IsEnabled  -->
@@ -343,7 +343,7 @@
                     <Condition Property="IsEnabled" Value="False" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.HighlightText}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -351,8 +351,8 @@
                     <Condition Property="IsEnabled" Value="False" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
             </MultiTrigger>
 
         </Style.Triggers>
@@ -366,14 +366,14 @@
             <Path Width="20"
                   Height="20"
                   Data="m 31.630585,39.233818 24.6309,-24.6308 c 0.6183,-0.6184 1.6208,-0.6184 2.2392,0 l 24.6308,24.6308 c 0.6184,0.6184 0.6184,1.6209 0,2.2392 l -24.6308,24.6309 c -0.6183,0.6183 -1.6209,0.6183 -2.2392,0 l -24.6309,-24.6309 c -0.6183,-0.6183 -0.6183,-1.6208 0,-2.2392 z"
-                  Fill="{DynamicResource ControlsValidationBrush}"
+                  Fill="{DynamicResource MahApps.Brushes.Controls.Validation}"
                   Stretch="Uniform" />
             <Path Width="10"
                   Height="10"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Data="m 53.781741,31.196677 c -2.237724,0 -4.0625,1.824776 -4.0625,4.0625 0,2.237724 1.824776,4.0625 4.0625,4.0625 2.237724,0 4.0625,-1.824776 4.0625,-4.0625 0,-2.237724 -1.824776,-4.0625 -4.0625,-4.0625 z m -4.09375,-21.375 0.03125,0.53125 1.21875,19.46875 5.6875,0 1.25,-20 -8.1875,0 z"
-                  Fill="{DynamicResource ValidationTextBrush}"
+                  Fill="{DynamicResource MahApps.Brushes.Text.Validation}"
                   Stretch="Uniform" />
         </Grid>
     </ControlTemplate>
@@ -392,9 +392,9 @@
                     <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.HighlightText}" />
             </MultiTrigger>
 
             <!--  IsSelected and Selector.IsSelectionActive  -->
@@ -404,9 +404,9 @@
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightTextBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlightText}" />
             </MultiTrigger>
 
             <!--  IsMouseOver  -->
@@ -415,8 +415,8 @@
                     <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
             </MultiTrigger>
 
             <!--  IsEnabled  -->
@@ -435,24 +435,24 @@
                     <Condition Property="IsEnabled" Value="False" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.HighlightText}" />
             </MultiTrigger>
 
         </Style.Triggers>
     </Style>
 
     <Style x:Key="MetroDataGrid" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0 0 0 0" />
         <Setter Property="CellStyle" Value="{StaticResource MetroDataGridCell}" />
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MetroDataGridColumnHeader}" />
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="Separator">
-                    <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="Separator">
@@ -468,7 +468,7 @@
         </Setter>
         <Setter Property="GridLinesVisibility" Value="None" />
         <Setter Property="HeadersVisibility" Value="Column" />
-        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="MinRowHeight" Value="25" />
         <Setter Property="RowHeaderStyle" Value="{StaticResource MetroDataGridRowHeader}" />
         <Setter Property="RowStyle" Value="{StaticResource MetroDataGridRow}" />
@@ -538,7 +538,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -587,14 +587,14 @@
         </Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}" Value="0">
-                <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent4}" />
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}" Value="0" />
                     <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsSelected}" Value="True" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>

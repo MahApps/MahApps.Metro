@@ -115,7 +115,7 @@
                               VerticalAlignment="Center"
                               Data="M0,0 L1,1 M0,1 L1,0"
                               Stretch="Uniform"
-                              Stroke="{DynamicResource CloseButtonStroke}"
+                              Stroke="{DynamicResource MahApps.Brushes.CloseButton.Stroke}"
                               StrokeEndLineCap="Flat"
                               StrokeStartLineCap="Flat"
                               StrokeThickness="2" />
@@ -125,12 +125,12 @@
                             <Setter Property="Visibility" Value="Hidden" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundHighlighted}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource CloseButtonStrokeHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CloseButton.BackgroundHighlighted}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CloseButton.StrokeHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundPressed}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource CloseButtonStroke}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CloseButton.BackgroundPressed}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CloseButton.Stroke}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -142,7 +142,7 @@
     <Style x:Key="StandardTabItem"
            BasedOn="{StaticResource MetroTabItem}"
            TargetType="{x:Type TabItem}">
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Controls:TabControlHelper.CloseButtonEnabled" Value="True" />
         <Setter Property="Padding" Value="12 5 12 5" />
         <Setter Property="Template">
@@ -213,11 +213,11 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -233,7 +233,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

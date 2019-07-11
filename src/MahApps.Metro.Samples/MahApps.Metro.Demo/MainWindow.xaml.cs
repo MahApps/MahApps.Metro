@@ -431,7 +431,7 @@ namespace MetroDemo
             w.Content = new Button() { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
+            w.SetResourceReference(MetroWindow.GlowBrushProperty, "MahApps.Brushes.Accent");
             w.Show();
         }
 

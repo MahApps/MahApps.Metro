@@ -10,7 +10,7 @@
     <Geometry x:Key="UpArrow">M 0,4 L 3.5,0 L 7,4 Z</Geometry>
 
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
-        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Background}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="6 2 6 2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -20,12 +20,12 @@
                     <Grid Margin="0 6 0 4" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Rectangle Height="1"
                                    Margin="20 0 1 1"
-                                   Fill="{DynamicResource GrayBrush7}"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray7}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    UseLayoutRounding="True" />
                         <Rectangle Height="1"
                                    Margin="20 1 1 0"
-                                   Fill="{DynamicResource WhiteBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.White}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    UseLayoutRounding="True" />
                     </Grid>
@@ -35,7 +35,7 @@
     </Style>
 
     <Style x:Key="MetroMenu" TargetType="{x:Type Menu}">
-        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Background}" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource MenuFontSize}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
@@ -60,9 +60,9 @@
     </Style>
 
     <Style x:Key="MetroContextMenu" TargetType="{x:Type ContextMenu}">
-        <Setter Property="Background" Value="{DynamicResource ContextMenuBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ContextMenu.Background}" />
         <Setter Property="Block.TextAlignment" Value="Left" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ContextMenuBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ContextMenu.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource ContextMenuFontSize}" />
@@ -122,7 +122,7 @@
     </Style>
 
     <Style x:Key="MetroMenuItem" TargetType="{x:Type MenuItem}">
-        <Setter Property="Background" Value="{DynamicResource MenuItemBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Background}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
@@ -285,8 +285,8 @@
     </Style>
 
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}" TargetType="{x:Type ContentControl}">
-        <Border Background="{DynamicResource SubMenuBackgroundBrush}"
-                BorderBrush="{DynamicResource SubMenuBorderBrush}"
+        <Border Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
                 BorderThickness="1">
             <ContentPresenter />
         </Border>
@@ -310,7 +310,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Data="{StaticResource Checkmark}"
-                      Fill="{DynamicResource CheckmarkFill}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
                       FlowDirection="LeftToRight"
                       Visibility="Collapsed" />
                 <ContentPresenter Margin="{TemplateBinding Padding}"
@@ -370,19 +370,19 @@
                 <Setter TargetName="SubMenuBorder" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource TopMenuItemSelectionStroke}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource TopMenuItemPressedFill}" />
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource TopMenuItemPressedStroke}" />
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedStroke}" />
             </Trigger>
             <Trigger Property="IsSubmenuOpen" Value="True">
-                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource TopMenuItemPressedFill}" />
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource TopMenuItemPressedStroke}" />
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource DisabledMenuItemGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -405,7 +405,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Data="{StaticResource Checkmark}"
-                      Fill="{DynamicResource CheckmarkFill}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
                       FlowDirection="LeftToRight"
                       Visibility="Collapsed" />
                 <ContentPresenter Margin="{TemplateBinding Padding}"
@@ -423,15 +423,15 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource TopMenuItemSelectionStroke}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource TopMenuItemPressedFill}" />
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource TopMenuItemPressedStroke}" />
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource DisabledMenuItemGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -463,7 +463,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Data="{StaticResource Checkmark}"
-                      Fill="{DynamicResource CheckmarkFill}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
                       FlowDirection="LeftToRight"
                       Visibility="Collapsed" />
                 <ContentPresenter Grid.Column="2"
@@ -479,7 +479,7 @@
                       Margin="4 0 0 0"
                       VerticalAlignment="Center"
                       Data="{StaticResource RightArrow}"
-                      Fill="{DynamicResource RightArrowFill}" />
+                      Fill="{DynamicResource MahApps.Brushes.RightArrowFill}" />
             </Grid>
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
@@ -533,12 +533,12 @@
                 <Setter TargetName="SubMenuBorder" Property="Margin" Value="0 0 6 6" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MenuItemSelectionFill}" />
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MenuItemSelectionStroke}" />
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource DisabledMenuItemGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -570,7 +570,7 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Data="{StaticResource Checkmark}"
-                      Fill="{DynamicResource CheckmarkFill}"
+                      Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
                       FlowDirection="LeftToRight"
                       Visibility="Collapsed" />
                 <ContentPresenter Grid.Column="2"
@@ -592,12 +592,12 @@
                 <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MenuItemSelectionFill}" />
-                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MenuItemSelectionStroke}" />
+                <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
+                <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource DisabledMenuItemGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

@@ -187,7 +187,7 @@
             </DataGrid.Columns>
             <DataGrid.Style>
                 <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
-                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
+                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
                 </Style>
             </DataGrid.Style>
             <DataGrid.RowStyle>
@@ -245,7 +245,7 @@
                                                        Margin="5 2"
                                                        VerticalAlignment="Center"
                                                        Background="Transparent"
-                                                       Foreground="{DynamicResource AccentColorBrush}"
+                                                       Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                        Maximum="20"
                                                        Minimum="0"
                                                        Value="{Binding Price}" />

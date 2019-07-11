@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MetroStatusBarItem" TargetType="{x:Type StatusBarItem}">
-        <Setter Property="BorderBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="Template">
@@ -20,7 +20,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -30,7 +30,7 @@
     </Style>
 
     <Style x:Key="MetroStatusBarSeparator" TargetType="{x:Type Separator}">
-        <Setter Property="Background" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="MinWidth" Value="1" />
         <Setter Property="Opacity" Value="0.75" />
@@ -53,7 +53,7 @@
         <Setter Property="FontSize" Value="{DynamicResource StatusBarFontSize}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type StatusBar}">
@@ -84,7 +84,7 @@
                 <Setter Property="Background" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
             </MultiDataTrigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>

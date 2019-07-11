@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="StandardTextBox" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="{DynamicResource TextBoxBackground}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.Background}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
         <Setter Property="Padding" Value="1" />
@@ -15,10 +15,10 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -37,7 +37,7 @@
                         <TextBlock Name="search"
                                    Margin="5 0 0 0"
                                    VerticalAlignment="Center"
-                                   Foreground="{DynamicResource SearchTextForeground}"
+                                   Foreground="{DynamicResource MahApps.Brushes.SearchTextBox.Foreground}"
                                    Text="Search ..."
                                    Visibility="Hidden" />
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
@@ -50,11 +50,11 @@
                             <Setter TargetName="search" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />
                             <Setter TargetName="search" Property="Foreground" Value="{DynamicResource Foreground}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />
                             <Setter TargetName="search" Property="Visibility" Value="Hidden" />
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -223,12 +223,12 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
         <Setter Property="DarkMinButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="LightCloseButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMaxButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
@@ -237,7 +237,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

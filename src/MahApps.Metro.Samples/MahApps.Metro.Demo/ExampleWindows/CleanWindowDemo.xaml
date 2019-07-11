@@ -7,7 +7,7 @@
                       Title="CleanWindowDemo"
                       Width="800"
                       Height="400"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Icon="..\mahapps.metro.logo2.ico"
                       ResizeMode="CanResizeWithGrip"
                       ShowIconOnTitleBar="True"

@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="StandardButton" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource BackgroundNormal}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -19,11 +19,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="Transparent" />
@@ -36,7 +36,7 @@
 
     <Style x:Key="LinkButton" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="{DynamicResource LinkButtonForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -48,7 +48,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="{DynamicResource LinkButtonForegroundHighlighted}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.ForegroundHighlighted}" />
             </Trigger>
         </Style.Triggers>
     </Style>

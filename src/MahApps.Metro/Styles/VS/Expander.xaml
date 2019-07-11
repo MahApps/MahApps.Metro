@@ -61,7 +61,7 @@
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       IsHitTestVisible="False"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
@@ -146,7 +146,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                         </Grid>
@@ -207,7 +207,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
@@ -281,7 +281,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                         </Grid>
@@ -325,7 +325,7 @@
 
     <Style x:Key="StandardExpander" TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
@@ -341,7 +341,7 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">

@@ -3,8 +3,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
-        <Setter Property="Background" Value="{DynamicResource BackgroundNormal}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
@@ -21,11 +21,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -45,14 +45,14 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource ScrollBarPageButtonBackgroundHighlighted}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ScrollBar.PageButtonBackgroundHighlighted}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource BackgroundNormal}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -65,11 +65,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="True">
                             <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

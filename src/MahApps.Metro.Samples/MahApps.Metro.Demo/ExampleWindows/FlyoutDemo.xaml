@@ -14,7 +14,7 @@
                       MinWidth="700"
                       MinHeight="500"
                       d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
-                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                       BorderThickness="1"
                       IconOverlayBehavior="Never"
                       SaveWindowPosition="True"
@@ -49,7 +49,7 @@
             <iconPacks:PackIconModern Width="{TemplateBinding Width}"
                                       Height="{TemplateBinding Height}"
                                       Margin="4"
-                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                      Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
                                       Kind="Box" />
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
@@ -260,7 +260,7 @@
                     <TextBlock Margin="10"
                                FontSize="22"
                                Text="Flyout on the top..." />
-                    <Grid VerticalAlignment="Bottom" Background="{DynamicResource AccentColorBrush2}">
+                    <Grid VerticalAlignment="Bottom" Background="{DynamicResource MahApps.Brushes.Accent2}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
