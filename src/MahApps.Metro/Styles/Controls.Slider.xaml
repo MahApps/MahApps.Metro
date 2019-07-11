@@ -3,10 +3,10 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <System:Double x:Key="HorizontalThumbHeight">16</System:Double>
-    <System:Double x:Key="HorizontalThumbWidth">10</System:Double>
-    <System:Double x:Key="VerticalThumbWidth">16</System:Double>
-    <System:Double x:Key="VerticalThumbHeight">10</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Slider.HorizontalThumbHeight">16</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Slider.HorizontalThumbWidth">10</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Slider.VerticalThumbWidth">16</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Slider.VerticalThumbHeight">10</System:Double>
 
     <Style x:Key="MahApps.Metro.Styles.Slider.Thumb" TargetType="Thumb">
         <Setter Property="BorderThickness" Value="0" />
@@ -120,8 +120,8 @@
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="HorizontalThumb"
-                                         Width="{DynamicResource HorizontalThumbWidth}"
-                                         Height="{DynamicResource HorizontalThumbHeight}"
+                                         Width="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbWidth}"
+                                         Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          BorderThickness="1 0"
                                          IsTabStop="True"
@@ -206,8 +206,8 @@
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="VerticalThumb"
-                                         Width="{DynamicResource VerticalThumbWidth}"
-                                         Height="{DynamicResource VerticalThumbHeight}"
+                                         Width="{DynamicResource MahApps.Sizes.Slider.VerticalThumbWidth}"
+                                         Height="{DynamicResource MahApps.Sizes.Slider.VerticalThumbHeight}"
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          BorderThickness="0 1"
                                          IsTabStop="True"

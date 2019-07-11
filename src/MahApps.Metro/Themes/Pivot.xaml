@@ -4,7 +4,7 @@
 
     <DataTemplate x:Key="PivotHeaderTemplate">
         <TextBlock FontFamily="{DynamicResource HeaderFontFamily}"
-                   FontSize="{DynamicResource HeaderFontSize}"
+                   FontSize="{DynamicResource MahApps.Sizes.HeaderFont}"
                    Text="{Binding}" />
     </DataTemplate>
 
@@ -74,7 +74,7 @@
                                 <DataTemplate DataType="{x:Type Controls:PivotItem}">
                                     <TextBlock Margin="0 0 25 0"
                                                FontFamily="{DynamicResource HeaderFontFamily}"
-                                               FontSize="{DynamicResource SubHeaderFontSize}"
+                                               FontSize="{DynamicResource SubMahApps.Sizes.HeaderFont}"
                                                Text="{Binding Header}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

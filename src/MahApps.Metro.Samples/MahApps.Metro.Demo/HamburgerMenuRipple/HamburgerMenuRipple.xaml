@@ -295,7 +295,7 @@
                                        Margin="0 15 0 5"
                                        Padding="0"
                                        FontFamily="{DynamicResource HeaderFontFamily}"
-                                       FontSize="{DynamicResource HeaderFontSize}"
+                                       FontSize="{DynamicResource MahApps.Sizes.HeaderFont}"
                                        Text="{Binding Label}" />
                             <ScrollViewer Grid.Row="1"
                                           Focusable="False"

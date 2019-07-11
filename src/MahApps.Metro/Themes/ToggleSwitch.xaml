@@ -90,10 +90,10 @@
 
     <Style x:Key="MahApps.Metro.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentPadding" Value="0 0 4 0" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchMahApps.Sizes.HeaderFont}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />

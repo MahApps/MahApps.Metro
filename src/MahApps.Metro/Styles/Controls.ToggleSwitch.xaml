@@ -140,9 +140,9 @@
            TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentDirection" Value="RightToLeft" />
         <Setter Property="ContentPadding" Value="0 0 10 0" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize.Win10}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchMahApps.Sizes.HeaderFont.Win10}" />
         <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily.Win10}" />
-        <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize.Win10}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitch.Win10}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily.Win10}" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffSwitchBrush.Win10}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OnSwitchBrush.Win10}" />

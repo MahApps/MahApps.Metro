@@ -217,14 +217,14 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Height" Value="{DynamicResource MetroScrollBarHeight}" />
+                <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.Height.Metro}" />
                 <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Horizontal}" />
                 <Setter Property="Width" Value="Auto" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Height" Value="Auto" />
                 <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Vertical}" />
-                <Setter Property="Width" Value="{DynamicResource MetroScrollBarWidth}" />
+                <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.Width.Metro}" />
             </Trigger>
         </Style.Triggers>
     </Style>

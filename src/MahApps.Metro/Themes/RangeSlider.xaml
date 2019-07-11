@@ -79,7 +79,7 @@
 
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
-                                     Height="{DynamicResource HorizontalThumbHeight}"
+                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"
@@ -91,7 +91,7 @@
                                      Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
-                                     Height="{DynamicResource HorizontalThumbHeight}"
+                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"

@@ -60,7 +60,7 @@
                 <TextBlock Margin="0 -1 8 0"
                            VerticalAlignment="Center"
                            FontFamily="{DynamicResource HeaderFontFamily}"
-                           FontSize="{DynamicResource WindowTitleFontSize}"
+                           FontSize="{DynamicResource MahApps.Sizes.Font.WindowTitle}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
                 <Button Margin="1 0 1 1"
