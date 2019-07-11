@@ -1,31 +1,31 @@
 ﻿{
   "TemplateFile": "Theme.Template.xaml",
   "DefaultValues": {
-    "IdealForegroundColor": "White"
+    "MahApps.Colors.IdealForeground": "White"
   },
   "BaseColorSchemes": [
     {
       "Name": "Dark",
       "Values": {
-        "BlackColor": "#FFFFFFFF",
-        "BlackColor20": "#51FFFFFF",
-        "WhiteColor": "#FF252525",
-        "WhiteColor20": "#51252525",
-        "Gray1": "#FFF9F9F9",
-        "Gray2": "#FF7F7F7F",
-        "Gray3": "#FF9D9D9D",
-        "Gray4": "#FFA59F93",
-        "Gray5": "#FFB9B9B9",
-        "Gray6": "#FFCCCCCC",
-        "Gray7": "#FF7E7E7E",
-        "Gray8": "#FF454545",
-        "Gray9": "#5EC9C9C9",
-        "Gray10": "#FF2F2F2F",
-        "GrayNormal": "#FF7D7D7D",
-        "GrayHover": "#FFAAAAAA",
-        "FlyoutColor": "#FF2B2B2B",
-        "MenuShadowColor": "#FFFFFFFF",
-        "DisabledMenuItemForeground": "{StaticResource Gray7}",
+        "MahApps.Colors.Black": "#FFFFFFFF",
+        "MahApps.Colors.Black20": "#51FFFFFF",
+        "MahApps.Colors.White": "#FF252525",
+        "MahApps.Colors.White20": "#51252525",
+        "MahApps.Colors.Gray1": "#FFF9F9F9",
+        "MahApps.Colors.Gray2": "#FF7F7F7F",
+        "MahApps.Colors.Gray3": "#FF9D9D9D",
+        "MahApps.Colors.Gray4": "#FFA59F93",
+        "MahApps.Colors.Gray5": "#FFB9B9B9",
+        "MahApps.Colors.Gray6": "#FFCCCCCC",
+        "MahApps.Colors.Gray7": "#FF7E7E7E",
+        "MahApps.Colors.Gray8": "#FF454545",
+        "MahApps.Colors.Gray9": "#5EC9C9C9",
+        "MahApps.Colors.Gray10": "#FF2F2F2F",
+        "MahApps.Colors.GrayNormal": "#FF7D7D7D",
+        "MahApps.Colors.GrayHover": "#FFAAAAAA",
+        "MahApps.Colors.Flyout": "#FF2B2B2B",
+        "MahApps.Colors.MenuShadow": "#FFFFFFFF",
+        "DisabledMenuItemForeground": "{StaticResource MahApps.Colors.Gray7}",
         "SliderValueDisabled": "#FF535353",
         "SliderTrackDisabled": "#FF383838",
         "SliderThumbDisabled": "#FF7E7E7E",
@@ -52,25 +52,25 @@
     {
       "Name": "Light",
       "Values": {
-        "BlackColor": "#FF000000",
-        "BlackColor20": "#51000000",
-        "WhiteColor": "#FFFFFFFF",
-        "WhiteColor20": "#51FFFFFF",
-        "Gray1": "#FF333333",
-        "Gray2": "#FF7F7F7F",
-        "Gray3": "#FF9D9D9D",
-        "Gray4": "#FFA59F93",
-        "Gray5": "#FFB9B9B9",
-        "Gray6": "#FFCCCCCC",
-        "Gray7": "#FFD8D8D9",
-        "Gray8": "#FFE0E0E0",
-        "Gray9": "#5EC9C9C9",
-        "Gray10": "#FFF7F7F7",
-        "GrayNormal": "#FFBEBEBE",
-        "GrayHover": "#FF333333",
-        "FlyoutColor": "#FFFFFFFF",
-        "MenuShadowColor": "#FF000000",
-        "DisabledMenuItemForeground": "{StaticResource Gray2}",
+        "MahApps.Colors.Black": "#FF000000",
+        "MahApps.Colors.Black20": "#51000000",
+        "MahApps.Colors.White": "#FFFFFFFF",
+        "MahApps.Colors.White20": "#51FFFFFF",
+        "MahApps.Colors.Gray1": "#FF333333",
+        "MahApps.Colors.Gray2": "#FF7F7F7F",
+        "MahApps.Colors.Gray3": "#FF9D9D9D",
+        "MahApps.Colors.Gray4": "#FFA59F93",
+        "MahApps.Colors.Gray5": "#FFB9B9B9",
+        "MahApps.Colors.Gray6": "#FFCCCCCC",
+        "MahApps.Colors.Gray7": "#FFD8D8D9",
+        "MahApps.Colors.Gray8": "#FFE0E0E0",
+        "MahApps.Colors.Gray9": "#5EC9C9C9",
+        "MahApps.Colors.Gray10": "#FFF7F7F7",
+        "MahApps.Colors.GrayNormal": "#FFBEBEBE",
+        "MahApps.Colors.GrayHover": "#FF333333",
+        "MahApps.Colors.Flyout": "#FFFFFFFF",
+        "MahApps.Colors.MenuShadow": "#FF000000",
+        "DisabledMenuItemForeground": "{StaticResource MahApps.Colors.Gray2}",
         "SliderValueDisabled": "#FFBABABA",
         "SliderTrackDisabled": "#FFDBDBDB",
         "SliderThumbDisabled": "#FFA0A0A0",
@@ -99,255 +99,255 @@
     {
       "Name": "Amber",
       "Values": {
-        "AccentBaseColor": "#FFF0A30A",
-        "AccentColor": "#CCF0A30A",
-        "AccentColor2": "#99F0A30A",
-        "AccentColor3": "#66F0A30A",
-        "AccentColor4": "#33F0A30A",
-        "HighlightColor": "#FFB17807"
+        "MahApps.Colors.AccentBase": "#FFF0A30A",
+        "MahApps.Colors.Accent": "#CCF0A30A",
+        "MahApps.Colors.Accent2": "#99F0A30A",
+        "MahApps.Colors.Accent3": "#66F0A30A",
+        "MahApps.Colors.Accent4": "#33F0A30A",
+        "MahApps.Colors.Highlight": "#FFB17807"
       }
     },
     {
       "Name": "Blue",
       "Values": {
-        "AccentBaseColor": "#FF119EDA",
-        "AccentColor": "#CC119EDA",
-        "AccentColor2": "#99119EDA",
-        "AccentColor3": "#66119EDA",
-        "AccentColor4": "#33119EDA",
-        "HighlightColor": "#FF086F9E"
+        "MahApps.Colors.AccentBase": "#FF119EDA",
+        "MahApps.Colors.Accent": "#CC119EDA",
+        "MahApps.Colors.Accent2": "#99119EDA",
+        "MahApps.Colors.Accent3": "#66119EDA",
+        "MahApps.Colors.Accent4": "#33119EDA",
+        "MahApps.Colors.Highlight": "#FF086F9E"
       }
     },
     {
       "Name": "Brown",
       "Values": {
-        "AccentBaseColor": "#FF825A2C",
-        "AccentColor": "#CC825A2C",
-        "AccentColor2": "#99825A2C",
-        "AccentColor3": "#66825A2C",
-        "AccentColor4": "#33825A2C",
-        "HighlightColor": "#FF604220"
+        "MahApps.Colors.AccentBase": "#FF825A2C",
+        "MahApps.Colors.Accent": "#CC825A2C",
+        "MahApps.Colors.Accent2": "#99825A2C",
+        "MahApps.Colors.Accent3": "#66825A2C",
+        "MahApps.Colors.Accent4": "#33825A2C",
+        "MahApps.Colors.Highlight": "#FF604220"
       }
     },
     {
       "Name": "Cobalt",
       "Values": {
-        "AccentBaseColor": "#FF0050EF",
-        "AccentColor": "#CC0050EF",
-        "AccentColor2": "#990050EF",
-        "AccentColor3": "#660050EF",
-        "AccentColor4": "#330050EF",
-        "HighlightColor": "#FF003BB0"
+        "MahApps.Colors.AccentBase": "#FF0050EF",
+        "MahApps.Colors.Accent": "#CC0050EF",
+        "MahApps.Colors.Accent2": "#990050EF",
+        "MahApps.Colors.Accent3": "#660050EF",
+        "MahApps.Colors.Accent4": "#330050EF",
+        "MahApps.Colors.Highlight": "#FF003BB0"
       }
     },
     {
       "Name": "Crimson",
       "Values": {
-        "AccentBaseColor": "#FFA20025",
-        "AccentColor": "#CCA20025",
-        "AccentColor2": "#99A20025",
-        "AccentColor3": "#66A20025",
-        "AccentColor4": "#33A20025",
-        "HighlightColor": "#FF77001B"
+        "MahApps.Colors.AccentBase": "#FFA20025",
+        "MahApps.Colors.Accent": "#CCA20025",
+        "MahApps.Colors.Accent2": "#99A20025",
+        "MahApps.Colors.Accent3": "#66A20025",
+        "MahApps.Colors.Accent4": "#33A20025",
+        "MahApps.Colors.Highlight": "#FF77001B"
       }
     },
     {
       "Name": "Cyan",
       "Values": {
-        "AccentBaseColor": "#FF1BA1E2",
-        "AccentColor": "#CC1BA1E2",
-        "AccentColor2": "#991BA1E2",
-        "AccentColor3": "#661BA1E2",
-        "AccentColor4": "#331BA1E2",
-        "HighlightColor": "#FF1377A7"
+        "MahApps.Colors.AccentBase": "#FF1BA1E2",
+        "MahApps.Colors.Accent": "#CC1BA1E2",
+        "MahApps.Colors.Accent2": "#991BA1E2",
+        "MahApps.Colors.Accent3": "#661BA1E2",
+        "MahApps.Colors.Accent4": "#331BA1E2",
+        "MahApps.Colors.Highlight": "#FF1377A7"
       }
     },
     {
       "Name": "Emerald",
       "Values": {
-        "AccentBaseColor": "#FF008A00",
-        "AccentColor": "#CC008A00",
-        "AccentColor2": "#99008A00",
-        "AccentColor3": "#66008A00",
-        "AccentColor4": "#33008A00",
-        "HighlightColor": "#FF006600"
+        "MahApps.Colors.AccentBase": "#FF008A00",
+        "MahApps.Colors.Accent": "#CC008A00",
+        "MahApps.Colors.Accent2": "#99008A00",
+        "MahApps.Colors.Accent3": "#66008A00",
+        "MahApps.Colors.Accent4": "#33008A00",
+        "MahApps.Colors.Highlight": "#FF006600"
       }
     },
     {
       "Name": "Green",
       "Values": {
-        "AccentBaseColor": "#FF60A917",
-        "AccentColor": "#CC60A917",
-        "AccentColor2": "#9960A917",
-        "AccentColor3": "#6660A917",
-        "AccentColor4": "#3360A917",
-        "HighlightColor": "#FF477D11"
+        "MahApps.Colors.AccentBase": "#FF60A917",
+        "MahApps.Colors.Accent": "#CC60A917",
+        "MahApps.Colors.Accent2": "#9960A917",
+        "MahApps.Colors.Accent3": "#6660A917",
+        "MahApps.Colors.Accent4": "#3360A917",
+        "MahApps.Colors.Highlight": "#FF477D11"
       }
     },
     {
       "Name": "Indigo",
       "Values": {
-        "AccentBaseColor": "#FF6A00FF",
-        "AccentColor": "#CC6A00FF",
-        "AccentColor2": "#996A00FF",
-        "AccentColor3": "#666A00FF",
-        "AccentColor4": "#336A00FF",
-        "HighlightColor": "#FF4E00BC"
+        "MahApps.Colors.AccentBase": "#FF6A00FF",
+        "MahApps.Colors.Accent": "#CC6A00FF",
+        "MahApps.Colors.Accent2": "#996A00FF",
+        "MahApps.Colors.Accent3": "#666A00FF",
+        "MahApps.Colors.Accent4": "#336A00FF",
+        "MahApps.Colors.Highlight": "#FF4E00BC"
       }
     },
     {
       "Name": "Lime",
       "Values": {
-        "AccentBaseColor": "#FFA4C400",
-        "AccentColor": "#CCA4C400",
-        "AccentColor2": "#99A4C400",
-        "AccentColor3": "#66A4C400",
-        "AccentColor4": "#33A4C400",
-        "HighlightColor": "#FF799100"
+        "MahApps.Colors.AccentBase": "#FFA4C400",
+        "MahApps.Colors.Accent": "#CCA4C400",
+        "MahApps.Colors.Accent2": "#99A4C400",
+        "MahApps.Colors.Accent3": "#66A4C400",
+        "MahApps.Colors.Accent4": "#33A4C400",
+        "MahApps.Colors.Highlight": "#FF799100"
       }
     },
     {
       "Name": "Magenta",
       "Values": {
-        "AccentBaseColor": "#FFD80073",
-        "AccentColor": "#CCD80073",
-        "AccentColor2": "#99D80073",
-        "AccentColor3": "#66D80073",
-        "AccentColor4": "#33D80073",
-        "HighlightColor": "#FF9F0055"
+        "MahApps.Colors.AccentBase": "#FFD80073",
+        "MahApps.Colors.Accent": "#CCD80073",
+        "MahApps.Colors.Accent2": "#99D80073",
+        "MahApps.Colors.Accent3": "#66D80073",
+        "MahApps.Colors.Accent4": "#33D80073",
+        "MahApps.Colors.Highlight": "#FF9F0055"
       }
     },
     {
       "Name": "Mauve",
       "Values": {
-        "AccentBaseColor": "#FF76608A",
-        "AccentColor": "#CC76608A",
-        "AccentColor2": "#9976608A",
-        "AccentColor3": "#6676608A",
-        "AccentColor4": "#3376608A",
-        "HighlightColor": "#FF574766"
+        "MahApps.Colors.AccentBase": "#FF76608A",
+        "MahApps.Colors.Accent": "#CC76608A",
+        "MahApps.Colors.Accent2": "#9976608A",
+        "MahApps.Colors.Accent3": "#6676608A",
+        "MahApps.Colors.Accent4": "#3376608A",
+        "MahApps.Colors.Highlight": "#FF574766"
       }
     },
     {
       "Name": "Olive",
       "Values": {
-        "AccentBaseColor": "#FF6D8764",
-        "AccentColor": "#CC6D8764",
-        "AccentColor2": "#996D8764",
-        "AccentColor3": "#666D8764",
-        "AccentColor4": "#336D8764",
-        "HighlightColor": "#FF50634A"
+        "MahApps.Colors.AccentBase": "#FF6D8764",
+        "MahApps.Colors.Accent": "#CC6D8764",
+        "MahApps.Colors.Accent2": "#996D8764",
+        "MahApps.Colors.Accent3": "#666D8764",
+        "MahApps.Colors.Accent4": "#336D8764",
+        "MahApps.Colors.Highlight": "#FF50634A"
       }
     },
     {
       "Name": "Orange",
       "Values": {
-        "AccentBaseColor": "#FFFA6800",
-        "AccentColor": "#CCFA6800",
-        "AccentColor2": "#99FA6800",
-        "AccentColor3": "#66FA6800",
-        "AccentColor4": "#33FA6800",
-        "HighlightColor": "#FFB94C00"
+        "MahApps.Colors.AccentBase": "#FFFA6800",
+        "MahApps.Colors.Accent": "#CCFA6800",
+        "MahApps.Colors.Accent2": "#99FA6800",
+        "MahApps.Colors.Accent3": "#66FA6800",
+        "MahApps.Colors.Accent4": "#33FA6800",
+        "MahApps.Colors.Highlight": "#FFB94C00"
       }
     },
     {
       "Name": "Pink",
       "Values": {
-        "AccentBaseColor": "#FFF472D0",
-        "AccentColor": "#CCF472D0",
-        "AccentColor2": "#99F472D0",
-        "AccentColor3": "#66F472D0",
-        "AccentColor4": "#33F472D0",
-        "HighlightColor": "#FFB45499"
+        "MahApps.Colors.AccentBase": "#FFF472D0",
+        "MahApps.Colors.Accent": "#CCF472D0",
+        "MahApps.Colors.Accent2": "#99F472D0",
+        "MahApps.Colors.Accent3": "#66F472D0",
+        "MahApps.Colors.Accent4": "#33F472D0",
+        "MahApps.Colors.Highlight": "#FFB45499"
       }
     },
     {
       "Name": "Purple",
       "Values": {
-        "AccentBaseColor": "#FF6459DF",
-        "AccentColor": "#CC6459DF",
-        "AccentColor2": "#996459DF",
-        "AccentColor3": "#666459DF",
-        "AccentColor4": "#336459DF",
-        "HighlightColor": "#FF5133AB"
+        "MahApps.Colors.AccentBase": "#FF6459DF",
+        "MahApps.Colors.Accent": "#CC6459DF",
+        "MahApps.Colors.Accent2": "#996459DF",
+        "MahApps.Colors.Accent3": "#666459DF",
+        "MahApps.Colors.Accent4": "#336459DF",
+        "MahApps.Colors.Highlight": "#FF5133AB"
       }
     },
     {
       "Name": "Red",
       "Values": {
-        "AccentBaseColor": "#FFE51400",
-        "AccentColor": "#CCE51400",
-        "AccentColor2": "#99E51400",
-        "AccentColor3": "#66E51400",
-        "AccentColor4": "#33E51400",
-        "HighlightColor": "#FFA90E00"
+        "MahApps.Colors.AccentBase": "#FFE51400",
+        "MahApps.Colors.Accent": "#CCE51400",
+        "MahApps.Colors.Accent2": "#99E51400",
+        "MahApps.Colors.Accent3": "#66E51400",
+        "MahApps.Colors.Accent4": "#33E51400",
+        "MahApps.Colors.Highlight": "#FFA90E00"
       }
     },
     {
       "Name": "Sienna",
       "Values": {
-        "AccentBaseColor": "#FFA0522D",
-        "AccentColor": "#CCA0522D",
-        "AccentColor2": "#99A0522D",
-        "AccentColor3": "#66A0522D",
-        "AccentColor4": "#33A0522D",
-        "HighlightColor": "#FF763C21"
+        "MahApps.Colors.AccentBase": "#FFA0522D",
+        "MahApps.Colors.Accent": "#CCA0522D",
+        "MahApps.Colors.Accent2": "#99A0522D",
+        "MahApps.Colors.Accent3": "#66A0522D",
+        "MahApps.Colors.Accent4": "#33A0522D",
+        "MahApps.Colors.Highlight": "#FF763C21"
       }
     },
     {
       "Name": "Steel",
       "Values": {
-        "AccentBaseColor": "#FF647687",
-        "AccentColor": "#CC647687",
-        "AccentColor2": "#99647687",
-        "AccentColor3": "#66647687",
-        "AccentColor4": "#33647687",
-        "HighlightColor": "#FF4A5763"
+        "MahApps.Colors.AccentBase": "#FF647687",
+        "MahApps.Colors.Accent": "#CC647687",
+        "MahApps.Colors.Accent2": "#99647687",
+        "MahApps.Colors.Accent3": "#66647687",
+        "MahApps.Colors.Accent4": "#33647687",
+        "MahApps.Colors.Highlight": "#FF4A5763"
       }
     },
     {
       "Name": "Taupe",
       "Values": {
-        "AccentBaseColor": "#FF87794E",
-        "AccentColor": "#CC87794E",
-        "AccentColor2": "#9987794E",
-        "AccentColor3": "#6687794E",
-        "AccentColor4": "#3387794E",
-        "HighlightColor": "#FF635939"
+        "MahApps.Colors.AccentBase": "#FF87794E",
+        "MahApps.Colors.Accent": "#CC87794E",
+        "MahApps.Colors.Accent2": "#9987794E",
+        "MahApps.Colors.Accent3": "#6687794E",
+        "MahApps.Colors.Accent4": "#3387794E",
+        "MahApps.Colors.Highlight": "#FF635939"
       }
     },
     {
       "Name": "Teal",
       "Values": {
-        "AccentBaseColor": "#FF00ABA9",
-        "AccentColor": "#CC00ABA9",
-        "AccentColor2": "#9900ABA9",
-        "AccentColor3": "#6600ABA9",
-        "AccentColor4": "#3300ABA9",
-        "HighlightColor": "#FF007E7D"
+        "MahApps.Colors.AccentBase": "#FF00ABA9",
+        "MahApps.Colors.Accent": "#CC00ABA9",
+        "MahApps.Colors.Accent2": "#9900ABA9",
+        "MahApps.Colors.Accent3": "#6600ABA9",
+        "MahApps.Colors.Accent4": "#3300ABA9",
+        "MahApps.Colors.Highlight": "#FF007E7D"
       }
     },
     {
       "Name": "Violet",
       "Values": {
-        "AccentBaseColor": "#FFAA00FF",
-        "AccentColor": "#CCAA00FF",
-        "AccentColor2": "#99AA00FF",
-        "AccentColor3": "#66AA00FF",
-        "AccentColor4": "#33AA00FF",
-        "HighlightColor": "#FF7D00BC"
+        "MahApps.Colors.AccentBase": "#FFAA00FF",
+        "MahApps.Colors.Accent": "#CCAA00FF",
+        "MahApps.Colors.Accent2": "#99AA00FF",
+        "MahApps.Colors.Accent3": "#66AA00FF",
+        "MahApps.Colors.Accent4": "#33AA00FF",
+        "MahApps.Colors.Highlight": "#FF7D00BC"
       }
     },
     {
       "Name": "Yellow",
       "Values": {
-        "AccentBaseColor": "#FFFEDE06",
-        "AccentColor": "#CCFEDE06",
-        "AccentColor2": "#99FEDE06",
-        "AccentColor3": "#66FEDE06",
-        "AccentColor4": "#33FEDE06",
-        "HighlightColor": "#FFBBA404",
-        "IdealForegroundColor": "Black"
+        "MahApps.Colors.AccentBase": "#FFFEDE06",
+        "MahApps.Colors.Accent": "#CCFEDE06",
+        "MahApps.Colors.Accent2": "#99FEDE06",
+        "MahApps.Colors.Accent3": "#66FEDE06",
+        "MahApps.Colors.Accent4": "#33FEDE06",
+        "MahApps.Colors.Highlight": "#FFBBA404",
+        "MahApps.Colors.IdealForeground": "Black"
       }
     }
   ]

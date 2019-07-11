@@ -108,7 +108,7 @@
                                                       Direction="315"
                                                       Opacity="0.3"
                                                       ShadowDepth="2"
-                                                      Color="{DynamicResource MenuShadowColor}" />
+                                                      Color="{DynamicResource MahApps.Colors.MenuShadow}" />
                                 </Setter.Value>
                             </Setter>
                             <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
@@ -363,7 +363,7 @@
                                           Direction="315"
                                           Opacity="0.3"
                                           ShadowDepth="2"
-                                          Color="{DynamicResource MenuShadowColor}" />
+                                          Color="{DynamicResource MahApps.Colors.MenuShadow}" />
                     </Setter.Value>
                 </Setter>
                 <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
@@ -526,7 +526,7 @@
                                           Direction="315"
                                           Opacity="0.3"
                                           ShadowDepth="2"
-                                          Color="{DynamicResource MenuShadowColor}" />
+                                          Color="{DynamicResource MahApps.Colors.MenuShadow}" />
                     </Setter.Value>
                 </Setter>
                 <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />

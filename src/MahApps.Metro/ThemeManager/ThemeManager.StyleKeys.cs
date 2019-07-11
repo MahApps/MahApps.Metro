@@ -11,8 +11,8 @@ namespace MahApps.Metro
         // Note: add more checks if these keys aren't sufficient
         private static readonly List<string> styleKeys = new List<string>(new[]
                                                                           {
-                                                                              "HighlightColor",
-                                                                              "AccentBaseColor",
+                                                                              "MahApps.Colors.Highlight",
+                                                                              "MahApps.Colors.AccentBase",
                                                                               "HighlightBrush",
                                                                               "AccentBaseColorBrush"
                                                                           });

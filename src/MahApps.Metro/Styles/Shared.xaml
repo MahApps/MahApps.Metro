@@ -11,7 +11,7 @@
                       BlurRadius="10"
                       Opacity="0"
                       ShadowDepth="0"
-                      Color="{DynamicResource BlackColor}"
+                      Color="{DynamicResource MahApps.Colors.Black}"
                       po:Freeze="True" />
 
     <Storyboard x:Key="WaitingForDataStoryboard" po:Freeze="True">

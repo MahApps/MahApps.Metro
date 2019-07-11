@@ -329,13 +329,13 @@ namespace MahApps.Metro.Controls
 
         private void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
         {
-            var fromColorKey = accent ? "HighlightColor" : "FlyoutColor";
+            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
 
             resources.BeginInit();
 
             var fromColor = (Color)resources[fromColorKey];
-            resources["WhiteColor"] = fromColor;
-            resources["FlyoutColor"] = fromColor;
+            resources["MahApps.Colors.White"] = fromColor;
+            resources["MahApps.Colors.Flyout"] = fromColor;
 
             var newBrush = new SolidColorBrush(fromColor);
             newBrush.Freeze();
@@ -349,25 +349,25 @@ namespace MahApps.Metro.Controls
 
             if (accent)
             {
-                fromColor = (Color)resources["IdealForegroundColor"];
+                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["FlyoutForegroundBrush"] = newBrush;
                 resources["TextBrush"] = newBrush;
                 resources["LabelTextBrush"] = newBrush;
 
-                if (resources.Contains("AccentBaseColor"))
+                if (resources.Contains("MahApps.Colors.AccentBase"))
                 {
-                    fromColor = (Color)resources["AccentBaseColor"];
+                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
                 }
                 else
                 {
-                    var accentColor = (Color)resources["AccentColor"];
+                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
                     fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
                 }
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
-                resources["HighlightColor"] = fromColor;
+                resources["MahApps.Colors.Highlight"] = fromColor;
                 resources["HighlightBrush"] = newBrush;
             }
 
@@ -451,7 +451,7 @@ namespace MahApps.Metro.Controls
                             }
                         }
                         else
-                        {                            
+                        {
                             flyout.StopAutoCloseTimer();
                             if (flyout.hideStoryboard != null)
                             {
@@ -518,7 +518,7 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseIntervalChangedAction = () => { 
+            Action autoCloseIntervalChangedAction = () => {
                 if (e.NewValue != e.OldValue)
                 {
                     flyout.InitializeAutoCloseTimer();
@@ -580,7 +580,7 @@ namespace MahApps.Metro.Controls
             {
                 // first focus itself
                 this.Focus();
-                
+
                 if (this.FocusedElement != null)
                 {
                     this.FocusedElement.Focus();

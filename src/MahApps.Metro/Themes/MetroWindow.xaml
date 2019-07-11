@@ -561,7 +561,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FlyoutOverlayBrush">
             <Setter.Value>
-                <SolidColorBrush Opacity="0.5" Color="{DynamicResource BlackColor}" />
+                <SolidColorBrush Opacity="0.5" Color="{DynamicResource MahApps.Colors.Black}" />
             </Setter.Value>
         </Setter>
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
