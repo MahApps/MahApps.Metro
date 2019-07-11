@@ -300,6 +300,11 @@ namespace MetroDemo
                     return "No time given!";
                 }
 
+                if (columnName == nameof(IsToggleSwitchVisible) && !IsToggleSwitchVisible)
+                {
+                    return "There is something hidden... \nActivate me to show it up.";
+                }
+
                 return null;
             }
         }
@@ -455,5 +460,7 @@ namespace MetroDemo
         public bool IsScaleDownLargerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.ScaleDownLargerFrame;
 
         public bool IsNoScaleSmallerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame;
+
+        public bool IsToggleSwitchVisible { get; set; }
     }
 }
