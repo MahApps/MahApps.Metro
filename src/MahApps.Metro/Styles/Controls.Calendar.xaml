@@ -563,7 +563,7 @@
     <Style x:Key="MahApps.Metro.Styles.MetroCalendar"
            BasedOn="{StaticResource MahApps.Metro.Styles.BaseMetroCalendar}"
            TargetType="{x:Type Calendar}">
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
     </Style>
 

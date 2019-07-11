@@ -283,7 +283,7 @@
         <Setter Property="ButtonStyle" Value="{DynamicResource ButtonSplitStyle}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonSplitFocusVisual}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
