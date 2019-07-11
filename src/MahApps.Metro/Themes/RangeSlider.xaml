@@ -32,7 +32,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="MahApps.Metro.Styles.RangeSlider.HorizontalTemplate" TargetType="{x:Type Controls:RangeSlider}">
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Horizontal" TargetType="{x:Type Controls:RangeSlider}">
         <Grid x:Name="PART_Container"
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -152,7 +152,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Metro.Styles.RangeSlider.VerticalTemplate" TargetType="{x:Type Controls:RangeSlider}">
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Vertical" TargetType="{x:Type Controls:RangeSlider}">
         <Grid x:Name="PART_Container"
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -288,11 +288,11 @@
         <Setter Property="Controls:SliderHelper.TrackValueFillPressedBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Metro.Styles.RangeSlider.HorizontalTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Horizontal}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{StaticResource MahApps.Metro.Styles.RangeSlider.VerticalTemplate}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Vertical}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -329,7 +329,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="MahApps.Metro.Styles.RangeSlider.HorizontalTemplate.Win10" TargetType="{x:Type Controls:RangeSlider}">
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Horizontal.Win10" TargetType="{x:Type Controls:RangeSlider}">
         <Grid x:Name="PART_Container"
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -464,7 +464,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Metro.Styles.RangeSlider.VerticalTemplate.Win10" TargetType="{x:Type Controls:RangeSlider}">
+    <ControlTemplate x:Key="MahApps.Templates.RangeSlider.Vertical.Win10" TargetType="{x:Type Controls:RangeSlider}">
         <Grid x:Name="PART_Container"
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -616,11 +616,11 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsMoveToPointEnabled" Value="True" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Metro.Styles.RangeSlider.HorizontalTemplate.Win10}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Horizontal.Win10}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{StaticResource MahApps.Metro.Styles.RangeSlider.VerticalTemplate.Win10}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.RangeSlider.Vertical.Win10}" />
             </Trigger>
         </Style.Triggers>
     </Style>

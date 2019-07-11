@@ -179,7 +179,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
     <Style x:Key="MetroDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">

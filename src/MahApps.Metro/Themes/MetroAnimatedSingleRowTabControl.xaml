@@ -9,7 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="HorizontalMetroAnimatedSingleRowTabControl" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowDefinition0" Height="Auto" />
@@ -70,7 +70,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalMetroAnimatedSingleRowTabControl" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="ColumnDefinition0" Width="*" />
@@ -133,19 +133,19 @@
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
-        <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Top">
-                <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Bottom">
-                <Setter Property="Template" Value="{StaticResource HorizontalMetroAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Left">
-                <Setter Property="Template" Value="{StaticResource VerticalMetroAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Right">
-                <Setter Property="Template" Value="{StaticResource VerticalMetroAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical}" />
             </Trigger>
         </Style.Triggers>
     </Style>

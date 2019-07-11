@@ -65,7 +65,7 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
-    <ControlTemplate x:Key="FlyoutTemplate" TargetType="{x:Type Controls:Flyout}">
+    <ControlTemplate x:Key="MahApps.Templates.Flyout" TargetType="{x:Type Controls:Flyout}">
         <Border x:Name="PART_Root"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -231,7 +231,7 @@
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
-        <Setter Property="Template" Value="{StaticResource FlyoutTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Flyout}" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Visibility" Value="Hidden" />
         <Style.Triggers>

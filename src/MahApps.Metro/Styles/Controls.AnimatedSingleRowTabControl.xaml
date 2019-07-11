@@ -46,7 +46,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Horizontal" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -66,7 +66,7 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Vertical" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -86,27 +86,27 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="ScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollViewer" TargetType="{x:Type ScrollViewer}">
         <Grid>
             <ScrollBar x:Name="PART_HorizontalScrollBar"
                        Height="Auto"
-                       AutomationProperties.AutomationId="HorizontalScrollBar"
+                       AutomationProperties.AutomationId="MahApps.Templates.ScrollBar.Horizontal"
                        Cursor="Arrow"
                        Maximum="{TemplateBinding ScrollableWidth}"
                        Minimum="0"
                        Orientation="Horizontal"
-                       Template="{DynamicResource HorizontalScrollBarTemplate}"
+                       Template="{DynamicResource MahApps.Templates.ScrollBar.Horizontal}"
                        ViewportSize="{TemplateBinding ViewportWidth}"
                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             <ScrollBar x:Name="PART_VerticalScrollBar"
                        Width="Auto"
-                       AutomationProperties.AutomationId="VerticalScrollBar"
+                       AutomationProperties.AutomationId="MahApps.Templates.ScrollBar.Vertical"
                        Cursor="Arrow"
                        Maximum="{TemplateBinding ScrollableHeight}"
                        Minimum="0"
                        Orientation="Vertical"
-                       Template="{DynamicResource VerticalScrollBarTemplate}"
+                       Template="{DynamicResource MahApps.Templates.ScrollBar.Vertical}"
                        ViewportSize="{TemplateBinding ViewportHeight}"
                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                        Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -150,7 +150,7 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="HorizontalAnimatedSingleRowTabControl" TargetType="{x:Type TabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.TabControl.HorizontalAnimatedSingleRow" TargetType="{x:Type TabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowDefinition0" Height="Auto" />
@@ -161,7 +161,7 @@
                           Panel.ZIndex="1"
                           Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                           HorizontalScrollBarVisibility="Auto"
-                          Template="{StaticResource ScrollViewerTemplate}"
+                          Template="{StaticResource MahApps.Templates.ScrollViewer}"
                           VerticalScrollBarVisibility="Disabled">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
@@ -212,7 +212,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalAnimatedSingleRowTabControl" TargetType="{x:Type TabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.TabControl.VerticalAnimatedSingleRow" TargetType="{x:Type TabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="ColumnDefinition0" Width="*" />
@@ -222,7 +222,7 @@
                           Grid.Column="1"
                           Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Disabled"
-                          Template="{StaticResource ScrollViewerTemplate}"
+                          Template="{StaticResource MahApps.Templates.ScrollViewer}"
                           VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="HeaderPanelGrid">
                     <Controls:Underline x:Name="Underline"
@@ -276,19 +276,19 @@
     <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
         <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
-        <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.HorizontalAnimatedSingleRow}" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Top">
-                <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.HorizontalAnimatedSingleRow}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Bottom">
-                <Setter Property="Template" Value="{StaticResource HorizontalAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.HorizontalAnimatedSingleRow}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Left">
-                <Setter Property="Template" Value="{StaticResource VerticalAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.VerticalAnimatedSingleRow}" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Right">
-                <Setter Property="Template" Value="{StaticResource VerticalAnimatedSingleRowTabControl}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.VerticalAnimatedSingleRow}" />
             </Trigger>
 
         </Style.Triggers>

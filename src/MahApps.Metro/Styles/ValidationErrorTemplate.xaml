@@ -10,7 +10,7 @@
         <Setter Property="VerticalOffset" Value="0" />
     </Style>
 
-    <ControlTemplate x:Key="ValidationErrorTemplate">
+    <ControlTemplate x:Key="MahApps.Templates.ValidationError">
         <AdornedElementPlaceholder x:Name="placeholder">
             <Grid SnapsToDevicePixels="True">
                 <Rectangle x:Name="PopupTargetElement"

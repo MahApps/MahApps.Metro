@@ -13,7 +13,7 @@
     <converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
-    <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type mah:MetroWindow}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroWindow" TargetType="{x:Type mah:MetroWindow}">
         <Grid Background="{TemplateBinding Background}"
               LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
               RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
@@ -267,7 +267,7 @@
 
     </ControlTemplate>
 
-    <ControlTemplate x:Key="CenterWindowTemplateKey" TargetType="{x:Type mah:MetroWindow}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroWindow.Center" TargetType="{x:Type mah:MetroWindow}">
         <Grid Background="{TemplateBinding Background}"
               LayoutTransform="{Binding LayoutTransform, RelativeSource={RelativeSource TemplatedParent}}"
               RenderTransform="{Binding RenderTransform, RelativeSource={RelativeSource TemplatedParent}}"
@@ -572,7 +572,7 @@
         <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />
         <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template" Value="{StaticResource WindowTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroWindow}" />
         <Setter Property="TextElement.FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="TitleTemplate">
@@ -604,7 +604,7 @@
                 </Setter>
             </DataTrigger>
             <Trigger Property="TitleAlignment" Value="Center">
-                <Setter Property="Template" Value="{StaticResource CenterWindowTemplateKey}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroWindow.Center}" />
             </Trigger>
         </Style.Triggers>
     </Style>

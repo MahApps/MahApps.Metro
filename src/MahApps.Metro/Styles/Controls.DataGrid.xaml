@@ -231,7 +231,7 @@
                                 <Control Grid.Column="1"
                                          Focusable="False"
                                          SnapsToDevicePixels="False"
-                                         Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                         Template="{Binding MahApps.Templates.ValidationError, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
                                          Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
                             </Grid>
                         </Border>
@@ -358,7 +358,7 @@
         </Style.Triggers>
     </Style>
 
-    <ControlTemplate x:Key="DefaultRowValidationErrorTemplate">
+    <ControlTemplate x:Key="DefaultRowMahApps.Templates.ValidationError">
         <Grid Margin="2 0 2 0"
               VerticalAlignment="Center"
               DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors).CurrentItem}"

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <ControlTemplate x:Key="SplitButtonHorizontal" TargetType="{x:Type Controls:SplitButton}">
+    <ControlTemplate x:Key="MahApps.Templates.SplitButton.Horizontal" TargetType="{x:Type Controls:SplitButton}">
         <Grid UseLayoutRounding="True">
             <Border x:Name="PART_Border"
                     Background="Transparent"
@@ -130,7 +130,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="SplitButtonVertical" TargetType="{x:Type Controls:SplitButton}">
+    <ControlTemplate x:Key="MahApps.Templates.SplitButton.Vertical" TargetType="{x:Type Controls:SplitButton}">
         <Grid UseLayoutRounding="True">
             <Border x:Name="PART_Border"
                     Background="Transparent"
@@ -291,11 +291,11 @@
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template" Value="{StaticResource SplitButtonHorizontal}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Horizontal}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{StaticResource SplitButtonVertical}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Vertical}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />

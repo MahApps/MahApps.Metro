@@ -428,7 +428,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
     <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type Controls:DateTimePicker}">

@@ -50,7 +50,7 @@
                          Duration="0:0:0.2" />
     </Storyboard>
 
-    <ControlTemplate x:Key="MetroDialogTemplate" TargetType="{x:Type Dialogs:BaseMetroDialog}">
+    <ControlTemplate x:Key="MahApps.Templates.BaseMetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
         <Grid Background="{TemplateBinding Background}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -121,7 +121,7 @@
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
         <Setter Property="Opacity" Value="0" />
         <Setter Property="Padding" Value="0 10 0 0" />
-        <Setter Property="Template" Value="{StaticResource MetroDialogTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.BaseMetroDialog}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <ControlTemplate x:Key="WindowCommandsButtonTemplate" TargetType="{x:Type Button}">
+    <ControlTemplate x:Key="MahApps.Templates.Button.WindowCommands" TargetType="{x:Type Button}">
         <Grid Background="{TemplateBinding Background}">
             <Controls:ContentControlEx x:Name="PART_ContentControlEx"
                                        Padding="{TemplateBinding Padding}"
@@ -24,7 +24,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="WindowCommandsToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
+    <ControlTemplate x:Key="MahApps.Templates.ToggleButton.WindowCommands" TargetType="{x:Type ToggleButton}">
         <Grid Background="{TemplateBinding Background}">
             <Controls:ContentControlEx x:Name="PART_ContentControlEx"
                                        Padding="{TemplateBinding Padding}"
@@ -102,7 +102,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="LightWindowCommandsTemplate" TargetType="Controls:WindowCommands">
+    <ControlTemplate x:Key="MahApps.Templates.WindowCommands.Light" TargetType="Controls:WindowCommands">
         <DockPanel>
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
@@ -146,27 +146,27 @@
         <ControlTemplate.Resources>
             <ResourceDictionary>
                 <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                 </Style>
                 <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource WindowCommandsControlStyle}"
                        TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                 </Style>
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
                        BasedOn="{StaticResource WindowCommandsControlStyle}"
                        TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
             </ResourceDictionary>
         </ControlTemplate.Resources>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="DarkWindowCommandsTemplate" TargetType="Controls:WindowCommands">
+    <ControlTemplate x:Key="MahApps.Templates.WindowCommands.Dark" TargetType="Controls:WindowCommands">
         <DockPanel>
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
@@ -210,7 +210,7 @@
         <ControlTemplate.Resources>
             <ResourceDictionary>
                 <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -218,7 +218,7 @@
                     </Style.Triggers>
                 </Style>
                 <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -229,7 +229,7 @@
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource WindowCommandsControlStyle}"
                        TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -239,7 +239,7 @@
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
                        BasedOn="{StaticResource WindowCommandsControlStyle}"
                        TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -290,13 +290,13 @@
     <Style x:Key="MahApps.Metro.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="DarkTemplate" Value="{StaticResource DarkWindowCommandsTemplate}" />
+        <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Dark}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="LightTemplate" Value="{StaticResource LightWindowCommandsTemplate}" />
-        <Setter Property="Template" Value="{StaticResource LightWindowCommandsTemplate}" />
+        <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindow.ShowTitleBar}" Value="True">

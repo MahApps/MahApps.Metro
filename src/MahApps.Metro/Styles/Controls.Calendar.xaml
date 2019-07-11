@@ -171,7 +171,7 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.Resources>
-                                    <ControlTemplate x:Key="PreviousButtonTemplate" TargetType="{x:Type Button}">
+                                    <ControlTemplate x:Key="MahApps.Templates.Button.Previous" TargetType="{x:Type Button}">
                                         <Grid Cursor="Hand">
                                             <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
                                                        Opacity="0.1"
@@ -209,7 +209,7 @@
                                             </VisualStateManager.VisualStateGroups>
                                         </Grid>
                                     </ControlTemplate>
-                                    <ControlTemplate x:Key="NextButtonTemplate" TargetType="{x:Type Button}">
+                                    <ControlTemplate x:Key="MahApps.Templates.Button.Next" TargetType="{x:Type Button}">
                                         <Grid Cursor="Hand">
                                             <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
                                                        Opacity="0.1"
@@ -247,7 +247,7 @@
                                             </VisualStateManager.VisualStateGroups>
                                         </Grid>
                                     </ControlTemplate>
-                                    <ControlTemplate x:Key="HeaderButtonTemplate" TargetType="{x:Type Button}">
+                                    <ControlTemplate x:Key="MahApps.Templates.Button.Header" TargetType="{x:Type Button}">
                                         <Grid Cursor="Hand">
                                             <ContentPresenter x:Name="buttonContent"
                                                               Margin="1 4 1 9"
@@ -281,13 +281,13 @@
                                     </ControlTemplate>
 
                                     <Style x:Key="PreviousCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource PreviousButtonTemplate}" />
+                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Previous}" />
                                     </Style>
                                     <Style x:Key="NextCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource NextButtonTemplate}" />
+                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Next}" />
                                     </Style>
                                     <Style x:Key="HeaderCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource HeaderButtonTemplate}" />
+                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Header}" />
                                     </Style>
                                 </Grid.Resources>
 

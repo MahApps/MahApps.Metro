@@ -84,7 +84,7 @@
     </Style>
 
     <!--  HorizontalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Horizontal" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate"
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -170,7 +170,7 @@
     </ControlTemplate>
 
     <!--  VerticalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Vertical" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate"
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -275,12 +275,12 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
-        <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTemplate}" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal}" />
         <Setter Property="Value" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTemplate}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Vertical}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -335,7 +335,7 @@
     </Style>
 
     <!--  HorizontalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Horizontal.Win10" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate"
               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -422,7 +422,7 @@
     </ControlTemplate>
 
     <!--  VerticalSlider  -->
-    <ControlTemplate x:Key="MahApps.Metro.Styles.Slider.VerticalTemplate.Win10" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Vertical.Win10" TargetType="{x:Type Slider}">
         <Grid x:Name="HorizontalTemplate"
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               Background="{TemplateBinding Background}">
@@ -529,12 +529,12 @@
         <Setter Property="IsMoveToPointEnabled" Value="True" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
-        <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTemplate.Win10}" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal.Win10}" />
         <Setter Property="Value" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTemplate.Win10}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Vertical.Win10}" />
             </Trigger>
         </Style.Triggers>
     </Style>

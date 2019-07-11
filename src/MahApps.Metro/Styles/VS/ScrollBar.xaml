@@ -77,7 +77,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Horizontal" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="18" />
@@ -106,7 +106,7 @@
         </Grid>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Vertical" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="18" />
@@ -143,12 +143,12 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.ScrollBar.Vertical}" />
                 <Setter Property="Width" Value="18" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Height" Value="18" />
-                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.ScrollBar.Horizontal}" />
                 <Setter Property="Width" Value="Auto" />
             </Trigger>
         </Style.Triggers>

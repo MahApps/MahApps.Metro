@@ -19,7 +19,7 @@
     <Style x:Key="MetroScrollBarRepeatButtonSmallStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Height" Value="{DynamicResource VerticalScrollBarRepeatButtonHeight}" />
+        <Setter Property="Height" Value="{DynamicResource MahApps.Templates.ScrollBar.VerticalRepeatButtonHeight}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Interval" Value="50" />
         <Setter Property="IsTabStop" Value="False" />
@@ -61,7 +61,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Width" Value="{DynamicResource HorizontalScrollBarRepeatButtonWidth}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Templates.ScrollBar.HorizontalRepeatButtonWidth}" />
     </Style>
 
     <Style x:Key="MetroScrollBarRepeatButtonLargeStyle" TargetType="{x:Type RepeatButton}">
@@ -124,7 +124,7 @@
     </Style>
 
     <!--  fugging Scrollbars  -->
-    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Horizontal" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="HorizontalRoot" Height="{TemplateBinding Height}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -166,7 +166,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Vertical" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="VerticalRoot" Width="{TemplateBinding Width}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -218,12 +218,12 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Height" Value="{DynamicResource MetroScrollBarHeight}" />
-                <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Horizontal}" />
                 <Setter Property="Width" Value="Auto" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Vertical}" />
                 <Setter Property="Width" Value="{DynamicResource MetroScrollBarWidth}" />
             </Trigger>
         </Style.Triggers>
@@ -255,7 +255,6 @@
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Row="0"
                                    Grid.Column="1"
-                                   AutomationProperties.AutomationId="VerticalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableHeight}"
                                    Minimum="0"
@@ -265,7 +264,6 @@
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Grid.Row="1"
                                    Grid.Column="0"
-                                   AutomationProperties.AutomationId="HorizontalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableWidth}"
                                    Minimum="0"

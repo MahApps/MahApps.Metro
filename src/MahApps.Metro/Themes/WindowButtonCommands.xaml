@@ -5,7 +5,7 @@
 
     <!--  WindowButtonCommands control templates  -->
 
-    <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Focusable="False"
@@ -99,7 +99,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Metro.Templates.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Width="46"
@@ -233,7 +233,7 @@
         <Setter Property="LightCloseButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMaxButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMinButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="Template" Value="{StaticResource WindowButtonCommandsTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
@@ -247,7 +247,7 @@
            TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Dark.Win10}" />
         <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Light.Win10}" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </Style>
 
 </ResourceDictionary>

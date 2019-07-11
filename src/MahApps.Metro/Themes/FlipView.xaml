@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <ControlTemplate x:Key="FlipViewTemplate" TargetType="{x:Type Controls:FlipView}">
+    <ControlTemplate x:Key="MahApps.Templates.FlipView" TargetType="{x:Type Controls:FlipView}">
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -229,6 +229,6 @@
         <Setter Property="MinHeight" Value="100" />
         <Setter Property="MinWidth" Value="100" />
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True" />
-        <Setter Property="Template" Value="{StaticResource FlipViewTemplate}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.FlipView}" />
     </Style>
 </ResourceDictionary>

@@ -172,7 +172,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="HamburgerMenuItemFocusVisualTemplate">
+    <ControlTemplate x:Key="MahApps.Templates.HamburgerMenuItem.FocusVisual">
         <Rectangle SnapsToDevicePixels="True"
                    Stroke="Black"
                    StrokeThickness="2"
@@ -337,7 +337,7 @@
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
     </Style>
 
-    <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="{x:Type Controls:HamburgerMenu}">
+    <ControlTemplate x:Key="MahApps.Templates.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>
             <Controls:SplitView x:Name="MainSplitView"
                                 CompactPaneLength="{TemplateBinding CompactPaneLength}"

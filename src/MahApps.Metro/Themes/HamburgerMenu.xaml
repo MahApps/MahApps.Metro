@@ -32,7 +32,7 @@
         <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
         <Setter Property="PaneMargin" Value="0 0 0 8" />
         <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource HamburgerMenuSeparatorItemStyle}" />
-        <Setter Property="Template" Value="{DynamicResource HamburgerMenuTemplate}" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.HamburgerMenu}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 </ResourceDictionary>
