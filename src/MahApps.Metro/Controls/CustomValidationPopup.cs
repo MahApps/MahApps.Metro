@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(true));
 
         /// <summary>
-        /// Gets or sets if the popup can be closed by left mouse button down.
+        /// Gets or sets whether if the popup can be closed by left mouse button down.
         /// </summary>
         public bool CloseOnMouseLeftButtonDown
         {
@@ -61,6 +61,18 @@ namespace MahApps.Metro.Controls
             if (this.CloseOnMouseLeftButtonDown)
             {
                 this.SetCurrentValue(IsOpenProperty, false);
+            }
+            else
+            {
+                var adornedElement = this.GetAdornedElement();
+                if (adornedElement != null && ValidationHelper.GetCloseOnMouseLeftButtonDown(adornedElement))
+                {
+                    this.SetCurrentValue(IsOpenProperty, false);
+                }
+                else
+                {
+                    e.Handled = true;
+                }
             }
         }
 
@@ -132,19 +144,24 @@ namespace MahApps.Metro.Controls
             this.hostWindow = null;
         }
 
+        private UIElement GetAdornedElement()
+        {
+            var placeholder = this.PlacementTarget is FrameworkElement target ? target.DataContext as AdornedElementPlaceholder : null;
+            return placeholder?.AdornedElement;
+        }
+
         private void hostWindow_StateChanged(object sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
-                var target = this.PlacementTarget as FrameworkElement;
-                var holder = target != null ? target.DataContext as AdornedElementPlaceholder : null;
-                if (holder != null && holder.AdornedElement != null)
+                var adornedElement = this.GetAdornedElement();
+                if (adornedElement != null)
                 {
                     this.PopupAnimation = PopupAnimation.None;
                     this.IsOpen = false;
-                    var errorTemplate = holder.AdornedElement.GetValue(Validation.ErrorTemplateProperty);
-                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, null);
-                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
+                    var errorTemplate = adornedElement.GetValue(Validation.ErrorTemplateProperty);
+                    adornedElement.SetValue(Validation.ErrorTemplateProperty, null);
+                    adornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
                 }
             }
         }
