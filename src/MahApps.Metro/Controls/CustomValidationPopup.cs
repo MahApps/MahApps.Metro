@@ -27,12 +27,12 @@ namespace MahApps.Metro.Controls
                                           new PropertyMetadata(true));
 
         /// <summary>
-        /// Gets/sets if the popup can be closed by left mouse button down.
+        /// Gets or sets if the popup can be closed by left mouse button down.
         /// </summary>
         public bool CloseOnMouseLeftButtonDown
         {
-            get { return (bool)GetValue(CloseOnMouseLeftButtonDownProperty); }
-            set { SetValue(CloseOnMouseLeftButtonDownProperty, value); }
+            get { return (bool)this.GetValue(CloseOnMouseLeftButtonDownProperty); }
+            set { this.SetValue(CloseOnMouseLeftButtonDownProperty, value); }
         }
 
         public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
@@ -41,10 +41,13 @@ namespace MahApps.Metro.Controls
                                                   typeof(CustomValidationPopup),
                                                   new PropertyMetadata(false));
 
+        /// <summary>
+        /// Gets or sets whether the validation error text will be shown when hovering the validation triangle.
+        /// </summary>
         public bool ShowValidationErrorOnMouseOver
         {
-            get { return (bool)GetValue(ShowValidationErrorOnMouseOverProperty); }
-            set { SetValue(ShowValidationErrorOnMouseOverProperty, value); }
+            get { return (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty); }
+            set { this.SetValue(ShowValidationErrorOnMouseOverProperty, value); }
         }
 
         public CustomValidationPopup()
@@ -55,9 +58,9 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (CloseOnMouseLeftButtonDown)
+            if (this.CloseOnMouseLeftButtonDown)
             {
-                this.SetCurrentValue(Popup.IsOpenProperty, false);
+                this.SetCurrentValue(IsOpenProperty, false);
             }
         }
 
