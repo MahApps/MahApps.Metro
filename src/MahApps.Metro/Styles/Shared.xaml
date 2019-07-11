@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <ExponentialEase x:Key="ExpoEaseInOut"
+    <ExponentialEase x:Key="MahApps.ExponentialEase.InOut"
                      EasingMode="EaseInOut"
                      Exponent="2" />
 
-    <DropShadowEffect x:Key="WaitingForDataEffect"
+    <DropShadowEffect x:Key="MahApps.DropShadowEffect.WaitingForData"
                       x:Shared="False"
                       BlurRadius="10"
                       Opacity="0"
@@ -14,7 +14,7 @@
                       Color="{DynamicResource MahApps.Colors.Black}"
                       po:Freeze="True" />
 
-    <Storyboard x:Key="WaitingForDataStoryboard" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.WaitingForData" po:Freeze="True">
         <DoubleAnimation AutoReverse="True"
                          RepeatBehavior="Forever"
                          Timeline.DesiredFrameRate="30"
@@ -25,8 +25,8 @@
                          Duration="00:00:02" />
     </Storyboard>
 
-    <Storyboard x:Key="HideFloatingMessageStoryboard" po:Freeze="True">
-        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+    <Storyboard x:Key="MahApps.Storyboard.HideFloatingMessage" po:Freeze="True">
+        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.InOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="Opacity"
                          From="1"
@@ -37,11 +37,11 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="ShowFloatingMessageStoryboard" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ShowFloatingMessage" po:Freeze="True">
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_FloatingMessageContainer" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation EasingFunction="{StaticResource ExpoEaseInOut}"
+        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.InOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="Opacity"
                          From="0"
