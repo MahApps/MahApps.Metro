@@ -14,7 +14,7 @@
     <Converters:ClockDegreeConverter x:Key="HourDegreeConverter" TotalParts="12" />
     <Converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
 
-    <DataTemplate x:Key="FiveMinuteIndicator">
+    <DataTemplate x:Key="MahApps.Templates.DateTimePicker.FiveMinuteIndicator">
         <StackPanel Height="57"
                     Orientation="Horizontal"
                     RenderTransformOrigin=".5,1">
@@ -28,7 +28,7 @@
         </StackPanel>
     </DataTemplate>
 
-    <DataTemplate x:Key="MinuteIndicator">
+    <DataTemplate x:Key="MahApps.Templates.DateTimePicker.MinuteIndicator">
         <StackPanel Height="57"
                     Orientation="Horizontal"
                     RenderTransformOrigin=".5,1">
@@ -262,14 +262,14 @@
                                                     BorderThickness="2"
                                                     CornerRadius="75">
                                                 <Canvas HorizontalAlignment="Center">
-                                                    <ItemsControl ItemTemplate="{StaticResource FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
+                                                    <ItemsControl ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                     </ItemsControl>
-                                                    <ItemsControl ItemTemplate="{StaticResource MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
+                                                    <ItemsControl ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />

@@ -241,7 +241,7 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="ClosableTabItemTemplate">
+    <DataTemplate x:Key="MahApps.Templates.TabItem.Closable">
         <DockPanel>
             <ContentPresenter VerticalAlignment="Center" Content="{Binding DisplayName}">
                 <ContentPresenter.Resources>
@@ -255,10 +255,10 @@
     </DataTemplate>
 
     <!--  This template explains how to render the 'Workspace' content area in the main window.  -->
-    <DataTemplate x:Key="WorkspacesTemplate">
+    <DataTemplate x:Key="MahApps.Templates.TabControl.Workspaces">
         <TabControl Margin="0"
                     IsSynchronizedWithCurrentItem="True"
-                    ItemTemplate="{StaticResource ClosableTabItemTemplate}"
+                    ItemTemplate="{StaticResource MahApps.Templates.TabItem.Closable}"
                     ItemsSource="{Binding}"
                     Style="{DynamicResource StandardTabControl}" />
     </DataTemplate>
