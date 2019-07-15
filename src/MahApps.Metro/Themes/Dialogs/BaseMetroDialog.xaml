@@ -10,18 +10,27 @@
     <Style x:Key="MahApps.Metro.Styles.Dialogs.Button"
            BasedOn="{StaticResource SquareButtonStyle}"
            TargetType="{x:Type Button}">
+        <Setter Property="MinHeight" Value="35" />
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.Dialogs.AccentButton"
            BasedOn="{StaticResource AccentedSquareButtonStyle}"
            TargetType="{x:Type ButtonBase}">
+        <Setter Property="MinHeight" Value="35" />
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
     <Style x:Key="MahApps.Metro.Styles.Dialogs.AccentHighlightButton"
            BasedOn="{StaticResource HighlightedSquareButtonStyle}"
            TargetType="{x:Type ButtonBase}">
+        <Setter Property="MinHeight" Value="35" />
+        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 

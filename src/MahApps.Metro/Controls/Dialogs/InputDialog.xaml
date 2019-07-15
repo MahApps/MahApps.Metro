@@ -26,18 +26,14 @@
                  TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="2"
-                    Height="85"
+                    MinHeight="85"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="PART_AffirmativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="0 0 5 0"
                     Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Metro.Styles.Dialogs.AccentButton}" />
             <Button x:Name="PART_NegativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="5 0 5 0"
                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
