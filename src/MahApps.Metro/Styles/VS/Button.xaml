@@ -36,7 +36,7 @@
 
     <Style x:Key="MahApps.Styles.Button.VisualStudioWindowLink" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MahApps.Styles.Button.VisualStudioWindowLink.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -48,7 +48,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MahApps.Styles.Button.VisualStudioWindowLink.ForegroundHighlighted}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.ForegroundHighlighted}" />
             </Trigger>
         </Style.Triggers>
     </Style>

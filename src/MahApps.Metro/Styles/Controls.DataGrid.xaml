@@ -8,7 +8,7 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro"
+    <Style x:Key="MahApps.Styles.CheckBox.MetroDataGrid"
            BasedOn="{StaticResource MahApps.Styles.CheckBox.Metro}"
            TargetType="CheckBox">
         <Setter Property="HorizontalAlignment" Value="Center" />

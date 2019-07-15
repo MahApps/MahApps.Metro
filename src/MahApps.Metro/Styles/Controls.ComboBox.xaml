@@ -198,7 +198,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.MahApps.Styles.ComboBox.MetroDropDown" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.MetroComboBoxDropDown" TargetType="{x:Type ToggleButton}">
         <Setter Property="ClickMode" Value="Press" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
@@ -351,7 +351,7 @@
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           KeyboardNavigation.IsTabStop="False"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MahApps.Styles.ComboBox.MetroDropDown}" />
+                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MetroComboBoxDropDown}" />
 
                             <TextBox x:Name="PART_EditableTextBox"
                                      Grid.Row="1"

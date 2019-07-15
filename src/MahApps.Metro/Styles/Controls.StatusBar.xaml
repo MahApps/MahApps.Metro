@@ -29,7 +29,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Separator.MahApps.Styles.StatusBar.Metro" TargetType="{x:Type Separator}">
+    <Style x:Key="MahApps.Styles.Separator.MetroStatusBar" TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="MinWidth" Value="1" />

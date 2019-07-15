@@ -37,7 +37,7 @@
                         <TextBlock Name="search"
                                    Margin="5 0 0 0"
                                    VerticalAlignment="Center"
-                                   Foreground="{DynamicResource MahApps.Brushes.MahApps.Styles.TextBox.VisualStudioSearch.Foreground}"
+                                   Foreground="{DynamicResource MahApps.Brushes.SearchTextBox.Foreground}"
                                    Text="Search ..."
                                    Visibility="Hidden" />
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />

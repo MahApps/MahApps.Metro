@@ -170,12 +170,12 @@
                   SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
-                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
-                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MetroDataGrid}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MetroDataGrid}"
                                         Header="Row Selected" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
-                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MetroDataGrid}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MetroDataGrid}"
                                         Header="Album Selected" />
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />

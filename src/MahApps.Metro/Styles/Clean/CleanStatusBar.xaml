@@ -12,7 +12,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Separator.Clean"
-           BasedOn="{StaticResource MahApps.Styles.Separator.MahApps.Styles.StatusBar.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.Separator.MetroStatusBar}"
            TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
     </Style>
