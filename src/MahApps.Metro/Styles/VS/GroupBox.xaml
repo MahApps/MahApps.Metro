@@ -6,7 +6,7 @@
     <Thickness x:Key="GroupBoxHeaderThemePadding">2</Thickness>
     <System:Double x:Key="MahApps.Sizes.GroupBox.HeaderThemeFont">16</System:Double>
 
-    <Style x:Key="StandardGroupBox" TargetType="{x:Type GroupBox}">
+    <Style x:Key="MahApps.Styles.GroupBox.Standard" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />

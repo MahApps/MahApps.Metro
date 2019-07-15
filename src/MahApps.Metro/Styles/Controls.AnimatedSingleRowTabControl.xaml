@@ -7,7 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="ScrollBarRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBar" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
@@ -28,7 +28,7 @@
                                         Content="{TemplateBinding Content}"
                                         Foreground="{TemplateBinding Foreground}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        Style="{DynamicResource PathIconContentControlStyle}" />
+                                        Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -57,12 +57,12 @@
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                           Command="ScrollBar.PageLeftCommand"
                           Content="M6 2L0 8l6 6z"
-                          Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar}" />
             <RepeatButton Grid.Column="2"
                           Width="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"
                           Command="ScrollBar.PageRightCommand"
                           Content="M0 14l6-6-6-6z"
-                          Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar}" />
         </Grid>
     </ControlTemplate>
 
@@ -77,12 +77,12 @@
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                           Command="ScrollBar.PageUpCommand"
                           Content="M12 11L6 5l-6 6z"
-                          Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar}" />
             <RepeatButton Grid.Row="2"
                           Height="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"
                           Command="ScrollBar.PageDownCommand"
                           Content="M0 5l6 6 6-6z"
-                          Style="{DynamicResource ScrollBarRepeatButtonStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBar}" />
         </Grid>
     </ControlTemplate>
 
@@ -273,7 +273,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.Metro}" TargetType="{x:Type TabControl}">
         <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.TabControl.HorizontalAnimatedSingleRow}" />

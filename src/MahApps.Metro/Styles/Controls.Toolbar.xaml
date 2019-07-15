@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Style for toolbar buttons  -->
-    <Style x:Key="ToolBarButtonBaseStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.ToolBar" TargetType="{x:Type ButtonBase}">
         <Style.Resources>
             <!--  Disabled all images placed inside a button - most common scenario  -->
             <Style TargetType="Image">
@@ -60,29 +60,29 @@
 
     <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type Button}" />
     <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type ToggleButton}" />
     <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type CheckBox}" />
     <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type RadioButton}" />
 
     <!--  Style for text box inside a toolbar if needed  -->
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
-           BasedOn="{StaticResource MetroTextBox}"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}"
            TargetType="{x:Type TextBox}" />
 
     <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
-           BasedOn="{StaticResource MetroComboBox}"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.Metro}"
            TargetType="{x:Type ComboBox}" />
 
     <!--  Style the toolbar thumb  -->
-    <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.ToolBar" TargetType="{x:Type Thumb}">
         <Setter Property="Cursor" Value="SizeAll" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
@@ -121,7 +121,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
@@ -189,7 +189,7 @@
                                           DockPanel.Dock="Right"
                                           IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           IsEnabled="{TemplateBinding HasOverflowItems}"
-                                          Style="{StaticResource ToolBarOverflowButtonStyle}">
+                                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}">
                                 <Popup x:Name="OverflowPopup"
                                        AllowsTransparency="true"
                                        Focusable="false"
@@ -214,7 +214,7 @@
 
                             <Thumb x:Name="ToolBarThumb"
                                    Width="10"
-                                   Style="{StaticResource ToolBarThumbStyle}" />
+                                   Style="{StaticResource MahApps.Styles.Thumb.ToolBar}" />
 
                             <ToolBarPanel x:Name="PART_ToolBarPanel"
                                           Margin="0 1 2 2"

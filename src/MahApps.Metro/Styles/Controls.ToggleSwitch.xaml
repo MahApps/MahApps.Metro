@@ -11,8 +11,8 @@
 
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" TakeThicknessSide="Left" />
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
+    <Style x:Key="MahApps.Styles.ToggleSwitchButton.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton.Metro}"
            TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -135,8 +135,8 @@
         <Setter Property="Width" Value="44" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitch.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
+    <Style x:Key="MahApps.Styles.ToggleSwitch.Win10"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Metro}"
            TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentDirection" Value="RightToLeft" />
         <Setter Property="ContentPadding" Value="0 0 10 0" />
@@ -149,7 +149,7 @@
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorBrush.Win10}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Metro.Brushes.ToggleSwitchButton.ThumbIndicatorDisabledBrush.Win10}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
-        <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton.Win10}" />
+        <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Styles.ToggleSwitchButton.Win10}" />
         <Style.Triggers>
             <Trigger Property="ContentDirection" Value="RightToLeft">
                 <Setter Property="ContentPadding" Value="10 0 0 0" />

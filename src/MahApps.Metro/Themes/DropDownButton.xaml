@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="ButtonDropDownFocusVisual">
+    <Style x:Key="MahApps.Styles.MahApps.Styles.FocusVisualStyle.ButtonDropDown">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -23,14 +23,14 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ButtonStyle" Value="{DynamicResource ButtonDropDownStyle}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonDropDownFocusVisual}" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.MahApps.Styles.FocusVisualStyle.ButtonDropDown}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="MenuStyle" Value="{DynamicResource MetroContextMenu}" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.Metro}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -74,7 +74,7 @@
                                                     Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{TemplateBinding ArrowBrush}"
-                                                    Style="{DynamicResource PathIconContentControlStyle}"
+                                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}"
                                                     Visibility="{TemplateBinding ArrowVisibility}" />
                                     <StackPanel x:Name="PART_ContentOrientation"
                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

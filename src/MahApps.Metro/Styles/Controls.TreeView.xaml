@@ -9,7 +9,7 @@
 
     <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
 
-    <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpandCollapse" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
@@ -66,7 +66,7 @@
 
     <Converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
-    <Style x:Key="MetroTreeViewItem" TargetType="{x:Type TreeViewItem}">
+    <Style x:Key="MahApps.Styles.TreeViewItem.Metro" TargetType="{x:Type TreeViewItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
@@ -103,7 +103,7 @@
                                 <ToggleButton x:Name="Expander"
                                               ClickMode="Press"
                                               IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
-                                              Style="{StaticResource ExpandCollapseToggleStyle}" />
+                                              Style="{StaticResource MahApps.Styles.ToggleButton.ExpandCollapse}" />
                                 <ContentPresenter x:Name="PART_Header"
                                                   Grid.Column="1"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -182,7 +182,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MetroTreeView" TargetType="{x:Type TreeView}">
+    <Style x:Key="MahApps.Styles.TreeView.Metro" TargetType="{x:Type TreeView}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <!--  default to 0  -->
@@ -229,8 +229,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="VirtualisedMetroTreeView"
-           BasedOn="{StaticResource MetroTreeView}"
+    <Style x:Key="MahApps.Styles.TreeView.MetroVirtualized"
+           BasedOn="{StaticResource MahApps.Styles.TreeView.Metro}"
            TargetType="{x:Type TreeView}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />

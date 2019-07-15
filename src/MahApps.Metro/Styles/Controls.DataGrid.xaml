@@ -8,8 +8,8 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="MetroDataGridCheckBox"
-           BasedOn="{StaticResource MetroCheckBox}"
+    <Style x:Key="MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox.Metro}"
            TargetType="CheckBox">
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0" />
@@ -26,7 +26,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle"
+    <Style x:Key="MahApps.Styles.NumericUpDown.DataGridColumn"
            BasedOn="{StaticResource {x:Type Controls:NumericUpDown}}"
            TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="Background" Value="Transparent" />
@@ -38,8 +38,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle"
-           BasedOn="{StaticResource MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle}"
+    <Style x:Key="MahApps.Styles.NumericUpDown.DataGridColumnEditing"
+           BasedOn="{StaticResource MahApps.Styles.NumericUpDown.DataGridColumn}"
            TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="HideUpDownButtons" Value="False" />
@@ -73,7 +73,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.MetroColumnHeaderGripper" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -91,7 +91,7 @@
         <Setter Property="Width" Value="8" />
     </Style>
 
-    <Style x:Key="MetroRowHeaderGripperStyle" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.MetroRowHeaderGripper" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeNS" />
         <Setter Property="Height" Value="6" />
@@ -109,7 +109,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
+    <Style x:Key="MahApps.Styles.DataGridColumnHeader.Metro" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
@@ -164,12 +164,12 @@
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left"
                                Background="Transparent"
-                               Style="{StaticResource MetroColumnHeaderGripperStyle}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.MetroColumnHeaderGripper}" />
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
                                HorizontalAlignment="Right"
-                               Style="{StaticResource MetroColumnHeaderGripperStyle}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.MetroColumnHeaderGripper}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="SortDirection" Value="Ascending">
@@ -203,7 +203,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MetroDataGridRowHeader" TargetType="{x:Type DataGridRowHeader}">
+    <Style x:Key="MahApps.Styles.DataGridRowHeader.Metro" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderThickness" Value="0 0 1 0" />
@@ -238,10 +238,10 @@
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalAlignment="Top"
                                Background="Transparent"
-                               Style="{StaticResource MetroRowHeaderGripperStyle}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.MetroRowHeaderGripper}" />
                         <Thumb x:Name="PART_BottomHeaderGripper"
                                VerticalAlignment="Bottom"
-                               Style="{StaticResource MetroRowHeaderGripperStyle}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.MetroRowHeaderGripper}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -255,7 +255,7 @@
     </Style>
 
     <!--  ____________________ Metro CellStyle ____________________  -->
-    <Style x:Key="MetroDataGridCell" TargetType="{x:Type DataGridCell}">
+    <Style x:Key="MahApps.Styles.DataGridCell.Metro" TargetType="{x:Type DataGridCell}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Controls:DataGridCellHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
@@ -380,7 +380,7 @@
 
     <!--  ____________________ Metro RowStyle ____________________  -->
     <!--  Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style!  -->
-    <Style x:Key="MetroDataGridRow" TargetType="{x:Type DataGridRow}">
+    <Style x:Key="MahApps.Styles.DataGridRow.Metro" TargetType="{x:Type DataGridRow}">
         <Setter Property="Controls:DataGridRowHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
@@ -443,12 +443,12 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MetroDataGrid" TargetType="{x:Type DataGrid}">
+    <Style x:Key="MahApps.Styles.DataGrid.Metro" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0 0 0 0" />
-        <Setter Property="CellStyle" Value="{StaticResource MetroDataGridCell}" />
-        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MetroDataGridColumnHeader}" />
+        <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell.Metro}" />
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader.Metro}" />
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="Separator">
@@ -470,8 +470,8 @@
         <Setter Property="HeadersVisibility" Value="Column" />
         <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="MinRowHeight" Value="25" />
-        <Setter Property="RowHeaderStyle" Value="{StaticResource MetroDataGridRowHeader}" />
-        <Setter Property="RowStyle" Value="{StaticResource MetroDataGridRow}" />
+        <Setter Property="RowHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridRowHeader.Metro}" />
+        <Setter Property="RowStyle" Value="{StaticResource MahApps.Styles.DataGridRow.Metro}" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
@@ -550,21 +550,21 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="AzureDataGridColumnHeader"
-           BasedOn="{StaticResource MetroDataGridColumnHeader}"
+    <Style x:Key="MahApps.Styles.DataGridColumnHeader.Azure"
+           BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader.Metro}"
            TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Margin" Value="0 0 0 10" />
     </Style>
 
-    <Style x:Key="AzureDataGridRowHeader"
-           BasedOn="{StaticResource MetroDataGridRowHeader}"
+    <Style x:Key="MahApps.Styles.DataGridRowHeader.Azure"
+           BasedOn="{StaticResource MahApps.Styles.DataGridRowHeader.Metro}"
            TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
     <!--  ____________________ Azure CellStyle ____________________  -->
-    <Style x:Key="AzureDataGridCell"
-           BasedOn="{StaticResource MetroDataGridCell}"
+    <Style x:Key="MahApps.Styles.DataGridCell.Azure"
+           BasedOn="{StaticResource MahApps.Styles.DataGridCell.Metro}"
            TargetType="{x:Type DataGridCell}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
@@ -600,25 +600,25 @@
     </Style>
 
     <!--  ____________________ Azure RowStyle ____________________  -->
-    <Style x:Key="AzureDataGridRow"
-           BasedOn="{StaticResource MetroDataGridRow}"
+    <Style x:Key="MahApps.Styles.DataGridRow.Azure"
+           BasedOn="{StaticResource MahApps.Styles.DataGridRow.Metro}"
            TargetType="{x:Type DataGridRow}" />
-    <Style x:Key="AzureDataGridRowWithMargin"
-           BasedOn="{StaticResource AzureDataGridRow}"
+    <Style x:Key="MahApps.Styles.DataGridRow.AzureWithMargin"
+           BasedOn="{StaticResource MahApps.Styles.DataGridRow.Azure}"
            TargetType="{x:Type DataGridRow}">
         <Setter Property="Margin" Value="0 0 0 1" />
     </Style>
 
-    <Style x:Key="AzureDataGrid"
-           BasedOn="{StaticResource MetroDataGrid}"
+    <Style x:Key="MahApps.Styles.DataGrid.Azure"
+           BasedOn="{StaticResource MahApps.Styles.DataGrid.Metro}"
            TargetType="{x:Type DataGrid}">
-        <Setter Property="CellStyle" Value="{StaticResource AzureDataGridCell}" />
-        <Setter Property="ColumnHeaderStyle" Value="{StaticResource AzureDataGridColumnHeader}" />
-        <Setter Property="RowHeaderStyle" Value="{StaticResource AzureDataGridRowHeader}" />
-        <Setter Property="RowStyle" Value="{StaticResource AzureDataGridRow}" />
+        <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell.Azure}" />
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader.Azure}" />
+        <Setter Property="RowHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridRowHeader.Azure}" />
+        <Setter Property="RowStyle" Value="{StaticResource MahApps.Styles.DataGridRow.Azure}" />
         <Style.Triggers>
             <Trigger Property="GridLinesVisibility" Value="None">
-                <Setter Property="RowStyle" Value="{StaticResource AzureDataGridRowWithMargin}" />
+                <Setter Property="RowStyle" Value="{StaticResource MahApps.Styles.DataGridRow.AzureWithMargin}" />
             </Trigger>
         </Style.Triggers>
     </Style>

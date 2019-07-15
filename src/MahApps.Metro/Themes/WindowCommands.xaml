@@ -49,7 +49,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="WindowCommandsControlStyle" TargetType="{x:Type Control}">
+    <Style x:Key="MahApps.Styles.Control.WindowCommands" TargetType="{x:Type Control}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -62,7 +62,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -109,7 +109,7 @@
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
                           IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
-                          Style="{StaticResource ToolBarOverflowButtonStyle}"
+                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
                           Visibility="Collapsed">
                 <Popup x:Name="OverflowPopup"
                        AllowsTransparency="true"
@@ -145,20 +145,20 @@
 
         <ControlTemplate.Resources>
             <ResourceDictionary>
-                <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type Button}">
+                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type Button}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                 </Style>
-                <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type ToggleButton}">
+                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-                       BasedOn="{StaticResource WindowCommandsControlStyle}"
+                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
                        TargetType="{x:Type Button}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                 </Style>
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-                       BasedOn="{StaticResource WindowCommandsControlStyle}"
+                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
                        TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
@@ -173,7 +173,7 @@
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
                           IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
-                          Style="{StaticResource ToolBarOverflowButtonStyle}"
+                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
                           Visibility="Collapsed">
                 <Popup x:Name="OverflowPopup"
                        AllowsTransparency="true"
@@ -209,7 +209,7 @@
 
         <ControlTemplate.Resources>
             <ResourceDictionary>
-                <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type Button}">
+                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type Button}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
@@ -217,7 +217,7 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-                <Style BasedOn="{StaticResource WindowCommandsControlStyle}" TargetType="{x:Type ToggleButton}">
+                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed" Value="True">
@@ -227,7 +227,7 @@
                 </Style>
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-                       BasedOn="{StaticResource WindowCommandsControlStyle}"
+                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
                        TargetType="{x:Type Button}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
                     <Style.Triggers>
@@ -237,7 +237,7 @@
                     </Style.Triggers>
                 </Style>
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-                       BasedOn="{StaticResource WindowCommandsControlStyle}"
+                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
                        TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                     <Style.Triggers>
@@ -250,7 +250,7 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowCommandsItem" TargetType="{x:Type Controls:WindowCommandsItem}">
+    <Style x:Key="MahApps.Styles.WindowCommandsItem.Metro" TargetType="{x:Type Controls:WindowCommandsItem}">
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.Foreground, Mode=OneWay}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MinHeight" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.ParentWindow.TitleBarHeight, Mode=OneWay}" />
@@ -287,7 +287,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
+    <Style x:Key="MahApps.Styles.WindowCommands.Metro" TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Dark}" />

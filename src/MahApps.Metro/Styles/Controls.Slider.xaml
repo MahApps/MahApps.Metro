@@ -8,7 +8,7 @@
     <System:Double x:Key="MahApps.Sizes.Slider.VerticalThumbWidth">16</System:Double>
     <System:Double x:Key="MahApps.Sizes.Slider.VerticalThumbHeight">10</System:Double>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.Thumb" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.Slider" TargetType="Thumb">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -25,7 +25,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.HorizontalTrack" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderHorizontalTrack" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
@@ -41,8 +41,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.HorizontalTrackValue"
-           BasedOn="{StaticResource MahApps.Metro.Styles.Slider.HorizontalTrack}"
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderHorizontalTrackValue"
+           BasedOn="{StaticResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -55,8 +55,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.VerticalTrack"
-           BasedOn="{StaticResource MahApps.Metro.Styles.Slider.HorizontalTrack}"
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderVerticalTrack"
+           BasedOn="{StaticResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -69,8 +69,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.VerticalTrackValue"
-           BasedOn="{StaticResource MahApps.Metro.Styles.Slider.VerticalTrack}"
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderVerticalTrackValue"
+           BasedOn="{StaticResource MahApps.Styles.RepeatButton.SliderVerticalTrack}"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -110,13 +110,13 @@
                     <RepeatButton x:Name="HorizontalTrackDecrease"
                                   Command="{x:Static Slider.DecreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrackValue}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrackValue}" />
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalTrackIncrease"
                                   Command="{x:Static Slider.IncreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}" />
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="HorizontalThumb"
@@ -125,7 +125,7 @@
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          BorderThickness="1 0"
                                          IsTabStop="True"
-                                         Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -196,13 +196,13 @@
                     <RepeatButton x:Name="VerticalTrackDecrease"
                                   Command="{x:Static Slider.DecreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrackValue}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrackValue}" />
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalTrackIncrease"
                                   Command="{x:Static Slider.IncreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack}" />
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="VerticalThumb"
@@ -211,7 +211,7 @@
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          BorderThickness="0 1"
                                          IsTabStop="True"
-                                         Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -256,7 +256,7 @@
     </ControlTemplate>
 
     <!--  Slider Style  -->
-    <Style x:Key="MahApps.Metro.Styles.Slider" TargetType="{x:Type Slider}">
+    <Style x:Key="MahApps.Styles.Slider.Metro" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
@@ -287,7 +287,7 @@
 
     <!--  Windows 10  -->
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.Thumb.Win10" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.Slider.Win10" TargetType="Thumb">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -304,7 +304,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.HorizontalTrack.Win10" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
@@ -320,8 +320,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.Slider.VerticalTrack.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.Slider.HorizontalTrack.Win10}"
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10"
+           BasedOn="{StaticResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -363,13 +363,13 @@
                     <RepeatButton x:Name="HorizontalTrackDecrease"
                                   Command="{x:Static Slider.DecreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack.Win10}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalTrackIncrease"
                                   Command="{x:Static Slider.IncreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack.Win10}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="HorizontalThumb"
@@ -377,7 +377,7 @@
                                          Height="24"
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          IsTabStop="True"
-                                         Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -450,13 +450,13 @@
                     <RepeatButton x:Name="VerticalTrackDecrease"
                                   Command="{x:Static Slider.DecreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack.Win10}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
                 </Track.DecreaseRepeatButton>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalTrackIncrease"
                                   Command="{x:Static Slider.IncreaseLarge}"
                                   Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                                  Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack.Win10}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
                 </Track.IncreaseRepeatButton>
                 <Track.Thumb>
                     <Controls:MetroThumb x:Name="VerticalThumb"
@@ -464,7 +464,7 @@
                                          Height="8"
                                          Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                          IsTabStop="True"
-                                         Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
                 </Track.Thumb>
             </Track>
         </Grid>
@@ -509,7 +509,7 @@
     </ControlTemplate>
 
     <!--  Slider Win10 Style  -->
-    <Style x:Key="MahApps.Metro.Styles.Slider.Win10" TargetType="{x:Type Slider}">
+    <Style x:Key="MahApps.Styles.Slider.Metro.Win10" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />

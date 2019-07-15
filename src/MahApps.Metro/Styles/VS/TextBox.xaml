@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="StandardTextBox" TargetType="{x:Type TextBox}">
+    <Style x:Key="MahApps.Styles.TextBox.VisualStudioStandard" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.Background}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
@@ -27,8 +27,8 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="SearchTextBox"
-           BasedOn="{StaticResource StandardTextBox}"
+    <Style x:Key="MahApps.Styles.TextBox.VisualStudioSearch"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudioStandard}"
            TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>
@@ -37,7 +37,7 @@
                         <TextBlock Name="search"
                                    Margin="5 0 0 0"
                                    VerticalAlignment="Center"
-                                   Foreground="{DynamicResource MahApps.Brushes.SearchTextBox.Foreground}"
+                                   Foreground="{DynamicResource MahApps.Brushes.MahApps.Styles.TextBox.VisualStudioSearch.Foreground}"
                                    Text="Search ..."
                                    Visibility="Hidden" />
                         <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />

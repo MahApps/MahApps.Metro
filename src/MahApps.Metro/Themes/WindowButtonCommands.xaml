@@ -222,17 +222,17 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Metro" TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
-        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
-        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
+        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="LightMinButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
+        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
+        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
@@ -242,11 +242,11 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}"
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Win10"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Metro}"
            TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Dark.Win10}" />
-        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Light.Win10}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindowClose.Dark.Win10}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindowClose.Light.Win10}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </Style>
 

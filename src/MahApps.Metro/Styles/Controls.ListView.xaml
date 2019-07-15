@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MetroGridViewScrollViewerStyle"
+    <Style x:Key="MahApps.Styles.ScrollViewer.MetroGridView"
            BasedOn="{StaticResource {x:Static GridView.GridViewScrollViewerStyleKey}}"
            TargetType="{x:Type ScrollViewer}">
         <Setter Property="Focusable" Value="False" />
@@ -93,7 +93,7 @@
         It also (setting True) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose
         virtualisation http://serialseb.blogspot.com/2007/09/wpf-tips-7-smooth-scrolling.html
     -->
-    <Style x:Key="MetroListView" TargetType="{x:Type ListView}">
+    <Style x:Key="MahApps.Styles.ListView.Metro" TargetType="{x:Type ListView}">
         <Setter Property="AlternationCount" Value="2" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
@@ -116,7 +116,7 @@
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      Style="{DynamicResource MetroGridViewScrollViewerStyle}"
+                                      Style="{DynamicResource MahApps.Styles.ScrollViewer.MetroGridView}"
                                       VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
@@ -139,8 +139,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="VirtualisedMetroListView"
-           BasedOn="{StaticResource MetroListView}"
+    <Style x:Key="MahApps.Styles.ListView.MetroVirtualized"
+           BasedOn="{StaticResource MahApps.Styles.ListView.Metro}"
            TargetType="{x:Type ListView}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
@@ -149,7 +149,7 @@
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
     </Style>
 
-    <Style x:Key="MetroListViewItem" TargetType="{x:Type ListViewItem}">
+    <Style x:Key="MahApps.Styles.ListViewItem.Metro" TargetType="{x:Type ListViewItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -245,7 +245,7 @@
     </Style>
 
     <!--  Gives the impression that items cannot be selected on the ListView  -->
-    <Style x:Key="NonSelectableListViewContainerStyle" TargetType="{x:Type ListViewItem}">
+    <Style x:Key="MahApps.Styles.ListViewItem.NonSelectable" TargetType="{x:Type ListViewItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -282,7 +282,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+    <Style x:Key="MahApps.Styles.Thumb.GridViewColumnHeaderGripper" TargetType="Thumb">
         <Setter Property="Background" Value="LightGray" />
         <Setter Property="Template">
             <Setter.Value>
@@ -300,7 +300,7 @@
         <Setter Property="Width" Value="18" />
     </Style>
 
-    <Style x:Key="MetroGridViewColumnHeader" TargetType="GridViewColumnHeader">
+    <Style x:Key="MahApps.Styles.GridViewColumnHeader.Metro" TargetType="GridViewColumnHeader">
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -329,7 +329,7 @@
                         <Thumb x:Name="PART_HeaderGripper"
                                Margin="0 0 -9 0"
                                HorizontalAlignment="Right"
-                               Style="{StaticResource GridViewColumnHeaderGripper}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.GridViewColumnHeaderGripper}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">

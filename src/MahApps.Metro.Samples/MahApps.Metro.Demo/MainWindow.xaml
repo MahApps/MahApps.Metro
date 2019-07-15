@@ -47,7 +47,7 @@
                      Fill="{Binding ColorBrush, Mode=OneWay}" />
 
             <Style x:Key="AppThemeMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -55,7 +55,7 @@
             </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -82,7 +82,7 @@
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog"
                             Content="Close Me!"
-                            Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                            Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
             </Dialog:CustomDialog>
@@ -91,7 +91,7 @@
     </Window.Resources>
 
     <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -320,7 +320,7 @@
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
-            <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.MahApps.Styles.StatusBar.Metro}" />
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>

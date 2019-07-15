@@ -63,7 +63,7 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Style="{StaticResource WindowTitleThumbStyle}"
+                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
                                     UseLayoutRounding="True" />
 
                     <DockPanel Grid.Row="1"
@@ -144,7 +144,7 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Style="{StaticResource WindowTitleThumbStyle}"
+                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
                                     Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                     <!--  flyouts  -->
@@ -317,7 +317,7 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Style="{StaticResource WindowTitleThumbStyle}"
+                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
                                     UseLayoutRounding="True" />
 
                     <!--  the title bar  -->
@@ -404,7 +404,7 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Style="{StaticResource WindowTitleThumbStyle}"
+                                    Style="{StaticResource MahApps.Styles.Thumb.WindowTitle}"
                                     Visibility="{Binding ElementName=PART_FlyoutModal, Path=Visibility, Mode=OneWay}" />
 
                     <!--  flyouts  -->

@@ -108,11 +108,11 @@
         <system:Int32>59</system:Int32>
     </x:Array>
 
-    <Style x:Key="TimePartPickerBase" TargetType="{x:Type Controls:TimePickerBase}">
+    <Style x:Key="MahApps.Styles.TimePickerBase.Metro" TargetType="{x:Type Controls:TimePickerBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMahApps.Styles.ContextMenu.Metro}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
@@ -166,7 +166,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
@@ -181,7 +181,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -206,14 +206,14 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     IsTabStop="False"
-                                    Style="{DynamicResource ChromelessButtonStyle}">
+                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}">
                                 <!--  PackIconModern - Calendar14  -->
                                 <ContentControl x:Name="PART_ButtonIcon"
                                                 Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                                 Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                                 Padding="2"
                                                 Content="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
-                                                Style="{DynamicResource PathIconContentControlStyle}" />
+                                                Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                             </Button>
                             <Border x:Name="DisabledVisualElement"
                                     Grid.Row="0"
@@ -431,12 +431,12 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type Controls:DateTimePicker}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Metro}" TargetType="{x:Type Controls:DateTimePicker}">
         <Setter Property="Controls:TextBoxHelper.Watermark" Value="Select a date" />
         <Setter Property="IsTodayHighlighted" Value="True" />
     </Style>
 
-    <Style BasedOn="{StaticResource TimePartPickerBase}" TargetType="{x:Type Controls:TimePicker}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Metro}" TargetType="{x:Type Controls:TimePicker}">
         <Setter Property="Controls:TextBoxHelper.Watermark" Value="Select a time" />
     </Style>
 </ResourceDictionary>

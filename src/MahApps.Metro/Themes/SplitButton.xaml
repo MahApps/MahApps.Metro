@@ -75,7 +75,7 @@
                             <ContentControl Width="9"
                                             Height="9"
                                             Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource PathIconContentControlStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                         </Button>
                     </Grid>
                 </Controls:ClipBorder>
@@ -203,7 +203,7 @@
                             <ContentControl Width="9"
                                             Height="9"
                                             Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource PathIconContentControlStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                         </Button>
                     </Grid>
                 </Controls:ClipBorder>
@@ -258,7 +258,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="ButtonSplitFocusVisual">
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.ButtonSplit">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -279,15 +279,15 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ButtonArrowStyle" Value="{DynamicResource ButtonSplitArrowStyle}" />
-        <Setter Property="ButtonStyle" Value="{DynamicResource ButtonSplitStyle}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonSplitFocusVisual}" />
+        <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.SplitArrow}" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.FocusVisualStyle.ButtonSplit}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ListBoxStyle" Value="{DynamicResource VirtualisedMetroListBox}" />
+        <Setter Property="ListBoxStyle" Value="{DynamicResource MahApps.Styles.ListBox.MetroVirtualized}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

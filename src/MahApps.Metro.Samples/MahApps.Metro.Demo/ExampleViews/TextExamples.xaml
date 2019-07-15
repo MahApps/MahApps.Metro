@@ -74,9 +74,9 @@
                         <ContextMenu>
                             <MenuItem Header="Custom Item" />
                             <Separator />
-                            <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MetroMenuItem}" />
-                            <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MetroMenuItem}" />
-                            <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MetroMenuItem}" />
+                            <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
+                            <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
+                            <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
                         </ContextMenu>
                     </TextBox.ContextMenu>
                 </TextBox>
@@ -85,7 +85,7 @@
                          ContextMenu="{x:Null}"
                          Text="Clear button and no ContextMenu">
                     <TextBox.Style>
-                        <Style BasedOn="{StaticResource MetroTextBox}" TargetType="{x:Type TextBox}">
+                        <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}" TargetType="{x:Type TextBox}">
                             <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText" Value="False">
@@ -110,7 +110,7 @@
                                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
                     </TextBox.InputBindings>
                     <TextBox.Style>
-                        <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
+                        <Style BasedOn="{StaticResource MahApps.Styles.TextBox.MetroSearch}" TargetType="{x:Type TextBox}">
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                                     <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
@@ -125,12 +125,12 @@
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
                          Controls:TextBoxHelper.Watermark="Enter parameter"
-                         Style="{DynamicResource SearchMetroTextBox}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.MetroSearch}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonContent="s"
                          Controls:TextBoxHelper.Watermark="Custom icon style"
-                         Style="{DynamicResource MetroButtonTextBox}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.MetroButton}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
@@ -151,7 +151,7 @@
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Search style"
                          IsEnabled="False"
-                         Style="{DynamicResource SearchMetroTextBox}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.MetroSearch}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
@@ -178,7 +178,7 @@
                              Controls:TextBoxHelper.ButtonContent="s"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True"
-                             Style="{StaticResource MahApps.Metro.Styles.ButtonRichTextBox}" />
+                             Style="{StaticResource MahApps.Styles.RichTextBox.MetroButton}" />
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
                              Padding="5"
@@ -187,7 +187,7 @@
                              SpellCheck.IsEnabled="True">
                     <!--
                         Workaround for: RichTextBox behaves oddly inside a ScrollViewer
-                        
+
                         The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
                     -->
                     <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
@@ -244,13 +244,13 @@
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Win8"
                              Password="Win8"
-                             Style="{StaticResource Win8MetroPasswordBox}" />
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
                              Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MetroButtonRevealedPasswordBox}" />
+                             Style="{StaticResource MahApps.Styles.PasswordBox.MetroButtonRevealed}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"
@@ -263,7 +263,7 @@
                              Controls:TextBoxHelper.ButtonContent="4"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MetroButtonPasswordBox}">
+                             Style="{DynamicResource MahApps.Styles.PasswordBox.MetroButton}">
                     <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />

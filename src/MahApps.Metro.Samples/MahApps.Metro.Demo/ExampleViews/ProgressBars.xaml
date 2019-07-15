@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
+            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Metro}" TargetType="{x:Type Controls:MetroHeader}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -51,7 +51,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             Value="25" />
                     <ProgressBar Width="250"
                                  Margin="4"
@@ -131,7 +131,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             Value="25" />
                     <Controls:MetroProgressBar Width="250"
                                                Margin="4"

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MetroListBox" TargetType="{x:Type ListBox}">
+    <Style x:Key="MahApps.Styles.ListBox.Metro" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <!--  default to 0  -->
@@ -63,8 +63,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="VirtualisedMetroListBox"
-           BasedOn="{StaticResource MetroListBox}"
+    <Style x:Key="MahApps.Styles.ListBox.MetroVirtualized"
+           BasedOn="{StaticResource MahApps.Styles.ListBox.Metro}"
            TargetType="{x:Type ListBox}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
@@ -72,7 +72,7 @@
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
     </Style>
 
-    <Style x:Key="MetroListBoxItem" TargetType="{x:Type ListBoxItem}">
+    <Style x:Key="MahApps.Styles.ListBoxItem.Metro" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />

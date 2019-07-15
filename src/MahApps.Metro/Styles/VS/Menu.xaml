@@ -14,12 +14,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="StandardMenu" TargetType="{x:Type Menu}">
+    <Style x:Key="MahApps.Styles.Menu.Standard" TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource LightBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
     </Style>
 
-    <Style x:Key="StandardMenuItem" TargetType="{x:Type MenuItem}">
+    <Style x:Key="MahApps.Styles.MenuItem.Standard" TargetType="{x:Type MenuItem}">
         <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}" />
         <Setter Property="Template">
             <Setter.Value>

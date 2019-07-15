@@ -9,7 +9,7 @@
     <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
     <sys:Double x:Key="ExpanderToggleButtonEllipseThemeSize">18</sys:Double>
 
-    <Style x:Key="ExpanderBaseHeaderStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderBaseHeader" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -19,8 +19,8 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <Style x:Key="ExpanderRightHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderRightHeader"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderBaseHeader}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template">
@@ -94,8 +94,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ExpanderUpHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderUpHeader"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderBaseHeader}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
@@ -168,8 +168,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="ExpanderLeftHeaderStyle"
-           BasedOn="{StaticResource ExpanderRightHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderLeftHeader"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderRightHeader}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -240,8 +240,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderDownHeaderStyle"
-           BasedOn="{StaticResource ExpanderUpHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderDownHeader"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderUpHeader}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -303,7 +303,7 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MetroExpanderExpandStoryboard">
+    <Storyboard x:Key="MahApps.Storyboard.MahApps.Styles.Expander.MetroExpand">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="1"
@@ -313,7 +313,7 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+    <Storyboard x:Key="MahApps.Storyboard.MahApps.Styles.Expander.MetroCollapse">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="0"
@@ -323,16 +323,16 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MetroExpander" TargetType="{x:Type Expander}">
+    <Style x:Key="MahApps.Styles.Expander.Metro" TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource ExpanderDownHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource ExpanderLeftHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource ExpanderRightHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource ExpanderUpHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderDownHeader}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderLeftHeader}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderRightHeader}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderUpHeader}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
@@ -418,10 +418,10 @@
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.MahApps.Styles.Expander.MetroExpand}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.MahApps.Styles.Expander.MetroCollapse}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">

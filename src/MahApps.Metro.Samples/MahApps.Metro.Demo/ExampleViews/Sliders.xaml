@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
+            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Metro}" TargetType="{x:Type Controls:MetroHeader}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>
@@ -49,7 +49,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             Value="40" />
                     <Slider Height="150"
                             Margin="4"
@@ -60,7 +60,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickPlacement="TopLeft"
                             Ticks="20 25 30 50 70 75 80"
                             Value="50" />
@@ -71,7 +71,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -85,7 +85,7 @@
                             SelectionEnd="80"
                             SelectionStart="20"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -95,7 +95,7 @@
                             Maximum="100"
                             Minimum="0"
                             Orientation="Vertical"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -106,7 +106,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="BottomRight"
                             Value="40" />
@@ -117,7 +117,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="Both"
                             Value="40" />
@@ -136,7 +136,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             Value="40" />
                     <Slider Width="200"
                             Margin="4"
@@ -147,7 +147,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickPlacement="TopLeft"
                             Ticks="20 25 30 50 70 75 80"
                             Value="50" />
@@ -158,7 +158,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -172,7 +172,7 @@
                             SelectionEnd="80"
                             SelectionStart="20"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -182,7 +182,7 @@
                             Maximum="100"
                             Minimum="0"
                             Orientation="Horizontal"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -193,7 +193,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="BottomRight"
                             Value="40" />
@@ -204,7 +204,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.Slider.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
                             TickFrequency="5"
                             TickPlacement="Both"
                             Value="40" />
@@ -402,7 +402,7 @@
                                           Minimum="0"
                                           Orientation="Vertical"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           UpperValue="40" />
                     <Controls:RangeSlider Height="150"
                                           Margin="4"
@@ -414,7 +414,7 @@
                                           Minimum="0"
                                           Orientation="Vertical"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickPlacement="TopLeft"
                                           Ticks="20 25 30 50 70 75 80"
                                           UpperValue="50" />
@@ -426,7 +426,7 @@
                                           Minimum="0"
                                           Orientation="Vertical"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -441,7 +441,7 @@
                                           SelectionEnd="80"
                                           SelectionStart="20"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -452,7 +452,7 @@
                                           Maximum="100"
                                           Minimum="0"
                                           Orientation="Vertical"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -464,7 +464,7 @@
                                           Minimum="0"
                                           Orientation="Vertical"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="BottomRight"
                                           UpperValue="40" />
@@ -476,7 +476,7 @@
                                           Minimum="0"
                                           Orientation="Vertical"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="Both"
                                           UpperValue="40" />
@@ -496,7 +496,7 @@
                                           Minimum="0"
                                           Orientation="Horizontal"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           UpperValue="60">
                         <Controls:RangeSlider.AutoToolTipRangeValuesTemplate>
                             <DataTemplate DataType="Controls:RangeSliderAutoTooltipValues">
@@ -519,7 +519,7 @@
                                           Minimum="0"
                                           Orientation="Horizontal"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickPlacement="TopLeft"
                                           Ticks="20 25 30 50 70 75 80"
                                           UpperValue="50" />
@@ -531,7 +531,7 @@
                                           Minimum="0"
                                           Orientation="Horizontal"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -546,7 +546,7 @@
                                           SelectionEnd="80"
                                           SelectionStart="20"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -557,7 +557,7 @@
                                           Maximum="100"
                                           Minimum="0"
                                           Orientation="Horizontal"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="TopLeft"
                                           UpperValue="40" />
@@ -569,7 +569,7 @@
                                           Minimum="0"
                                           Orientation="Horizontal"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="BottomRight"
                                           UpperValue="40" />
@@ -581,7 +581,7 @@
                                           Minimum="0"
                                           Orientation="Horizontal"
                                           SmallChange="1"
-                                          Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.Win10}"
+                                          Style="{DynamicResource MahApps.Styles.RangeSlider.Win10}"
                                           TickFrequency="5"
                                           TickPlacement="Both"
                                           UpperValue="40" />
@@ -792,7 +792,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             Value="40" />
                     <Slider Height="150"
                             Margin="4"
@@ -803,7 +803,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickPlacement="TopLeft"
                             Ticks="20 25 30 50 70 75 80"
                             Value="50" />
@@ -814,7 +814,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -828,7 +828,7 @@
                             SelectionEnd="80"
                             SelectionStart="20"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -838,7 +838,7 @@
                             Maximum="100"
                             Minimum="0"
                             Orientation="Vertical"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -849,7 +849,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="BottomRight"
                             Value="40" />
@@ -860,7 +860,7 @@
                             Minimum="0"
                             Orientation="Vertical"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="Both"
                             Value="40" />
@@ -879,7 +879,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             Value="40" />
                     <Slider Width="200"
                             Margin="4"
@@ -890,7 +890,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickPlacement="TopLeft"
                             Ticks="20 25 30 50 70 75 80"
                             Value="50" />
@@ -901,7 +901,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -915,7 +915,7 @@
                             SelectionEnd="80"
                             SelectionStart="20"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -925,7 +925,7 @@
                             Maximum="100"
                             Minimum="0"
                             Orientation="Horizontal"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="TopLeft"
                             Value="40" />
@@ -936,7 +936,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="BottomRight"
                             Value="40" />
@@ -947,7 +947,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Metro.Styles.FlatSlider}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Flat}"
                             TickFrequency="5"
                             TickPlacement="Both"
                             Value="40" />

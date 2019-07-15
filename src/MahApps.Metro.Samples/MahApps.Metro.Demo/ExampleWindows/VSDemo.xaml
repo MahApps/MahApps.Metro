@@ -8,7 +8,7 @@
                       Title="Visual Studio 2012 Style Demo"
                       Width="1000"
                       Height="800"
-                      Style="{DynamicResource VSWindowStyleKey}"
+                      Style="{DynamicResource MahApps.Styles.MetroWindow.VisualStudio}"
                       WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -28,7 +28,7 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowSeparators="False">
-            <Button Style="{StaticResource VSWindowNotificationButtonStyle}" ToolTip="1 Notification">
+            <Button Style="{StaticResource MahApps.Styles.Button.VisualStudioWindowNotification}" ToolTip="1 Notification">
                 <iconPacks:PackIconEntypo Width="16"
                                           Height="16"
                                           Kind="Flag" />
@@ -38,7 +38,7 @@
                                                                              Width=12,
                                                                              Height=12}"
                      Controls:TextBoxHelper.Watermark="Quick Launch (Ctrl+Q)"
-                     Style="{DynamicResource VSWindowQuickLaunchTextBoxStyle}" />
+                     Style="{DynamicResource MahApps.Styles.TextBox.VisualStudioWindowQuickLaunch}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -232,7 +232,7 @@
                                  Grid.Column="1"
                                  Margin="5"
                                  FontSize="16"
-                                 Style="{StaticResource SearchTextBox}" />
+                                 Style="{StaticResource MahApps.Styles.TextBox.VisualStudioSearch}" />
                         <TextBox Grid.Row="2"
                                  Grid.ColumnSpan="2"
                                  Margin="5"
@@ -424,11 +424,11 @@
                 <Button Margin="0 10 0 3"
                         Content="Fire rocket..."
                         FontSize="14"
-                        Style="{StaticResource LinkButton}" />
+                        Style="{StaticResource MahApps.Styles.Button.VisualStudioWindowLink}" />
                 <Button Margin="0 3 0 10"
                         Content="Throw something over board..."
                         FontSize="14"
-                        Style="{StaticResource LinkButton}" />
+                        Style="{StaticResource MahApps.Styles.Button.VisualStudioWindowLink}" />
                 <Separator Background="#11FFFFFF" />
                 <TextBlock Margin="0 10 0 10"
                            FontSize="18"
@@ -438,11 +438,11 @@
                 <Button Margin="0 10 0 3"
                         Content="blastallenemies.cmd"
                         FontSize="14"
-                        Style="{StaticResource LinkButton}" />
+                        Style="{StaticResource MahApps.Styles.Button.VisualStudioWindowLink}" />
                 <Button Margin="0 3 0 3"
                         Content="verysecretmessage.txt"
                         FontSize="14"
-                        Style="{StaticResource LinkButton}" />
+                        Style="{StaticResource MahApps.Styles.Button.VisualStudioWindowLink}" />
             </StackPanel>
         </Grid>
     </DockPanel>

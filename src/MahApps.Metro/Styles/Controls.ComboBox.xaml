@@ -11,8 +11,8 @@
     <Thickness x:Key="ComboBoxPopupBorderThemeThickness">1</Thickness>
     <Thickness x:Key="ComboBoxPopupBorderThemePadding">1</Thickness>
 
-    <Style x:Key="EditableTextBoxStyle"
-           BasedOn="{StaticResource MetroTextBox}"
+    <Style x:Key="MahApps.Styles.TextBox.Editable"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}"
            TargetType="{x:Type TextBox}">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Template">
@@ -71,7 +71,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -79,7 +79,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
@@ -94,7 +94,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -127,7 +127,7 @@
                                     FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource ChromelessButtonStyle}"
+                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                     </Grid>
@@ -198,7 +198,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroComboBoxDropDownToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.MahApps.Styles.ComboBox.MetroDropDown" TargetType="{x:Type ToggleButton}">
         <Setter Property="ClickMode" Value="Press" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
@@ -223,7 +223,7 @@
                                 FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                 Foreground="{TemplateBinding Foreground}"
                                 IsTabStop="False"
-                                Style="{DynamicResource ChromelessButtonStyle}"
+                                Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
                                 Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <Grid x:Name="BtnArrowBackground"
                               Grid.Column="2"
@@ -263,7 +263,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroComboBox" TargetType="{x:Type ComboBox}">
+    <Style x:Key="MahApps.Styles.ComboBox.Metro" TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
@@ -351,7 +351,7 @@
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           KeyboardNavigation.IsTabStop="False"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Style="{DynamicResource MetroComboBoxDropDownToggleButtonStyle}" />
+                                          Style="{DynamicResource MahApps.Styles.ToggleButton.MahApps.Styles.ComboBox.MetroDropDown}" />
 
                             <TextBox x:Name="PART_EditableTextBox"
                                      Grid.Row="1"
@@ -381,7 +381,7 @@
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     Style="{StaticResource EditableTextBoxStyle}"
+                                     Style="{StaticResource MahApps.Styles.TextBox.Editable}"
                                      Visibility="Collapsed" />
 
                             <TextBlock x:Name="PART_WatermarkMessage"
@@ -392,7 +392,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -400,7 +400,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
@@ -416,7 +416,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -630,8 +630,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="VirtualisedMetroComboBox"
-           BasedOn="{StaticResource MetroComboBox}"
+    <Style x:Key="MahApps.Styles.ComboBox.MetroVirtualized"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.Metro}"
            TargetType="{x:Type ComboBox}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
@@ -639,7 +639,7 @@
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
     </Style>
 
-    <Style x:Key="MetroComboBoxItem" TargetType="ComboBoxItem">
+    <Style x:Key="MahApps.Styles.ComboBoxItem.Metro" TargetType="ComboBoxItem">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />

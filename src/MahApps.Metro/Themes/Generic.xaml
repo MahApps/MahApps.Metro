@@ -40,17 +40,17 @@
 
     <!--  set up default styles for our custom controls  -->
 
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}" TargetType="{x:Type Controls:ToggleSwitchButton}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}" TargetType="{x:Type Controls:ToggleSwitch}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}" TargetType="{x:Type Controls:ContentControlEx}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroThumbContentControl}" TargetType="{x:Type Controls:MetroThumbContentControl}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.WindowCommandsItem}" TargetType="{x:Type Controls:WindowCommandsItem}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.WindowCommands}" TargetType="{x:Type Controls:WindowCommands}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}" TargetType="{x:Type Controls:WindowButtonCommands}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.HamburgerMenu}" TargetType="{x:Type Controls:HamburgerMenu}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroDialog}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.RangeSlider}" TargetType="{x:Type Controls:RangeSlider}" />
-    <Style BasedOn="{StaticResource MahApps.Metro.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton.Metro}" TargetType="{x:Type Controls:ToggleSwitchButton}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Metro}" TargetType="{x:Type Controls:ToggleSwitch}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx.Metro}" TargetType="{x:Type Controls:ContentControlEx}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl.Metro}" TargetType="{x:Type Controls:MetroThumbContentControl}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem.Metro}" TargetType="{x:Type Controls:WindowCommandsItem}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands.Metro}" TargetType="{x:Type Controls:WindowCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Metro}" TargetType="{x:Type Controls:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu.Metro}" TargetType="{x:Type Controls:HamburgerMenu}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Metro}" TargetType="{x:Type Controls:MetroHeader}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog.Metro}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Metro}" TargetType="{x:Type Controls:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar.Metro}" TargetType="{x:Type Controls:MetroProgressBar}" />
 
 </ResourceDictionary>

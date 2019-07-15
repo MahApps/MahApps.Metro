@@ -7,7 +7,7 @@
 
     <Thickness x:Key="GroupBoxHeaderThemePadding">4</Thickness>
 
-    <Style x:Key="MetroGroupBox" TargetType="{x:Type GroupBox}">
+    <Style x:Key="MahApps.Styles.GroupBox.Metro" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />

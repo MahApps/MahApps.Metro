@@ -170,12 +170,12 @@
                   SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
-                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
                                         Header="Row Selected" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.MahApps.Styles.DataGrid.Metro}"
                                         Header="Album Selected" />
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
@@ -186,12 +186,12 @@
                                                       StringFormat="{}{0:C}" />
             </DataGrid.Columns>
             <DataGrid.Style>
-                <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
+                <Style BasedOn="{StaticResource MahApps.Styles.DataGrid.Metro}" TargetType="{x:Type DataGrid}">
                     <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
                 </Style>
             </DataGrid.Style>
             <DataGrid.RowStyle>
-                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                <Style BasedOn="{StaticResource MahApps.Styles.DataGridRow.Metro}" TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True">
                             <Setter Property="Background" Value="#FF8B8B" />
@@ -232,7 +232,7 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
                   RowHeaderWidth="0"
-                  Style="{DynamicResource AzureDataGrid}">
+                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />

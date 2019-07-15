@@ -5,7 +5,7 @@
 
     <converters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
-    <Style x:Key="MahApps.Metro.Styles.FlatButtonFocusVisualStyle">
+    <Style x:Key="MahApps.Styles.Button.FlatFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -20,10 +20,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroFlatButton" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.Flat" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FlatFocusVisualStyle}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FlatButton}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
@@ -66,11 +66,11 @@
         </Style.Triggers>
     </Style>
 
-    <!--  style for flat toggle button like MetroFlatButton  -->
-    <Style x:Key="MetroFlatToggleButton" TargetType="{x:Type ToggleButton}">
+    <!--  style for flat toggle button like MahApps.Styles.ToggleButton.Flat  -->
+    <Style x:Key="MahApps.Styles.ToggleButton.Flat" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FlatFocusVisualStyle}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FlatButton}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
@@ -144,7 +144,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.CircleButtonFocusVisualStyle">
+    <Style x:Key="MahApps.Styles.ButtonBase.MetroCircleFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
@@ -160,11 +160,11 @@
     </Style>
 
     <!--  style for WP7/Circle button  -->
-    <Style x:Key="MahApps.Metro.Styles.MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.MetroCircle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.MetroCircleFocusVisualStyle}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -252,7 +252,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.Chromeless" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -262,7 +262,7 @@
     </Style>
 
     <!--  base button style for min, max and close window buttons  -->
-    <Style x:Key="BaseMetroWindowButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.BaseMetroWindow" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -308,8 +308,8 @@
     </Style>
 
     <!--  light button style for min, max and close window buttons  -->
-    <Style x:Key="LightMetroWindowButtonStyle"
-           BasedOn="{StaticResource BaseMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Light"
+           BasedOn="{StaticResource MahApps.Styles.Button.BaseMetroWindow}"
            TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
@@ -332,8 +332,8 @@
     </Style>
 
     <!--  dark button style for min, max and close window buttons  -->
-    <Style x:Key="DarkMetroWindowButtonStyle"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Dark"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -349,8 +349,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButton.Close.Light.Win10"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindowClose.Light.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -366,8 +366,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButton.Close.Dark.Win10"
-           BasedOn="{StaticResource DarkMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindowClose.Dark.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -384,7 +384,7 @@
     </Style>
 
     <!--  style for default button  -->
-    <Style x:Key="MahApps.Metro.Styles.MetroButton" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.Metro" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -449,7 +449,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SquareButtonStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.Square" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -525,15 +525,15 @@
         </Setter>
     </Style>
 
-    <Style x:Key="AccentedSquareButtonStyle"
-           BasedOn="{StaticResource SquareButtonStyle}"
+    <Style x:Key="MahApps.Styles.ButtonBase.AccentedSquare"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
     </Style>
 
-    <Style x:Key="HighlightedSquareButtonStyle"
-           BasedOn="{StaticResource SquareButtonStyle}"
+    <Style x:Key="MahApps.Styles.ButtonBase.HighlightedSquare"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
@@ -602,11 +602,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.MetroCircleToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.MetroCircle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.MetroCircleFocusVisualStyle}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
@@ -673,7 +673,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.MetroToggleButton" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.Metro" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -758,7 +758,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="SquareMetroButton" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.MetroSquare" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -871,8 +871,8 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MetroAccentButton"
-           BasedOn="{StaticResource SquareMetroButton}"
+    <Style x:Key="MahApps.Styles.ButtonBase.MetroAccentSquare"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.MetroSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
@@ -979,7 +979,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonDropDownStyle"
+    <Style x:Key="MahApps.Styles.Button.DropDown"
            BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
            TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
@@ -1021,14 +1021,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonSplitStyle"
-           BasedOn="{StaticResource ButtonDropDownStyle}"
+    <Style x:Key="MahApps.Styles.Button.Split"
+           BasedOn="{StaticResource MahApps.Styles.Button.DropDown}"
            TargetType="{x:Type Button}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
-    <Style x:Key="ButtonSplitArrowStyle"
-           BasedOn="{StaticResource ButtonSplitStyle}"
+    <Style x:Key="MahApps.Styles.Button.SplitArrow"
+           BasedOn="{StaticResource MahApps.Styles.Button.Split}"
            TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />

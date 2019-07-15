@@ -34,7 +34,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroMenu" TargetType="{x:Type Menu}">
+    <Style x:Key="MahApps.Styles.Menu.Metro" TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Background}" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Menu}" />
@@ -59,7 +59,7 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     </Style>
 
-    <Style x:Key="MetroContextMenu" TargetType="{x:Type ContextMenu}">
+    <Style x:Key="MahApps.Styles.ContextMenu.Metro" TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ContextMenu.Background}" />
         <Setter Property="Block.TextAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ContextMenu.Border}" />
@@ -121,7 +121,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MetroMenuItem" TargetType="{x:Type MenuItem}">
+    <Style x:Key="MahApps.Styles.MenuItem.Metro" TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Background}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
@@ -149,20 +149,20 @@
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.SuggestionMenuItemStyleKey}"
-           BasedOn="{StaticResource MetroMenuItem}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=CommandParameter}" />
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.IgnoreAllMenuItemStyleKey}"
-           BasedOn="{StaticResource MetroMenuItem}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="Ignore All" />
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.NoSuggestionsMenuItemStyleKey}"
-           BasedOn="{StaticResource MetroMenuItem}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="(no spelling suggestions)" />
         <Setter Property="IsEnabled" Value="False" />
@@ -172,13 +172,13 @@
            BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}"
            TargetType="{x:Type Separator}" />
 
-    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MetroContextMenu}">
-        <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MetroMenuItem}" />
-        <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MetroMenuItem}" />
-        <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MetroMenuItem}" />
+    <ContextMenu x:Key="TextBoxMahApps.Styles.ContextMenu.Metro" Style="{StaticResource MahApps.Styles.ContextMenu.Metro}">
+        <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
+        <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
+        <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
     </ContextMenu>
 
-    <Style x:Key="MenuScrollButton"
+    <Style x:Key="MahApps.Styles.RepeatButton.MenuScroll"
            BasedOn="{x:Null}"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="ClickMode" Value="Hover" />
@@ -246,7 +246,7 @@
                                       Command="{x:Static ScrollBar.LineUpCommand}"
                                       CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                       Focusable="False"
-                                      Style="{StaticResource MenuScrollButton}">
+                                      Style="{StaticResource MahApps.Styles.RepeatButton.MenuScroll}">
                             <RepeatButton.Visibility>
                                 <MultiBinding Converter="{StaticResource MenuScrollingVisibilityConverter}"
                                               ConverterParameter="0"
@@ -264,7 +264,7 @@
                                       Command="{x:Static ScrollBar.LineDownCommand}"
                                       CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                       Focusable="False"
-                                      Style="{StaticResource MenuScrollButton}">
+                                      Style="{StaticResource MahApps.Styles.RepeatButton.MenuScroll}">
                             <RepeatButton.Visibility>
                                 <MultiBinding Converter="{StaticResource MenuScrollingVisibilityConverter}"
                                               ConverterParameter="100"

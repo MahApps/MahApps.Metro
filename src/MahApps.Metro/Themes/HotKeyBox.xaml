@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMahApps.Styles.ContextMenu.Metro}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb" TargetType="{x:Type Controls:MetroThumb}">
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb" TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="True" />
@@ -18,8 +18,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider.VerticalMiddleThumb"
-           BasedOn="{StaticResource MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb}"
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb"
+           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb}"
            TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -75,7 +75,7 @@
                         Orientation="Horizontal">
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}" />
 
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
@@ -83,23 +83,23 @@
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
                 <Controls:MetroThumb x:Name="PART_MiddleThumb"
                                      MinWidth="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb}" />
+                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
                                      Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
 
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -195,7 +195,7 @@
                         Orientation="Vertical">
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack}" />
 
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource VerticalThumbWidth}"
@@ -203,23 +203,23 @@
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="0 1"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
                 <Controls:MetroThumb x:Name="PART_MiddleThumb"
                                      MinHeight="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{StaticResource MahApps.Metro.Styles.RangeSlider.VerticalMiddleThumb}" />
+                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="{DynamicResource VerticalThumbWidth}"
                                      Height="{DynamicResource VerticalThumbHeight}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="0 1"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider}" />
 
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -272,7 +272,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider" TargetType="{x:Type Controls:RangeSlider}">
+    <Style x:Key="MahApps.Styles.RangeSlider.Metro" TargetType="{x:Type Controls:RangeSlider}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
@@ -299,7 +299,7 @@
 
     <!--  Win10 RangeSlider style  -->
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb.Win10" TargetType="{x:Type Controls:MetroThumb}">
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10" TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="True" />
@@ -315,8 +315,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider.VerticalMiddleThumb.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb.Win10}"
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10}"
            TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -373,29 +373,29 @@
                         Orientation="Horizontal">
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
 
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="8"
                                      Height="24"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
                 <Controls:MetroThumb x:Name="PART_MiddleThumb"
                                      MinWidth="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{DynamicResource MahApps.Metro.Styles.RangeSlider.HorizontalMiddleThumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="8"
                                      Height="24"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
 
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.HorizontalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -508,29 +508,29 @@
                         Orientation="Vertical">
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
 
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="24"
                                      Height="8"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
                 <Controls:MetroThumb x:Name="PART_MiddleThumb"
                                      MinHeight="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{StaticResource MahApps.Metro.Styles.RangeSlider.VerticalMiddleThumb.Win10}" />
+                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb.Win10}" />
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="24"
                                      Height="8"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      Cursor="Arrow"
-                                     Style="{DynamicResource MahApps.Metro.Styles.Slider.Thumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.Thumb.Slider.Win10}" />
 
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Metro.Styles.Slider.VerticalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -599,7 +599,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Metro.Styles.RangeSlider.Win10" TargetType="{x:Type Controls:RangeSlider}">
+    <Style x:Key="MahApps.Styles.RangeSlider.Win10" TargetType="{x:Type Controls:RangeSlider}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />

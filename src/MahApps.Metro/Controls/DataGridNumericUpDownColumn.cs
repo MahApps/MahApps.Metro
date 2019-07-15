@@ -28,7 +28,7 @@ namespace MahApps.Metro.Controls
                 {
                     var numericUpDown = new NumericUpDown();
 
-                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumnEditing") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls
                 {
                     var numericUpDown = new NumericUpDown();
 
-                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumn") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));

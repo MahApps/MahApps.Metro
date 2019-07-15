@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton" TargetType="{x:Type Controls:ToggleSwitchButton}">
+    <Style x:Key="MahApps.Styles.ToggleSwitchButton.Metro" TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Height" Value="35" />
@@ -88,7 +88,7 @@
         <Setter Property="Width" Value="70" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
+    <Style x:Key="MahApps.Styles.ToggleSwitch.Metro" TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentPadding" Value="0 0 4 0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchMahApps.Sizes.HeaderFont}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
@@ -222,7 +222,7 @@
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
-        <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.ToggleSwitchButton}" />
+        <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton.Metro}" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>

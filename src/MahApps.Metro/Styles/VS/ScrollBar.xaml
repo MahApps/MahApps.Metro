@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.VisualStudioScrollBarLine" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Focusable" Value="false" />
@@ -33,7 +33,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.VisualStudioScrollBarPage" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -50,7 +50,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.VisualStudioScrollBar" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Focusable" Value="false" />
@@ -87,22 +87,22 @@
             <RepeatButton Grid.Column="0"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M 0 4 L 4 8 L 4 0 Z"
-                          Style="{StaticResource ScrollBarLineButton}" />
+                          Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarLine}" />
             <Track Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarPage}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
+                    <Controls:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.VisualStudioScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarPage}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Column="2"
                           Command="ScrollBar.LineRightCommand"
                           Content="M 0 0 L 0 8 L 4 4 Z"
-                          Style="{StaticResource ScrollBarLineButton}" />
+                          Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarLine}" />
         </Grid>
     </ControlTemplate>
 
@@ -116,28 +116,28 @@
             <RepeatButton Grid.Row="0"
                           Command="ScrollBar.LineUpCommand"
                           Content="M 0 4 L 8 4 L 4 0 Z"
-                          Style="{StaticResource ScrollBarLineButton}" />
+                          Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarLine}" />
             <Track Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="true">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarPage}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
+                    <Controls:MetroThumb Style="{StaticResource MahApps.Styles.Thumb.VisualStudioScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButton}" />
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarPage}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton Grid.Row="2"
                           Command="ScrollBar.LineDownCommand"
                           Content="M 0 0 L 4 4 L 8 0 Z"
-                          Style="{StaticResource ScrollBarLineButton}" />
+                          Style="{StaticResource MahApps.Styles.RepeatButton.VisualStudioScrollBarLine}" />
         </Grid>
     </ControlTemplate>
 
-    <Style x:Key="StandardScrollBar" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="MahApps.Styles.ScrollBar.VisualStudioStandard" TargetType="{x:Type ScrollBar}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>

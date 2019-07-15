@@ -72,7 +72,7 @@
             </ObjectDataProvider>
 
             <Style x:Key="HamburgerMenuCreatorsItemStyle"
-                   BasedOn="{StaticResource HamburgerMenuItemStyle}"
+                   BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
                    TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
                 <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />

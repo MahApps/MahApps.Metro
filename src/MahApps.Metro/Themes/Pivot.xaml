@@ -8,7 +8,7 @@
                    Text="{Binding}" />
     </DataTemplate>
 
-    <Style x:Key="PivotListViewItem" TargetType="{x:Type ListViewItem}">
+    <Style x:Key="MahApps.Styles.ListViewItem.Pivot" TargetType="{x:Type ListViewItem}">
         <Setter Property="Border.BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -60,7 +60,7 @@
                                   Grid.Row="1"
                                   Background="{x:Null}"
                                   BorderBrush="{x:Null}"
-                                  ItemContainerStyle="{StaticResource PivotListViewItem}"
+                                  ItemContainerStyle="{StaticResource MahApps.Styles.ListViewItem.Pivot}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"
                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   ScrollViewer.VerticalScrollBarVisibility="Disabled"

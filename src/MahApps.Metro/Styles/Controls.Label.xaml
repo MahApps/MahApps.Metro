@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="MetroLabel" TargetType="{x:Type Label}">
+    <Style x:Key="MahApps.Styles.Label.Metro" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Label.Text}" />
     </Style>
 
