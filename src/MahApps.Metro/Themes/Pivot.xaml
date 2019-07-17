@@ -4,7 +4,7 @@
 
     <DataTemplate x:Key="MahApps.Templates.PivotHeader">
         <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Header}"
-                   FontSize="{DynamicResource MahApps.Sizes.HeaderFont}"
+                   FontSize="{DynamicResource MahApps.Sizes.Font.Header}"
                    Text="{Binding}" />
     </DataTemplate>
 
