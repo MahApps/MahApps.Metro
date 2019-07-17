@@ -9,7 +9,7 @@
     <Style x:Key="MahApps.Styles.HamburgerMenu.Metro" TargetType="{x:Type Controls:HamburgerMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="HamburgerButtonStyle" Value="{DynamicResource HamburgerButtonStyle}" />
+        <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
