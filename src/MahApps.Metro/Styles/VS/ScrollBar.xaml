@@ -16,15 +16,15 @@
                         <Path HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}"
-                              Fill="{DynamicResource Foreground}" />
+                              Fill="{DynamicResource MahApps.Brushes.Foreground}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -64,11 +64,11 @@
                             BorderThickness="1" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

@@ -3,8 +3,8 @@
 
     <Style x:Key="MahApps.Styles.TextBox.VisualStudioStandard" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.Background}" />
-        <Setter Property="CaretBrush" Value="{DynamicResource Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -51,7 +51,7 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />
-                            <Setter TargetName="search" Property="Foreground" Value="{DynamicResource Foreground}" />
+                            <Setter TargetName="search" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
                             <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.BackgroundSelected}" />

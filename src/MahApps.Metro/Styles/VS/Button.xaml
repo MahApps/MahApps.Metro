@@ -4,7 +4,7 @@
     <Style x:Key="MahApps.Styles.Button.VisualStudioWindowStandard" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -18,11 +18,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

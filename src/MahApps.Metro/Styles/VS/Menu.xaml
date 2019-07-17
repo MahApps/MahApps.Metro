@@ -15,8 +15,8 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Menu.Standard" TargetType="{x:Type Menu}">
-        <Setter Property="Background" Value="{DynamicResource LightBackground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.LightBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.MenuItem.Standard" TargetType="{x:Type MenuItem}">
@@ -175,7 +175,7 @@
                             <Setter TargetName="Border" Property="BorderThickness" Value="1 1 1 0" />
                         </MultiTrigger>
                         <Trigger Property="IsSubmenuOpen" Value="true">
-                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                         <Trigger Property="IsSuspendingPopupAnimation" Value="true">
                             <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None" />

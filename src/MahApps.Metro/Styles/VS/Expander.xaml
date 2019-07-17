@@ -82,11 +82,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -156,11 +156,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -228,11 +228,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -291,11 +291,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -333,8 +333,8 @@
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderLeftHeader}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderRightHeader}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderUpHeader}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

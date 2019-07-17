@@ -25,11 +25,11 @@
                                         <Condition Property="IsMouseOver" Value="True" />
                                         <Condition Property="IsSelected" Value="False" />
                                     </MultiTrigger.Conditions>
-                                    <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                                 </MultiTrigger>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                                     <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>

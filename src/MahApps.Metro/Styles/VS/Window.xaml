@@ -18,7 +18,7 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
             </Trigger>
         </Style.Triggers>

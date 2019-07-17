@@ -14,10 +14,10 @@
     <Style x:Key="MahApps.Styles.TabControl.VisualStudioStandard"
            BasedOn="{StaticResource MahApps.Styles.TabControl.Metro}"
            TargetType="{x:Type TabControl}">
-        <Setter Property="Background" Value="{DynamicResource Background}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundSelected}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -212,11 +212,11 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <MultiTrigger>
@@ -232,7 +232,7 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -247,7 +247,7 @@
                 <ContentPresenter.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontSize" Value="20" />
-                        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
                     </Style>
                 </ContentPresenter.Resources>
             </ContentPresenter>
