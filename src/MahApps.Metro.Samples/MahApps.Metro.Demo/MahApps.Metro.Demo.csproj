@@ -27,6 +27,7 @@
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
         <PackageReference Include="MaterialDesignThemes" Version="2.*" />
+        <PackageReference Include="MaterialDesignColors" Version="1.*" />
         <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
         <PackageReference Include="Fody" Version="5.*">
           <PrivateAssets>all</PrivateAssets>
