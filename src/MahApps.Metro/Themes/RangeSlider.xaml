@@ -75,11 +75,11 @@
                         Orientation="Horizontal">
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack}" />
 
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
-                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
+                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"
@@ -91,7 +91,7 @@
                                      Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
-                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumbHeight}"
+                                     Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height}"
                                      Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.ThumbFillBrush)}"
                                      BorderThickness="1 0"
                                      Cursor="Arrow"
@@ -99,7 +99,7 @@
 
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -195,7 +195,7 @@
                         Orientation="Vertical">
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack}" />
 
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource VerticalThumbWidth}"
@@ -219,7 +219,7 @@
 
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -373,7 +373,7 @@
                         Orientation="Horizontal">
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
 
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="8"
@@ -395,7 +395,7 @@
 
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderHorizontalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.HorizontalTrack.Win10}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>
@@ -508,7 +508,7 @@
                         Orientation="Vertical">
                 <RepeatButton x:Name="PART_RightEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
 
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="24"
@@ -530,7 +530,7 @@
 
                 <RepeatButton x:Name="PART_LeftEdge"
                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackFillBrush)}"
-                              Style="{DynamicResource MahApps.Styles.RepeatButton.SliderVerticalTrack.Win10}" />
+                              Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
             </StackPanel>
         </Grid>
         <ControlTemplate.Triggers>

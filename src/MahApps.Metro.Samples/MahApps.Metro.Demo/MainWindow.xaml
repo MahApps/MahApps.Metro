@@ -320,7 +320,7 @@
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
-            <Separator Style="{StaticResource MahApps.Styles.Separator.MetroStatusBar}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar.Metro}" />
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>

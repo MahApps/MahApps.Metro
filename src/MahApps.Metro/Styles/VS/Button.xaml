@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudioWindowStandard" TargetType="Button">
+    <Style x:Key="MahApps.Styles.Button.Window.Standard.VisualStudio" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
@@ -34,7 +34,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudioWindowLink" TargetType="Button">
+    <Style x:Key="MahApps.Styles.Button.Window.Link.VisualStudio" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.Foreground}" />
         <Setter Property="Template">

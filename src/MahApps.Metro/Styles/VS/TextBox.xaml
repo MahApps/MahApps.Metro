@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="MahApps.Styles.TextBox.VisualStudioStandard" TargetType="{x:Type TextBox}">
+    <Style x:Key="MahApps.Styles.TextBox.Standard.VisualStudio" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.Background}" />
         <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
@@ -27,8 +27,8 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.VisualStudioSearch"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudioStandard}"
+    <Style x:Key="MahApps.Styles.TextBox.Search.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Standard.VisualStudio}"
            TargetType="{x:Type TextBox}">
         <Setter Property="Template">
             <Setter.Value>

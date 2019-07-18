@@ -5,7 +5,7 @@
     <System:Double x:Key="MahApps.Sizes.ScrollBar.Height.Metro">14</System:Double>
     <System:Double x:Key="MahApps.Sizes.ScrollBar.Width.Metro">14</System:Double>
 
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButtonWidth">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButtonHeight">14</System:Double>
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</System:Double>
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</System:Double>
 
 </ResourceDictionary>

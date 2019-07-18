@@ -13,15 +13,15 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Expander.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.Button.VisualStudioWindowStandard}" TargetType="Button" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Standard}" TargetType="ListBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Standard}" TargetType="MenuItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Menu.Standard}" TargetType="Menu" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.VisualStudioStandard}" TargetType="ScrollBar" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.VisualStudioStandard}" TargetType="TabItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.VisualStudioStandard}" TargetType="TabControl" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.VisualStudioStandard}" TargetType="TextBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox.Standard}" TargetType="GroupBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Expander.VisualStudioStandard}" TargetType="Expander" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Button.Window.Standard.VisualStudio}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Standard.VisualStudio}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Standard.VisualStudio}" TargetType="MenuItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Menu.Standard.VisualStudio}" TargetType="Menu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Standard.VisualStudio}" TargetType="ScrollBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.Standard.VisualStudio}" TargetType="TabItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.Standard.VisualStudio}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Standard.VisualStudio}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox.Standard.VisualStudio}" TargetType="GroupBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Expander.Standard.VisualStudio}" TargetType="Expander" />
 
 </ResourceDictionary>

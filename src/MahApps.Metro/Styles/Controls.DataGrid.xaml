@@ -8,7 +8,7 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="MahApps.Styles.CheckBox.MetroDataGrid"
+    <Style x:Key="MahApps.Styles.CheckBox.DataGrid.Metro"
            BasedOn="{StaticResource MahApps.Styles.CheckBox.Metro}"
            TargetType="CheckBox">
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -73,7 +73,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Thumb.MetroColumnHeaderGripper" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.ColumnHeaderGripper.Metro" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -91,7 +91,7 @@
         <Setter Property="Width" Value="8" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Thumb.MetroRowHeaderGripper" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.RowHeaderGripper.Metro" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="Cursor" Value="SizeNS" />
         <Setter Property="Height" Value="6" />
@@ -164,12 +164,12 @@
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left"
                                Background="Transparent"
-                               Style="{StaticResource MahApps.Styles.Thumb.MetroColumnHeaderGripper}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.Metro}" />
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
                                HorizontalAlignment="Right"
-                               Style="{StaticResource MahApps.Styles.Thumb.MetroColumnHeaderGripper}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.Metro}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="SortDirection" Value="Ascending">
@@ -238,10 +238,10 @@
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalAlignment="Top"
                                Background="Transparent"
-                               Style="{StaticResource MahApps.Styles.Thumb.MetroRowHeaderGripper}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper.Metro}" />
                         <Thumb x:Name="PART_BottomHeaderGripper"
                                VerticalAlignment="Bottom"
-                               Style="{StaticResource MahApps.Styles.Thumb.MetroRowHeaderGripper}" />
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper.Metro}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Styles.RepeatButton.FlatSliderTrack" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.SliderTrack.Flat" TargetType="{x:Type RepeatButton}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -16,7 +16,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Thumb.FlatSlider" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.Slider.Flat" TargetType="{x:Type Thumb}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -28,7 +28,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TickBar.FlatSlider" TargetType="TickBar">
+    <Style x:Key="MahApps.Styles.TickBar.Slider.Flat" TargetType="TickBar">
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.SliderThumb.Disabled}" />
         <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
@@ -52,7 +52,7 @@
         </Style.Triggers>
     </Style>
 
-    <ControlTemplate x:Key="MahApps.Templates.Slider.FlatHorizontal" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Horizontal.Flat" TargetType="{x:Type Slider}">
         <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -62,26 +62,26 @@
             <TickBar x:Name="TopTick"
                      Grid.Row="0"
                      Placement="Top"
-                     Style="{DynamicResource MahApps.Styles.TickBar.FlatSlider}" />
+                     Style="{DynamicResource MahApps.Styles.TickBar.Slider.Flat}" />
             <TickBar x:Name="BottomTick"
                      Grid.Row="2"
                      Placement="Bottom"
-                     Style="{DynamicResource MahApps.Styles.TickBar.FlatSlider}" />
+                     Style="{DynamicResource MahApps.Styles.TickBar.Slider.Flat}" />
             <Track x:Name="PART_Track" Grid.Row="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.FlatSliderTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderTrack.Flat}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Width="{TemplateBinding Slider.MinHeight}"
                                          Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{DynamicResource MahApps.Styles.Thumb.FlatSlider}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider.Flat}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.FlatSliderTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderTrack.Flat}" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
@@ -99,7 +99,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Templates.Slider.FlatVertical" TargetType="{x:Type Slider}">
+    <ControlTemplate x:Key="MahApps.Templates.Slider.Vertical.Flat" TargetType="{x:Type Slider}">
         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -109,26 +109,26 @@
             <TickBar x:Name="TopTick"
                      Grid.Column="0"
                      Placement="Left"
-                     Style="{DynamicResource MahApps.Styles.TickBar.FlatSlider}" />
+                     Style="{DynamicResource MahApps.Styles.TickBar.Slider.Flat}" />
             <TickBar x:Name="BottomTick"
                      Grid.Column="2"
                      Placement="Right"
-                     Style="{DynamicResource MahApps.Styles.TickBar.FlatSlider}" />
+                     Style="{DynamicResource MahApps.Styles.TickBar.Slider.Flat}" />
             <Track x:Name="PART_Track" Grid.Column="1">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.FlatSliderTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderTrack.Flat}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <controls:MetroThumb Height="{TemplateBinding Slider.MinWidth}"
                                          Background="{TemplateBinding Slider.BorderBrush}"
-                                         Style="{DynamicResource MahApps.Styles.Thumb.FlatSlider}" />
+                                         Style="{DynamicResource MahApps.Styles.Thumb.Slider.Flat}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.FlatSliderTrack}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.SliderTrack.Flat}" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
@@ -171,12 +171,12 @@
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinHeight" Value="12" />
                 <Setter Property="MinWidth" Value="0" />
-                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.FlatHorizontal}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Horizontal.Flat}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="MinHeight" Value="0" />
                 <Setter Property="MinWidth" Value="12" />
-                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.FlatVertical}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.Slider.Vertical.Flat}" />
             </Trigger>
         </Style.Triggers>
     </Style>

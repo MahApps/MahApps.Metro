@@ -532,7 +532,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Calendar.MetroBase" TargetType="{x:Type Calendar}">
+    <Style x:Key="MahApps.Styles.Calendar.Base.Metro" TargetType="{x:Type Calendar}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -561,7 +561,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Calendar.Metro"
-           BasedOn="{StaticResource MahApps.Styles.Calendar.MetroBase}"
+           BasedOn="{StaticResource MahApps.Styles.Calendar.Base.Metro}"
            TargetType="{x:Type Calendar}">
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />

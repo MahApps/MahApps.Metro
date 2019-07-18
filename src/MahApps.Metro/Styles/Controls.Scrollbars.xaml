@@ -16,7 +16,7 @@
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MahApps.Styles.RepeatButton.MetroScrollBarSmall" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarSmall.Metro" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Height" Value="{DynamicResource MahApps.Templates.ScrollBar.VerticalRepeatButtonHeight}" />
@@ -64,7 +64,7 @@
         <Setter Property="Width" Value="{DynamicResource MahApps.Templates.ScrollBar.HorizontalRepeatButtonWidth}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.RepeatButton.MetroScrollBarLarge" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarLarge.Metro" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Interval" Value="50" />
@@ -81,7 +81,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Thumb.MetroScrollBar" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar.Metro" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Thumb}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="IsTabStop" Value="False" />
@@ -135,29 +135,29 @@
                           Grid.Column="0"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z"
-                          Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarSmall}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall.Metro}" />
             <Track x:Name="PART_Track"
                    Grid.Column="1"
                    IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeDecrease"
                                   Command="ScrollBar.PageLeftCommand"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarLarge}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge.Metro}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MahApps.Styles.Thumb.MetroScrollBar}" />
+                    <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.Metro}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeIncrease"
                                   Command="ScrollBar.PageRightCommand"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarLarge}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge.Metro}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="HorizontalSmallIncrease"
                           Grid.Column="2"
                           Command="ScrollBar.LineRightCommand"
                           Content="M192,79.875L352,239.875 192,399.875 192,79.875z"
-                          Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarSmall}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall.Metro}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -177,7 +177,7 @@
                           Grid.Row="0"
                           Command="ScrollBar.LineUpCommand"
                           Content="M240.125,160L400.125,320 80.125,320 240.125,160z"
-                          Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarSmall}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall.Metro}" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="True">
@@ -187,22 +187,22 @@
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeDecrease"
                                   Command="ScrollBar.PageUpCommand"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarLarge}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge.Metro}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MahApps.Styles.Thumb.MetroScrollBar}" />
+                    <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar.Metro}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeIncrease"
                                   Command="ScrollBar.PageDownCommand"
-                                  Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarLarge}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge.Metro}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="VerticalSmallIncrease"
                           Grid.Row="2"
                           Command="ScrollBar.LineDownCommand"
                           Content="M80.125,192L400.125,192 240.125,352 80.125,192z"
-                          Style="{DynamicResource MahApps.Styles.RepeatButton.MetroScrollBarSmall}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall.Metro}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">

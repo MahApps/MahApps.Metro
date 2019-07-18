@@ -13,7 +13,7 @@
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.WindowTitle.Foreground}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudioWindow"
+    <Style x:Key="MahApps.Styles.Button.Window.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
@@ -25,15 +25,15 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
-        <Setter Property="DarkMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
-        <Setter Property="DarkMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
-        <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
-        <Setter Property="LightMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
-        <Setter Property="LightMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.VisualStudioWindow}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="DarkMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudioWindowNotification"
+    <Style x:Key="MahApps.Styles.Button.Window.Notification.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.Button.Flat}"
            TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.Background}" />
@@ -51,8 +51,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.VisualStudioWindowQuickLaunch"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.MetroButton}"
+    <Style x:Key="MahApps.Styles.TextBox.WindowQuickLaunch.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Button.Metro}"
            TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />

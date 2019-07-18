@@ -110,7 +110,7 @@
                                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
                     </TextBox.InputBindings>
                     <TextBox.Style>
-                        <Style BasedOn="{StaticResource MahApps.Styles.TextBox.MetroSearch}" TargetType="{x:Type TextBox}">
+                        <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search.Metro}" TargetType="{x:Type TextBox}">
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                                     <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
@@ -125,12 +125,12 @@
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
                          Controls:TextBoxHelper.Watermark="Enter parameter"
-                         Style="{DynamicResource MahApps.Styles.TextBox.MetroSearch}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.Search.Metro}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonContent="s"
                          Controls:TextBoxHelper.Watermark="Custom icon style"
-                         Style="{DynamicResource MahApps.Styles.TextBox.MetroButton}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.Button.Metro}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
@@ -151,7 +151,7 @@
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Search style"
                          IsEnabled="False"
-                         Style="{DynamicResource MahApps.Styles.TextBox.MetroSearch}" />
+                         Style="{DynamicResource MahApps.Styles.TextBox.Search.Metro}" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
@@ -178,7 +178,7 @@
                              Controls:TextBoxHelper.ButtonContent="s"
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True"
-                             Style="{StaticResource MahApps.Styles.RichTextBox.MetroButton}" />
+                             Style="{StaticResource MahApps.Styles.RichTextBox.Button.Metro}" />
                 <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
                              Padding="5"
@@ -250,7 +250,7 @@
                              Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.MetroButtonRevealed}" />
+                             Style="{StaticResource MahApps.Styles.PasswordBox.ButtonRevealed.Metro}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"
@@ -263,7 +263,7 @@
                              Controls:TextBoxHelper.ButtonContent="4"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Custom icon style"
-                             Style="{DynamicResource MahApps.Styles.PasswordBox.MetroButton}">
+                             Style="{DynamicResource MahApps.Styles.PasswordBox.Button.Metro}">
                     <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />

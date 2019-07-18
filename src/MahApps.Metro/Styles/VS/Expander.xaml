@@ -10,7 +10,7 @@
     <sys:Double x:Key="ExpanderHeaderThemeFontSize">16</sys:Double>
     <sys:Double x:Key="ExpanderToggleButtonThemeSize">18</sys:Double>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderBaseHeader" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -20,8 +20,8 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderRightHeader"
-           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderBaseHeader}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 0 2 0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -95,8 +95,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderUpHeader"
-           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderBaseHeader}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 2 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -169,8 +169,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderLeftHeader"
-           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderRightHeader}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="2 0 0 0" />
         <Setter Property="Template">
@@ -240,8 +240,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderDownHeader"
-           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderUpHeader}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 0 0 2" />
         <Setter Property="Template">
@@ -323,16 +323,16 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MahApps.Styles.Expander.VisualStudioStandard" TargetType="{x:Type Expander}">
+    <Style x:Key="MahApps.Styles.Expander.Standard.VisualStudio" TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderDownHeader}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderLeftHeader}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderRightHeader}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderUpHeader}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

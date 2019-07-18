@@ -13,7 +13,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.MetroBase}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Base.Metro}" />
         <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMahApps.Styles.ContextMenu.Metro}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
@@ -97,7 +97,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -270,7 +270,7 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />

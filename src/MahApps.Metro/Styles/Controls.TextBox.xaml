@@ -100,7 +100,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -124,7 +124,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -270,7 +270,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.MetroButton"
+    <Style x:Key="MahApps.Styles.TextBox.Button.Metro"
            BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}"
            TargetType="{x:Type TextBox}">
         <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.ButtonBase.Chromeless}" />
@@ -345,7 +345,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -369,7 +369,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -497,8 +497,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.MetroSearch"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.MetroButton}"
+    <Style x:Key="MahApps.Styles.TextBox.Search.Metro"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Button.Metro}"
            TargetType="{x:Type TextBox}">
         <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
@@ -624,7 +624,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -650,7 +650,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -782,7 +782,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.RichTextBox.MetroButton"
+    <Style x:Key="MahApps.Styles.RichTextBox.Button.Metro"
            BasedOn="{StaticResource MahApps.Styles.RichTextBox.Metro}"
            TargetType="{x:Type RichTextBox}">
         <Setter Property="Controls:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
@@ -826,7 +826,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource MahApps.Styles.TextBlock.MetroWatermark}"
+                                       Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
@@ -852,7 +852,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.MetroAutoCollapsing}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">

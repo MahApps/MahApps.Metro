@@ -11,7 +11,7 @@
 
     <System:Double x:Key="MahApps.Sizes.Font.TabItem">12</System:Double>
 
-    <Style x:Key="MahApps.Styles.TabControl.VisualStudioStandard"
+    <Style x:Key="MahApps.Styles.TabControl.Standard.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TabControl.Metro}"
            TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background}" />
@@ -99,7 +99,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.VisualStudioWindowMahApps.Styles.TabItem.VisualStudioStandardClose" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.TabItemClose.Standard.VisualStudio" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Focusable" Value="False" />
@@ -139,7 +139,7 @@
         <Setter Property="Width" Value="15" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TabItem.VisualStudioStandard"
+    <Style x:Key="MahApps.Styles.TabItem.Standard.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TabItem.Metro}"
            TargetType="{x:Type TabItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
@@ -176,7 +176,7 @@
                             <Button x:Name="PART_CloseButton"
                                     VerticalAlignment="Center"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.Button.VisualStudioWindowMahApps.Styles.TabItem.VisualStudioStandardClose}"
+                                    Style="{DynamicResource MahApps.Styles.Button.TabItemClose.Standard.VisualStudio}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseButtonEnabled), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
@@ -241,7 +241,7 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="MahApps.Templates.TabItem.Closable">
+    <DataTemplate x:Key="MahApps.Templates.TabItem.Closable.VisualStudio">
         <DockPanel>
             <ContentPresenter VerticalAlignment="Center" Content="{Binding DisplayName}">
                 <ContentPresenter.Resources>
@@ -255,12 +255,12 @@
     </DataTemplate>
 
     <!--  This template explains how to render the 'Workspace' content area in the main window.  -->
-    <DataTemplate x:Key="MahApps.Templates.TabControl.Workspaces">
+    <DataTemplate x:Key="MahApps.Templates.TabControl.Workspaces.VisualStudio">
         <TabControl Margin="0"
                     IsSynchronizedWithCurrentItem="True"
-                    ItemTemplate="{StaticResource MahApps.Templates.TabItem.Closable}"
+                    ItemTemplate="{StaticResource MahApps.Templates.TabItem.Closable.VisualStudio}"
                     ItemsSource="{Binding}"
-                    Style="{DynamicResource MahApps.Styles.TabControl.VisualStudioStandard}" />
+                    Style="{DynamicResource MahApps.Styles.TabControl.Standard.VisualStudio}" />
     </DataTemplate>
 
 </ResourceDictionary>
