@@ -229,7 +229,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TreeView.MetroVirtualized"
+    <Style x:Key="MahApps.Styles.TreeView.Virtualized.Metro"
            BasedOn="{StaticResource MahApps.Styles.TreeView.Metro}"
            TargetType="{x:Type TreeView}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />

@@ -630,7 +630,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ComboBox.MetroVirtualized"
+    <Style x:Key="MahApps.Styles.ComboBox.Virtualized.Metro"
            BasedOn="{StaticResource MahApps.Styles.ComboBox.Metro}"
            TargetType="{x:Type ComboBox}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />

@@ -63,7 +63,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ListBox.MetroVirtualized"
+    <Style x:Key="MahApps.Styles.ListBox.Virtualized.Metro"
            BasedOn="{StaticResource MahApps.Styles.ListBox.Metro}"
            TargetType="{x:Type ListBox}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />

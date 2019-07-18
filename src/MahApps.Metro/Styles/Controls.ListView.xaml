@@ -139,7 +139,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ListView.MetroVirtualized"
+    <Style x:Key="MahApps.Styles.ListView.Virtualized.Metro"
            BasedOn="{StaticResource MahApps.Styles.ListView.Metro}"
            TargetType="{x:Type ListView}">
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
