@@ -509,7 +509,7 @@
     </ControlTemplate>
 
     <!--  Slider Win10 Style  -->
-    <Style x:Key="MahApps.Styles.Slider.Metro.Win10" TargetType="{x:Type Slider}">
+    <Style x:Key="MahApps.Styles.Slider.Win10" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />

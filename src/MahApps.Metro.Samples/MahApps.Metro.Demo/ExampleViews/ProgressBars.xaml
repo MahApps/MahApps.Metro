@@ -51,7 +51,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Win10}"
                             Value="25" />
                     <ProgressBar Width="250"
                                  Margin="4"
@@ -131,7 +131,7 @@
                             Minimum="0"
                             Orientation="Horizontal"
                             SmallChange="1"
-                            Style="{DynamicResource MahApps.Styles.Slider.Metro.Win10}"
+                            Style="{DynamicResource MahApps.Styles.Slider.Win10}"
                             Value="25" />
                     <Controls:MetroProgressBar Width="250"
                                                Margin="4"
