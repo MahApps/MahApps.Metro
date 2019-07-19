@@ -151,7 +151,7 @@
                               BorderThickness="0"
                               ItemsSource="{Binding Artists, Mode=OneWay}"
                               SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized.Metro}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
@@ -166,7 +166,7 @@
                              DisplayMemberPath="Title"
                              ItemsSource="{Binding Albums, Mode=OneWay}"
                              SelectedIndex="0"
-                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized.Metro}" />
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
                 </TabItem>
                 <TabItem Header="Slider">
                     <StackPanel Orientation="Vertical">

@@ -287,7 +287,7 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ListBoxStyle" Value="{DynamicResource MahApps.Styles.ListBox.Virtualized.Metro}" />
+        <Setter Property="ListBoxStyle" Value="{DynamicResource MahApps.Styles.ListBox.Virtualized}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

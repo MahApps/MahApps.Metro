@@ -5,7 +5,7 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <Style x:Key="MahApps.Styles.TabControl.Metro" TargetType="{x:Type TabControl}">
+    <Style x:Key="MahApps.Styles.TabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <!--  special property for header font size  -->
@@ -100,7 +100,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TabItem.Metro" TargetType="TabItem">
+    <Style x:Key="MahApps.Styles.TabItem" TargetType="TabItem">
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=Background, Mode=OneWay, FallbackValue=Transparent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0" />

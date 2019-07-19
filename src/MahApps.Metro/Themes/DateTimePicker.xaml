@@ -108,7 +108,7 @@
         <system:Int32>59</system:Int32>
     </x:Array>
 
-    <Style x:Key="MahApps.Styles.TimePickerBase.Metro" TargetType="{x:Type Controls:TimePickerBase}">
+    <Style x:Key="MahApps.Styles.TimePickerBase" TargetType="{x:Type Controls:TimePickerBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -181,7 +181,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -431,12 +431,12 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Metro}" TargetType="{x:Type Controls:DateTimePicker}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase}" TargetType="{x:Type Controls:DateTimePicker}">
         <Setter Property="Controls:TextBoxHelper.Watermark" Value="Select a date" />
         <Setter Property="IsTodayHighlighted" Value="True" />
     </Style>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase.Metro}" TargetType="{x:Type Controls:TimePicker}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TimePickerBase}" TargetType="{x:Type Controls:TimePicker}">
         <Setter Property="Controls:TextBoxHelper.Watermark" Value="Select a time" />
     </Style>
 </ResourceDictionary>

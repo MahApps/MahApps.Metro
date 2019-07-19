@@ -47,7 +47,7 @@
                      Fill="{Binding ColorBrush, Mode=OneWay}" />
 
             <Style x:Key="AppThemeMenuItemStyle"
-                   BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -55,7 +55,7 @@
             </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
-                   BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -320,7 +320,7 @@
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
-            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar.Metro}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}" />
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>

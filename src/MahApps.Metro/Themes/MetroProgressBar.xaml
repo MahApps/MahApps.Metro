@@ -5,7 +5,7 @@
 
     <System:Double x:Key="MahApps.Sizes.ProgressBar.MinHeight">6</System:Double>
 
-    <Style x:Key="MahApps.Styles.MetroProgressBar.Metro" TargetType="{x:Type Controls:MetroProgressBar}">
+    <Style x:Key="MahApps.Styles.MetroProgressBar" TargetType="{x:Type Controls:MetroProgressBar}">
         <Setter Property="Background" Value="#1FFFFFFF" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />

@@ -102,7 +102,7 @@
                 <ToggleButton Width="48"
                               Height="48"
                               Margin="4"
-                              Style="{DynamicResource MahApps.Styles.ToggleButton.MetroCircle}">
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -111,7 +111,7 @@
                               Height="48"
                               Margin="4"
                               IsEnabled="False"
-                              Style="{DynamicResource MahApps.Styles.ToggleButton.MetroCircle}">
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -196,7 +196,7 @@
                     HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
-                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Metro}"
+                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
                        TargetType="{x:Type Controls:ToggleSwitch}">
                     <Setter Property="OffLabel" Value="False" />
                     <Setter Property="OffSwitchBrush" Value="Red" />
@@ -204,7 +204,7 @@
                     <Setter Property="OnSwitchBrush" Value="Green" />
                 </Style>
                 <Style x:Key="CustomMetroToggleSwitchButton"
-                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton.Metro}"
+                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
                        TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Setter Property="OffSwitchBrush" Value="DarkRed" />
                     <Setter Property="OnSwitchBrush" Value="DarkGreen" />

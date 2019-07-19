@@ -65,7 +65,7 @@
                  options:Freeze="true" />
 
     <Style x:Key="MahApps.Styles.ScrollViewer.Hamburger"
-           BasedOn="{StaticResource MahApps.Styles.ScrollViewer.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
            TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
             <Setter.Value>
@@ -180,7 +180,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerBase"
-           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -296,7 +296,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ListBox.HamburgerMenu"
-           BasedOn="{StaticResource MahApps.Styles.ListBox.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ListBox}"
            TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />

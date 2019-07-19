@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Metro}" TargetType="{x:Type Controls:MetroHeader}">
+            <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
                 <Setter Property="HeaderTemplate">
                     <Setter.Value>
                         <DataTemplate>

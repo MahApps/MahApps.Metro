@@ -11,7 +11,7 @@
 
     <Converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter" />
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.Metro}" TargetType="{x:Type Controls:MetroTabItem}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type Controls:MetroTabItem}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">

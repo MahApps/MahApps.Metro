@@ -2,17 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  never ever make a default style for TextBlock in App.xaml !!!  -->
-    <Style x:Key="MahApps.Styles.TextBlock.Metro" TargetType="{x:Type TextBlock}" />
+    <Style x:Key="MahApps.Styles.TextBlock" TargetType="{x:Type TextBlock}" />
 
-    <Style x:Key="MahApps.Styles.TextBlock.Watermark.Metro"
-           BasedOn="{StaticResource MahApps.Styles.TextBlock.Metro}"
+    <Style x:Key="MahApps.Styles.TextBlock.Watermark"
+           BasedOn="{StaticResource MahApps.Styles.TextBlock}"
            TargetType="{x:Type TextBlock}">
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Opacity" Value="0.6" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBlock.AutoCollapsing.Metro"
-           BasedOn="{StaticResource MahApps.Styles.TextBlock.Metro}"
+    <Style x:Key="MahApps.Styles.TextBlock.AutoCollapsing"
+           BasedOn="{StaticResource MahApps.Styles.TextBlock}"
            TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FloatingWatermark}" />
         <Setter Property="Opacity" Value="0.6" />

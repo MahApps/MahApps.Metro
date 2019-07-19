@@ -222,7 +222,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.WindowButtonCommands.Metro" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <Style x:Key="MahApps.Styles.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
@@ -243,7 +243,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Win10"
-           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands}"
            TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindowClose.Dark.Win10}" />
         <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindowClose.Light.Win10}" />

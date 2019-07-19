@@ -12,7 +12,7 @@
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" TakeThicknessSide="Left" />
 
     <Style x:Key="MahApps.Styles.ToggleSwitchButton.Win10"
-           BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
            TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -136,7 +136,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleSwitch.Win10"
-           BasedOn="{StaticResource MahApps.Styles.ToggleSwitch.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentDirection" Value="RightToLeft" />
         <Setter Property="ContentPadding" Value="0 0 10 0" />

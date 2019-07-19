@@ -30,7 +30,7 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu.Metro}" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

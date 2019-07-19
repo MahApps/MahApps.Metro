@@ -79,42 +79,42 @@
 
     <!--  note: default style for textblock is now in MetroWindow !!!  -->
 
-    <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup.Metro}" TargetType="{x:Type Controls:CustomValidationPopup}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToolTip.Metro}" TargetType="ToolTip" />
+    <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type Controls:CustomValidationPopup}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolTip}" TargetType="ToolTip" />
     <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase.Metro}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase.Metro}" TargetType="RepeatButton" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.Metro}" TargetType="ToggleButton" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}" TargetType="TextBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.Metro}" TargetType="RichTextBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Metro}" TargetType="Slider" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Label.Metro}" TargetType="Label" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabItem.Metro}" TargetType="TabItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TabControl.Metro}" TargetType="TabControl" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Metro}" TargetType="ScrollBar" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Metro}" TargetType="RadioButton" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar.Metro}" TargetType="ProgressBar" />
-    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.Metro}" TargetType="PasswordBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Metro}" TargetType="CheckBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.Metro}" TargetType="ComboBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Metro}" TargetType="ComboBoxItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}" TargetType="MenuItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Menu.Metro}" TargetType="Menu" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Metro}" TargetType="ContextMenu" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Expander.Metro}" TargetType="Expander" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox.Metro}" TargetType="GroupBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Metro}" TargetType="ListBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Metro}" TargetType="ListBoxItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader.Metro}" TargetType="GridViewColumnHeader" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListView.Metro}" TargetType="ListView" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem.Metro}" TargetType="ListViewItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TreeView.Metro}" TargetType="TreeView" />
-    <Style BasedOn="{StaticResource MahApps.Styles.TreeViewItem.Metro}" TargetType="TreeViewItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.Metro}" TargetType="DatePicker" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox.Metro}" TargetType="DatePickerTextBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Calendar.Metro}" TargetType="Calendar" />
-    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid.Metro}" TargetType="DataGrid" />
-    <Style BasedOn="{StaticResource MahApps.Styles.StatusBar.Metro}" TargetType="StatusBar" />
-    <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem.Metro}" TargetType="StatusBarItem" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.Metro}" TargetType="ScrollViewer" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="ToggleButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="RichTextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Label}" TargetType="Label" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar}" TargetType="ScrollBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar}" TargetType="ProgressBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox}" TargetType="PasswordBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}" TargetType="ComboBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem}" TargetType="MenuItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Menu}" TargetType="Menu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu}" TargetType="ContextMenu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="Expander" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBox}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem}" TargetType="ListBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader}" TargetType="GridViewColumnHeader" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListView}" TargetType="ListView" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="ListViewItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeView}" TargetType="TreeView" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeViewItem}" TargetType="TreeViewItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker}" TargetType="DatePicker" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox}" TargetType="DatePickerTextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Calendar}" TargetType="Calendar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid}" TargetType="DataGrid" />
+    <Style BasedOn="{StaticResource MahApps.Styles.StatusBar}" TargetType="StatusBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="StatusBarItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer}" TargetType="ScrollViewer" />
 
 </ResourceDictionary>

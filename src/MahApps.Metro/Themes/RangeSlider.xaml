@@ -272,7 +272,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.RangeSlider.Metro" TargetType="{x:Type Controls:RangeSlider}">
+    <Style x:Key="MahApps.Styles.RangeSlider" TargetType="{x:Type Controls:RangeSlider}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />

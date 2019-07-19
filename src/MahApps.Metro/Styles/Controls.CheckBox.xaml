@@ -4,7 +4,7 @@
 
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
-    <Style x:Key="MahApps.Styles.CheckBox.Metro" TargetType="CheckBox">
+    <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="BorderThickness" Value="1" />

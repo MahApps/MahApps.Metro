@@ -250,7 +250,7 @@
         </ControlTemplate.Resources>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.WindowCommandsItem.Metro" TargetType="{x:Type Controls:WindowCommandsItem}">
+    <Style x:Key="MahApps.Styles.WindowCommandsItem" TargetType="{x:Type Controls:WindowCommandsItem}">
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.Foreground, Mode=OneWay}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MinHeight" Value="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindowCommands.ParentWindow.TitleBarHeight, Mode=OneWay}" />
@@ -287,7 +287,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.WindowCommands.Metro" TargetType="{x:Type Controls:WindowCommands}">
+    <Style x:Key="MahApps.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Dark}" />

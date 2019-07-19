@@ -9,11 +9,11 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MahApps.Styles.DatePicker.Metro" TargetType="{x:Type DatePicker}">
+    <Style x:Key="MahApps.Styles.DatePicker" TargetType="{x:Type DatePicker}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Base.Metro}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Base}" />
         <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
@@ -97,7 +97,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing.Metro}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -182,7 +182,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.DatePickerTextBox.Metro" TargetType="{x:Type DatePickerTextBox}">
+    <Style x:Key="MahApps.Styles.DatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
@@ -270,7 +270,7 @@
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   Style="{DynamicResource MahApps.Styles.TextBlock.Watermark.Metro}"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                    TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />

@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <!--  Tooltip Style  -->
-    <Style x:Key="MahApps.Styles.ToolTip.Metro" TargetType="ToolTip">
+    <Style x:Key="MahApps.Styles.ToolTip" TargetType="ToolTip">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="1" />

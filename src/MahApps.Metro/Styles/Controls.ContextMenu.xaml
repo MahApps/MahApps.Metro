@@ -34,7 +34,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Menu.Metro" TargetType="{x:Type Menu}">
+    <Style x:Key="MahApps.Styles.Menu" TargetType="{x:Type Menu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Menu.Background}" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Menu}" />
@@ -59,7 +59,7 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ContextMenu.Metro" TargetType="{x:Type ContextMenu}">
+    <Style x:Key="MahApps.Styles.ContextMenu" TargetType="{x:Type ContextMenu}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ContextMenu.Background}" />
         <Setter Property="Block.TextAlignment" Value="Left" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ContextMenu.Border}" />
@@ -121,7 +121,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.MenuItem.Metro" TargetType="{x:Type MenuItem}">
+    <Style x:Key="MahApps.Styles.MenuItem" TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.Background}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
@@ -149,20 +149,20 @@
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.SuggestionMenuItemStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=CommandParameter}" />
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.IgnoreAllMenuItemStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="Ignore All" />
     </Style>
 
     <Style x:Key="{x:Static controls:Spelling.NoSuggestionsMenuItemStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.MenuItem.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.MenuItem}"
            TargetType="{x:Type MenuItem}">
         <Setter Property="Header" Value="(no spelling suggestions)" />
         <Setter Property="IsEnabled" Value="False" />
@@ -172,10 +172,10 @@
            BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}"
            TargetType="{x:Type Separator}" />
 
-    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MahApps.Styles.ContextMenu.Metro}">
-        <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
-        <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
-        <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem.Metro}" />
+    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MahApps.Styles.ContextMenu}">
+        <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem}" />
+        <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem}" />
+        <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem}" />
     </ContextMenu>
 
     <Style x:Key="MahApps.Styles.RepeatButton.MenuScroll"

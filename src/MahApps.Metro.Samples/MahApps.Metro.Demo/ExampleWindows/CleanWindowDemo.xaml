@@ -121,7 +121,7 @@
                       Header="artists">
                 <ListBox x:Name="artist"
                          ItemsSource="{x:Static models:SampleData.Artists}"
-                         Style="{DynamicResource MahApps.Styles.ListBox.Virtualized.Metro}">
+                         Style="{DynamicResource MahApps.Styles.ListBox.Virtualized}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:Artist}">
                             <TextBlock>
@@ -147,7 +147,7 @@
                 <Controls:MetroTabItem Header="albums">
                     <ListBox x:Name="albums"
                              ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
-                             Style="{DynamicResource MahApps.Styles.ListBox.Virtualized.Metro}">
+                             Style="{DynamicResource MahApps.Styles.ListBox.Virtualized}">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type models:Album}">
                                 <TextBlock>

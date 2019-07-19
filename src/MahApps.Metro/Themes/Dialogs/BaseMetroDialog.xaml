@@ -108,7 +108,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.BaseMetroDialog.Metro" TargetType="{x:Type Dialogs:BaseMetroDialog}">
+    <Style x:Key="MahApps.Styles.BaseMetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
         <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Sizes.Font.DialogMessage}" />
         <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Sizes.Font.DialogTitle}" />

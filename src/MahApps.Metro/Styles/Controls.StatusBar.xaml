@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Styles.StatusBarItem.Metro" TargetType="{x:Type StatusBarItem}">
+    <Style x:Key="MahApps.Styles.StatusBarItem" TargetType="{x:Type StatusBarItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="3" />
@@ -29,7 +29,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Separator.StatusBar.Metro" TargetType="{x:Type Separator}">
+    <Style x:Key="MahApps.Styles.Separator.StatusBar" TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="MinHeight" Value="1" />
         <Setter Property="MinWidth" Value="1" />
@@ -48,7 +48,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.StatusBar.Metro" TargetType="{x:Type StatusBar}">
+    <Style x:Key="MahApps.Styles.StatusBar" TargetType="{x:Type StatusBar}">
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.StatusBar}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />

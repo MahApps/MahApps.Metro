@@ -6,13 +6,13 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.StatusBar.Clean"
-           BasedOn="{StaticResource MahApps.Styles.StatusBar.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.StatusBar}"
            TargetType="{x:Type StatusBar}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Separator.Clean"
-           BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}"
            TargetType="{x:Type Separator}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
     </Style>

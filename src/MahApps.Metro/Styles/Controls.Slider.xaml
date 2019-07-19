@@ -256,7 +256,7 @@
     </ControlTemplate>
 
     <!--  Slider Style  -->
-    <Style x:Key="MahApps.Styles.Slider.Metro" TargetType="{x:Type Slider}">
+    <Style x:Key="MahApps.Styles.Slider" TargetType="{x:Type Slider}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />

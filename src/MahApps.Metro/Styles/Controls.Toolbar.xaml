@@ -74,11 +74,11 @@
 
     <!--  Style for text box inside a toolbar if needed  -->
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.TextBox.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}" />
 
     <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.ComboBox.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox}"
            TargetType="{x:Type ComboBox}" />
 
     <!--  Style the toolbar thumb  -->

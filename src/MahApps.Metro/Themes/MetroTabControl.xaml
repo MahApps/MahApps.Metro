@@ -160,7 +160,7 @@
     </ControlTemplate>
 
     <Style x:Key="{x:Type Controls:MetroTabControl}"
-           BasedOn="{StaticResource MahApps.Styles.TabControl.Metro}"
+           BasedOn="{StaticResource MahApps.Styles.TabControl}"
            TargetType="{x:Type Controls:MetroTabControl}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroTabControl.DoNotKeepVisualTreeInMemoryWhenChangingTabs}" />
         <Style.Triggers>
