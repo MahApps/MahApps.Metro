@@ -14,7 +14,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Base.Metro}" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMahApps.Styles.ContextMenu.Metro}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
@@ -184,7 +184,7 @@
 
     <Style x:Key="MahApps.Styles.DatePickerTextBox.Metro" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMahApps.Styles.ContextMenu.Metro}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
