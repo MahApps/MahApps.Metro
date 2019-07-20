@@ -183,6 +183,8 @@
                 <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
                                                       Header="Price"
                                                       Minimum="0"
+                                                      Width="200"
+                                                      TextAlignment="Right"
                                                       StringFormat="{}{0:C}" />
             </DataGrid.Columns>
             <DataGrid.Style>

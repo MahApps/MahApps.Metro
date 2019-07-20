@@ -111,6 +111,7 @@ namespace MahApps.Metro.Controls
             SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
             SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
 
+            SyncColumnProperty(this, numericUpDown, TextAlignmentProperty, NumericUpDown.TextAlignmentProperty);
             SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
             SyncColumnProperty(this, numericUpDown, CultureProperty, NumericUpDown.CultureProperty);
             SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
@@ -234,6 +235,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (CultureInfo)this.GetValue(CultureProperty); }
             set { this.SetValue(CultureProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty TextAlignmentProperty =
+            NumericUpDown.TextAlignmentProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata(TextAlignment.Left, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public TextAlignment TextAlignment
+        {
+            get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
+            set { this.SetValue(TextAlignmentProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>

@@ -36,6 +36,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="{Binding Path=TextAlignment, RelativeSource={RelativeSource AncestorType=DataGridCell}}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.NumericUpDown.DataGridColumnEditing"
