@@ -172,7 +172,7 @@
            BasedOn="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}"
            TargetType="{x:Type Separator}" />
 
-    <ContextMenu x:Key="TextBoxMetroContextMenu" Style="{StaticResource MahApps.Styles.ContextMenu}">
+    <ContextMenu x:Key="MahApps.TextBox.ContextMenu" Style="{StaticResource MahApps.Styles.ContextMenu}">
         <MenuItem Command="ApplicationCommands.Cut" Style="{DynamicResource MahApps.Styles.MenuItem}" />
         <MenuItem Command="ApplicationCommands.Copy" Style="{DynamicResource MahApps.Styles.MenuItem}" />
         <MenuItem Command="ApplicationCommands.Paste" Style="{DynamicResource MahApps.Styles.MenuItem}" />
