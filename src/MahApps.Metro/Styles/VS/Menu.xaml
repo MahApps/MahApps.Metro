@@ -7,19 +7,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Separator">
                     <Border Margin="25 0 0 0"
-                            BorderBrush="{DynamicResource MenuSeparatorBorderBrush}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.MenuSeparator.Border}"
                             BorderThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="StandardMenu" TargetType="{x:Type Menu}">
-        <Setter Property="Background" Value="{DynamicResource LightBackground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+    <Style x:Key="MahApps.Styles.Menu.Standard.VisualStudio" TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.LightBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
     </Style>
 
-    <Style x:Key="StandardMenuItem" TargetType="{x:Type MenuItem}">
+    <Style x:Key="MahApps.Styles.MenuItem.Standard.VisualStudio" TargetType="{x:Type MenuItem}">
         <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Menu}}}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -75,8 +75,8 @@
                                 <Grid Margin="0 0 5 5">
                                     <!--  Border 2  -->
                                     <Border x:Name="SubMenuBorder"
-                                            Background="{DynamicResource SubmenuItemBackground}"
-                                            BorderBrush="{DynamicResource MenuSeparatorBorderBrush}"
+                                            Background="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.MenuSeparator.Border}"
                                             BorderThickness="1"
                                             SnapsToDevicePixels="True">
                                         <Grid x:Name="SubMenu"
@@ -95,8 +95,8 @@
                                             Margin="1 0 0 0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
-                                            Background="{DynamicResource SubmenuItemBackground}"
-                                            BorderBrush="{DynamicResource SubmenuItemBackground}"
+                                            Background="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.SubmenuItem.Background}"
                                             BorderThickness="1"
                                             SnapsToDevicePixels="False" />
                                 </Grid>
@@ -127,14 +127,14 @@
                         <Trigger Property="Role" Value="SubmenuHeader">
                             <Setter Property="DockPanel.Dock" Value="Top" />
                             <Setter Property="Padding" Value="10 3 0 3" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.SubmenuItem.Background}" />
                             <Setter TargetName="Border" Property="MinHeight" Value="22" />
                         </Trigger>
                         <Trigger Property="Role" Value="SubmenuItem">
                             <Setter Property="DockPanel.Dock" Value="Top" />
                             <Setter Property="Padding" Value="10 3 0 3" />
                             <Setter TargetName="ArrowPanel" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.SubmenuItem.Background}" />
                             <Setter TargetName="Border" Property="MinHeight" Value="22" />
                         </Trigger>
                         <MultiTrigger>
@@ -142,40 +142,40 @@
                                 <Condition Property="IsHighlighted" Value="true" />
                                 <Condition Property="Role" Value="TopLevelHeader" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHighlightedBackground}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.BackgroundHighlighted}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsHighlighted" Value="true" />
                                 <Condition Property="Role" Value="TopLevelItem" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHighlightedBackground}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.MenuItem.BackgroundHighlighted}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsHighlighted" Value="true" />
                                 <Condition Property="Role" Value="SubmenuHeader" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackgroundHighlighted}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.SubmenuItem.BackgroundHighlighted}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsHighlighted" Value="true" />
                                 <Condition Property="Role" Value="SubmenuItem" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackgroundHighlighted}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.SubmenuItem.BackgroundHighlighted}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSubmenuOpen" Value="true" />
                                 <Condition Property="Role" Value="TopLevelHeader" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource SubmenuItemBackground}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MenuSeparatorBorderBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.SubmenuItem.Background}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.MenuSeparator.Border}" />
                             <Setter TargetName="Border" Property="BorderThickness" Value="1 1 1 0" />
                         </MultiTrigger>
                         <Trigger Property="IsSubmenuOpen" Value="true">
-                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowPanelPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                         <Trigger Property="IsSuspendingPopupAnimation" Value="true">
                             <Setter TargetName="SubMenuPopup" Property="PopupAnimation" Value="None" />
@@ -184,7 +184,7 @@
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource MenuDisabledForeground}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Menu.ForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -18,7 +18,7 @@
         <TextBox x:Name="PART_TextBox"
                  Grid.Row="1"
                  Margin="0 5 0 0"
-                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                  controls:TextBoxHelper.SelectAllOnFocus="True"
                  FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
@@ -32,11 +32,11 @@
             <Button x:Name="PART_AffirmativeButton"
                     Margin="0 0 5 0"
                     Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.AccentButton}" />
+                    Style="{DynamicResource MahApps.Styles.ButtonBase.DialogsAccent}" />
             <Button x:Name="PART_NegativeButton"
                     Margin="5 0 5 0"
                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
         </StackPanel>
     </Grid>
 </Dialogs:BaseMetroDialog>

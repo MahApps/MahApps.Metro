@@ -29,7 +29,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource AccentColorBrush4}">
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="430*" />
@@ -44,7 +44,7 @@
                    FontFamily="Segoe UI"
                    FontSize="30"
                    FontWeight="Light"
-                   Foreground="{DynamicResource BlackBrush}"
+                   Foreground="{DynamicResource MahApps.Brushes.Black}"
                    Text="Only some Tiles in a WrapPanel" />
 
         <WrapPanel Grid.Row="1"
@@ -55,7 +55,7 @@
                    VerticalAlignment="Top">
             <Controls:Tile Title="Mail"
                            Margin="3"
-                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
                            Background="Teal"
                            HorizontalTitleAlignment="Right"
                            Style="{StaticResource LargeTileStyle}">
@@ -65,7 +65,7 @@
             </Controls:Tile>
             <Controls:Tile Title="Desktop"
                            Margin="3"
-                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
                            Style="{StaticResource LargeTileStyle}">
                 <iconPacks:PackIconFontAwesome Width="40"
                                                Height="40"

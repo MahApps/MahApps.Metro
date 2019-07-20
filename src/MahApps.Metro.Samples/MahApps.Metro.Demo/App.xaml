@@ -17,7 +17,7 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
 
-            <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
+            <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
                 <Setter Property="CloseOnMouseLeftButtonDown" Value="False" />
                 <Setter Property="ShowValidationErrorOnMouseOver" Value="False" />
             </Style>

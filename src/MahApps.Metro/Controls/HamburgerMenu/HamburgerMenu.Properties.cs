@@ -379,7 +379,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeItemFocusVisualStyle()
         {
-            _defaultItemFocusVisualTemplate = _defaultItemFocusVisualTemplate ?? TryFindResource("HamburgerMenuItemFocusVisualTemplate") as ControlTemplate;
+            _defaultItemFocusVisualTemplate = _defaultItemFocusVisualTemplate ?? TryFindResource("MahApps.Templates.HamburgerMenuItem.FocusVisual") as ControlTemplate;
             if (_defaultItemFocusVisualTemplate != null)
             {
                 var focusVisualStyle = new Style(typeof(Control));

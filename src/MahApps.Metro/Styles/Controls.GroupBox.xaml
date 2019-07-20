@@ -7,14 +7,14 @@
 
     <Thickness x:Key="GroupBoxHeaderThemePadding">4</Thickness>
 
-    <Style x:Key="MetroGroupBox" TargetType="{x:Type GroupBox}">
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+    <Style x:Key="MahApps.Styles.GroupBox" TargetType="{x:Type GroupBox}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

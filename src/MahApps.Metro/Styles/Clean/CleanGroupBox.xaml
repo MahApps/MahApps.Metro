@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="CleanGroupBoxStyleKey" TargetType="GroupBox">
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+    <Style x:Key="MahApps.Styles.GroupBox.Clean" TargetType="GroupBox">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="0.3" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="16" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GroupBox">

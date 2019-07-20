@@ -5,15 +5,15 @@
 
     <!--  ********************************** RadioButton Style **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
-    <Style x:Key="MetroRadioButton" TargetType="RadioButton">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
+    <Style x:Key="MahApps.Styles.RadioButton" TargetType="RadioButton">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource CheckBoxMouseOverBrush}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Label.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Padding" Value="6 0 0 0" />
         <Setter Property="Template">
@@ -27,7 +27,7 @@
                         <Grid x:Name="PART_CHECKBOX"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Rectangle Margin="-6 0" Fill="{DynamicResource TransparentWhiteBrush}" />
+                            <Rectangle Margin="-6 0" Fill="{DynamicResource MahApps.Brushes.TransparentWhite}" />
                             <Ellipse x:Name="normal"
                                      Width="18"
                                      Height="18"
@@ -37,12 +37,12 @@
                             <Ellipse x:Name="Checked1"
                                      Width="10"
                                      Height="10"
-                                     Fill="{DynamicResource HighlightBrush}"
+                                     Fill="{DynamicResource MahApps.Brushes.Highlight}"
                                      Opacity="0" />
                             <Ellipse x:Name="disabled"
                                      Width="18"
                                      Height="18"
-                                     Fill="{DynamicResource SemiTransparentWhiteBrush}"
+                                     Fill="{DynamicResource MahApps.Brushes.SemiTransparentWhite}"
                                      Opacity="0"
                                      StrokeThickness="{TemplateBinding BorderThickness}" />
                         </Grid>
@@ -91,7 +91,7 @@
                             <Setter TargetName="normal" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="normal" Property="Stroke" Value="{DynamicResource HighlightBrush}" />
+                            <Setter TargetName="normal" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="normal" Property="Stroke" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />

@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Style for toolbar buttons  -->
-    <Style x:Key="ToolBarButtonBaseStyle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.ToolBar" TargetType="{x:Type ButtonBase}">
         <Style.Resources>
             <!--  Disabled all images placed inside a button - most common scenario  -->
             <Style TargetType="Image">
@@ -24,8 +24,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="Border"
-                            Background="{DynamicResource TransparentWhiteBrush}"
-                            BorderBrush="{DynamicResource TransparentWhiteBrush}"
+                            Background="{DynamicResource MahApps.Brushes.TransparentWhite}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.TransparentWhite}"
                             BorderThickness="1">
                         <ContentPresenter Margin="2"
                                           HorizontalAlignment="Center"
@@ -34,23 +34,23 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="CheckBox.IsChecked" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -60,29 +60,29 @@
 
     <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type Button}" />
     <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type ToggleButton}" />
     <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type CheckBox}" />
     <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
-           BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
            TargetType="{x:Type RadioButton}" />
 
     <!--  Style for text box inside a toolbar if needed  -->
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
-           BasedOn="{StaticResource MetroTextBox}"
+           BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}" />
 
     <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
-           BasedOn="{StaticResource MetroComboBox}"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox}"
            TargetType="{x:Type ComboBox}" />
 
     <!--  Style the toolbar thumb  -->
-    <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
+    <Style x:Key="MahApps.Styles.Thumb.ToolBar" TargetType="{x:Type Thumb}">
         <Setter Property="Cursor" Value="SizeAll" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
@@ -100,7 +100,7 @@
                                               Viewport="0,0,5,4"
                                               ViewportUnits="Absolute">
                                     <DrawingBrush.Drawing>
-                                        <GeometryDrawing Brush="{DynamicResource GrayBrush3}">
+                                        <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray3}">
                                             <GeometryDrawing.Geometry>
                                                 <GeometryGroup>
                                                     <GeometryGroup.Children>
@@ -121,7 +121,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
@@ -137,34 +137,34 @@
                                        Height="1"
                                        Margin="2 8"
                                        VerticalAlignment="Bottom"
-                                       Fill="{DynamicResource BlackBrush}" />
+                                       Fill="{DynamicResource MahApps.Brushes.Black}" />
                             <Path Name="Arrow"
                                   Margin="2 3"
                                   VerticalAlignment="Bottom"
                                   Data="M 0 0 L 6 0 3 3 Z"
-                                  Fill="{DynamicResource BlackBrush}" />
+                                  Fill="{DynamicResource MahApps.Brushes.Black}" />
                             <ContentPresenter />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource TransparentWhiteBrush}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource TransparentWhiteBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -180,8 +180,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolBar}">
                     <Border x:Name="Border"
-                            Background="{DynamicResource TransparentWhiteBrush}"
-                            BorderBrush="{DynamicResource TransparentWhiteBrush}"
+                            Background="{DynamicResource MahApps.Brushes.TransparentWhite}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.TransparentWhite}"
                             BorderThickness="1"
                             CornerRadius="2">
                         <DockPanel>
@@ -189,7 +189,7 @@
                                           DockPanel.Dock="Right"
                                           IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           IsEnabled="{TemplateBinding HasOverflowItems}"
-                                          Style="{StaticResource ToolBarOverflowButtonStyle}">
+                                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}">
                                 <Popup x:Name="OverflowPopup"
                                        AllowsTransparency="true"
                                        Focusable="false"
@@ -198,8 +198,8 @@
                                        PopupAnimation="Slide"
                                        StaysOpen="false">
                                     <Border x:Name="DropDownBorder"
-                                            Background="{DynamicResource ControlBackgroundBrush}"
-                                            BorderBrush="{DynamicResource ControlBorderBrush}"
+                                            Background="{DynamicResource MahApps.Brushes.Control.Background}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.Controls.Border}"
                                             BorderThickness="1">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
                                                               Margin="2"
@@ -214,7 +214,7 @@
 
                             <Thumb x:Name="ToolBarThumb"
                                    Width="10"
-                                   Style="{StaticResource ToolBarThumbStyle}" />
+                                   Style="{StaticResource MahApps.Styles.Thumb.ToolBar}" />
 
                             <ToolBarPanel x:Name="PART_ToolBarPanel"
                                           Margin="0 1 2 2"
@@ -236,7 +236,7 @@
 
     <!--  Style the toolbar tray  -->
     <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
     </Style>
 
 </ResourceDictionary>

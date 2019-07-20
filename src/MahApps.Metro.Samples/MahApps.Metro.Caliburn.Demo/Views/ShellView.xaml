@@ -8,7 +8,7 @@
                       Title="Flyouts Demo"
                       Width="800"
                       Height="600"
-                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                       BorderThickness="1"
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
