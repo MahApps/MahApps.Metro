@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb" TargetType="{x:Type Controls:MetroThumb}">
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb" TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="True" />
@@ -18,8 +18,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb"
-           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb}"
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.VerticalMiddleThumb"
+           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb}"
            TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -88,7 +88,7 @@
                                      MinWidth="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb}" />
+                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="{DynamicResource HorizontalThumbWidth}"
                                      Height="{DynamicResource MahApps.Sizes.Slider.HorizontalThumb.Height}"
@@ -208,7 +208,7 @@
                                      MinHeight="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb}" />
+                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSlider.VerticalMiddleThumb}" />
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="{DynamicResource VerticalThumbWidth}"
                                      Height="{DynamicResource VerticalThumbHeight}"
@@ -299,7 +299,7 @@
 
     <!--  Win10 RangeSlider style  -->
 
-    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10" TargetType="{x:Type Controls:MetroThumb}">
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb.Win10" TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="True" />
@@ -315,8 +315,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb.Win10"
-           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10}"
+    <Style x:Key="MahApps.Styles.MetroThumb.RangeSlider.VerticalMiddleThumb.Win10"
+           BasedOn="{StaticResource MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb.Win10}"
            TargetType="{x:Type Controls:MetroThumb}">
         <Setter Property="Template">
             <Setter.Value>
@@ -385,7 +385,7 @@
                                      MinWidth="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSliderHorizontalMiddleThumb.Win10}" />
+                                     Style="{DynamicResource MahApps.Styles.MetroThumb.RangeSlider.HorizontalMiddleThumb.Win10}" />
                 <Controls:MetroThumb x:Name="PART_RightThumb"
                                      Width="8"
                                      Height="24"
@@ -520,7 +520,7 @@
                                      MinHeight="{TemplateBinding MinRangeWidth}"
                                      Cursor="Hand"
                                      Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:SliderHelper.TrackValueFillBrush)}"
-                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSliderVerticalMiddleThumb.Win10}" />
+                                     Style="{StaticResource MahApps.Styles.MetroThumb.RangeSlider.VerticalMiddleThumb.Win10}" />
                 <Controls:MetroThumb x:Name="PART_LeftThumb"
                                      Width="24"
                                      Height="8"
