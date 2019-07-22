@@ -9,14 +9,14 @@
 
     <Style x:Key="MahApps.Styles.Button.Dialogs"
            BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
-           TargetType="{x:Type Button}">
+           TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.DialogsAccent"
+    <Style x:Key="MahApps.Styles.Button.Dialogs.Accent"
            BasedOn="{StaticResource MahApps.Styles.ButtonBase.AccentedSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
