@@ -323,7 +323,7 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MahApps.Styles.Expander.Standard.VisualStudio" TargetType="{x:Type Expander}">
+    <Style x:Key="MahApps.Styles.Expander.VisualStudio" TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
