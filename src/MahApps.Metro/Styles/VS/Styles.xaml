@@ -13,7 +13,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Expander.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.Button.Window.Standard.VisualStudio}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Button.Standard.VisualStudio}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Standard.VisualStudio}" TargetType="ListBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Standard.VisualStudio}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.Standard.VisualStudio}" TargetType="Menu" />
