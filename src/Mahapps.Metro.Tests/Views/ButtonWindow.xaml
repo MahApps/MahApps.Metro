@@ -11,6 +11,6 @@
         <Button Name="DefaultButton" Content="SomeText" />
         <Button Name="SquareButton"
                 Content="SomeText"
-                Style="{DynamicResource MahApps.Styles.ButtonBase.Square}" />
+                Style="{DynamicResource MahApps.Styles.Button.Square}" />
     </StackPanel>
 </controls:MetroWindow>

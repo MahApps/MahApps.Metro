@@ -86,10 +86,10 @@
                                  Columns="2">
                         <Button Margin="10"
                                 Content="Create"
-                                Style="{DynamicResource MahApps.Styles.ButtonBase.Square}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                         <Button Margin="10"
                                 Content="Cancel"
-                                Style="{DynamicResource MahApps.Styles.ButtonBase.Square}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                     </UniformGrid>
 
                 </Grid>

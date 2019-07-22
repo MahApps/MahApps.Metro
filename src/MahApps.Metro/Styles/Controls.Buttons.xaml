@@ -384,7 +384,7 @@
     </Style>
 
     <!--  style for default button  -->
-    <Style x:Key="MahApps.Styles.ButtonBase" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.Button" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -449,7 +449,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.Square" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.Button.Square" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -525,15 +525,15 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.AccentedSquare"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
+    <Style x:Key="MahApps.Styles.Button.AccentedSquare"
+           BasedOn="{StaticResource MahApps.Styles.Button.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.HighlightedSquare"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
+    <Style x:Key="MahApps.Styles.Button.HighlightedSquare"
+           BasedOn="{StaticResource MahApps.Styles.Button.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
@@ -758,7 +758,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.MetroSquare" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.Button.MetroSquare" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
@@ -871,8 +871,8 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.MetroAccentSquare"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.MetroSquare}"
+    <Style x:Key="MahApps.Styles.Button.MetroAccentSquare"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />

@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Square}"
+           BasedOn="{StaticResource MahApps.Styles.Button.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
@@ -17,7 +17,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.Accent"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.AccentedSquare}"
+           BasedOn="{StaticResource MahApps.Styles.Button.AccentedSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
@@ -26,7 +26,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.AccentHighlight"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.HighlightedSquare}"
+           BasedOn="{StaticResource MahApps.Styles.Button.HighlightedSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />
