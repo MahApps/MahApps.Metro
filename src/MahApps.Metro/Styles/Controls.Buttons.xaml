@@ -349,7 +349,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroWindowClose.Light.Win10"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Light.Win10"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
@@ -366,7 +366,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroWindowClose.Dark.Win10"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Dark.Win10"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
