@@ -144,7 +144,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.FocusVisualStyle.MetroCircle">
+    <Style x:Key="MahApps.Styles.ButtonBase.FocusVisualStyle.Circle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
@@ -164,7 +164,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.FocusVisualStyle.MetroCircle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.FocusVisualStyle.Circle}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -606,7 +606,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.FocusVisualStyle.MetroCircle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.ButtonBase.FocusVisualStyle.Circle}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
