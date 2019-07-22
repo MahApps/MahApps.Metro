@@ -15,6 +15,7 @@
 
     <Style BasedOn="{StaticResource MahApps.Styles.Button.Standard.VisualStudio}" TargetType="Button" />
     <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Standard.VisualStudio}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Standard.VisualStudio}" TargetType="ListBoxItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Standard.VisualStudio}" TargetType="MenuItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.Menu.Standard.VisualStudio}" TargetType="Menu" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Standard.VisualStudio}" TargetType="ScrollBar" />

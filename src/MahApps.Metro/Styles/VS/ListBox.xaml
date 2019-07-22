@@ -4,40 +4,39 @@
     <Style x:Key="MahApps.Styles.ListBox.Standard.VisualStudio" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Style.Resources>
-            <Style TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
-                <Setter Property="BorderBrush" Value="Transparent" />
-                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                            <Grid Margin="4 0 4 4">
-                                <Border Background="{TemplateBinding Background}"
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ListBoxItem.Standard.VisualStudio" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Margin="4 0 4 4">
+                        <Border Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="1"
                                         SnapsToDevicePixels="True" />
-                                <ContentPresenter Margin="8 5" />
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsMouseOver" Value="True" />
-                                        <Condition Property="IsSelected" Value="False" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
-                                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
-                                </MultiTrigger>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
-                                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </Style.Resources>
+                        <ContentPresenter Margin="8 5" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
