@@ -64,7 +64,7 @@
                                         VerticalAlignment="Top"
                                         Background="{DynamicResource MahApps.Brushes.GrayNormal}"
                                         IsTabStop="False"
-                                        Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                         Visibility="Collapsed">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
