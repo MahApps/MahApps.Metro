@@ -16,7 +16,7 @@
                     Height="34"
                     Margin="4 2 2 2"
                     VerticalAlignment="Center"
-                    Style="{DynamicResource MahApps.Styles.ButtonBase.Circle}">
+                    Style="{DynamicResource MahApps.Styles.Button.Circle}">
                 <ContentControl Width="20"
                                 Height="20"
                                 Content="M57,42V34H32.25L42.25,24H31.75L17.75,38L31.75,52H42.25L32.25,42H57Z"
@@ -28,7 +28,7 @@
                     Margin="2 2 4 2"
                     VerticalAlignment="Center"
                     IsEnabled="False"
-                    Style="{DynamicResource MahApps.Styles.ButtonBase.Circle}">
+                    Style="{DynamicResource MahApps.Styles.Button.Circle}">
                 <ContentControl Width="20"
                                 Height="20"
                                 Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
