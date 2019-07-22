@@ -10,7 +10,7 @@
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.MetroScrollBarThumbPressed" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbPressed" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PressedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.8" />
         </DoubleAnimationUsingKeyFrames>
@@ -108,7 +108,7 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbMouseOver}" />
-                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MahApps.Storyboard.MetroScrollBarThumbPressed}" />
+                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbPressed}" />
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
