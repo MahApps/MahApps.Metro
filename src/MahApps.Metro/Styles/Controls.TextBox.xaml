@@ -273,7 +273,7 @@
     <Style x:Key="MahApps.Styles.TextBox.Button"
            BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}">
-        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.ButtonBase.Chromeless}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.TextButton" Value="True" />
         <!--  change SnapsToDevicePixels to True to view a better border and validation error  -->
         <Setter Property="Template">
@@ -786,7 +786,7 @@
            BasedOn="{StaticResource MahApps.Styles.RichTextBox}"
            TargetType="{x:Type RichTextBox}">
         <Setter Property="Controls:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
-        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.ButtonBase.Chromeless}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
