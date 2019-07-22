@@ -34,7 +34,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Window.Link.VisualStudio" TargetType="Button">
+    <Style x:Key="MahApps.Styles.Button.Link.VisualStudio" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.LinkButton.Foreground}" />
         <Setter Property="Template">

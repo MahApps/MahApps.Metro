@@ -424,11 +424,11 @@
                 <Button Margin="0 10 0 3"
                         Content="Fire rocket..."
                         FontSize="14"
-                        Style="{StaticResource MahApps.Styles.Button.Window.Link.VisualStudio}" />
+                        Style="{StaticResource MahApps.Styles.Button.Link.VisualStudio}" />
                 <Button Margin="0 3 0 10"
                         Content="Throw something over board..."
                         FontSize="14"
-                        Style="{StaticResource MahApps.Styles.Button.Window.Link.VisualStudio}" />
+                        Style="{StaticResource MahApps.Styles.Button.Link.VisualStudio}" />
                 <Separator Background="#11FFFFFF" />
                 <TextBlock Margin="0 10 0 10"
                            FontSize="18"
@@ -438,11 +438,11 @@
                 <Button Margin="0 10 0 3"
                         Content="blastallenemies.cmd"
                         FontSize="14"
-                        Style="{StaticResource MahApps.Styles.Button.Window.Link.VisualStudio}" />
+                        Style="{StaticResource MahApps.Styles.Button.Link.VisualStudio}" />
                 <Button Margin="0 3 0 3"
                         Content="verysecretmessage.txt"
                         FontSize="14"
-                        Style="{StaticResource MahApps.Styles.Button.Window.Link.VisualStudio}" />
+                        Style="{StaticResource MahApps.Styles.Button.Link.VisualStudio}" />
             </StackPanel>
         </Grid>
     </DockPanel>
