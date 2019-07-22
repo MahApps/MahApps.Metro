@@ -25,7 +25,7 @@
         <Setter Property="controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.ButtonBase.DialogsAccentHighlight"
+    <Style x:Key="MahApps.Styles.Button.Dialogs.AccentHighlight"
            BasedOn="{StaticResource MahApps.Styles.ButtonBase.HighlightedSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
