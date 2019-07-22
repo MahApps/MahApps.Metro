@@ -23,7 +23,7 @@
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
-            <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+            <Storyboard x:Key="MahApps.Storyboard.MetroExpanderCollapse">
                 <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                  Storyboard.TargetProperty="(UIElement.Opacity)"
                                  To="0"
