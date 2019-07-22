@@ -11,7 +11,7 @@
 
     <System:Double x:Key="MahApps.Sizes.Font.TabItem">12</System:Double>
 
-    <Style x:Key="MahApps.Styles.TabControl.Standard.VisualStudio"
+    <Style x:Key="MahApps.Styles.TabControl.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TabControl}"
            TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background}" />
@@ -99,7 +99,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.TabItemClose.Standard.VisualStudio" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.TabItemClose.VisualStudio" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Focusable" Value="False" />
@@ -139,7 +139,7 @@
         <Setter Property="Width" Value="15" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TabItem.Standard.VisualStudio"
+    <Style x:Key="MahApps.Styles.TabItem.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TabItem}"
            TargetType="{x:Type TabItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
@@ -176,7 +176,7 @@
                             <Button x:Name="PART_CloseButton"
                                     VerticalAlignment="Center"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.Button.TabItemClose.Standard.VisualStudio}"
+                                    Style="{DynamicResource MahApps.Styles.Button.TabItemClose.VisualStudio}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseButtonEnabled), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
@@ -260,7 +260,7 @@
                     IsSynchronizedWithCurrentItem="True"
                     ItemTemplate="{StaticResource MahApps.Templates.TabItem.Closable.VisualStudio}"
                     ItemsSource="{Binding}"
-                    Style="{DynamicResource MahApps.Styles.TabControl.Standard.VisualStudio}" />
+                    Style="{DynamicResource MahApps.Styles.TabControl.VisualStudio}" />
     </DataTemplate>
 
 </ResourceDictionary>

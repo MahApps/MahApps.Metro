@@ -4,13 +4,13 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Storyboard x:Key="MahApps.Storyboard.MetroScrollBarThumbMouseOver" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbMouseOver" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.6" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.MetroScrollBarThumbPressed" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbPressed" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PressedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.8" />
         </DoubleAnimationUsingKeyFrames>
@@ -19,7 +19,7 @@
     <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarSmall" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Height" Value="{DynamicResource MahApps.Templates.ScrollBar.VerticalRepeatButtonHeight}" />
+        <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Interval" Value="50" />
         <Setter Property="IsTabStop" Value="False" />
@@ -61,7 +61,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Width" Value="{DynamicResource MahApps.Templates.ScrollBar.HorizontalRepeatButtonWidth}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarLarge" TargetType="{x:Type RepeatButton}">
@@ -107,8 +107,8 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MahApps.Storyboard.MetroScrollBarThumbMouseOver}" />
-                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MahApps.Storyboard.MetroScrollBarThumbPressed}" />
+                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbMouseOver}" />
+                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbPressed}" />
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>

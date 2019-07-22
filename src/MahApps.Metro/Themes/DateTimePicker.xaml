@@ -206,7 +206,7 @@
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}">
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}">
                                 <!--  PackIconModern - Calendar14  -->
                                 <ContentControl x:Name="PART_ButtonIcon"
                                                 Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"

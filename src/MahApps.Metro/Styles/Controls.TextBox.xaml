@@ -157,7 +157,7 @@
                                     FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
@@ -273,7 +273,7 @@
     <Style x:Key="MahApps.Styles.TextBox.Button"
            BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}">
-        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.ButtonBase.Chromeless}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.TextButton" Value="True" />
         <!--  change SnapsToDevicePixels to True to view a better border and validation error  -->
         <Setter Property="Template">
@@ -402,7 +402,7 @@
                                     FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.TextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
@@ -684,7 +684,7 @@
                                     FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
 
@@ -786,7 +786,7 @@
            BasedOn="{StaticResource MahApps.Styles.RichTextBox}"
            TargetType="{x:Type RichTextBox}">
         <Setter Property="Controls:TextBoxHelper.ButtonCommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
-        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.ButtonBase.Chromeless}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -888,7 +888,7 @@
                                     FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                     Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
                                     Visibility="Visible" />
                         </Grid>

@@ -51,7 +51,7 @@
                                     Grid.Column="1"
                                     Foreground="{TemplateBinding Foreground}"
                                     IsTabStop="False"
-                                    Style="{DynamicResource MahApps.Styles.ButtonBase.Chromeless}">
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}">
                                 <!--  PackIconModern - Calendar14  -->
                                 <ContentControl Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                                 Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"

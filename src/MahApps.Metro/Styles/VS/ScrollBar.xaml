@@ -137,7 +137,7 @@
         </Grid>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.ScrollBar.Standard.VisualStudio" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="MahApps.Styles.ScrollBar.VisualStudio" TargetType="{x:Type ScrollBar}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>

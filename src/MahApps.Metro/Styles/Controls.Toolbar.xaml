@@ -7,7 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Style for toolbar buttons  -->
-    <Style x:Key="MahApps.Styles.ButtonBase.ToolBar" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.Button.ToolBar" TargetType="{x:Type ButtonBase}">
         <Style.Resources>
             <!--  Disabled all images placed inside a button - most common scenario  -->
             <Style TargetType="Image">
@@ -60,16 +60,16 @@
 
     <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar}"
            TargetType="{x:Type Button}" />
     <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar}"
            TargetType="{x:Type ToggleButton}" />
     <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar}"
            TargetType="{x:Type CheckBox}" />
     <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.ToolBar}"
+           BasedOn="{StaticResource MahApps.Styles.Button.ToolBar}"
            TargetType="{x:Type RadioButton}" />
 
     <!--  Style for text box inside a toolbar if needed  -->

@@ -303,7 +303,7 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MahApps.Storyboard.MetroExpanderExpand">
+    <Storyboard x:Key="MahApps.Storyboard.ExpanderExpand">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="1"
@@ -313,7 +313,7 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.MetroExpanderCollapse">
+    <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="0"
@@ -418,10 +418,10 @@
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.MetroExpanderExpand}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderExpand}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.MetroExpanderCollapse}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderCollapse}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">

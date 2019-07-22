@@ -20,7 +20,7 @@
     <Controls:HamburgerMenuItemStyleSelector x:Key="HamburgerMenuItemOptionsStyleSelector" IsItemOptions="True" />
 
     <Style x:Key="MahApps.Styles.Button.Hamburger"
-           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Chromeless}"
+           BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
            TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="0" />
