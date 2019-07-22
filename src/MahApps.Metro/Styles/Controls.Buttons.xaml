@@ -384,7 +384,7 @@
     </Style>
 
     <!--  style for default button  -->
-    <Style x:Key="MahApps.Styles.ButtonBase.Metro" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />

@@ -81,8 +81,8 @@
 
     <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type Controls:CustomValidationPopup}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToolTip}" TargetType="ToolTip" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase.Metro}" TargetType="Button" />
-    <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase.Metro}" TargetType="RepeatButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ButtonBase}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="RichTextBox" />
