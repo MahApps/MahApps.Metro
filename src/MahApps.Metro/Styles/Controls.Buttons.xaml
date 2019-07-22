@@ -160,7 +160,7 @@
     </Style>
 
     <!--  style for WP7/Circle button  -->
-    <Style x:Key="MahApps.Styles.ButtonBase.MetroCircle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Styles.ButtonBase.Circle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="BorderThickness" Value="2" />

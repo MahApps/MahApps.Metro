@@ -144,7 +144,7 @@
                         Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style x:Key="AccentCircleButtonStyle"
-                           BasedOn="{StaticResource MahApps.Styles.ButtonBase.MetroCircle}"
+                           BasedOn="{StaticResource MahApps.Styles.ButtonBase.Circle}"
                            TargetType="{x:Type ButtonBase}">
                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         <Style.Triggers>
@@ -179,7 +179,7 @@
                         Margin="4"
                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                         IsEnabled="False"
-                        Style="{StaticResource MahApps.Styles.ButtonBase.MetroCircle}">
+                        Style="{StaticResource MahApps.Styles.ButtonBase.Circle}">
                     <Button.ContentTemplate>
                         <DataTemplate>
                             <iconPacks:PackIconModern Width="20"
@@ -318,7 +318,7 @@
                        TargetType="Controls:DropDownButton">
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.ButtonBase.MetroCircle}" />
+                    <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.ButtonBase.Circle}" />
                     <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
                     <Setter Property="Height" Value="48" />
                     <Setter Property="Width" Value="48" />

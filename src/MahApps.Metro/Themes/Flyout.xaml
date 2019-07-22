@@ -16,7 +16,7 @@
                     DockPanel.Dock="Left"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}"
-                    Style="{DynamicResource MahApps.Styles.ButtonBase.MetroCircle}"
+                    Style="{DynamicResource MahApps.Styles.ButtonBase.Circle}"
                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
