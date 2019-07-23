@@ -123,11 +123,11 @@
         <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.Accent3}" />
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderValue.Disabled" Color="{{MahApps.Brushes.SliderValue.Disabled}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Disabled" Color="{{MahApps.Brushes.SliderTrack.Disabled}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumb.Disabled" Color="{{MahApps.Brushes.SliderThumb.Disabled}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Hover" Color="{{MahApps.Brushes.SliderTrack.Hover}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Normal" Color="{{MahApps.Brushes.SliderTrack.Normal}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderValue.Disabled" Color="{{MahApps.Colors.SliderValue.Disabled}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Disabled" Color="{{MahApps.Colors.SliderTrack.Disabled}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumb.Disabled" Color="{{MahApps.Colors.SliderThumb.Disabled}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Hover" Color="{{MahApps.Colors.SliderTrack.Hover}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderTrack.Normal" Color="{{MahApps.Colors.SliderTrack.Normal}}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Flyout.Background" Color="{StaticResource MahApps.Colors.Flyout}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Flyout.Foreground" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
@@ -137,7 +137,7 @@
 
     <SolidColorBrush x:Key="MahApps.Brushes.FlatButton.Background" Color="#D5D5D5" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.FlatButton.Foreground" Color="#222222" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.FlatButton.PressedBackground" Color="{{MahApps.Brushes.FlatButton.PressedBackground}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.FlatButton.PressedBackground" Color="{{MahApps.Colors.FlatButton.PressedBackground}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.FlatButton.PressedForeground" Color="White" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.DarkIdealForegroundDisabled" Color="#ADADAD" options:Freeze="True" />
@@ -175,15 +175,15 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionFill" Color="{{MahApps.Brushes.MenuItem.SelectionFill}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionStroke" Color="{{MahApps.Brushes.MenuItem.SelectionStroke}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionFill" Color="{{MahApps.Colors.MenuItem.SelectionFill}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.SelectionStroke" Color="{{MahApps.Colors.MenuItem.SelectionStroke}}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.PressedFill" Color="{{MahApps.Brushes.TopMenuItem.PressedFill}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.PressedStroke" Color="{{MahApps.Brushes.TopMenuItem.PressedStroke}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.SelectionStroke" Color="{{MahApps.Brushes.TopMenuItem.SelectionStroke}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.PressedFill" Color="{{MahApps.Colors.TopMenuItem.PressedFill}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.PressedStroke" Color="{{MahApps.Colors.TopMenuItem.PressedStroke}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.SelectionStroke" Color="{{MahApps.Colors.TopMenuItem.SelectionStroke}}" options:Freeze="True" />
 
     <!--  original #FF9A9A9A"  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledForeground" Color="{{MahApps.Brushes.MenuItem.DisabledForeground}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledForeground" Color="{{MahApps.Colors.MenuItem.DisabledForeground}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledGlyphPanel" Color="#848589" options:Freeze="True" />
 
      <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
@@ -209,21 +209,21 @@
     <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.InactiveSelectionHighlight" Color="{StaticResource MahApps.Colors.Accent2}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.InactiveSelectionHighlightText" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.Pressed.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.Pressed.Win10}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffMouseOverBorder.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.OffMouseOverBorder.Win10}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffDisabledBorder.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.OffDisabledBorder.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.Pressed.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.Pressed.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.OffBorder.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffMouseOverBorder.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.OffMouseOverBorder.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffDisabledBorder.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.OffDisabledBorder.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffSwitch.Win10" Color="Transparent" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OnSwitch.Win10" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OnSwitchDisabled.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.OnSwitchDisabled.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OnSwitchDisabled.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.OnSwitchDisabled.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OnSwitchMouseOver.Win10" Color="{StaticResource MahApps.Colors.Accent2}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOver.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOver.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicator.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOver.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicatorMouseOver.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorChecked.Win10" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorPressed.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorPressed.Win10}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10" Color="{{MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorPressed.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicatorPressed.Win10}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicatorDisabled.Win10}}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.Badged.DisabledBackground" Color="{{MahApps.Brushes.Badged.DisabledBackground}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Badged.DisabledBackground" Color="{{MahApps.Colors.Badged.DisabledBackground}}" options:Freeze="True" />
 
     <!--  HamburgerMenu  -->
 
