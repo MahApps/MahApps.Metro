@@ -567,4 +567,269 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
     </Style>
 
+    <!-- MUI -->
+
+    <Style x:Key="MahApps.Styles.Calendar.Mui" TargetType="Calendar">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemText.Mui}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ItemBorder.Mui}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CalendarButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarButton.Mui}" />
+        <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton.Mui}" />
+        <Setter Property="CalendarItemStyle" Value="{DynamicResource MahApps.Styles.CalendarItem.Mui}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Calendar">
+                    <StackPanel Name="PART_Root" HorizontalAlignment="Center">
+                        <CalendarItem
+                            Name="PART_CalendarItem"
+                            Style="{TemplateBinding CalendarItemStyle}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CalendarItem.Mui" TargetType="CalendarItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CalendarItem">
+                    <ControlTemplate.Resources>
+                        <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
+                            <TextBlock x:Name="Text" FontWeight="Bold"
+                                       FontSize="{DynamicResource DefaultFontSize}"
+                                       Foreground="{DynamicResource MahApps.Brushes.ItemText.Mui}"
+                                       HorizontalAlignment="Center"
+                                       Text="{Binding}"
+                                       Margin="0,6,0,6"
+                                       VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </ControlTemplate.Resources>
+                    <Grid Name="PART_Root" >
+                        <Border
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MinWidth="132"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="PART_PreviousButton"
+                                        Grid.Row="0" Grid.Column="0"
+                                        Margin="-1,-1,0,0"
+                                        Padding="10,4,10,3"
+                                        Focusable="False">
+                                    <Path Height="10" Width="6" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Fill"
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                          Data="F1 M 0,0 1,1 1,-1 Z" />
+                                </Button>
+
+                                <Button x:Name="PART_NextButton"
+                                        Grid.Row="0" Grid.Column="2"
+                                        Margin="0,-1,-1,0"
+                                        Padding="10,4,10,3"
+                                        Focusable="False">
+                                    <Path Height="10" Width="6" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Fill"
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                          Data="F1 M 0,1 1,0 0,-1 Z" />
+                                </Button>
+
+                                <Button x:Name="PART_HeaderButton"
+                                        Grid.Row="0" Grid.Column="1"
+                                        Margin="-1,-1,-1,0"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Focusable="False" />
+
+                                <Grid x:Name="PART_MonthView" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Visible" Margin="8" HorizontalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+
+                                <Grid x:Name="PART_YearView" Grid.Row="1" Grid.ColumnSpan="3" Visibility="Hidden" Margin="8" HorizontalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Value="Year">
+                            <DataTrigger.Binding>
+                                <Binding Path="DisplayMode">
+                                    <Binding.RelativeSource>
+                                        <RelativeSource Mode="FindAncestor" AncestorType="{x:Type Calendar}" />
+                                    </Binding.RelativeSource>
+                                </Binding>
+                            </DataTrigger.Binding>
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Value="Decade">
+                            <DataTrigger.Binding>
+                                <Binding Path="DisplayMode">
+                                    <Binding.RelativeSource>
+                                        <RelativeSource Mode="FindAncestor" AncestorType="{x:Type Calendar}" />
+                                    </Binding.RelativeSource>
+                                </Binding>
+                            </DataTrigger.Binding>
+                            <Setter TargetName="PART_MonthView" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="PART_YearView" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CalendarDayButton.Mui" TargetType="CalendarDayButton" >
+        <Setter Property="MinWidth" Value="5"/>
+        <Setter Property="MinHeight" Value="5"/>
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CalendarDayButton">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                                x:Name="NormalText"
+                                TextElement.Foreground="{TemplateBinding Foreground}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Margin="5,1,5,1" />
+                        <Path x:Name="Blackout" Opacity=".5" Visibility="Collapsed" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Foreground}" Stretch="Fill" Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z"/>
+                        <Rectangle x:Name="DayButtonFocusVisual" Visibility="Collapsed" IsHitTestVisible="false" Stroke="{DynamicResource MahApps.Brushes.Accent.Mui}"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="DayButtonFocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="DayButtonFocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundHover.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextHover.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsToday" Value="True">
+                            <Setter TargetName="DayButtonFocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextDisabled.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextDisabled.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsBlackedOut" Value="True">
+                            <Setter TargetName="Blackout" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CalendarButton.Mui" TargetType="CalendarButton" >
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonText.Mui}" />
+        <Setter Property="MinWidth" Value="40"/>
+        <Setter Property="MinHeight" Value="42"/>
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CalendarButton">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="NormalText"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="1,0,1,1" />
+                        <Rectangle x:Name="CalendarButtonFocusVisual" Visibility="Collapsed" IsHitTestVisible="false" Stroke="{DynamicResource MahApps.Brushes.Accent.Mui}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="CalendarButtonFocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="CalendarButtonFocusVisual" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundHover.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextHover.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="HasSelectedDays" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsInactive" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextDisabled.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextDisabled.Mui}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
