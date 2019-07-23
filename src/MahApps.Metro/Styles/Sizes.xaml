@@ -8,4 +8,10 @@
     <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</System:Double>
     <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</System:Double>
 
+    <!-- MUI -->
+
+    <System:Double x:Key="CloseButtonWidth">32</System:Double>
+    <System:Double x:Key="SystemButtonHeight">24</System:Double>
+    <System:Double x:Key="SystemButtonWidth">32</System:Double>
+
 </ResourceDictionary>

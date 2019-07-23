@@ -37,4 +37,13 @@
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Win10">15</System:Double>
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header.Win10">15</System:Double>
 
+    <!-- MUI -->
+
+    <FontFamily x:Key="DefaultFontFamily">Segoe UI</FontFamily>
+    <FontFamily x:Key="FixedFontFamily">Consolas</FontFamily>
+
+    <System:Double x:Key="DefaultFontSize">13</System:Double>
+    <System:Double x:Key="FixedFontSize">13.333</System:Double>
+    <System:Double x:Key="SmallFontSize">11</System:Double>
+
 </ResourceDictionary>
