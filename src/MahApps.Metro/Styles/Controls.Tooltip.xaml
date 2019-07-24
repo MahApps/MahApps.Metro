@@ -70,8 +70,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.WindowBorderActive.Mui}"/>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowBackground.Mui}"/>
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WindowText.Mui}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}"/>
-        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default.Mui}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}"/>
         <Setter Property="FontStyle" Value="Normal"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Padding" Value="5,1,5,4"/>

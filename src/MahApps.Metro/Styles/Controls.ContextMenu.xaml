@@ -605,8 +605,8 @@
     <!-- MUI -->
 
     <Style x:Key="MahApps.Styles.ContextMenu.Mui" TargetType="{x:Type ContextMenu}">
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}"/>
-        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default.Mui}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowBackground.Mui}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemText.Mui}"/>

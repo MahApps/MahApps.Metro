@@ -602,7 +602,7 @@
                     <ControlTemplate.Resources>
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
                             <TextBlock x:Name="Text" FontWeight="Bold"
-                                       FontSize="{DynamicResource DefaultFontSize}"
+                                       FontSize="{DynamicResource MahApps.Sizes.Font.Default.Mui}"
                                        Foreground="{DynamicResource MahApps.Brushes.ItemText.Mui}"
                                        HorizontalAlignment="Center"
                                        Text="{Binding}"
@@ -722,7 +722,7 @@
     <Style x:Key="MahApps.Styles.CalendarDayButton.Mui" TargetType="CalendarDayButton" >
         <Setter Property="MinWidth" Value="5"/>
         <Setter Property="MinHeight" Value="5"/>
-        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -786,7 +786,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonText.Mui}" />
         <Setter Property="MinWidth" Value="40"/>
         <Setter Property="MinHeight" Value="42"/>
-        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

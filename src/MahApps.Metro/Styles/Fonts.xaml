@@ -39,11 +39,11 @@
 
     <!-- MUI -->
 
-    <FontFamily x:Key="DefaultFontFamily">Segoe UI</FontFamily>
-    <FontFamily x:Key="FixedFontFamily">Consolas</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Default.Mui">Segoe UI</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Fixed.Mui">Consolas</FontFamily>
 
-    <System:Double x:Key="DefaultFontSize">13</System:Double>
-    <System:Double x:Key="FixedFontSize">13.333</System:Double>
-    <System:Double x:Key="SmallFontSize">11</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Font.Default.Mui">13</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Font.Fixed.Mui">13.333</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Font.Small.Mui">11</System:Double>
 
 </ResourceDictionary>

@@ -46,20 +46,20 @@
 
     <Style x:Key="MahApps.Styles.TextBlock.Small.Mui" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="{DynamicResource SmallFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Small.Mui}"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 
     <Style x:Key="MahApps.Styles.TextBlock.Emphasis.Mui" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="{DynamicResource SmallFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Small.Mui}"/>
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 
     <Style x:Key="MahApps.Styles.TextBlock.Fixed.Mui" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{DynamicResource FixedFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource FixedFontSize}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Fixed.Mui}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Fixed.Mui}"/>
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 

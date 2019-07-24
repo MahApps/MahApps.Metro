@@ -118,18 +118,4 @@
                          Duration="0:0:.2" />
     </Storyboard>
 
-    <!-- MUI -->
-
-    <Thickness x:Key="RootMargin">-42,-8,-16,-16</Thickness>
-    <Thickness x:Key="ContentMargin">16,28,16,16</Thickness>
-    <Thickness x:Key="StatusMargin">-16,16,0,0</Thickness>
-    <Thickness x:Key="HeaderMargin">0,-28,44,0</Thickness>
-
-    <Thickness x:Key="SplitLeft">0,0,0,0</Thickness>
-    <Thickness x:Key="SplitRight">16,0,0,0</Thickness>
-
-    <Style x:Key="ContentRoot" TargetType="FrameworkElement">
-        <Setter Property="Margin" Value="{StaticResource ContentMargin}" />
-    </Style>
-
 </ResourceDictionary>

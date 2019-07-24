@@ -883,8 +883,8 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForeground.Mui}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default.Mui}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}" />
         <Setter Property="Padding" Value="4,3,4,3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />

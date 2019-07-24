@@ -10,8 +10,8 @@
 
     <!-- MUI -->
 
-    <System:Double x:Key="CloseButtonWidth">32</System:Double>
-    <System:Double x:Key="SystemButtonHeight">24</System:Double>
-    <System:Double x:Key="SystemButtonWidth">32</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Button.Close.Width.Mui">32</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Button.System.Height.Mui">24</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Button.System.Width.Mui">32</System:Double>
 
 </ResourceDictionary>

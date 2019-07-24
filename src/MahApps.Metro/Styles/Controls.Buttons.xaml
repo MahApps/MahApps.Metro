@@ -1092,8 +1092,8 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.System.Mui" TargetType="ButtonBase" BasedOn="{StaticResource MahApps.Styles.Button.System.Base.Mui}">
-        <Setter Property="Width" Value="{DynamicResource SystemButtonWidth}" />
-        <Setter Property="Height" Value="{DynamicResource SystemButtonHeight}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.Button.System.Width.Mui}" />
+        <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.Button.System.Height.Mui}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonText.Mui}"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -1111,7 +1111,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.System.Close.Mui" TargetType="ButtonBase" BasedOn="{StaticResource MahApps.Styles.Button.System.Mui}">
-        <Setter Property="Width" Value="{DynamicResource CloseButtonWidth}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.Button.Close.Width.Mui}" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CloseButtonBackground.Mui}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
