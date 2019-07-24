@@ -22,6 +22,10 @@
 
     <AdornerDecorator>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -297,6 +301,34 @@
                         </StackPanel>
                     </AdornerDecorator>
                 </GroupBox>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <Label Content="MUI Calendar" Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <Calendar Margin="5"
+                          DisplayDateStart="{x:Static system:DateTime.Now}"
+                          IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="MultipleRange"
+                          Style="{DynamicResource MahApps.Styles.Calendar.Mui}"
+                          />
+                <Calendar Margin="5"
+                          HorizontalAlignment="Center"
+                          IsEnabled="False"
+                          Style="{DynamicResource MahApps.Styles.Calendar.Mui}"
+                          />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label Content="MUI Date Picker" Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <DatePicker Width="200"
+                            Margin="0 10 0 0"
+                            Style="{DynamicResource MahApps.Styles.DatePicker.Mui}" />
+                <DatePicker Width="200"
+                            Margin="0 10 0 0"
+                            IsEnabled="False"
+                            Style="{DynamicResource MahApps.Styles.DatePicker.Mui}" />
             </StackPanel>
         </Grid>
     </AdornerDecorator>

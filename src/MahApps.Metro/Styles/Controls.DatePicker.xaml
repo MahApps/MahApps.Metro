@@ -368,7 +368,7 @@
 
     <!-- MUI -->
 
-    <Style x:Key="MahApps.Styles.DataPicker.Mui" TargetType="{x:Type DatePicker}">
+    <Style x:Key="MahApps.Styles.DatePicker.Mui" TargetType="{x:Type DatePicker}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.InputBackground.Mui}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.InputText.Mui}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.InputBorder.Mui}" />
@@ -471,7 +471,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.DataPickerTextBox.Mui" TargetType="{x:Type DatePickerTextBox}">
+    <Style x:Key="MahApps.Styles.DatePickerTextBox.Mui" TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.InputText.Mui}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0" />
