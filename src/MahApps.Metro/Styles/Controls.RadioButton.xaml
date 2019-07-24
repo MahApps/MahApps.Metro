@@ -110,4 +110,52 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <!-- MUI -->
+
+    <Style x:Key="MahApps.Styles.RadioButton.Mui" TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WindowText.Mui}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="LayoutRoot" Margin="{TemplateBinding Padding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="CheckBorder" Width="16" Height="16" Margin="0,1,4,0"
+                                Background="{DynamicResource MahApps.Brushes.ButtonBackground.Mui}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.ButtonBorder.Mui}" BorderThickness="1">
+                            <Rectangle x:Name="CheckMark" Width="8" Height="8" Margin="4" Fill="{TemplateBinding Foreground}" Visibility="Collapsed"/>
+                        </Border>
+                        <ContentPresenter Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ButtonTextDisabled.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundHover.Mui}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ButtonBorderHover.Mui}" />
+                            <Setter TargetName="CheckMark" Property="Fill" Value="{DynamicResource MahApps.Brushes.ButtonTextHover.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.ButtonBackgroundPressed.Mui}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ButtonBorderPressed.Mui}" />
+                            <Setter TargetName="CheckMark" Property="Fill" Value="{DynamicResource MahApps.Brushes.ButtonTextPressed.Mui}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent.Mui}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
