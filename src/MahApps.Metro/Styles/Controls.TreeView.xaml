@@ -240,4 +240,165 @@
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
     </Style>
 
+    <!-- MUI -->
+
+    <Style x:Key="MahApps.Styles.TreeView.Mui" TargetType="TreeView">
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpandCollapse.Mui" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Width="16"
+                            Height="16"
+                            Background="Transparent"
+                            Padding="5,5,5,5" >
+                        <Path x:Name="ExpandPath"
+                              Stroke="#FF989898"
+                              StrokeThickness="1"
+                              Data="F1 M.5,.5, .5,6.5 6.5,.5 Z" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="135"
+                                                 CenterX="3"
+                                                 CenterY="3"/>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ExpandPath"
+                                    Property="Stroke"
+                                    Value="{DynamicResource Accent}"/>
+                        </Trigger>-->
+
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="ExpandPath"
+                                    Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180"
+                                                     CenterX="3"
+                                                     CenterY="3"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ExpandPath"
+                                    Property="Fill"
+                                    Value="#FF595959"/>
+                            <Setter TargetName="ExpandPath"
+                                    Property="Stroke"
+                                    Value="#FF262626"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <!--<Setter TargetName="ExpandPath"
+                                    Property="Stroke"
+                                    Value="{DynamicResource Accent}"/>-->
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TreeViewItem.FocusVisualStyle.Mui">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TreeViewItem.Mui" TargetType="{x:Type TreeViewItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalContentAlignment"
+                Value="{Binding Path=HorizontalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment"
+                Value="{Binding Path=VerticalContentAlignment,RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemText.Mui}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.TreeViewItem.FocusVisualStyle.Mui}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="19"
+                                              Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <ToggleButton x:Name="Expander"
+                                      Style="{StaticResource MahApps.Styles.ToggleButton.ExpandCollapse.Mui}"
+                                      IsChecked="{Binding Path=IsExpanded,RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press"/>
+                        <Border Name="Bd"
+                                Grid.Column="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="true">
+
+                            <ContentPresenter x:Name="PART_Header"
+                                              ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ItemsPresenter x:Name="ItemsHost"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"/>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="false">
+                            <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="Expander" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.ItemBackgroundHover.Mui}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemTextHover.Mui}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.ItemBackgroundSelected.Mui}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemTextSelected.Mui}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ItemTextDisabled.Mui}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing"
+                 Value="true">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
