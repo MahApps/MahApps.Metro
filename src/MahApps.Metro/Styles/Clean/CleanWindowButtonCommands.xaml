@@ -6,9 +6,9 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindowButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="CleanWindowButtonCommandsStyleKey" TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource DarkCleanWindowCloseButtonStyle}" />
-        <Setter Property="LightCloseButtonStyle" Value="{StaticResource LightCleanWindowCloseButtonStyle}" />
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean" TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Dark}" />
+        <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Light}" />
     </Style>
 
 </ResourceDictionary>

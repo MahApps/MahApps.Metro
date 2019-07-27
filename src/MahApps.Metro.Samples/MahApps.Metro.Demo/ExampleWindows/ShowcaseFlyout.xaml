@@ -46,7 +46,7 @@
                         FontSize="16"
                         Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:Flyout}}, Path=Foreground}"
                         IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonIsCancel}"
-                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                        Style="{DynamicResource MahApps.Styles.Button.Circle}"
                         Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=CloseButtonVisibility}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
@@ -57,7 +57,7 @@
                                     Height="20"
                                     Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
                                     FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:Flyout}}, Path=FlowDirection}"
-                                    Style="{DynamicResource PathIconContentControlStyle}" />
+                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                 </Button>
                 <TextBlock x:Name="PART_BackHeaderText"
                            Margin="15 0 0 0"
@@ -139,7 +139,7 @@
                                        IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                        OffLabel="Disabled"
                                        OnLabel="Allowed"
-                                       Style="{DynamicResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+                                       Style="{DynamicResource MahApps.Styles.ToggleSwitch.Win10}" />
 
             </Grid>
 
@@ -151,7 +151,7 @@
                               BorderThickness="0"
                               ItemsSource="{Binding Artists, Mode=OneWay}"
                               SelectedIndex="0"
-                              Style="{StaticResource VirtualisedMetroListView}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
@@ -166,7 +166,7 @@
                              DisplayMemberPath="Title"
                              ItemsSource="{Binding Albums, Mode=OneWay}"
                              SelectedIndex="0"
-                             Style="{StaticResource VirtualisedMetroListBox}" />
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
                 </TabItem>
                 <TabItem Header="Slider">
                     <StackPanel Orientation="Vertical">
@@ -183,7 +183,7 @@
                                 Maximum="100"
                                 Minimum="0"
                                 SmallChange="1"
-                                Style="{StaticResource MahApps.Metro.Styles.FlatSlider}"
+                                Style="{StaticResource MahApps.Styles.Slider.Flat}"
                                 Value="{Binding ElementName=TheSlider, Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock Margin="2"
                                    HorizontalAlignment="Center"

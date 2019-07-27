@@ -4,16 +4,16 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <Thickness x:Key="GroupBoxHeaderThemePadding">2</Thickness>
-    <System:Double x:Key="GroupBoxHeaderThemeFontSize">16</System:Double>
+    <System:Double x:Key="MahApps.Sizes.GroupBox.HeaderThemeFont">16</System:Double>
 
-    <Style x:Key="StandardGroupBox" TargetType="{x:Type GroupBox}">
+    <Style x:Key="MahApps.Styles.GroupBox.VisualStudio" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource GroupBoxHeaderThemeFontSize}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>

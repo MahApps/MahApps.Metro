@@ -20,9 +20,9 @@
     </Storyboard>
 
     <Style TargetType="{x:Type controls:Badged}">
-        <Setter Property="BadgeBackground" Value="{DynamicResource AccentBaseColorBrush}" />
+        <Setter Property="BadgeBackground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
-        <Setter Property="BadgeForeground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="BadgeForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
@@ -100,7 +100,7 @@
                             <Setter TargetName="PART_BadgeContainer" Property="VerticalAlignment" Value="Center" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_BadgeContainer" Property="Background" Value="{DynamicResource ResourceKey=MahApps.Metro.Brushes.Badged.DisabledBackgroundBrush}" />
+                            <Setter TargetName="PART_BadgeContainer" Property="Background" Value="{DynamicResource ResourceKey=MahApps.Brushes.Badged.DisabledBackground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

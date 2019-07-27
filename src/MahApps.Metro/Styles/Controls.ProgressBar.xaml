@@ -2,11 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--  ProgressBar Style  -->
-    <Style x:Key="MahApps.Metro.Styles.ProgressBar" TargetType="ProgressBar">
-        <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlBorderBrush}" />
+    <Style x:Key="MahApps.Styles.ProgressBar" TargetType="ProgressBar">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Highlight}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="MinHeight" Value="10" />
@@ -23,7 +23,7 @@
                             <Grid x:Name="IndeterminateRoot" Visibility="Collapsed">
                                 <Rectangle x:Name="IndeterminateSolidFill"
                                            Margin="{TemplateBinding BorderThickness}"
-                                           Fill="{DynamicResource ProgressBrush}"
+                                           Fill="{DynamicResource MahApps.Brushes.Progress}"
                                            Opacity="1"
                                            RenderTransformOrigin="0.5,0.5"
                                            StrokeThickness="0" />
@@ -39,10 +39,10 @@
                                                     <SkewTransform AngleX="-30" />
                                                 </TransformGroup>
                                             </LinearGradientBrush.Transform>
-                                            <GradientStop Offset="0" Color="{DynamicResource ProgressIndeterminateColor1}" />
-                                            <GradientStop Offset="0.651" Color="{DynamicResource ProgressIndeterminateColor2}" />
-                                            <GradientStop Offset="0.093" Color="{DynamicResource ProgressIndeterminateColor3}" />
-                                            <GradientStop Offset="0.548" Color="{DynamicResource ProgressIndeterminateColor4}" />
+                                            <GradientStop Offset="0" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate1}" />
+                                            <GradientStop Offset="0.651" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate2}" />
+                                            <GradientStop Offset="0.093" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate3}" />
+                                            <GradientStop Offset="0.548" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate4}" />
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
@@ -51,7 +51,7 @@
                                 <Border x:Name="PART_Indicator"
                                         Margin="-1"
                                         HorizontalAlignment="Left"
-                                        Background="{DynamicResource ProgressBrush}">
+                                        Background="{DynamicResource MahApps.Brushes.Progress}">
                                     <Rectangle x:Name="GradientFill"
                                                Opacity="0.7"
                                                Visibility="Collapsed">
@@ -63,10 +63,10 @@
                                                         <SkewTransform AngleX="-30" />
                                                     </TransformGroup>
                                                 </LinearGradientBrush.Transform>
-                                                <GradientStop Offset="0" Color="{DynamicResource ProgressIndeterminateColor1}" />
-                                                <GradientStop Offset="0.651" Color="{DynamicResource ProgressIndeterminateColor2}" />
-                                                <GradientStop Offset="0.093" Color="{DynamicResource ProgressIndeterminateColor3}" />
-                                                <GradientStop Offset="0.548" Color="{DynamicResource ProgressIndeterminateColor4}" />
+                                                <GradientStop Offset="0" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate1}" />
+                                                <GradientStop Offset="0.651" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate2}" />
+                                                <GradientStop Offset="0.093" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate3}" />
+                                                <GradientStop Offset="0.548" Color="{DynamicResource MahApps.Colors.ProgressIndeterminate4}" />
                                             </LinearGradientBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>

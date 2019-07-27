@@ -28,7 +28,7 @@
                              Grid.Column="0"
                              Width="30"
                              Height="30"
-                             Stroke="{DynamicResource GrayBrush2}">
+                             Stroke="{DynamicResource MahApps.Brushes.Gray2}">
                         <i:Interaction.Behaviors>
                             <behaviors:BindableResourceBehavior ResourceName="{Binding}" Property="{x:Static Shape.FillProperty}" />
                         </i:Interaction.Behaviors>
@@ -36,12 +36,12 @@
                     <TextBlock Grid.Column="1"
                                Margin="10"
                                VerticalAlignment="Center"
-                               FontSize="{DynamicResource NormalFontSize}"
+                               FontSize="{DynamicResource MahApps.Sizes.Font.Normal}"
                                Text="{Binding ElementName=BrushResource, Path=(Shape.Fill)}" />
                     <TextBlock Grid.Column="2"
                                Margin="10"
                                VerticalAlignment="Center"
-                               FontSize="{DynamicResource NormalFontSize}"
+                               FontSize="{DynamicResource MahApps.Sizes.Font.Normal}"
                                Text="{Binding}" />
                 </Grid>
             </DataTemplate>

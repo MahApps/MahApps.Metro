@@ -9,7 +9,7 @@
     <Thickness x:Key="ExpanderHeaderThemePadding">2</Thickness>
     <sys:Double x:Key="ExpanderToggleButtonEllipseThemeSize">18</sys:Double>
 
-    <Style x:Key="ExpanderBaseHeaderStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Base" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -19,8 +19,8 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <Style x:Key="ExpanderRightHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Right"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template">
@@ -79,12 +79,12 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -94,8 +94,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ExpanderUpHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Up"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
@@ -153,12 +153,12 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -168,8 +168,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="ExpanderLeftHeaderStyle"
-           BasedOn="{StaticResource ExpanderRightHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Left"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -226,12 +226,12 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -240,8 +240,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderDownHeaderStyle"
-           BasedOn="{StaticResource ExpanderUpHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -289,12 +289,12 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -303,7 +303,7 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MetroExpanderExpandStoryboard">
+    <Storyboard x:Key="MahApps.Storyboard.ExpanderExpand">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="1"
@@ -313,7 +313,7 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+    <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="0"
@@ -323,18 +323,18 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MetroExpander" TargetType="{x:Type Expander}">
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+    <Style x:Key="MahApps.Styles.Expander" TargetType="{x:Type Expander}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource ExpanderDownHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource ExpanderLeftHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource ExpanderRightHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource ExpanderUpHeaderStyle}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -342,7 +342,7 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                    IsHitTestVisible="false"
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
@@ -418,10 +418,10 @@
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderExpand}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderCollapse}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">

@@ -7,7 +7,7 @@
                       d:DesignHeight="300"
                       d:DesignWidth="300"
                       ResizeMode="CanResizeWithGrip"
-                      Style="{DynamicResource CleanWindowStyleKey}"
+                      Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}"
                       mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>

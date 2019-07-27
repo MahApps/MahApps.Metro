@@ -14,7 +14,7 @@
                       MinWidth="700"
                       MinHeight="500"
                       d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
-                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                       BorderThickness="1"
                       IconOverlayBehavior="Never"
                       SaveWindowPosition="True"
@@ -49,7 +49,7 @@
             <iconPacks:PackIconModern Width="{TemplateBinding Width}"
                                       Height="{TemplateBinding Height}"
                                       Margin="4"
-                                      Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                      Foreground="{DynamicResource MahApps.Brushes.IdealForeground}"
                                       Kind="Box" />
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
@@ -59,14 +59,14 @@
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <TextBlock Margin="0 -1 8 0"
                            VerticalAlignment="Center"
-                           FontFamily="{DynamicResource HeaderFontFamily}"
-                           FontSize="{DynamicResource WindowTitleFontSize}"
+                           FontFamily="{DynamicResource MahApps.Fonts.Header}"
+                           FontSize="{DynamicResource MahApps.Sizes.Font.WindowTitle}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
                 <Button Margin="1 0 1 1"
                         Click="ClickMeOnClick"
                         Content="Click Me..."
-                        Style="{StaticResource MetroFlatButton}" />
+                        Style="{StaticResource MahApps.Styles.Button.Flat}" />
             </StackPanel>
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
@@ -134,10 +134,10 @@
                                  Columns="2">
                         <Button Margin="10"
                                 Content="Create"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                         <Button Margin="10"
                                 Content="Cancel"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                     </UniformGrid>
                 </Grid>
             </Controls:Flyout>
@@ -150,10 +150,10 @@
                 <StackPanel Margin="10" Orientation="Vertical">
                     <Button Margin="2"
                             Content="create"
-                            Style="{StaticResource MetroFlatButton}" />
+                            Style="{StaticResource MahApps.Styles.Button.Flat}" />
                     <Button Margin="2"
                             Content="cancel"
-                            Style="{StaticResource MetroFlatButton}" />
+                            Style="{StaticResource MahApps.Styles.Button.Flat}" />
                 </StackPanel>
             </Controls:Flyout>
 
@@ -218,7 +218,7 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
                             Content="Save"
-                            Style="{StaticResource MetroFlatButton}" />
+                            Style="{StaticResource MahApps.Styles.Button.Flat}" />
                     <UniformGrid Grid.Row="2"
                                  Grid.Column="0"
                                  Grid.ColumnSpan="2"
@@ -228,11 +228,11 @@
                         <Button Margin="10"
                                 Click="ShowSettingsLeft"
                                 Content="Left"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                         <Button Margin="10"
                                 Click="ShowSettingsRight"
                                 Content="Right"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                     </UniformGrid>
                 </Grid>
             </Controls:Flyout>
@@ -260,7 +260,7 @@
                     <TextBlock Margin="10"
                                FontSize="22"
                                Text="Flyout on the top..." />
-                    <Grid VerticalAlignment="Bottom" Background="{DynamicResource AccentColorBrush2}">
+                    <Grid VerticalAlignment="Bottom" Background="{DynamicResource MahApps.Brushes.Accent2}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -270,13 +270,13 @@
                                 Margin="5"
                                 Content="_Save"
                                 IsEnabled="False"
-                                Style="{DynamicResource MetroFlatButton}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Flat}" />
                         <Button Grid.Column="2"
                                 Margin="5"
                                 Click="TopFlyoutCloseButtonOnClick"
                                 Content="_Close"
                                 IsCancel="True"
-                                Style="{DynamicResource MetroFlatButton}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Flat}" />
                     </Grid>
                 </Grid>
             </Controls:Flyout>
@@ -291,7 +291,7 @@
                             Orientation="Horizontal">
                     <Button Width="36"
                             Height="36"
-                            Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                            Style="{DynamicResource MahApps.Styles.Button.Circle}">
                         <iconPacks:PackIconModern Kind="Alert" />
                     </Button>
                 </StackPanel>
@@ -306,7 +306,7 @@
                             Height="36"
                             FontFamily="Segoe UI Symbol"
                             FontSize="16"
-                            Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                            Style="{DynamicResource MahApps.Styles.Button.Circle}">
                         <iconPacks:PackIconModern Kind="Add" />
                     </Button>
                 </StackPanel>
@@ -359,7 +359,7 @@
     <Grid>
 
         <Grid.Resources>
-            <Style BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}" />
+            <Style BasedOn="{StaticResource MahApps.Styles.Button.Flat}" TargetType="{x:Type Button}" />
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>

@@ -339,11 +339,11 @@ namespace MahApps.Metro.Controls
             var defaultMenu = new ContextMenu();
 
             var m1 = new MenuItem { Command = ApplicationCommands.Cut };
-            m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            m1.SetResourceReference(FrameworkElement.StyleProperty, "MahApps.Styles.MenuItem");
             var m2 = new MenuItem { Command = ApplicationCommands.Copy };
-            m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            m2.SetResourceReference(FrameworkElement.StyleProperty, "MahApps.Styles.MenuItem");
             var m3 = new MenuItem { Command = ApplicationCommands.Paste };
-            m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            m3.SetResourceReference(FrameworkElement.StyleProperty, "MahApps.Styles.MenuItem");
 
             defaultMenu.Items.Add(m1);
             defaultMenu.Items.Add(m2);

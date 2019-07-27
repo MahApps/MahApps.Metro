@@ -16,7 +16,7 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       Closing="MetroWindow_Closing"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Icon="mahapps.metro.logo2.ico"
                       NonActiveGlowBrush="#CDFF0000"
                       ShowIconOnTitleBar="True"
@@ -47,7 +47,7 @@
                      Fill="{Binding ColorBrush, Mode=OneWay}" />
 
             <Style x:Key="AppThemeMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -55,7 +55,7 @@
             </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -67,7 +67,7 @@
                                  Title="This dialog allows arbitrary content.">
                 <TextBlock x:Name="MessageTextBlock"
                            Height="200"
-                           Foreground="{DynamicResource AccentColorBrush}"
+                           Foreground="{DynamicResource MahApps.Brushes.Accent}"
                            Text="{Binding Artists[0].Name}" />
             </Dialog:CustomDialog>
 
@@ -77,12 +77,12 @@
 
                 <StackPanel>
                     <TextBlock Height="30"
-                               Foreground="{DynamicResource AccentColorBrush}"
+                               Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog"
                             Content="Close Me!"
-                            Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                            Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
             </Dialog:CustomDialog>
@@ -91,7 +91,7 @@
     </Window.Resources>
 
     <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Win10}" />
     </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -320,7 +320,7 @@
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
-            <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}" />
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>
