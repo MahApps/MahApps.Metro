@@ -70,7 +70,7 @@
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBlock.DataGrid" TargetType="TextBlock" >
+    <Style x:Key="MahApps.Styles.TextBlock.DataGrid.Mui" TargetType="TextBlock" >
         <Setter Property="Margin" Value="2,0" />
     </Style>
 

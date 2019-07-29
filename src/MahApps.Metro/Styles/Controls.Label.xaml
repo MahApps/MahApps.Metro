@@ -40,6 +40,8 @@
         </Setter>
     </Style>
 
+    <!-- MUI -->
+
     <Style x:Key="MahApps.Styles.Label.Mui" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WindowText.Mui}"/>
         <Setter Property="Background" Value="Transparent"/>

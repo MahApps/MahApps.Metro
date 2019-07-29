@@ -1071,8 +1071,6 @@
 
     <Style x:Key="MahApps.Styles.RichTextBox.Mui" BasedOn="{StaticResource MahApps.Styles.TextBoxBase.Mui}" TargetType="{x:Type RichTextBox}" />
 
-    <!-- text-in-datagrid styles-->
-
     <Style x:Key="MahApps.Styles.TextBox.DataGridEditing.Mui" TargetType="TextBox" BasedOn="{StaticResource MahApps.Styles.TextBox.Mui}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />

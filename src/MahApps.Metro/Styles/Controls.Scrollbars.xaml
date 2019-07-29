@@ -521,7 +521,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Static GridView.GridViewScrollViewerStyleKey}" TargetType="{x:Type ScrollViewer}">
+    <Style x:Key="MahApps.Styles.ScrollViewer.GridView.Mui" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Focusable" Value="false"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">

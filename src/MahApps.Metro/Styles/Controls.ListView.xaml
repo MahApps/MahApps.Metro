@@ -449,7 +449,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Static GridView.GridViewStyleKey}" TargetType="{x:Type ListView}">
+    <Style x:Key="MahApps.Styles.ListView.GridView.Mui" TargetType="{x:Type ListView}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>

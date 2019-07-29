@@ -702,7 +702,7 @@
 
     <!-- MUI -->
 
-    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}" TargetType="{x:Type Button}"
+    <Style x:Key="MahApps.Styles.Button.DataGridSelectAll.Mui" TargetType="{x:Type Button}"
            BasedOn="{StaticResource MahApps.Styles.Button.Base.Mui}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />

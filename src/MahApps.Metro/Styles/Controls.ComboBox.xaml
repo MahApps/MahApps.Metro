@@ -946,7 +946,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ComboBox.DataGridEditing" TargetType="ComboBox" BasedOn="{StaticResource MahApps.Styles.ComboBox.Mui}">
+    <Style x:Key="MahApps.Styles.ComboBox.DataGridEditing.Mui" TargetType="ComboBox" BasedOn="{StaticResource MahApps.Styles.ComboBox.Mui}">
         <Setter Property="IsSynchronizedWithCurrentItem" Value="False" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="1,1" />

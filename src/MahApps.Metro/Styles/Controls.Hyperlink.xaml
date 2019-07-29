@@ -1,8 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:MahApps.Metro.Styles">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Style x:Key="MahApps.Styles.Hyperlink.Mui" TargetType="{x:Type Hyperlink}">
+    <!-- MUI -->
+
+    <Style x:Key="MahApps.Styles.Hyperlink.Mui" TargetType="{x:Type Hyperlink}">
     <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Hyperlink.Mui}"/>
     <Setter Property="TextDecorations" Value="Underline"/>
     <Style.Triggers>
