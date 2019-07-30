@@ -1,0 +1,118 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
+
+    <Style TargetType="{x:Type Controls:ColorCanvas}">
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:ColorCanvas}">
+                    <Grid SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" MinWidth="110" MaxWidth="310"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" MinHeight="110"  MaxHeight="310"/>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Border x:Name="SaturationValueArea"
+                                        Grid.Column="0" 
+                                        Grid.Row="0"
+                                        Background="Red" 
+                                        BorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                                        Margin="5"
+                                        BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Saturation, Converter={StaticResource PercentageToGridLengthConverter}}" />
+                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Saturation, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Value, Converter={StaticResource PercentageToGridLengthConverter}}" />
+                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Value, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- Gradients to display Saturation and Value -->
+                                        <Grid.Background>
+                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                <GradientStop Offset="0" Color="White" />
+                                                <GradientStop Offset="1" Color="Transparent" />
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                        <Grid Grid.ColumnSpan="2"
+                                              Grid.RowSpan="2">
+                                            <Grid.Background>
+                                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                    <GradientStop Offset="0" Color="Transparent" />
+                                                    <GradientStop Offset="1" Color="Black" />
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
+                                        </Grid>
+
+                                        <!-- Fade -->
+                                        <Rectangle Width="3" 
+                                                   Grid.RowSpan="2"
+                                                   Margin="-1.5,0"
+                                                   VerticalAlignment="Stretch" 
+                                                   HorizontalAlignment="Right"
+                                                   Fill="White" />
+                                        <Rectangle Height="3" 
+                                                   Grid.ColumnSpan="2"
+                                                   Margin="0,-1.5"
+                                                   VerticalAlignment="Bottom" 
+                                                   HorizontalAlignment="Stretch"
+                                                   Fill="White" />
+
+                                        <Rectangle Width="1" 
+                                                   Grid.RowSpan="2"
+                                                   Margin="-0.5,0"
+                                                   VerticalAlignment="Stretch" 
+                                                   HorizontalAlignment="Right"
+                                                   Fill="Black" />
+                                        <Rectangle Height="1" 
+                                                   Grid.ColumnSpan="2"
+                                                   Margin="0,-0.5"
+                                                   VerticalAlignment="Bottom" 
+                                                   HorizontalAlignment="Stretch"
+                                                   Fill="Black" />
+
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Column="0"
+                                        Grid.Row="1" 
+                                        BorderThickness="1"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.Black}" 
+                                        Margin="5"
+                                        Height="40">
+                                    <Rectangle >
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.RGB}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

@@ -337,6 +337,11 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
+
+            <TabItem Header="ColorPicker">
+                <Controls:ColorCanvas />
+            </TabItem>
+            
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StatusBar Grid.Row="2">
