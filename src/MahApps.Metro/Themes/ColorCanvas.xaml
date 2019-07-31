@@ -30,6 +30,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
+                                <!-- Saturation and Value -->
                                 <Border x:Name="SaturationValueArea"
                                         Grid.Column="0" 
                                         Grid.Row="0"
@@ -39,12 +40,12 @@
                                         BorderThickness="1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Saturation, Converter={StaticResource PercentageToGridLengthConverter}}" />
-                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Saturation, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
+                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={StaticResource PercentageToGridLengthConverter}}" />
+                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Value, Converter={StaticResource PercentageToGridLengthConverter}}" />
-                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.Value, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
+                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value, Converter={StaticResource PercentageToGridLengthConverter}, ConverterParameter=true}" />
+                                            <RowDefinition Height="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value, Converter={StaticResource PercentageToGridLengthConverter}}" />
                                         </Grid.RowDefinitions>
                                         
                                         <!-- Gradients to display Saturation and Value -->
@@ -94,6 +95,7 @@
                                     </Grid>
                                 </Border>
 
+                                <!-- Selected Color Preview -->
                                 <Border Grid.Column="0"
                                         Grid.Row="1" 
                                         BorderThickness="1"
@@ -102,11 +104,64 @@
                                         Height="40">
                                     <Rectangle >
                                         <Rectangle.Fill>
-                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColorItem.RGB}" />
+                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
                                         </Rectangle.Fill>
                                     </Rectangle>
                                 </Border>
 
+                                <!-- Sliders for Values -->
+                                <ScrollViewer Grid.Column="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!-- R -->
+                                        <TextBlock Text="R"
+                                                   Grid.Column="0"
+                                                   Grid.Row="0" />
+                                        <Slider Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" 
+                                                Grid.Column="1"
+                                                Grid.Row="0" />
+                                        <Controls:NumericUpDown Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}"
+                                                                Grid.Column="2"
+                                                                Grid.Row="0" />
+
+                                        <!-- G -->
+                                        <TextBlock Text="G"
+                                                   Grid.Column="0"
+                                                   Grid.Row="1" />
+                                        <Slider Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" 
+                                                Grid.Column="1"
+                                                Grid.Row="1" />
+                                        <Controls:NumericUpDown Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}"
+                                                                Grid.Column="2"
+                                                                Grid.Row="1" />
+
+                                        <!-- B -->
+                                        <TextBlock Text="B"
+                                                   Grid.Column="0"
+                                                   Grid.Row="2" />
+                                        <Slider Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" 
+                                                Grid.Column="1"
+                                                Grid.Row="2" />
+                                        <Controls:NumericUpDown Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}"
+                                                                Grid.Column="2"
+                                                                Grid.Row="2" />
+                                    </Grid>
+                                </ScrollViewer>
+                                
                             </Grid>
                         </Border>
                     </Grid>
