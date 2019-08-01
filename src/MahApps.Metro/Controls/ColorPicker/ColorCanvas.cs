@@ -10,19 +10,11 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    [TemplatePart(Name = "PART_SaturationValueBox", Type = typeof(Control))]
+    [TemplatePart(Name = "PART_SaturationValueBox_Background", Type = typeof(SolidColorBrush))]
     public class ColorCanvas: Control
     {
-
-        //public static readonly DependencyProperty SelectedColorItemProperty = DependencyProperty.Register("SelectedColorItem", typeof(ColorPickerItem), typeof(ColorCanvas), new PropertyMetadata(new ColorPickerItem(Colors.GreenYellow)));
-
-        //public ColorPickerItem SelectedColorItem
-        //{
-        //    get { return (ColorPickerItem)GetValue(SelectedColorItemProperty); }
-        //    set { SetValue(SelectedColorItemProperty, value); }
-        //}
-
-        //public Color SelectedColor => SelectedColorItem.RGB;
-
+        SolidColorBrush PART_SaturationValueBox_Background;
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorCanvas), new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
@@ -77,6 +69,8 @@ namespace MahApps.Metro.Controls
                 colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
                 colorCanvas.SetCurrentValue(SaturationProperty, hsv.Saturation);
                 colorCanvas.SetCurrentValue(ValueProperty, hsv.Value);
+
+                colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(hsv.Hue, 1, 1).GetColor();
             }
         }
         #endregion
@@ -99,6 +93,18 @@ namespace MahApps.Metro.Controls
             get { return (double)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
+
+
+
+        #region Overrides
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            PART_SaturationValueBox_Background = (SolidColorBrush)base.GetTemplateChild("PART_SaturationValueBox_Background");
+        }
+
+        #endregion
 
     }
 }

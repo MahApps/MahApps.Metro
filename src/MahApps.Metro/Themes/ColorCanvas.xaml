@@ -31,13 +31,16 @@
                                 </Grid.RowDefinitions>
 
                                 <!-- Saturation and Value -->
-                                <Border x:Name="SaturationValueArea"
+                                <Border x:Name="PART_SaturationValueBox"
                                         Grid.Column="0" 
                                         Grid.Row="0"
-                                        Background="Red" 
                                         BorderBrush="{DynamicResource MahApps.Brushes.Black}"
                                         Margin="5"
                                         BorderThickness="1">
+                                    <Border.Background>
+                                        <SolidColorBrush x:Name="PART_SaturationValueBox_Background"
+                                                         Color="Red" />
+                                    </Border.Background>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation, Converter={StaticResource PercentageToGridLengthConverter}}" />
