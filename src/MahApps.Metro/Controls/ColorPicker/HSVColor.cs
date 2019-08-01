@@ -78,10 +78,9 @@ namespace MahApps.Metro.Controls.ColorPicker
 
             // Helper Values
             int h_i = (int)Math.Floor(Hue / 60);
-            double f = (Hue / 60 - h_i);
-            double p = Value * (1 - Saturation);
-            double q = Value * (1 - Saturation * f);
-            double t = Value * (1 - Saturation * (1 - f));
+            double C = Value * Saturation;
+            double X = C * (1 - Math.Abs((Hue / 60) % 2 - 1));
+            double m = Value - C;
 
             double r, g, b;
 
@@ -89,44 +88,48 @@ namespace MahApps.Metro.Controls.ColorPicker
             {
                 case 0:
                 case 6:
-                    r = Value;
-                    b = t;
-                    g = p;
+                    r = C;
+                    g = X;
+                    b = 0;
                     break;
 
                 case 1:
-                    r = q;
-                    b = Value;
-                    g = p;
+                    r = X;
+                    g = C;
+                    b = 0;
                     break;
 
                 case 2:
-                    r = p;
-                    b = Value;
-                    g = t;
+                    r = 0;
+                    g = C;
+                    b = X;
                     break;
 
                 case 3:
-                    r = p;
-                    b = q;
-                    g = Value;
+                    r = 0;
+                    g = X;
+                    b = C;
                     break;
 
                 case 4:
-                    r = t;
-                    b = p;
-                    g = Value;
+                    r = X;
+                    g = 0;
+                    b = C;
                     break;
 
                 case 5:
-                    r = Value;
-                    b = p;
-                    g = q;
+                    r = C;
+                    g = 0;
+                    b = X;
                     break;
 
                 default:
                     throw new ArgumentException();
             }
+
+            r = r + m;
+            g = g + m;
+            b = b + m;
 
             return Color.FromArgb(255, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
         }
