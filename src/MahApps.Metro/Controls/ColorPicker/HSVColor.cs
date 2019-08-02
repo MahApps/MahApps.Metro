@@ -71,7 +71,7 @@ namespace MahApps.Metro.Controls.ColorPicker
             Value = value;
         }
 
-        public Color GetColor ()
+        public Color ToColor ()
         {
             if (double.IsNaN(Hue))
                 Hue = 0;
