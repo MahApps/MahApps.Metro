@@ -240,8 +240,7 @@
                                         <!-- HTML String-->
 
                                         <Grid Grid.Row="6" Grid.ColumnSpan="3">
-                                            <Controls:NumericUpDown Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorNumber}"
-                                                                    StringFormat="{}{0:X8}" />
+                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnDataErrors=True}" />
                                         </Grid>
                                         
                                     </Grid>
