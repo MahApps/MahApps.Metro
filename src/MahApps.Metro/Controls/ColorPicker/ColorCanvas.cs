@@ -25,7 +25,8 @@ namespace MahApps.Metro.Controls
         #endregion
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorCanvas), new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
-        public static readonly DependencyProperty HexCodeProperty = DependencyProperty.Register("HexCode", typeof(string), typeof(ColorCanvas), new FrameworkPropertyMetadata("FF000000", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HexCodeChanged));
+        public static readonly DependencyProperty HexCodeProperty = DependencyProperty.Register("HexCode", typeof(string), typeof(ColorCanvas), new FrameworkPropertyMetadata("#FF000000", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged), IsValidHexCode);
+        public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register("ColorName", typeof(string), typeof(ColorCanvas), new PropertyMetadata(null));
 
         public static readonly DependencyProperty AProperty = DependencyProperty.Register("A", typeof(byte), typeof(ColorCanvas), new FrameworkPropertyMetadata((byte)255, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
         public static readonly DependencyProperty RProperty = DependencyProperty.Register("R", typeof(byte), typeof(ColorCanvas), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
@@ -48,6 +49,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(HexCodeProperty, value); }
         }
 
+
+        public string ColorName
+        {
+            get { return (string)GetValue(ColorNameProperty); }
+            set { SetValue(ColorNameProperty, value); }
+        }
+
+
+
+
         private static void ColorChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorCanvas colorCanvas)
@@ -59,6 +70,7 @@ namespace MahApps.Metro.Controls
                 colorCanvas.ColorIsUpdating = true;
 
                 colorCanvas.SetCurrentValue(HexCodeProperty, colorCanvas.SelectedColor.ToString());
+                colorCanvas.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorCanvas.SelectedColor));
 
                 var hsv = new HSVColor(colorCanvas.SelectedColor);
                 colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
@@ -75,7 +87,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void HexCodeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void ColorNameChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorCanvas colorCanvas)
             {
@@ -88,6 +100,8 @@ namespace MahApps.Metro.Controls
                 if (ColorHelper.ColorFromString(colorCanvas.HexCode) is Color color)
                 {
                     colorCanvas.SetCurrentValue(SelectedColorProperty, color);
+                    colorCanvas.SetCurrentValue(HexCodeProperty, color.ToString());
+                    colorCanvas.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorCanvas.SelectedColor));
 
                     var hsv = new HSVColor(colorCanvas.SelectedColor);
                     colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
@@ -101,10 +115,13 @@ namespace MahApps.Metro.Controls
                     colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(hsv.Hue, 1, 1).ToColor();
                 }
 
-                colorCanvas.SetCurrentValue(HexCodeProperty, colorCanvas.SelectedColor.ToString());
-
                 colorCanvas.ColorIsUpdating = false;
             }
+        }
+
+        public static bool IsValidHexCode(object value)
+        {
+            return ColorHelper.ColorFromString(value.ToString()).HasValue;
         }
 
 
@@ -154,6 +171,7 @@ namespace MahApps.Metro.Controls
                 colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(hsv.Hue, 1, 1).ToColor();
 
                 colorCanvas.SetValue(HexCodeProperty, colorCanvas.SelectedColor.ToString());
+                colorCanvas.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorCanvas.SelectedColor));
 
                 colorCanvas.ColorIsUpdating = false;
             }
@@ -200,8 +218,9 @@ namespace MahApps.Metro.Controls
 
                 colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(hsv.Hue, 1, 1).ToColor();
 
-
                 colorCanvas.SetValue(HexCodeProperty, colorCanvas.SelectedColor.ToString());
+                colorCanvas.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorCanvas.SelectedColor));
+
                 colorCanvas.ColorIsUpdating = false;
             }
         }

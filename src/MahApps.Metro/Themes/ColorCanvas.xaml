@@ -11,6 +11,19 @@
 
     <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
 
+    <DrawingBrush x:Key="CheckerdBrush" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,20,20">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
+                <GeometryDrawing.Geometry>
+                    <GeometryGroup>
+                        <RectangleGeometry Rect="0,0,10,10" />
+                        <RectangleGeometry Rect="10,10,10,10" />
+                    </GeometryGroup>
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
     <Style TargetType="{x:Type Controls:ColorCanvas}">
         
         <Setter Property="Template">
@@ -107,16 +120,19 @@
                                         IsMoveToPointEnabled="True"
                                         Margin="0,5,5,5" />
 
-                                <!-- Selected Color Preview -->
+                                <!-- Selected Color Preview and Opacity -->
                                 <Border Grid.Column="0"
                                         Grid.Row="1" 
                                         BorderThickness="1"
                                         BorderBrush="{DynamicResource MahApps.Brushes.Black}" 
+                                        Background="{StaticResource CheckerdBrush}"
                                         Margin="5"
                                         Height="40">
-                                    <Border.Background>
-                                        <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
-                                    </Border.Background>
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
                                 </Border>
 
                                 <!-- Sliders for Values -->
@@ -237,10 +253,34 @@
                                                                 Minimum="0" Maximum="100"
                                                                 StringFormat="p0"/>
                                         
-                                        <!-- HTML String-->
+                                        <!-- HTML String und Name -->
 
-                                        <Grid Grid.Row="6" Grid.ColumnSpan="3">
-                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                                        <Grid Grid.Row="6" Grid.ColumnSpan="3" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="Hex-Code "
+                                                   Grid.Column="0"
+                                                   Grid.Row="0"
+                                                   VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
+                                                     Grid.Column="1"
+                                                     Grid.Row="0"
+                                                     Margin="2"/>
+                                            <TextBlock Text="Name "
+                                                   Grid.Column="0"
+                                                   Grid.Row="1"
+                                                   VerticalAlignment="Center" />
+                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
+                                                     IsReadOnly="True"
+                                                     Grid.Column="1"
+                                                     Grid.Row="1"
+                                                     Margin="2"/>
                                         </Grid>
                                         
                                     </Grid>
