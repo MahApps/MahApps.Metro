@@ -121,23 +121,62 @@
                                         Margin="0,5,5,5" />
 
                                 <!-- Selected Color Preview and Opacity -->
-                                <Border Grid.Column="0"
-                                        Grid.Row="1" 
-                                        BorderThickness="1"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.Black}" 
-                                        Background="{StaticResource CheckerdBrush}"
-                                        Margin="5"
-                                        Height="40">
-                                    <Rectangle>
-                                        <Rectangle.Fill>
-                                            <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                </Border>
+                                <Grid Grid.Row="1"
+                                      Margin="5,0,5,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Preview"
+                                               Margin="0,2"/>
+
+
+                                    <Border Grid.Row="0" 
+                                            Grid.Column="1"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.Black}" 
+                                            Background="{StaticResource CheckerdBrush}"
+                                            Margin="5,0,0,5"
+                                            Height="30">
+                                        <Rectangle>
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+
+                                    <TextBlock Text="Opacity"
+                                               Grid.Column="0"
+                                               Grid.Row="1"
+                                               VerticalAlignment="Center" />
+                                    
+                                    <Grid Grid.Row="1" 
+                                          Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" MinWidth="110" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Slider Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" 
+                                                Grid.Column="0"
+                                                Margin="5,0,2,0"
+                                                Minimum="0" Maximum="255"/>
+                                        <Controls:NumericUpDown Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}"
+                                                                Grid.Column="1"
+                                                                Minimum="0" Maximum="255"/>
+
+                                    </Grid>
+                                    
+                                </Grid>
 
                                 <!-- Sliders for Values -->
                                 <ScrollViewer Grid.Column="2" 
-                                              Grid.RowSpan="2"
                                               Margin="0,5,5,5"
                                               VerticalScrollBarVisibility="Auto"
                                               HorizontalScrollBarVisibility="Auto">
@@ -253,39 +292,41 @@
                                                                 Minimum="0" Maximum="100"
                                                                 StringFormat="p0"/>
                                         
-                                        <!-- HTML String und Name -->
+                                    </Grid>
+                                </ScrollViewer>
 
-                                        <Grid Grid.Row="6" Grid.ColumnSpan="3" >
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="Hex-Code "
+                                <!-- HTML String und Name -->
+
+                                <Grid Grid.Row="2" 
+                                      Grid.Column="2"
+                                      Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Hex-Code "
                                                    Grid.Column="0"
                                                    Grid.Row="0"
                                                    VerticalAlignment="Center" />
-                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
+                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
                                                      Grid.Column="1"
                                                      Grid.Row="0"
                                                      Margin="2"/>
-                                            <TextBlock Text="Name "
+                                    <TextBlock Text="Name "
                                                    Grid.Column="0"
                                                    Grid.Row="1"
                                                    VerticalAlignment="Center" />
-                                            <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
+                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
                                                      IsReadOnly="True"
                                                      Grid.Column="1"
                                                      Grid.Row="1"
                                                      Margin="2"/>
-                                        </Grid>
-                                        
-                                    </Grid>
-                                </ScrollViewer>
-                                
+                                </Grid>
+
                             </Grid>
                         </Border>
                     </Grid>

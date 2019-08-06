@@ -73,6 +73,10 @@ namespace MahApps.Metro.Controls.ColorPicker
 
         public Color ToColor ()
         {
+            return ToColor(255);
+        }
+        public Color ToColor(byte AlphaChannel)
+        {
             if (double.IsNaN(Hue))
                 Hue = 0;
 
@@ -131,7 +135,7 @@ namespace MahApps.Metro.Controls.ColorPicker
             g = g + m;
             b = b + m;
 
-            return Color.FromArgb(255, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+            return Color.FromArgb(AlphaChannel, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
         }
     }
 }
