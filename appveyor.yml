@@ -18,12 +18,10 @@ environment:
     secure: BSPdW2TgnQtoQXXbeDECug==
 
 skip_tags: true
-image: Visual Studio 2019
-configuration: Release
+image: Visual Studio 2019 Preview
 test: off
 
 install:
-  - cinst netfx-4.7-devpack
   - cinst dotnetcore-sdk --pre
 
 pull_requests:
