@@ -180,11 +180,10 @@
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
                 <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
-                <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
+                <controls:DataGridNumericUpDownColumn Width="200"
+                                                      Binding="{Binding Price}"
                                                       Header="Price"
                                                       Minimum="0"
-                                                      Width="200"
-                                                      TextAlignment="Right"
                                                       StringFormat="{}{0:C}" />
             </DataGrid.Columns>
             <DataGrid.Style>

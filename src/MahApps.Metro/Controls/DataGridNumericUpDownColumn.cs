@@ -241,7 +241,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextAlignmentProperty =
             NumericUpDown.TextAlignmentProperty.AddOwner(
                 typeof(DataGridNumericUpDownColumn),
-                new FrameworkPropertyMetadata(TextAlignment.Left, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+                new FrameworkPropertyMetadata((TextAlignment)NumericUpDown.TextAlignmentProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
         public TextAlignment TextAlignment
         {
@@ -539,6 +539,9 @@ namespace MahApps.Metro.Controls
                         break;
                     case nameof(this.FontWeight):
                         SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
+                        break;
+                    case nameof(this.TextAlignment):
+                        SyncColumnProperty(this, numericUpDown, TextAlignmentProperty, NumericUpDown.TextAlignmentProperty);
                         break;
                     case nameof(this.StringFormat):
                         SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
