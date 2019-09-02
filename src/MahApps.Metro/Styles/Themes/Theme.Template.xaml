@@ -186,7 +186,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledForeground" Color="{{MahApps.Colors.MenuItem.DisabledForeground}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledGlyphPanel" Color="#848589" options:Freeze="True" />
 
-     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.CheckmarkFill" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.RightArrowFill" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
