@@ -337,7 +337,7 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGrey}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
