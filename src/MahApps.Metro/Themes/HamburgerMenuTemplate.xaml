@@ -357,7 +357,6 @@
                         </Grid.RowDefinitions>
                         <DockPanel x:Name="PaneHeader"
                                    Grid.Row="0"
-                                   Height="{TemplateBinding HamburgerHeight}"
                                    Margin="{TemplateBinding PaneHeaderMargin}"
                                    LastChildFill="True">
                             <Button x:Name="HamburgerButton"
