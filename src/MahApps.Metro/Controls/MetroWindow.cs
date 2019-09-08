@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
 
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(Brush), typeof(MetroWindow));
 
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -173,9 +173,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
-        public SolidColorBrush OverrideDefaultWindowCommandsBrush
+        public Brush OverrideDefaultWindowCommandsBrush
         {
-            get { return (SolidColorBrush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
+            get { return (Brush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
