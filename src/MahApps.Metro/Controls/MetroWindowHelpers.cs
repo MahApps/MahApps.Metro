@@ -63,22 +63,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="window">The MetroWindow</param>
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
-        /// <param name="resetBrush">An optional brush to reset the window commands brush to.</param>
-        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts, Brush resetBrush = null)
+        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts)
         {
             var allOpenFlyouts = flyouts.Where(x => x.IsOpen);
 
             var anyFlyoutOpen = allOpenFlyouts.Any(x => x.Position != Position.Bottom);
             if (!anyFlyoutOpen)
             {
-                if (resetBrush == null)
-                {
-                    window.ResetAllWindowCommandsBrush();
-                }
-                else
-                {
-                    window.ChangeAllWindowCommandsBrush(resetBrush);
-                }
+                window.ResetAllWindowCommandsBrush();
             }
 
             var topFlyout = allOpenFlyouts
@@ -119,7 +111,8 @@ namespace MahApps.Metro.Controls
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            window.ChangeAllWindowButtonCommandsBrush(flyout.Foreground, flyout.Position);
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, flyout.Position);
         }
 
         private static bool NeedLightTheme(this Brush brush)
