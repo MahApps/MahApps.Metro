@@ -129,8 +129,7 @@ namespace MetroDemo
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
-            dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
             dialog = dialog.ShowDialogExternally();
 
             await Task.Delay(5000);
@@ -180,7 +179,7 @@ namespace MetroDemo
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
 
             await this.ShowMetroDialogAsync(dialog);
 
@@ -189,7 +188,7 @@ namespace MetroDemo
 
             await Task.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() {OwnerCanCloseWithDialog = true});
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions.ColorScheme });
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await Task.Delay(2000);
@@ -215,7 +214,7 @@ namespace MetroDemo
                 };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
-            var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
 
             await this.ShowMetroDialogAsync(dialog);
             await dialog.WaitUntilUnloadedAsync();
@@ -223,7 +222,7 @@ namespace MetroDemo
 
         private async void CloseCustomDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
+            var dialog = (sender as DependencyObject).TryFindParent<BaseMetroDialog>();
 
             await this.HideMetroDialogAsync(dialog);
             await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
@@ -274,7 +273,8 @@ namespace MetroDemo
             {
                 NegativeButtonText = "Close now",
                 AnimateShow = false,
-                AnimateHide = false
+                AnimateHide = false,
+                ColorScheme = this.MetroDialogOptions.ColorScheme
             };
 
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);

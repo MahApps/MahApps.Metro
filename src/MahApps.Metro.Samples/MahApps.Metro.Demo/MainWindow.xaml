@@ -62,22 +62,19 @@
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
             </Style>
 
-            <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 x:Name="CustomTestDialog"
-                                 Title="This dialog allows arbitrary content.">
-                <TextBlock x:Name="MessageTextBlock"
-                           Height="200"
-                           Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                           Text="{Binding Artists[0].Name}" />
-            </Dialog:CustomDialog>
+            <UserControl x:Key="CustomDialogTest"
+                         x:Name="CustomDialogTest"
+                         MinHeight="200">
 
-            <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
-                                 x:Name="CustomCloseDialogTest"
-                                 Title="Custom Dialog which is awaitable">
+                <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
+
+            </UserControl>
+
+            <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
                     <TextBlock Height="30"
-                               Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                               Margin="0 4"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog"
@@ -85,7 +82,7 @@
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
-            </Dialog:CustomDialog>
+            </UserControl>
 
         </ResourceDictionary>
     </Window.Resources>
