@@ -249,7 +249,11 @@ namespace MahApps.Metro.Controls
         {
             base.OnContentChanged(oldContent, newContent);
 
-            this.StartTransition(oldContent, newContent);
+            if (oldContent != newContent)
+            {
+                this.StartTransition(oldContent, newContent);
+
+            }
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "newContent", Justification = "Should be used in the future.")]
