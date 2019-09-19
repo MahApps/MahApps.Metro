@@ -96,6 +96,7 @@
                           Content="Disabled"
                           IsEnabled="False"
                           Style="{DynamicResource MahApps.Styles.ToggleButton.Flat}" />
+
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
@@ -115,6 +116,37 @@
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
+                </ToggleButton>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
+                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
+                    <ToggleButton.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </ToggleButton.ContentTemplate>
+                </ToggleButton>
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
+                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                              IsEnabled="False"
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
+                    <ToggleButton.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </ToggleButton.ContentTemplate>
                 </ToggleButton>
             </StackPanel>
         </StackPanel>
@@ -186,6 +218,7 @@
                     </Button.ContentTemplate>
                 </Button>
             </StackPanel>
+
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
@@ -205,6 +238,37 @@
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
+                </Button>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        IsEnabled="False"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </Button.ContentTemplate>
                 </Button>
             </StackPanel>
         </StackPanel>
