@@ -151,9 +151,6 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Resources>
@@ -187,6 +184,27 @@
                                                       Kind="CitySeattle" />
                         </DataTemplate>
                     </Button.ContentTemplate>
+                </Button>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <iconPacks:PackIconModern Width="20"
+                                              Height="20"
+                                              Kind="City" />
+                </Button>
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        IsEnabled="False"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <iconPacks:PackIconModern Width="20"
+                                              Height="20"
+                                              Kind="City" />
                 </Button>
             </StackPanel>
         </StackPanel>

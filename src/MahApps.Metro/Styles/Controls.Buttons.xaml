@@ -218,7 +218,8 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}"/>
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}"/>
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -663,7 +664,8 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}"/>
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}"/>
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
