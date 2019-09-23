@@ -540,7 +540,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
         /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null)
+        public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
             Window win = SetupExternalDialogWindow(dialog, windowOwner);
 
@@ -559,7 +559,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
         /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null)
+        public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
             Window win = SetupExternalDialogWindow(dialog, windowOwner);
 
