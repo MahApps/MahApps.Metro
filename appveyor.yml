@@ -18,11 +18,11 @@ environment:
     secure: BSPdW2TgnQtoQXXbeDECug==
 
 skip_tags: true
-image: Visual Studio 2019 Preview
+image: Visual Studio 2019
 test: off
 
 install:
-  - cinst dotnetcore-sdk --pre
+  - cinst dotnetcore-sdk
 
 pull_requests:
   do_not_increment_build_number: false
@@ -36,3 +36,7 @@ artifacts:
 
 nuget:
   disable_publish_on_pr: true
+
+skip_commits:
+  files:
+    - '**/*.md'
