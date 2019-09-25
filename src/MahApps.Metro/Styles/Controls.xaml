@@ -118,5 +118,5 @@
     <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="StatusBarItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter}" TargetType="GridSplitter" />
-    
+
 </ResourceDictionary>

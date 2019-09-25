@@ -127,7 +127,9 @@
                         DataContext="{Binding ElementName=SimpleSplitview}"
                         Template="{StaticResource ConfigDataTemplate}" />
 
-        <GridSplitter Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext" />
+        <GridSplitter Grid.Row="1"
+                      Grid.Column="1"
+                      ResizeBehavior="PreviousAndNext" />
 
         <controls:SplitView x:Name="SimpleSplitview"
                             Grid.Row="1"
