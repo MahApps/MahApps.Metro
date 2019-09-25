@@ -15,9 +15,9 @@
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Grid Margin="4 0 4 4">
                         <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="1"
-                                        SnapsToDevicePixels="True" />
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True" />
                         <ContentPresenter Margin="8 5" />
                     </Grid>
                     <ControlTemplate.Triggers>
