@@ -6,13 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = "PART_SaturationValueBox", Type = typeof(Control))]
     [TemplatePart(Name = "PART_SaturationValueBox_Background", Type = typeof(SolidColorBrush))]
+    [TemplatePart(Name = "PART_PickColorFromScreen", Type = typeof(Button))]
     public class ColorCanvas: Control
     {
 
@@ -20,10 +23,13 @@ namespace MahApps.Metro.Controls
 
         SolidColorBrush PART_SaturationValueBox_Background;
         FrameworkElement PART_SaturationValueBox;
+        Button PART_PickColorFromScreen;
+
         bool ColorIsUpdating = false;
-        
+
         #endregion
 
+        // Depency Properties
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorCanvas), new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
         public static readonly DependencyProperty HexCodeProperty = DependencyProperty.Register("HexCode", typeof(string), typeof(ColorCanvas), new FrameworkPropertyMetadata("#FF000000", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged), IsValidHexCode);
         public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register("ColorName", typeof(string), typeof(ColorCanvas), new PropertyMetadata(ColorHelper.GetColorName(Colors.Black)));
@@ -223,9 +229,82 @@ namespace MahApps.Metro.Controls
             PART_SaturationValueBox = (FrameworkElement)base.GetTemplateChild("PART_SaturationValueBox");
             PART_SaturationValueBox.MouseLeftButtonDown += PART_SaturationValueBox_MouseLeftButtonDown;
             PART_SaturationValueBox.MouseLeftButtonUp += PART_SaturationValueBox_MouseLeftButtonUp;
+
+            PART_PickColorFromScreen = (Button)base.GetTemplateChild("PART_PickColorFromScreen");
+            PART_PickColorFromScreen.PreviewMouseLeftButtonDown += PART_PickColorFromScreen_PreviewMouseDown; ;
+            PART_PickColorFromScreen.PreviewMouseLeftButtonUp += PART_PickColorFromScreen_PreviewMouseUp; ;
+
         }
 
+        private void PART_PickColorFromScreen_PreviewMouseUp(object sender, MouseEventArgs e)
+        {
+            Mouse.Capture(null);
+            PART_PickColorFromScreen.MouseMove -= PART_PickColorFromScreen_PreviewMouseMove;
 
+            PART_PickColorFromScreen.Cursor = Cursors.Arrow;
+
+            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            {
+                toolTip.IsOpen = false;
+            }
+
+            if (!PART_PickColorFromScreen.IsMouseOver)
+            {
+                Point pointToWindow = Mouse.GetPosition(this);
+                Point pointToScreen = PointToScreen(pointToWindow);
+                SelectedColor = ColorHelper.GetPixelColor(pointToScreen);
+            }
+
+            UpdateTooltip_Timer = null;
+        }
+
+        private void PART_PickColorFromScreen_PreviewMouseDown(object sender, MouseEventArgs e)
+        {
+            PART_PickColorFromScreen.PreviewMouseMove += PART_PickColorFromScreen_PreviewMouseMove;
+            PART_PickColorFromScreen.Cursor = (Cursor)PART_PickColorFromScreen.Resources["MahApps.Cursors.EyeDropper"];
+            Mouse.Capture(PART_PickColorFromScreen);
+
+            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            {
+                toolTip.IsOpen = true;
+                toolTip.StaysOpen = true;
+                toolTip.Placement = PlacementMode.MousePoint;
+                toolTip.HorizontalOffset = Mouse.GetPosition(PART_PickColorFromScreen).X + 18;
+                toolTip.VerticalOffset = Mouse.GetPosition(PART_PickColorFromScreen).Y - 18;
+
+                UpdateTooltip_Timer = new DispatcherTimer();
+                UpdateTooltip_Timer.Interval = TimeSpan.FromSeconds(0.1);
+                UpdateTooltip_Timer.Tick += PART_PickColorFromScreen_UpdateTooltip;
+                UpdateTooltip_Timer.Start();
+            }
+
+            PART_PickColorFromScreen_UpdateTooltip(this, new EventArgs());
+
+            e.Handled = true;
+        }
+
+        private void PART_PickColorFromScreen_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            {
+                toolTip.IsOpen = true;
+                toolTip.StaysOpen = true;
+                toolTip.Placement = PlacementMode.MousePoint;
+                toolTip.HorizontalOffset = Mouse.GetPosition(PART_PickColorFromScreen).X + 18;
+                toolTip.VerticalOffset = Mouse.GetPosition(PART_PickColorFromScreen).Y - 18;
+            }
+        }
+
+        private DispatcherTimer UpdateTooltip_Timer;
+        private void PART_PickColorFromScreen_UpdateTooltip(object sender, EventArgs e)
+        {
+            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            {
+                Point pointToWindow = Mouse.GetPosition(this);
+                Point pointToScreen = PointToScreen(pointToWindow);
+                toolTip.DataContext = ColorHelper.GetPixelColor(pointToScreen);
+            }
+        }
         #endregion
 
     }

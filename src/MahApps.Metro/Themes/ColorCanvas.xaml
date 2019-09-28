@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:ControlzEx="urn:controlzex"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
@@ -11,7 +12,10 @@
 
     <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
 
-    <DrawingBrush x:Key="CheckerdBrush" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,20,20">
+    <DrawingBrush x:Key="CheckerdBrush"
+                  TileMode="Tile"
+                  ViewportUnits="Absolute"
+                  Viewport="0,0,20,20">
         <DrawingBrush.Drawing>
             <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
                 <GeometryDrawing.Geometry>
@@ -303,6 +307,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
@@ -313,7 +318,8 @@
                                                    Grid.Row="0"
                                                    VerticalAlignment="Center" />
                                     <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
-                                                     Grid.Column="1"
+                                              x:Name="TextBox_HexCode"       
+                                             Grid.Column="1"
                                                      Grid.Row="0"
                                                      Margin="2"/>
                                     <TextBlock Text="Name "
@@ -325,6 +331,60 @@
                                                      Grid.Column="1"
                                                      Grid.Row="1"
                                                      Margin="2"/>
+                                    <Button x:Name="PART_PickColorFromScreen"
+                                            Grid.Column="2"
+                                            Grid.Row="0" 
+                                            Width="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}"
+                                            Height="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}">
+
+                                        <Button.Resources>
+                                            <Cursor x:Key="MahApps.Cursors.EyeDropper">../Controls/ColorPicker/Eyedropper.cur</Cursor>
+                                        </Button.Resources>
+                                        
+                                        <Button.Content>
+                                            <Viewbox Stretch="Uniform">
+                                                <Canvas Width="24"
+                                                        Height="24">
+                                                    <Path Data="M19.35,11.72L17.22,13.85L15.81,12.43L8.1,20.14L3.5,22L2,20.5L3.86,15.9L11.57,8.19L10.15,6.78L12.28,4.65L19.35,11.72M16.76,3C17.93,1.83 19.83,1.83 21,3C22.17,4.17 22.17,6.07 21,7.24L19.08,9.16L14.84,4.92L16.76,3M5.56,17.03L4.5,19.5L6.97,18.44L14.4,11L13,9.6L5.56,17.03Z"
+                                                          Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                                </Canvas>
+                                            </Viewbox>
+                                        </Button.Content>
+                                        
+                                        <Button.ToolTip>
+                                            <ToolTip DataContext="Magenta">
+                                                <ToolTip.Template>
+                                                    <ControlTemplate>
+                                                        <Border Background="{DynamicResource MahApps.Brushes.White}"
+                                                                BorderThickness="1"
+                                                                BorderBrush="{DynamicResource MahApps.Brushes.Gray5}">
+                                                            <Grid >
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Ellipse Width="{DynamicResource MahApps.Sizes.Font.Content}"
+                                                                         Height="{DynamicResource MahApps.Sizes.Font.Content}"
+                                                                         StrokeThickness="1"
+                                                                         Margin="5"
+                                                                         Stroke="{DynamicResource MahApps.Brushes.Gray5}">
+                                                                    <Ellipse.Fill>
+                                                                        <SolidColorBrush Color="{Binding TargetNullValue='#FF0000'}" />
+                                                                    </Ellipse.Fill>
+                                                                </Ellipse>
+                                                                <TextBlock Margin="5"
+                                                                           Text="{Binding TargetNullValue='#FF0000'}"
+                                                                           FontFamily="Consolas"
+                                                                           Grid.Column="1"
+                                                                           TextOptions.TextFormattingMode="Display"
+                                                                           TextOptions.TextRenderingMode="ClearType" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ToolTip.Template>
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
                                 </Grid>
 
                             </Grid>
