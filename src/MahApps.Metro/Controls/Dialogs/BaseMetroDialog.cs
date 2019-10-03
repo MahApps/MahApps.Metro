@@ -102,6 +102,18 @@ namespace MahApps.Metro.Controls.Dialogs
             set { this.SetValue(DialogMessageFontSizeProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="DialogButtonFontSize"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogButtonFontSizeProperty = DependencyProperty.Register(nameof(DialogButtonFontSize), typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(SystemFonts.MessageFontSize));
+
+        /// <summary>
+        /// Gets or sets the font size of any dialog buttons.
+        /// </summary>
+        public double DialogButtonFontSize
+        {
+            get { return (double)this.GetValue(DialogButtonFontSizeProperty); }
+            set { this.SetValue(DialogButtonFontSizeProperty, value); }
+        }
+
         public MetroDialogSettings DialogSettings { get; private set; }
 
         internal SizeChangedEventHandler SizeChangedHandler { get; set; }
