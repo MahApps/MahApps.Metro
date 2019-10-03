@@ -174,11 +174,14 @@
                 </TabItem>
                 <TabItem Header="Demo">
                     <Grid>
-                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="This button has a context menu" Padding="4,0,4,0">
+                        <Button Padding="4 0 4 0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="This button has a context menu">
                             <Button.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="Item One"/>
-                                    <MenuItem Header="Item Two"/>
+                                    <MenuItem Header="Item One" />
+                                    <MenuItem Header="Item Two" />
                                     <MenuItem Header="Rockets">
                                         <MenuItem Header="Rocket slot 1">
                                             <MenuItem Header="Fire slot" />

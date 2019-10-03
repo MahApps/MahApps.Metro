@@ -4,6 +4,7 @@
     <Style x:Key="MahApps.Styles.TextBox.VisualStudio" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TextBox.Background}" />
         <Setter Property="CaretBrush" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
