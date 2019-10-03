@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="options">
 
     <!--  Background  -->
@@ -84,6 +85,11 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SubmenuItem.Background" Color="#1B1B1C" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SubmenuItem.BackgroundHighlighted" Color="#333334" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Menu.ForegroundDisabled" Color="#656565" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Background" Color="#1B1B1C" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="#333337" options:Freeze="True" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#FFFFFF" options:Freeze="True" />
+    <System:Double x:Key="MahApps.Sizes.Font.ContextMenu">12</System:Double>
+
 
     <!--  Scroll Bar  -->
     <SolidColorBrush x:Key="MahApps.Brushes.ScrollBar.PageButtonBackgroundHighlighted" Color="#05FFFFFF" options:Freeze="True" />

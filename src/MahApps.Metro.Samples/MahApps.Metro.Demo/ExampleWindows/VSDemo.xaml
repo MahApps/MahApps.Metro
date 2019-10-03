@@ -172,6 +172,29 @@
                         </Expander>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Demo">
+                    <Grid>
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="This button has a context menu" Padding="4,0,4,0">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Item One"/>
+                                    <MenuItem Header="Item Two"/>
+                                    <MenuItem Header="Rockets">
+                                        <MenuItem Header="Rocket slot 1">
+                                            <MenuItem Header="Fire slot" />
+                                            <Separator />
+                                            <MenuItem Header="Reload slot" />
+                                            <MenuItem Header="Report damage to control room" />
+                                        </MenuItem>
+                                        <MenuItem Header="Rocket slot 2">
+                                            <MenuItem Header="damaged .. being repaired" IsEnabled="False" />
+                                        </MenuItem>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="Manage Rockets">
                     <DockPanel>
                         <Button Width="200"
