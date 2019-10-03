@@ -146,7 +146,8 @@ namespace MetroDemo
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
                 FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = MetroDialogOptions.ColorScheme
+                ColorScheme = MetroDialogOptions.ColorScheme,
+                DialogButtonFontSize = 20D
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
@@ -314,6 +315,20 @@ namespace MetroDemo
         private async void ShowInputDialog(object sender, RoutedEventArgs e)
         {
             var result = await this.ShowInputAsync("Hello!", "What is your name?");
+
+            if (result == null) //user pressed cancel
+                return;
+
+            await this.ShowMessageAsync("Hello", "Hello " + result + "!");
+        }
+
+        private async void ShowInputDialogCustomButtonSizes(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings
+            {
+                DialogButtonFontSize = 30D
+            };
+            var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
 
             if (result == null) //user pressed cancel
                 return;
