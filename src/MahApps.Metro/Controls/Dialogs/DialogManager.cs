@@ -759,6 +759,10 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 dialog.DialogMessageFontSize = settings.DialogMessageFontSize;
             }
+            if (!double.IsNaN(settings.DialogButtonFontSize))
+            {
+                dialog.DialogButtonFontSize = settings.DialogButtonFontSize;
+            }
         }
 
         public static event EventHandler<DialogStateChangedEventArgs> DialogOpened;
