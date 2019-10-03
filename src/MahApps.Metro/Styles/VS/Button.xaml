@@ -5,6 +5,10 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Height" Value="23"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -13,7 +17,9 @@
                             BorderThickness="1"
                             SnapsToDevicePixels="True">
                         <Grid>
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ContentPresenter Margin="{TemplateBinding Padding}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
