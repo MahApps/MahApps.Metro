@@ -35,6 +35,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
@@ -130,6 +131,7 @@
                                 Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                 BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
