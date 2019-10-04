@@ -318,7 +318,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                         <Grid Margin="{TemplateBinding BorderThickness}">
@@ -338,7 +338,7 @@
                                           Margin="0"
                                           Padding="{TemplateBinding Padding}"
                                           VerticalAlignment="Stretch"
-                                          Controls:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
+                                          Controls:ControlsHelper.CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                           Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                           Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                           Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
@@ -458,7 +458,7 @@
                                 Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                 BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0.6"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

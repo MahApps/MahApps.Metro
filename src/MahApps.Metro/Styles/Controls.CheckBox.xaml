@@ -32,6 +32,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Path x:Name="checkBox"
                                   Width="12"
@@ -51,6 +52,7 @@
                                     Height="18"
                                     Background="{DynamicResource MahApps.Brushes.SemiTransparentWhite}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                     Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
