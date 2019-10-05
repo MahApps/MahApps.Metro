@@ -8,21 +8,24 @@ namespace MahApps.Metro.Converters
     /// <summary>
     /// Converts a Thickness to a new Thickness. It's possible to ignore a side with the IgnoreThicknessSide property.
     /// </summary>
+    [ValueConversion(typeof(Thickness), typeof(Thickness), ParameterType = typeof(ThicknessSideType))]
     public class ThicknessBindingConverter : IValueConverter
     {
-        public ThicknessSideType IgnoreThicknessSide { get; set; }
+        public ThicknessSideType IgnoreThicknessSide { get; set; } = ThicknessSideType.None;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Thickness thickness)
             {
+                var ignoreThickness = this.IgnoreThicknessSide;
+
                 // yes, we can override it with the parameter value
                 if (parameter is ThicknessSideType sideType)
                 {
-                    this.IgnoreThicknessSide = sideType;
+                    ignoreThickness = sideType;
                 }
 
-                switch (this.IgnoreThicknessSide)
+                switch (ignoreThickness)
                 {
                     case ThicknessSideType.Left:
                         return new Thickness(0, thickness.Top, thickness.Right, thickness.Bottom);

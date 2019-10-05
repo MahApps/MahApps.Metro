@@ -8,7 +8,7 @@ namespace MahApps.Metro.Converters
     /// <summary>
     /// Converts a CornerRadius to a new CornerRadius. It's possible to ignore a side with the IgnoreRadius property.
     /// </summary>
-    [ValueConversion(typeof(CornerRadius), typeof(CornerRadius))]
+    [ValueConversion(typeof(CornerRadius), typeof(CornerRadius), ParameterType = typeof(RadiusType))]
     public class CornerRadiusBindingConverter : IValueConverter
     {
         public RadiusType IgnoreRadius { get; set; } = RadiusType.None;
