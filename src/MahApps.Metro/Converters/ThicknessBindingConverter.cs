@@ -6,7 +6,7 @@ using System.Windows.Data;
 namespace MahApps.Metro.Converters
 {
     /// <summary>
-    /// Converts a Thickness to a new Thickness. It's possible to ignore a side With the IgnoreThicknessSide property.
+    /// Converts a Thickness to a new Thickness. It's possible to ignore a side with the IgnoreThicknessSide property.
     /// </summary>
     public class ThicknessBindingConverter : IValueConverter
     {
@@ -14,28 +14,29 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Thickness)
+            if (value is Thickness thickness)
             {
                 // yes, we can override it with the parameter value
-                if (parameter is ThicknessSideType)
+                if (parameter is ThicknessSideType sideType)
                 {
-                    this.IgnoreThicknessSide = (ThicknessSideType)parameter;
+                    this.IgnoreThicknessSide = sideType;
                 }
-                var orgThickness = (Thickness)value;
+
                 switch (this.IgnoreThicknessSide)
                 {
                     case ThicknessSideType.Left:
-                        return new Thickness(0, orgThickness.Top, orgThickness.Right, orgThickness.Bottom);
+                        return new Thickness(0, thickness.Top, thickness.Right, thickness.Bottom);
                     case ThicknessSideType.Top:
-                        return new Thickness(orgThickness.Left, 0, orgThickness.Right, orgThickness.Bottom);
+                        return new Thickness(thickness.Left, 0, thickness.Right, thickness.Bottom);
                     case ThicknessSideType.Right:
-                        return new Thickness(orgThickness.Left, orgThickness.Top, 0, orgThickness.Bottom);
+                        return new Thickness(thickness.Left, thickness.Top, 0, thickness.Bottom);
                     case ThicknessSideType.Bottom:
-                        return new Thickness(orgThickness.Left, orgThickness.Top, orgThickness.Right, 0);
+                        return new Thickness(thickness.Left, thickness.Top, thickness.Right, 0);
                     default:
-                        return orgThickness;
+                        return thickness;
                 }
             }
+
             return default(Thickness);
         }
 
