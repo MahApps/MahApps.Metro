@@ -17,13 +17,15 @@ namespace MahApps.Metro.Converters
         {
             if (value is CornerRadius cornerRadius)
             {
+                var ignoreRadius = this.IgnoreRadius;
+
                 // yes, we can override it with the parameter value
                 if (parameter is RadiusType radiusType)
                 {
-                    this.IgnoreRadius = radiusType;
+                    ignoreRadius = radiusType;
                 }
 
-                switch (this.IgnoreRadius)
+                switch (ignoreRadius)
                 {
                     case RadiusType.Left:
                         return new CornerRadius(0, cornerRadius.TopRight, cornerRadius.BottomRight, 0);
