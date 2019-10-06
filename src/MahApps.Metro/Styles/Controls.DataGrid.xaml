@@ -382,7 +382,7 @@
     <!--  Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style!  -->
     <Style x:Key="MahApps.Styles.DataGridRow" TargetType="{x:Type DataGridRow}">
         <Setter Property="Controls:DataGridRowHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
-        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="Margin" Value="0" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
         <Setter Property="ValidationErrorTemplate" Value="{StaticResource MahApps.Templates.DataGridRow.ValidationError}" />
         <Style.Triggers>
@@ -446,7 +446,7 @@
     <Style x:Key="MahApps.Styles.DataGrid" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="BorderThickness" Value="0 0 0 0" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell}" />
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader}" />
         <Setter Property="DropLocationIndicatorStyle">
@@ -480,6 +480,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
                             <ScrollViewer.Template>

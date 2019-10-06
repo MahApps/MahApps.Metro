@@ -187,7 +187,7 @@
                              SpellCheck.IsEnabled="True">
                     <!--
                         Workaround for: RichTextBox behaves oddly inside a ScrollViewer
-
+                        
                         The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
                     -->
                     <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">

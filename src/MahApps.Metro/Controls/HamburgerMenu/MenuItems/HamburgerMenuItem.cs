@@ -7,7 +7,7 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// The HamburgerMenuItem provides an implementation for HamburgerMenu entries.
     /// </summary>
-    public class HamburgerMenuItem : HamburgerMenuItemBase, ICommandSource
+    public class HamburgerMenuItem : HamburgerMenuItemBase, IHamburgerMenuItem, ICommandSource
     {
         /// <summary>
         /// Identifies the <see cref="Label"/> dependency property.
