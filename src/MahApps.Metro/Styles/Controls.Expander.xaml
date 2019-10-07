@@ -325,7 +325,6 @@
     </Storyboard>
 
     <Style x:Key="MahApps.Styles.Expander" TargetType="{x:Type Expander}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
@@ -334,7 +333,8 @@
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -348,7 +348,7 @@
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
                             <Border x:Name="HeaderSite"
-                                    Background="{TemplateBinding Background}"
+                                    Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Bottom}}"
@@ -371,10 +371,10 @@
                                     <ToggleButton.Foreground>
                                         <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                             <Binding Mode="OneWay"
-                                                     Path="Background"
+                                                     Path="(Controls:HeaderedControlHelper.HeaderBackground)"
                                                      RelativeSource="{RelativeSource TemplatedParent}" />
                                             <Binding Mode="OneWay"
-                                                     Path="(Controls:GroupBoxHelper.HeaderForeground)"
+                                                     Path="(Controls:HeaderedControlHelper.HeaderForeground)"
                                                      RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ToggleButton.Foreground>
@@ -383,7 +383,7 @@
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Background="Transparent"
+                                    Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
                                     CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Top}}"
