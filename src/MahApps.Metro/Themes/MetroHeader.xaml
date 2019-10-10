@@ -5,7 +5,8 @@
     <Style x:Key="MahApps.Styles.MetroHeader" TargetType="{x:Type Controls:MetroHeader}">
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Normal}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 2" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -17,29 +18,31 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Controls:ContentControlEx x:Name="PART_Header"
-                                                   Grid.Row="0"
-                                                   Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
-                                                   Content="{TemplateBinding Header}"
-                                                   ContentCharacterCasing="{TemplateBinding Controls:ControlsHelper.ContentCharacterCasing}"
-                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                   FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                   FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                   FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                   FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
-                                                   IsTabStop="False"
-                                                   RecognizesAccessKey="True"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <ContentPresenter x:Name="PART_Content"
-                                          Grid.Row="1"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          ContentSource="Content"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Grid.Row="0" Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}">
+                            <Controls:ContentControlEx x:Name="PART_Header"
+                                                       Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                                       Content="{TemplateBinding Header}"
+                                                       ContentCharacterCasing="{TemplateBinding Controls:ControlsHelper.ContentCharacterCasing}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
+                                                       IsTabStop="False"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <Grid Grid.Row="1" Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="PART_Content"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              ContentSource="Content"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

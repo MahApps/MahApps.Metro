@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.Button.VisualStudio" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background.Normal}" />
@@ -14,6 +15,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="True">
                         <Grid>
                             <ContentPresenter Margin="{TemplateBinding Padding}"
