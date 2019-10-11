@@ -190,6 +190,7 @@ namespace MahApps.Metro.Controls
         //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -1016,44 +1017,60 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                var match = RegexStringFormatHexadecimal.Match(format);
-                if (match.Success)
+                if(TryFormatHexadecimal(newValue, format, culture, out string hexValue))
                 {
-                    if (match.Groups["simpleHEX"].Success)
-                    {
-                        // HEX DOES SUPPORT INT ONLY.
-                        return ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
-                    }
-
-                    if (match.Groups["complexHEX"].Success)
-                    {
-                        return string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
-                    }
+                    return hexValue;
                 }
                 else
                 {
-                    var value = newValue.Value;
-
-                    if (format.ToUpper().Contains("P") || format.Contains("%"))
+                    var match = RegexStringFormat.Match(format);
+                    if (match.Success)
                     {
-                        value = value / 100d;
+                        // we have a format template such as "{0:N0}"
+                        return string.Format(culture, format, ConvertStringFormatValue(newValue.Value, match.Groups["format"].Value));
                     }
-                    else if (format.Contains("‰"))
-                    {
-                        value = value / 1000d;
-                    }
-
-                    if (!format.Contains("{"))
-                    {
-                        // then we may have a StringFormat of e.g. "N0"
-                        return value.ToString(format, culture);
-                    }
-
-                    return string.Format(culture, format, value);
+                    // we have a format such as "N0"
+                    var value = ConvertStringFormatValue(newValue.Value, format);
+                    return value.ToString(format, culture);
                 }
             }
 
             return newValue.Value.ToString(culture);
+        }        
+
+        private static double ConvertStringFormatValue(double value, string format)
+        {
+            if (format.ToUpper().Contains("P") || format.Contains("%"))
+            {
+                value /= 100d;
+            }
+            else if (format.Contains("‰"))
+            {
+                value /= 1000d;
+            }
+            return value;
+        }        
+
+        private bool TryFormatHexadecimal(double? newValue, string format, CultureInfo culture, out string output)
+        {
+            var match = RegexStringFormatHexadecimal.Match(format);
+            if (match.Success)
+            {
+                if (match.Groups["simpleHEX"].Success)
+                {
+                    // HEX DOES SUPPORT INT ONLY.
+                    output = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                    return true;
+                }
+
+                if (match.Groups["complexHEX"].Success)
+                {
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                    return true;
+                }
+            }
+            output = null;
+            return false;
         }
 
         private ScrollViewer TryFindScrollViewer()

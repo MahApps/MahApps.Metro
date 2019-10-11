@@ -124,6 +124,12 @@ namespace MahApps.Metro.Tests
             SetText(textBox, "200.00");
             Assert.Equal(200d, window.TheNUD.Value);
             Assert.Equal("200.00 cm", textBox.Text);
+
+            // GH-3551
+            window.TheNUD.StringFormat = "{}{0}mmHg";
+            SetText(textBox, "15");
+            Assert.Equal(15, window.TheNUD.Value);
+            Assert.Equal("15mmHg", textBox.Text);
         }
 
         [Fact]
@@ -195,6 +201,54 @@ namespace MahApps.Metro.Tests
             SetText(textBox, "-0.39678");
             Assert.Equal(-0.39678d, window.TheNUD.Value);
             Assert.Equal("-0.4 %", textBox.Text);
+
+            window.TheNUD.StringFormat = "{}{0:0.0%}";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0%", textBox.Text);
+
+            window.TheNUD.StringFormat = "{0:0.0%}";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0%", textBox.Text);
+
+            window.TheNUD.StringFormat = "0.0%";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0%", textBox.Text);            
+
+            window.TheNUD.StringFormat = "{}{0:0.0‰}";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0‰", textBox.Text);
+
+            window.TheNUD.StringFormat = "{0:0.0‰}";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0‰", textBox.Text);
+
+            window.TheNUD.StringFormat = "0.0‰";
+            SetText(textBox, "1");
+            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal("1.0‰", textBox.Text);
+
+            // GH-3376 Case 3
+            window.TheNUD.StringFormat = "{0:0.0000}%";
+            SetText(textBox, "0.25");
+            Assert.Equal(0.25, window.TheNUD.Value);
+            Assert.Equal("0.2500%", textBox.Text);
+
+            // GH-3376 Case 4
+            window.TheNUD.StringFormat = "{0:0.0000}‰";
+            SetText(textBox, "0.25");
+            Assert.Equal(0.25, window.TheNUD.Value);
+            Assert.Equal("0.2500‰", textBox.Text);
+
+            // GH-3376#issuecomment-472324787
+            window.TheNUD.StringFormat = "{}{0:G3} mPa·s";
+            SetText(textBox, "0.986");
+            Assert.Equal(0.986, window.TheNUD.Value);
+            Assert.Equal("0.986 mPa·s", textBox.Text);
         }
 
         [Fact]
