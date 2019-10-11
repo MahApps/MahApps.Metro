@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -243,13 +243,13 @@ namespace MahApps.Metro.Tests
             Assert.Equal(42d, window.TheNUD.Value);
 
             SetText(textBox, "42.2");
-            Assert.Equal(null, window.TheNUD.Value);
+            Assert.Null(window.TheNUD.Value);
 
             SetText(textBox, ".");
-            Assert.Equal(null, window.TheNUD.Value);
+            Assert.Null(window.TheNUD.Value);
 
             SetText(textBox, ".9");
-            Assert.Equal(null, window.TheNUD.Value);
+            Assert.Null(window.TheNUD.Value);
         }
 
         [Fact]
