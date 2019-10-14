@@ -187,7 +187,6 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
@@ -586,7 +585,7 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
-            this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
+            this.ToggleReadOnlyMode(this.IsReadOnly || !this.InterceptManualEnter);
 
             this.repeatUp.Click += (o, e) =>
                 {
@@ -683,23 +682,22 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            switch (e.Key)
+            if (e.Key == Key.Enter)
             {
-                case Key.Enter:
-                    if (!this.ChangeValueOnTextChanged)
-                    {
-                        this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
-                    }
-
-                    break;
-                case Key.Up:
-                    this.ChangeValueWithSpeedUp(true);
-                    e.Handled = true;
-                    break;
-                case Key.Down:
-                    this.ChangeValueWithSpeedUp(false);
-                    e.Handled = true;
-                    break;
+                if (!this.ChangeValueOnTextChanged)
+                {
+                    this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
+                }
+            }
+            else if (e.Key == Key.Up)
+            {
+                this.ChangeValueWithSpeedUp(true);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                this.ChangeValueWithSpeedUp(false);
+                e.Handled = true;
             }
 
             if (e.Handled)
@@ -943,27 +941,6 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
-        }
-
-        private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-            if (e.NewValue != e.OldValue && e.NewValue is bool && numericUpDown.Value != null)
-            {
-                var hasDecimals = (bool)e.NewValue;
-                var numericInput = numericUpDown.NumericInputMode;
-                if (!hasDecimals)
-                {
-                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
-                    numericInput &= ~NumericInput.Decimal;
-                }
-                else
-                {
-                    numericInput |= NumericInput.Decimal;
-                }
-
-                numericUpDown.SetCurrentValue(NumericInputModeProperty, numericInput);
-            }
         }
 
         private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1305,7 +1282,7 @@ namespace MahApps.Metro.Controls
                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
-            var number = this.TryGetNumberFromText(text, isHex);
+            var number = TryGetNumberFromText(text, isHex);
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
@@ -1348,7 +1325,7 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-        private string TryGetNumberFromText(string text, bool isHex)
+        private static string TryGetNumberFromText(string text, bool isHex)
         {
             if (isHex)
             {
