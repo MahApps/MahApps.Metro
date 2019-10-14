@@ -1040,7 +1040,7 @@ namespace MahApps.Metro.Controls
 
         private static double ConvertStringFormatValue(double value, string format)
         {
-            if (format.ToUpper().Contains("P") || format.Contains("%"))
+            if (format.ToUpperInvariant().Contains("P") || format.Contains("%"))
             {
                 value /= 100d;
             }
@@ -1051,7 +1051,7 @@ namespace MahApps.Metro.Controls
             return value;
         }        
 
-        private bool TryFormatHexadecimal(double? newValue, string format, CultureInfo culture, out string output)
+        private static bool TryFormatHexadecimal(double? newValue, string format, CultureInfo culture, out string output)
         {
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
