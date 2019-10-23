@@ -68,9 +68,22 @@
                                  RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      SnapsToDevicePixels="True" />
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Line SnapsToDevicePixels="True"
+                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                          StrokeThickness="2.5"
+                          X1="1"
+                          X2="9"
+                          Y1="1"
+                          Y2="9" />
+                    <Line SnapsToDevicePixels="True"
+                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                          StrokeThickness="2.5"
+                          X1="1"
+                          X2="9"
+                          Y1="9"
+                          Y2="1" />
+                </Grid>
             </Button>
         </StackPanel>
         <ControlTemplate.Triggers>
@@ -177,18 +190,14 @@
                                  RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Grid>
-                    <Line HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          SnapsToDevicePixels="True"
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Line SnapsToDevicePixels="True"
                           Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                           X1="0"
                           X2="10"
                           Y1="0"
                           Y2="10" />
-                    <Line HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          SnapsToDevicePixels="True"
+                    <Line SnapsToDevicePixels="True"
                           Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                           X1="0"
                           X2="10"
