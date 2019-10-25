@@ -565,6 +565,16 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+            <Style BasedOn="{StaticResource {x:Type FlowDocument}}" TargetType="{x:Type FlowDocument}">
+                <Setter Property="FlowDirection" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FlowDirection}" />
+                <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontFamily}" />
+                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontSize}" />
+                <Setter Property="FontStretch" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontStretch}" />
+                <Setter Property="FontStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontStyle}" />
+                <Setter Property="FontWeight" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=FontWeight}" />
+                <Setter Property="Language" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=Language}" />
+                <Setter Property="PageWidth" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}" />
+            </Style>
         </Style.Resources>
         <Setter Property="AllowDrop" Value="True" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />

@@ -187,9 +187,9 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -585,7 +585,7 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
-            this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
+            this.ToggleReadOnlyMode(this.IsReadOnly || !this.InterceptManualEnter);
 
             this.repeatUp.Click += (o, e) =>
                 {
@@ -682,23 +682,22 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            switch (e.Key)
+            if (e.Key == Key.Enter)
             {
-                case Key.Enter:
-                    if (!this.ChangeValueOnTextChanged)
-                    {
-                        this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
-                    }
-
-                    break;
-                case Key.Up:
-                    this.ChangeValueWithSpeedUp(true);
-                    e.Handled = true;
-                    break;
-                case Key.Down:
-                    this.ChangeValueWithSpeedUp(false);
-                    e.Handled = true;
-                    break;
+                if (!this.ChangeValueOnTextChanged)
+                {
+                    this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
+                }
+            }
+            else if (e.Key == Key.Up)
+            {
+                this.ChangeValueWithSpeedUp(true);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                this.ChangeValueWithSpeedUp(false);
+                e.Handled = true;
             }
 
             if (e.Handled)
@@ -944,27 +943,6 @@ namespace MahApps.Metro.Controls
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
         }
 
-        private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-            if (e.NewValue != e.OldValue && e.NewValue is bool && numericUpDown.Value != null)
-            {
-                var hasDecimals = (bool)e.NewValue;
-                var numericInput = numericUpDown.NumericInputMode;
-                if (!hasDecimals)
-                {
-                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
-                    numericInput &= ~NumericInput.Decimal;
-                }
-                else
-                {
-                    numericInput |= NumericInput.Decimal;
-                }
-
-                numericUpDown.SetCurrentValue(NumericInputModeProperty, numericInput);
-            }
-        }
-
         private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var numericUpDown = (NumericUpDown)d;
@@ -1016,44 +994,60 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                var match = RegexStringFormatHexadecimal.Match(format);
-                if (match.Success)
+                if(TryFormatHexadecimal(newValue, format, culture, out string hexValue))
                 {
-                    if (match.Groups["simpleHEX"].Success)
-                    {
-                        // HEX DOES SUPPORT INT ONLY.
-                        return ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
-                    }
-
-                    if (match.Groups["complexHEX"].Success)
-                    {
-                        return string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
-                    }
+                    return hexValue;
                 }
                 else
                 {
-                    var value = newValue.Value;
-
-                    if (format.ToUpper().Contains("P") || format.Contains("%"))
+                    var match = RegexStringFormat.Match(format);
+                    if (match.Success)
                     {
-                        value = value / 100d;
+                        // we have a format template such as "{0:N0}"
+                        return string.Format(culture, format, ConvertStringFormatValue(newValue.Value, match.Groups["format"].Value));
                     }
-                    else if (format.Contains("‰"))
-                    {
-                        value = value / 1000d;
-                    }
-
-                    if (!format.Contains("{"))
-                    {
-                        // then we may have a StringFormat of e.g. "N0"
-                        return value.ToString(format, culture);
-                    }
-
-                    return string.Format(culture, format, value);
+                    // we have a format such as "N0"
+                    var value = ConvertStringFormatValue(newValue.Value, format);
+                    return value.ToString(format, culture);
                 }
             }
 
             return newValue.Value.ToString(culture);
+        }        
+
+        private static double ConvertStringFormatValue(double value, string format)
+        {
+            if (format.ToUpperInvariant().Contains("P") || format.Contains("%"))
+            {
+                value /= 100d;
+            }
+            else if (format.Contains("‰"))
+            {
+                value /= 1000d;
+            }
+            return value;
+        }        
+
+        private static bool TryFormatHexadecimal(double? newValue, string format, CultureInfo culture, out string output)
+        {
+            var match = RegexStringFormatHexadecimal.Match(format);
+            if (match.Success)
+            {
+                if (match.Groups["simpleHEX"].Success)
+                {
+                    // HEX DOES SUPPORT INT ONLY.
+                    output = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                    return true;
+                }
+
+                if (match.Groups["complexHEX"].Success)
+                {
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                    return true;
+                }
+            }
+            output = null;
+            return false;
         }
 
         private ScrollViewer TryFindScrollViewer()
@@ -1288,7 +1282,7 @@ namespace MahApps.Metro.Controls
                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
-            var number = this.TryGetNumberFromText(text, isHex);
+            var number = TryGetNumberFromText(text, isHex);
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
@@ -1331,7 +1325,7 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-        private string TryGetNumberFromText(string text, bool isHex)
+        private static string TryGetNumberFromText(string text, bool isHex)
         {
             if (isHex)
             {
