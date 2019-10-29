@@ -324,12 +324,12 @@ namespace MahApps.Metro
                 throw new ArgumentNullException(nameof(theme));
             }
 
-            if (theme.Name.StartsWith("dark.", StringComparison.OrdinalIgnoreCase))
+            if (theme.Type == ThemeType.Dark)
             {
                 return GetTheme("Light." + theme.Name.Substring("dark.".Length));
             }
 
-            if (theme.Name.StartsWith("light.", StringComparison.OrdinalIgnoreCase))
+            if (theme.Type == ThemeType.Light)
             {
                 return GetTheme("Dark." + theme.Name.Substring("light.".Length));
             }
