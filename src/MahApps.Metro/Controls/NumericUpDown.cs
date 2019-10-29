@@ -138,6 +138,7 @@ namespace MahApps.Metro.Controls
                     if (e.NewValue != e.OldValue)
                     {
                         var numUpDown = (NumericUpDown)o;
+                        numUpDown.regexNumber = null;
                         numUpDown.OnValueChanged(numUpDown.Value, numUpDown.Value);
                     }
                 }));
@@ -187,7 +188,8 @@ namespace MahApps.Metro.Controls
         }
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
+        private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
+        private Regex regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
@@ -1282,7 +1284,7 @@ namespace MahApps.Metro.Controls
                         || this.ParsingNumberStyle.HasFlag(NumberStyles.AllowHexSpecifier)
                         || this.ParsingNumberStyle == NumberStyles.HexNumber;
 
-            var number = TryGetNumberFromText(text, isHex);
+            var number = this.TryGetNumberFromText(text, isHex);
 
             // If we are only accepting numbers then attempt to parse as an integer.
             if (isNumeric)
@@ -1325,7 +1327,7 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-        private static string TryGetNumberFromText(string text, bool isHex)
+        private string TryGetNumberFromText(string text, bool isHex)
         {
             if (isHex)
             {
@@ -1333,7 +1335,14 @@ namespace MahApps.Metro.Controls
                 return hexMatches.Count > 0 ? hexMatches[0].Value : text;
             }
 
-            var matches = RegexNumber.Matches(text);
+            if (this.regexNumber == null)
+            {
+                this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+                                                                 .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),
+                                             RegexOptions.Compiled);
+            }
+
+            var matches = this.regexNumber.Matches(text);
             return matches.Count > 0 ? matches[0].Value : text;
         }
     }

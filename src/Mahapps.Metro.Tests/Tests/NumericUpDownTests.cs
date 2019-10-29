@@ -282,6 +282,37 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
+        public async Task ShouldConvertDecimalTextInputWithSpecialCulture()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            var textBox = window.TheNUD.FindChild<TextBox>(string.Empty);
+            Assert.NotNull(textBox);
+
+            window.TheNUD.NumericInputMode = NumericInput.Decimal;
+
+            window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
+
+            SetText(textBox, "42");
+            Assert.Equal(42d, window.TheNUD.Value);
+
+            SetText(textBox, "42/751");
+            Assert.Equal(42.751d, window.TheNUD.Value);
+
+            SetText(textBox, "/");
+            Assert.Equal(0d, window.TheNUD.Value);
+
+            SetText(textBox, "/9");
+            Assert.Equal(0.9d, window.TheNUD.Value);
+
+            SetText(textBox, "/0115");
+            Assert.Equal(0.0115d, window.TheNUD.Value);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
         public async Task ShouldConvertNumericTextInput()
         {
             await TestHost.SwitchToAppThread();
