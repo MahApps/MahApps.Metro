@@ -3,12 +3,19 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindowButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Base}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Dark}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Dark}" />
+        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Dark}" />
         <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Light}" />
+        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Light}" />
+        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Light}" />
     </Style>
 
 </ResourceDictionary>

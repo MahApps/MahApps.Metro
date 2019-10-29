@@ -231,7 +231,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Base" TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
@@ -244,6 +244,11 @@
         <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.WindowButtonCommands"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Base}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />

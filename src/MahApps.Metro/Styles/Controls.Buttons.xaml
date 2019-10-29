@@ -305,8 +305,8 @@
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentWhite}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
@@ -326,11 +326,11 @@
         <Setter Property="Width" Value="34" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentWhite}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.HoverBackground}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
@@ -344,11 +344,11 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.HoverBackground}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}" />

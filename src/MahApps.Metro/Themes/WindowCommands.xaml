@@ -21,6 +21,9 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="PART_ContentControlEx" Property="Opacity" Value="1" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_ContentControlEx" Property="Opacity" Value="1" />
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -46,6 +49,9 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter TargetName="PART_ContentControlEx" Property="Opacity" Value="1" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_ContentControlEx" Property="Opacity" Value="1" />
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -57,7 +63,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -287,7 +293,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.WindowCommands" TargetType="{x:Type Controls:WindowCommands}">
+    <Style x:Key="MahApps.Styles.WindowCommands.Base" TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Dark}" />
@@ -298,6 +304,11 @@
         <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.WindowCommands.Base}"
+           TargetType="{x:Type Controls:WindowCommands}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ParentWindow.ShowTitleBar}" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
