@@ -190,7 +190,9 @@
                                  RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      UseLayoutRounding="False">
                     <Line SnapsToDevicePixels="True"
                           Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                           X1="0"
