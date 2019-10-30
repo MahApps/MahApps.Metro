@@ -210,9 +210,10 @@ namespace MahApps.Metro.Controls
             e.Handled = true;
         }
 
-        private void ExpanderClick(object sender, RoutedEventArgs e)
+        private void ExpanderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.SetCurrentValue(IsExpandedProperty, !this.IsExpanded);
+            e.Handled = true;
         }
 
         public override void OnApplyTemplate()
@@ -320,14 +321,14 @@ namespace MahApps.Metro.Controls
 
         private void InitializeVisualElementsContainer()
         {
-            this._expander.Click -= this.ExpanderClick;
+            this._expander.PreviewMouseLeftButtonDown -= this.ExpanderMouseLeftButtonDown;
             this._clickButton.Click -= this.ButtonClick;
             this._listBox.SelectionChanged -= this.ListBoxSelectionChanged;
             this._listBox.PreviewMouseLeftButtonDown -= this.ListBoxPreviewMouseLeftButtonDown;
             this._popup.Opened -= this.PopupOpened;
             this._popup.Closed -= this.PopupClosed;
 
-            this._expander.Click += this.ExpanderClick;
+            this._expander.PreviewMouseLeftButtonDown += this.ExpanderMouseLeftButtonDown;
             this._clickButton.Click += this.ButtonClick;
             this._listBox.SelectionChanged += this.ListBoxSelectionChanged;
             this._listBox.PreviewMouseLeftButtonDown += this.ListBoxPreviewMouseLeftButtonDown;
@@ -351,6 +352,11 @@ namespace MahApps.Metro.Controls
 
         private void PopupClosed(object sender, EventArgs e)
         {
+            this.OnPopupClose();
+        }
+
+        private void OnPopupClose()
+        {
             this.SetCurrentValue(IsExpandedProperty, false);
             this.ReleaseMouseCapture();
             Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
@@ -362,12 +368,26 @@ namespace MahApps.Metro.Controls
 
         private void PopupOpened(object sender, EventArgs e)
         {
-            Mouse.Capture(this, CaptureMode.SubTree);
+            this.NavigateToContainer();
+
             // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
             // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
             // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
             // to cause OutsideCapturedElementHandler to be called again.
             Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
+        }
+
+        private void NavigateToContainer()
+        {
+            Mouse.Capture(this, CaptureMode.SubTree);
+            if (this._listBox.Focusable)
+            {
+                Keyboard.Focus(this._listBox);
+            }
+            else
+            {
+                this._listBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
         }
 
         private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
@@ -378,13 +398,13 @@ namespace MahApps.Metro.Controls
             // at all.
             if (this.IsExpanded)
             {
-                Mouse.Capture(this, CaptureMode.SubTree);
+                this.NavigateToContainer();
             }
         }
 
         private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
         {
-            this.PopupClosed(sender, e);
+            this.OnPopupClose();
         }
 
         protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
@@ -393,7 +413,7 @@ namespace MahApps.Metro.Controls
             // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
             if (!(bool)e.NewValue)
             {
-                this.SetCurrentValue(IsExpandedProperty, false);
+                this.OnPopupClose();
             }
         }
 
