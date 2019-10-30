@@ -68,6 +68,49 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Styles.SplitButton.Button.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
+           TargetType="{x:Type Control}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.SplitButton.ButtonArrow.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.SplitButton.Button.WindowCommands}"
+           TargetType="{x:Type Control}">
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.SplitButton.WindowCommands" TargetType="{x:Type Controls:SplitButton}">
+        <Setter Property="ArrowBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="ArrowPressedBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ButtonArrowStyle" Value="{StaticResource MahApps.Styles.SplitButton.ButtonArrow.WindowCommands}" />
+        <Setter Property="ButtonStyle" Value="{StaticResource MahApps.Styles.SplitButton.Button.WindowCommands}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="8 0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
@@ -157,6 +200,7 @@
                 <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type ToggleButton}">
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
+                <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
@@ -231,6 +275,7 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
+                <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
