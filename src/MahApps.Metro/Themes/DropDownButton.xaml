@@ -32,6 +32,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu}" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -89,7 +90,6 @@
                                                           RecognizesAccessKey="True"
                                                           UseLayoutRounding="False" />
                                         <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                                   Margin="3"
                                                                    Padding="{TemplateBinding Padding}"
                                                                    HorizontalAlignment="Center"
                                                                    VerticalAlignment="Center"

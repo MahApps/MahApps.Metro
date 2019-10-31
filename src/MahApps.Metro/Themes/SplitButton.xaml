@@ -46,7 +46,6 @@
                                                   RecognizesAccessKey="True"
                                                   UseLayoutRounding="False" />
                                 <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                           Margin="2"
                                                            Padding="{TemplateBinding Padding}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
@@ -175,7 +174,6 @@
                                                   RecognizesAccessKey="True"
                                                   UseLayoutRounding="False" />
                                 <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                           Margin="2"
                                                            Padding="{TemplateBinding Padding}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
@@ -291,6 +289,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="ListBoxStyle" Value="{DynamicResource MahApps.Styles.ListBox.Virtualized}" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Horizontal}" />

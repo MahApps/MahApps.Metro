@@ -72,6 +72,7 @@
            BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
            TargetType="{x:Type Control}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="4 0 0 0" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Style.Triggers>
@@ -85,7 +86,7 @@
            BasedOn="{StaticResource MahApps.Styles.SplitButton.Button.WindowCommands}"
            TargetType="{x:Type Control}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="Padding" Value="0 0 4 0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
@@ -100,7 +101,35 @@
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Padding" Value="8 0" />
+        <Setter Property="Padding" Value="4 0" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Opacity" Value="1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DropDownButton.Button.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.SplitButton.Button.WindowCommands}"
+           TargetType="{x:Type Control}">
+        <Setter Property="Padding" Value="4 0 4 0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DropDownButton.WindowCommands" TargetType="{x:Type Controls:DropDownButton}">
+        <Setter Property="ArrowBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="ArrowPressedBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ButtonStyle" Value="{StaticResource MahApps.Styles.DropDownButton.Button.WindowCommands}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="4 0 8 0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -201,6 +230,7 @@
                     <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
                 </Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WindowCommands}" TargetType="{x:Type Controls:DropDownButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
@@ -276,6 +306,7 @@
                     </Style.Triggers>
                 </Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WindowCommands}" TargetType="{x:Type Controls:DropDownButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
                        BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
