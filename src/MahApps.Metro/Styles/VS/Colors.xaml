@@ -50,6 +50,8 @@
         <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.White}" />
     </LinearGradientBrush>
 
+    <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.HoverBackground" Color="#40808080" options:Freeze="True" />
+
     <!--  Foreground  -->
     <SolidColorBrush x:Key="MahApps.Brushes.Foreground" Color="#FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WindowTitle.Foreground" Color="#999988" options:Freeze="True" />

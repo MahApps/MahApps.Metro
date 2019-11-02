@@ -52,6 +52,10 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
+    <Controls:MetroWindow.WindowButtonCommands>
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Clean.Win10}" />
+    </Controls:MetroWindow.WindowButtonCommands>
+
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="settingsFlyout"
