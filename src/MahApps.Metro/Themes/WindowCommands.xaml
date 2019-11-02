@@ -142,7 +142,6 @@
 
     <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
@@ -152,27 +151,26 @@
                           Background="{TemplateBinding Background}"
                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Path Name="Arrow"
+                              Width="7"
                               Margin="4"
+                              HorizontalAlignment="Center"
                               VerticalAlignment="Bottom"
-                              Data="M 0 0 L 6 0 3 3 Z"
-                              Fill="{TemplateBinding Foreground}" />
+                              Data="M16.59,5.59L18,7L12,13L6,7L7.41,5.59L12,10.17L16.59,5.59M16.59,11.59L18,13L12,19L6,13L7.41,11.59L12,16.17L16.59,11.59Z"
+                              Fill="{TemplateBinding Foreground}"
+                              Opacity="0.75"
+                              Stretch="Uniform" />
                         <ContentPresenter />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
+                            <Setter TargetName="Arrow" Property="Opacity" Value="1" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="White" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -185,6 +183,7 @@
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
+                          Foreground="{TemplateBinding Foreground}"
                           IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
                           Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
@@ -251,6 +250,7 @@
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
                           DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
+                          Foreground="{TemplateBinding Foreground}"
                           IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
                           IsEnabled="false"
                           Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
