@@ -436,7 +436,7 @@
                                             Focusable="False"
                                             IsTabStop="False" />
                             <Rectangle x:Name="LightDismissLayer"
-                                       Fill="Transparent"
+                                       Fill="{TemplateBinding OverlayBrush}"
                                        Visibility="Collapsed" />
                         </Grid>
 
