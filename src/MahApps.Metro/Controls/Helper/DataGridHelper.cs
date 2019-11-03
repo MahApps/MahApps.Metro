@@ -13,6 +13,35 @@ namespace MahApps.Metro.Controls
     {
         private static DataGrid _suppressComboAutoDropDown;
 
+        public static readonly DependencyProperty CellPaddingProperty
+            = DependencyProperty.RegisterAttached(
+                "CellPadding",
+                typeof(Thickness),
+                typeof(DataGridHelper),
+                new FrameworkPropertyMetadata(new Thickness(0), FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the padding inside the cell.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGrid))]
+        [AttachedPropertyBrowsableForType(typeof(DataGridRow))]
+        public static Thickness GetCellPadding(DependencyObject element)
+        {
+            return (Thickness)element.GetValue(CellPaddingProperty);
+        }
+
+        /// <summary>
+        /// Sets the padding inside the cell.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGrid))]
+        [AttachedPropertyBrowsableForType(typeof(DataGridRow))]
+        public static void SetCellPadding(DependencyObject element, Thickness value)
+        {
+            element.SetValue(CellPaddingProperty, value);
+        }
+
         public static readonly DependencyProperty EnableCellEditAssistProperty
             = DependencyProperty.RegisterAttached(
                 "EnableCellEditAssist",
