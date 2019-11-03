@@ -42,6 +42,33 @@ namespace MahApps.Metro.Controls
             element.SetValue(CellPaddingProperty, value);
         }
 
+        public static readonly DependencyProperty ColumnHeaderPaddingProperty
+            = DependencyProperty.RegisterAttached(
+                "ColumnHeaderPadding",
+                typeof(Thickness),
+                typeof(DataGridHelper),
+                new FrameworkPropertyMetadata(new Thickness(10, 0, 4, 0), FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the padding inside the column.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGrid))]
+        public static Thickness GetColumnHeaderPadding(DependencyObject element)
+        {
+            return (Thickness)element.GetValue(ColumnHeaderPaddingProperty);
+        }
+
+        /// <summary>
+        /// Sets the padding inside the column.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGrid))]
+        public static void SetColumnHeaderPadding(DependencyObject element, Thickness value)
+        {
+            element.SetValue(ColumnHeaderPaddingProperty, value);
+        }
+
         public static readonly DependencyProperty EnableCellEditAssistProperty
             = DependencyProperty.RegisterAttached(
                 "EnableCellEditAssist",
