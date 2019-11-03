@@ -26,6 +26,7 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Content="{TemplateBinding Content}"
+                                        FlowDirection="{TemplateBinding FlowDirection}"
                                         Foreground="{TemplateBinding Foreground}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
