@@ -23,9 +23,9 @@
                         Orientation="Horizontal">
                 <Button x:Name="PART_NegativeButton"
                         Margin="5 0 0 0"
-                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Cursor="Arrow"
+                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Visibility="Hidden" />
             </StackPanel>
