@@ -310,5 +310,33 @@ namespace MahApps.Metro.Controls
 
             return rect.Contains(e.GetPosition(frameworkElement));
         }
+
+        public static readonly DependencyProperty SelectionUnitProperty
+            = DependencyProperty.RegisterAttached("SelectionUnit",
+                                                  typeof(DataGridSelectionUnit),
+                                                  typeof(DataGridHelper),
+                                                  new FrameworkPropertyMetadata(DataGridSelectionUnit.FullRow));
+
+        /// <summary>
+        /// Gets the value to define the selection behavior.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGridRow))]
+        [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        public static DataGridSelectionUnit GetSelectionUnit(UIElement element)
+        {
+            return (DataGridSelectionUnit)element.GetValue(SelectionUnitProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to define the selection behavior.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(DataGridRow))]
+        [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
+        public static void SetSelectionUnit(UIElement element, DataGridSelectionUnit value)
+        {
+            element.SetValue(SelectionUnitProperty, value);
+        }
     }
 }
