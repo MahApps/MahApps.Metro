@@ -16,11 +16,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Expander", Type = typeof(Button))]
     public class SplitButton : ComboBox
     {
-        private Button _clickButton;
-        private Button _expander;
-
         public static readonly RoutedEvent ClickEvent
-            = EventManager.RegisterRoutedEvent("Click",
+            = EventManager.RegisterRoutedEvent(nameof(Click),
                                                RoutingStrategy.Bubble,
                                                typeof(RoutedEventHandler),
                                                typeof(SplitButton));
@@ -31,49 +28,11 @@ namespace MahApps.Metro.Controls
             remove { this.RemoveHandler(ClickEvent, value); }
         }
 
-        public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(object), typeof(SplitButton));
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(SplitButton), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(SplitButton));
-        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(SplitButton));
-
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(SplitButton));
-        public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(SplitButton));
-        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(SplitButton));
-
-        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
-        public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
-        public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty ArrowMouseOverBrushProperty = DependencyProperty.Register("ArrowMouseOverBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty ArrowPressedBrushProperty = DependencyProperty.Register("ArrowPressedBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
-
-        /// <summary>
-        /// Reflects the parameter to pass to the CommandProperty upon execution. 
-        /// </summary>
-        public object CommandParameter
-        {
-            get { return this.GetValue(CommandParameterProperty); }
-            set { this.SetValue(CommandParameterProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the target element on which to fire the command.
-        /// </summary>
-        public IInputElement CommandTarget
-        {
-            get { return (IInputElement)this.GetValue(CommandTargetProperty); }
-            set { this.SetValue(CommandTargetProperty, value); }
-        }
-
-        /// <summary>
-        /// Get or sets the Command property. 
-        /// </summary>
-        public ICommand Command
-        {
-            get { return (ICommand)this.GetValue(CommandProperty); }
-            set { this.SetValue(CommandProperty, value); }
-        }
+        public static readonly DependencyProperty ExtraTagProperty
+            = DependencyProperty.Register(
+                nameof(ExtraTag),
+                typeof(object),
+                typeof(SplitButton));
 
         /// <summary>
         /// Gets or sets an extra tag.
@@ -84,14 +43,27 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ExtraTagProperty, value); }
         }
 
+        public static readonly DependencyProperty OrientationProperty
+            = DependencyProperty.Register(
+                nameof(Orientation),
+                typeof(Orientation),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         /// <summary>
-        /// Gets or sets the dimension of children stacking.
+        /// Gets or sets the orientation of children stacking.
         /// </summary>
         public Orientation Orientation
         {
             get { return (Orientation)this.GetValue(OrientationProperty); }
             set { this.SetValue(OrientationProperty, value); }
         }
+
+        public static readonly DependencyProperty IconProperty
+            = DependencyProperty.Register(
+                nameof(Icon),
+                typeof(object),
+                typeof(SplitButton));
 
         /// <summary>
         ///  Gets or sets the Content used to generate the icon part.
@@ -103,6 +75,12 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(IconProperty, value); }
         }
 
+        public static readonly DependencyProperty IconTemplateProperty
+            = DependencyProperty.Register(
+                nameof(IconTemplate),
+                typeof(DataTemplate),
+                typeof(SplitButton));
+
         /// <summary> 
         /// Gets or sets the ContentTemplate used to display the content of the icon part. 
         /// </summary>
@@ -113,6 +91,58 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(IconTemplateProperty, value); }
         }
 
+        public static readonly DependencyProperty CommandProperty
+            = DependencyProperty.Register(
+                nameof(Command),
+                typeof(ICommand),
+                typeof(SplitButton));
+
+        /// <summary>
+        /// Get or sets the Command property. 
+        /// </summary>
+        public ICommand Command
+        {
+            get { return (ICommand)this.GetValue(CommandProperty); }
+            set { this.SetValue(CommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty CommandTargetProperty
+            = DependencyProperty.Register(
+                nameof(CommandTarget),
+                typeof(IInputElement),
+                typeof(SplitButton));
+
+        /// <summary>
+        /// Gets or sets the target element on which to fire the command.
+        /// </summary>
+        public IInputElement CommandTarget
+        {
+            get { return (IInputElement)this.GetValue(CommandTargetProperty); }
+            set { this.SetValue(CommandTargetProperty, value); }
+        }
+
+        public static readonly DependencyProperty CommandParameterProperty
+            = DependencyProperty.Register(
+                nameof(CommandParameter),
+                typeof(object),
+                typeof(SplitButton));
+
+        /// <summary>
+        /// Reflects the parameter to pass to the CommandProperty upon execution. 
+        /// </summary>
+        public object CommandParameter
+        {
+            get { return this.GetValue(CommandParameterProperty); }
+            set { this.SetValue(CommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty ButtonStyleProperty
+            = DependencyProperty.Register(
+                nameof(ButtonStyle),
+                typeof(Style),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         /// <summary>
         /// Gets/sets the button style.
         /// </summary>
@@ -121,6 +151,13 @@ namespace MahApps.Metro.Controls
             get { return (Style)this.GetValue(ButtonStyleProperty); }
             set { this.SetValue(ButtonStyleProperty, value); }
         }
+
+        public static readonly DependencyProperty ButtonArrowStyleProperty
+            = DependencyProperty.Register(
+                nameof(ButtonArrowStyle),
+                typeof(Style),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets/sets the button arrow style.
@@ -131,6 +168,13 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ButtonArrowStyleProperty, value); }
         }
 
+        public static readonly DependencyProperty ArrowBrushProperty
+            = DependencyProperty.Register(
+                nameof(ArrowBrush),
+                typeof(Brush),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+
         /// <summary>
         /// Gets/sets the brush of the button arrow icon.
         /// </summary>
@@ -140,6 +184,13 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ArrowBrushProperty, value); }
         }
 
+        public static readonly DependencyProperty ArrowMouseOverBrushProperty
+            = DependencyProperty.Register(
+                nameof(ArrowMouseOverBrush),
+                typeof(Brush),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+
         /// <summary>
         /// Gets/sets the brush of the button arrow icon if the mouse is over the split button.
         /// </summary>
@@ -148,6 +199,13 @@ namespace MahApps.Metro.Controls
             get { return (Brush)this.GetValue(ArrowMouseOverBrushProperty); }
             set { this.SetValue(ArrowMouseOverBrushProperty, value); }
         }
+
+        public static readonly DependencyProperty ArrowPressedBrushProperty
+            = DependencyProperty.Register(
+                nameof(ArrowPressedBrush),
+                typeof(Brush),
+                typeof(SplitButton),
+                new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets/sets the brush of the button arrow icon if the arrow button is pressed.
@@ -187,26 +245,38 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            this._clickButton = this.EnforceInstance<Button>("PART_Button");
-            this._expander = this.EnforceInstance<Button>("PART_Expander");
-            this.InitializeVisualElementsContainer();
+
+            if (this._clickButton != null)
+            {
+                this._clickButton.Click -= this.ButtonClick;
+                this._clickButton.IsEnabledChanged -= this.ButtonIsEnabledChanged;
+            }
+
+            this._clickButton = this.GetTemplateChild("PART_Button") as Button;
+            if (this._clickButton != null)
+            {
+                this._clickButton.Click += this.ButtonClick;
+                this._clickButton.IsEnabledChanged += this.ButtonIsEnabledChanged;
+            }
+
+            if (this._expander != null)
+            {
+                this._expander.PreviewMouseLeftButtonDown -= this.ExpanderMouseLeftButtonDown;
+            }
+
+            this._expander = this.GetTemplateChild("PART_Expander") as Button;
+            if (this._expander != null)
+            {
+                this._expander.PreviewMouseLeftButtonDown += this.ExpanderMouseLeftButtonDown;
+            }
         }
 
-        private void InitializeVisualElementsContainer()
+        private void ButtonIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this._expander.PreviewMouseLeftButtonDown -= this.ExpanderMouseLeftButtonDown;
-            this._expander.PreviewMouseLeftButtonDown += this.ExpanderMouseLeftButtonDown;
-
-            this._clickButton.Click -= this.ButtonClick;
-            this._clickButton.Click += this.ButtonClick;
+            this.SetCurrentValue(IsEnabledProperty, e.NewValue);
         }
 
-        //Get element from name. If it exist then element instance return, if not, new will be created
-        private T EnforceInstance<T>(string partName)
-            where T : FrameworkElement, new()
-        {
-            T element = this.GetTemplateChild(partName) as T ?? new T();
-            return element;
-        }
+        private Button _clickButton;
+        private Button _expander;
     }
 }
