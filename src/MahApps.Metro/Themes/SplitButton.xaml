@@ -51,11 +51,12 @@
                                                            VerticalAlignment="Center"
                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Content="{TemplateBinding SelectionBoxItem}"
                                                            ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                           IsHitTestVisible="False"
                                                            RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
@@ -82,34 +83,26 @@
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
-                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                   PlacementTarget="{Binding ElementName=PART_Border}"
-                   PopupAnimation="Fade"
-                   StaysOpen="True">
-                <ListBox x:Name="PART_ListBox"
-                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                         Margin="0"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="1"
-                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                         FocusVisualStyle="{x:Null}"
-                         IsSelected="{TemplateBinding IsSelected}"
-                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
-                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                         ItemTemplate="{TemplateBinding ItemTemplate}"
-                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                         ItemsPanel="{TemplateBinding ItemsPanel}"
-                         ItemsSource="{TemplateBinding ItemsSource}"
-                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
-                         SelectionMode="Single"
-                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                         Style="{TemplateBinding ListBoxStyle}" />
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="Fade">
+                <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border x:Name="PopupBorder"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            Background="{DynamicResource MahApps.Brushes.White}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer Padding="1" BorderThickness="0">
+                            <Grid RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -127,6 +120,13 @@
                 <Setter Property="Opacity" Value=".55" />
                 <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
             </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -179,11 +179,12 @@
                                                            VerticalAlignment="Center"
                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Content="{TemplateBinding SelectionBoxItem}"
                                                            ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                           IsHitTestVisible="False"
                                                            RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
@@ -210,34 +211,26 @@
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
-                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                   PlacementTarget="{Binding ElementName=PART_Border}"
-                   PopupAnimation="Fade"
-                   StaysOpen="True">
-                <ListBox x:Name="PART_ListBox"
-                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                         Margin="0"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="1"
-                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                         FocusVisualStyle="{x:Null}"
-                         IsSelected="{TemplateBinding IsSelected}"
-                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
-                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                         ItemTemplate="{TemplateBinding ItemTemplate}"
-                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                         ItemsPanel="{TemplateBinding ItemsPanel}"
-                         ItemsSource="{TemplateBinding ItemsSource}"
-                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
-                         SelectionMode="Single"
-                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                         Style="{TemplateBinding ListBoxStyle}" />
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="Fade">
+                <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border x:Name="PopupBorder"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            Background="{DynamicResource MahApps.Brushes.White}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer Padding="1" BorderThickness="0">
+                            <Grid RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -255,6 +248,13 @@
                 <Setter Property="Opacity" Value=".55" />
                 <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
             </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -282,19 +282,37 @@
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.SplitArrow}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.FocusVisualStyle.ButtonSplit}" />
-        <Setter Property="Focusable" Value="False" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ListBoxStyle" Value="{DynamicResource MahApps.Styles.ListBox.Virtualized}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Horizontal}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizingWhenGrouping" Value="True" />
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
         <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsItemsHost="True"
+                                                    IsVirtualizing="True"
+                                                    IsVirtualizingWhenGrouping="True"
+                                                    VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Vertical}" />
             </Trigger>
