@@ -28,6 +28,7 @@ namespace MahApps.Metro.Controls
             remove { this.RemoveHandler(ClickEvent, value); }
         }
 
+        /// <summary>Identifies the <see cref="ExtraTag"/> dependency property.</summary>
         public static readonly DependencyProperty ExtraTagProperty
             = DependencyProperty.Register(
                 nameof(ExtraTag),
@@ -43,6 +44,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ExtraTagProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
         public static readonly DependencyProperty OrientationProperty
             = DependencyProperty.Register(
                 nameof(Orientation),
@@ -59,6 +61,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(OrientationProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="Icon"/> dependency property.</summary>
         public static readonly DependencyProperty IconProperty
             = DependencyProperty.Register(
                 nameof(Icon),
@@ -66,7 +69,7 @@ namespace MahApps.Metro.Controls
                 typeof(SplitButton));
 
         /// <summary>
-        ///  Gets or sets the Content used to generate the icon part.
+        /// Gets or sets the content for the icon part.
         /// </summary>
         [Bindable(true)]
         public object Icon
@@ -75,6 +78,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(IconProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="IconTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty IconTemplateProperty
             = DependencyProperty.Register(
                 nameof(IconTemplate),
@@ -82,7 +86,7 @@ namespace MahApps.Metro.Controls
                 typeof(SplitButton));
 
         /// <summary> 
-        /// Gets or sets the ContentTemplate used to display the content of the icon part. 
+        /// Gets or sets the DataTemplate for the icon part.
         /// </summary>
         [Bindable(true)]
         public DataTemplate IconTemplate
@@ -91,6 +95,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(IconTemplateProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="Command"/> dependency property.</summary>
         public static readonly DependencyProperty CommandProperty
             = DependencyProperty.Register(
                 nameof(Command),
@@ -98,7 +103,7 @@ namespace MahApps.Metro.Controls
                 typeof(SplitButton));
 
         /// <summary>
-        /// Get or sets the Command property. 
+        /// Gets or sets the command to invoke when the content button is pressed.
         /// </summary>
         public ICommand Command
         {
@@ -106,6 +111,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(CommandProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="CommandTarget"/> dependency property.</summary>
         public static readonly DependencyProperty CommandTargetProperty
             = DependencyProperty.Register(
                 nameof(CommandTarget),
@@ -113,7 +119,7 @@ namespace MahApps.Metro.Controls
                 typeof(SplitButton));
 
         /// <summary>
-        /// Gets or sets the target element on which to fire the command.
+        /// Gets or sets the element on which to raise the specified command.
         /// </summary>
         public IInputElement CommandTarget
         {
@@ -121,6 +127,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(CommandTargetProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="CommandParameter"/> dependency property.</summary>
         public static readonly DependencyProperty CommandParameterProperty
             = DependencyProperty.Register(
                 nameof(CommandParameter),
@@ -128,7 +135,7 @@ namespace MahApps.Metro.Controls
                 typeof(SplitButton));
 
         /// <summary>
-        /// Reflects the parameter to pass to the CommandProperty upon execution. 
+        /// Gets or sets the parameter to pass to the command property.
         /// </summary>
         public object CommandParameter
         {
@@ -136,6 +143,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(CommandParameterProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="ButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty ButtonStyleProperty
             = DependencyProperty.Register(
                 nameof(ButtonStyle),
@@ -144,7 +152,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
-        /// Gets/sets the button style.
+        /// Gets or sets the button content style.
         /// </summary>
         public Style ButtonStyle
         {
@@ -152,6 +160,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ButtonStyleProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="ButtonArrowStyle"/> dependency property.</summary>
         public static readonly DependencyProperty ButtonArrowStyleProperty
             = DependencyProperty.Register(
                 nameof(ButtonArrowStyle),
@@ -160,7 +169,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
-        /// Gets/sets the button arrow style.
+        /// Gets or sets the button arrow style.
         /// </summary>
         public Style ButtonArrowStyle
         {
@@ -168,6 +177,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ButtonArrowStyleProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="ArrowBrush"/> dependency property.</summary>
         public static readonly DependencyProperty ArrowBrushProperty
             = DependencyProperty.Register(
                 nameof(ArrowBrush),
@@ -176,7 +186,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
-        /// Gets/sets the brush of the button arrow icon.
+        /// Gets or sets the foreground brush for the button arrow icon.
         /// </summary>
         public Brush ArrowBrush
         {
@@ -184,6 +194,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ArrowBrushProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="ArrowMouseOverBrush"/> dependency property.</summary>
         public static readonly DependencyProperty ArrowMouseOverBrushProperty
             = DependencyProperty.Register(
                 nameof(ArrowMouseOverBrush),
@@ -192,7 +203,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
-        /// Gets/sets the brush of the button arrow icon if the mouse is over the split button.
+        /// Gets or sets the foreground brush of the button arrow icon if the mouse is over the split button.
         /// </summary>
         public Brush ArrowMouseOverBrush
         {
@@ -200,6 +211,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ArrowMouseOverBrushProperty, value); }
         }
 
+        /// <summary>Identifies the <see cref="ArrowPressedBrush"/> dependency property.</summary>
         public static readonly DependencyProperty ArrowPressedBrushProperty
             = DependencyProperty.Register(
                 nameof(ArrowPressedBrush),
@@ -208,7 +220,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
-        /// Gets/sets the brush of the button arrow icon if the arrow button is pressed.
+        /// Gets or sets the foreground brush of the button arrow icon if the arrow button is pressed.
         /// </summary>
         public Brush ArrowPressedBrush
         {
