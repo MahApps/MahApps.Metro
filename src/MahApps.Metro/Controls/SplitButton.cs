@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,15 +9,16 @@ using System.Windows.Media;
 namespace MahApps.Metro.Controls
 {
     [ContentProperty("ItemsSource")]
-    [DefaultEvent("SelectionChanged"),
-     TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
-     TemplatePart(Name = "PART_Button", Type = typeof(Button)),
-     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
-     TemplatePart(Name = "PART_Popup", Type = typeof(Popup)),
-     TemplatePart(Name = "PART_Expander", Type = typeof(Button)),
-     TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
-    public class SplitButton : Selector
+    [TemplatePart(Name = "PART_Container", Type = typeof(Grid))]
+    [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl))]
+    [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
+    [TemplatePart(Name = "PART_Expander", Type = typeof(Button))]
+    public class SplitButton : ComboBox
     {
+        private Button _clickButton;
+        private Button _expander;
+
         public static readonly RoutedEvent ClickEvent
             = EventManager.RegisterRoutedEvent("Click",
                                                RoutingStrategy.Bubble,
@@ -31,8 +30,6 @@ namespace MahApps.Metro.Controls
             add { this.AddHandler(ClickEvent, value); }
             remove { this.RemoveHandler(ClickEvent, value); }
         }
-
-        public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
 
         public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(object), typeof(SplitButton));
 
@@ -47,7 +44,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
-        public static readonly DependencyProperty ListBoxStyleProperty = DependencyProperty.Register("ListBoxStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty ArrowMouseOverBrushProperty = DependencyProperty.Register("ArrowMouseOverBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         public static readonly DependencyProperty ArrowPressedBrushProperty = DependencyProperty.Register("ArrowPressedBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
@@ -57,7 +53,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object CommandParameter
         {
-            get { return (object)this.GetValue(CommandParameterProperty); }
+            get { return this.GetValue(CommandParameterProperty); }
             set { this.SetValue(CommandParameterProperty, value); }
         }
 
@@ -77,15 +73,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (ICommand)this.GetValue(CommandProperty); }
             set { this.SetValue(CommandProperty, value); }
-        }
-
-        /// <summary> 
-        /// Indicates whether the Popup is visible. 
-        /// </summary>
-        public bool IsExpanded
-        {
-            get { return (bool)this.GetValue(IsExpandedProperty); }
-            set { this.SetValue(IsExpandedProperty, value); }
         }
 
         /// <summary>
@@ -145,15 +132,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the popup listbox style.
-        /// </summary>
-        public Style ListBoxStyle
-        {
-            get { return (Style)this.GetValue(ListBoxStyleProperty); }
-            set { this.SetValue(ListBoxStyleProperty, value); }
-        }
-
-        /// <summary>
         /// Gets/sets the brush of the button arrow icon.
         /// </summary>
         public Brush ArrowBrush
@@ -180,39 +158,29 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ArrowPressedBrushProperty, value); }
         }
 
-        private Button _clickButton;
-        private Button _expander;
-        private ListBox _listBox;
-        private Popup _popup;
-
         static SplitButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
+
+            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceIsEnabledProperty)));
         }
 
-        public SplitButton()
+        private static object CoerceIsEnabledProperty(DependencyObject dependencyObject, object value)
         {
-            // maybe later
-            //Keyboard.AddKeyDownHandler(this, this.OnKeyDown);
-            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, this.OutsideCapturedElementHandler);
+            // For now SplitButton is not editable
+            return false;
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
-            this.SetCurrentValue(IsExpandedProperty, false);
-        }
-
-        private void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            this.SetCurrentValue(IsExpandedProperty, false);
-            e.Handled = true;
+            this.SetCurrentValue(IsDropDownOpenProperty, false);
         }
 
         private void ExpanderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.SetCurrentValue(IsExpandedProperty, !this.IsExpanded);
+            this.SetCurrentValue(IsDropDownOpenProperty, !this.IsDropDownOpen);
             e.Handled = true;
         }
 
@@ -221,233 +189,24 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
             this._clickButton = this.EnforceInstance<Button>("PART_Button");
             this._expander = this.EnforceInstance<Button>("PART_Expander");
-            this._listBox = this.EnforceInstance<ListBox>("PART_ListBox");
-            this._popup = this.EnforceInstance<Popup>("PART_Popup");
             this.InitializeVisualElementsContainer();
-            if (this._listBox != null && this.Items != null && this.ItemsSource == null)
-            {
-                foreach (var newItem in this.Items)
-                {
-                    this.TryRemoveVisualFromOldTree(newItem);
-                    this._listBox.Items.Add(newItem);
-                }
-            }
-        }
-
-        private void TryRemoveVisualFromOldTree(object newItem)
-        {
-            var visual = newItem as Visual;
-            if (visual != null)
-            {
-                var fe = LogicalTreeHelper.GetParent(visual) as FrameworkElement ?? VisualTreeHelper.GetParent(visual) as FrameworkElement;
-                if (Equals(this, fe))
-                {
-                    this.RemoveLogicalChild(visual);
-                    this.RemoveVisualChild(visual);
-                }
-            }
-        }
-
-        /// <summary>Updates the current selection when an item in the <see cref="T:System.Windows.Controls.Primitives.Selector" /> has changed</summary>
-        /// <param name="e">The event data.</param>
-        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
-        {
-            base.OnItemsChanged(e);
-            if (this._listBox == null || this.ItemsSource != null || this._listBox.ItemsSource != null)
-            {
-                return;
-            }
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems != null)
-                    {
-                        foreach (var newItem in e.NewItems)
-                        {
-                            this.TryRemoveVisualFromOldTree(newItem);
-                            this._listBox.Items.Add(newItem);
-                        }
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems != null)
-                    {
-                        foreach (var oldItem in e.OldItems)
-                        {
-                            this._listBox.Items.Remove(oldItem);
-                        }
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                case NotifyCollectionChangedAction.Replace:
-                    if (e.OldItems != null)
-                    {
-                        foreach (var oldItem in e.OldItems)
-                        {
-                            this._listBox.Items.Remove(oldItem);
-                        }
-                    }
-                    if (e.NewItems != null)
-                    {
-                        foreach (var newItem in e.NewItems)
-                        {
-                            this.TryRemoveVisualFromOldTree(newItem);
-                            this._listBox.Items.Add(newItem);
-                        }
-                    }
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    if (this.Items != null)
-                    {
-                        this._listBox.Items.Clear();
-                        foreach (var newItem in this.Items)
-                        {
-                            this.TryRemoveVisualFromOldTree(newItem);
-                            this._listBox.Items.Add(newItem);
-                        }
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        //Get element from name. If it exist then element instance return, if not, new will be created
-        private T EnforceInstance<T>(string partName) where T : FrameworkElement, new()
-        {
-            T element = this.GetTemplateChild(partName) as T ?? new T();
-            return element;
         }
 
         private void InitializeVisualElementsContainer()
         {
             this._expander.PreviewMouseLeftButtonDown -= this.ExpanderMouseLeftButtonDown;
-            this._clickButton.Click -= this.ButtonClick;
-            this._listBox.SelectionChanged -= this.ListBoxSelectionChanged;
-            this._listBox.PreviewMouseLeftButtonDown -= this.ListBoxPreviewMouseLeftButtonDown;
-            this._popup.Opened -= this.PopupOpened;
-            this._popup.Closed -= this.PopupClosed;
-
             this._expander.PreviewMouseLeftButtonDown += this.ExpanderMouseLeftButtonDown;
+
+            this._clickButton.Click -= this.ButtonClick;
             this._clickButton.Click += this.ButtonClick;
-            this._listBox.SelectionChanged += this.ListBoxSelectionChanged;
-            this._listBox.PreviewMouseLeftButtonDown += this.ListBoxPreviewMouseLeftButtonDown;
-            this._popup.Opened += this.PopupOpened;
-            this._popup.Closed += this.PopupClosed;
         }
 
-        //Make popup close even if no selectionchanged event fired (case when user select the same item as before)
-        private void ListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //Get element from name. If it exist then element instance return, if not, new will be created
+        private T EnforceInstance<T>(string partName)
+            where T : FrameworkElement, new()
         {
-            var source = e.OriginalSource as DependencyObject;
-            if (source != null)
-            {
-                var item = ContainerFromElement(this._listBox, source) as ListBoxItem;
-                if (item != null)
-                {
-                    this.SetCurrentValue(IsExpandedProperty, false);
-                }
-            }
+            T element = this.GetTemplateChild(partName) as T ?? new T();
+            return element;
         }
-
-        private void PopupClosed(object sender, EventArgs e)
-        {
-            this.OnPopupClose();
-        }
-
-        private void OnPopupClose()
-        {
-            this.SetCurrentValue(IsExpandedProperty, false);
-            this.ReleaseMouseCapture();
-            Mouse.RemoveLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
-            if (this.IsKeyboardFocusWithin)
-            {
-                this._expander?.Focus();
-            }
-        }
-
-        private void PopupOpened(object sender, EventArgs e)
-        {
-            this.NavigateToContainer();
-
-            // Mouse capture can be lost on 'this' when the user clicks on the scroll bar, which can cause
-            // OutsideCapturedElementHandler to never be called. If we monitor the popup for lost mouse capture
-            // (which the popup gains on mouse down of the scroll bar), then we can recapture the mouse at that point
-            // to cause OutsideCapturedElementHandler to be called again.
-            Mouse.AddLostMouseCaptureHandler(this._popup, this.LostMouseCaptureHandler);
-        }
-
-        private void NavigateToContainer()
-        {
-            Mouse.Capture(this, CaptureMode.SubTree);
-            if (this._listBox.Focusable)
-            {
-                Keyboard.Focus(this._listBox);
-            }
-            else
-            {
-                this._listBox.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-            }
-        }
-
-        private void LostMouseCaptureHandler(object sender, MouseEventArgs e)
-        {
-            // If the list is still expanded, recapture the SplitButton subtree
-            // so that we still can know when the user has clicked outside of the popup.
-            // This happens on scroll bar mouse up, so this doesn't disrupt the scroll bar functionality
-            // at all.
-            if (this.IsExpanded)
-            {
-                this.NavigateToContainer();
-            }
-        }
-
-        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
-        {
-            this.OnPopupClose();
-        }
-
-        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnIsKeyboardFocusWithinChanged(e);
-            // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
-            if (!(bool)e.NewValue)
-            {
-                this.OnPopupClose();
-            }
-        }
-
-        /* maybe later
-        private static bool IsKeyModifyingPopupState(KeyEventArgs e)
-        {
-            return (((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt) && ((e.SystemKey == Key.Down) || (e.SystemKey == Key.Up)))
-                    || (e.Key == Key.F4);
-        }
-
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (!this.IsExpanded)
-            {
-                if (IsKeyModifyingPopupState(e))
-                {
-                    this.IsExpanded = true;
-                    e.Handled = true;
-                }
-            }
-            else
-            {
-                if (IsKeyModifyingPopupState(e))
-                {
-                    this.PopupClosed(sender, e);
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.Escape)
-                {
-                    this.PopupClosed(sender, e);
-                    e.Handled = true;
-                }
-            }
-        }
-        */
     }
 }
