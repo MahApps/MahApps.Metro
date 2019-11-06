@@ -395,6 +395,7 @@
                                         NumericInputMode="{Binding ElementName=NumericInputCheckBox, Path=SelectedItem, Mode=TwoWay}"
                                         StringFormat="0,000.00"
                                         Value="5" />
+                <TextBox x:Name="TextBox" Margin="{StaticResource ControlMargin}" Text="{Binding ElementName=StringFormatNumUpDown, Path=Value, Mode=TwoWay}" />
 
                 <Label Content="Select all on focus" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.SelectAllOnFocus="True"
