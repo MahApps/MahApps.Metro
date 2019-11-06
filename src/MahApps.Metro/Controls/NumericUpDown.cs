@@ -983,7 +983,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.valueTextBox.Text = this.FormattedValue(newValue, this.StringFormat, this.SpecificCultureInfo);
+            this.valueTextBox.Text = this.FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
 
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
@@ -991,7 +991,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private string FormattedValue(double? newValue, string format, CultureInfo culture)
+        private string FormattedValueString(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
@@ -1006,15 +1006,36 @@ namespace MahApps.Metro.Controls
                     if (match.Success)
                     {
                         // we have a format template such as "{0:N0}"
-                        return string.Format(culture, format, ConvertStringFormatValue(newValue.Value, match.Groups["format"].Value));
+                        return string.Format(culture, format, newValue);
                     }
                     // we have a format such as "N0"
-                    var value = ConvertStringFormatValue(newValue.Value, format);
-                    return value.ToString(format, culture);
+                    return newValue.ToString(format, culture);
                 }
             }
 
-            return newValue.Value.ToString(culture);
+            return newValue.ToString(culture);
+        }        
+
+        private double FormattedValue(double newValue, string format, CultureInfo culture)
+        {
+            format = format.Replace("{}", string.Empty);
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                if (!TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                {
+                    var match = RegexStringFormat.Match(format);
+                    if (match.Success)
+                    {
+                        // we have a format template such as "{0:N0}"
+                        return ConvertStringFormatValue(newValue, match.Groups["format"].Value);
+                    }
+
+                    // we have a format such as "N0"
+                    return ConvertStringFormatValue(newValue, format);
+                }
+            }
+
+            return newValue;
         }        
 
         private static double ConvertStringFormatValue(double value, string format)
@@ -1030,7 +1051,7 @@ namespace MahApps.Metro.Controls
             return value;
         }        
 
-        private static bool TryFormatHexadecimal(double? newValue, string format, CultureInfo culture, out string output)
+        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, out string output)
         {
             var match = RegexStringFormatHexadecimal.Match(format);
             if (match.Success)
@@ -1038,13 +1059,13 @@ namespace MahApps.Metro.Controls
                 if (match.Groups["simpleHEX"].Success)
                 {
                     // HEX DOES SUPPORT INT ONLY.
-                    output = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                    output = ((int)newValue).ToString(match.Groups["simpleHEX"].Value, culture);
                     return true;
                 }
 
                 if (match.Groups["complexHEX"].Success)
                 {
-                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue);
                     return true;
                 }
             }
@@ -1186,6 +1207,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(textBox.Text, out convertedValue))
                 {
+                    convertedValue = this.FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
             }
@@ -1209,7 +1231,8 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    this.SetCurrentValue(ValueProperty, convertedValue);
+                    convertedValue = this.FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
+                    this.SetValueTo(convertedValue);
                 }
             }
         }

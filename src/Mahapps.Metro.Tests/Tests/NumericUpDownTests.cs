@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,30 @@ namespace MahApps.Metro.Tests
 {
     public class NumericUpDownTests : AutomationTestBase
     {
+        public static bool NearlyEqual(double a, double b, double epsilon)
+        {
+            double absA = Math.Abs(a);
+            double absB = Math.Abs(b);
+            double diff = Math.Abs(a - b);
+
+            if (a == b)
+            {
+                // shortcut, handles infinities
+                return true;
+            }
+            else if (a == 0 || b == 0 || diff < Double.Epsilon)
+            {
+                // a or b is zero or both are extremely close to it
+                // relative error is less meaningful here
+                return diff < epsilon;
+            }
+            else
+            {
+                // use relative error
+                return diff / (absA + absB) < epsilon;
+            }
+        }
+
         [Fact]
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithSnapToMultipleOfInterval()
@@ -149,105 +174,105 @@ namespace MahApps.Metro.Tests
 
             window.TheNUD.StringFormat = "{}{0:P0}";
             SetText(textBox, "100");
-            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal(1d, window.TheNUD.Value);
             Assert.Equal("100%", textBox.Text);
 
             SetText(textBox, "100 %");
-            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal(1d, window.TheNUD.Value);
             Assert.Equal("100%", textBox.Text);
 
             SetText(textBox, "100%");
-            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal(1d, window.TheNUD.Value);
             Assert.Equal("100%", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:P1}";
             SetText(textBox, "-0.39678");
-            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.True(NearlyEqual(-0.0039678d, window.TheNUD.Value.Value, 0.000005));
             Assert.Equal("-0.4%", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:0%}";
             SetText(textBox, "100%");
-            Assert.Equal(100d, window.TheNUD.Value);
+            Assert.Equal(1d, window.TheNUD.Value);
             Assert.Equal("100%", textBox.Text);
 
             window.TheNUD.StringFormat = "P0";
             SetText(textBox, "50");
-            Assert.Equal(50d, window.TheNUD.Value);
+            Assert.Equal(0.5d, window.TheNUD.Value);
             Assert.Equal("50%", textBox.Text);
 
             window.TheNUD.StringFormat = "P1";
             SetText(textBox, "-0.39678");
-            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.True(NearlyEqual(-0.0039678d, window.TheNUD.Value.Value, 0.000005));
             Assert.Equal("-0.4%", textBox.Text);
 
             window.TheNUD.Culture = CultureInfo.InvariantCulture;
 
             window.TheNUD.StringFormat = "{}{0:P0}";
             SetText(textBox, "10");
-            Assert.Equal(10d, window.TheNUD.Value);
+            Assert.Equal(0.1d, window.TheNUD.Value);
             Assert.Equal("10 %", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:P1}";
             SetText(textBox, "-0.39678");
-            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.True(NearlyEqual(-0.0039678d, window.TheNUD.Value.Value, 0.000005));
             Assert.Equal("-0.4 %", textBox.Text);
 
             window.TheNUD.StringFormat = "P0";
             SetText(textBox, "1");
-            Assert.Equal(1d, window.TheNUD.Value);
+            Assert.Equal(0.01d, window.TheNUD.Value);
             Assert.Equal("1 %", textBox.Text);
 
             window.TheNUD.StringFormat = "P1";
             SetText(textBox, "-0.39678");
-            Assert.Equal(-0.39678d, window.TheNUD.Value);
+            Assert.True(NearlyEqual(-0.0039678d, window.TheNUD.Value.Value, 0.000005));
             Assert.Equal("-0.4 %", textBox.Text);
 
             window.TheNUD.StringFormat = "{}{0:0.0%}";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.01d, window.TheNUD.Value);
             Assert.Equal("1.0%", textBox.Text);
 
             window.TheNUD.StringFormat = "{0:0.0%}";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.01d, window.TheNUD.Value);
             Assert.Equal("1.0%", textBox.Text);
 
             window.TheNUD.StringFormat = "0.0%";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.01d, window.TheNUD.Value);
             Assert.Equal("1.0%", textBox.Text);            
 
             window.TheNUD.StringFormat = "{}{0:0.0‰}";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.001d, window.TheNUD.Value);
             Assert.Equal("1.0‰", textBox.Text);
 
             window.TheNUD.StringFormat = "{0:0.0‰}";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.001d, window.TheNUD.Value);
             Assert.Equal("1.0‰", textBox.Text);
 
             window.TheNUD.StringFormat = "0.0‰";
             SetText(textBox, "1");
-            Assert.Equal(1, window.TheNUD.Value);
+            Assert.Equal(0.001d, window.TheNUD.Value);
             Assert.Equal("1.0‰", textBox.Text);
 
             // GH-3376 Case 3
             window.TheNUD.StringFormat = "{0:0.0000}%";
             SetText(textBox, "0.25");
-            Assert.Equal(0.25, window.TheNUD.Value);
+            Assert.Equal(0.25d, window.TheNUD.Value);
             Assert.Equal("0.2500%", textBox.Text);
 
             // GH-3376 Case 4
             window.TheNUD.StringFormat = "{0:0.0000}‰";
             SetText(textBox, "0.25");
-            Assert.Equal(0.25, window.TheNUD.Value);
+            Assert.Equal(0.25d, window.TheNUD.Value);
             Assert.Equal("0.2500‰", textBox.Text);
 
             // GH-3376#issuecomment-472324787
             window.TheNUD.StringFormat = "{}{0:G3} mPa·s";
             SetText(textBox, "0.986");
-            Assert.Equal(0.986, window.TheNUD.Value);
+            Assert.Equal(0.986d, window.TheNUD.Value);
             Assert.Equal("0.986 mPa·s", textBox.Text);
         }
 
