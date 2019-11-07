@@ -31,7 +31,7 @@
                             HorizontalAlignment="Center"
                             HorizontalContentAlignment="Stretch"
                             Controls:TextBoxHelper.UseFloatingWatermark="True"
-                            Controls:TextBoxHelper.Watermark="Select a date"
+                            Controls:TextBoxHelper.Watermark="Please select a date"
                             Controls:TextBoxHelper.WatermarkAlignment="Right" />
                 <DatePicker Width="200"
                             Margin="0 10 0 0"
