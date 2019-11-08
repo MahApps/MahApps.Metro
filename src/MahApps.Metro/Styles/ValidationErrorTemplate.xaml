@@ -124,6 +124,9 @@
         </AdornedElementPlaceholder>
 
         <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding ElementName=placeholder, Path=AdornedElement.BorderThickness, FallbackValue=0, TargetNullValue=0}" Value="0">
+                <Setter TargetName="ValidationErrorElement" Property="BorderThickness" Value="1" />
+            </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
