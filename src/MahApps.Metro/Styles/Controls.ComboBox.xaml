@@ -11,6 +11,8 @@
     <Thickness x:Key="ComboBoxPopupBorderThemeThickness">1</Thickness>
     <Thickness x:Key="ComboBoxPopupBorderThemePadding">1</Thickness>
 
+    <Geometry x:Key="ComboBoxDownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
+
     <Style x:Key="MahApps.Styles.TextBox.Editable"
            BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}">
@@ -45,7 +47,7 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
-                        <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
+                        <Grid x:Name="PART_InnerGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="TextColumn" Width="*" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
@@ -59,14 +61,17 @@
                                           Grid.Row="1"
                                           Grid.Column="0"
                                           Margin="0"
+                                          Padding="{TemplateBinding Padding}"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}"
                                           BorderThickness="0"
-                                          IsTabStop="False" />
+                                          IsTabStop="False"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
                             <TextBlock x:Name="PART_Message"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="3 0"
+                                       Margin="4 0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -76,9 +81,11 @@
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        Visibility="Collapsed" />
+
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
+                                            Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -114,6 +121,7 @@
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </ContentControl>
+
                             <Button x:Name="PART_ClearText"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
@@ -225,15 +233,16 @@
                                 IsTabStop="False"
                                 Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                 Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
+
                         <Grid x:Name="BtnArrowBackground"
                               Grid.Column="2"
                               Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                               Background="Transparent">
-                            <Path x:Name="BtnArrow"
+                            <Path x:Name="Arrow"
                                   Width="8"
                                   Height="4"
                                   HorizontalAlignment="Center"
-                                  Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                  Data="{DynamicResource ComboBoxDownArrowGeometry}"
                                   Fill="{DynamicResource MahApps.Brushes.Gray1}"
                                   IsHitTestVisible="false"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -270,13 +279,13 @@
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.MouseOverInnerBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
         <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Sizes.Font.ClearTextButton}" />
-        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="24" />
+        <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
@@ -314,7 +323,6 @@
                     </ControlTemplate.Resources>
                     <Grid>
                         <Border x:Name="Border"
-                                Grid.ColumnSpan="3"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -336,7 +344,6 @@
                                           Grid.RowSpan="2"
                                           Grid.ColumnSpan="3"
                                           Margin="0"
-                                          Padding="{TemplateBinding Padding}"
                                           VerticalAlignment="Stretch"
                                           Controls:ControlsHelper.CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                           Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
@@ -352,6 +359,21 @@
                                           KeyboardNavigation.IsTabStop="False"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Style="{DynamicResource MahApps.Styles.ToggleButton.ComboBoxDropDown}" />
+
+                            <Grid x:Name="ContentSite"
+                                  Grid.Row="1"
+                                  Grid.Column="0"
+                                  Margin="1 0">
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
 
                             <TextBox x:Name="PART_EditableTextBox"
                                      Grid.Row="1"
@@ -387,7 +409,7 @@
                             <TextBlock x:Name="PART_WatermarkMessage"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="5 0"
+                                       Margin="4 0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -397,9 +419,11 @@
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        Visibility="Collapsed" />
+
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
+                                            Margin="4 0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -412,7 +436,6 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
-                                           Margin="2 2 0 0"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
@@ -436,21 +459,6 @@
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </ContentControl>
-
-                            <Grid x:Name="ContentSite"
-                                  Grid.Row="1"
-                                  Grid.Column="0"
-                                  Margin="4 0">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Content="{TemplateBinding SelectionBoxItem}"
-                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                  IsHitTestVisible="False"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </Grid>
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
@@ -568,7 +576,7 @@
                         </DataTrigger>
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="false" />
-                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_DropDownToggle" Property="Background" Value="{x:Null}" />
                             <Setter TargetName="PART_DropDownToggle" Property="Focusable" Value="False" />
                             <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
