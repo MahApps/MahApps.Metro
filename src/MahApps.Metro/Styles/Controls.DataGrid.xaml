@@ -4,6 +4,8 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -24,6 +26,37 @@
                 <Setter Property="IsHitTestVisible" Value="False" />
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ComboBox.DataGrid.Editing"
+           BasedOn="{StaticResource MahApps.Styles.ComboBox.Virtualized}"
+           TargetType="{x:Type ComboBox}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="22" />
+        <Setter Property="Padding" Value="-2 0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray6}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.TextBox.DataGrid.Editing"
+           BasedOn="{StaticResource MahApps.Styles.TextBox}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="-2 0" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 
     <Style x:Key="MahApps.Styles.NumericUpDown.DataGridColumn"
@@ -121,7 +154,7 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="10 0 4 0" />
+        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.ColumnHeaderPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -258,9 +291,9 @@
     <Style x:Key="MahApps.Styles.DataGridCell" TargetType="{x:Type DataGridCell}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Controls:DataGridCellHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -288,7 +321,15 @@
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
@@ -298,7 +339,14 @@
             <!--  IsKeyboardFocusWithin  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.FocusBorder}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
                     <Condition Property="IsKeyboardFocusWithin" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.FocusBorder}" />
@@ -314,7 +362,16 @@
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsSelected" Value="True" />
+                    <Condition Property="Selector.IsSelectionActive" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.InactiveSelectionHighlight}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                 </MultiTrigger.Conditions>
@@ -325,7 +382,15 @@
             <!--  IsMouseOver  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
@@ -347,7 +412,16 @@
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridCellHelper.IsCellOrRowHeader" Value="True" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="Cell" />
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.DisabledHighlight}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="CellOrRowHeader" />
                     <Condition Property="IsEnabled" Value="False" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
@@ -381,7 +455,8 @@
     <!--  ____________________ Metro RowStyle ____________________  -->
     <!--  Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style!  -->
     <Style x:Key="MahApps.Styles.DataGridRow" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Controls:DataGridRowHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <Setter Property="Controls:DataGridHelper.CellPadding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
         <Setter Property="ValidationErrorTemplate" Value="{StaticResource MahApps.Templates.DataGridRow.ValidationError}" />
@@ -389,7 +464,7 @@
             <!--  IsSelected  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.Highlight}" />
@@ -400,7 +475,7 @@
             <!--  IsSelected and Selector.IsSelectionActive  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsSelected" Value="True" />
                     <Condition Property="Selector.IsSelectionActive" Value="False" />
                 </MultiTrigger.Conditions>
@@ -412,7 +487,7 @@
             <!--  IsMouseOver  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGrid.MouseOverHighlight}" />
@@ -422,7 +497,7 @@
             <!--  IsEnabled  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsEnabled" Value="False" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
@@ -431,7 +506,7 @@
             <!--  IsEnabled and IsSelected  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="Controls:DataGridRowHelper.SelectionUnit" Value="FullRow" />
+                    <Condition Property="Controls:DataGridHelper.SelectionUnit" Value="FullRow" />
                     <Condition Property="IsEnabled" Value="False" />
                     <Condition Property="IsSelected" Value="True" />
                 </MultiTrigger.Conditions>
@@ -449,6 +524,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell}" />
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MahApps.Styles.DataGridColumnHeader}" />
+        <Setter Property="Controls:DataGridHelper.AutoGeneratedCheckBoxColumnEditingStyle" Value="{StaticResource MahApps.Styles.CheckBox.DataGrid}" />
+        <Setter Property="Controls:DataGridHelper.AutoGeneratedCheckBoxColumnStyle" Value="{StaticResource MahApps.Styles.CheckBox.DataGrid}" />
+        <Setter Property="Controls:DataGridHelper.AutoGeneratedTextColumnEditingStyle" Value="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}" />
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="Separator">

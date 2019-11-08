@@ -177,9 +177,15 @@
                                         EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
                                         ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
                                         Header="Album Selected" />
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Genre" />
                 <controls:DataGridNumericUpDownColumn Width="200"
                                                       Binding="{Binding Price}"
                                                       Header="Price"
@@ -235,9 +241,15 @@
                   RowHeaderWidth="0"
                   Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Genre" />
                 <DataGridTemplateColumn Header="Price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

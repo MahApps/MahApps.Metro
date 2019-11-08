@@ -11,13 +11,14 @@ namespace MahApps.Metro.Tests.TestHelpers
 {
     public static class WindowHelpers
     {
-        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T> changeAddiotionalProperties = null) where T : Window, new()
+        public static Task<T> CreateInvisibleWindowAsync<T>(Action<T> changeAddiotionalProperties = null)
+            where T : Window, new()
         {
             var window = new T
-            {
-                Visibility = Visibility.Hidden, 
-                ShowInTaskbar = false
-            };
+                         {
+                             Visibility = Visibility.Hidden,
+                             ShowInTaskbar = false
+                         };
 
             changeAddiotionalProperties?.Invoke(window);
 
@@ -26,13 +27,13 @@ namespace MahApps.Metro.Tests.TestHelpers
             EventHandler handler = null;
 
             handler = (sender, args) =>
-            {
-                window.Activated -= handler;
-                completionSource.SetResult(window);
-            };
+                {
+                    window.Activated -= handler;
+                    completionSource.SetResult(window);
+                };
 
             window.Activated += handler;
-            
+
             window.Show();
 
             return completionSource.Task;
@@ -40,7 +41,11 @@ namespace MahApps.Metro.Tests.TestHelpers
 
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
         {
-            Assert.True(window.RightWindowCommands.Items.Cast<Button>().Select(x => ((SolidColorBrush)x.Foreground).Color).All(x => x == color));
+            foreach (var element in window.RightWindowCommands.Items.OfType<Button>())
+            {
+                Assert.Equal(color, ((SolidColorBrush)element.Foreground).Color);
+            }
+
             Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
         }
     }

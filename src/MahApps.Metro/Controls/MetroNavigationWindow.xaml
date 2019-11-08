@@ -20,6 +20,7 @@
                 <ContentControl Width="20"
                                 Height="20"
                                 Content="M57,42V34H32.25L42.25,24H31.75L17.75,38L31.75,52H42.25L32.25,42H57Z"
+                                FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
                                 Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
             </Button>
             <Button x:Name="PART_ForwardButton"
@@ -32,6 +33,7 @@
                 <ContentControl Width="20"
                                 Height="20"
                                 Content="M19,34V42H43.75L33.75,52H44.25L58.25,38L44.25,24H33.75L43.75,34H19Z"
+                                FlowDirection="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=FlowDirection, Mode=OneWay}"
                                 Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
             </Button>
             <Label x:Name="PART_Title"

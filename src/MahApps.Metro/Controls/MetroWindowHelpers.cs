@@ -105,84 +105,83 @@ namespace MahApps.Metro.Controls
 
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
-            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
+            var currentAppTheme = ThemeManager.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.DetectTheme(Application.Current);
+
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
         }
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
-            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, flyout.Position);
+            var currentAppTheme = ThemeManager.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.DetectTheme(Application.Current);
+
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentAppTheme, flyout.Theme, flyout.Position);
         }
 
-        private static bool NeedLightTheme(this Brush brush)
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, Metro.Theme currentAppTheme)
         {
-            if (brush == null)
+            if (foregroundBrush == null)
             {
-                return true;
+                window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
+                window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
             }
 
-            // calculate brush color lightness
-            var color = ((SolidColorBrush)brush).Color;
-
-            var r = color.R / 255.0f;
-            var g = color.G / 255.0f;
-            var b = color.B / 255.0f;
-
-            var max = r;
-            var min = r;
-
-            if (g > max) max = g;
-            if (b > max) max = b;
-
-            if (g < min) min = g;
-            if (b < min) min = b;
-
-            var lightness = (max + min) / 2;
-
-            return lightness > 0.1;
-        }
-
-        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush brush)
-        {
-            // set the theme based on color lightness
-            var theme = brush.NeedLightTheme() ? Theme.Light : Theme.Dark;
+            // set the theme based on current application or window theme
+            var theme = currentAppTheme != null && currentAppTheme.Type == ThemeType.Dark
+                ? Theme.Dark
+                : Theme.Light;
 
             // set the theme to light by default
             window.LeftWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
             window.RightWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
 
             // clear or set the foreground property
-            if (brush != null)
+            if (foregroundBrush != null)
             {
-                window.LeftWindowCommands?.SetValue(Control.ForegroundProperty, brush);
-                window.RightWindowCommands?.SetValue(Control.ForegroundProperty, brush);
-            }
-            else
-            {
-                window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
-                window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
+                window.LeftWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
+                window.RightWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
             }
         }
 
-        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush brush, Position position = Position.Top)
+        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, Metro.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
         {
-            // set the theme to light by default
             if (position == Position.Right || position == Position.Top)
             {
+                if (foregroundBrush == null)
+                {
+                    window.WindowButtonCommands?.ClearValue(Control.ForegroundProperty);
+                }
+
                 // set the theme based on color lightness
-                var theme = brush.NeedLightTheme() ? Theme.Light : Theme.Dark;
+                // otherwise set the theme based on current application or window theme
+                var theme = currentAppTheme != null && currentAppTheme.Type == ThemeType.Dark
+                    ? Theme.Dark
+                    : Theme.Light;
+
+                if (flyoutTheme == FlyoutTheme.Light)
+                {
+                    theme = Theme.Light;
+                }
+                else if (flyoutTheme == FlyoutTheme.Dark)
+                {
+                    theme = Theme.Dark;
+                }
+                else if (flyoutTheme == FlyoutTheme.Inverse)
+                {
+                    theme = theme == Theme.Light ? Theme.Dark : Theme.Light;
+                }
 
                 window.WindowButtonCommands?.SetValue(WindowButtonCommands.ThemeProperty, theme);
 
                 // clear or set the foreground property
-                if (brush != null)
+                if (foregroundBrush != null)
                 {
-                    window.WindowButtonCommands?.SetValue(Control.ForegroundProperty, brush);
-                }
-                else
-                {
-                    window.WindowButtonCommands?.ClearValue(Control.ForegroundProperty);
+                    window.WindowButtonCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
                 }
             }
         }
