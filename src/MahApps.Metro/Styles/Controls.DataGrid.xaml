@@ -35,7 +35,6 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="22" />
-        <Setter Property="Padding" Value="-2 0" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Style.Triggers>
             <MultiTrigger>
@@ -55,7 +54,6 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Padding" Value="-2 0" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 
@@ -66,7 +64,6 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HideUpDownButtons" Value="True" />
         <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
