@@ -89,6 +89,36 @@ namespace MahApps.Metro.Tests
         }
 
         [Theory]
+        [InlineData(42d, "", "42")]
+        [InlineData(null, "", "")]
+        [InlineData(0.25d, "{}{0:0.00%}", "25.00%")] // 3376 Case 1
+        [InlineData(0.25d, "{0:0.00%}", "25.00%")] // 3376 Case 1
+        [InlineData(0.25d, "0.00%", "25.00%")] // 3376 Case 1
+        [InlineData(0.25d, "{}{0:0.00‰}", "250.00‰")] // 3376 Case 2
+        [InlineData(0.25d, "{0:0.00‰}", "250.00‰")] // 3376 Case 2
+        [InlineData(0.25d, "0.00‰", "250.00‰")] // 3376 Case 2
+        [InlineData(0.25d, "{}{0:0.0000}%", "0.2500%")] // 3376 Case 3
+        [InlineData(0.25d, "{0:0.0000}%", "0.2500%")] // 3376 Case 3
+        [InlineData(0.25d, "{}{0:0.00000}‰", "0.25000‰")] // 3376 Case 4
+        [InlineData(0.25d, "{0:0.00000}‰", "0.25000‰")] // 3376 Case 4
+        [InlineData(0.25d, "{}{0:P}", "25.00%")] // 3376 Case 5
+        [InlineData(0.25d, "{0:P}", "25.00%")] // 3376 Case 5
+        [InlineData(0.25d, "P", "25.00%")] // 3376 Case 5
+        [DisplayTestMethodName]
+        public async Task ShouldFormatValueInput(object value, string format, string expectedText)
+        {
+            await TestHost.SwitchToAppThread();
+
+            this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.StringFormat = format;
+
+            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, value);
+
+            Assert.Equal(expectedText, this.textBox.Text);
+            Assert.Equal(value, this.window.TheNUD.Value);
+        }
+
+        [Theory]
         [InlineData("42", NumericInput.All, 42d)]
         [InlineData("42.", NumericInput.All, 42d)]
         [InlineData("42.2", NumericInput.All, 42.2d)]
