@@ -66,7 +66,7 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithSnapToMultipleOfInterval()
+        public async Task ShouldSnapToMultipleOfInterval()
         {
             await TestHost.SwitchToAppThread();
 
@@ -76,319 +76,208 @@ namespace MahApps.Metro.Tests
             this.window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
-                numUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                this.numUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 Assert.Equal(0d + 0.1 * i, this.window.TheNUD.Value);
             }
 
             this.window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
-                numDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                this.numDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 Assert.Equal(0d - 0.1 * i, this.window.TheNUD.Value);
             }
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("42", NumericInput.All, 42d)]
+        [InlineData("42.", NumericInput.All, 42d)]
+        [InlineData("42.2", NumericInput.All, 42.2d)]
+        [InlineData(".", NumericInput.All, 0d)]
+        [InlineData(".9", NumericInput.All, 0.9d)]
+        [InlineData(".0115", NumericInput.All, 0.0115d)]
+        [InlineData("", NumericInput.All, null)]
+        [InlineData("42", NumericInput.Decimal, 42d)]
+        [InlineData("42.", NumericInput.Decimal, 42d)]
+        [InlineData("42.2", NumericInput.Decimal, 42.2d)]
+        [InlineData(".", NumericInput.Decimal, 0d)]
+        [InlineData(".9", NumericInput.Decimal, 0.9d)]
+        [InlineData(".0115", NumericInput.Decimal, 0.0115d)]
+        [InlineData("", NumericInput.Decimal, null)]
+        [InlineData("42", NumericInput.Numbers, 42d)]
+        [InlineData("42.", NumericInput.Numbers, null)]
+        [InlineData("42.2", NumericInput.Numbers, null)]
+        [InlineData(".", NumericInput.Numbers, null)]
+        [InlineData(".9", NumericInput.Numbers, null)]
+        [InlineData("", NumericInput.Numbers, null)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInput()
+        public async Task ShouldConvertTextInput(string text, NumericInput numericInput, object expectedValue)
+        {
+            await TestHost.SwitchToAppThread();
+
+            this.window.TheNUD.NumericInputMode = numericInput;
+
+            SetText(this.textBox, text);
+
+            Assert.Equal(expectedValue, this.window.TheNUD.Value);
+        }
+
+        [Theory]
+        [InlineData("42", "{}{0:N2} cm", 42d, "42.00 cm")]
+        [InlineData("42.", "{}{0:N2} cm", 42d, "42.00 cm")]
+        [InlineData("42.2", "{}{0:N2} cm", 42.2d, "42.20 cm")]
+        [InlineData(".", "{}{0:N2} cm", 0d, "0.00 cm")]
+        [InlineData(".9", "{}{0:N2} cm", 0.9d, "0.90 cm")]
+        [InlineData(".0115", "{}{0:N2} cm", 0.0115d, "0.01 cm")]
+        [InlineData(".0155", "{}{0:N2} cm", 0.0155d, "0.02 cm")]
+        [InlineData("100.00 cm", "{}{0:N2} cm", 100d, "100.00 cm")]
+        [InlineData("200.00cm", "{}{0:N2} cm", 200d, "200.00 cm")]
+        [InlineData("200.20", "{}{0:N2} cm", 200.2d, "200.20 cm")]
+        [InlineData("15", "{}{0}mmHg", 15d, "15mmHg")] // GH-3551
+        [InlineData("0.986", "{}{0:G3} mPa·s", 0.986d, "0.986 mPa·s")] // GH-3376#issuecomment-472324787
+        [InlineData("", "{}{0:N2} cm", null, "")]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
         {
             await TestHost.SwitchToAppThread();
 
             this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.StringFormat = format;
 
-            SetText(textBox, "42");
-            Assert.Equal(42d, this.window.TheNUD.Value);
+            SetText(this.textBox, text);
 
-            SetText(textBox, "42.2");
-            Assert.Equal(42.2d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".");
-            Assert.Equal(0d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".9");
-            Assert.Equal(0.9d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".0115");
-            Assert.Equal(0.0115d, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.window.TheNUD.Value);
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("100", "{}{0:P0}", "en-EN", 1d, "100%")]
+        [InlineData("100 %", "{}{0:P0}", "en-EN", 1d, "100%")]
+        [InlineData("100%", "{}{0:P0}", "en-EN", 1d, "100%")]
+        [InlineData("-0.39678", "{}{0:P1}", "en-EN", -0.0039678d, "-0.4%", true)]
+        [InlineData("50", "P0", "en-EN", 0.5d, "50%")]
+        [InlineData("50", "P1", "en-EN", 0.5d, "50.0%")]
+        [InlineData("-0.39678", "P1", "en-EN", -0.0039678d, "-0.4%", true)]
+        [InlineData("10", "{}{0:P0}", null, 0.1d, "10 %")]
+        [InlineData("-0.39678", "{}{0:P1}", null, -0.0039678d, "-0.4 %", true)]
+        [InlineData("1", "P0", null, 0.01d, "1 %")]
+        [InlineData("-0.39678", "P1", null, -0.0039678d, "-0.4 %", true)]
+        [InlineData("1", "{}{0:0.0%}", null, 0.01d, "1.0%")]
+        [InlineData("1", "0.0%", null, 0.01d, "1.0%")]
+        [InlineData("0.25", "{0:0.0000}%", null, 0.25d, "0.2500%")] // GH-3376 Case 3
+        [InlineData("100", "{}{0}%", null, 100d, "100%")]
+        [InlineData("100%", "{}{0}%", null, 100d, "100%")]
+        [InlineData("100 %", "{}{0}%", null, 100d, "100%")]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithStringFormat()
+        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
         {
             await TestHost.SwitchToAppThread();
 
             this.window.TheNUD.NumericInputMode = NumericInput.All;
-            this.window.TheNUD.StringFormat = "{}{0:N2} cm";
+            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.window.TheNUD.StringFormat = format;
 
-            SetText(textBox, "42");
-            Assert.Equal(42d, this.window.TheNUD.Value);
-            Assert.Equal("42.00 cm", textBox.Text);
+            SetText(this.textBox, text);
 
-            SetText(textBox, "42.2");
-            Assert.Equal(42.2d, this.window.TheNUD.Value);
-            Assert.Equal("42.20 cm", textBox.Text);
-
-            SetText(textBox, ".");
-            Assert.Equal(0d, this.window.TheNUD.Value);
-            Assert.Equal("0.00 cm", textBox.Text);
-
-            SetText(textBox, ".9");
-            Assert.Equal(0.9d, this.window.TheNUD.Value);
-            Assert.Equal("0.90 cm", textBox.Text);
-
-            SetText(textBox, ".0115");
-            Assert.Equal(0.0115d, this.window.TheNUD.Value);
-            Assert.Equal("0.01 cm", textBox.Text);
-
-            SetText(textBox, ".0155");
-            Assert.Equal(0.0155d, this.window.TheNUD.Value);
-            Assert.Equal("0.02 cm", textBox.Text);
-
-            SetText(textBox, "100.00 cm");
-            Assert.Equal(100d, this.window.TheNUD.Value);
-            Assert.Equal("100.00 cm", textBox.Text);
-
-            SetText(textBox, "200.00cm");
-            Assert.Equal(200d, this.window.TheNUD.Value);
-            Assert.Equal("200.00 cm", textBox.Text);
-
-            SetText(textBox, "200.00");
-            Assert.Equal(200d, this.window.TheNUD.Value);
-            Assert.Equal("200.00 cm", textBox.Text);
-
-            // GH-3551
-            this.window.TheNUD.StringFormat = "{}{0}mmHg";
-            SetText(textBox, "15");
-            Assert.Equal(15, this.window.TheNUD.Value);
-            Assert.Equal("15mmHg", textBox.Text);
+            if (useEpsilon)
+            {
+                Assert.True(NearlyEqual((double)expectedValue, this.window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.window.TheNUD.Value.Value}'");
+            }
+            else
+            {
+                Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            }
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("1", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1‰", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1 ‰", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1", "{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1‰", "{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1 ‰", "{0:0.0‰}", null, 0.001d, "1.0%")]
+        [InlineData("1", "0.0‰", null, 0.001d, "1.0%")]
+        [InlineData("1‰", "0.0‰", null, 0.001d, "1.0%")]
+        [InlineData("1 ‰", "0.0‰", null, 0.001d, "1.0%")]
+        [InlineData("1", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1 ‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1 ‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1", "0.0‰", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1‰", "0.0‰", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0%")]
+        [InlineData("0.25", "{0:0.0000}‰", null, 0.25d, "0.2500‰")]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithPercentStringFormat()
+        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
         {
             await TestHost.SwitchToAppThread();
 
             this.window.TheNUD.NumericInputMode = NumericInput.All;
+            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.window.TheNUD.StringFormat = format;
 
-            this.window.TheNUD.Culture = CultureInfo.GetCultureInfo("en-EN");
+            SetText(this.textBox, text);
 
-            this.window.TheNUD.StringFormat = "{}{0:P0}";
-            SetText(textBox, "100");
-            Assert.Equal(1d, this.window.TheNUD.Value);
-            Assert.Equal("100%", textBox.Text);
-
-            SetText(textBox, "100 %");
-            Assert.Equal(1d, this.window.TheNUD.Value);
-            Assert.Equal("100%", textBox.Text);
-
-            SetText(textBox, "100%");
-            Assert.Equal(1d, this.window.TheNUD.Value);
-            Assert.Equal("100%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{}{0:P1}";
-            SetText(textBox, "-0.39678");
-            Assert.True(NearlyEqual(-0.0039678d, this.window.TheNUD.Value.Value, 0.000005));
-            Assert.Equal("-0.4%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{}{0:0%}";
-            SetText(textBox, "100%");
-            Assert.Equal(1d, this.window.TheNUD.Value);
-            Assert.Equal("100%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "P0";
-            SetText(textBox, "50");
-            Assert.Equal(0.5d, this.window.TheNUD.Value);
-            Assert.Equal("50%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "P1";
-            SetText(textBox, "-0.39678");
-            Assert.True(NearlyEqual(-0.0039678d, this.window.TheNUD.Value.Value, 0.000005));
-            Assert.Equal("-0.4%", textBox.Text);
-
-            this.window.TheNUD.Culture = CultureInfo.InvariantCulture;
-
-            this.window.TheNUD.StringFormat = "{}{0:P0}";
-            SetText(textBox, "10");
-            Assert.Equal(0.1d, this.window.TheNUD.Value);
-            Assert.Equal("10 %", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{}{0:P1}";
-            SetText(textBox, "-0.39678");
-            Assert.True(NearlyEqual(-0.0039678d, this.window.TheNUD.Value.Value, 0.000005));
-            Assert.Equal("-0.4 %", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "P0";
-            SetText(textBox, "1");
-            Assert.Equal(0.01d, this.window.TheNUD.Value);
-            Assert.Equal("1 %", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "P1";
-            SetText(textBox, "-0.39678");
-            Assert.True(NearlyEqual(-0.0039678d, this.window.TheNUD.Value.Value, 0.000005));
-            Assert.Equal("-0.4 %", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{}{0:0.0%}";
-            SetText(textBox, "1");
-            Assert.Equal(0.01d, this.window.TheNUD.Value);
-            Assert.Equal("1.0%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{0:0.0%}";
-            SetText(textBox, "1");
-            Assert.Equal(0.01d, this.window.TheNUD.Value);
-            Assert.Equal("1.0%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "0.0%";
-            SetText(textBox, "1");
-            Assert.Equal(0.01d, this.window.TheNUD.Value);
-            Assert.Equal("1.0%", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{}{0:0.0‰}";
-            SetText(textBox, "1");
-            Assert.Equal(0.001d, this.window.TheNUD.Value);
-            Assert.Equal("1.0‰", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "{0:0.0‰}";
-            SetText(textBox, "1");
-            Assert.Equal(0.001d, this.window.TheNUD.Value);
-            Assert.Equal("1.0‰", textBox.Text);
-
-            this.window.TheNUD.StringFormat = "0.0‰";
-            SetText(textBox, "1");
-            Assert.Equal(0.001d, this.window.TheNUD.Value);
-            Assert.Equal("1.0‰", textBox.Text);
-
-            // GH-3376 Case 3
-            this.window.TheNUD.StringFormat = "{0:0.0000}%";
-            SetText(textBox, "0.25");
-            Assert.Equal(0.25d, this.window.TheNUD.Value);
-            Assert.Equal("0.2500%", textBox.Text);
-
-            // GH-3376 Case 4
-            this.window.TheNUD.StringFormat = "{0:0.0000}‰";
-            SetText(textBox, "0.25");
-            Assert.Equal(0.25d, this.window.TheNUD.Value);
-            Assert.Equal("0.2500‰", textBox.Text);
-
-            // GH-3376#issuecomment-472324787
-            this.window.TheNUD.StringFormat = "{}{0:G3} mPa·s";
-            SetText(textBox, "0.986");
-            Assert.Equal(0.986d, this.window.TheNUD.Value);
-            Assert.Equal("0.986 mPa·s", textBox.Text);
+            if (useEpsilon)
+            {
+                Assert.True(NearlyEqual((double)expectedValue, this.window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.window.TheNUD.Value.Value}'");
+            }
+            else
+            {
+                Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            }
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("42", 42d)]
+        [InlineData("42/751", 42.751d)]
+        [InlineData("/", 0d)]
+        [InlineData("/9", 0.9d)]
+        [InlineData("/0115", 0.0115d)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertDecimalTextInput()
+        public async Task ShouldConvertDecimalTextInputWithSpecialCulture(string text, object expectedValue)
         {
             await TestHost.SwitchToAppThread();
 
             this.window.TheNUD.NumericInputMode = NumericInput.Decimal;
-
-            SetText(textBox, "42");
-            Assert.Equal(42d, this.window.TheNUD.Value);
-
-            SetText(textBox, "42.2");
-            Assert.Equal(42.2d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".");
-            Assert.Equal(0d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".9");
-            Assert.Equal(0.9d, this.window.TheNUD.Value);
-
-            SetText(textBox, ".0115");
-            Assert.Equal(0.0115d, this.window.TheNUD.Value);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task ShouldConvertDecimalTextInputWithSpecialCulture()
-        {
-            await TestHost.SwitchToAppThread();
-
-            this.window.TheNUD.NumericInputMode = NumericInput.Decimal;
-
             this.window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
 
-            SetText(textBox, "42");
-            Assert.Equal(42d, this.window.TheNUD.Value);
+            SetText(this.textBox, text);
 
-            SetText(textBox, "42/751");
-            Assert.Equal(42.751d, this.window.TheNUD.Value);
-
-            SetText(textBox, "/");
-            Assert.Equal(0d, this.window.TheNUD.Value);
-
-            SetText(textBox, "/9");
-            Assert.Equal(0.9d, this.window.TheNUD.Value);
-
-            SetText(textBox, "/0115");
-            Assert.Equal(0.0115d, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.window.TheNUD.Value);
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("42", 66d)]
+        [InlineData("F", 15d)]
+        [InlineData("1F", 31d)]
+        [InlineData("37C5", 14277d)]
+        [InlineData("ACDC", 44252d)]
+        [InlineData("10000", 65536d)]
+        [InlineData("AFFE", 45054d)]
+        [InlineData("AFFE0815", 2952661013d)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertNumericTextInput()
-        {
-            await TestHost.SwitchToAppThread();
-
-            this.window.TheNUD.NumericInputMode = NumericInput.Numbers;
-
-            SetText(textBox, "42");
-            Assert.Equal(42d, this.window.TheNUD.Value);
-
-            SetText(textBox, "42.2");
-            Assert.Null(this.window.TheNUD.Value);
-
-            SetText(textBox, ".");
-            Assert.Null(this.window.TheNUD.Value);
-
-            SetText(textBox, ".9");
-            Assert.Null(this.window.TheNUD.Value);
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
-        public async Task ShouldConvertHexadecimalTextInput()
+        public async Task ShouldConvertHexadecimalTextInput(string text, object expectedValue)
         {
             await TestHost.SwitchToAppThread();
 
             this.window.TheNUD.NumericInputMode = NumericInput.Numbers;
             this.window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
 
-            SetText(textBox, "F");
-            Assert.Equal(15d, this.window.TheNUD.Value);
+            SetText(this.textBox, text);
 
-            SetText(textBox, "1F");
-            Assert.Equal(31d, this.window.TheNUD.Value);
-
-            SetText(textBox, "37C5");
-            Assert.Equal(14277d, this.window.TheNUD.Value);
-
-            SetText(textBox, "ACDC");
-            Assert.Equal(44252d, this.window.TheNUD.Value);
-
-            SetText(textBox, "10000");
-            Assert.Equal(65536d, this.window.TheNUD.Value);
-
-            SetText(textBox, "AFFE");
-            Assert.Equal(45054d, this.window.TheNUD.Value);
-
-            SetText(textBox, "AFFE0815");
-            Assert.Equal(2952661013d, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.window.TheNUD.Value);
         }
 
-        private static void SetText(TextBox textBox, string text)
+        private static void SetText(TextBox theTextBox, string theText)
         {
-            textBox.Clear();
-            var textCompositionEventArgs = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, textBox, text));
+            theTextBox.Clear();
+            var textCompositionEventArgs = new TextCompositionEventArgs(Keyboard.PrimaryDevice, new TextComposition(InputManager.Current, theTextBox, theText));
             textCompositionEventArgs.RoutedEvent = UIElement.PreviewTextInputEvent;
-            textBox.RaiseEvent(textCompositionEventArgs);
+            theTextBox.RaiseEvent(textCompositionEventArgs);
             textCompositionEventArgs.RoutedEvent = UIElement.TextInputEvent;
-            textBox.RaiseEvent(textCompositionEventArgs);
-            textBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+            theTextBox.RaiseEvent(textCompositionEventArgs);
+            theTextBox.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
     }
 }
