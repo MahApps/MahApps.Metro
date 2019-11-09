@@ -20,32 +20,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="enterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
                         <Grid x:Name="PART_InnerGrid">
                             <Grid.ColumnDefinitions>
@@ -184,19 +158,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
 
@@ -295,32 +269,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_WatermarkMessage"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_WatermarkMessage"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="enterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_WatermarkMessage"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_WatermarkMessage"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid>
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
@@ -406,7 +354,7 @@
                                      Style="{StaticResource MahApps.Styles.TextBox.Editable}"
                                      Visibility="Collapsed" />
 
-                            <TextBlock x:Name="PART_WatermarkMessage"
+                            <TextBlock x:Name="PART_Message"
                                        Grid.Row="1"
                                        Grid.Column="0"
                                        Margin="4 0"
@@ -527,8 +475,9 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}" Value="{x:Null}" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_WatermarkMessage" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Message" Property="Visibility" Value="Visible" />
                         </MultiDataTrigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="True" />
@@ -536,24 +485,26 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
@@ -572,7 +523,7 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}" Value="False">
                             <Setter TargetName="ContentSite" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_EditableTextBox" Property="Grid.ColumnSpan" Value="2" />
-                            <Setter TargetName="PART_WatermarkMessage" Property="Grid.ColumnSpan" Value="2" />
+                            <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
                         </DataTrigger>
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="false" />

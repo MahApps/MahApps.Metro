@@ -176,6 +176,7 @@
                 <RichTextBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ButtonContent="s"
+                             Controls:TextBoxHelper.Watermark="Type in..."
                              IsDocumentEnabled="True"
                              SpellCheck.IsEnabled="True"
                              Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
