@@ -222,47 +222,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="EnterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="ExitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="EnterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="ExitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid x:Name="PART_InnerGrid">
 
                         <ScrollViewer x:Name="PART_ContentHost"
@@ -321,10 +280,10 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus.DatePickerTextBox}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus.DatePickerTextBox}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
@@ -334,10 +293,10 @@
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText.DatePickerTextBox}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText.DatePickerTextBox}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>

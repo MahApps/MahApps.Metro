@@ -14,6 +14,75 @@
                       Color="{DynamicResource MahApps.Colors.Black}"
                       po:Freeze="True" />
 
+    <Storyboard x:Key="MahApps.Storyboard.EnterGotFocus" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         To=".2"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.ExitGotFocus" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.EnterGotFocus.DatePickerTextBox" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                         Storyboard.TargetProperty="Opacity"
+                         To=".2"
+                         Duration="0:0:0.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         To=".2"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.ExitGotFocus.DatePickerTextBox" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.EnterHasText" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         From=".2"
+                         To="0"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.ExitHasText" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.EnterHasText.DatePickerTextBox" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                         Storyboard.TargetProperty="Opacity"
+                         From=".2"
+                         To="0"
+                         Duration="0:0:0.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         From=".2"
+                         To="0"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.ExitHasText.DatePickerTextBox" po:Freeze="True">
+        <DoubleAnimation Storyboard.TargetName="PART_Watermark"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+        <DoubleAnimation Storyboard.TargetName="PART_Message"
+                         Storyboard.TargetProperty="Opacity"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
     <Storyboard x:Key="MahApps.Storyboard.WaitingForData" po:Freeze="True">
         <DoubleAnimation AutoReverse="True"
                          RepeatBehavior="Forever"
