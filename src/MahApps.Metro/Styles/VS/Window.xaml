@@ -56,14 +56,11 @@
            BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
            TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.FocusedBorder}" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="0 2" />
         <Setter Property="MaxWidth" Value="300" />
         <Setter Property="MinWidth" Value="200" />
-        <Setter Property="Padding" Value="0 1 0 0" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
