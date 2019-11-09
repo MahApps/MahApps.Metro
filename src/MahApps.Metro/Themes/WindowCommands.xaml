@@ -68,6 +68,18 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Styles.Button.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
+           TargetType="{x:Type Button}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ToggleButton.WindowCommands"
+           BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.SplitButton.Button.WindowCommands"
            BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
            TargetType="{x:Type Control}">
@@ -222,25 +234,17 @@
 
         <ControlTemplate.Resources>
             <ResourceDictionary>
-                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
-                </Style>
-                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
-                </Style>
+                <Style BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}" TargetType="{x:Type Button}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.WindowCommands}" TargetType="{x:Type ToggleButton}" />
                 <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
                 <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WindowCommands}" TargetType="{x:Type Controls:DropDownButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
-                       TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
-                </Style>
+                       BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}"
+                       TargetType="{x:Type Button}" />
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
-                       TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
-                </Style>
+                       BasedOn="{StaticResource MahApps.Styles.ToggleButton.WindowCommands}"
+                       TargetType="{x:Type ToggleButton}" />
             </ResourceDictionary>
         </ControlTemplate.Resources>
     </ControlTemplate>
@@ -289,45 +293,17 @@
 
         <ControlTemplate.Resources>
             <ResourceDictionary>
-                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-                <Style BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}" TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                <Style BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}" TargetType="{x:Type Button}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.WindowCommands}" TargetType="{x:Type ToggleButton}" />
                 <Style BasedOn="{StaticResource MahApps.Styles.SplitButton.WindowCommands}" TargetType="{x:Type Controls:SplitButton}" />
                 <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WindowCommands}" TargetType="{x:Type Controls:DropDownButton}" />
 
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
-                       TargetType="{x:Type Button}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.WindowCommands}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                       BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}"
+                       TargetType="{x:Type Button}" />
                 <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-                       BasedOn="{StaticResource MahApps.Styles.Control.WindowCommands}"
-                       TargetType="{x:Type ToggleButton}">
-                    <Setter Property="Template" Value="{StaticResource MahApps.Templates.ToggleButton.WindowCommands}" />
-                    <Style.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                       BasedOn="{StaticResource MahApps.Styles.ToggleButton.WindowCommands}"
+                       TargetType="{x:Type ToggleButton}" />
             </ResourceDictionary>
         </ControlTemplate.Resources>
     </ControlTemplate>
