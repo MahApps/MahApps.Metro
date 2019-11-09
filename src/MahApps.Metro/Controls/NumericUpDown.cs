@@ -187,7 +187,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
         private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
         private Regex regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
@@ -930,10 +930,11 @@ namespace MahApps.Metro.Controls
                 nud.InternalSetText(nud.Value);
             }
 
-            var value = (string)e.NewValue;
+            var format = (string)e.NewValue;
 
-            if (!nud.NumericInputMode.HasFlag(NumericInput.Decimal) && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
+            if (!string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
             {
+                nud.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
                 nud.SetCurrentValue(NumericInputModeProperty, nud.NumericInputMode | NumericInput.Decimal);
             }
         }
