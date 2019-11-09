@@ -11,33 +11,13 @@ using Xunit;
 
 namespace MahApps.Metro.Tests
 {
-    public class NumericUpDownTests : AutomationTestBase, IAsyncLifetime
+    public class NumericUpDownTests : AutomationTestBase, IClassFixture<NumericUpDownFixture>
     {
-        private NumericUpDownWindow window;
-        private TextBox textBox;
-        private RepeatButton numUp;
-        private RepeatButton numDown;
+        private readonly NumericUpDownFixture fixture;
 
-        /// <summary>
-        /// Called immediately after the class has been created, before it is used.
-        /// </summary>
-        public async Task InitializeAsync()
+        public NumericUpDownTests(NumericUpDownFixture fixture)
         {
-            await TestHost.SwitchToAppThread();
-            this.window = await WindowHelpers.CreateInvisibleWindowAsync<NumericUpDownWindow>().ConfigureAwait(false);
-
-            this.textBox = this.window.TheNUD.FindChild<TextBox>();
-            this.numUp = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericUp");
-            this.numDown = this.window.TheNUD.FindChild<RepeatButton>("PART_NumericDown");
-        }
-
-        /// <summary>
-        /// Called when an object is no longer needed. Called just before <see cref="M:System.IDisposable.Dispose" />
-        /// if the class also implements that.
-        /// </summary>
-        public Task DisposeAsync()
-        {
-            return Task.CompletedTask;
+            this.fixture = fixture;
         }
 
         public static bool NearlyEqual(double a, double b, double epsilon)
@@ -68,23 +48,24 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldSnapToMultipleOfInterval()
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.Interval = 0.1;
-            this.window.TheNUD.SnapToMultipleOfInterval = true;
+            this.fixture.Window.TheNUD.Interval = 0.1;
+            this.fixture.Window.TheNUD.SnapToMultipleOfInterval = true;
 
-            this.window.TheNUD.Value = 0;
+            this.fixture.Window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
-                this.numUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                Assert.Equal(0d + 0.1 * i, this.window.TheNUD.Value);
+                this.fixture.NumUp.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                Assert.Equal(0d + 0.1 * i, this.fixture.Window.TheNUD.Value);
             }
 
-            this.window.TheNUD.Value = 0;
+            this.fixture.Window.TheNUD.Value = 0;
             for (int i = 1; i < 15; i++)
             {
-                this.numDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
-                Assert.Equal(0d - 0.1 * i, this.window.TheNUD.Value);
+                this.fixture.NumDown.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                Assert.Equal(0d - 0.1 * i, this.fixture.Window.TheNUD.Value);
             }
         }
 
@@ -104,18 +85,25 @@ namespace MahApps.Metro.Tests
         [InlineData(0.25d, "{}{0:P}", "25.00%")] // 3376 Case 5
         [InlineData(0.25d, "{0:P}", "25.00%")] // 3376 Case 5
         [InlineData(0.25d, "P", "25.00%")] // 3376 Case 5
+        [InlineData(123456789d, "X", "75BCD15")]
+        [InlineData(123456789d, "X2", "75BCD15")]
+        [InlineData(255d, "X", "FF")]
+        [InlineData(-1d, "x", "ffffffff")]
+        [InlineData(255d, "x4", "00ff")]
+        [InlineData(-1d, "X4", "FFFFFFFF")]
         [DisplayTestMethodName]
         public async Task ShouldFormatValueInput(object value, string format, string expectedText)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.All;
-            this.window.TheNUD.StringFormat = format;
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
+            this.fixture.Window.TheNUD.StringFormat = format;
 
-            this.window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, value);
+            this.fixture.Window.TheNUD.SetCurrentValue(NumericUpDown.ValueProperty, value);
 
-            Assert.Equal(expectedText, this.textBox.Text);
-            Assert.Equal(value, this.window.TheNUD.Value);
+            Assert.Equal(expectedText, this.fixture.TextBox.Text);
+            Assert.Equal(value, this.fixture.Window.TheNUD.Value);
         }
 
         [Theory]
@@ -142,13 +130,14 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInput(string text, NumericInput numericInput, object expectedValue)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = numericInput;
+            this.fixture.Window.TheNUD.NumericInputMode = numericInput;
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
-            Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
         }
 
         [Theory]
@@ -168,14 +157,16 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.All;
-            this.window.TheNUD.StringFormat = format;
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
+            this.fixture.Window.TheNUD.StringFormat = format;
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
-            Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
+            Assert.Equal(expectedText, this.fixture.TextBox.Text);
         }
 
         [Theory]
@@ -199,63 +190,69 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.All;
-            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
-            this.window.TheNUD.StringFormat = format;
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
+            this.fixture.Window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.fixture.Window.TheNUD.StringFormat = format;
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
             if (useEpsilon)
             {
-                Assert.True(NearlyEqual((double)expectedValue, this.window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.window.TheNUD.Value.Value}'");
+                Assert.True(NearlyEqual((double)expectedValue, this.fixture.Window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.fixture.Window.TheNUD.Value.Value}'");
             }
             else
             {
-                Assert.Equal(expectedValue, this.window.TheNUD.Value);
+                Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
             }
+
+            Assert.Equal(expectedText, this.fixture.TextBox.Text);
         }
 
         [Theory]
-        [InlineData("1", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1‰", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1 ‰", "{}{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1", "{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1‰", "{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1 ‰", "{0:0.0‰}", null, 0.001d, "1.0%")]
-        [InlineData("1", "0.0‰", null, 0.001d, "1.0%")]
-        [InlineData("1‰", "0.0‰", null, 0.001d, "1.0%")]
-        [InlineData("1 ‰", "0.0‰", null, 0.001d, "1.0%")]
-        [InlineData("1", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1 ‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1 ‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1", "0.0‰", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1‰", "0.0‰", "en-EN", 0.001d, "1.0%")]
-        [InlineData("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0%")]
+        [InlineData("1", "{}{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1‰", "{}{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "{}{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1", "{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1‰", "{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "{0:0.0‰}", null, 0.001d, "1.0‰")]
+        [InlineData("1", "0.0‰", null, 0.001d, "1.0‰")]
+        [InlineData("1‰", "0.0‰", null, 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "0.0‰", null, 0.001d, "1.0‰")]
+        [InlineData("1", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "{}{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1", "{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "{0:0.0‰}", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1", "0.0‰", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
+        [InlineData("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
         [InlineData("0.25", "{0:0.0000}‰", null, 0.25d, "0.2500‰")]
         [DisplayTestMethodName]
         public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.All;
-            this.window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
-            this.window.TheNUD.StringFormat = format;
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.All;
+            this.fixture.Window.TheNUD.Culture = string.IsNullOrEmpty(culture) ? CultureInfo.InvariantCulture : CultureInfo.GetCultureInfo(culture);
+            this.fixture.Window.TheNUD.StringFormat = format;
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
             if (useEpsilon)
             {
-                Assert.True(NearlyEqual((double)expectedValue, this.window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.window.TheNUD.Value.Value}'");
+                Assert.True(NearlyEqual((double)expectedValue, this.fixture.Window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.fixture.Window.TheNUD.Value.Value}'");
             }
             else
             {
-                Assert.Equal(expectedValue, this.window.TheNUD.Value);
+                Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
             }
+
+            Assert.Equal(expectedText, this.fixture.TextBox.Text);
         }
 
         [Theory]
@@ -267,14 +264,15 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertDecimalTextInputWithSpecialCulture(string text, object expectedValue)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.Decimal;
-            this.window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.Decimal;
+            this.fixture.Window.TheNUD.Culture = CultureInfo.GetCultureInfo("fa-IR");
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
-            Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
         }
 
         [Theory]
@@ -289,14 +287,42 @@ namespace MahApps.Metro.Tests
         [DisplayTestMethodName]
         public async Task ShouldConvertHexadecimalTextInput(string text, object expectedValue)
         {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
 
-            this.window.TheNUD.NumericInputMode = NumericInput.Numbers;
-            this.window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
+            this.fixture.Window.TheNUD.NumericInputMode = NumericInput.Numbers;
+            this.fixture.Window.TheNUD.ParsingNumberStyle = NumberStyles.HexNumber;
 
-            SetText(this.textBox, text);
+            SetText(this.fixture.TextBox, text);
 
-            Assert.Equal(expectedValue, this.window.TheNUD.Value);
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
+        }
+
+        [Theory]
+        [InlineData("42", "{}{0:X}", 66d, "42")]
+        [InlineData("42", "{0:X}", 66d, "42")]
+        [InlineData("42", "X", 66d, "42")]
+        [InlineData("42", "{}{0:x}", 66d, "42")]
+        [InlineData("42", "{0:x}", 66d, "42")]
+        [InlineData("42", "x", 66d, "42")]
+        [InlineData("255", "{}{0:X4}", 597d, "0255")]
+        [InlineData("255", "{0:X4}", 597d, "0255")]
+        [InlineData("255", "X4", 597d, "0255")]
+        [InlineData("AFFE", "{}{0:X8}", 45054d, "0000AFFE")]
+        [InlineData("AFFE", "{0:X8}", 45054d, "0000AFFE")]
+        [InlineData("AFFE", "X8", 45054d, "0000AFFE")]
+        [DisplayTestMethodName]
+        public async Task ShouldConvertHexadecimalTextInputWithStringFormat(string text, string format, object expectedValue, string expectedText)
+        {
+            await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
+            await TestHost.SwitchToAppThread();
+
+            this.fixture.Window.TheNUD.StringFormat = format;
+
+            SetText(this.fixture.TextBox, text);
+
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
+            Assert.Equal(expectedText, this.fixture.TextBox.Text);
         }
 
         private static void SetText(TextBox theTextBox, string theText)
