@@ -26,12 +26,12 @@ namespace MahApps.Metro.Tests
             double absB = Math.Abs(b);
             double diff = Math.Abs(a - b);
 
-            if (a == b)
+            if (a.Equals(b))
             {
                 // shortcut, handles infinities
                 return true;
             }
-            else if (a == 0 || b == 0 || diff < Double.Epsilon)
+            else if (a.Equals(0) || b.Equals(0) || diff < double.Epsilon)
             {
                 // a or b is zero or both are extremely close to it
                 // relative error is less meaningful here
@@ -170,25 +170,25 @@ namespace MahApps.Metro.Tests
         }
 
         [Theory]
-        [InlineData("100", "{}{0:P0}", "en-EN", 1d, "100%")]
-        [InlineData("100 %", "{}{0:P0}", "en-EN", 1d, "100%")]
-        [InlineData("100%", "{}{0:P0}", "en-EN", 1d, "100%")]
+        [InlineData("100", "{}{0:P0}", "en-EN", 1d, "100%", false)]
+        [InlineData("100 %", "{}{0:P0}", "en-EN", 1d, "100%", false)]
+        [InlineData("100%", "{}{0:P0}", "en-EN", 1d, "100%", false)]
         [InlineData("-0.39678", "{}{0:P1}", "en-EN", -0.0039678d, "-0.4%", true)]
-        [InlineData("50", "P0", "en-EN", 0.5d, "50%")]
-        [InlineData("50", "P1", "en-EN", 0.5d, "50.0%")]
+        [InlineData("50", "P0", "en-EN", 0.5d, "50%", false)]
+        [InlineData("50", "P1", "en-EN", 0.5d, "50.0%", false)]
         [InlineData("-0.39678", "P1", "en-EN", -0.0039678d, "-0.4%", true)]
-        [InlineData("10", "{}{0:P0}", null, 0.1d, "10 %")]
+        [InlineData("10", "{}{0:P0}", null, 0.1d, "10 %", false)]
         [InlineData("-0.39678", "{}{0:P1}", null, -0.0039678d, "-0.4 %", true)]
-        [InlineData("1", "P0", null, 0.01d, "1 %")]
+        [InlineData("1", "P0", null, 0.01d, "1 %", false)]
         [InlineData("-0.39678", "P1", null, -0.0039678d, "-0.4 %", true)]
-        [InlineData("1", "{}{0:0.0%}", null, 0.01d, "1.0%")]
-        [InlineData("1", "0.0%", null, 0.01d, "1.0%")]
-        [InlineData("0.25", "{0:0.0000}%", null, 0.25d, "0.2500%")] // GH-3376 Case 3
-        [InlineData("100", "{}{0}%", null, 100d, "100%")]
-        [InlineData("100%", "{}{0}%", null, 100d, "100%")]
-        [InlineData("100 %", "{}{0}%", null, 100d, "100%")]
+        [InlineData("1", "{}{0:0.0%}", null, 0.01d, "1.0%", false)]
+        [InlineData("1", "0.0%", null, 0.01d, "1.0%", false)]
+        [InlineData("0.25", "{0:0.0000}%", null, 0.25d, "0.2500%", false)] // GH-3376 Case 3
+        [InlineData("100", "{}{0}%", null, 100d, "100%", false)]
+        [InlineData("100%", "{}{0}%", null, 100d, "100%", false)]
+        [InlineData("100 %", "{}{0}%", null, 100d, "100%", false)]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
+        public async Task ShouldConvertTextInputWithPercentageStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon)
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
@@ -232,7 +232,7 @@ namespace MahApps.Metro.Tests
         [InlineData("1 ‰", "0.0‰", "en-EN", 0.001d, "1.0‰")]
         [InlineData("0.25", "{0:0.0000}‰", null, 0.25d, "0.2500‰")]
         [DisplayTestMethodName]
-        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText, bool useEpsilon = false)
+        public async Task ShouldConvertTextInputWithPermilleStringFormat(string text, string format, string culture, object expectedValue, string expectedText)
         {
             await this.fixture.PrepareForTestAsync().ConfigureAwait(false);
             await TestHost.SwitchToAppThread();
@@ -243,15 +243,7 @@ namespace MahApps.Metro.Tests
 
             SetText(this.fixture.TextBox, text);
 
-            if (useEpsilon)
-            {
-                Assert.True(NearlyEqual((double)expectedValue, this.fixture.Window.TheNUD.Value.Value, 0.000005), $"The input '{text}' should be '{expectedValue} ({expectedText})', but value is '{this.fixture.Window.TheNUD.Value.Value}'");
-            }
-            else
-            {
-                Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
-            }
-
+            Assert.Equal(expectedValue, this.fixture.Window.TheNUD.Value);
             Assert.Equal(expectedText, this.fixture.TextBox.Text);
         }
 

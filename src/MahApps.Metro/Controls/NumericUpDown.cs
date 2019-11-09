@@ -984,7 +984,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.valueTextBox.Text = this.FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
+            this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
 
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
@@ -992,7 +992,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private string FormattedValueString(double newValue, string format, CultureInfo culture)
+        private static string FormattedValueString(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
@@ -1017,7 +1017,7 @@ namespace MahApps.Metro.Controls
             return newValue.ToString(culture);
         }        
 
-        private double FormattedValue(double newValue, string format, CultureInfo culture)
+        private static double FormattedValue(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
@@ -1208,7 +1208,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(textBox.Text, out convertedValue))
                 {
-                    convertedValue = this.FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
+                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
             }
@@ -1232,7 +1232,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    convertedValue = this.FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
+                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
             }
