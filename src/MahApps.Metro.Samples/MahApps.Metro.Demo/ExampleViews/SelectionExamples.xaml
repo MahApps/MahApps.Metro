@@ -10,6 +10,10 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+    </UserControl.Resources>
+
     <TabControl Margin="10" TabStripPlacement="Left">
         <TabItem Header="ListBox">
             <ScrollViewer Margin="2"
@@ -188,7 +192,6 @@
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
                               BorderThickness="4"
@@ -203,8 +206,9 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
                               SelectedIndex="0">
@@ -218,8 +222,23 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
@@ -234,8 +253,9 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Editable..."
@@ -249,8 +269,14 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Editable TextBox..." />
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Autocompletion"
                               DisplayMemberPath="Title"
@@ -259,9 +285,10 @@
                               MaxDropDownHeight="125"
                               Style="{DynamicResource MahApps.Styles.ComboBox.Virtualized}"
                               Text="{Binding Path=Title}" />
+
                     <ComboBox x:Name="groupingComboBox"
                               Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.Watermark="Autocompletion with grouping"
                               DisplayMemberPath="Title"
                               IsEditable="True"
@@ -279,8 +306,9 @@
                             </GroupStyle>
                         </ComboBox.GroupStyle>
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               IsEnabled="False"
                               SelectedIndex="0">
                         <ComboBoxItem Content="Item 1" />

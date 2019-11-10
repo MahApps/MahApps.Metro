@@ -16,7 +16,7 @@
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -25,6 +25,7 @@
                 <ControlTemplate TargetType="{x:Type Controls:HotKeyBox}">
                     <TextBox x:Name="PART_TextBox"
                              MinHeight="{TemplateBinding MinHeight}"
+                             Margin="0"
                              Padding="{TemplateBinding Padding}"
                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"

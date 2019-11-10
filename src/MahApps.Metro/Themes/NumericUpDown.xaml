@@ -7,8 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
-
     <Style TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
@@ -26,7 +24,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Right" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="MinWidth" Value="62" />
-        <Setter Property="Padding" Value="1" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -50,8 +48,8 @@
                                      Grid.Column="0"
                                      MinWidth="20"
                                      MinHeight="0"
-                                     Margin="0 0 -2 0"
-                                     Padding="0"
+                                     Margin="0"
+                                     Padding="{TemplateBinding Padding}"
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -86,7 +84,7 @@
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}"
+                                          Margin="0"
                                           Delay="{TemplateBinding Delay}"
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
                                           Foreground="{TemplateBinding Foreground}"
@@ -102,7 +100,7 @@
                             <RepeatButton x:Name="PART_NumericDown"
                                           Grid.Column="2"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}"
+                                          Margin="0"
                                           VerticalContentAlignment="Center"
                                           Delay="{TemplateBinding Delay}"
                                           Focusable="{TemplateBinding UpDownButtonsFocusable}"
@@ -136,29 +134,9 @@
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericUp" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="ButtonsAlignment" Value="Opposite" />
-                                <Condition Property="SwitchUpDownButtons" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
-                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
-                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericUp" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
-                            <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
-                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -168,13 +146,22 @@
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericUp" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ButtonsAlignment" Value="Opposite" />
+                                <Condition Property="SwitchUpDownButtons" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
+                            <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
+                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -184,14 +171,11 @@
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_NumericUp" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
                         </MultiTrigger>
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="ButtonsAlignment" Value="Right" />
@@ -200,14 +184,11 @@
                             <Setter TargetName="PART_LeftColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_MiddleColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="2" />
-                            <Setter TargetName="PART_NumericUp" Property="Margin" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Right}}" />
                             <Setter TargetName="PART_RightColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
-                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
                         </MultiTrigger>
+
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
