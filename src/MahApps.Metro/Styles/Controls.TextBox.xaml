@@ -34,32 +34,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="enterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
                             <Border x:Name="PART_WaitingForDataEffectGrid"
@@ -246,19 +220,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
 
@@ -291,32 +265,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="enterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="exitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid>
                         <AdornerDecorator x:Name="PART_WaitingForDataEffectAdornerDecorator" Visibility="Collapsed">
                             <Border x:Name="PART_WaitingForDataEffectGrid"
@@ -503,6 +451,28 @@
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
+                                <Condition Property="Controls:TextBoxHelper.HasText" Value="False" />
+                                <Condition Property="IsFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+                        <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
                                 <Condition Property="IsVisible" Value="True" />
                                 <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
                             </MultiTrigger.Conditions>
@@ -542,30 +512,6 @@
 
     <Style x:Key="MahApps.Styles.RichTextBox" TargetType="{x:Type RichTextBox}">
         <Style.Resources>
-            <Storyboard x:Key="enterGotFocus">
-                <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                 Storyboard.TargetProperty="Opacity"
-                                 To=".2"
-                                 Duration="0:0:0.2" />
-            </Storyboard>
-            <Storyboard x:Key="exitGotFocus">
-                <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Duration="0:0:0.2" />
-            </Storyboard>
-
-            <Storyboard x:Key="enterHasText">
-                <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From=".2"
-                                 To="0"
-                                 Duration="0:0:0.2" />
-            </Storyboard>
-            <Storyboard x:Key="exitHasText">
-                <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                 Storyboard.TargetProperty="Opacity"
-                                 Duration="0:0:0.2" />
-            </Storyboard>
             <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                 <Setter Property="TextDecorations" Value="Underline" />
@@ -797,19 +743,19 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -993,6 +939,28 @@
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:TextBoxHelper.HasText" Value="False" />
+                                <Condition Property="IsFocused" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus}" />
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus}" />
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+
+                        <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText}" />
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText}" />
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
