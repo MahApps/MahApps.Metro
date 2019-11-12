@@ -22,11 +22,23 @@ namespace MetroDemo.ExampleViews
         {
             InitializeComponent();
         }
-        private void TextBox_SelectAll(object sender, RoutedEventArgs e)
+        private static void TextBox_SelectAll(object sender, RoutedEventArgs e)
         {
-            if (!(sender is TextBox textBox)) return;
-            if (string.IsNullOrWhiteSpace(textBox.Text)) return;
-            if (textBox.SelectionStart == 0 && textBox.SelectionLength == textBox.Text.Length) return;
+            if (!(sender is TextBox textBox))
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                return;
+            }
+
+            if (textBox.SelectionStart == 0 && textBox.SelectionLength == textBox.Text.Length)
+            {
+                return;
+            }
+
             textBox.SelectAll();
         }
     }
@@ -62,22 +74,30 @@ namespace MetroDemo.ExampleViews
         public Resources(ResourceDictionary dictionary)
         {
             FillItems(dictionary);
-            Items.Sort((a, b) => a.Header.CompareTo(b.Header));
+            Items.Sort((a, b) => string.CompareOrdinal(a.Header, b.Header));
             foreach (var item in Items)
             {
-                item.Sort((a, b) => a.Key.ToString().CompareTo(b.Key.ToString()));
+                item.Sort((a, b) => string.CompareOrdinal(a.Key.ToString(), b.Key.ToString()));
             }
             FilteredItems = Items;
         }
 
         void FillItems(ResourceDictionary dictionary)
         {
-            if (Items == null) Items = new List<ResourceList>();
+            if (Items == null)
+            {
+                Items = new List<ResourceList>();
+            }
+
             foreach (var key in dictionary.Keys)
             {
                 AddItem(dictionary[key], key);
             }
-            if (dictionary.MergedDictionaries == null) return;
+            if (dictionary.MergedDictionaries == null)
+            {
+                return;
+            }
+
             foreach (var dict in dictionary.MergedDictionaries)
             {
                 FillItems(dict);
@@ -92,18 +112,50 @@ namespace MetroDemo.ExampleViews
                 list = new ResourceList(type.Name, type);
                 Items.Add(list);
             }
-            if (list.Any(a => a.Key.Equals(key))) return;
+            if (list.Any(a => a.Key.Equals(key)))
+            {
+                return;
+            }
+
             list.Add(new ResourceItem(item, key));
         }
         Type GetItemType(object item)
         {
-            if (item is IValueConverter) return CreateList<IValueConverter>("Converters");
-            if (item is IMultiValueConverter) return CreateList<IValueConverter>("Converters");
-            if (item is UIElement) return CreateList<UIElement>("UI Elements");
-            if (item is Geometry) return CreateList<Geometry>("Geometries");
-            if (item is EasingFunctionBase) return CreateList<EasingFunctionBase>("Easing Functions");
-            if (item is Timeline) return CreateList<Timeline>("Timelines");
-            if (item is Effect) return CreateList<Effect>("Effects");
+            if (item is IValueConverter)
+            {
+                return CreateList<IValueConverter>("Converters");
+            }
+
+            if (item is IMultiValueConverter)
+            {
+                return CreateList<IValueConverter>("Converters");
+            }
+
+            if (item is UIElement)
+            {
+                return CreateList<UIElement>("UI Elements");
+            }
+
+            if (item is Geometry)
+            {
+                return CreateList<Geometry>("Geometries");
+            }
+
+            if (item is EasingFunctionBase)
+            {
+                return CreateList<EasingFunctionBase>("Easing Functions");
+            }
+
+            if (item is Timeline)
+            {
+                return CreateList<Timeline>("Timelines");
+            }
+
+            if (item is Effect)
+            {
+                return CreateList<Effect>("Effects");
+            }
+
             return CreateList(item.GetType(), item.GetType().Name);
         }
         Type CreateList<T>(string header)
@@ -135,8 +187,16 @@ namespace MetroDemo.ExampleViews
         {
             get
             {
-                if (Key is string s) return s;
-                if (Key is Type type) return $"{{x:Type {type.Name}}}";
+                if (Key is string s)
+                {
+                    return s;
+                }
+
+                if (Key is Type type)
+                {
+                    return $"{{x:Type {type.Name}}}";
+                }
+
                 return "Not Available";
             }
         }
@@ -176,26 +236,36 @@ namespace MetroDemo.ExampleViews
 
         FrameworkElement CreateControl(Type type)
         {
-            if (type == typeof(ButtonBase)) return new Button();
-            return Activator.CreateInstance(type) as FrameworkElement;
+            if (type == typeof(ButtonBase))
+            {
+                return new Button();
+            }
+
+            var element = Activator.CreateInstance(type) as FrameworkElement;
+            if (element != null)
+            {
+                element.SetCurrentValue(FrameworkElement.MinHeightProperty, MinHeight);
+                element.SetCurrentValue(FrameworkElement.MinWidthProperty, MinWidth);
+            }
+            return element;
         }
-        FrameworkElement PrepareElement(FrameworkElement element)
+        static FrameworkElement PrepareElement(FrameworkElement element)
         {
             if (element is ContextMenu contextMenu)
             {
                 contextMenu.Items.Add(new MenuItem() { Header = "Test menu" });
-                element = new TextBlock() { Text = "Right click me!!", ContextMenu = contextMenu, Background = Brushes.Gray };
+                element = new TextBlock { Text = "Right click me!!", ContextMenu = contextMenu, Background = Brushes.Gray };
             }
             else if (element is Popup popup)
             {
-                element = new TextBlock() { Text = "Right click me!!" };
+                element = new TextBlock { Text = "Right click me!!" };
                 popup.SetCurrentValue(Popup.PlacementTargetProperty, element);
                 popup.SetCurrentValue(Popup.ChildProperty, new Button() { Content = "Test popup!!" });
                 element.MouseRightButtonUp += (sender, e) => popup.SetCurrentValue(Popup.IsOpenProperty, true);
             }
             else if (element is ToolTip tooltip)
             {
-                element = new TextBlock() { Text = "Just move over to see tool tip.", ToolTip = tooltip };
+                element = new TextBlock { Text = "Just move over to see tool tip.", ToolTip = tooltip };
                 tooltip.SetCurrentValue(ToolTip.PlacementTargetProperty, element);
                 tooltip.SetCurrentValue(ContentControl.ContentProperty, new TextBlock() { Text = "Test tool tip!!" });
             }
@@ -210,18 +280,21 @@ namespace MetroDemo.ExampleViews
             return element;
         }
         object CreateColorPreview(Color color) => CreateBrushPreview(new SolidColorBrush(color));
-        object CreateBrushPreview(Brush brush) => new Rectangle() { Width = MinWidth, Height = MinHeight, Fill = brush };
-        object CreateGeometryPreview(Geometry geometry) => new Path() { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
-        object CreateFontPreview(FontFamily font) => new TextBlock() { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
-        object CreateEffectPreview(Effect effect) => new TextBlock() { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
+        object CreateBrushPreview(Brush brush) => new Rectangle { Width = MinWidth, Height = MinHeight, Fill = brush };
+        object CreateGeometryPreview(Geometry geometry) => new Path { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
+        object CreateFontPreview(FontFamily font) => new TextBlock { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
+        object CreateEffectPreview(Effect effect) => new TextBlock { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
         object CreateControlTemplatePreview(ControlTemplate template)
         {
             if (template.TargetType != null)
             {
                 try
                 {
-                    var control = CreateControl(template.TargetType) as Control;
-                    if (control == null) return "Target type is not a control.";
+                    if (!(CreateControl(template.TargetType) is Control control))
+                    {
+                        return "Target type is not a control.";
+                    }
+
                     control.SetCurrentValue(Control.TemplateProperty, template);
                     control = PrepareElement(control) as Control;
                     return control;
@@ -240,7 +313,11 @@ namespace MetroDemo.ExampleViews
                 try
                 {
                     var control = CreateControl(style.TargetType);
-                    if (control == null) return "Target type is not a framework element.";
+                    if (control == null)
+                    {
+                        return "Target type is not a framework element.";
+                    }
+
                     control.SetCurrentValue(FrameworkElement.StyleProperty, style);
                     control = PrepareElement(control);
                     return control;
@@ -255,15 +332,42 @@ namespace MetroDemo.ExampleViews
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Brush brush) return CreateBrushPreview(brush);
-            if (value is Color color) return CreateColorPreview(color);
-            if (value is Geometry geometry) return CreateGeometryPreview(geometry);
-            if (value is FontFamily font) return CreateFontPreview(font);
-            if (value is Effect effect) return CreateEffectPreview(effect);
-            if (value is ControlTemplate controlTemplate) return CreateControlTemplatePreview(controlTemplate);
-            if (value is Style style) return CreateStylePreview(style);
-            if (value is FrameworkElement element) return PrepareElement(element);
-            return value;
+            if (value is Brush brush)
+            {
+                return CreateBrushPreview(brush);
+            }
+
+            if (value is Color color)
+            {
+                return CreateColorPreview(color);
+            }
+
+            if (value is Geometry geometry)
+            {
+                return CreateGeometryPreview(geometry);
+            }
+
+            if (value is FontFamily font)
+            {
+                return CreateFontPreview(font);
+            }
+
+            if (value is Effect effect)
+            {
+                return CreateEffectPreview(effect);
+            }
+
+            if (value is ControlTemplate controlTemplate)
+            {
+                return CreateControlTemplatePreview(controlTemplate);
+            }
+
+            if (value is Style style)
+            {
+                return CreateStylePreview(style);
+            }
+
+            return value is FrameworkElement element ? PrepareElement(element) : value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -278,18 +382,38 @@ namespace MetroDemo.ExampleViews
         public double MinHeight { get; set; } = 50;
 
         object CreateColorPreview(Color color) => CreateBrushPreview(new SolidColorBrush(color));
-        object CreateBrushPreview(Brush brush) => new Ellipse() { Width = MinWidth, Height = MinHeight, Fill = brush, Stroke = Brushes.Gray, StrokeThickness = 2 };
-        object CreateGeometryPreview(Geometry geometry) => new Path() { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
-        object CreateFontPreview(FontFamily font) => new TextBlock() { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
-        object CreateEffectPreview(Effect effect) => new TextBlock() { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
+        object CreateBrushPreview(Brush brush) => new Ellipse { Width = MinWidth, Height = MinHeight, Fill = brush, Stroke = Brushes.Gray, StrokeThickness = 2 };
+        object CreateGeometryPreview(Geometry geometry) => new Path { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
+        object CreateFontPreview(FontFamily font) => new TextBlock { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
+        object CreateEffectPreview(Effect effect) => new TextBlock { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Brush brush) return CreateBrushPreview(brush);
-            if (value is Color color) return CreateColorPreview(color);
-            if (value is Geometry geometry) return CreateGeometryPreview(geometry);
-            if (value is FontFamily font) return CreateFontPreview(font);
-            if (value is Effect effect) return CreateEffectPreview(effect);
+            if (value is Brush brush)
+            {
+                return CreateBrushPreview(brush);
+            }
+
+            if (value is Color color)
+            {
+                return CreateColorPreview(color);
+            }
+
+            if (value is Geometry geometry)
+            {
+                return CreateGeometryPreview(geometry);
+            }
+
+            if (value is FontFamily font)
+            {
+                return CreateFontPreview(font);
+            }
+
+            if (value is Effect effect)
+            {
+                return CreateEffectPreview(effect);
+            }
+
             return new PackIconModern()
             { 
                 Width = MinWidth, 
