@@ -83,6 +83,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.CloseButton.StrokeHighlighted" Color="#FFFFFF" options:Freeze="True" />
 
     <!--  Menu  -->
+    <SolidColorBrush x:Key="MahApps.Brushes.Menu.Checkmark.Fill" Color="#FF999999" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Menu.Checkmark.Background" Color="#FF2D2D30" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuSeparator.Border" Color="#333337" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.BackgroundHighlighted" Color="#3E3E40" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SubmenuItem.Background" Color="#1B1B1C" options:Freeze="True" />
@@ -91,8 +93,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Background" Color="#1B1B1C" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="#333337" options:Freeze="True" />
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#FFFFFF" options:Freeze="True" />
-    <System:Double x:Key="MahApps.Sizes.Font.ContextMenu">12</System:Double>
 
+    <System:Double x:Key="MahApps.Sizes.Font.ContextMenu">12</System:Double>
 
     <!--  Scroll Bar  -->
     <SolidColorBrush x:Key="MahApps.Brushes.ScrollBar.PageButtonBackgroundHighlighted" Color="#05FFFFFF" options:Freeze="True" />

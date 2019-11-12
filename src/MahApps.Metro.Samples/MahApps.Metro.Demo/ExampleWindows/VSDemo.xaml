@@ -51,7 +51,9 @@
                     <MenuItem Header="Fire slot" />
                     <Separator />
                     <MenuItem Header="Reload slot" />
-                    <MenuItem Header="Report damage to control room" />
+                    <MenuItem Header="Report damage to control room"
+                              IsCheckable="True"
+                              IsChecked="True" />
                 </MenuItem>
                 <MenuItem Header="Rocket slot 2">
                     <MenuItem Header="damaged .. being repaired" IsEnabled="False" />
