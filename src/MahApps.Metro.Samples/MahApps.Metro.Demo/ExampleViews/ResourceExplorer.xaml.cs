@@ -22,7 +22,7 @@ namespace MetroDemo.ExampleViews
         {
             InitializeComponent();
         }
-        private static void TextBox_SelectAll(object sender, RoutedEventArgs e)
+        private void TextBox_SelectAll(object sender, RoutedEventArgs e)
         {
             if (!(sender is TextBox textBox))
             {
