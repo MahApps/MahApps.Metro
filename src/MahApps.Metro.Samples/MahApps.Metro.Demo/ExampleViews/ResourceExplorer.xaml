@@ -11,7 +11,8 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <local:ResourceToContentConverter x:Key="ResourceToContentConverter"/>
-        <local:ResourceToTreeIconConverter x:Key="ResourceToTreeIconConverter"/>
+        <local:ResourceToContentConverter x:Key="ResourceToTreeIconConverter"
+                                          MinHeight="50" MinWidth="50" IsIcon="True"/>
         <HierarchicalDataTemplate DataType="{x:Type local:ResourceList}" ItemsSource="{Binding Items}">
             <TextBlock Text="{Binding Header}"/>
         </HierarchicalDataTemplate>

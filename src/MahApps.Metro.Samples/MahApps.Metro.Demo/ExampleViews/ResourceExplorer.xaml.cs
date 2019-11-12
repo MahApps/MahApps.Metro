@@ -172,7 +172,11 @@ namespace MetroDemo.ExampleViews
         }
         List<ResourceList> FilterResources()
         {
-            if (string.IsNullOrWhiteSpace(filter)) return Items;
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                return Items;
+            }
+
             return Items.Where(a => a.Any(r => r.Display.IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1))
                         .Select(a => new ResourceList(a.Header, a.Type, a.Items.Where(r => r.Display.IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1))).ToList();
         }
@@ -233,6 +237,7 @@ namespace MetroDemo.ExampleViews
     {
         public double MinWidth { get; set; } = 100;
         public double MinHeight { get; set; } = 100;
+        public bool IsIcon { get; set; }
 
         FrameworkElement CreateControl(Type type)
         {
@@ -280,7 +285,16 @@ namespace MetroDemo.ExampleViews
             return element;
         }
         object CreateColorPreview(Color color) => CreateBrushPreview(new SolidColorBrush(color));
-        object CreateBrushPreview(Brush brush) => new Rectangle { Width = MinWidth, Height = MinHeight, Fill = brush };
+        object CreateBrushPreview(Brush brush)
+        {
+            if (IsIcon)
+            {
+                return new Ellipse { Width = MinWidth, Height = MinHeight, Fill = brush, Stroke = Brushes.Gray, StrokeThickness = 2 };
+            }
+
+            return new Rectangle { Width = MinWidth, Height = MinHeight, Fill = brush };
+        }
+
         object CreateGeometryPreview(Geometry geometry) => new Path { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
         object CreateFontPreview(FontFamily font) => new TextBlock { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
         object CreateEffectPreview(Effect effect) => new TextBlock { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
@@ -357,6 +371,17 @@ namespace MetroDemo.ExampleViews
                 return CreateEffectPreview(effect);
             }
 
+            if (IsIcon)
+            {
+                return new PackIconModern()
+                {
+                    Width = MinWidth,
+                    Height = MinHeight,
+                    Foreground = Brushes.DarkRed,
+                    Kind = PackIconModernKind.SocialGithubOctocat
+                };
+            }
+
             if (value is ControlTemplate controlTemplate)
             {
                 return CreateControlTemplatePreview(controlTemplate);
@@ -368,59 +393,6 @@ namespace MetroDemo.ExampleViews
             }
 
             return value is FrameworkElement element ? PrepareElement(element) : value;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new InvalidOperationException();
-        }
-
-    }
-    class ResourceToTreeIconConverter : IValueConverter
-    {
-        public double MinWidth { get; set; } = 50;
-        public double MinHeight { get; set; } = 50;
-
-        object CreateColorPreview(Color color) => CreateBrushPreview(new SolidColorBrush(color));
-        object CreateBrushPreview(Brush brush) => new Ellipse { Width = MinWidth, Height = MinHeight, Fill = brush, Stroke = Brushes.Gray, StrokeThickness = 2 };
-        object CreateGeometryPreview(Geometry geometry) => new Path { Width = MinWidth, Height = MinHeight, Stroke = Brushes.Black, Fill = Brushes.Yellow, Data = geometry };
-        object CreateFontPreview(FontFamily font) => new TextBlock { Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", FontFamily = font };
-        object CreateEffectPreview(Effect effect) => new TextBlock { Text = "Effects Preview", Effect = effect, FontWeight = FontWeights.Bold, FontSize = 24 };
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is Brush brush)
-            {
-                return CreateBrushPreview(brush);
-            }
-
-            if (value is Color color)
-            {
-                return CreateColorPreview(color);
-            }
-
-            if (value is Geometry geometry)
-            {
-                return CreateGeometryPreview(geometry);
-            }
-
-            if (value is FontFamily font)
-            {
-                return CreateFontPreview(font);
-            }
-
-            if (value is Effect effect)
-            {
-                return CreateEffectPreview(effect);
-            }
-
-            return new PackIconModern()
-            { 
-                Width = MinWidth, 
-                Height = MinHeight, 
-                Foreground = Brushes.DarkRed, 
-                Kind = PackIconModernKind.SocialGithubOctocat
-            };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
