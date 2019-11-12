@@ -20,7 +20,7 @@ namespace MahApps.Metro.Converters
             {
                 if (inverse)
                 {
-                    value = 100 - (double)value;
+                    value = 1 - (double)value;
                 }
                 return new GridLength((double)value, GridUnitType.Star);
             }
