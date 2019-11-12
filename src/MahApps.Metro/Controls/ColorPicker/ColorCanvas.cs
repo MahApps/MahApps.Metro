@@ -80,8 +80,8 @@ namespace MahApps.Metro.Controls
 
                 var hsv = new HSVColor(colorCanvas.SelectedColor);
                 colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
-                colorCanvas.SetCurrentValue(SaturationProperty, hsv.Saturation * 100);
-                colorCanvas.SetCurrentValue(ValueProperty, hsv.Value * 100);
+                colorCanvas.SetCurrentValue(SaturationProperty, hsv.Saturation);
+                colorCanvas.SetCurrentValue(ValueProperty, hsv.Value);
 
                 colorCanvas.SetCurrentValue(AProperty, colorCanvas.SelectedColor.A);
                 colorCanvas.SetCurrentValue(RProperty, colorCanvas.SelectedColor.R);
@@ -168,7 +168,7 @@ namespace MahApps.Metro.Controls
         {
             if (dependencyObject is ColorCanvas colorCanvas && !colorCanvas.ColorIsUpdating)
             {
-                var hsv = new HSVColor(colorCanvas.Hue, colorCanvas.Saturation / 100, colorCanvas.Value / 100);
+                var hsv = new HSVColor(colorCanvas.Hue, colorCanvas.Saturation, colorCanvas.Value);
                 colorCanvas.SetCurrentValue(SelectedColorProperty, hsv.ToColor(colorCanvas.A));
             }
         }
@@ -213,8 +213,8 @@ namespace MahApps.Metro.Controls
             if (s < 0) s = 0;
             if (v < 0) v = 0;
 
-            SetCurrentValue (SaturationProperty, s * 100);
-            SetCurrentValue (ValueProperty, v * 100);
+            SetCurrentValue (SaturationProperty, s);
+            SetCurrentValue (ValueProperty, v);
         }
 
 
