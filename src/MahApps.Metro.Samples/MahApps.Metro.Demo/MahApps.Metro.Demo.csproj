@@ -38,6 +38,7 @@
     <ItemGroup>
         <None Include="app.manifest" />
         <None Remove="App.config" />
+        <None Remove="ExampleViews\Tile.jpg" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>

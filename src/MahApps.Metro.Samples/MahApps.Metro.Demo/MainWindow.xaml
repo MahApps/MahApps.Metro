@@ -314,6 +314,9 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </ScrollViewer>
             </TabItem>
+            <TabItem Header="resources">
+                <exampleViews:ResourceExplorer/>
+            </TabItem>
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StatusBar Grid.Row="2">
