@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -12,6 +13,7 @@ namespace MahApps.Metro.Converters
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
+        [SuppressMessage("ReSharper", "EmptyConstructor")]
         static ToUpperConverter()
         {
         }
