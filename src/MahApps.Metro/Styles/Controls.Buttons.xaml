@@ -273,7 +273,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Opacity" Value="0.7" />
+        <Setter Property="Opacity" Value="0.8" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
