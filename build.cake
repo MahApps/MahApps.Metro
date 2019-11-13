@@ -6,7 +6,7 @@
 #tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
 #tool "dotnet:?package=AzureSignTool&version=2.0.17"
 
-#tool GitVersion.CommandLine
+#tool GitVersion.CommandLine&version=5.0.1
 #tool gitreleasemanager
 #tool xunit.runner.console
 #tool vswhere
