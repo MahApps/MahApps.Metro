@@ -179,7 +179,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="MahApps.Templates.WindowCommands.Light" TargetType="Controls:WindowCommands">
+    <ControlTemplate x:Key="MahApps.Templates.WindowCommands" TargetType="Controls:WindowCommands">
         <DockPanel>
             <ToggleButton x:Name="PART_ToggleButton"
                           ClickMode="Press"
@@ -213,50 +213,6 @@
                           Background="{TemplateBinding Background}"
                           IsItemsHost="true" />
         </DockPanel>
-
-        <ControlTemplate.Triggers>
-            <Trigger Property="HasOverflowItems" Value="true">
-                <Setter TargetName="PART_ToggleButton" Property="IsEnabled" Value="true" />
-                <Setter TargetName="PART_ToggleButton" Property="Visibility" Value="Visible" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="MahApps.Templates.WindowCommands.Dark" TargetType="Controls:WindowCommands">
-        <DockPanel>
-            <ToggleButton x:Name="PART_ToggleButton"
-                          ClickMode="Press"
-                          DockPanel.Dock="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(DockPanel.Dock), Mode=OneWay}"
-                          Foreground="{TemplateBinding Foreground}"
-                          IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen, Mode=TwoWay}"
-                          IsEnabled="false"
-                          Style="{StaticResource MahApps.Styles.ToggleButton.ToolBarOverflow}"
-                          Visibility="Collapsed">
-                <Popup x:Name="OverflowPopup"
-                       AllowsTransparency="true"
-                       Focusable="false"
-                       IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOverflowOpen}"
-                       Placement="Bottom"
-                       PopupAnimation="Slide"
-                       StaysOpen="false">
-                    <Grid x:Name="DropDownBorder" Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Background, Mode=OneWay}">
-                        <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowTitleBrush, Mode=OneWay}"
-                                              FocusVisualStyle="{x:Null}"
-                                              Focusable="true"
-                                              KeyboardNavigation.DirectionalNavigation="Cycle"
-                                              KeyboardNavigation.TabNavigation="Cycle" />
-                    </Grid>
-                </Popup>
-            </ToggleButton>
-            <ToolBarPanel x:Name="PART_ToolBarPanel"
-                          Margin="0"
-                          Background="{TemplateBinding Background}"
-                          IsItemsHost="true" />
-        </DockPanel>
-
         <ControlTemplate.Triggers>
             <Trigger Property="HasOverflowItems" Value="true">
                 <Setter TargetName="PART_ToggleButton" Property="IsEnabled" Value="true" />
@@ -313,13 +269,13 @@
         </Style.Resources>
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Dark}" />
+        <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands.Light}" />
+        <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
