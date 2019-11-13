@@ -1207,8 +1207,8 @@ namespace MahApps.Metro.Controls
             if (WindowButtonCommands == null)
                 WindowButtonCommands = new WindowButtonCommands();
 
-            LeftWindowCommands.ParentWindow = this;
-            RightWindowCommands.ParentWindow = this;
+            LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
             WindowButtonCommands.ParentWindow = this;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
