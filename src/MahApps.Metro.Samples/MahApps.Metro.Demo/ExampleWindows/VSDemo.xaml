@@ -42,6 +42,10 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
+    <Controls:MetroWindow.WindowButtonCommands>
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Win10}" />
+    </Controls:MetroWindow.WindowButtonCommands>
+
     <DockPanel>
         <Menu Margin="2 0 0 0"
               DockPanel.Dock="Top"
