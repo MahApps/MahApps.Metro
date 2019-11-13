@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using ControlzEx;
 
 namespace MahApps.Metro.Controls
@@ -163,13 +164,32 @@ namespace MahApps.Metro.Controls
         {
             base.PrepareContainerForItemOverride(element, item);
 
-            this.AttachVisibilityHandler(element as WindowCommandsItem, item as UIElement);
+            if (!(element is WindowCommandsItem windowCommandsItem))
+            {
+                return;
+            }
+
+            if (!(item is FrameworkElement frameworkElement))
+            {
+                windowCommandsItem.ApplyTemplate();
+                frameworkElement = windowCommandsItem.ContentTemplate?.LoadContent() as FrameworkElement;
+            }
+
+            frameworkElement?.SetBinding(ControlsHelper.ContentCharacterCasingProperty,
+                                         new Binding { Source = this, Path = new PropertyPath(ControlsHelper.ContentCharacterCasingProperty) });
+
+            this.AttachVisibilityHandler(windowCommandsItem, item as UIElement);
             ResetSeparators();
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
             base.ClearContainerForItemOverride(element, item);
+
+            if (item is FrameworkElement frameworkElement)
+            {
+                BindingOperations.ClearBinding(frameworkElement, ControlsHelper.ContentCharacterCasingProperty);
+            }
 
             this.DetachVisibilityHandler(element as WindowCommandsItem);
             ResetSeparators(false);
