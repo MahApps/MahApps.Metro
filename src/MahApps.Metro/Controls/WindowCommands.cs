@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -333,7 +332,14 @@ namespace MahApps.Metro.Controls
 
         private IEnumerable<WindowCommandsItem> GetWindowCommandsItems()
         {
-            return this.Items.OfType<object>().Select(this.GetWindowCommandsItem).Where(item => item != null);
+            foreach (var item in this.Items)
+            {
+                var windowCommandsItem = this.GetWindowCommandsItem(item);
+                if (windowCommandsItem != null)
+                {
+                    yield return windowCommandsItem;
+                }
+            }
         }
 
         private void WindowCommandsLoaded(object sender, RoutedEventArgs e)
