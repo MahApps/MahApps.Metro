@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace MahApps.Metro.Controls.Helper
+namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// Defines a helper class for selected items binding on collections with multiselector elements
