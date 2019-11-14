@@ -24,14 +24,18 @@
                              Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
+                             SelectionMode="Extended"
                              ItemsSource="{Binding Artists}"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              SelectedIndex="0"
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
                     <ListBox Margin="2"
                              BorderThickness="1"
-                             DisplayMemberPath="Title"
+                             DisplayMemberPath="Name"
+                             SelectionMode="Extended"
                              IsEnabled="False"
-                             ItemsSource="{Binding Albums}"
+                             ItemsSource="{Binding Artists}"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              SelectedIndex="0"
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
 

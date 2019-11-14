@@ -19,6 +19,7 @@ using MetroDemo.Core;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
+using System.Collections.ObjectModel;
 
 namespace MetroDemo
 {
@@ -198,6 +199,13 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
 
         public List<Artist> Artists { get; set; }
+
+        private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+        public ObservableCollection<Artist> SelectedArtists
+        {
+            get => _selectedArtists;
+            set => Set(ref _selectedArtists, value);
+        }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
 
