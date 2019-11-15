@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
@@ -68,6 +67,11 @@ namespace MahApps.Metro.Controls
         {
             var selectedItem = _buttonsListView.SelectedItem;
 
+            if (!CanRaiseItemEvents(selectedItem))
+            {
+                return false;
+            }
+
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseItemCommand();
 
@@ -78,6 +82,26 @@ namespace MahApps.Metro.Controls
             }
 
             return raiseItemEvents;
+        }
+
+        private bool CanRaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this._buttonsListView != null)
+                {
+                    this._buttonsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private bool RaiseItemEvents(object selectedItem)
@@ -100,6 +124,11 @@ namespace MahApps.Metro.Controls
         {
             var selectedItem = _optionsListView.SelectedItem;
 
+            if (!CanRaiseOptionsItemEvents(selectedItem))
+            {
+                return false;
+            }
+
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseOptionsItemCommand();
 
@@ -112,9 +141,34 @@ namespace MahApps.Metro.Controls
             return raiseOptionsItemEvents;
         }
 
+        private bool CanRaiseOptionsItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this._optionsListView != null)
+                {
+                    this._optionsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
         private bool RaiseOptionsItemEvents(object selectedItem)
         {
             if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
             {
                 return false;
             }

@@ -179,12 +179,13 @@
                                     ItemInvoked="HamburgerMenuControl_OnItemInvoked"
                                     ItemTemplate="{StaticResource HamburgerMenuItem}"
                                     OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
-                                    SelectedIndex="0"
+                                    SelectedIndex="1"
                                     Style="{StaticResource HamburgerMenuCreatorsStyle}"
                                     VerticalScrollBarOnLeftSide="False">
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
+                        <Controls:HamburgerMenuHeaderItem Label="Pictures" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
                         <Controls:HamburgerMenuSeparatorItem />
