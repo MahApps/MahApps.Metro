@@ -21,6 +21,7 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="HeaderItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuHeader}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
