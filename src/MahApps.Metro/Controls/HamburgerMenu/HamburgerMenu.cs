@@ -77,20 +77,27 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (RaiseItemEvents(_buttonsListView?.SelectedItem))
+            var item = this._buttonsListView?.SelectedItem;
+            var canRaiseItemEvents = this.CanRaiseItemEvents(item);
+            if (canRaiseItemEvents && RaiseItemEvents(item))
             {
                 return;
             }
 
-            if (RaiseOptionsItemEvents(_optionsListView?.SelectedItem))
+            var optionItem = this._optionsListView?.SelectedItem;
+            var canRaiseOptionsItemEvents = this.CanRaiseOptionsItemEvents(optionItem);
+            if (canRaiseOptionsItemEvents && RaiseOptionsItemEvents(optionItem))
             {
                 return;
             }
 
-            var selectedItem = _buttonsListView?.SelectedItem ?? _optionsListView?.SelectedItem;
-            if (selectedItem != null)
+            if (canRaiseItemEvents || canRaiseOptionsItemEvents)
             {
-                SetCurrentValue(ContentProperty, selectedItem);
+                var selectedItem = item ?? optionItem;
+                if (selectedItem != null)
+                {
+                    SetCurrentValue(ContentProperty, selectedItem);
+                }
             }
         }
     }
