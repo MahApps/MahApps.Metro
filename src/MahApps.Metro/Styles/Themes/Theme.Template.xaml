@@ -236,16 +236,16 @@
 
     <!--  ************* ModernUI *************  -->
     <Color x:Key="MahApps.Colors.Accent.Mui">{{MahApps.Colors.Accent.Mui}}</Color>
-    <SolidColorBrush x:Key="MahApps.Brushes.Accent.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Accent.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
 
     <Color x:Key="MahApps.Colors.WindowBackground.Mui">{{MahApps.Colors.WindowBackground.Mui}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonBackground.Mui" Color="{{MahApps.Colors.ButtonBackground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonBackgroundHover.Mui" Color="{{MahApps.Colors.ButtonBackgroundHover.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ButtonBackgroundPressed.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ButtonBackgroundPressed.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonBorder.Mui" Color="{{MahApps.Colors.ButtonBorder.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonBorderHover.Mui" Color="{{MahApps.Colors.ButtonBorderHover.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ButtonBorderPressed.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ButtonBorderPressed.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonText.Mui" Color="{{MahApps.Colors.ButtonText.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonTextHover.Mui" Color="{{MahApps.Colors.ButtonTextHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ButtonTextPressed.Mui" Color="{{MahApps.Colors.ButtonTextPressed.Mui}}" />
@@ -255,23 +255,23 @@
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridForeground.Mui" Color="{{MahApps.Colors.DataGridForeground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellBackground.Mui" Color="{{MahApps.Colors.DataGridCellBackground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellBackgroundHover.Mui" Color="{{MahApps.Colors.DataGridCellBackgroundHover.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellBackgroundSelected.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellBackgroundSelected.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellForeground.Mui" Color="{{MahApps.Colors.DataGridCellForeground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellForegroundHover.Mui" Color="{{MahApps.Colors.DataGridCellForegroundHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridCellForegroundSelected.Mui" Color="{{MahApps.Colors.DataGridCellForegroundSelected.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackground.Mui" Color="{{MahApps.Colors.DataGridHeaderBackground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackgroundHover.Mui" Color="{{MahApps.Colors.DataGridHeaderBackgroundHover.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackgroundPressed.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackgroundSelected.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackgroundPressed.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderBackgroundSelected.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderForeground.Mui" Color="{{MahApps.Colors.DataGridHeaderForeground.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderForegroundHover.Mui" Color="{{MahApps.Colors.DataGridHeaderForegroundHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderForegroundPressed.Mui" Color="{{MahApps.Colors.DataGridHeaderForegroundPressed.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridHeaderForegroundSelected.Mui" Color="{{MahApps.Colors.DataGridHeaderForegroundSelected.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.DataGridGridLines.Mui" Color="{{MahApps.Colors.DataGridGridLines.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGridDropSeparator.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGridDropSeparator.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.Hyperlink.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.HyperlinkHover.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Hyperlink.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.HyperlinkHover.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.HyperlinkDisabled.Mui" Color="{{MahApps.Colors.HyperlinkDisabled.Mui}}" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.InputBackground.Mui" Color="{{MahApps.Colors.InputBackground.Mui}}" />
@@ -283,7 +283,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.InputTextDisabled.Mui" Color="{{MahApps.Colors.InputTextDisabled.Mui}}" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.ItemBackgroundHover.Mui" Color="{{MahApps.Colors.ItemBackgroundHover.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ItemBackgroundSelected.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ItemBackgroundSelected.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ItemBorder.Mui" Color="{{MahApps.Colors.ItemBorder.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ItemText.Mui" Color="{{MahApps.Colors.ItemText.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ItemTextSelected.Mui" Color="{{MahApps.Colors.ItemTextSelected.Mui}}" />
@@ -303,7 +303,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonBorderHover.Mui" Color="{{MahApps.Colors.ModernButtonBorderHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonBorderPressed.Mui" Color="{{MahApps.Colors.ModernButtonBorderPressed.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonBorderDisabled.Mui" Color="{{MahApps.Colors.ModernButtonBorderDisabled.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonIconBackgroundPressed.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonIconBackgroundPressed.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonIconForegroundPressed.Mui" Color="{{MahApps.Colors.ModernButtonIconForegroundPressed.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonText.Mui" Color="{{MahApps.Colors.ModernButtonText.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.ModernButtonTextHover.Mui" Color="{{MahApps.Colors.ModernButtonTextHover.Mui}}" />
@@ -325,14 +325,14 @@
 
     <SolidColorBrush x:Key="MahApps.Brushes.SeparatorBackground.Mui" Color="{{MahApps.Colors.SeparatorBackground.Mui}}" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderSelectionBackground.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderSelectionBorder.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderSelectionBackground.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderSelectionBorder.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBackground.Mui" Color="{{MahApps.Colors.SliderThumbBackground.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBackgroundDragging.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBackgroundDragging.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBackgroundHover.Mui" Color="{{MahApps.Colors.SliderThumbBackgroundHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBackgroundDisabled.Mui" Color="{{MahApps.Colors.SliderThumbBackgroundDisabled.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBorder.Mui" Color="{{MahApps.Colors.SliderThumbBorder.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBorderDragging.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBorderDragging.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBorderHover.Mui" Color="{{MahApps.Colors.SliderThumbBorderHover.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderThumbBorderDisabled.Mui" Color="{{MahApps.Colors.SliderThumbBorderDisabled.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SliderTrackBackground.Mui" Color="{{MahApps.Colors.SliderTrackBackground.Mui}}" />
@@ -345,8 +345,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SubMenuTextSelected.Mui" Color="{{MahApps.Colors.SubMenuTextSelected.Mui}}" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.WindowBackground.Mui" Color="{StaticResource MahApps.Colors.WindowBackground.Mui}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WindowBorder.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" Opacity=".5" />
-    <SolidColorBrush x:Key="MahApps.Brushes.WindowBorderActive.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WindowBorder.Mui" Color="{{MahApps.Colors.Accent.Mui}}" Opacity=".5" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WindowBorderActive.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     {{MahApps.Colors.WindowHeaderGradient.Mui}}
     <SolidColorBrush x:Key="MahApps.Brushes.WindowText.Mui" Color="{{MahApps.Colors.WindowText.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.WindowTextReadOnly.Mui" Color="{{MahApps.Colors.WindowTextReadOnly.Mui}}" />
@@ -360,7 +360,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonBackground.Mui" Color="{StaticResource MahApps.Colors.WindowBackground.Mui}" Opacity="0" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonBackgroundOnMoseOver.Mui" Color="{{MahApps.Colors.SystemButtonBackgroundOnMoseOver.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonForegroundOnMoseOver.Mui" Color="{{MahApps.Colors.SystemButtonForegroundOnMoseOver.Mui}}" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonBackgroundIsPressed.Mui" Color="{DynamicResource MahApps.Colors.Accent.Mui}" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonBackgroundIsPressed.Mui" Color="{{MahApps.Colors.Accent.Mui}}" />
     <SolidColorBrush x:Key="MahApps.Brushes.SystemButtonForegroundIsPressed.Mui" Color="{{MahApps.Colors.SystemButtonForegroundIsPressed.Mui}}" />
 
 </ResourceDictionary>

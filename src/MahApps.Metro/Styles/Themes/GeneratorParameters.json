@@ -257,7 +257,7 @@
         "MahApps.Colors.SubMenuText.Mui": "#99000000",
         "MahApps.Colors.SubMenuTextHover.Mui": "#66000000",
         "MahApps.Colors.SubMenuTextSelected.Mui": "#333333",
-        "MahApps.Colors.WindowHeaderGradient.Mui": "<LinearGradientBrush x:Key=\"MahApps.Brushes.WindowHeaderGradient.Mui\" StartPoint=\"0, 0\" EndPoint=\"0, 1\" Opacity=\".1\">\r\n<GradientStop Offset=\"0\" Color=\"{DynamicResource MahApps.Colors.Mui.AccentColor}\" />\r\n<GradientStop Offset=\".3\" Color=\"{DynamicResource MahApps.Colors.Mui.AccentColor}\" />\r\n<GradientStop Offset=\"1\" Color=\"Transparent\" />\r\n</LinearGradientBrush>",
+        "MahApps.Colors.WindowHeaderGradient.Mui": "<LinearGradientBrush x:Key=\"MahApps.Brushes.WindowHeaderGradient.Mui\" StartPoint=\"0, 0\" EndPoint=\"0, 1\" Opacity=\".1\">\r\n\t\t<GradientStop Offset=\"0\" Color=\"{StaticResource MahApps.Colors.Accent.Mui}\" />\r\n\t\t<GradientStop Offset=\".3\" Color=\"{StaticResource MahApps.Colors.Accent.Mui}\" />\r\n\t\t<GradientStop Offset=\"1\" Color=\"Transparent\" />\r\n\t</LinearGradientBrush>",
         "MahApps.Colors.WindowText.Mui": "#333333",
         "MahApps.Colors.WindowTextReadOnly.Mui": "#919191",
         "MahApps.Colors.CloseButtonBackgroundOnMoseOver.Mui": "#dddddd",
