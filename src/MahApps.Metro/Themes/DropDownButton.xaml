@@ -26,7 +26,7 @@
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.DropDownButton.FocusVisualStyle}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />

@@ -134,7 +134,7 @@
         <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HandVisibility" Value="HourMinute" />

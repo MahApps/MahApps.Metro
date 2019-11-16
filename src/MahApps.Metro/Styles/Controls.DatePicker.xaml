@@ -36,7 +36,7 @@
         <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
@@ -213,7 +213,7 @@
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Padding" Value="4" />

@@ -23,7 +23,7 @@
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
         <Setter Property="Controls:TextBoxHelper.WatermarkWrapping" Value="{Binding RelativeSource={RelativeSource Self}, Path=TextWrapping, Mode=OneWay}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="MinHeight" Value="26" />
@@ -552,7 +552,7 @@
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="MinHeight" Value="26" />

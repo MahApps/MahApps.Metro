@@ -5,7 +5,7 @@
     <FontFamily x:Key="MahApps.Fonts.Family.Button">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Header">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.WindowTitle">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="MahApps.Fonts.Content">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Control">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
     <FontFamily x:Key="MahApps.Fonts.ToggleSwitch">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.ToggleSwitch.Header">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
