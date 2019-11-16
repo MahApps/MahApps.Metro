@@ -133,5 +133,4 @@
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
-
 </ResourceDictionary>

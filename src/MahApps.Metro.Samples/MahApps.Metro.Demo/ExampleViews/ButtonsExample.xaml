@@ -27,7 +27,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0">
@@ -485,78 +484,6 @@
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
 
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="0">
-            <Label Content="MUI button" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Button Width="100"
-                    Margin="{StaticResource ControlMargin}"
-                    Content="Enabled"
-                    Style="{DynamicResource MahApps.Styles.Button.Mui}" />
-            <Button Width="100"
-                    Margin="{StaticResource ControlMargin}"
-                    Content="Disabled"
-                    IsEnabled="False"
-                    Style="{DynamicResource MahApps.Styles.Button.Mui}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="2"
-                    Grid.Column="1"
-                    HorizontalAlignment="Center">
-            <Label Content="MUI Checkbox" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Enabled"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Enabled checked"
-                      IsChecked="True"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Enabled three state"
-                      IsChecked="{x:Null}"
-                      IsThreeState="True"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled"
-                      IsEnabled="False"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled checked"
-                      IsChecked="True"
-                      IsEnabled="False"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled three state"
-                      IsChecked="{x:Null}"
-                      IsEnabled="False"
-                      IsThreeState="True"
-                      Style="{DynamicResource MahApps.Styles.CheckBox.Mui}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="2"
-                    Grid.Column="2"
-                    HorizontalAlignment="Center">
-            <Label Content="MUI Radio button" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Enabled"
-                         GroupName="1"
-                         Style="{DynamicResource MahApps.Styles.RadioButton.Mui}" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Enabled checked"
-                         GroupName="1"
-                         IsChecked="True"
-                         Style="{DynamicResource MahApps.Styles.RadioButton.Mui}" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Disabled"
-                         GroupName="2"
-                         IsEnabled="False"
-                         Style="{DynamicResource MahApps.Styles.RadioButton.Mui}" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Disabled checked"
-                         GroupName="2"
-                         IsChecked="True"
-                         IsEnabled="False"
-                         Style="{DynamicResource MahApps.Styles.RadioButton.Mui}" />
         </StackPanel>
     </Grid>
 
