@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- MUI -->
-
     <Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
     <Geometry x:Key="Checkmark">M 15,21L 22,28L 32.9999,14.0001L 35.9999,17.0001L 22,34L 12.0001,24L 15,21 Z</Geometry>
 

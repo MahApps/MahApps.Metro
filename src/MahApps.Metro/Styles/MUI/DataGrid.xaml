@@ -1,0 +1,390 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="MahApps.Styles.Button.DataGridSelectAll.Mui" TargetType="{x:Type Button}"
+           BasedOn="{StaticResource MahApps.Styles.Button.Base.Mui}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridColumnHeadersPresenter.Mui" TargetType="{x:Type DataGridColumnHeadersPresenter}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeadersPresenter}">
+                    <Grid>
+                        <DataGridColumnHeader IsHitTestVisible="False" Name="PART_FillerColumnHeader"/>
+                        <ItemsPresenter />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.ColumnHeaderGripper.Mui" TargetType="{x:Type Thumb}">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Thumb.RowHeaderGripper.Mui" TargetType="{x:Type Thumb}">
+        <Setter Property="Height" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="SizeNS"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Padding}"
+                      Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Control.ColumnFloatingHeader.Mui" TargetType="{x:Type Control}">
+        <Setter Property="Opacity" Value="0.6"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Padding ="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Canvas Name="PART_VisualBrushCanvas" Margin="{TemplateBinding Margin}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Separator.ColumnHeaderDrop.Mui" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridDropSeparator.Mui}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridRow.Mui" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+        <Setter Property="ValidationErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <TextBlock Margin="2,0,0,0" VerticalAlignment="Center" Foreground="#FFdc000c" Text="!" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Border x:Name="DGR_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <SelectiveScrollingGrid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <DataGridCellsPresenter Grid.Column="1"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <DataGridDetailsPresenter  SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=AreRowDetailsFrozen, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}}"
+                                                       Grid.Column="1" Grid.Row="1"
+                                                       Visibility="{TemplateBinding DetailsVisibility}" />
+
+                            <DataGridRowHeader SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                               Grid.RowSpan="2"
+                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}"/>
+                        </SelectiveScrollingGrid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridCellBackgroundHover.Mui}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridCellsPresenter.Mui" TargetType="{x:Type DataGridCellsPresenter}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCellsPresenter}">
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridCell.Mui" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridCellBackground.Mui}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridCellForeground.Mui}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="5,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridCellBackgroundHover.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridCellForegroundHover.Mui}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridCellBackgroundSelected.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridCellForegroundSelected.Mui}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridColumnHeader.Mui" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackground.Mui}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForeground.Mui}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default.Mui}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}" />
+        <Setter Property="Padding" Value="4,3,4,3"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+>
+                            <Grid x:Name="containerGrid" Margin="5" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Grid.Column="0"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Path x:Name="SortArrow"
+                                      Grid.Column="1"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Width="8" Height="6"  Margin="5,0,5,0"
+                                      Stretch="Fill" Opacity="0.5" Fill="{TemplateBinding Foreground}"
+                                      RenderTransformOrigin="0.5,0.4"
+                                      Visibility="Hidden"
+                                      Data="M0,0 L1,0 0.5,1 z" />
+                            </Grid>
+                        </Border>
+                        <Thumb x:Name="PART_LeftHeaderGripper"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.Mui}"/>
+                        <Thumb x:Name="PART_RightHeaderGripper"
+                               HorizontalAlignment="Right"
+                               Style="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper.Mui}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortArrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackgroundHover.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForegroundHover.Mui}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackgroundPressed.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForegroundPressed.Mui}" />
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGridRowHeader.Mui" TargetType="{x:Type DataGridRowHeader}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackground.Mui}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForeground.Mui}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGridGridLines.Mui}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding ="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                                <Control SnapsToDevicePixels="false"
+                                         Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=(Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                         Template="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=ValidationErrorTemplate}" />
+                            </StackPanel>
+                        </Border>
+                        <Thumb x:Name="PART_TopHeaderGripper"
+                               VerticalAlignment="Top"
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper.Mui}"/>
+                        <Thumb x:Name="PART_BottomHeaderGripper"
+                               VerticalAlignment="Bottom"
+                               Style="{StaticResource MahApps.Styles.Thumb.RowHeaderGripper.Mui}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackgroundHover.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForegroundHover.Mui}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackgroundPressed.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForegroundPressed.Mui}" />
+            </Trigger>
+            <Trigger Property="IsRowSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridHeaderBackgroundSelected.Mui}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridHeaderForegroundSelected.Mui}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.DataGrid.Mui" TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.DataGridBackground.Mui}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGridForeground.Mui}"/>
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.DataGridGridLines.Mui}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource MahApps.Brushes.DataGridGridLines.Mui}" />
+        <Setter Property="DragIndicatorStyle" Value="{StaticResource MahApps.Styles.Control.ColumnFloatingHeader.Mui}" />
+        <Setter Property="DropLocationIndicatorStyle" Value="{StaticResource MahApps.Styles.Separator.ColumnHeaderDrop.Mui}" />
+        <Setter Property="GridLinesVisibility" Value="Horizontal" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGrid}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True"
+                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer Focusable="false" Name="DG_ScrollViewer">
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Command="{x:Static DataGrid.SelectAllCommand}"
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=CellsPanelHorizontalOffset}"
+                                                Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}}"
+                                                Focusable="false"
+                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.All}}" />
+                                        <DataGridColumnHeadersPresenter Grid.Column="1"
+                                                                        Name="PART_ColumnHeadersPresenter"
+                                                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}}"/>
+
+                                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="1" Grid.ColumnSpan="2" CanContentScroll="{TemplateBinding CanContentScroll}" />
+
+                                        <ScrollBar Grid.Row="1" Grid.Column="2" Name="PART_VerticalScrollBar"
+                                                   Orientation="Vertical"
+                                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                                   Value="{Binding Path=VerticalOffset, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+
+                                        <Grid Grid.Row="2" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=NonFrozenColumnsViewportHorizontalOffset}"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ScrollBar Grid.Column="1"
+                                                       Name="PART_HorizontalScrollBar"
+                                                       Orientation="Horizontal"
+                                                       Maximum="{TemplateBinding ScrollableWidth}"
+                                                       ViewportSize="{TemplateBinding ViewportWidth}"
+                                                       Value="{Binding Path=HorizontalOffset, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                                        </Grid>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsGrouping" Value="true">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

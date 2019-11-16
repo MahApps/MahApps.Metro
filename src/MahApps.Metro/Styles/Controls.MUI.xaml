@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource MahApps.Styles.Button.Mui}" TargetType="Button" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Calendar.Mui}" TargetType="Calendar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Mui}" TargetType="CheckBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBox.Mui}" TargetType="ComboBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ComboBoxItem.Mui}" TargetType="ComboBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ContextMenu.Mui}" TargetType="ContextMenu" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DataGrid.Mui}" TargetType="DataGrid" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePicker.Mui}" TargetType="DatePicker" />
+    <Style BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox.Mui}" TargetType="DatePickerTextBox" />
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="Expander" /> -->
+    <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter.Mui}" TargetType="GridSplitter" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GridViewColumnHeader.Mui}" TargetType="GridViewColumnHeader" />
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox" /> -->
+    <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink.Mui}" TargetType="Hyperlink" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Label.Mui}" TargetType="Label" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBoxItem.Flat.Mui}" TargetType="ListBoxItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListBox.Mui}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem.Mui}" TargetType="ListViewItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ListView.Mui}" TargetType="ListView" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MenuItem.Mui}" TargetType="MenuItem" />
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.Menu}" TargetType="Menu" /> -->
+    <Style BasedOn="{StaticResource MahApps.Styles.PasswordBox.Mui}" TargetType="PasswordBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ProgressBar.Mui}" TargetType="ProgressBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Mui}" TargetType="RadioButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RepeatButton.Mui}" TargetType="RepeatButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox.Mui}" TargetType="RichTextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollBar.Mui}" TargetType="ScrollBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer.Mui}" TargetType="ScrollViewer" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Mui}" TargetType="Slider" />
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="StatusBarItem" /> -->
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.StatusBar}" TargetType="StatusBar" /> -->
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="TabControl" /> -->
+    <!-- <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem" /> -->
+    <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Mui}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton.Mui}" TargetType="ToggleButton" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolTip.Mui}" TargetType="ToolTip" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeViewItem.Mui}" TargetType="TreeViewItem" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TreeView.Mui}" TargetType="TreeView" />
+
+</ResourceDictionary>
