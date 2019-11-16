@@ -18,7 +18,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/RadioButton.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/Scrollbars.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/Scrollbar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/Slider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/MUI/TextBox.xaml" />
