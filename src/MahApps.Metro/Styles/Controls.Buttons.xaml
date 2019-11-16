@@ -391,7 +391,7 @@
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderThickness" Value="2" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.UpperCaseContent}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
@@ -453,7 +453,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Lower" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="MinHeight" Value="25" />
@@ -692,7 +692,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.UpperCaseContent}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
@@ -775,7 +775,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Default}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
