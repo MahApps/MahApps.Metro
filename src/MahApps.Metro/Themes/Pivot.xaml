@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <DataTemplate x:Key="MahApps.Templates.PivotHeader">
-        <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Header}"
+        <TextBlock FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                    FontSize="{DynamicResource MahApps.Sizes.Font.Header}"
                    Text="{Binding}" />
     </DataTemplate>
@@ -73,7 +73,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type Controls:PivotItem}">
                                     <TextBlock Margin="0 0 25 0"
-                                               FontFamily="{DynamicResource MahApps.Fonts.Header}"
+                                               FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                                FontSize="{DynamicResource SubMahApps.Sizes.HeaderFont}"
                                                Text="{Binding Header}" />
                                 </DataTemplate>

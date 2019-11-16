@@ -294,7 +294,7 @@
                             <TextBlock Grid.Row="0"
                                        Margin="0 15 0 5"
                                        Padding="0"
-                                       FontFamily="{DynamicResource MahApps.Fonts.Header}"
+                                       FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                        FontSize="{DynamicResource MahApps.Sizes.Font.Header}"
                                        Text="{Binding Label}" />
                             <ScrollViewer Grid.Row="1"
