@@ -92,10 +92,10 @@
         <Setter Property="ContentPadding" Value="0 0 4 0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitchHeader}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.ToggleSwitch}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.ToggleSwitch.Header}" />
+        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="IsTabStop" Value="True" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />

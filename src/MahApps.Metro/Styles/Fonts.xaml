@@ -6,11 +6,10 @@
     <FontFamily x:Key="MahApps.Fonts.Family.Header">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.WindowTitle">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Control">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-
-    <FontFamily x:Key="MahApps.Fonts.ToggleSwitch">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="MahApps.Fonts.ToggleSwitch.Header">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="MahApps.Fonts.ToggleSwitch.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="MahApps.Fonts.ToggleSwitch.Header.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
     <System:Double x:Key="MahApps.Sizes.Font.Header">40</System:Double>
     <System:Double x:Key="MahApps.Sizes.Font.SubHeader">29.333</System:Double>

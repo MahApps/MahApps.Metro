@@ -141,9 +141,9 @@
         <Setter Property="ContentDirection" Value="RightToLeft" />
         <Setter Property="ContentPadding" Value="0 0 10 0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitchHeader.Win10}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.ToggleSwitch.Win10}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.ToggleSwitch.Win10}" />
-        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.ToggleSwitch.Header.Win10}" />
+        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header.Win10}" />
         <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffSwitch.Win10}" />
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OnSwitch.Win10}" />
         <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10}" />
