@@ -620,8 +620,10 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Topmost = false; //It is not necessary here because the owner is setted
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner; //WindowStartupLocation should be CenterOwner
 
+            var offset = SystemParameters.WindowNonClientFrameThickness.Left + SystemParameters.WindowResizeBorderThickness.Left +
+                    SystemParameters.WindowNonClientFrameThickness.Right + SystemParameters.WindowResizeBorderThickness.Right;
             //Set Width and Height maximum according Owner
-            win.Width = window.ActualWidth;
+            win.Width = window.WindowState != WindowState.Maximized ? window.ActualWidth : window.ActualWidth - offset;
             win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
 
