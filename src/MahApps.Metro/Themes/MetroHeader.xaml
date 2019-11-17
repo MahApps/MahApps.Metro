@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.MetroHeader" TargetType="{x:Type Controls:MetroHeader}">
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Normal}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 2" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />

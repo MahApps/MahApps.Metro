@@ -36,12 +36,12 @@
                     <TextBlock Grid.Column="1"
                                Margin="10"
                                VerticalAlignment="Center"
-                               FontSize="{DynamicResource MahApps.Font.Size.Normal}"
+                               FontSize="{DynamicResource MahApps.Font.Size.Default}"
                                Text="{Binding ElementName=BrushResource, Path=(Shape.Fill)}" />
                     <TextBlock Grid.Column="2"
                                Margin="10"
                                VerticalAlignment="Center"
-                               FontSize="{DynamicResource MahApps.Font.Size.Normal}"
+                               FontSize="{DynamicResource MahApps.Font.Size.Default}"
                                Text="{Binding}" />
                 </Grid>
             </DataTemplate>
