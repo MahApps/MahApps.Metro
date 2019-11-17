@@ -222,7 +222,7 @@
     <Style TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Flyout.Background}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.FlyoutHeader}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.FlyoutHeader}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Flyout.Foreground}" />

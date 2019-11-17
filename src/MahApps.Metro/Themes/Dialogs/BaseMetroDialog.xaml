@@ -110,9 +110,9 @@
 
     <Style x:Key="MahApps.Styles.BaseMetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
-        <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Sizes.Font.DialogButton}" />
-        <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Sizes.Font.DialogMessage}" />
-        <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Sizes.Font.DialogTitle}" />
+        <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Font.Size.DialogButton}" />
+        <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Font.Size.DialogMessage}" />
+        <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Font.Size.DialogTitle}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />

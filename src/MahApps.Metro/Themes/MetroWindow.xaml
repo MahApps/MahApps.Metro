@@ -569,7 +569,7 @@
         <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroWindow}" />
-        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
+        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="TitleTemplate">
             <Setter.Value>
@@ -577,7 +577,7 @@
                     <TextBlock Margin="8 -1 1 0"
                                VerticalAlignment="Center"
                                FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
-                               FontSize="{DynamicResource MahApps.Sizes.Font.WindowTitle}"
+                               FontSize="{DynamicResource MahApps.Font.Size.WindowTitle}"
                                Text="{TemplateBinding Content}"
                                TextTrimming="CharacterEllipsis" />
                 </DataTemplate>

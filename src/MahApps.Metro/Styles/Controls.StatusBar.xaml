@@ -50,7 +50,7 @@
 
     <Style x:Key="MahApps.Styles.StatusBar" TargetType="{x:Type StatusBar}">
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.StatusBar}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.StatusBar}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />

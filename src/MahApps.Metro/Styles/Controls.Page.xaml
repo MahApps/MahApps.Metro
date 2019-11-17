@@ -4,7 +4,7 @@
     <Style x:Key="MahApps.Styles.Page" TargetType="{x:Type Page}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
-        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
+        <Setter Property="TextElement.FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
     </Style>
 
 </ResourceDictionary>

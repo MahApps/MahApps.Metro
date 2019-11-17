@@ -9,7 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <System:Double x:Key="MahApps.Sizes.Font.TabItem">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.TabItem">12</System:Double>
 
     <Style x:Key="MahApps.Styles.TabControl.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TabControl}"

@@ -11,32 +11,30 @@
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header.Win10">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
 
-    <System:Double x:Key="MahApps.Sizes.Font.Header">40</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.SubHeader">29.333</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.WindowTitle">16</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.Normal">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.Content">12</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.FlatButton">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.TabItem">26.67</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.UpperCaseContent">10</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.FloatingWatermark">10</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.ClearTextButton">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Header">40</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.SubHeader">29.333</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.WindowTitle">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Normal">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Content">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.FlatButton">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.TabItem">26.67</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.UpperCaseContent">10</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.FloatingWatermark">10</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ClearTextButton">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Tooltip">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Menu">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ContextMenu">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.StatusBar">12</System:Double>
 
-    <System:Double x:Key="MahApps.Sizes.Font.Tooltip">12</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.Menu">14</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.ContextMenu">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.DialogTitle">26</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.DialogMessage">15</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.DialogButton">12</System:Double>
 
-    <System:Double x:Key="MahApps.Sizes.Font.StatusBar">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.FlyoutHeader">20</System:Double>
 
-    <System:Double x:Key="MahApps.Sizes.Font.DialogTitle">26</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.DialogMessage">15</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.DialogButton">12</System:Double>
-
-    <System:Double x:Key="MahApps.Sizes.Font.FlyoutHeader">20</System:Double>
-
-    <System:Double x:Key="MahApps.Sizes.Font.ToggleSwitch">14.667</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.ToggleSwitchHeader">16</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.ToggleSwitch.Win10">15</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.ToggleSwitchHeader.Win10">15</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch">14.667</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitchHeader">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Win10">15</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitchHeader.Win10">15</System:Double>
 
 </ResourceDictionary>
