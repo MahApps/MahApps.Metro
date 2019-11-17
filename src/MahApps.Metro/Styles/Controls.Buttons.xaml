@@ -24,7 +24,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.FlatButton}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -72,7 +72,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.FlatButton}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

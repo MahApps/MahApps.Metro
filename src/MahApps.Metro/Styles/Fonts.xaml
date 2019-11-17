@@ -16,7 +16,7 @@
     <System:Double x:Key="MahApps.Font.Size.Window.Title">16</System:Double>
     <System:Double x:Key="MahApps.Font.Size.Normal">14</System:Double>
     <System:Double x:Key="MahApps.Font.Size.Content">12</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.FlatButton">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Button.Flat">14</System:Double>
     <System:Double x:Key="MahApps.Font.Size.TabItem">26.67</System:Double>
     <System:Double x:Key="MahApps.Font.Size.UpperCaseContent">10</System:Double>
     <System:Double x:Key="MahApps.Font.Size.FloatingWatermark">10</System:Double>
