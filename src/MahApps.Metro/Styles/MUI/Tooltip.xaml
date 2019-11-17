@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowBackground.Mui}"/>
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.WindowText.Mui}"/>
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Default.Mui}"/>
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Default.Mui}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Default.Mui}"/>
         <Setter Property="FontStyle" Value="Normal"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Padding" Value="5,1,5,4"/>

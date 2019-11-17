@@ -42,8 +42,8 @@
     <FontFamily x:Key="MahApps.Fonts.Family.Default.Mui">Segoe UI</FontFamily>
     <FontFamily x:Key="MahApps.Fonts.Family.Fixed.Mui">Consolas</FontFamily>
 
-    <System:Double x:Key="MahApps.Sizes.Font.Default.Mui">13</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.Fixed.Mui">13.333</System:Double>
-    <System:Double x:Key="MahApps.Sizes.Font.Small.Mui">11</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Default.Mui">13</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Fixed.Mui">13.333</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Small.Mui">11</System:Double>
 
 </ResourceDictionary>
