@@ -59,8 +59,8 @@
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <TextBlock Margin="0 -1 8 0"
                            VerticalAlignment="Center"
-                           FontFamily="{DynamicResource MahApps.Fonts.Header}"
-                           FontSize="{DynamicResource MahApps.Sizes.Font.WindowTitle}"
+                           FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
+                           FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
                            Text="{TemplateBinding Content}"
                            TextTrimming="CharacterEllipsis" />
                 <Button Margin="1 0 1 1"

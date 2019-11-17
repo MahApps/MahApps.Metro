@@ -94,7 +94,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ContextMenu.Border" Color="#333337" options:Freeze="True" />
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="#FFFFFF" options:Freeze="True" />
 
-    <System:Double x:Key="MahApps.Sizes.Font.ContextMenu">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ContextMenu">12</System:Double>
 
     <!--  Scroll Bar  -->
     <SolidColorBrush x:Key="MahApps.Brushes.ScrollBar.PageButtonBackgroundHighlighted" Color="#05FFFFFF" options:Freeze="True" />

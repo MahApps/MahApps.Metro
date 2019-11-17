@@ -26,7 +26,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ContextMenu.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.ContextMenu}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ContextMenu}" />
         <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
         <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
