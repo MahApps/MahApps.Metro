@@ -33,8 +33,8 @@
     <System:Double x:Key="MahApps.Font.Size.Flyout.Header">20</System:Double>
 
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch">14.667</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitchHeader">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">16</System:Double>
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Win10">15</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitchHeader.Win10">15</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header.Win10">15</System:Double>
 
 </ResourceDictionary>
