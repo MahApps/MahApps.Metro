@@ -13,7 +13,7 @@
 
     <System:Double x:Key="MahApps.Font.Size.Header">40</System:Double>
     <System:Double x:Key="MahApps.Font.Size.SubHeader">29.333</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.WindowTitle">16</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Window.Title">16</System:Double>
     <System:Double x:Key="MahApps.Font.Size.Normal">14</System:Double>
     <System:Double x:Key="MahApps.Font.Size.Content">12</System:Double>
     <System:Double x:Key="MahApps.Font.Size.FlatButton">14</System:Double>
