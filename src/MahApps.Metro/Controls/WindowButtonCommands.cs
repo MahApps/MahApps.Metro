@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
@@ -159,9 +160,6 @@ namespace MahApps.Metro.Controls
             set { SetValue(RestoreProperty, value); }
         }
 
-        private Button min;
-        private Button max;
-        private Button close;
 #pragma warning disable 618
         private SafeLibraryHandle user32;
 #pragma warning restore 618
@@ -173,6 +171,11 @@ namespace MahApps.Metro.Controls
 
         public WindowButtonCommands()
         {
+            CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, MinimizeWindow));
+            CommandBindings.Add(new CommandBinding(SystemCommands.MaximizeWindowCommand, MaximizeWindow));
+            CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, RestoreWindow));
+            CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand, CloseWindow));
+
             this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
                                         new Action(() => {
                                                        if (string.IsNullOrWhiteSpace(this.Minimize))
@@ -194,6 +197,46 @@ namespace MahApps.Metro.Controls
                                                    }));
         }
 
+        private void MinimizeWindow(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ParentWindow != null)
+            {
+                SystemCommands.MinimizeWindow(ParentWindow);
+            }
+        }
+
+        private void MaximizeWindow(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ParentWindow != null)
+            {
+                SystemCommands.MaximizeWindow(ParentWindow);
+            }
+        }
+
+        private void RestoreWindow(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (ParentWindow != null)
+            {
+                SystemCommands.RestoreWindow(ParentWindow);
+            }
+        }
+
+        private void CloseWindow(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (this.ParentWindow != null)
+            {
+                var args = new ClosingWindowEventHandlerArgs();
+                this.ClosingWindow?.Invoke(this, args);
+
+                if (args.Cancelled)
+                {
+                    return;
+                }
+
+                SystemCommands.CloseWindow(this.ParentWindow);
+            }
+        }
+
 #pragma warning disable 618
         private string GetCaption(int id)
         {
@@ -207,74 +250,6 @@ namespace MahApps.Metro.Controls
             return sb.ToString().Replace("&", "");
         }
 #pragma warning restore 618
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            close = Template.FindName("PART_Close", this) as Button;
-            if (close != null)
-            {
-                close.Click += CloseClick;
-            }
-
-            max = Template.FindName("PART_Max", this) as Button;
-            if (max != null)
-            {
-                max.Click += MaximizeClick;
-            }
-
-            min = Template.FindName("PART_Min", this) as Button;
-            if (min != null)
-            {
-                min.Click += MinimizeClick;
-            }
-        }
-
-        protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
-        {
-            var handler = ClosingWindow;
-            if (handler != null)
-            {
-                handler(this, args);
-            }
-        }
-
-#pragma warning disable 618
-
-        private void MinimizeClick(object sender, RoutedEventArgs e)
-        {
-            if (null == this.ParentWindow) return;
-            ControlzEx.Windows.Shell.SystemCommands.MinimizeWindow(this.ParentWindow);
-        }
-
-        private void MaximizeClick(object sender, RoutedEventArgs e)
-        {
-            if (null == this.ParentWindow) return;
-            if (this.ParentWindow.WindowState == WindowState.Maximized)
-            {
-                ControlzEx.Windows.Shell.SystemCommands.RestoreWindow(this.ParentWindow);
-            }
-            else
-            {
-                ControlzEx.Windows.Shell.SystemCommands.MaximizeWindow(this.ParentWindow);
-            }
-        }
-#pragma warning restore 618
-
-        private void CloseClick(object sender, RoutedEventArgs e)
-        {
-            var closingWindowEventHandlerArgs = new ClosingWindowEventHandlerArgs();
-            OnClosingWindow(closingWindowEventHandlerArgs);
-
-            if (closingWindowEventHandlerArgs.Cancelled)
-            {
-                return;
-            }
-
-            if (null == this.ParentWindow) return;
-            this.ParentWindow.Close();
-        }
 
         private MetroWindow _parentWindow;
 
