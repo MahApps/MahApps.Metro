@@ -30,7 +30,7 @@
     <System:Double x:Key="MahApps.Font.Size.Dialog.Message">15</System:Double>
     <System:Double x:Key="MahApps.Font.Size.Dialog.Button">12</System:Double>
 
-    <System:Double x:Key="MahApps.Font.Size.FlyoutHeader">20</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.Flyout.Header">20</System:Double>
 
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch">14.667</System:Double>
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitchHeader">16</System:Double>
