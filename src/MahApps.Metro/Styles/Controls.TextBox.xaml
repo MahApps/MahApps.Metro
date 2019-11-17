@@ -18,7 +18,7 @@
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
-        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.ClearTextButton}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
@@ -547,7 +547,7 @@
         <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
-        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.ClearTextButton}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled" Value="{Binding RelativeSource={RelativeSource Self}, Path=(SpellCheck.IsEnabled)}" />
