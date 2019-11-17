@@ -1201,15 +1201,23 @@ namespace MahApps.Metro.Controls
             WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             if (LeftWindowCommands == null)
+            {
                 LeftWindowCommands = new WindowCommands();
+            }
+
             if (RightWindowCommands == null)
+            {
                 RightWindowCommands = new WindowCommands();
+            }
+
             if (WindowButtonCommands == null)
+            {
                 WindowButtonCommands = new WindowButtonCommands();
+            }
 
             LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
             RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
-            WindowButtonCommands.ParentWindow = this;
+            WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
