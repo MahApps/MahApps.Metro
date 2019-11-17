@@ -576,7 +576,7 @@
                 <DataTemplate>
                     <TextBlock Margin="8 -1 1 0"
                                VerticalAlignment="Center"
-                               FontFamily="{DynamicResource MahApps.Fonts.Family.WindowTitle}"
+                               FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
                                FontSize="{DynamicResource MahApps.Sizes.Font.WindowTitle}"
                                Text="{TemplateBinding Content}"
                                TextTrimming="CharacterEllipsis" />
