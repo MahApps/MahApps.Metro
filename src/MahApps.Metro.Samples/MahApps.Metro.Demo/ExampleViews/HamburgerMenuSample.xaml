@@ -21,7 +21,7 @@
         <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="{x:Type Slider}" />
 
         <Style BasedOn="{StaticResource {x:Type Controls:MetroHeader}}" TargetType="{x:Type Controls:MetroHeader}">
-            <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
+            <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 5" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>

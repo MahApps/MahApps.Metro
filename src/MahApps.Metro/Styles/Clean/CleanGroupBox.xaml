@@ -5,7 +5,7 @@
     <Style x:Key="MahApps.Styles.GroupBox.Clean" TargetType="GroupBox">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="0.3" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="16" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="16" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -23,10 +23,10 @@
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

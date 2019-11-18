@@ -3,10 +3,10 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.MetroHeader" TargetType="{x:Type Controls:MetroHeader}">
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
-        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 2" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Mode=OneWay}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Default}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 2" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -20,16 +20,16 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}">
                             <Controls:ContentControlEx x:Name="PART_Header"
-                                                       Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                                       Margin="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{TemplateBinding Controls:ControlsHelper.ContentCharacterCasing}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                                        IsTabStop="False"
                                                        RecognizesAccessKey="True"

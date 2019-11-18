@@ -8,8 +8,8 @@
     <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
@@ -30,8 +30,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
                 <Button.Visibility>
@@ -56,8 +56,8 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     RenderOptions.EdgeMode="Aliased"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -120,8 +120,8 @@
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Width="46"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
@@ -150,8 +150,8 @@
             </Button>
             <Button x:Name="PART_Max"
                     Width="46"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">
@@ -182,8 +182,8 @@
             </Button>
             <Button x:Name="PART_Close"
                     Width="46"
-                    Focusable="False"
                     Command="{x:Static SystemCommands.CloseWindowCommand}"
+                    Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                     UseLayoutRounding="True">

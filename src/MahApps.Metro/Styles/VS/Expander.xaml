@@ -328,12 +328,12 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
         <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -355,10 +355,10 @@
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
                                           ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                           DockPanel.Dock="Top"
-                                          FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                          FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                          FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                          FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                          FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                          FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                          FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                          FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                           Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                           IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

@@ -90,8 +90,8 @@
 
     <Style x:Key="MahApps.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentPadding" Value="0 0 4 0" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
-        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 5" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -121,14 +121,14 @@
                             <ContentControl x:Name="Header"
                                             Grid.Column="0"
                                             Grid.ColumnSpan="2"
-                                            Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                            Margin="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
                                             Content="{TemplateBinding Header}"
                                             ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                             FontFamily="{TemplateBinding HeaderFontFamily}"
-                                            FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                            FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                            FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                            FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                             IsTabStop="False" />
                             <ContentControl x:Name="Content"
                                             Grid.Row="1"

@@ -76,17 +76,17 @@
             <AdornerDecorator>
                 <DockPanel FocusVisualStyle="{x:Null}" Focusable="False">
                     <Controls:MetroThumbContentControl x:Name="PART_Header"
-                                                       Padding="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
+                                                       Padding="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                                        DockPanel.Dock="Top"
-                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content"
@@ -222,8 +222,8 @@
     <Style TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Flyout.Background}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Flyout.Header}" />
-        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Flyout.Header}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Flyout.Foreground}" />
         <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.FlyoutHeader}" />
@@ -236,10 +236,10 @@
         <Setter Property="Visibility" Value="Hidden" />
         <Style.Triggers>
             <Trigger Property="Position" Value="Right">
-                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+                <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
             </Trigger>
             <Trigger Property="Position" Value="Left">
-                <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="10 25 10 10" />
+                <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10 25 10 10" />
             </Trigger>
         </Style.Triggers>
     </Style>
