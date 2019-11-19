@@ -926,6 +926,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            this.CommandBindings.Add(new CommandBinding(MahAppsCommands.ClearControlCommand, (sender, args) => MahAppsCommands.ClearControl(args)));
+
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
             // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.

@@ -34,18 +34,24 @@
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
                             HorizontalContentAlignment="Stretch"
+                            Controls:TextBoxHelper.ClearTextButton="True"
                             Controls:TextBoxHelper.UseFloatingWatermark="True"
                             Controls:TextBoxHelper.Watermark="Please select a date"
                             Controls:TextBoxHelper.WatermarkAlignment="Right" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
                             Controls:ControlsHelper.IsReadOnly="True"
+                            Controls:TextBoxHelper.ClearTextButton="True"
                             SelectedDate="{x:Static system:DateTime.Now}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd}"
+                            Controls:TextBoxHelper.ButtonCommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             Controls:TextBoxHelper.Watermark="" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
+                            Controls:TextBoxHelper.ButtonsAlignment="Left"
+                            Controls:TextBoxHelper.ClearTextButton="True"
                             Controls:TextBoxHelper.Watermark="{x:Null}" />
                 <DatePicker Width="200"
                             Margin="{StaticResource ControlMargin}"
