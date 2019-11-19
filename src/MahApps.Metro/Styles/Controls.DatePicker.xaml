@@ -33,6 +33,7 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
@@ -58,6 +59,7 @@
                         <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding BorderThickness}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ClearButtonColumn" Width="Auto" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -126,10 +128,29 @@
                                 </TextBlock>
                             </ContentControl>
 
-                            <Button x:Name="PART_Button"
+                            <Button x:Name="PART_ClearText"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
+                                    Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                                    Command="{TemplateBinding Controls:TextBoxHelper.ButtonCommand}"
+                                    CommandParameter="{TemplateBinding Controls:TextBoxHelper.ButtonCommandParameter}"
+                                    CommandTarget="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Mode=OneWay}"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                    Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
+                                    Visibility="Visible" />
+
+                            <Button x:Name="PART_Button"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
                                     Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Content="{TemplateBinding Controls:DatePickerHelper.DropDownButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:DatePickerHelper.DropDownButtonContentTemplate}"
@@ -161,6 +182,19 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:TextBoxHelper.ClearTextButton" Value="True">
+                            <Setter Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Static Controls:MahAppsCommands.ClearControlCommand}" />
+                        </Trigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}" Value="Left">
+                            <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
+                            <Setter TargetName="PART_Button" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
+                        </DataTrigger>
+
                         <Trigger Property="Controls:ControlsHelper.IsReadOnly" Value="True">
                             <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
                             <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
@@ -187,6 +221,34 @@
                             <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
                         </Trigger>
+
+                        <Trigger Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}">
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
+                        </MultiTrigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                        </Trigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
