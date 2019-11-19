@@ -2,14 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitchButton" TargetType="{x:Type Controls:ToggleSwitchButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}" />
+    <Style x:Key="MahApps.Styles.ToggleSwitchButton" TargetType="{x:Type Controls:ToggleSwitchButton}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="SwitchHeight" Value="30" />
         <Setter Property="SwitchWidth" Value="60" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -22,10 +22,11 @@
                             <ColumnDefinition x:Name="FirstCol" Width="Auto" />
                             <ColumnDefinition x:Name="SecondCol" Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid x:Name="PART_SwitchTrack" Margin="5"
+                        <Grid x:Name="PART_SwitchTrack"
                               Grid.Column="0"
+                              Width="{TemplateBinding SwitchWidth}"
                               Height="{TemplateBinding SwitchHeight}"
-                              Width="{TemplateBinding SwitchWidth}">
+                              Margin="5">
                             <Border Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}">
@@ -37,7 +38,7 @@
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
                                     <Rectangle x:Name="PART_BackgroundOverlay"
-                                               Fill="{DynamicResource WhiteBrush}"
+                                               Fill="{DynamicResource MahApps.Brushes.White}"
                                                Opacity="0" />
                                 </Grid>
                             </Border>
@@ -58,11 +59,11 @@
                             </Thumb.Template>
                         </Thumb>
 
-                        <ContentPresenter Grid.Column="1" 
-                                          Content="{TemplateBinding Content}"
+                        <ContentPresenter Grid.Column="1"
                                           Margin="{TemplateBinding ContentPadding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -106,23 +107,23 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ToggleSwitchHeaderFontSize}" />
+    <Style x:Key="MahApps.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
-        <Setter Property="FontFamily" Value="{DynamicResource ToggleSwitchFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ToggleSwitchFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="HeaderFontFamily" Value="{DynamicResource ToggleSwitchHeaderFontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="IsTabStop" Value="True" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource GrayBrush4}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -149,28 +150,28 @@
                                             IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Row="1"
-                                                         VerticalAlignment="Center"
                                                          HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Center"
                                                          Background="{TemplateBinding Background}"
+                                                         Content="{TemplateBinding Content}"
+                                                         ContentPadding="{TemplateBinding ContentPadding}"
+                                                         FlowDirection="{TemplateBinding ContentDirection}"
                                                          FocusVisualStyle="{x:Null}"
+                                                         IntermediateBorderBrush="{TemplateBinding IntermediateBorderBrush}"
+                                                         IntermediateSwitchBrush="{TemplateBinding IntermediateSwitchBrush}"
                                                          IsChecked="{TemplateBinding IsChecked}"
                                                          IsThreeState="{TemplateBinding IsThreeState}"
-                                                         OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
-                                                         OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
-                                                         IntermediateSwitchBrush="{TemplateBinding IntermediateSwitchBrush}"
-                                                         OnBorderBrush="{TemplateBinding OnBorderBrush}"
                                                          OffBorderBrush="{TemplateBinding OffBorderBrush}"
-                                                         IntermediateBorderBrush="{TemplateBinding IntermediateBorderBrush}"
+                                                         OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
+                                                         OnBorderBrush="{TemplateBinding OnBorderBrush}"
+                                                         OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                          Style="{TemplateBinding ToggleSwitchButtonStyle}"
-                                                         ThumbIndicatorOnBrush="{TemplateBinding ThumbIndicatorOnBrush}"
-                                                         ThumbIndicatorOffBrush="{TemplateBinding ThumbIndicatorOffBrush}"
-                                                         ThumbIndicatorIntermediateBrush="{TemplateBinding ThumbIndicatorIntermediateBrush}"
                                                          ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
-                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
-                                                         Content="{TemplateBinding Content}"
-                                                         FlowDirection="{TemplateBinding ContentDirection}"
-                                                         ContentPadding="{TemplateBinding ContentPadding}"/>
+                                                         ThumbIndicatorIntermediateBrush="{TemplateBinding ThumbIndicatorIntermediateBrush}"
+                                                         ThumbIndicatorOffBrush="{TemplateBinding ThumbIndicatorOffBrush}"
+                                                         ThumbIndicatorOnBrush="{TemplateBinding ThumbIndicatorOnBrush}"
+                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}" />
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -237,12 +238,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorOffBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="ThumbIndicatorIntermediateBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorOffBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorIntermediateBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
-        <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.ToggleSwitchButton}" />
+        <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
