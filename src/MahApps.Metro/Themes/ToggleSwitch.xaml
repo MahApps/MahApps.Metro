@@ -59,11 +59,11 @@
                             </Thumb.Template>
                         </Thumb>
 
-                        <ContentPresenter Grid.Column="1"
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          Grid.Column="1"
                                           Margin="{TemplateBinding ContentPadding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Content="{TemplateBinding Content}" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -107,14 +107,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorOnBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
-        <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 5" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 5" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
@@ -139,21 +139,21 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="Header"
-                                            Margin="{TemplateBinding Controls:ControlsHelper.HeaderMargin}"
                                             Content="{TemplateBinding Header}"
+                                            Margin="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
                                             ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                             FontFamily="{TemplateBinding HeaderFontFamily}"
-                                            FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                            FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                            FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                            FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                             IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
+                                                         Content="{TemplateBinding Content}"
                                                          Grid.Row="1"
                                                          HorizontalAlignment="Stretch"
                                                          VerticalAlignment="Center"
                                                          Background="{TemplateBinding Background}"
-                                                         Content="{TemplateBinding Content}"
                                                          ContentPadding="{TemplateBinding ContentPadding}"
                                                          FlowDirection="{TemplateBinding ContentDirection}"
                                                          FocusVisualStyle="{x:Null}"
