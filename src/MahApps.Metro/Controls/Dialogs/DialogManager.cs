@@ -660,6 +660,17 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else
             {
+                // Remove the border on left and right side
+                win.BeginInvoke(x =>
+                                    {
+                                        x.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, x.BorderThickness.Top, 0, x.BorderThickness.Bottom));
+                                        if (x is MetroWindow metroWindow)
+                                        {
+                                            metroWindow.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, metroWindow.ResizeBorderThickness.Top, 0, metroWindow.ResizeBorderThickness.Bottom));
+                                        }
+                                    },
+                                DispatcherPriority.Loaded);
+
                 var offset = SystemParameters.WindowNonClientFrameThickness.Left + SystemParameters.WindowResizeBorderThickness.Left +
                              SystemParameters.WindowNonClientFrameThickness.Right + SystemParameters.WindowResizeBorderThickness.Right;
                 win.Width = window.ActualWidth - offset;
