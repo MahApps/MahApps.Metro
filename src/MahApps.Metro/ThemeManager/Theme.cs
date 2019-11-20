@@ -64,6 +64,14 @@ namespace MahApps.Metro
             this.BaseColorScheme = (string)this.Resources[ThemeBaseColorSchemeKey];
             this.ColorScheme = (string)this.Resources[ThemeColorSchemeKey];
             this.ShowcaseBrush = (SolidColorBrush)this.Resources[ThemeShowcaseBrushKey];
+            if (this.Name.StartsWith("light.", StringComparison.OrdinalIgnoreCase))
+            {
+                this.Type = ThemeType.Light;
+            }
+            else if (this.Name.StartsWith("dark.", StringComparison.OrdinalIgnoreCase))
+            {
+                this.Type = ThemeType.Dark;
+            }
         }
 
         /// <summary>
@@ -75,6 +83,11 @@ namespace MahApps.Metro
         /// Gets the name of the theme.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets the theme type (light, dark).
+        /// </summary>
+        public ThemeType Type { get; } = ThemeType.Unknown;
 
         /// <summary>
         /// Gets the display name of the theme.

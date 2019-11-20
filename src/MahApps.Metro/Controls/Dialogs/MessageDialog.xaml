@@ -24,34 +24,30 @@
         </ScrollViewer>
 
         <StackPanel Grid.Row="1"
-                    Height="85"
+                    MinHeight="85"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="PART_AffirmativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="0 0 5 0"
                     Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
             <Button x:Name="PART_NegativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="5 0 5 0"
                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
             <Button x:Name="PART_FirstAuxiliaryButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="5 0 5 0"
                     Content="{Binding FirstAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
                     Visibility="Collapsed" />
             <Button x:Name="PART_SecondAuxiliaryButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="5 0 0 0"
                     Content="{Binding SecondAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}"
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}"
                     Visibility="Collapsed" />
         </StackPanel>
     </Grid>

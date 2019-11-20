@@ -176,7 +176,7 @@
 
         <Border Grid.Column="0"
                 Margin="10 10 0 10"
-                BorderBrush="{DynamicResource GrayBrush7}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
                 BorderThickness="1">
 
             <Controls:HamburgerMenu x:Name="HamburgerMenuControl"

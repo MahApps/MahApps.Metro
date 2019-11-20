@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.CancellationToken = CancellationToken.None;
             this.DialogTitleFontSize = Double.NaN;
             this.DialogMessageFontSize = Double.NaN;
+            this.DialogButtonFontSize = Double.NaN;
             this.DialogResultOnCancel = null;
         }
 
@@ -85,6 +86,14 @@ namespace MahApps.Metro.Controls.Dialogs
         /// The size of the dialog message font.
         /// </value>
         public double DialogMessageFontSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of the dialog button font.
+        /// </summary>
+        /// <value>
+        /// The size of the dialog button font.
+        /// </value>
+        public double DialogButtonFontSize { get; set; }
 
         /// <summary>
         /// Gets or sets the dialog result when the user cancelled the dialog with 'ESC' key

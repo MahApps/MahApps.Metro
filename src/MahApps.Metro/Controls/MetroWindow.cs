@@ -31,9 +31,9 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_FlyoutModalDragMoveThumb, Type = typeof(Thumb))]
-    [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
-    [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
-    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
+    [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroActiveDialogContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroInactiveDialogsContainer, Type = typeof(Grid))]
@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
 
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(Brush), typeof(MetroWindow));
 
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -173,9 +173,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
-        public SolidColorBrush OverrideDefaultWindowCommandsBrush
+        public Brush OverrideDefaultWindowCommandsBrush
         {
-            get { return (SolidColorBrush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
+            get { return (Brush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
@@ -926,6 +926,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public MetroWindow()
         {
+            this.CommandBindings.Add(new CommandBinding(MahAppsCommands.ClearControlCommand, (sender, args) => MahAppsCommands.ClearControl(args)));
+
             this.SetCurrentValue(MetroDialogOptionsProperty, new MetroDialogSettings());
 
             // BorderlessWindowBehavior initialization has to occur in constructor. Otherwise the load event is fired early and performance of the window is degraded.
@@ -1201,15 +1203,23 @@ namespace MahApps.Metro.Controls
             WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             if (LeftWindowCommands == null)
+            {
                 LeftWindowCommands = new WindowCommands();
-            if (RightWindowCommands == null)
-                RightWindowCommands = new WindowCommands();
-            if (WindowButtonCommands == null)
-                WindowButtonCommands = new WindowButtonCommands();
+            }
 
-            LeftWindowCommands.ParentWindow = this;
-            RightWindowCommands.ParentWindow = this;
-            WindowButtonCommands.ParentWindow = this;
+            if (RightWindowCommands == null)
+            {
+                RightWindowCommands = new WindowCommands();
+            }
+
+            if (WindowButtonCommands == null)
+            {
+                WindowButtonCommands = new WindowButtonCommands();
+            }
+
+            LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;

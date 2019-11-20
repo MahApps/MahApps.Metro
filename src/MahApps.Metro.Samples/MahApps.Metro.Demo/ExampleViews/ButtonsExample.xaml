@@ -61,21 +61,21 @@
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled"
-                    Style="{DynamicResource SquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.AccentedSquare}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False"
-                    Style="{DynamicResource SquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.AccentedSquare}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2">
@@ -90,19 +90,20 @@
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="Enabled"
-                          Style="{DynamicResource MetroFlatToggleButton}" />
+                          Style="{DynamicResource MahApps.Styles.ToggleButton.Flat}" />
             <ToggleButton Width="100"
                           Margin="{StaticResource ControlMargin}"
                           Content="Disabled"
                           IsEnabled="False"
-                          Style="{DynamicResource MetroFlatToggleButton}" />
+                          Style="{DynamicResource MahApps.Styles.ToggleButton.Flat}" />
+
             <StackPanel Margin="{StaticResource ControlMargin}"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <ToggleButton Width="48"
                               Height="48"
                               Margin="4"
-                              Style="{DynamicResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
@@ -111,10 +112,41 @@
                               Height="48"
                               Margin="4"
                               IsEnabled="False"
-                              Style="{DynamicResource MahApps.Metro.Styles.MetroCircleToggleButtonStyle}">
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
                     <iconPacks:PackIconModern Width="20"
                                               Height="20"
                                               Kind="City" />
+                </ToggleButton>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
+                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
+                    <ToggleButton.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </ToggleButton.ContentTemplate>
+                </ToggleButton>
+                <ToggleButton Width="48"
+                              Height="48"
+                              Margin="4"
+                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                              IsEnabled="False"
+                              Style="{DynamicResource MahApps.Styles.ToggleButton.Circle}">
+                    <ToggleButton.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </ToggleButton.ContentTemplate>
                 </ToggleButton>
             </StackPanel>
         </StackPanel>
@@ -144,15 +176,12 @@
                         Orientation="Horizontal">
                 <StackPanel.Resources>
                     <Style x:Key="AccentCircleButtonStyle"
-                           BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                           BasedOn="{StaticResource MahApps.Styles.Button.Circle}"
                            TargetType="{x:Type ButtonBase}">
-                        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -177,14 +206,67 @@
                 <Button Width="48"
                         Height="48"
                         Margin="4"
-                        Foreground="{DynamicResource AccentColorBrush}"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
                         IsEnabled="False"
-                        Style="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
                     <Button.ContentTemplate>
                         <DataTemplate>
                             <iconPacks:PackIconModern Width="20"
                                                       Height="20"
                                                       Kind="CitySeattle" />
+                        </DataTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <iconPacks:PackIconModern Width="20"
+                                              Height="20"
+                                              Kind="City" />
+                </Button>
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        IsEnabled="False"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <iconPacks:PackIconModern Width="20"
+                                              Height="20"
+                                              Kind="City" />
+                </Button>
+            </StackPanel>
+            <StackPanel Margin="{StaticResource ControlMargin}"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
+                        </DataTemplate>
+                    </Button.ContentTemplate>
+                </Button>
+                <Button Width="48"
+                        Height="48"
+                        Margin="4"
+                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        IsEnabled="False"
+                        Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <Button.ContentTemplate>
+                        <DataTemplate>
+                            <iconPacks:PackIconModern Width="20"
+                                                      Height="20"
+                                                      Kind="City" />
                         </DataTemplate>
                     </Button.ContentTemplate>
                 </Button>
@@ -196,7 +278,7 @@
                     HorizontalAlignment="Stretch">
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
-                       BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch}"
+                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
                        TargetType="{x:Type Controls:ToggleSwitch}">
                     <Setter Property="OffLabel" Value="False" />
                     <Setter Property="OffSwitchBrush" Value="Red" />
@@ -204,7 +286,7 @@
                     <Setter Property="OnSwitchBrush" Value="Green" />
                 </Style>
                 <Style x:Key="CustomMetroToggleSwitchButton"
-                       BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitchButton}"
+                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
                        TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Setter Property="OffSwitchBrush" Value="DarkRed" />
                     <Setter Property="OnSwitchBrush" Value="DarkGreen" />
@@ -238,28 +320,28 @@
                                    IsThreeState="True"
                                    OffLabel="Disabled"
                                    OnLabel="Enabled"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
-                                   Controls:ValidationHelper.ShowValidationErrorOnMouseOver="True"
-                                   Controls:ValidationHelper.CloseOnMouseLeftButtonDown="True"
                                    Margin="{StaticResource ControlMargin}"
+                                   Controls:ValidationHelper.CloseOnMouseLeftButtonDown="True"
+                                   Controls:ValidationHelper.ShowValidationErrorOnMouseOver="True"
                                    IsChecked="{Binding IsToggleSwitchVisible, ValidatesOnDataErrors=True}"
                                    OffLabel="Collapsed"
                                    OnLabel="Visible"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}"
                                    Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
 
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="{x:Null}"
                                    IsEnabled="False"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsChecked="False"
                                    IsEnabled="False"
-                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" />
+                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -319,7 +401,7 @@
                        TargetType="Controls:DropDownButton">
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" />
+                    <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Circle}" />
                     <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
                     <Setter Property="Height" Value="48" />
                     <Setter Property="Width" Value="48" />

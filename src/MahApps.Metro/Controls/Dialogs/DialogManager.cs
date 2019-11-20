@@ -538,10 +538,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="dialog">The dialog which will be shown externally.</param>
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
+        /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
+        public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
             Window win = SetupExternalDialogWindow(dialog, windowOwner);
+
+            handleExternalDialogWindow?.Invoke(win);
 
             dialog.OnShown();
             win.Show();
@@ -554,10 +557,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="dialog">The dialog which will be shown externally.</param>
         /// <param name="windowOwner">The owner for the external window. If it's null the main window will be use.</param>
+        /// <param name="handleExternalDialogWindow">The delegate for customizing dialog window. It can be null.</param>
         /// <returns>The given dialog.</returns>
-        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
+        public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
             Window win = SetupExternalDialogWindow(dialog, windowOwner);
+
+            handleExternalDialogWindow?.Invoke(win);
 
             dialog.OnShown();
             win.ShowDialog();
@@ -752,6 +758,10 @@ namespace MahApps.Metro.Controls.Dialogs
             if (!double.IsNaN(settings.DialogMessageFontSize))
             {
                 dialog.DialogMessageFontSize = settings.DialogMessageFontSize;
+            }
+            if (!double.IsNaN(settings.DialogButtonFontSize))
+            {
+                dialog.DialogButtonFontSize = settings.DialogButtonFontSize;
             }
         }
 

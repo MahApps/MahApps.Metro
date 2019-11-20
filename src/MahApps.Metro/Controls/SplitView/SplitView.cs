@@ -131,6 +131,23 @@
         }
 
         /// <summary>
+        /// Identifies the <see cref="OverlayBrush"/> dependency property. 
+        /// </summary>
+        /// <returns>The identifier for the <see cref="OverlayBrush" /> dependency property.</returns>
+        public static readonly DependencyProperty OverlayBrushProperty =
+            DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(SplitView), new PropertyMetadata(Brushes.Transparent));
+
+        /// <summary>
+        /// Gets or sets a value that specifies the OverlayBrush 
+        /// </summary>
+        /// <returns>The current OverlayBrush</returns>
+        public Brush OverlayBrush
+        {
+            get { return (Brush)this.GetValue(OverlayBrushProperty); }
+            set { this.SetValue(OverlayBrushProperty, value); }
+        }
+
+        /// <summary>
         ///     Identifies the <see cref="OpenPaneLength" /> dependency property.
         /// </summary>
         /// <returns>The identifier for the <see cref="OpenPaneLength" /> dependency property.</returns>

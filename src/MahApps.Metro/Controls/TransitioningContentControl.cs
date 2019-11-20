@@ -63,7 +63,7 @@ namespace MahApps.Metro.Controls
     public class TransitioningContentControl : ContentControl
     {
         internal const string PresentationGroup = "PresentationStates";
-        internal const string NormalState = "Normal";
+        internal const string HiddenState = "Hidden";
         internal const string PreviousContentPresentationSitePartName = "PreviousContentPresentationSite";
         internal const string CurrentContentPresentationSitePartName = "CurrentContentPresentationSite";
 
@@ -242,14 +242,18 @@ namespace MahApps.Metro.Controls
                 throw new MahAppsException($"'{invalidTransition}' transition could not be found!");
             }
 
-            VisualStateManager.GoToState(this, NormalState, false);
+            VisualStateManager.GoToState(this, HiddenState, false);
         }
 
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             base.OnContentChanged(oldContent, newContent);
 
-            this.StartTransition(oldContent, newContent);
+            if (oldContent != newContent)
+            {
+                this.StartTransition(oldContent, newContent);
+
+            }
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "newContent", Justification = "Should be used in the future.")]
@@ -275,7 +279,7 @@ namespace MahApps.Metro.Controls
                     }
 
                     this.IsTransitioning = true;
-                    VisualStateManager.GoToState(this, NormalState, false);
+                    VisualStateManager.GoToState(this, HiddenState, false);
                     VisualStateManager.GoToState(this, this.GetTransitionName(this.Transition), true);
                 }
             }
@@ -302,7 +306,7 @@ namespace MahApps.Metro.Controls
                     }
 
                     this.IsTransitioning = true;
-                    VisualStateManager.GoToState(this, NormalState, false);
+                    VisualStateManager.GoToState(this, HiddenState, false);
                     VisualStateManager.GoToState(this, this.GetTransitionName(this.Transition), true);
                 }
             }
@@ -321,7 +325,7 @@ namespace MahApps.Metro.Controls
         public void AbortTransition()
         {
             // go to normal state and release our hold on the old content.
-            VisualStateManager.GoToState(this, NormalState, false);
+            VisualStateManager.GoToState(this, HiddenState, false);
             this.IsTransitioning = false;
             this.previousContentPresentationSite?.SetCurrentValue(ContentPresenter.ContentProperty, null);
         }

@@ -7,7 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource MetroTabControl}" TargetType="{x:Type TabControl}">
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="{x:Type TabControl}">
         <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
         <Setter Property="Template">
             <Setter.Value>

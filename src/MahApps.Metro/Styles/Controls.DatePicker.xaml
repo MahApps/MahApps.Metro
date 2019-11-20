@@ -9,22 +9,40 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MetroDatePicker" TargetType="{x:Type DatePicker}">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+    <Style x:Key="MahApps.Styles.DatePicker" TargetType="{x:Type DatePicker}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Metro.Styles.BaseMetroCalendar}" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MahApps.Styles.Calendar.Base}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.FocusBorder}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
+        <Setter Property="Controls:DatePickerHelper.DropDownButtonContent" Value="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z" />
+        <Setter Property="Controls:DatePickerHelper.DropDownButtonContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <!--  Modern - Calendar14  -->
+                    <ContentControl x:Name="PART_PackIcon"
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType=DatePicker}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                    Height="{Binding RelativeSource={RelativeSource AncestorType=DatePicker}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                    Padding="3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Mode=OneWay}"
+                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource MahApps.Templates.Button.Chromeless}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -35,10 +53,13 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding Padding}">
+
+                        <Grid x:Name="PART_InnerGrid" Margin="{TemplateBinding BorderThickness}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ClearButtonColumn" Width="Auto" />
                                 <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -46,34 +67,22 @@
                                 <RowDefinition x:Name="ButtonRow" Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Button x:Name="PART_Button"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="1"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    IsTabStop="False"
-                                    Style="{DynamicResource ChromelessButtonStyle}">
-                                <!--  PackIconModern - Calendar14  -->
-                                <ContentControl Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
-                                                Height="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
-                                                Padding="2"
-                                                Content="M34,52H31V38.5C29.66,39.9 28.16,40.78 26.34,41.45V37.76C27.3,37.45 28.34,36.86 29.46,36C30.59,35.15 31.36,34.15 31.78,33H34V52M45,52V48H37V45L45,33H48V45H50V48H48V52H45M45,45V38.26L40.26,45H45M18,57V23H23V20A2,2 0 0,1 25,18H29C30.11,18 31,18.9 31,20V23H45V20A2,2 0 0,1 47,18H51C52.11,18 53,18.9 53,20V23H58V57H18M21,54H55V31H21V54M48.5,20A1.5,1.5 0 0,0 47,21.5V24.5A1.5,1.5 0 0,0 48.5,26H49.5C50.34,26 51,25.33 51,24.5V21.5A1.5,1.5 0 0,0 49.5,20H48.5M26.5,20A1.5,1.5 0 0,0 25,21.5V24.5A1.5,1.5 0 0,0 26.5,26H27.5A1.5,1.5 0 0,0 29,24.5V21.5A1.5,1.5 0 0,0 27.5,20H26.5Z"
-                                                Style="{DynamicResource PathIconContentControlStyle}" />
-                            </Button>
-
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Grid.Row="1"
                                                Grid.Column="0"
+                                               Margin="0"
+                                               Padding="{TemplateBinding Padding}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkTrimming="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkTrimming), Mode=OneWay}"
-                                               CaretBrush="{DynamicResource BlackBrush}"
+                                               CaretBrush="{DynamicResource MahApps.Brushes.Black}"
                                                ContextMenu="{TemplateBinding ContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
-                                               SelectionBrush="{DynamicResource HighlightBrush}">
+                                               SelectionBrush="{DynamicResource MahApps.Brushes.Highlight}">
                                 <i:Interaction.Behaviors>
                                     <behaviors:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
@@ -82,7 +91,8 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Style="{DynamicResource FloatingMessageContainerStyle}">
+                                            Margin="4 0"
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
                                         <Binding ElementName="PART_FloatingMessage"
@@ -97,7 +107,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}"
+                                           Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
@@ -118,24 +128,73 @@
                                 </TextBlock>
                             </ContentControl>
 
+                            <Button x:Name="PART_ClearText"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                                    Command="{TemplateBinding Controls:TextBoxHelper.ButtonCommand}"
+                                    CommandParameter="{TemplateBinding Controls:TextBoxHelper.ButtonCommandParameter}"
+                                    CommandTarget="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Mode=OneWay}"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                                    ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
+                                    FontSize="{TemplateBinding Controls:TextBoxHelper.ButtonFontSize}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                    Template="{TemplateBinding Controls:TextBoxHelper.ButtonTemplate}"
+                                    Visibility="Visible" />
+
+                            <Button x:Name="PART_Button"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
+                                    Content="{TemplateBinding Controls:DatePickerHelper.DropDownButtonContent}"
+                                    ContentTemplate="{TemplateBinding Controls:DatePickerHelper.DropDownButtonContentTemplate}"
+                                    Focusable="False"
+                                    FontFamily="{TemplateBinding Controls:DatePickerHelper.DropDownButtonFontFamily}"
+                                    FontSize="{TemplateBinding Controls:DatePickerHelper.DropDownButtonFontSize}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsTabStop="False"
+                                    Style="{DynamicResource MahApps.Styles.Button.Chromeless}" />
+
                             <Popup x:Name="PART_Popup"
                                    Grid.Row="1"
                                    Grid.Column="0"
                                    AllowsTransparency="True"
                                    Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=PART_Root}"
+                                   PopupAnimation="Fade"
                                    StaysOpen="False" />
                         </Grid>
+
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource ControlsDisabledBrush}"
-                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:TextBoxHelper.ClearTextButton" Value="True">
+                            <Setter Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Static Controls:MahAppsCommands.ClearControlCommand}" />
+                        </Trigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}" Value="Left">
+                            <Setter TargetName="ButtonColumn" Property="Width" Value="*" />
+                            <Setter TargetName="PART_Button" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="PART_FloatingMessageContainer" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="TextColumn" Property="Width" Value="Auto" />
+                        </DataTrigger>
+
                         <Trigger Property="Controls:ControlsHelper.IsReadOnly" Value="True">
                             <Setter TargetName="PART_Button" Property="IsEnabled" Value="False" />
                             <Setter TargetName="PART_TextBox" Property="IsReadOnly" Value="True" />
@@ -145,7 +204,7 @@
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_FloatingMessage" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter TargetName="PART_FloatingMessage" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
@@ -155,13 +214,41 @@
                             <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.6" />
                         </Trigger>
                         <Trigger SourceName="PART_Button" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource GrayBrush8}" />
-                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
                         </Trigger>
+
+                        <Trigger Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}">
+                            <Setter TargetName="PART_ClearText" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
+                        </MultiTrigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                        </Trigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=IsVisible, RelativeSource={RelativeSource Self}}" Value="True" />
@@ -169,111 +256,83 @@
                                 <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ShowFloatingMessage}" />
                             </MultiDataTrigger.EnterActions>
                             <MultiDataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.HideFloatingMessage}" />
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
     </Style>
 
-    <Style x:Key="MetroDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="ContextMenu" Value="{DynamicResource TextBoxMetroContextMenu}" />
+    <Style x:Key="MahApps.Styles.DatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource MahApps.TextBox.ContextMenu}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="Padding" Value="4" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePickerTextBox}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="EnterGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             To=".2"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="ExitGotFocus">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-
-                        <Storyboard x:Key="EnterHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             From=".2"
-                                             To="0"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="ExitHasText">
-                            <DoubleAnimation Storyboard.TargetName="PART_Watermark"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetName="PART_Message"
-                                             Storyboard.TargetProperty="Opacity"
-                                             Duration="0:0:0.2" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
-                    <Grid x:Name="PART_InnerGrid" Margin="2">
+                    <Grid x:Name="PART_InnerGrid">
 
                         <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="0"
+                                      Padding="{TemplateBinding Padding}"
                                       VerticalAlignment="Stretch"
                                       Background="{x:Null}"
                                       BorderThickness="0"
                                       FocusVisualStyle="{x:Null}"
-                                      IsTabStop="False" />
+                                      IsTabStop="False"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
                         <ContentControl x:Name="PART_Watermark"
-                                        Margin="4 0 0 0"
+                                        Margin="4 0"
+                                        Padding="{TemplateBinding Padding}"
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                         Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                         Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                        Controls:TextBoxHelper.WatermarkWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
                                         Focusable="False"
                                         Foreground="{TemplateBinding Foreground}"
                                         IsHitTestVisible="False"
-                                        Opacity="0.6"
                                         Visibility="Hidden">
                             <ContentControl.Template>
                                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                                    <TextBlock HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    <TextBlock Margin="0"
+                                               Padding="{TemplateBinding Padding}"
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                                Text="{TemplateBinding Content}"
                                                TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
-                                               TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
+                                               TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                               TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}" />
                                 </ControlTemplate>
                             </ContentControl.Template>
                         </ContentControl>
+
                         <TextBlock x:Name="PART_Message"
-                                   Margin="4 0 0 0"
+                                   Margin="4 0"
+                                   Padding="{TemplateBinding Padding}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Foreground="{TemplateBinding Foreground}"
-                                   Style="{DynamicResource MahApps.Metro.Styles.MetroWatermarkTextBlock}"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
-                                   TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}" />
+                                   TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
+                                   TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -282,10 +341,10 @@
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource EnterGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterGotFocus.DatePickerTextBox}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ExitGotFocus}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitGotFocus.DatePickerTextBox}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
@@ -295,10 +354,10 @@
 
                         <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource EnterHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.EnterHasText.DatePickerTextBox}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ExitHasText}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExitHasText.DatePickerTextBox}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>

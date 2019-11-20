@@ -324,12 +324,12 @@ namespace MahApps.Metro
                 throw new ArgumentNullException(nameof(theme));
             }
 
-            if (theme.Name.StartsWith("dark.", StringComparison.OrdinalIgnoreCase))
+            if (theme.Type == ThemeType.Dark)
             {
                 return GetTheme("Light." + theme.Name.Substring("dark.".Length));
             }
 
-            if (theme.Name.StartsWith("light.", StringComparison.OrdinalIgnoreCase))
+            if (theme.Type == ThemeType.Light)
             {
                 return GetTheme("Dark." + theme.Name.Substring("light.".Length));
             }
@@ -913,8 +913,13 @@ namespace MahApps.Metro
                 return false;
             }
 
-            if (first.Source.IsNull()
+            // If RD does not have a source, but both have keys and the first one has at least as many keys as the second,
+            // then compares their values.
+            if ((first.Source.IsNull()
                 || second.Source.IsNull())
+                && first.Keys.Count > 0
+                && second.Keys.Count > 0
+                && first.Keys.Count >= second.Keys.Count)
             {
                 try
                 {

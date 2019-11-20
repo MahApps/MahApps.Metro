@@ -10,6 +10,10 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+    </UserControl.Resources>
+
     <TabControl Margin="10" TabStripPlacement="Left">
         <TabItem Header="ListBox">
             <ScrollViewer Margin="2"
@@ -17,19 +21,23 @@
                           VerticalScrollBarVisibility="Disabled">
                 <UniformGrid Columns="2" Rows="2">
                     <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
                              ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
-                             Style="{StaticResource VirtualisedMetroListBox}" />
+                             SelectionMode="Extended"
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
                     <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              BorderThickness="1"
-                             DisplayMemberPath="Title"
+                             DisplayMemberPath="Name"
                              IsEnabled="False"
-                             ItemsSource="{Binding Albums}"
+                             ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
-                             Style="{StaticResource VirtualisedMetroListBox}" />
+                             SelectionMode="Extended"
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
 
                     <ListBox Margin="2" SelectedIndex="0">
                         <ListBoxItem Content="Item 1" />
@@ -56,7 +64,7 @@
                               BorderThickness="1"
                               ItemsSource="{Binding Artists}"
                               SelectedIndex="0"
-                              Style="{StaticResource VirtualisedMetroListView}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
@@ -69,7 +77,7 @@
                               IsEnabled="False"
                               ItemsSource="{Binding Artists}"
                               SelectedIndex="0"
-                              Style="{StaticResource VirtualisedMetroListView}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
@@ -80,7 +88,7 @@
 
                     <ListView Margin="2"
                               SelectedIndex="0"
-                              Style="{StaticResource VirtualisedMetroListView}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListViewItem>Test 1</ListViewItem>
                         <ListViewItem>Test 2</ListViewItem>
                         <ListViewItem>Test 3</ListViewItem>
@@ -89,7 +97,7 @@
                     <ListView Margin="2"
                               IsEnabled="False"
                               SelectedIndex="0"
-                              Style="{StaticResource VirtualisedMetroListView}">
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                         <ListViewItem>Test 1</ListViewItem>
                         <ListViewItem>Test 2</ListViewItem>
                         <ListViewItem>Test 3</ListViewItem>
@@ -107,7 +115,7 @@
                     <TreeView Margin="2"
                               BorderThickness="1"
                               ItemsSource="{Binding Artists}"
-                              Style="{StaticResource VirtualisedMetroTreeView}">
+                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
                                 <TextBlock Text="{Binding Name}" />
@@ -123,7 +131,7 @@
                               BorderThickness="1"
                               IsEnabled="False"
                               ItemsSource="{Binding Artists}"
-                              Style="{StaticResource VirtualisedMetroTreeView}">
+                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
                                 <TextBlock Text="{Binding Name}" />
@@ -188,7 +196,6 @@
                           VerticalScrollBarVisibility="Auto">
                 <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
                               BorderThickness="4"
@@ -203,8 +210,9 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
                               SelectedIndex="0">
@@ -218,8 +226,23 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Please select an item..."
@@ -234,8 +257,9 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.ClearTextButton="True"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Editable..."
@@ -249,25 +273,32 @@
                         <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                         <ComboBoxItem Content="Item 4" />
                     </ComboBox>
+
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Editable TextBox..." />
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                               Controls:TextBoxHelper.Watermark="Autocompletion"
                               DisplayMemberPath="Title"
                               IsEditable="True"
                               ItemsSource="{Binding Albums}"
                               MaxDropDownHeight="125"
-                              Style="{DynamicResource VirtualisedMetroComboBox}"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.Virtualized}"
                               Text="{Binding Path=Title}" />
+
                     <ComboBox x:Name="groupingComboBox"
                               Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               Controls:TextBoxHelper.Watermark="Autocompletion with grouping"
                               DisplayMemberPath="Title"
                               IsEditable="True"
                               IsEnabled="True"
                               ItemsSource="{Binding Albums}"
-                              Style="{DynamicResource VirtualisedMetroComboBox}"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.Virtualized}"
                               Text="{Binding Path=Title}">
                         <ComboBox.GroupStyle>
                             <GroupStyle>
@@ -279,8 +310,9 @@
                             </GroupStyle>
                         </ComboBox.GroupStyle>
                     </ComboBox>
+
                     <ComboBox Width="200"
-                              Margin="0 10 0 0"
+                              Margin="{StaticResource ControlMargin}"
                               IsEnabled="False"
                               SelectedIndex="0">
                         <ComboBoxItem Content="Item 1" />

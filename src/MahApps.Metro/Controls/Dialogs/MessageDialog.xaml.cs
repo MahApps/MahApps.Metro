@@ -11,8 +11,8 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public partial class MessageDialog : BaseMetroDialog
     {
-        private const string ACCENT_BUTTON_STYLE = "MahApps.Metro.Styles.Dialogs.AccentButton";
-        private const string ACCENT_HIGHLIGHT_BUTTON_STYLE = "MahApps.Metro.Styles.Dialogs.AccentHighlightButton";
+        private const string ACCENT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.Accent";
+        private const string ACCENT_HIGHLIGHT_BUTTON_STYLE = "MahApps.Styles.Button.Dialogs.AccentHighlight";
 
         /// <summary>Identifies the <see cref="Message"/> dependency property.</summary>
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message), typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));

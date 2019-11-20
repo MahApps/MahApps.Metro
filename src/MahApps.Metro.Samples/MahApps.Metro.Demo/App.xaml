@@ -17,13 +17,13 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
 
-            <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
+            <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
                 <Setter Property="CloseOnMouseLeftButtonDown" Value="False" />
                 <Setter Property="ShowValidationErrorOnMouseOver" Value="False" />
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
-            <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+            <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
                 <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                  Storyboard.TargetProperty="(UIElement.Opacity)"
                                  To="0"

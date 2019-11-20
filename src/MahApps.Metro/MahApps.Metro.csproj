@@ -14,7 +14,7 @@
         <Reference Include="System.Configuration" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ControlzEx" Version="[4.0.0-alpha*, 5.0)" />
+        <PackageReference Include="ControlzEx" Version="[4.*, 5.0)" />
         <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
         <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />
@@ -30,7 +30,7 @@
             <!-- <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot> -->
             <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
         </PropertyGroup>
-        <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
+        <Exec Command="&quot;$(NuGetPackageRoot)\xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
         <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
     </Target>
     <!-- Key to generating the xaml files at the right point in time is to do this before DispatchToInnerBuilds -->

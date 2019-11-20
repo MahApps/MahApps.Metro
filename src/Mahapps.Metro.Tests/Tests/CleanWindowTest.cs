@@ -13,9 +13,15 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>().ConfigureAwait(false);
 
-            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetTheme("Light.Blue").Resources["BlackBrush"]).Color;
+            var theme = ThemeManager.DetectTheme();
+            Assert.NotNull(theme);
+
+            var brush = theme.Resources["MahApps.Brushes.Black"] as SolidColorBrush;
+            Assert.NotNull(brush);
+
+            var blackBrushColor = brush.Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
         }

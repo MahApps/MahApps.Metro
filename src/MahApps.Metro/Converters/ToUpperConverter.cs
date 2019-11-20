@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -12,6 +13,7 @@ namespace MahApps.Metro.Converters
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
+        [SuppressMessage("ReSharper", "EmptyConstructor")]
         static ToUpperConverter()
         {
         }
@@ -23,36 +25,7 @@ namespace MahApps.Metro.Converters
 
         protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var val = value as string;
-            return val != null ? val.ToUpper() : value;
-        }
-
-        protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Binding.DoNothing;
-        }
-    }
-
-    [MarkupExtensionReturnType(typeof(ToLowerConverter))]
-    public class ToLowerConverter : MarkupConverter
-    {
-        private static ToLowerConverter _instance;
-
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
-        static ToLowerConverter()
-        {
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return _instance ?? (_instance = new ToLowerConverter());
-        }
-
-        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var val = value as string;
-            return val != null ? val.ToLower() : value;
+            return value is string s ? s.ToUpper(culture) : value;
         }
 
         protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -93,6 +93,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ItemContainerStyleProperty = DependencyProperty.Register(nameof(ItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
+        /// Identifies the <see cref="HeaderItemContainerStyle"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderItemContainerStyleProperty = DependencyProperty.Register(nameof(HeaderItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
         /// Identifies the <see cref="SeparatorItemContainerStyle"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SeparatorItemContainerStyleProperty = DependencyProperty.Register(nameof(SeparatorItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
@@ -248,7 +253,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(ItemContainerStyleProperty, value); }
         }
 
-        /// <summary>
+        /// <summary>   
+        /// Gets or sets the Style used for each header item.
+        /// </summary>
+        public Style HeaderItemContainerStyle
+        {
+            get { return (Style)GetValue(HeaderItemContainerStyleProperty); }
+            set { SetValue(HeaderItemContainerStyleProperty, value); }
+        }
+
+        /// <summary>   
         /// Gets or sets the Style used for each separator item.
         /// </summary>
         public Style SeparatorItemContainerStyle
@@ -379,7 +393,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeItemFocusVisualStyle()
         {
-            _defaultItemFocusVisualTemplate = _defaultItemFocusVisualTemplate ?? TryFindResource("HamburgerMenuItemFocusVisualTemplate") as ControlTemplate;
+            _defaultItemFocusVisualTemplate = _defaultItemFocusVisualTemplate ?? TryFindResource("MahApps.Templates.HamburgerMenuItem.FocusVisual") as ControlTemplate;
             if (_defaultItemFocusVisualTemplate != null)
             {
                 var focusVisualStyle = new Style(typeof(Control));

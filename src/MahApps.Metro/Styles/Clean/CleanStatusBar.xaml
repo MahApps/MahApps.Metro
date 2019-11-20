@@ -5,16 +5,16 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.StatusBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="CleanMetroStatusBarKey"
-           BasedOn="{StaticResource MetroStatusBar}"
+    <Style x:Key="MahApps.Styles.StatusBar.Clean"
+           BasedOn="{StaticResource MahApps.Styles.StatusBar}"
            TargetType="{x:Type StatusBar}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
     </Style>
 
-    <Style x:Key="CleanMetroStatusBarSeparator"
-           BasedOn="{StaticResource MetroStatusBarSeparator}"
+    <Style x:Key="MahApps.Styles.Separator.Clean"
+           BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}"
            TargetType="{x:Type Separator}">
-        <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
     </Style>
 
 </ResourceDictionary>

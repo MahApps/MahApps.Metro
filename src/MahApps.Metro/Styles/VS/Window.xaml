@@ -4,68 +4,66 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="VSWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="GlowBrush" Value="{DynamicResource WindowGlowBrush}" />
-        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource AccentColorBrush}" />
+    <Style x:Key="MahApps.Styles.MetroWindow.VisualStudio" TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Window.Glow}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="ShowTitleBar" Value="True" />
-        <Setter Property="TitleForeground" Value="{DynamicResource WindowTitleForeground}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.WindowTitle.Foreground}" />
     </Style>
 
-    <Style x:Key="VSWindowButtonStyle"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.Window.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="DarkMaxButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="DarkMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="LightCloseButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="LightMaxButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
-        <Setter Property="LightMinButtonStyle" Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="DarkMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightMaxButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
+        <Setter Property="LightMinButtonStyle" Value="{StaticResource MahApps.Styles.Button.Window.VisualStudio}" />
     </Style>
 
-    <Style x:Key="VSWindowNotificationButtonStyle"
-           BasedOn="{StaticResource MetroFlatButton}"
+    <Style x:Key="MahApps.Styles.Button.Window.Notification.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.Button.Flat}"
            TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NotificationButton.Foreground}" />
         <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="Padding" Value="9 5 9 5" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundOverBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.BackgroundOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource NotificationButtonBackgroundPressedBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource NotificationButtonForegroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.NotificationButton.BackgroundPressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.NotificationButton.Foreground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="VSWindowQuickLaunchTextBoxStyle"
-           BasedOn="{StaticResource MetroButtonTextBox}"
+    <Style x:Key="MahApps.Styles.TextBox.WindowQuickLaunch.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
            TargetType="{x:Type TextBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource QuickLaunchTextBoxFocusedBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.FocusedBorder}" />
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="0 2" />
         <Setter Property="MaxWidth" Value="300" />
         <Setter Property="MinWidth" Value="200" />
-        <Setter Property="Padding" Value="0 1 0 0" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Background" Value="{DynamicResource QuickLaunchTextBoxBorderBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />
             </Trigger>
         </Style.Triggers>
     </Style>

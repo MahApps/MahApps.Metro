@@ -61,7 +61,6 @@
                                Text="DisplayMode" />
                     <ComboBox Grid.Row="1"
                               Grid.Column="1"
-                              Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
                               SelectedValue="{Binding DisplayMode}">
@@ -78,7 +77,6 @@
                                Text="PanePlacement" />
                     <ComboBox Grid.Row="2"
                               Grid.Column="1"
-                              Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
                               SelectedValue="{Binding PanePlacement}">
@@ -105,8 +103,9 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="200" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="4*" MinWidth="100" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -117,7 +116,7 @@
 
         <Label Grid.Row="0"
                Grid.Column="0"
-               Grid.ColumnSpan="2"
+               Grid.ColumnSpan="3"
                HorizontalAlignment="Left"
                Content="Simple SplitView example"
                Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -128,9 +127,13 @@
                         DataContext="{Binding ElementName=SimpleSplitview}"
                         Template="{StaticResource ConfigDataTemplate}" />
 
+        <GridSplitter Grid.Row="1"
+                      Grid.Column="1"
+                      ResizeBehavior="PreviousAndNext" />
+
         <controls:SplitView x:Name="SimpleSplitview"
                             Grid.Row="1"
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Margin="5"
                             DisplayMode="Inline"
                             IsPaneOpen="True"

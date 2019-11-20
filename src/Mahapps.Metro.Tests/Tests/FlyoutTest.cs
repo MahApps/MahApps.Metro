@@ -27,7 +27,7 @@ namespace MahApps.Metro.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.GetTheme("Dark.Blue").Resources["BlackBrush"]).Color;
+            Color expectedColor = ((SolidColorBrush)ThemeManager.GetTheme("Dark.Blue").Resources["MahApps.Brushes.Black"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }
@@ -209,6 +209,44 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task WindowButtonCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
+            window.RightFlyout.IsOpen = true;
+
+            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
+            window.RightFlyout.IsOpen = false;
+
+            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task WindowCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
+
+            window.RightFlyout.IsOpen = true;
+            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+
+            window.RightFlyout.IsOpen = false;
+            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+
+            window.LeftFlyout.IsOpen = true;
+            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
+
+            window.LeftFlyout.IsOpen = false;
+            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
         }
     }
 }

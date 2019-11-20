@@ -113,6 +113,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}">
+        <Setter Property="ContentPadding" Value="0 0 4 0" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 5" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
@@ -140,6 +141,8 @@
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="Header"
                                             Content="{TemplateBinding Header}"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
                                             Margin="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
                                             ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -147,6 +150,19 @@
                                             FontFamily="{TemplateBinding HeaderFontFamily}"
                                             FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
                                             FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
+                                            IsTabStop="False" />
+                            <ContentControl x:Name="Content"
+                                            Content="{TemplateBinding Content}"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Margin="{TemplateBinding ContentPadding}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                            FontFamily="{TemplateBinding FontFamily}"
+                                            FontSize="{TemplateBinding FontSize}"
                                             IsTabStop="False" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Content="{TemplateBinding Content}"
@@ -179,6 +195,10 @@
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="Header"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To="0.3"
+                                                         Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="Content"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          To="0.3"
                                                          Duration="0" />
@@ -234,6 +254,13 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}" Value="{x:Null}">
                             <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
+                        <Trigger Property="ContentDirection" Value="RightToLeft">
+                            <Setter Property="ContentPadding" Value="4 0 0 0" />
+                            <Setter TargetName="Content" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="firstCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="secCol" Property="Width" Value="*" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -245,6 +272,11 @@
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
+        <Setter Property="ThumbIndicatorWidth" Value="13" />
+        <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 </ResourceDictionary>

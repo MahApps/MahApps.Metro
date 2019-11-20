@@ -19,14 +19,21 @@ namespace MahApps.Metro.Controls
                 var hamburgerMenu = listBox?.TryFindParent<HamburgerMenu>();
                 if (hamburgerMenu != null)
                 {
-                    if (item is HamburgerMenuSeparatorItem)
+                    if (item is IHamburgerMenuHeaderItem)
+                    {
+                        if (hamburgerMenu.HeaderItemContainerStyle != null)
+                        {
+                            return hamburgerMenu.HeaderItemContainerStyle;
+                        }
+                    }
+                    else if (item is IHamburgerMenuSeparatorItem)
                     {
                         if (hamburgerMenu.SeparatorItemContainerStyle != null)
                         {
                             return hamburgerMenu.SeparatorItemContainerStyle;
                         }
                     }
-                    else if (item is HamburgerMenuItem)
+                    else
                     {
                         var itemContainerStyle = this.IsItemOptions ? hamburgerMenu.OptionsItemContainerStyle : hamburgerMenu.ItemContainerStyle;
                         if (itemContainerStyle != null)
