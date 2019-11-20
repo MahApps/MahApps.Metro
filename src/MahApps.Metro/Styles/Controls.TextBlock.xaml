@@ -14,7 +14,7 @@
     <Style x:Key="MahApps.Styles.TextBlock.AutoCollapsing"
            BasedOn="{StaticResource MahApps.Styles.TextBlock}"
            TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.FloatingWatermark}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.FloatingWatermark}" />
         <Setter Property="Opacity" Value="0.6" />
         <Style.Triggers>
             <Trigger Property="Text" Value="">

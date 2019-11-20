@@ -19,6 +19,7 @@ using MetroDemo.Core;
 using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
+using System.Collections.ObjectModel;
 
 namespace MetroDemo
 {
@@ -108,20 +109,24 @@ namespace MetroDemo
                     {
                         if (x is string s)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", s);
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Wow, you typed Return and got", s).ConfigureAwait(false);
                         }
                         else if (x is RichTextBox richTextBox)
                         {
                             var text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text);
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("RichTextBox Button was clicked!", text).ConfigureAwait(false);
                         }
                         else if (x is TextBox textBox)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", textBox.Text);
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!", textBox.Text).ConfigureAwait(false);
                         }
                         else if (x is PasswordBox passwordBox)
                         {
-                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", passwordBox.Password);
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!", passwordBox.Password).ConfigureAwait(false);
+                        }
+                        else if (x is DatePicker datePicker)
+                        {
+                            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DatePicker Button was clicked!", datePicker.Text).ConfigureAwait(false);
                         }
                     }
             );
@@ -198,6 +203,13 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
 
         public List<Artist> Artists { get; set; }
+
+        private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+        public ObservableCollection<Artist> SelectedArtists
+        {
+            get => _selectedArtists;
+            set => Set(ref _selectedArtists, value);
+        }
 
         public List<AccentColorMenuData> AccentColors { get; set; }
 

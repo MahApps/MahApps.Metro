@@ -563,8 +563,8 @@
     <Style x:Key="MahApps.Styles.Calendar"
            BasedOn="{StaticResource MahApps.Styles.Calendar.Base}"
            TargetType="{x:Type Calendar}">
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Content}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
     </Style>
 
 </ResourceDictionary>

@@ -21,18 +21,22 @@
                           VerticalScrollBarVisibility="Disabled">
                 <UniformGrid Columns="2" Rows="2">
                     <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
                              BorderThickness="1"
                              DisplayMemberPath="Name"
                              ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
+                             SelectionMode="Extended"
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
                     <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
                              BorderThickness="1"
-                             DisplayMemberPath="Title"
+                             DisplayMemberPath="Name"
                              IsEnabled="False"
-                             ItemsSource="{Binding Albums}"
+                             ItemsSource="{Binding Artists}"
                              SelectedIndex="0"
+                             SelectionMode="Extended"
                              Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
 
                     <ListBox Margin="2" SelectedIndex="0">

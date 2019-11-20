@@ -43,9 +43,4 @@
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <ItemGroup>
-      <None Update="Styles\Controls.GridSplitter">
-        <Generator>MSBuild:Compile</Generator>
-      </None>
-    </ItemGroup>
 </Project>
