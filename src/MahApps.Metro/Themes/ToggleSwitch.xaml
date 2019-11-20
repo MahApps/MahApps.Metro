@@ -107,7 +107,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
     </Style>
@@ -254,13 +253,6 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}" Value="{x:Null}">
                             <Setter TargetName="Header" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <Trigger Property="ContentDirection" Value="RightToLeft">
-                            <Setter Property="ContentPadding" Value="4 0 0 0" />
-                            <Setter TargetName="Content" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
-                            <Setter TargetName="firstCol" Property="Width" Value="Auto" />
-                            <Setter TargetName="secCol" Property="Width" Value="*" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -272,7 +264,6 @@
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />
