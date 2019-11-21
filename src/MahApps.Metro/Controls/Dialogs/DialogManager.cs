@@ -591,7 +591,6 @@ namespace MahApps.Metro.Controls.Dialogs
             };
         }
 
-        [SuppressMessage("ReSharper", "CS0618")]
         private static Window SetupExternalDialogWindow(BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
             var win = CreateExternalWindow();
@@ -608,22 +607,19 @@ namespace MahApps.Metro.Controls.Dialogs
                                 },
                             DispatcherPriority.Loaded);
 
-            win.Width = SystemParameters.PrimaryScreenWidth;
-            win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
-
-            // Try to get the monitor from where the owner stays and use the working area for window size properties
-            if (win.Owner != null && PresentationSource.FromVisual(win.Owner) is HwndSource source)
+            // Get the monitor working area
+            var monitorWorkingArea = win.Owner.GetMonitorWorkSize();
+            if (monitorWorkingArea != default)
             {
-                var monitor = NativeMethods.MonitorFromWindow(source.Handle, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-                if (monitor != IntPtr.Zero)
-                {
-                    var monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
-                    var rcWorkArea = monitorInfo.rcWork;
-
-                    win.Width = rcWorkArea.Width;
-                    win.MinHeight = rcWorkArea.Height / 4.0;
-                    win.MaxHeight = rcWorkArea.Height;
-                }
+                win.Width = monitorWorkingArea.Width;
+                win.MinHeight = monitorWorkingArea.Height / 4.0;
+                win.MaxHeight = monitorWorkingArea.Height;
+            }
+            else
+            {
+                win.Width = SystemParameters.PrimaryScreenWidth;
+                win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
+                win.MaxHeight = SystemParameters.PrimaryScreenHeight;
             }
 
             dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
@@ -657,6 +653,7 @@ namespace MahApps.Metro.Controls.Dialogs
             if (window.WindowState != WindowState.Maximized)
             {
                 win.Width = window.ActualWidth;
+                win.MaxHeight = window.ActualHeight;
             }
             else
             {
@@ -671,12 +668,20 @@ namespace MahApps.Metro.Controls.Dialogs
                                     },
                                 DispatcherPriority.Loaded);
 
-                var offset = SystemParameters.WindowNonClientFrameThickness.Left + SystemParameters.WindowResizeBorderThickness.Left +
-                             SystemParameters.WindowNonClientFrameThickness.Right + SystemParameters.WindowResizeBorderThickness.Right;
-                win.Width = window.ActualWidth - offset;
+                // Get the monitor working area
+                var monitorWorkingArea = window.GetMonitorWorkSize();
+                if (monitorWorkingArea != default)
+                {
+                    win.Width = monitorWorkingArea.Width;
+                    win.MaxHeight = monitorWorkingArea.Height;
+                }
+                else
+                {
+                    win.Width = window.ActualWidth;
+                    win.MaxHeight = window.ActualHeight;
+                }
             }
 
-            win.MaxHeight = window.ActualHeight;
             win.SizeToContent = SizeToContent.Height;
 
             return win;
