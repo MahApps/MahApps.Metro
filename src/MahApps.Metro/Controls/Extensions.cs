@@ -66,6 +66,19 @@ namespace MahApps.Metro.Controls
             dispatcherObject.Dispatcher.BeginInvoke(priority, invokeAction);
         }
 
+        public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background) where T: DispatcherObject
+        {
+            if (dispatcherObject == null)
+            {
+                throw new ArgumentNullException(nameof(dispatcherObject));
+            }
+            if (invokeAction == null)
+            {
+                throw new ArgumentNullException(nameof(invokeAction));
+            }
+            dispatcherObject.Dispatcher?.BeginInvoke(priority, new Action(() => invokeAction(dispatcherObject)));
+        }
+
         /// <summary> 
         ///   Executes the specified action if the element is loaded or at the loaded event if it's not loaded.
         /// </summary>
