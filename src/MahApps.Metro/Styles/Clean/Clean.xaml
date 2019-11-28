@@ -10,10 +10,10 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanStatusBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style BasedOn="{StaticResource CleanGroupBoxStyleKey}" TargetType="{x:Type GroupBox}" />
-    <Style BasedOn="{StaticResource CleanWindowStyleKey}" TargetType="{x:Type Controls:MetroWindow}" />
-    <Style BasedOn="{StaticResource CleanWindowButtonCommandsStyleKey}" TargetType="{x:Type Controls:WindowButtonCommands}" />
-    <Style BasedOn="{StaticResource CleanWindowCommandsStyleKey}" TargetType="{x:Type Controls:WindowCommands}" />
-    <Style BasedOn="{StaticResource CleanMetroStatusBarKey}" TargetType="{x:Type StatusBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.GroupBox.Clean}" TargetType="{x:Type GroupBox}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.Clean}" TargetType="{x:Type Controls:MetroWindow}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Clean}" TargetType="{x:Type Controls:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands.Clean}" TargetType="{x:Type Controls:WindowCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.StatusBar.Clean}" TargetType="{x:Type StatusBar}" />
 
 </ResourceDictionary>

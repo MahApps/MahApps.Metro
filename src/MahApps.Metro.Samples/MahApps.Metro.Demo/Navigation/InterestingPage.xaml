@@ -6,7 +6,7 @@
       Title="Interesting Page"
       d:DesignHeight="300"
       d:DesignWidth="300"
-      Style="{DynamicResource MetroPage}"
+      Style="{DynamicResource MahApps.Styles.Page}"
       mc:Ignorable="d">
 
     <StackPanel Margin="10" Orientation="Vertical">

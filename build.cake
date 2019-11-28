@@ -2,7 +2,11 @@
 // TOOLS / ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
-#tool GitVersion.CommandLine
+#module nuget:?package=Cake.DotNetTool.Module
+#tool "dotnet:?package=NuGetKeyVaultSignTool&version=1.2.18"
+#tool "dotnet:?package=AzureSignTool&version=2.0.17"
+
+#tool GitVersion.CommandLine&version=5.0.1
 #tool gitreleasemanager
 #tool xunit.runner.console
 #tool vswhere
@@ -30,6 +34,12 @@ if (isLocal == false || verbosity == Verbosity.Verbose)
 }
 GitVersion gitVersion = GitVersion(new GitVersionSettings { OutputType = GitVersionOutput.Json });
 
+var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
+var branchName = gitVersion.BranchName;
+var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
+var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
+var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
+
 var latestInstallationPath = VSWhereLatest(new VSWhereLatestSettings { IncludePrerelease = true });
 var msBuildPath = latestInstallationPath.Combine("./MSBuild/Current/Bin");
 var msBuildPathExe = msBuildPath.CombineWithFilePath("./MSBuild.exe");
@@ -38,12 +48,6 @@ if (FileExists(msBuildPathExe) == false)
 {
     throw new NotImplementedException("You need at least Visual Studio 2019 to build this project.");
 }
-
-var isPullRequest = AppVeyor.Environment.PullRequest.IsPullRequest;
-var branchName = gitVersion.BranchName;
-var isDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", branchName);
-var isReleaseBranch = StringComparer.OrdinalIgnoreCase.Equals("master", branchName);
-var isTagged = AppVeyor.Environment.Repository.Tag.IsTag;
 
 // Directories and Paths
 var solution = "./src/MahApps.Metro.sln";
@@ -55,8 +59,6 @@ var publishDir = "./Publish";
 
 Setup(ctx =>
 {
-    // Executed BEFORE the first task.
-
     if (!IsRunningOnWindows())
     {
         throw new NotImplementedException($"{repoName} will only build on Windows because it's not possible to target WPF and Windows Forms from UNIX.");
@@ -77,7 +79,6 @@ Setup(ctx =>
 
 Teardown(ctx =>
 {
-   // Executed AFTER the last task.
 });
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,22 +98,7 @@ Task("Clean")
 Task("Restore")
     .Does(() =>
 {
-    // var msBuildSettings = new MSBuildSettings {
-    //     Verbosity = Verbosity.Minimal,
-    //     ToolPath = msBuildPathExe,
-    //     Configuration = configuration,
-    //     ArgumentCustomization = args => args.Append("/m")
-    // };
-    // MSBuild(solution, msBuildSettings.WithTarget("restore"));
-    
-    StartProcess("nuget", new ProcessSettings {
-        Arguments = new ProcessArgumentBuilder()
-            .Append("restore")
-            .Append(solution)
-            .Append("-msbuildpath")
-            .AppendQuoted(msBuildPath.ToString())
-       }
-   );
+    NuGetRestore(solution, new NuGetRestoreSettings { MSBuildPath = msBuildPath.ToString() });
 });
 
 Task("Build")
@@ -122,12 +108,12 @@ Task("Build")
         Verbosity = verbosity
         , ToolPath = msBuildPathExe
         , Configuration = configuration
-        , ArgumentCustomization = args => args.Append("/m")
+        , ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once it’s done
         , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
-        };
+    };
     MSBuild(solution, msBuildSettings
             .SetMaxCpuCount(0)
-            .WithProperty("Description", "A toolkit for creating Metro / Modern UI styled WPF apps.")
+            .WithProperty("Description", "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.")
             .WithProperty("Version", isReleaseBranch ? gitVersion.MajorMinorPatch : gitVersion.NuGetVersion)
             .WithProperty("AssemblyVersion", gitVersion.AssemblySemVer)
             .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
@@ -146,10 +132,12 @@ Task("Pack")
         , ToolPath = msBuildPathExe
         , Configuration = configuration
     };
-    var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
 
+    var project = "./src/MahApps.Metro/MahApps.Metro.csproj";
     MSBuild(project, msBuildSettings
       .WithTarget("pack")
+      .WithProperty("NoBuild", "true")
+      .WithProperty("IncludeBuildOutput", "true")
       .WithProperty("PackageOutputPath", "../../" + publishDir)
       .WithProperty("RepositoryBranch", branchName)
       .WithProperty("RepositoryCommit", gitVersion.Sha)
@@ -159,6 +147,157 @@ Task("Pack")
       .WithProperty("FileVersion", gitVersion.AssemblySemFileVer)
       .WithProperty("InformationalVersion", gitVersion.InformationalVersion)
     );
+});
+
+void SignFiles(IEnumerable<FilePath> files, string description)
+{
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
+
+    foreach(var file in files)
+    {
+        Information($"Sign file: {file}");
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(MakeAbsolute(file).FullPath)
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--description", description)
+                .AppendSwitchQuoted("--description-url", "https://github.com/MahApps/MahApps.Metro")
+                .Append("--no-page-hashing")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+        };
+
+        using(var process = StartAndReturnProcess("tools/AzureSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
+}
+
+Task("Sign")
+    .ContinueOnError()
+    .Does(() =>
+{
+    var files = GetFiles("./src/MahApps.Metro/bin/**/*/MahApps.Metro.dll");
+    SignFiles(files, "MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+
+    files = GetFiles("./src/MahApps.Metro.Samples/**/bin/**/*.exe");
+    SignFiles(files, "Demo application of MahApps.Metro, a toolkit for creating Metro / Modern UI styled WPF applications.");
+});
+
+Task("SignNuGet")
+    .ContinueOnError()
+    .Does(() =>
+{
+    if (!DirectoryExists(Directory(publishDir)))
+    {
+        return;
+    }
+
+    var vurl = EnvironmentVariable("azure-key-vault-url");
+    if(string.IsNullOrWhiteSpace(vurl)) {
+        Error("Could not resolve signing url.");
+        return;
+    }
+
+    var vcid = EnvironmentVariable("azure-key-vault-client-id");
+    if(string.IsNullOrWhiteSpace(vcid)) {
+        Error("Could not resolve signing client id.");
+        return;
+    }
+
+    var vcs = EnvironmentVariable("azure-key-vault-client-secret");
+    if(string.IsNullOrWhiteSpace(vcs)) {
+        Error("Could not resolve signing client secret.");
+        return;
+    }
+
+    var vc = EnvironmentVariable("azure-key-vault-certificate");
+    if(string.IsNullOrWhiteSpace(vc)) {
+        Error("Could not resolve signing certificate.");
+        return;
+    }
+
+    var nugetFiles = GetFiles(publishDir + "/*.nupkg");
+    foreach(var file in nugetFiles)
+    {
+        Information($"Sign file: {file}");
+        var processSettings = new ProcessSettings {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            Arguments = new ProcessArgumentBuilder()
+                .Append("sign")
+                .Append(MakeAbsolute(file).FullPath)
+                .Append("--force")
+                .AppendSwitchQuoted("--file-digest", "sha256")
+                .AppendSwitchQuoted("--timestamp-rfc3161", "http://timestamp.digicert.com")
+                .AppendSwitchQuoted("--timestamp-digest", "sha256")
+                .AppendSwitchQuoted("--azure-key-vault-url", vurl)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-id", vcid)
+                .AppendSwitchQuotedSecret("--azure-key-vault-client-secret", vcs)
+                .AppendSwitchQuotedSecret("--azure-key-vault-certificate", vc)
+        };
+
+        using(var process = StartAndReturnProcess("tools/NuGetKeyVaultSignTool", processSettings))
+        {
+            process.WaitForExit();
+
+            if (process.GetStandardOutput().Any())
+            {
+                Information($"Output:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardOutput())}");
+            }
+
+            if (process.GetStandardError().Any())
+            {
+                Information($"Errors occurred:{Environment.NewLine}{string.Join(Environment.NewLine, process.GetStandardError())}");
+            }
+
+            // This should output 0 as valid arguments supplied
+            Information("Exit code: {0}", process.GetExitCode());
+        }
+    }
 });
 
 Task("Zip")
@@ -239,8 +378,11 @@ Task("Default")
 
 Task("appveyor")
     .IsDependentOn("Default")
+    .IsDependentOn("Sign")
     .IsDependentOn("Pack")
-    .IsDependentOn("Zip");
+    .IsDependentOn("SignNuGet")
+    .IsDependentOn("Zip")
+    ;
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION

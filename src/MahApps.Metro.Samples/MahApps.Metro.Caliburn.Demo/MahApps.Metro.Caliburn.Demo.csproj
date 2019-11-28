@@ -14,35 +14,29 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
         <PackageReference Include="Caliburn.Micro" Version="3.*" />
-        <PackageReference Include="Fody" Version="4.*" />
-        <PackageReference Include="Costura.Fody" Version="3.*" />
+        <PackageReference Include="Fody" Version="6.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="System.ComponentModel.Composition"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <!--
-    Workaround to fix IntelliSense file generation for XAML projects
-    ISSUE: https://github.com/dotnet/project-system/issues/2488
-  -->
-    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-        </PropertyGroup>
-    </Target>
 </Project>

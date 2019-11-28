@@ -9,38 +9,6 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class ComboBoxHelper
     {
-        // TODO remove this
-        public static readonly DependencyProperty EnableVirtualizationWithGroupingProperty
-            = DependencyProperty.RegisterAttached("EnableVirtualizationWithGrouping",
-                                                  typeof(bool),
-                                                  typeof(ComboBoxHelper),
-                                                  new FrameworkPropertyMetadata(false, OnEnableVirtualizationWithGroupingChanged));
-
-        private static void OnEnableVirtualizationWithGroupingChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var comboBox = dependencyObject as ComboBox;
-            if (comboBox != null && e.NewValue != e.OldValue)
-            {
-                comboBox.SetCurrentValue(VirtualizingStackPanel.IsVirtualizingProperty, e.NewValue);
-                comboBox.SetCurrentValue(VirtualizingPanel.IsVirtualizingWhenGroupingProperty, e.NewValue);
-                comboBox.SetCurrentValue(ScrollViewer.CanContentScrollProperty, e.NewValue);
-            }
-        }
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
-        public static void SetEnableVirtualizationWithGrouping(DependencyObject obj, bool value)
-        {
-            obj.SetValue(EnableVirtualizationWithGroupingProperty, value);
-        }
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
-        public static bool GetEnableVirtualizationWithGrouping(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(EnableVirtualizationWithGroupingProperty);
-        }
-
         public static readonly DependencyProperty MaxLengthProperty
             = DependencyProperty.RegisterAttached("MaxLength",
                                                   typeof(int),

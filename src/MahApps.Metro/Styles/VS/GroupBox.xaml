@@ -4,16 +4,17 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <Thickness x:Key="GroupBoxHeaderThemePadding">2</Thickness>
-    <System:Double x:Key="GroupBoxHeaderThemeFontSize">16</System:Double>
+    <System:Double x:Key="MahApps.Sizes.GroupBox.HeaderThemeFont">16</System:Double>
 
-    <Style x:Key="StandardGroupBox" TargetType="{x:Type GroupBox}">
+    <Style x:Key="MahApps.Styles.GroupBox.VisualStudio" TargetType="{x:Type GroupBox}">
         <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource GroupBoxHeaderThemeFontSize}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -23,23 +24,24 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Controls:ContentControlEx x:Name="HeaderContent"
-                                                   Grid.Row="0"
-                                                   Margin="{DynamicResource GroupBoxHeaderThemePadding}"
-                                                   Content="{TemplateBinding Header}"
-                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                   FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                   FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                   FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                   FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
-                                                   RecognizesAccessKey="True"
-                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Grid.Row="0" Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}">
+                            <Controls:ContentControlEx x:Name="HeaderContent"
+                                                       Margin="{DynamicResource GroupBoxHeaderThemePadding}"
+                                                       Content="{TemplateBinding Header}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
+                                                       Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
                         <Border Grid.Row="1"
-                                Background="Transparent"
+                                Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

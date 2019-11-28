@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     /// <summary>
     /// <para>

@@ -4,10 +4,10 @@
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="Controls:Tile">
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{x:Null}" />
         <Setter Property="CountFontSize" Value="28" />
-        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
         <Setter Property="Height" Value="140" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="3" />

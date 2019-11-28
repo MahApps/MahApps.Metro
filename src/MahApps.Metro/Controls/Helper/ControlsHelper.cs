@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -52,6 +51,7 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ContentControl))]
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(SplitButton))]
         [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
         public static CharacterCasing GetContentCharacterCasing(UIElement element)
         {
@@ -66,122 +66,77 @@ namespace MahApps.Metro.Controls
             element.SetValue(ContentCharacterCasingProperty, value);
         }
 
-        public static readonly DependencyProperty HeaderFontFamilyProperty =
-            DependencyProperty.RegisterAttached("HeaderFontFamily", typeof(FontFamily), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily));
 
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
-        public static FontFamily GetHeaderFontFamily(UIElement element)
-        {
-            return (FontFamily)element.GetValue(HeaderFontFamilyProperty);
-        }
 
-        public static void SetHeaderFontFamily(UIElement element, FontFamily value)
-        {
-            element.SetValue(HeaderFontFamilyProperty, value);
-        }
-
-        public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontSize));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
-        public static double GetHeaderFontSize(UIElement element)
-        {
-            return (double)element.GetValue(HeaderFontSizeProperty);
-        }
-
-        public static void SetHeaderFontSize(UIElement element, double value)
-        {
-            element.SetValue(HeaderFontSizeProperty, value);
-        }
-
-        public static readonly DependencyProperty HeaderFontStretchProperty =
-            DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new FrameworkPropertyMetadata(TextElement.FontStretchProperty.DefaultMetadata.DefaultValue));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
-        public static FontStretch GetHeaderFontStretch(UIElement element)
-        {
-            return (FontStretch)element.GetValue(HeaderFontStretchProperty);
-        }
-
-        public static void SetHeaderFontStretch(UIElement element, FontStretch value)
-        {
-            element.SetValue(HeaderFontStretchProperty, value);
-        }
-
-        public static readonly DependencyProperty HeaderFontWeightProperty =
-            DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
-        public static FontWeight GetHeaderFontWeight(UIElement element)
-        {
-            return (FontWeight)element.GetValue(HeaderFontWeightProperty);
-        }
-
-        public static void SetHeaderFontWeight(UIElement element, FontWeight value)
-        {
-            element.SetValue(HeaderFontWeightProperty, value);
-        }
-
-        public static readonly DependencyProperty HeaderMarginProperty =
-            DependencyProperty.RegisterAttached("HeaderMargin", typeof(Thickness), typeof(ControlsHelper), new UIPropertyMetadata(new Thickness()));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
-        public static Thickness GetHeaderMargin(UIElement element)
-        {
-            return (Thickness)element.GetValue(HeaderMarginProperty);
-        }
-
-        public static void SetHeaderMargin(UIElement element, Thickness value)
-        {
-            element.SetValue(HeaderMarginProperty, value);
-        }
-
-        public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-
-        /// <summary>
-        /// Sets the brush used to draw the focus border.
-        /// </summary>
-        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
-        {
-            obj.SetValue(FocusBorderBrushProperty, value);
-        }
+        public static readonly DependencyProperty FocusBorderBrushProperty
+            = DependencyProperty.RegisterAttached("FocusBorderBrush",
+                                                  typeof(Brush),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the focus border.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
-        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
         public static Brush GetFocusBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(FocusBorderBrushProperty);
         }
 
         /// <summary>
-        /// Sets the brush used to draw the mouse over brush.
+        /// Sets the brush used to draw the focus border.
         /// </summary>
-        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
         {
-            obj.SetValue(MouseOverBorderBrushProperty, value);
+            obj.SetValue(FocusBorderBrushProperty, value);
         }
+
+        public static readonly DependencyProperty FocusBorderThicknessProperty
+            = DependencyProperty.RegisterAttached("FocusBorderThickness",
+                                                  typeof(Thickness),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(default(Thickness), FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Gets the brush used to draw the focus border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static Thickness GetFocusBorderThickness(DependencyObject obj)
+        {
+            return (Thickness)obj.GetValue(FocusBorderThicknessProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the focus border.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        public static void SetFocusBorderThickness(DependencyObject obj, Thickness value)
+        {
+            obj.SetValue(FocusBorderThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseOverBorderBrushProperty
+            = DependencyProperty.RegisterAttached("MouseOverBorderBrush",
+                                                  typeof(Brush),
+                                                  typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets the brush used to draw the mouse over brush.
@@ -196,6 +151,21 @@ namespace MahApps.Metro.Controls
         public static Brush GetMouseOverBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the mouse over brush.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(Tile))]
+        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(MouseOverBorderBrushProperty, value);
         }
 
         /// <summary>

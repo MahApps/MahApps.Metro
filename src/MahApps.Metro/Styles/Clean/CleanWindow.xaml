@@ -2,12 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="CleanWindowStyleKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="OverrideDefaultWindowCommandsBrush" Value="{DynamicResource BlackBrush}" />
+    <Style x:Key="MahApps.Styles.MetroWindow.Clean" TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="TitleAlignment" Value="Center" />
-        <Setter Property="TitleForeground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="WindowTitleBrush" Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="WindowTitleBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
     </Style>
 
 </ResourceDictionary>

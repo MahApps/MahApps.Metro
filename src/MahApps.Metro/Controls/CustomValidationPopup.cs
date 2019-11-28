@@ -18,9 +18,37 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
-        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty = DependencyProperty.Register("CloseOnMouseLeftButtonDown", typeof(bool), typeof(CustomValidationPopup), new PropertyMetadata(true));
-
         private Window hostWindow;
+
+        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
+            = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown),
+                                          typeof(bool),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets whether if the popup can be closed by left mouse button down.
+        /// </summary>
+        public bool CloseOnMouseLeftButtonDown
+        {
+            get { return (bool)this.GetValue(CloseOnMouseLeftButtonDownProperty); }
+            set { this.SetValue(CloseOnMouseLeftButtonDownProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
+            = DependencyProperty.RegisterAttached(nameof(ShowValidationErrorOnMouseOver),
+                                                  typeof(bool),
+                                                  typeof(CustomValidationPopup),
+                                                  new PropertyMetadata(false));
+
+        /// <summary>
+        /// Gets or sets whether the validation error text will be shown when hovering the validation triangle.
+        /// </summary>
+        public bool ShowValidationErrorOnMouseOver
+        {
+            get { return (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty); }
+            set { this.SetValue(ShowValidationErrorOnMouseOverProperty, value); }
+        }
 
         public CustomValidationPopup()
         {
@@ -28,20 +56,23 @@ namespace MahApps.Metro.Controls
             this.Opened += this.CustomValidationPopup_Opened;
         }
 
-        /// <summary>
-        /// Gets/sets if the popup can be closed by left mouse button down.
-        /// </summary>
-        public bool CloseOnMouseLeftButtonDown
-        {
-            get { return (bool)GetValue(CloseOnMouseLeftButtonDownProperty); }
-            set { SetValue(CloseOnMouseLeftButtonDownProperty, value); }
-        }
-
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (CloseOnMouseLeftButtonDown)
+            if (this.CloseOnMouseLeftButtonDown)
             {
-                this.SetCurrentValue(Popup.IsOpenProperty, false);
+                this.SetCurrentValue(IsOpenProperty, false);
+            }
+            else
+            {
+                var adornedElement = this.GetAdornedElement();
+                if (adornedElement != null && ValidationHelper.GetCloseOnMouseLeftButtonDown(adornedElement))
+                {
+                    this.SetCurrentValue(IsOpenProperty, false);
+                }
+                else
+                {
+                    e.Handled = true;
+                }
             }
         }
 
@@ -98,6 +129,7 @@ namespace MahApps.Metro.Controls
             {
                 target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             }
+
             if (this.hostWindow != null)
             {
                 this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
@@ -106,24 +138,30 @@ namespace MahApps.Metro.Controls
                 this.hostWindow.Activated -= this.hostWindow_Activated;
                 this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
             }
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Opened -= this.CustomValidationPopup_Opened;
             this.hostWindow = null;
+        }
+
+        private UIElement GetAdornedElement()
+        {
+            var placeholder = this.PlacementTarget is FrameworkElement target ? target.DataContext as AdornedElementPlaceholder : null;
+            return placeholder?.AdornedElement;
         }
 
         private void hostWindow_StateChanged(object sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
-                var target = this.PlacementTarget as FrameworkElement;
-                var holder = target != null ? target.DataContext as AdornedElementPlaceholder : null;
-                if (holder != null && holder.AdornedElement != null)
+                var adornedElement = this.GetAdornedElement();
+                if (adornedElement != null)
                 {
                     this.PopupAnimation = PopupAnimation.None;
                     this.IsOpen = false;
-                    var errorTemplate = holder.AdornedElement.GetValue(Validation.ErrorTemplateProperty);
-                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, null);
-                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
+                    var errorTemplate = adornedElement.GetValue(Validation.ErrorTemplateProperty);
+                    adornedElement.SetValue(Validation.ErrorTemplateProperty, null);
+                    adornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
                 }
             }
         }
@@ -157,6 +195,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var hwnd = hwndSource.Handle;
 
 #pragma warning disable 618

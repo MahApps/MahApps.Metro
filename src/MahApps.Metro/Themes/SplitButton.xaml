@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <ControlTemplate x:Key="SplitButtonHorizontal" TargetType="{x:Type Controls:SplitButton}">
+    <ControlTemplate x:Key="MahApps.Templates.SplitButton.Horizontal" TargetType="{x:Type Controls:SplitButton}">
         <Grid UseLayoutRounding="True">
             <Border x:Name="PART_Border"
                     Background="Transparent"
@@ -46,17 +46,17 @@
                                                   RecognizesAccessKey="True"
                                                   UseLayoutRounding="False" />
                                 <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                           Margin="2"
                                                            Padding="{TemplateBinding Padding}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Content="{TemplateBinding SelectionBoxItem}"
                                                            ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                           IsHitTestVisible="False"
                                                            RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
@@ -75,7 +75,7 @@
                             <ContentControl Width="9"
                                             Height="9"
                                             Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource PathIconContentControlStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                         </Button>
                     </Grid>
                 </Controls:ClipBorder>
@@ -83,46 +83,54 @@
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
-                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                   PlacementTarget="{Binding ElementName=PART_Border}"
-                   PopupAnimation="Fade"
-                   StaysOpen="True">
-                <ListBox x:Name="PART_ListBox"
-                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                         Margin="0"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                         IsSelected="{TemplateBinding IsSelected}"
-                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
-                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                         ItemTemplate="{TemplateBinding ItemTemplate}"
-                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                         ItemsPanel="{TemplateBinding ItemsPanel}"
-                         ItemsSource="{TemplateBinding ItemsSource}"
-                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
-                         SelectionMode="Single"
-                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                         Style="{TemplateBinding ListBoxStyle}" />
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="Fade">
+                <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border x:Name="PopupBorder"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            Background="{DynamicResource MahApps.Brushes.White}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer Padding="1" BorderThickness="0">
+                            <Grid RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-            </Trigger>
+            </MultiTrigger>
             <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
             </Trigger>
+            <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".55" />
+                <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="SplitButtonVertical" TargetType="{x:Type Controls:SplitButton}">
+    <ControlTemplate x:Key="MahApps.Templates.SplitButton.Vertical" TargetType="{x:Type Controls:SplitButton}">
         <Grid UseLayoutRounding="True">
             <Border x:Name="PART_Border"
                     Background="Transparent"
@@ -166,17 +174,17 @@
                                                   RecognizesAccessKey="True"
                                                   UseLayoutRounding="False" />
                                 <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                           Margin="2"
                                                            Padding="{TemplateBinding Padding}"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
                                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                           Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Content="{TemplateBinding SelectionBoxItem}"
                                                            ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                           ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                           ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                           ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                           IsHitTestVisible="False"
                                                            RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
@@ -195,7 +203,7 @@
                             <ContentControl Width="9"
                                             Height="9"
                                             Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
-                                            Style="{DynamicResource PathIconContentControlStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                         </Button>
                     </Grid>
                 </Controls:ClipBorder>
@@ -203,46 +211,54 @@
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
-                   IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                   PlacementTarget="{Binding ElementName=PART_Border}"
-                   PopupAnimation="Fade"
-                   StaysOpen="True">
-                <ListBox x:Name="PART_ListBox"
-                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                         Margin="0"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                         IsSelected="{TemplateBinding IsSelected}"
-                         IsSynchronizedWithCurrentItem="{TemplateBinding IsSynchronizedWithCurrentItem}"
-                         ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                         ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                         ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                         ItemTemplate="{TemplateBinding ItemTemplate}"
-                         ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                         ItemsPanel="{TemplateBinding ItemsPanel}"
-                         ItemsSource="{TemplateBinding ItemsSource}"
-                         RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}"
-                         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValue="{Binding SelectedValue, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                         SelectedValuePath="{TemplateBinding SelectedValuePath}"
-                         SelectionMode="Single"
-                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                         Style="{TemplateBinding ListBoxStyle}" />
+                   IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                   Placement="Bottom"
+                   PopupAnimation="Fade">
+                <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                    <Border x:Name="PopupBorder"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            Background="{DynamicResource MahApps.Brushes.White}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer Padding="1" BorderThickness="0">
+                            <Grid RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-            </Trigger>
+            </MultiTrigger>
             <Trigger SourceName="PART_Expander" Property="IsPressed" Value="True">
                 <Setter TargetName="PART_Expander" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
             </Trigger>
+            <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value=".55" />
+                <Setter TargetName="PART_Expander" Property="IsEnabled" Value="False" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+            </MultiTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="ButtonSplitFocusVisual">
+    <Style x:Key="MahApps.Styles.FocusVisualStyle.ButtonSplit">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -257,35 +273,54 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:SplitButton}">
-        <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ButtonArrowStyle" Value="{DynamicResource ButtonSplitArrowStyle}" />
-        <Setter Property="ButtonStyle" Value="{DynamicResource ButtonSplitStyle}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonSplitFocusVisual}" />
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.SplitArrow}" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.FocusVisualStyle.ButtonSplit}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="ListBoxStyle" Value="{DynamicResource VirtualisedMetroListBox}" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template" Value="{StaticResource SplitButtonHorizontal}" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Horizontal}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizingWhenGrouping" Value="True" />
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
         <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsItemsHost="True"
+                                                    IsVirtualizing="True"
+                                                    IsVirtualizingWhenGrouping="True"
+                                                    VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{StaticResource SplitButtonVertical}" />
+                <Setter Property="Template" Value="{StaticResource MahApps.Templates.SplitButton.Vertical}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
             </Trigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value=".55" />

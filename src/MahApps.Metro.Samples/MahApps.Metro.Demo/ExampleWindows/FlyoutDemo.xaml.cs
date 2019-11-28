@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using MetroDemo.Models;
 
 namespace MetroDemo.ExampleWindows
 {
@@ -11,11 +9,13 @@ namespace MetroDemo.ExampleWindows
     {
         private bool _disposed;
         private bool _hideOnClose = true;
-        
+
         public FlyoutDemo()
         {
             this.DataContext = new MainWindowViewModel(DialogCoordinator.Instance);
+
             this.InitializeComponent();
+
             this.Closing += (s, e) =>
                 {
                     if (_hideOnClose)
@@ -43,6 +43,7 @@ namespace MetroDemo.ExampleWindows
             {
                 WindowState = WindowState.Normal;
             }
+
             Show();
         }
 
@@ -59,19 +60,6 @@ namespace MetroDemo.ExampleWindows
                 _disposed = true;
                 _hideOnClose = false;
                 Close();
-            }
-        }
-
-        private ICommand openFirstFlyoutCommand;
-
-        public ICommand OpenFirstFlyoutCommand
-        {
-            get
-            {
-                return this.openFirstFlyoutCommand ?? (this.openFirstFlyoutCommand = new SimpleCommand {
-                    CanExecuteDelegate = x => this.Flyouts.Items.Count > 0,
-                    ExecuteDelegate = x => this.ToggleFlyout(0)
-                });
             }
         }
 
@@ -166,16 +154,18 @@ namespace MetroDemo.ExampleWindows
 
         private void ShowDynamicFlyout(object sender, RoutedEventArgs e)
         {
-            var flyout = new DynamicFlyout {
-                Header = "Dynamic flyout"
-            };
+            var flyout = new DynamicFlyout
+                         {
+                             Header = "Dynamic flyout"
+                         };
 
             // when the flyout is closed, remove it from the hosting FlyoutsControl
             RoutedEventHandler closingFinishedHandler = null;
-            closingFinishedHandler = (o, args) => {
-                flyout.ClosingFinished -= closingFinishedHandler;
-                flyoutsControl.Items.Remove(flyout);
-            };
+            closingFinishedHandler = (o, args) =>
+                {
+                    flyout.ClosingFinished -= closingFinishedHandler;
+                    flyoutsControl.Items.Remove(flyout);
+                };
             flyout.ClosingFinished += closingFinishedHandler;
 
             flyoutsControl.Items.Add(flyout);

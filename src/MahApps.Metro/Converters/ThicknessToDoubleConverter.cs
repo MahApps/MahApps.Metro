@@ -1,35 +1,37 @@
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
 namespace MahApps.Metro.Converters
 {
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-
     [ValueConversion(typeof(Thickness), typeof(double), ParameterType = typeof(ThicknessSideType))]
     public class ThicknessToDoubleConverter : IValueConverter
     {
-        public ThicknessSideType TakeThicknessSide { get; set; }
+        public ThicknessSideType TakeThicknessSide { get; set; } = ThicknessSideType.None;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Thickness)
+            if (value is Thickness thickness)
             {
+                var takeThicknessSide = this.TakeThicknessSide;
+
                 // yes, we can override it with the parameter value
-                if (parameter is ThicknessSideType)
+                if (parameter is ThicknessSideType sideType)
                 {
-                    this.TakeThicknessSide = (ThicknessSideType)parameter;
+                    takeThicknessSide = sideType;
                 }
-                var orgThickness = (Thickness)value;
-                switch (this.TakeThicknessSide)
+
+                switch (takeThicknessSide)
                 {
                     case ThicknessSideType.Left:
-                        return orgThickness.Left;
+                        return thickness.Left;
                     case ThicknessSideType.Top:
-                        return orgThickness.Top;
+                        return thickness.Top;
                     case ThicknessSideType.Right:
-                        return orgThickness.Right;
+                        return thickness.Right;
                     case ThicknessSideType.Bottom:
-                        return orgThickness.Bottom;
+                        return thickness.Bottom;
                     default:
                         return default(double);
                 }

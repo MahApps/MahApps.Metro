@@ -3,12 +3,12 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <!--  Tooltip Style  -->
-    <Style x:Key="MetroToolTip" TargetType="ToolTip">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+    <Style x:Key="MahApps.Styles.ToolTip" TargetType="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="FontSize" Value="{DynamicResource TooltipFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Tooltip}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="6 3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

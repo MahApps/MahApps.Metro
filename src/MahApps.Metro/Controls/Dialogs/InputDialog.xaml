@@ -18,7 +18,7 @@
         <TextBox x:Name="PART_TextBox"
                  Grid.Row="1"
                  Margin="0 5 0 0"
-                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                  controls:TextBoxHelper.SelectAllOnFocus="True"
                  FontSize="{Binding DialogMessageFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
@@ -26,21 +26,19 @@
                  TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="2"
-                    Height="85"
+                    MinHeight="85"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button x:Name="PART_AffirmativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="0 0 5 0"
                     Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.AccentButton}" />
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
             <Button x:Name="PART_NegativeButton"
-                    Height="35"
-                    MinWidth="80"
                     Margin="5 0 5 0"
                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Metro.Styles.Dialogs.Button}" />
+                    FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
         </StackPanel>
     </Grid>
 </Dialogs:BaseMetroDialog>

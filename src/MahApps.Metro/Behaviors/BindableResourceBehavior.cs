@@ -2,7 +2,7 @@
 using System.Windows.Shapes;
 using Microsoft.Xaml.Behaviors;
 
-namespace MahApps.Metro.Behaviours
+namespace MahApps.Metro.Behaviors
 {
     public class BindableResourceBehavior : Behavior<Shape>
     {

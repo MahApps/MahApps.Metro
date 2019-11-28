@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
@@ -9,96 +8,240 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public partial class HamburgerMenu
     {
+        public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
+
         /// <summary>
         /// Event raised when an item is clicked
         /// </summary>
-        public event ItemClickEventHandler ItemClick;
+        public event ItemClickRoutedEventHandler ItemClick
+        {
+            add { this.AddHandler(HamburgerMenu.ItemClickEvent, value); }
+            remove { this.RemoveHandler(HamburgerMenu.ItemClickEvent, value); }
+        }
+
+        public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an options' item is clicked
         /// </summary>
-        public event ItemClickEventHandler OptionsItemClick;
+        public event ItemClickRoutedEventHandler OptionsItemClick
+        {
+            add { this.AddHandler(HamburgerMenu.OptionsItemClickEvent, value); }
+            remove { this.RemoveHandler(HamburgerMenu.OptionsItemClickEvent, value); }
+        }
+
+        public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Direct, typeof(HamburgerMenuItemInvokedRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is invoked
         /// </summary>
-        public event EventHandler<HamburgerMenuItemInvokedEventArgs> ItemInvoked;
-
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        public event HamburgerMenuItemInvokedRoutedEventHandler ItemInvoked
         {
-            IsPaneOpen = !IsPaneOpen;
+            add { this.AddHandler(HamburgerMenu.ItemInvokedEvent, value); }
+            remove { this.RemoveHandler(HamburgerMenu.ItemInvokedEvent, value); }
         }
 
-        private void OnItemClick()
-        {
-            if (_optionsListView != null)
-            {
-                _optionsListView.SelectedIndex = -1;
-            }
+        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(HamburgerMenu));
 
+        /// <summary>
+        /// Event raised when the hamburger button is clicked
+        /// </summary>
+        public event RoutedEventHandler HamburgerButtonClick
+        {
+            add { this.AddHandler(HamburgerMenu.HamburgerButtonClickEvent, value); }
+            remove { this.RemoveHandler(HamburgerMenu.HamburgerButtonClickEvent, value); }
+        }
+
+        private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
+        {
+            var args = new RoutedEventArgs(HamburgerMenu.HamburgerButtonClickEvent, sender);
+            this.RaiseEvent(args);
+
+            if (!args.Handled)
+            {
+                IsPaneOpen = !IsPaneOpen;
+            }
+        }
+
+        private bool OnItemClick()
+        {
             var selectedItem = _buttonsListView.SelectedItem;
+
+            if (!CanRaiseItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseItemCommand();
 
-            RaiseItemEvents(selectedItem);
+            var raiseItemEvents = this.RaiseItemEvents(selectedItem);
+            if (raiseItemEvents && _optionsListView != null)
+            {
+                _optionsListView.SelectedIndex = -1;
+            }
+
+            return raiseItemEvents;
+        }
+
+        private bool CanRaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this._buttonsListView != null)
+                {
+                    this._buttonsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private bool RaiseItemEvents(object selectedItem)
         {
-            if (selectedItem is null || (ItemClick is null && ItemInvoked is null))
+            if (selectedItem is null)
             {
                 return false;
             }
 
-            ItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
-            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = false });
+            var itemClickEventArgs = new ItemClickEventArgs(ItemClickEvent, this) { ClickedItem = selectedItem };
+            this.RaiseEvent(itemClickEventArgs);
 
-            return true;
+            var hamburgerMenuItemInvokedEventArgs = new HamburgerMenuItemInvokedEventArgs(ItemInvokedEvent, this) { InvokedItem = selectedItem, IsItemOptions = false };
+            this.RaiseEvent(hamburgerMenuItemInvokedEventArgs);
+
+            return !itemClickEventArgs.Handled && !hamburgerMenuItemInvokedEventArgs.Handled;
         }
 
-        private void OnOptionsItemClick()
+        private bool OnOptionsItemClick()
         {
-            if (_buttonsListView != null)
-            {
-                _buttonsListView.SelectedIndex = -1;
-            }
-
             var selectedItem = _optionsListView.SelectedItem;
+
+            if (!CanRaiseOptionsItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
             RaiseOptionsItemCommand();
 
-            RaiseOptionsItemEvents(selectedItem);
+            var raiseOptionsItemEvents = this.RaiseOptionsItemEvents(selectedItem);
+            if (raiseOptionsItemEvents && _buttonsListView != null)
+            {
+                _buttonsListView.SelectedIndex = -1;
+            }
+
+            return raiseOptionsItemEvents;
         }
 
-        private bool RaiseOptionsItemEvents(object selectedItem)
+        private bool CanRaiseOptionsItemEvents(object selectedItem)
         {
-            if (selectedItem is null || (OptionsItemClick is null && ItemInvoked is null))
+            if (selectedItem is null)
             {
                 return false;
             }
 
-            OptionsItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
-            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = true });
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this._optionsListView != null)
+                {
+                    this._optionsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
 
             return true;
         }
 
+        private bool RaiseOptionsItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                return false;
+            }
+
+            var itemClickEventArgs = new ItemClickEventArgs(OptionsItemClickEvent, this) { ClickedItem = selectedItem };
+            this.RaiseEvent(itemClickEventArgs);
+
+            var hamburgerMenuItemInvokedEventArgs = new HamburgerMenuItemInvokedEventArgs(ItemInvokedEvent, this) { InvokedItem = selectedItem, IsItemOptions = true };
+            this.RaiseEvent(hamburgerMenuItemInvokedEventArgs);
+
+            return !itemClickEventArgs.Handled && !hamburgerMenuItemInvokedEventArgs.Handled;
+        }
+
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listBox = sender as ListBox;
+            if (listBox == null)
+            {
+                return;
+            }
+
+            listBox.SelectionChanged -= this.ButtonsListView_SelectionChanged;
+
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                OnItemClick();
+                var canItemClick = OnItemClick();
+
+                if (!canItemClick)
+                {
+                    // The following lines will fire another SelectionChanged event.
+                    if (e.RemovedItems.Count > 0)
+                    {
+                        listBox.SelectedItem = e.RemovedItems[0];
+                    }
+                    else
+                    {
+                        listBox.SelectedIndex = -1;
+                    }
+                }
             }
+
+            listBox.SelectionChanged += this.ButtonsListView_SelectionChanged;
         }
 
         private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listBox = sender as ListBox;
+            if (listBox == null)
+            {
+                return;
+            }
+
+            listBox.SelectionChanged -= this.OptionsListView_SelectionChanged;
+
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                OnOptionsItemClick();
+                var canItemClick = OnOptionsItemClick();
+
+                if (!canItemClick)
+                {
+                    // The following lines will fire another SelectionChanged event.
+                    if (e.RemovedItems.Count > 0)
+                    {
+                        listBox.SelectedItem = e.RemovedItems[0];
+                    }
+                    else
+                    {
+                        listBox.SelectedIndex = -1;
+                    }
+                }
             }
+
+            listBox.SelectionChanged += this.OptionsListView_SelectionChanged;
         }
     }
 }

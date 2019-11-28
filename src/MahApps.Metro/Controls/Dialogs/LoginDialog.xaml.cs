@@ -148,6 +148,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.ShouldHideUsername = settings.ShouldHideUsername;
             this.RememberCheckBoxVisibility = settings.RememberCheckBoxVisibility;
             this.RememberCheckBoxText = settings.RememberCheckBoxText;
+            this.RememberCheckBoxChecked = settings.RememberCheckBoxChecked;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
@@ -201,7 +202,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             escapeKeyHandler = (sender, e) =>
                 {
-                    if (e.Key == Key.Escape)
+                    if (e.Key == Key.Escape || (e.Key == Key.System && e.SystemKey == Key.F4))
                     {
                         cleanUpHandlers();
 
@@ -275,7 +276,7 @@ namespace MahApps.Metro.Controls.Dialogs
             var settings = this.DialogSettings as LoginDialogSettings;
             if (settings != null && settings.EnablePasswordPreview)
             {
-                var win8MetroPasswordStyle = this.FindResource("Win8MetroPasswordBox") as Style;
+                var win8MetroPasswordStyle = this.FindResource("MahApps.Styles.PasswordBox.Win8") as Style;
                 if (win8MetroPasswordStyle != null)
                 {
                     this.PART_TextBox2.Style = win8MetroPasswordStyle;
@@ -290,9 +291,9 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (this.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Metro.Styles.Dialogs.AccentHighlightButton");
-                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    this.PART_TextBox2.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                    this.PART_NegativeButton.SetResourceReference(StyleProperty, "MahApps.Styles.Button.Dialogs.AccentHighlight");
+                    this.PART_TextBox.SetResourceReference(ForegroundProperty, "MahApps.Brushes.BlackColor");
+                    this.PART_TextBox2.SetResourceReference(ForegroundProperty, "MahApps.Brushes.BlackColor");
                     break;
             }
         }

@@ -2,7 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="CleanWindowCommandsStyleKey" TargetType="{x:Type Controls:WindowCommands}">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MahApps.Styles.WindowCommands.Clean"
+           BasedOn="{StaticResource MahApps.Styles.WindowCommands.Base}"
+           TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="SeparatorHeight" Value="11" />
         <Setter Property="ShowLastSeparator" Value="False" />

@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
-    <Style x:Key="MahApps.Metro.Styles.ContentControlEx" TargetType="{x:Type controls:ContentControlEx}">
+    <Style x:Key="MahApps.Styles.ContentControlEx" TargetType="{x:Type controls:ContentControlEx}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -43,8 +43,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.MetroThumbContentControl"
-           BasedOn="{StaticResource MahApps.Metro.Styles.ContentControlEx}"
+    <Style x:Key="MahApps.Styles.MetroThumbContentControl"
+           BasedOn="{StaticResource MahApps.Styles.ContentControlEx}"
            TargetType="{x:Type controls:MetroThumbContentControl}" />
 
 </ResourceDictionary>

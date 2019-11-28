@@ -7,11 +7,11 @@
                       Title="CleanWindowDemo"
                       Width="800"
                       Height="400"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Icon="..\mahapps.metro.logo2.ico"
                       ResizeMode="CanResizeWithGrip"
                       ShowIconOnTitleBar="True"
-                      Style="{DynamicResource CleanWindowStyleKey}">
+                      Style="{DynamicResource MahApps.Styles.MetroWindow.Clean}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -52,6 +52,10 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
+    <Controls:MetroWindow.WindowButtonCommands>
+        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Clean.Win10}" />
+    </Controls:MetroWindow.WindowButtonCommands>
+
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="settingsFlyout"
@@ -86,10 +90,10 @@
                                  Columns="2">
                         <Button Margin="10"
                                 Content="Create"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                         <Button Margin="10"
                                 Content="Cancel"
-                                Style="{DynamicResource SquareButtonStyle}" />
+                                Style="{DynamicResource MahApps.Styles.Button.Square}" />
                     </UniformGrid>
 
                 </Grid>
@@ -117,11 +121,11 @@
 
             <GroupBox Grid.Column="0"
                       Padding="5"
-                      Controls:ControlsHelper.HeaderFontSize="30"
+                      Controls:HeaderedControlHelper.HeaderFontSize="30"
                       Header="artists">
                 <ListBox x:Name="artist"
                          ItemsSource="{x:Static models:SampleData.Artists}"
-                         Style="{DynamicResource VirtualisedMetroListBox}">
+                         Style="{DynamicResource MahApps.Styles.ListBox.Virtualized}">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:Artist}">
                             <TextBlock>
@@ -147,7 +151,7 @@
                 <Controls:MetroTabItem Header="albums">
                     <ListBox x:Name="albums"
                              ItemsSource="{Binding ElementName=artist, Path=SelectedItem.Albums}"
-                             Style="{DynamicResource VirtualisedMetroListBox}">
+                             Style="{DynamicResource MahApps.Styles.ListBox.Virtualized}">
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type models:Album}">
                                 <TextBlock>
@@ -166,7 +170,7 @@
 
             <GroupBox Grid.Column="2"
                       Padding="5"
-                      Controls:ControlsHelper.HeaderFontSize="30"
+                      Controls:HeaderedControlHelper.HeaderFontSize="30"
                       Header="some tests">
                 <StackPanel MinWidth="100"
                             HorizontalAlignment="Center"
@@ -175,11 +179,11 @@
                     <Button Margin="2"
                             Click="Button_Click"
                             Content="Flyout"
-                            Style="{DynamicResource MetroFlatButton}" />
+                            Style="{DynamicResource MahApps.Styles.Button.Flat}" />
                     <Button Margin="2"
                             Click="Button_Click_1"
                             Content="Dialog"
-                            Style="{DynamicResource MetroFlatButton}" />
+                            Style="{DynamicResource MahApps.Styles.Button.Flat}" />
                     <ComboBox Margin="2"
                               ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}"
                               SelectedItem="{Binding ElementName=ThisView, Path=TitleAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -189,7 +193,7 @@
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro Clean Window</StatusBarItem>
-            <Separator Style="{StaticResource CleanMetroStatusBarSeparator}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.Clean}" />
             <StatusBarItem>Some stuff</StatusBarItem>
         </StatusBar>
     </Grid>

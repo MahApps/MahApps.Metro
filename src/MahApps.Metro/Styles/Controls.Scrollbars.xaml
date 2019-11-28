@@ -4,22 +4,22 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Storyboard x:Key="MetroScrollBarThumbMouseOverStoryboard" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbMouseOver" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.6" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MetroScrollBarThumbPressedStoryboard" po:Freeze="True">
+    <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbPressed" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PressedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.8" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="MetroScrollBarRepeatButtonSmallStyle" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarSmall" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Height" Value="{DynamicResource VerticalScrollBarRepeatButtonHeight}" />
+        <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Interval" Value="50" />
         <Setter Property="IsTabStop" Value="False" />
@@ -42,7 +42,7 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=OneWay}"
-                                  Fill="{DynamicResource GrayBrush3}"
+                                  Fill="{DynamicResource MahApps.Brushes.Gray3}"
                                   Stretch="Uniform" />
                         </Viewbox>
                     </Grid>
@@ -51,20 +51,20 @@
                             <Setter TargetName="ArrowBox" Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray1}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Width" Value="{DynamicResource HorizontalScrollBarRepeatButtonWidth}" />
+        <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width}" />
     </Style>
 
-    <Style x:Key="MetroScrollBarRepeatButtonLargeStyle" TargetType="{x:Type RepeatButton}">
+    <Style x:Key="MahApps.Styles.RepeatButton.ScrollBarLarge" TargetType="{x:Type RepeatButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Interval" Value="50" />
@@ -81,8 +81,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroScrollBarThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="Background" Value="{DynamicResource ThumbBrush}" />
+    <Style x:Key="MahApps.Styles.Thumb.ScrollBar" TargetType="{x:Type Thumb}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Thumb}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -95,20 +95,20 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="MouseOverRectangle"
-                                   Fill="{DynamicResource BlackBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Black}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="PressedRectangle"
-                                   Fill="{DynamicResource BlackBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Black}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MetroScrollBarThumbMouseOverStoryboard}" />
-                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MetroScrollBarThumbPressedStoryboard}" />
+                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbMouseOver}" />
+                                <VisualState x:Name="Pressed" Storyboard="{StaticResource MahApps.Storyboard.ScrollBarThumbPressed}" />
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -124,7 +124,7 @@
     </Style>
 
     <!--  fugging Scrollbars  -->
-    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Horizontal" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="HorizontalRoot" Height="{TemplateBinding Height}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -135,29 +135,29 @@
                           Grid.Column="0"
                           Command="ScrollBar.LineLeftCommand"
                           Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
             <Track x:Name="PART_Track"
                    Grid.Column="1"
                    IsDirectionReversed="False">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeDecrease"
                                   Command="ScrollBar.PageLeftCommand"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MetroScrollBarThumbStyle}" />
+                    <Controls:MetroThumb Margin="0 1 0 1" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="HorizontalLargeIncrease"
                                   Command="ScrollBar.PageRightCommand"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="HorizontalSmallIncrease"
                           Grid.Column="2"
                           Command="ScrollBar.LineRightCommand"
                           Content="M192,79.875L352,239.875 192,399.875 192,79.875z"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -166,7 +166,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="MahApps.Templates.ScrollBar.Vertical" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="VerticalRoot" Width="{TemplateBinding Width}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -177,7 +177,7 @@
                           Grid.Row="0"
                           Command="ScrollBar.LineUpCommand"
                           Content="M240.125,160L400.125,320 80.125,320 240.125,160z"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="True">
@@ -187,22 +187,22 @@
                 <Track.DecreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeDecrease"
                                   Command="ScrollBar.PageUpCommand"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MetroScrollBarThumbStyle}" />
+                    <Controls:MetroThumb Margin="1 0 1 0" Style="{DynamicResource MahApps.Styles.Thumb.ScrollBar}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton x:Name="VerticalLargeIncrease"
                                   Command="ScrollBar.PageDownCommand"
-                                  Style="{DynamicResource MetroScrollBarRepeatButtonLargeStyle}" />
+                                  Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarLarge}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <RepeatButton x:Name="VerticalSmallIncrease"
                           Grid.Row="2"
                           Command="ScrollBar.LineDownCommand"
                           Content="M80.125,192L400.125,192 240.125,352 80.125,192z"
-                          Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}" />
+                          Style="{DynamicResource MahApps.Styles.RepeatButton.ScrollBarSmall}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -212,24 +212,24 @@
     </ControlTemplate>
 
     <!--  Style for overall  ScrollBar  -->
-    <Style x:Key="MetroScrollBar" TargetType="{x:Type ScrollBar}">
+    <Style x:Key="MahApps.Styles.ScrollBar" TargetType="{x:Type ScrollBar}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Height" Value="{DynamicResource MetroScrollBarHeight}" />
-                <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
+                <Setter Property="Height" Value="{DynamicResource MahApps.Sizes.ScrollBar.Height}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Horizontal}" />
                 <Setter Property="Width" Value="Auto" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
-                <Setter Property="Width" Value="{DynamicResource MetroScrollBarWidth}" />
+                <Setter Property="Template" Value="{DynamicResource MahApps.Templates.ScrollBar.Vertical}" />
+                <Setter Property="Width" Value="{DynamicResource MahApps.Sizes.ScrollBar.Width}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MetroScrollViewer" TargetType="{x:Type ScrollViewer}">
+    <Style x:Key="MahApps.Styles.ScrollViewer" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
@@ -255,7 +255,6 @@
                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                    Grid.Row="0"
                                    Grid.Column="1"
-                                   AutomationProperties.AutomationId="VerticalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableHeight}"
                                    Minimum="0"
@@ -265,7 +264,6 @@
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Grid.Row="1"
                                    Grid.Column="0"
-                                   AutomationProperties.AutomationId="HorizontalScrollBar"
                                    Cursor="Arrow"
                                    Maximum="{TemplateBinding ScrollableWidth}"
                                    Minimum="0"

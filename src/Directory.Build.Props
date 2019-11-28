@@ -5,8 +5,7 @@
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <!-- <DisableImplicitFrameworkReferences Condition="'$(TargetFramework)' != 'netcoreapp3.0'">true</DisableImplicitFrameworkReferences> -->
-        <LangVersion>latest</LangVersion>
+        <LangVersion>7.3</LangVersion>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <NoWarn>$(NoWarn);CS1591</NoWarn>
@@ -16,30 +15,17 @@
 
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2018.*" PrivateAssets="All" />
+        <PackageReference Include="JetBrains.Annotations" Version="2019.*" PrivateAssets="All" />
         <PackageReference Include="WpfAnalyzers" Version="2.2.*" PrivateAssets="All" />
     </ItemGroup>
 
-    <!-- Set the reference for the other targets -->
-    <!-- <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
-        <Reference Include="System"/>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
-        <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Xaml"/>
-        <Reference Include="WindowsBase"/>
-    </ItemGroup> -->
-
     <ItemGroup>
-        <None Remove="**\*.png;**\*.jpg;**\*.ico"/>
-        <Resource Include="**\*.png;**\*.jpg;**\*.ico"/>
+        <None Remove="**\*.png;**\*.jpg;**\*.ico" />
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico" />
     </ItemGroup>
 
     <!-- SourceLink -->
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <PropertyGroup>
         <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->

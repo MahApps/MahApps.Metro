@@ -29,90 +29,86 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ScrollViewer Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
-                  HorizontalScrollBarVisibility="Visible"
-                  VerticalScrollBarVisibility="Disabled">
-        <Grid Background="{DynamicResource AccentColorBrush4}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="430*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="83*" />
-                <RowDefinition Height="259*" />
-            </Grid.RowDefinitions>
+    <Grid Background="{DynamicResource MahApps.Brushes.Accent4}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="430*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="83*" />
+            <RowDefinition Height="259*" />
+        </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="1"
-                       VerticalAlignment="Center"
-                       FontFamily="Segoe UI"
-                       FontSize="30"
-                       FontWeight="Light"
-                       Foreground="{DynamicResource BlackBrush}"
-                       Text="Only some Tiles in a WrapPanel" />
+        <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontFamily="Segoe UI"
+                   FontSize="30"
+                   FontWeight="Light"
+                   Foreground="{DynamicResource MahApps.Brushes.Black}"
+                   Text="Only some Tiles in a WrapPanel" />
 
-            <WrapPanel Grid.Row="1"
-                       Grid.Column="1"
-                       Width="940"
-                       Height="382"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top">
-                <Controls:Tile Title="Mail"
-                               Margin="3"
-                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
-                               Background="Teal"
-                               HorizontalTitleAlignment="Right"
-                               Style="{StaticResource LargeTileStyle}">
-                    <iconPacks:PackIconModern Width="40"
-                                              Height="40"
-                                              Kind="Email" />
-                </Controls:Tile>
-                <Controls:Tile Title="Desktop"
-                               Margin="3"
-                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}"
-                               Style="{StaticResource LargeTileStyle}">
-                    <iconPacks:PackIconFontAwesome Width="40"
-                                                   Height="40"
-                                                   Kind="DesktopSolid" />
-                </Controls:Tile>
-                <Controls:Tile Title="Finance"
-                               Background="DimGray"
-                               Style="{StaticResource LargeTileStyle}">
-                    <iconPacks:PackIconModern Width="40"
-                                              Height="40"
-                                              Kind="Money" />
-                </Controls:Tile>
-                <Controls:Tile Title="People"
-                               Background="#D2691E"
-                               HorizontalTitleAlignment="Right"
-                               Style="{StaticResource LargeTileStyle}">
-                    <iconPacks:PackIconModern Width="40"
-                                              Height="40"
-                                              Kind="PeopleMultiple" />
-                </Controls:Tile>
-                <Controls:Tile Title="Count"
-                               Background="#FF842D"
-                               Count="28"
-                               CountFontSize="42"
-                               HorizontalTitleAlignment="Center"
-                               IsEnabled="False"
-                               Style="{StaticResource SmallTileStyle}"
-                               TitleFontSize="16"
-                               VerticalTitleAlignment="Top" />
-                <Controls:Tile Title="Weather"
-                               Background="#1E90FF"
-                               Style="{StaticResource SmallTileStyle}">
-                    <iconPacks:PackIconMaterial Width="40"
-                                                Height="40"
-                                                Kind="WeatherCloudy" />
-                </Controls:Tile>
-                <Controls:Tile Title="Store"
-                               Background="Green"
-                               Style="{StaticResource LargeTileStyle}">
-                    <iconPacks:PackIconEntypo Width="40"
-                                              Height="40"
-                                              Kind="WindowsStore" />
-                </Controls:Tile>
-            </WrapPanel>
-        </Grid>
-    </ScrollViewer>
+        <WrapPanel Grid.Row="1"
+                   Grid.Column="1"
+                   Width="940"
+                   Height="382"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top">
+            <Controls:Tile Title="Mail"
+                           Margin="3"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                           Background="Teal"
+                           HorizontalTitleAlignment="Right"
+                           Style="{StaticResource LargeTileStyle}">
+                <iconPacks:PackIconModern Width="40"
+                                          Height="40"
+                                          Kind="Email" />
+            </Controls:Tile>
+            <Controls:Tile Title="Desktop"
+                           Margin="3"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                           Style="{StaticResource LargeTileStyle}">
+                <iconPacks:PackIconFontAwesome Width="40"
+                                               Height="40"
+                                               Kind="DesktopSolid" />
+            </Controls:Tile>
+            <Controls:Tile Title="Finance"
+                           Background="DimGray"
+                           Style="{StaticResource LargeTileStyle}">
+                <iconPacks:PackIconModern Width="40"
+                                          Height="40"
+                                          Kind="Money" />
+            </Controls:Tile>
+            <Controls:Tile Title="People"
+                           Background="#D2691E"
+                           HorizontalTitleAlignment="Right"
+                           Style="{StaticResource LargeTileStyle}">
+                <iconPacks:PackIconModern Width="40"
+                                          Height="40"
+                                          Kind="PeopleMultiple" />
+            </Controls:Tile>
+            <Controls:Tile Title="Count"
+                           Background="#FF842D"
+                           Count="28"
+                           CountFontSize="42"
+                           HorizontalTitleAlignment="Center"
+                           IsEnabled="False"
+                           Style="{StaticResource SmallTileStyle}"
+                           TitleFontSize="16"
+                           VerticalTitleAlignment="Top" />
+            <Controls:Tile Title="Weather"
+                           Background="#1E90FF"
+                           Style="{StaticResource SmallTileStyle}">
+                <iconPacks:PackIconMaterial Width="40"
+                                            Height="40"
+                                            Kind="WeatherCloudy" />
+            </Controls:Tile>
+            <Controls:Tile Title="Store"
+                           Background="Green"
+                           Style="{StaticResource LargeTileStyle}">
+                <iconPacks:PackIconEntypo Width="40"
+                                          Height="40"
+                                          Kind="WindowsStore" />
+            </Controls:Tile>
+        </WrapPanel>
+    </Grid>
 </UserControl>

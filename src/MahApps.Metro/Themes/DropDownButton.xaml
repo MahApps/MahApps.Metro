@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="ButtonDropDownFocusVisual">
+    <Style x:Key="MahApps.Styles.DropDownButton.FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -17,21 +17,22 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:DropDownButton}">
-        <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ButtonStyle" Value="{DynamicResource ButtonDropDownStyle}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonDropDownFocusVisual}" />
+        <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.DropDown}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.DropDownButton.FocusVisualStyle}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="MenuStyle" Value="{DynamicResource MetroContextMenu}" />
+        <Setter Property="MenuStyle" Value="{DynamicResource MahApps.Styles.ContextMenu}" />
         <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -74,7 +75,7 @@
                                                     Content="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{TemplateBinding ArrowBrush}"
-                                                    Style="{DynamicResource PathIconContentControlStyle}"
+                                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}"
                                                     Visibility="{TemplateBinding ArrowVisibility}" />
                                     <StackPanel x:Name="PART_ContentOrientation"
                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -89,7 +90,6 @@
                                                           RecognizesAccessKey="True"
                                                           UseLayoutRounding="False" />
                                         <Controls:ContentControlEx x:Name="PART_ButtonContent"
-                                                                   Margin="3"
                                                                    Padding="{TemplateBinding Padding}"
                                                                    HorizontalAlignment="Center"
                                                                    VerticalAlignment="Center"
@@ -134,11 +134,18 @@
                             <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
                             <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition SourceName="PART_Button" Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-                        </Trigger>
+                        </MultiTrigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_Button" Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value=".55" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -147,10 +154,10 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
             </Trigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value=".55" />

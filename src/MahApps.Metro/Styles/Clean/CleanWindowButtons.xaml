@@ -5,32 +5,98 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--  light button style for close window button (clean style)  -->
-    <Style x:Key="LightCleanWindowCloseButtonStyle"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
+    <!--  light button style for min, max and close window buttons  -->
+    <Style x:Key="MahApps.Styles.Button.CleanWindow.Light"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonPressedBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  dark button style for min, max and close window buttons  -->
+    <Style x:Key="MahApps.Styles.Button.CleanWindow.Dark"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
+           TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  light button style for close window button (clean style)  -->
+    <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Light"
+           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+           TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  dark button style for close window button (clean style)  -->
-    <Style x:Key="DarkCleanWindowCloseButtonStyle"
-           BasedOn="{StaticResource DarkMetroWindowButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Dark"
+           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Dark}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource CleanWindowCloseButtonPressedBackgroundBrush}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.CleanWindow.Close.Light.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+           TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E81123" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F1707A" />
+                <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.Button.CleanWindow.Close.Dark.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Dark}"
+           TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#E81123" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#F1707A" />
+                <Setter Property="Foreground" Value="Black" />
             </Trigger>
         </Style.Triggers>
     </Style>

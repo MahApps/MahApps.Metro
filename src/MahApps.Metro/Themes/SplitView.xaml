@@ -7,7 +7,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OpenPaneLength" Value="320" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
-        <Setter Property="PaneForeground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SplitView}">
@@ -436,7 +436,7 @@
                                             Focusable="False"
                                             IsTabStop="False" />
                             <Rectangle x:Name="LightDismissLayer"
-                                       Fill="Transparent"
+                                       Fill="{TemplateBinding OverlayBrush}"
                                        Visibility="Collapsed" />
                         </Grid>
 

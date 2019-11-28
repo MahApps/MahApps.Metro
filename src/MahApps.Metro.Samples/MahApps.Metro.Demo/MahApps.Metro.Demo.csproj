@@ -14,39 +14,36 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj"/>
+        <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Globalization" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsFormsIntegration" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
-        <PackageReference Include="MaterialDesignThemes" Version="2.5.*" />
+        <PackageReference Include="MaterialDesignThemes" Version="2.*" />
+        <PackageReference Include="MaterialDesignColors" Version="1.*" />
         <PackageReference Include="NHotkey.Wpf" Version="1.2.1" />
-        <PackageReference Include="Fody" Version="4.*" />
-        <PackageReference Include="Costura.Fody" Version="3.*" />
+        <PackageReference Include="Fody" Version="6.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="WindowsFormsIntegration"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="app.manifest"/>
-        <None Remove="App.config"/>
+        <None Include="app.manifest" />
+        <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
             <TargetPath>$(AssemblyName).config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)"/>
-        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)"/>
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <!--
-    Workaround to fix IntelliSense file generation for XAML projects
-    ISSUE: https://github.com/dotnet/project-system/issues/2488
-  -->
-    <Target Name="_SdkDesignTimeBuildAndIntelliSenseWorkaround" AfterTargets="_CheckCompileDesignTimePrerequisite">
-        <PropertyGroup>
-            <BuildingProject>false</BuildingProject>
-        </PropertyGroup>
-    </Target>
 </Project>

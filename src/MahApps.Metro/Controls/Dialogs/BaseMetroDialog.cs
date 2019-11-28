@@ -18,6 +18,30 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
     {
+        /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentMarginProperty = DependencyProperty.Register(nameof(DialogContentMargin), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(25, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the left and right margin for the dialog content.
+        /// </summary>
+        public GridLength DialogContentMargin
+        {
+            get { return (GridLength)this.GetValue(DialogContentMarginProperty); }
+            set { this.SetValue(DialogContentMarginProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="DialogContentWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogContentWidthProperty = DependencyProperty.Register(nameof(DialogContentWidth), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(50, GridUnitType.Star)));
+
+        /// <summary>
+        /// Gets or sets the width for the dialog content.
+        /// </summary>
+        public GridLength DialogContentWidth
+        {
+            get { return (GridLength)this.GetValue(DialogContentWidthProperty); }
+            set { this.SetValue(DialogContentWidthProperty, value); }
+        }
+
         /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
 
@@ -76,6 +100,18 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (double)this.GetValue(DialogMessageFontSizeProperty); }
             set { this.SetValue(DialogMessageFontSizeProperty, value); }
+        }
+
+        /// <summary>Identifies the <see cref="DialogButtonFontSize"/> dependency property.</summary>
+        public static readonly DependencyProperty DialogButtonFontSizeProperty = DependencyProperty.Register(nameof(DialogButtonFontSize), typeof(double), typeof(BaseMetroDialog), new PropertyMetadata(SystemFonts.MessageFontSize));
+
+        /// <summary>
+        /// Gets or sets the font size of any dialog buttons.
+        /// </summary>
+        public double DialogButtonFontSize
+        {
+            get { return (double)this.GetValue(DialogButtonFontSizeProperty); }
+            set { this.SetValue(DialogButtonFontSizeProperty, value); }
         }
 
         public MetroDialogSettings DialogSettings { get; private set; }
@@ -222,8 +258,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     case MetroDialogColorScheme.Theme:
                         ThemeManager.ChangeTheme(this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "WhiteColorBrush"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "BlackBrush"));
+                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.WhiteColor"));
+                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Black"));
                         break;
                     case MetroDialogColorScheme.Inverted:
                         theme = ThemeManager.GetInverseTheme(theme);
@@ -234,13 +270,13 @@ namespace MahApps.Metro.Controls.Dialogs
                         }
 
                         ThemeManager.ChangeTheme(this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "WhiteColorBrush"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "BlackBrush"));
+                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.WhiteColor"));
+                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.Black"));
                         break;
                     case MetroDialogColorScheme.Accented:
                         ThemeManager.ChangeTheme(this.Resources, theme);
-                        this.SetValue(BackgroundProperty, TryGetResource(theme, "HighlightBrush"));
-                        this.SetValue(ForegroundProperty, TryGetResource(theme, "IdealForegroundColorBrush"));
+                        this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Highlight"));
+                        this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.IdealForeground"));
                         break;
                 }
             }
@@ -248,7 +284,7 @@ namespace MahApps.Metro.Controls.Dialogs
             if (this.ParentDialogWindow != null)
             {
                 this.ParentDialogWindow.SetValue(BackgroundProperty, this.Background);
-                var glowBrush = TryGetResource(theme, "AccentColorBrush");
+                var glowBrush = TryGetResource(theme, "MahApps.Brushes.Accent");
                 if (glowBrush != null)
                 {
                     this.ParentDialogWindow.SetValue(MetroWindow.GlowBrushProperty, glowBrush);
@@ -410,7 +446,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.DialogSettings.AnimateHide)
             {
-                Storyboard closingStoryboard = this.TryFindResource("DialogCloseStoryboard") as Storyboard;
+                Storyboard closingStoryboard = this.TryFindResource("MahApps.Storyboard.DialogClose") as Storyboard;
 
                 if (closingStoryboard == null)
                 {

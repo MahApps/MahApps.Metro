@@ -38,7 +38,7 @@
         {
             var sender = d as SplitView;
             sender?.TemplateSettings?.Update();
-            sender?.ChangeVisualState();
+            sender?.ChangeVisualState(true, true);
         }
 
         /// <summary>
@@ -128,6 +128,23 @@
         {
             get { return (bool)this.GetValue(IsPaneOpenProperty); }
             set { this.SetValue(IsPaneOpenProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="OverlayBrush"/> dependency property. 
+        /// </summary>
+        /// <returns>The identifier for the <see cref="OverlayBrush" /> dependency property.</returns>
+        public static readonly DependencyProperty OverlayBrushProperty =
+            DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(SplitView), new PropertyMetadata(Brushes.Transparent));
+
+        /// <summary>
+        /// Gets or sets a value that specifies the OverlayBrush 
+        /// </summary>
+        /// <returns>The current OverlayBrush</returns>
+        public Brush OverlayBrush
+        {
+            get { return (Brush)this.GetValue(OverlayBrushProperty); }
+            set { this.SetValue(OverlayBrushProperty, value); }
         }
 
         /// <summary>
@@ -250,12 +267,6 @@
         {
             this.DefaultStyleKey = typeof(SplitView);
             this.TemplateSettings = new SplitViewTemplateSettings(this);
-
-            this.Loaded += (s, args) =>
-                {
-                    this.TemplateSettings.Update();
-                    this.ChangeVisualState(false);
-                };
         }
 
         /// <summary>
@@ -279,6 +290,12 @@
             {
                 this.lightDismissLayer.MouseDown += this.OnLightDismiss;
             }
+
+            this.ExecuteWhenLoaded(() =>
+                {
+                    this.TemplateSettings.Update();
+                    this.ChangeVisualState(false);
+                });
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -330,7 +347,7 @@
             }
         }
 
-        protected virtual void ChangeVisualState(bool animated = true)
+        protected virtual void ChangeVisualState(bool animated = true, bool reset = false)
         {
             if (this.paneClipRectangle != null)
             {
@@ -364,7 +381,11 @@
                 }
             }
 
-            VisualStateManager.GoToState(this, "None", animated);
+            if (reset)
+            {
+                VisualStateManager.GoToState(this, "None", animated);
+            }
+
             VisualStateManager.GoToState(this, state, animated);
         }
 

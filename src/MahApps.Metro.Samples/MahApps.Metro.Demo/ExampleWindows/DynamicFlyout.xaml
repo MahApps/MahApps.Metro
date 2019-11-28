@@ -42,11 +42,11 @@
             <Button Margin="10"
                     Click="CloseFlyoutClick"
                     Content="OK"
-                    Style="{DynamicResource SquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square}" />
             <Button Margin="10"
                     Click="CloseFlyoutClick"
                     Content="Cancel"
-                    Style="{DynamicResource SquareButtonStyle}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square}" />
         </UniformGrid>
     </Grid>
 </Controls:Flyout>

@@ -9,10 +9,10 @@
                       mc:Ignorable="d">
     <StackPanel>
         <TextBox x:Name="TestTextBox" />
-        <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MetroButtonTextBox}" />
+        <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
         <PasswordBox x:Name="TestPasswordBox" />
-        <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MetroButtonPasswordBox}" />
-        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MetroButtonRevealedPasswordBox}" />
+        <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Button}" />
+        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.ButtonRevealed}" />
         <ComboBox x:Name="TestComboBox" />
         <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
         <controls:NumericUpDown x:Name="TestNumericUpDown" />

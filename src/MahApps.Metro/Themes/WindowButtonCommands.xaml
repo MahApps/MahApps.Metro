@@ -5,9 +5,10 @@
 
     <!--  WindowButtonCommands control templates  -->
 
-    <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    Command="{x:Static SystemCommands.MinimizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -29,6 +30,7 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
+                    Command="{x:Static SystemCommands.MaximizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -54,6 +56,7 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
+                    Command="{x:Static SystemCommands.CloseWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     RenderOptions.EdgeMode="Aliased"
@@ -68,9 +71,22 @@
                                  RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                      SnapsToDevicePixels="True" />
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Line SnapsToDevicePixels="True"
+                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                          StrokeThickness="2.5"
+                          X1="1"
+                          X2="9"
+                          Y1="1"
+                          Y2="9" />
+                    <Line SnapsToDevicePixels="True"
+                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                          StrokeThickness="2.5"
+                          X1="1"
+                          X2="9"
+                          Y1="9"
+                          Y2="1" />
+                </Grid>
             </Button>
         </StackPanel>
         <ControlTemplate.Triggers>
@@ -83,6 +99,7 @@
                 <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
             </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                 <Setter TargetName="PART_MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
             </DataTrigger>
@@ -99,10 +116,11 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Metro.Templates.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}">
+    <ControlTemplate x:Key="MahApps.Templates.WindowButtonCommands.Win10" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
                     Width="46"
+                    Command="{x:Static SystemCommands.MinimizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -124,7 +142,7 @@
                       Height="10"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Data="M0,40 L96,40 96,48 0,48 0,40z"
+                      Data="M0,0L10,0 10,1 10,1 1,1 0,1z"
                       Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       RenderOptions.EdgeMode="Aliased"
                       SnapsToDevicePixels="True"
@@ -132,6 +150,7 @@
             </Button>
             <Button x:Name="PART_Max"
                     Width="46"
+                    Command="{x:Static SystemCommands.MaximizeWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -155,7 +174,7 @@
                       Height="10"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Data="M6,6L6,90 90,90 90,6 6,6z M0,0L96,0 96,96 0,96 0,0z"
+                      Data="M1,1L1,11 11,11 11,1z M0,0L12,0 12,12 0,12z"
                       Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                       RenderOptions.EdgeMode="Aliased"
                       SnapsToDevicePixels="True"
@@ -163,6 +182,7 @@
             </Button>
             <Button x:Name="PART_Close"
                     Width="46"
+                    Command="{x:Static SystemCommands.CloseWindowCommand}"
                     Focusable="False"
                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled, Mode=OneWay}"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -177,37 +197,30 @@
                                  RelativeSource="{RelativeSource AncestorType={x:Type Controls:MetroWindow}}" />
                     </MultiBinding>
                 </Button.Visibility>
-                <Grid>
-                    <Line HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          SnapsToDevicePixels="True"
-                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                          X1="0"
-                          X2="10"
-                          Y1="0"
-                          Y2="10" />
-                    <Line HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          SnapsToDevicePixels="True"
-                          Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                          X1="0"
-                          X2="10"
-                          Y1="10"
-                          Y2="0" />
-                </Grid>
+                <Path Width="10"
+                      Height="10"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="F1M8.583,8L13,12.424 12.424,13 8,8.583 3.576,13 3,12.424 7.417,8 3,3.576 3.576,3 8,7.417 12.424,3 13,3.576z"
+                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                      RenderOptions.EdgeMode="Aliased"
+                      SnapsToDevicePixels="True"
+                      Stretch="Uniform" />
             </Button>
         </StackPanel>
         <ControlTemplate.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsAnyDialogOpen}" Value="True" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabledWithDialog}" Value="False" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />
             </MultiDataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                <Setter TargetName="PART_Max" Property="Command" Value="{x:Static SystemCommands.RestoreWindowCommand}" />
                 <Setter TargetName="PART_Max" Property="ToolTip" Value="{Binding Restore, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-                <Setter TargetName="PART_MaxPath" Property="Data" Value="M10,9 9,9 9,3 3,3 3,2 10,2 10,9Z M8,11 1,11 1,4 8,4 8,11Z M2,1 2,3 0,3 0,12 9,12 9,10 11,10 11,1 2,1Z" />
+                <Setter TargetName="PART_MaxPath" Property="Data" Value="M1,4.56L1,14.56 11,14.56 11,4.56z M4,1L4,3.56 12,3.56 12,11 14,11 14,1z M3,0L15,0 15,12 12,12 12,15.56 0,15.56 0,3.56 3,3.56z" />
             </DataTrigger>
             <Trigger Property="Theme" Value="Light">
                 <Setter TargetName="PART_Close" Property="Style" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LightCloseButtonStyle}" />
@@ -222,32 +235,37 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands" TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
-        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
-        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
-        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource DarkMetroWindowButtonStyle}" />
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Base" TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
+        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="LightMinButtonStyle" Value="{DynamicResource LightMetroWindowButtonStyle}" />
-        <Setter Property="Template" Value="{StaticResource WindowButtonCommandsTemplate}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
+        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
+        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.WindowButtonCommands"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Base}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Metro.Styles.WindowButtonCommands.Win10"
-           BasedOn="{StaticResource MahApps.Metro.Styles.WindowButtonCommands}"
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Win10"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands}"
            TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Dark.Win10}" />
-        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Metro.Styles.WindowButton.Close.Light.Win10}" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Dark.Win10}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Light.Win10}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </Style>
 
 </ResourceDictionary>

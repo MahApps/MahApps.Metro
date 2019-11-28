@@ -61,7 +61,6 @@
                                Text="DisplayMode" />
                     <ComboBox Grid.Row="1"
                               Grid.Column="1"
-                              Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
                               SelectedValue="{Binding DisplayMode}">
@@ -78,7 +77,6 @@
                                Text="PanePlacement" />
                     <ComboBox Grid.Row="2"
                               Grid.Column="1"
-                              Width="100"
                               Margin="2"
                               VerticalAlignment="Center"
                               SelectedValue="{Binding PanePlacement}">
@@ -102,65 +100,68 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid>
+    <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="200" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="4*" MinWidth="100" />
+        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
 
-            <Label Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   HorizontalAlignment="Left"
-                   Content="Simple SplitView example"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+        <Label Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"
+               HorizontalAlignment="Left"
+               Content="Simple SplitView example"
+               Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <ContentControl Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="10 5 5 5"
-                            DataContext="{Binding ElementName=SimpleSplitview}"
-                            Template="{StaticResource ConfigDataTemplate}" />
+        <ContentControl Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10 5 5 5"
+                        DataContext="{Binding ElementName=SimpleSplitview}"
+                        Template="{StaticResource ConfigDataTemplate}" />
 
-            <controls:SplitView x:Name="SimpleSplitview"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Margin="5"
-                                DisplayMode="Inline"
-                                IsPaneOpen="True"
-                                OpenPaneLength="150"
-                                PaneBackground="Red"
-                                PaneClosing="Splitview_PaneClosing">
-                <controls:SplitView.Pane>
-                    <Grid Margin="48 0 0 0" Background="LightGreen">
-                        <TextBlock Margin="10"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="20"
-                                   Foreground="White"
-                                   Text="Pane content area"
-                                   TextWrapping="Wrap" />
-                    </Grid>
-                </controls:SplitView.Pane>
+        <GridSplitter Grid.Row="1"
+                      Grid.Column="1"
+                      ResizeBehavior="PreviousAndNext" />
 
-                <Grid Background="CornflowerBlue">
-                    <TextBlock Margin="20"
+        <controls:SplitView x:Name="SimpleSplitview"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="5"
+                            DisplayMode="Inline"
+                            IsPaneOpen="True"
+                            OpenPaneLength="150"
+                            PaneBackground="Red"
+                            PaneClosing="Splitview_PaneClosing">
+            <controls:SplitView.Pane>
+                <Grid Margin="48 0 0 0" Background="LightGreen">
+                    <TextBlock Margin="10"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="20"
                                Foreground="White"
-                               Text="This is the main content area and should be blue"
+                               Text="Pane content area"
                                TextWrapping="Wrap" />
                 </Grid>
+            </controls:SplitView.Pane>
 
-            </controls:SplitView>
-        </Grid>
-    </ScrollViewer>
+            <Grid Background="CornflowerBlue">
+                <TextBlock Margin="20"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           Foreground="White"
+                           Text="This is the main content area and should be blue"
+                           TextWrapping="Wrap" />
+            </Grid>
+
+        </controls:SplitView>
+    </Grid>
 </UserControl>

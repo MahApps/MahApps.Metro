@@ -25,18 +25,6 @@ namespace MetroDemo
             flyoutDemo = new FlyoutDemo();
             flyoutDemo.ApplyTemplate();
             flyoutDemo.Closed += (o, e) => flyoutDemo = null;
-
-            Closing += (s, e) =>
-                {
-                    if (!e.Cancel && flyoutDemo != null)
-                    {
-                        flyoutDemo.Dispose();
-                    }
-                    if (!e.Cancel)
-                    {
-                        _viewModel.Dispose();
-                    }
-                };
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
@@ -141,8 +129,7 @@ namespace MetroDemo
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
-            dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
             dialog = dialog.ShowDialogExternally();
 
             await Task.Delay(5000);
@@ -159,7 +146,8 @@ namespace MetroDemo
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
                 FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = MetroDialogOptions.ColorScheme
+                ColorScheme = MetroDialogOptions.ColorScheme,
+                DialogButtonFontSize = 20D
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
@@ -192,7 +180,7 @@ namespace MetroDemo
 
         private async void ShowCustomDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomDialogTest"], Title = "This dialog allows arbitrary content." };
 
             await this.ShowMetroDialogAsync(dialog);
 
@@ -201,7 +189,7 @@ namespace MetroDemo
 
             await Task.Delay(3000);
 
-            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() {OwnerCanCloseWithDialog = true});
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.", MessageDialogStyle.Affirmative, new MetroDialogSettings() { OwnerCanCloseWithDialog = true, ColorScheme = this.MetroDialogOptions.ColorScheme });
 
             textBlock.Text = "The dialog will close in 2 seconds.";
             await Task.Delay(2000);
@@ -227,7 +215,7 @@ namespace MetroDemo
                 };
             DialogManager.DialogClosed += dialogManagerOnDialogClosed;
 
-            var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
+            var dialog = new CustomDialog(this.MetroDialogOptions) { Content = this.Resources["CustomCloseDialogTest"], Title = "Custom Dialog which is awaitable" };
 
             await this.ShowMetroDialogAsync(dialog);
             await dialog.WaitUntilUnloadedAsync();
@@ -235,7 +223,7 @@ namespace MetroDemo
 
         private async void CloseCustomDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
+            var dialog = (sender as DependencyObject).TryFindParent<BaseMetroDialog>();
 
             await this.HideMetroDialogAsync(dialog);
             await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
@@ -286,7 +274,8 @@ namespace MetroDemo
             {
                 NegativeButtonText = "Close now",
                 AnimateShow = false,
-                AnimateHide = false
+                AnimateHide = false,
+                ColorScheme = this.MetroDialogOptions.ColorScheme
             };
 
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!", settings: mySettings);
@@ -333,6 +322,20 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
+        private async void ShowInputDialogCustomButtonSizes(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings
+            {
+                DialogButtonFontSize = 30D
+            };
+            var result = await this.ShowInputAsync("Hello!", "What is your name?", settings);
+
+            if (result == null) //user pressed cancel
+                return;
+
+            await this.ShowMessageAsync("Hello", "Hello " + result + "!");
+        }
+
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)
         {
             LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps"});
@@ -359,26 +362,38 @@ namespace MetroDemo
 
             //uncomment the next two lines if you want the clean style.
             //navWin.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml", UriKind.Absolute) });
-            //navWin.SetResourceReference(StyleProperty, "CleanWindowStyleKey");
+            //navWin.SetResourceReference(StyleProperty, "MahApps.Styles.MetroWindow.Clean");
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
         }
 
-        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (e.Cancel)
             {
                 return;
             }
 
-            e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
-            if (!e.Cancel)
+            if (_viewModel.QuitConfirmationEnabled
+                && _shutdown == false)
             {
-                return;
-            }
+                e.Cancel = true;
 
-            var mySettings = new MetroDialogSettings()
+                // We have to delay the execution through BeginInvoke to prevent potential re-entrancy
+                Dispatcher.BeginInvoke(new Action(async () => await this.ConfirmShutdown()));
+            }
+            else
+            {
+                flyoutDemo?.Dispose();
+
+                _viewModel.Dispose();
+            }
+        }
+
+        private async Task ConfirmShutdown()
+        {
+            var mySettings = new MetroDialogSettings
                              {
                                  AffirmativeButtonText = "Quit",
                                  NegativeButtonText = "Cancel",
@@ -431,7 +446,7 @@ namespace MetroDemo
             w.Content = new Button() { Content = "MetroWindow with Glow", ToolTip = "And test tool tip", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
+            w.SetResourceReference(MetroWindow.GlowBrushProperty, "MahApps.Brushes.Accent");
             w.Show();
         }
 
