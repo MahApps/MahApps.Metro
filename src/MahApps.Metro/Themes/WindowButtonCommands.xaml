@@ -212,6 +212,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabled}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsAnyDialogOpen}" Value="True" />
                     <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}, Path=IsCloseButtonEnabledWithDialog}" Value="False" />
                 </MultiDataTrigger.Conditions>
                 <Setter TargetName="PART_Close" Property="IsEnabled" Value="False" />

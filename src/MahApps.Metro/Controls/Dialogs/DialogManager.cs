@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Threading;
+using ControlzEx.Standard;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -591,9 +595,32 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateExternalWindow();
             win.Owner = windowOwner ?? Application.Current?.MainWindow;
-            win.Width = SystemParameters.PrimaryScreenWidth;
-            win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
-            win.SizeToContent = SizeToContent.Height;
+
+            // Remove the border on left and right side
+            win.BeginInvoke(x =>
+                                {
+                                    x.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, x.BorderThickness.Top, 0, x.BorderThickness.Bottom));
+                                    if (x is MetroWindow metroWindow)
+                                    {
+                                        metroWindow.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, metroWindow.ResizeBorderThickness.Top, 0, metroWindow.ResizeBorderThickness.Bottom));
+                                    }
+                                },
+                            DispatcherPriority.Loaded);
+
+            // Get the monitor working area
+            var monitorWorkingArea = win.Owner.GetMonitorWorkSize();
+            if (monitorWorkingArea != default)
+            {
+                win.Width = monitorWorkingArea.Width;
+                win.MinHeight = monitorWorkingArea.Height / 4.0;
+                win.MaxHeight = monitorWorkingArea.Height;
+            }
+            else
+            {
+                win.Width = SystemParameters.PrimaryScreenWidth;
+                win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
+                win.MaxHeight = SystemParameters.PrimaryScreenHeight;
+            }
 
             dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
 
@@ -603,12 +630,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
             EventHandler closedHandler = null;
             closedHandler = (sender, args) =>
-            {
-                win.Closed -= closedHandler;
-                dialog.ParentDialogWindow = null;
-                win.Content = null;
-            };
+                {
+                    win.Closed -= closedHandler;
+                    dialog.ParentDialogWindow = null;
+                    win.Content = null;
+                };
             win.Closed += closedHandler;
+
+            win.SizeToContent = SizeToContent.Height;
 
             return win;
         }
@@ -617,12 +646,42 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = CreateExternalWindow();
             win.Owner = window;
-            win.Topmost = false; //It is not necessary here because the owner is setted
-            win.WindowStartupLocation = WindowStartupLocation.CenterOwner; //WindowStartupLocation should be CenterOwner
+            win.Topmost = false; // It is not necessary here because the owner is setted
+            win.WindowStartupLocation = WindowStartupLocation.CenterOwner; // WindowStartupLocation should be CenterOwner
 
-            //Set Width and Height maximum according Owner
-            win.Width = window.ActualWidth;
-            win.MaxHeight = window.ActualHeight;
+            // Set Width and Height maximum according Owner
+            if (window.WindowState != WindowState.Maximized)
+            {
+                win.Width = window.ActualWidth;
+                win.MaxHeight = window.ActualHeight;
+            }
+            else
+            {
+                // Remove the border on left and right side
+                win.BeginInvoke(x =>
+                                    {
+                                        x.SetCurrentValue(Control.BorderThicknessProperty, new Thickness(0, x.BorderThickness.Top, 0, x.BorderThickness.Bottom));
+                                        if (x is MetroWindow metroWindow)
+                                        {
+                                            metroWindow.SetCurrentValue(MetroWindow.ResizeBorderThicknessProperty, new Thickness(0, metroWindow.ResizeBorderThickness.Top, 0, metroWindow.ResizeBorderThickness.Bottom));
+                                        }
+                                    },
+                                DispatcherPriority.Loaded);
+
+                // Get the monitor working area
+                var monitorWorkingArea = window.GetMonitorWorkSize();
+                if (monitorWorkingArea != default)
+                {
+                    win.Width = monitorWorkingArea.Width;
+                    win.MaxHeight = monitorWorkingArea.Height;
+                }
+                else
+                {
+                    win.Width = window.ActualWidth;
+                    win.MaxHeight = window.ActualHeight;
+                }
+            }
+
             win.SizeToContent = SizeToContent.Height;
 
             return win;
