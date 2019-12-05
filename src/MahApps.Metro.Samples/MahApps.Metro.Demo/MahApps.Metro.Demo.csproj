@@ -5,7 +5,7 @@
         <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DisableFody Condition="'$(Configuration)' == 'Debug' or '$(TargetFramework)' == 'netcoreapp3.0'">true</DisableFody>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -16,7 +16,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
     <ItemGroup>

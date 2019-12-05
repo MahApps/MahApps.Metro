@@ -2,14 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net45;net46;net47;netcoreapp3.0</TargetFrameworks>
         <AssemblyName>MahApps.Metro</AssemblyName>
         <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
         <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
@@ -17,7 +16,10 @@
         <PackageReference Include="ControlzEx" Version="[4.*, 5.0)" />
         <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
         <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2*" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
     <!-- Items include -->
     <ItemGroup>

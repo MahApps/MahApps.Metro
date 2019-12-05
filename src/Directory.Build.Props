@@ -1,10 +1,10 @@
 <Project>
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net45;net46;net47;netcoreapp3.0</TargetFrameworks>
+        <TargetFrameworks>net45;net46;net47;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
         <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <AutoGenerateBindingRedirects Condition=" $(TargetFramework.StartsWith('net4')) ">true</AutoGenerateBindingRedirects>
         <LangVersion>7.3</LangVersion>
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>

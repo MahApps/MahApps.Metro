@@ -22,7 +22,7 @@ image: Visual Studio 2019
 test: off
 
 install:
-  - cinst dotnetcore-sdk
+  - cinst dotnetcore-sdk --version=3.1.100
 
 pull_requests:
   do_not_increment_build_number: false

@@ -9,7 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp3.0'">
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="Microsoft.CSharp" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
     </ItemGroup>
