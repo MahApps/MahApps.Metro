@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -1338,7 +1337,9 @@ namespace MahApps.Metro.Controls
                 }
                 else if (this.ShowSystemMenu)
                 {
-                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitleBarHeight)));
+#pragma warning disable 618
+                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(BorderThickness.Left, TitleBarHeight + BorderThickness.Top)));
+#pragma warning restore 618
                 }
             }
         }
@@ -1473,7 +1474,9 @@ namespace MahApps.Metro.Controls
                 var mousePos = e.GetPosition(window);
                 if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
                 {
-                    ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+#pragma warning disable 618
+                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+#pragma warning restore 618
                 }
             }
         }
@@ -1496,24 +1499,6 @@ namespace MahApps.Metro.Controls
         {
             return GetTemplateChild(name);
         }
-
-#pragma warning disable 618
-        private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
-        {
-            if (window == null) return;
-
-            var hwnd = new WindowInteropHelper(window).Handle;
-            if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
-                return;
-
-            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
-
-            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
-                (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
-            if (0 != cmd)
-                NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
-        }
-#pragma warning restore 618
 
         internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {
