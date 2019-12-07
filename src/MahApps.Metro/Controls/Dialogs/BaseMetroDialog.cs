@@ -16,8 +16,15 @@ namespace MahApps.Metro.Controls.Dialogs
     /// You probably don't want to use this class, if you want to add arbitrary content to your dialog,
     /// use the <see cref="CustomDialog"/> class.
     /// </summary>
+    [TemplatePart(Name = PART_Top, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_Content, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_Bottom, Type = typeof(ContentPresenter))]
     public abstract class BaseMetroDialog : ContentControl
     {
+        private const string PART_Top = "PART_Top";
+        private const string PART_Content = "PART_Content";
+        private const string PART_Bottom = "PART_Bottom";
+
         /// <summary>Identifies the <see cref="DialogContentMargin"/> dependency property.</summary>
         public static readonly DependencyProperty DialogContentMarginProperty = DependencyProperty.Register(nameof(DialogContentMargin), typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(new GridLength(25, GridUnitType.Star)));
 
@@ -208,8 +215,17 @@ namespace MahApps.Metro.Controls.Dialogs
 
             this.HandleThemeChange();
 
+            this.DataContextChanged += this.BaseMetroDialogDataContextChanged;
             this.Loaded += this.BaseMetroDialogLoaded;
             this.Unloaded += this.BaseMetroDialogUnloaded;
+        }
+
+        private void BaseMetroDialogDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // MahApps add these controls to the dialog with AddLogicalChild method.
+            // This has the side effect that the DataContext doesn't update, so do this now here.
+            if (this.DialogTop is FrameworkElement elementTop) elementTop.DataContext = this.DataContext;
+            if (this.DialogBottom is FrameworkElement elementBottom) elementBottom.DataContext = this.DataContext;
         }
 
         private void BaseMetroDialogLoaded(object sender, RoutedEventArgs e)
