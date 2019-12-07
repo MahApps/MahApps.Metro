@@ -222,7 +222,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void BaseMetroDialogDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            // MahApps add these controls to the dialog with AddLogicalChild method.
+            // MahApps add these content presenter to the dialog with AddLogicalChild method.
             // This has the side effect that the DataContext doesn't update, so do this now here.
             if (this.DialogTop is FrameworkElement elementTop) elementTop.DataContext = this.DataContext;
             if (this.DialogBottom is FrameworkElement elementBottom) elementBottom.DataContext = this.DataContext;
