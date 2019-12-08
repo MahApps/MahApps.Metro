@@ -90,26 +90,26 @@
                                         <!--  Fade  -->
                                         <Rectangle Grid.RowSpan="2"
                                                    Width="3"
-                                                   Margin="-1.5,0"
+                                                   Margin="-1.5 0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Stretch"
                                                    Fill="White" />
                                         <Rectangle Grid.ColumnSpan="2"
                                                    Height="3"
-                                                   Margin="0,-1.5"
+                                                   Margin="0 -1.5"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Bottom"
                                                    Fill="White" />
 
                                         <Rectangle Grid.RowSpan="2"
                                                    Width="1"
-                                                   Margin="-0.5,0"
+                                                   Margin="-0.5 0"
                                                    HorizontalAlignment="Right"
                                                    VerticalAlignment="Stretch"
                                                    Fill="Black" />
                                         <Rectangle Grid.ColumnSpan="2"
                                                    Height="1"
-                                                   Margin="0,-0.5"
+                                                   Margin="0 -0.5"
                                                    HorizontalAlignment="Stretch"
                                                    VerticalAlignment="Bottom"
                                                    Fill="Black" />
@@ -119,13 +119,13 @@
 
                                 <!--  HueSlider  -->
                                 <Slider Grid.Column="1"
-                                        Margin="0,5,5,5"
+                                        Margin="0 5 5 5"
                                         IsMoveToPointEnabled="True"
                                         Style="{StaticResource MahApps.Styles.Slider.HueSlider}"
                                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
                                 <!--  Selected Color Preview and Opacity  -->
-                                <Grid Grid.Row="1" Margin="5,0,5,5">
+                                <Grid Grid.Row="1" Margin="5 0 5 5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -136,13 +136,13 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="Preview" Margin="0,2" />
+                                    <TextBlock Margin="0 2" Text="Preview" />
 
 
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
                                             Height="30"
-                                            Margin="5,0,0,5"
+                                            Margin="5 0 0 5"
                                             Background="{StaticResource CheckerdBrush}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.Black}"
                                             BorderThickness="1">
@@ -153,10 +153,10 @@
                                         </Rectangle>
                                     </Border>
 
-                                    <TextBlock Text="Opacity"
-                                               Grid.Row="1"
+                                    <TextBlock Grid.Row="1"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center" />
+                                               VerticalAlignment="Center"
+                                               Text="Opacity" />
 
                                     <Grid Grid.Row="1" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
@@ -165,7 +165,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Slider Grid.Column="0"
-                                                Margin="5,0,2,0"
+                                                Margin="5 0 2 0"
                                                 Maximum="255"
                                                 Minimum="0"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
@@ -180,7 +180,7 @@
 
                                 <!--  Sliders for Values  -->
                                 <ScrollViewer Grid.Column="2"
-                                              Margin="0,5,5,5"
+                                              Margin="0 5 5 5"
                                               HorizontalScrollBarVisibility="Auto"
                                               VerticalScrollBarVisibility="Auto">
                                     <Grid>
@@ -201,10 +201,10 @@
                                         </Grid.RowDefinitions>
 
                                         <!--  R  -->
-                                        <TextBlock Text="R"
-                                                   Grid.Row="0"
+                                        <TextBlock Grid.Row="0"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center" />
+                                                   VerticalAlignment="Center"
+                                                   Text="R" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -218,10 +218,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
 
                                         <!--  G  -->
-                                        <TextBlock Text="G"
-                                                   Grid.Row="1"
+                                        <TextBlock Grid.Row="1"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center" />
+                                                   VerticalAlignment="Center"
+                                                   Text="G" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -235,10 +235,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
 
                                         <!--  B  -->
-                                        <TextBlock Text="B"
-                                                   Grid.Row="2"
+                                        <TextBlock Grid.Row="2"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center" />
+                                                   VerticalAlignment="Center"
+                                                   Text="B" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -252,30 +252,30 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
 
                                         <!--  H  -->
-                                        <TextBlock Text="H"
-                                                   Grid.Row="3"
+                                        <TextBlock Grid.Row="3"
                                                    Grid.Column="0"
-                                                   Margin="0,8,0,0"
-                                                   VerticalAlignment="Center" />
+                                                   Margin="0 8 0 0"
+                                                   VerticalAlignment="Center"
+                                                   Text="H" />
                                         <Slider Grid.Row="3"
                                                 Grid.Column="1"
-                                                Margin="0,8,0,0"
+                                                Margin="0 8 0 0"
                                                 Maximum="360"
                                                 Minimum="0"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
                                         <Controls:NumericUpDown Grid.Row="3"
                                                                 Grid.Column="2"
-                                                                Margin="2,10,2,2"
+                                                                Margin="2 10 2 2"
                                                                 Maximum="360"
                                                                 Minimum="0"
                                                                 StringFormat="0 °"
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
                                         <!--  S  -->
-                                        <TextBlock Text="S"
-                                                   Grid.Row="4"
+                                        <TextBlock Grid.Row="4"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center" />
+                                                   VerticalAlignment="Center"
+                                                   Text="S" />
                                         <Slider Grid.Row="4"
                                                 Grid.Column="1"
                                                 Maximum="1"
@@ -290,10 +290,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
 
                                         <!--  Value  -->
-                                        <TextBlock Text="V"
-                                                   Grid.Row="5"
+                                        <TextBlock Grid.Row="5"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center" />
+                                                   VerticalAlignment="Center"
+                                                   Text="V" />
                                         <Slider Grid.Row="5"
                                                 Grid.Column="1"
                                                 Maximum="1"
@@ -324,24 +324,24 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="Hex-Code "
-                                               Grid.Row="0"
+                                    <TextBlock Grid.Row="0"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center" />
+                                               VerticalAlignment="Center"
+                                               Text="Hex-Code " />
                                     <TextBox x:Name="TextBox_HexCode"
-                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
                                              Grid.Row="0"
                                              Grid.Column="1"
-                                             Margin="2" />
-                                    <TextBlock Text="Name "
-                                               Grid.Row="1"
+                                             Margin="2"
+                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}" />
+                                    <TextBlock Grid.Row="1"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center" />
-                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
-                                             Grid.Row="1"
+                                               VerticalAlignment="Center"
+                                               Text="Name " />
+                                    <TextBox Grid.Row="1"
                                              Grid.Column="1"
                                              Margin="2"
-                                             IsReadOnly="True" />
+                                             IsReadOnly="True"
+                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}" />
                                     <Button x:Name="PART_PickColorFromScreen"
                                             Grid.Row="0"
                                             Grid.Column="2"
@@ -372,8 +372,8 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                     <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Ellipse Width="{DynamicResource MahApps.Sizes.Font.Content}"
-                                                                         Height="{DynamicResource MahApps.Sizes.Font.Content}"
+                                                                <Ellipse Width="{DynamicResource MahApps.Font.Size.Content}"
+                                                                         Height="{DynamicResource MahApps.Font.Size.Content}"
                                                                          Margin="5"
                                                                          Stroke="{DynamicResource MahApps.Brushes.Gray5}"
                                                                          StrokeThickness="1">
@@ -381,10 +381,10 @@
                                                                         <SolidColorBrush Color="{Binding TargetNullValue='#FF0000'}" />
                                                                     </Ellipse.Fill>
                                                                 </Ellipse>
-                                                                <TextBlock Text="{Binding TargetNullValue='#FF0000'}"
-                                                                           Grid.Column="1"
+                                                                <TextBlock Grid.Column="1"
                                                                            Margin="5"
                                                                            FontFamily="Consolas"
+                                                                           Text="{Binding TargetNullValue='#FF0000'}"
                                                                            TextOptions.TextFormattingMode="Display"
                                                                            TextOptions.TextRenderingMode="ClearType" />
                                                             </Grid>

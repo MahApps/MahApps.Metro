@@ -8,20 +8,19 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Slider}" x:Key="MahApps.Styles.Slider.HueSlider">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Minimum" Value="0" />
+    <Style x:Key="MahApps.Styles.Slider.HueSlider" TargetType="{x:Type Slider}">
         <Setter Property="Maximum" Value="360" />
+        <Setter Property="Minimum" Value="0" />
         <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Border BorderBrush="{DynamicResource MahApps.Brushes.Black}" BorderThickness="1">
-                        
+
                         <Grid>
                             <Grid.Background>
-                                <LinearGradientBrush StartPoint="0.5,1"
-                                                 EndPoint="0.5,0">
+                                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
                                     <GradientStop Offset="0.00000000000000000" Color="#FFFF0000" />
                                     <GradientStop Offset="0.16666666666666666" Color="#FFFFFF00" />
                                     <GradientStop Offset="0.33333333333333333" Color="#FF00FF00" />
@@ -34,36 +33,41 @@
                             <Track x:Name="PART_Track">
                                 <Track.DecreaseRepeatButton>
                                     <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
-                                          Foreground="Transparent"
-                                          Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
+                                                  Foreground="Transparent"
+                                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
                                 </Track.DecreaseRepeatButton>
                                 <Track.IncreaseRepeatButton>
                                     <RepeatButton x:Name="VerticalTrackIncrease"
-                                          Command="{x:Static Slider.IncreaseLarge}"
-                                          Foreground="Transparent"
-                                          Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
+                                                  Command="{x:Static Slider.IncreaseLarge}"
+                                                  Foreground="Transparent"
+                                                  Style="{DynamicResource MahApps.Styles.RepeatButton.Slider.VerticalTrack.Win10}" />
                                 </Track.IncreaseRepeatButton>
                                 <Track.Thumb>
                                     <Controls:MetroThumb x:Name="VerticalThumb"
-                                                     HorizontalAlignment="Stretch"
-                                                     Height="10"
-                                                     Margin="-1,-5"
-                                                     Background="Transparent"
-                                                     IsTabStop="True" >
+                                                         Height="10"
+                                                         Margin="-1 -5"
+                                                         HorizontalAlignment="Stretch"
+                                                         Background="Transparent"
+                                                         IsTabStop="True">
                                         <Controls:MetroThumb.Template>
                                             <ControlTemplate>
                                                 <Grid Background="Transparent">
-                                                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Black}" 
-                                                               Height="1"
-                                                               VerticalAlignment="Center"/> 
-                                                    <Path Fill="{DynamicResource MahApps.Brushes.White}" StrokeThickness="1" Stroke="{DynamicResource MahApps.Brushes.Black}" >
+                                                    <Rectangle Height="1"
+                                                               VerticalAlignment="Center"
+                                                               Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                                    <Path Fill="{DynamicResource MahApps.Brushes.White}"
+                                                          Stroke="{DynamicResource MahApps.Brushes.Black}"
+                                                          StrokeThickness="1">
                                                         <Path.Data>
-                                                            <PathGeometry Figures="M 0 0 8 5 0 10 Z" FillRule="NonZero"/>
+                                                            <PathGeometry Figures="M 0 0 8 5 0 10 Z" FillRule="NonZero" />
                                                         </Path.Data>
                                                     </Path>
-                                                    <Path Fill="{DynamicResource MahApps.Brushes.White}" StrokeThickness="1" Stroke="{DynamicResource MahApps.Brushes.Black}" HorizontalAlignment="Right" >
+                                                    <Path HorizontalAlignment="Right"
+                                                          Fill="{DynamicResource MahApps.Brushes.White}"
+                                                          Stroke="{DynamicResource MahApps.Brushes.Black}"
+                                                          StrokeThickness="1">
                                                         <Path.Data>
-                                                            <PathGeometry Figures="M 8 0 0 5 8 10 Z" FillRule="NonZero"/>
+                                                            <PathGeometry Figures="M 8 0 0 5 8 10 Z" FillRule="NonZero" />
                                                         </Path.Data>
                                                     </Path>
                                                 </Grid>
