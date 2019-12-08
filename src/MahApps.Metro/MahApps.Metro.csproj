@@ -50,14 +50,6 @@
     <!--     <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" /> -->
     <!-- </ItemGroup> -->
     <ItemGroup>
-      <None Remove="Controls\ColorPicker\Eyedropper.cur" />
-      <None Remove="Themes\ColorCanvas.xaml" />
-      <None Remove="Themes\MahApps.Styles.ColorCanvas.Slider.HueSlider.xaml" />
-    </ItemGroup>
-    <ItemGroup>
-      <Resource Include="Controls\ColorPicker\Eyedropper.cur" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>

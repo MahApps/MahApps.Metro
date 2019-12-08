@@ -20,8 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
-        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf" />
+        <None Remove="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
+        <Resource Include="**\*.png;**\*.jpg;**\*.ico;**\*.ttf;**\*.cur" />
     </ItemGroup>
 
 </Project>

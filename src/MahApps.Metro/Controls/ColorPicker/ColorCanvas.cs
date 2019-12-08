@@ -1,24 +1,19 @@
-﻿using MahApps.Metro.Controls.ColorPicker;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MahApps.Metro.Controls.ColorPicker;
 
 namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = "PART_SaturationValueBox", Type = typeof(Control))]
     [TemplatePart(Name = "PART_SaturationValueBox_Background", Type = typeof(SolidColorBrush))]
     [TemplatePart(Name = "PART_PickColorFromScreen", Type = typeof(Button))]
-    public class ColorCanvas: Control
+    public class ColorCanvas : Control
     {
-
         #region private Members
 
         SolidColorBrush PART_SaturationValueBox_Background;
@@ -45,25 +40,21 @@ namespace MahApps.Metro.Controls
 
         public Color SelectedColor
         {
-            get { return (Color)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
+            get { return (Color)this.GetValue(SelectedColorProperty); }
+            set { this.SetValue(SelectedColorProperty, value); }
         }
 
         public string HexCode
         {
-            get { return (string)GetValue(HexCodeProperty); }
-            set { SetValue(HexCodeProperty, value); }
+            get { return (string)this.GetValue(HexCodeProperty); }
+            set { this.SetValue(HexCodeProperty, value); }
         }
-
 
         public string ColorName
         {
-            get { return (string)GetValue(ColorNameProperty); }
-            set { SetValue(ColorNameProperty, value); }
+            get { return (string)this.GetValue(ColorNameProperty); }
+            set { this.SetValue(ColorNameProperty, value); }
         }
-
-
-
 
         private static void ColorChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -110,58 +101,58 @@ namespace MahApps.Metro.Controls
             return ColorHelper.ColorFromString(value.ToString()).HasValue;
         }
 
-
         #region ARGB
+
         public byte A
         {
-            get { return (byte)GetValue(AProperty); }
-            set { SetValue(AProperty, value); }
+            get { return (byte)this.GetValue(AProperty); }
+            set { this.SetValue(AProperty, value); }
         }
 
         public byte R
         {
-            get { return (byte)GetValue(RProperty); }
-            set { SetValue(RProperty, value); }
+            get { return (byte)this.GetValue(RProperty); }
+            set { this.SetValue(RProperty, value); }
         }
 
         public byte G
         {
-            get { return (byte)GetValue(GProperty); }
-            set { SetValue(GProperty, value); }
+            get { return (byte)this.GetValue(GProperty); }
+            set { this.SetValue(GProperty, value); }
         }
 
         public byte B
         {
-            get { return (byte)GetValue(BProperty); }
-            set { SetValue(BProperty, value); }
+            get { return (byte)this.GetValue(BProperty); }
+            set { this.SetValue(BProperty, value); }
         }
-
 
         public static void ColorChannelChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (dependencyObject is ColorCanvas colorCanvas && ! colorCanvas.ColorIsUpdating)
+            if (dependencyObject is ColorCanvas colorCanvas && !colorCanvas.ColorIsUpdating)
             {
                 colorCanvas.SetCurrentValue(SelectedColorProperty, Color.FromArgb(colorCanvas.A, colorCanvas.R, colorCanvas.G, colorCanvas.B));
             }
         }
+
         #endregion
 
         public double Hue
         {
-            get { return (double)GetValue(HueProperty); }
-            set { SetValue(HueProperty, value); }
+            get { return (double)this.GetValue(HueProperty); }
+            set { this.SetValue(HueProperty, value); }
         }
 
         public double Saturation
         {
-            get { return (double)GetValue(SaturationProperty); }
-            set { SetValue(SaturationProperty, value); }
+            get { return (double)this.GetValue(SaturationProperty); }
+            set { this.SetValue(SaturationProperty, value); }
         }
 
         public double Value
         {
-            get { return (double)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
+            get { return (double)this.GetValue(ValueProperty); }
+            set { this.SetValue(ValueProperty, value); }
         }
 
         private static void HSV_Values_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -176,36 +167,36 @@ namespace MahApps.Metro.Controls
         private void PART_SaturationValueBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Mouse.Capture(null);
-            PART_SaturationValueBox.MouseMove -= PART_SaturationValueBox_MouseMove;
+            this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
         }
 
         private void PART_SaturationValueBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Mouse.Capture(PART_SaturationValueBox);
-            PART_SaturationValueBox.MouseMove += PART_SaturationValueBox_MouseMove;
+            Mouse.Capture(this.PART_SaturationValueBox);
+            this.PART_SaturationValueBox.MouseMove += this.PART_SaturationValueBox_MouseMove;
 
-            PART_SaturationValueBox_UpdateValues(e.GetPosition(PART_SaturationValueBox));
+            this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
         }
 
         private void PART_SaturationValueBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed)
             {
-                PART_SaturationValueBox.MouseMove -= PART_SaturationValueBox_MouseMove;
+                this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
             }
             else
             {
-                PART_SaturationValueBox_UpdateValues(e.GetPosition(PART_SaturationValueBox));
+                this.PART_SaturationValueBox_UpdateValues(e.GetPosition(this.PART_SaturationValueBox));
             }
         }
 
         private void PART_SaturationValueBox_UpdateValues(Point position)
         {
-            if (PART_SaturationValueBox.ActualWidth < 1 || PART_SaturationValueBox.ActualHeight < 1)
+            if (this.PART_SaturationValueBox.ActualWidth < 1 || this.PART_SaturationValueBox.ActualHeight < 1)
                 return;
 
-            var s = position.X / PART_SaturationValueBox.ActualWidth;
-            var v = 1 - (position.Y / PART_SaturationValueBox.ActualHeight);
+            var s = position.X / this.PART_SaturationValueBox.ActualWidth;
+            var v = 1 - (position.Y / this.PART_SaturationValueBox.ActualHeight);
 
             if (s > 1) s = 1;
             if (v > 1) v = 1;
@@ -213,10 +204,9 @@ namespace MahApps.Metro.Controls
             if (s < 0) s = 0;
             if (v < 0) v = 0;
 
-            SetCurrentValue (SaturationProperty, s);
-            SetCurrentValue (ValueProperty, v);
+            this.SetCurrentValue(SaturationProperty, s);
+            this.SetCurrentValue(ValueProperty, v);
         }
-
 
         #region Overrides
 
@@ -224,88 +214,90 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            PART_SaturationValueBox_Background = (SolidColorBrush)base.GetTemplateChild("PART_SaturationValueBox_Background");
+            this.PART_SaturationValueBox_Background = (SolidColorBrush)this.GetTemplateChild("PART_SaturationValueBox_Background");
 
-            PART_SaturationValueBox = (FrameworkElement)base.GetTemplateChild("PART_SaturationValueBox");
-            PART_SaturationValueBox.MouseLeftButtonDown += PART_SaturationValueBox_MouseLeftButtonDown;
-            PART_SaturationValueBox.MouseLeftButtonUp += PART_SaturationValueBox_MouseLeftButtonUp;
+            this.PART_SaturationValueBox = (FrameworkElement)this.GetTemplateChild("PART_SaturationValueBox");
+            this.PART_SaturationValueBox.MouseLeftButtonDown += this.PART_SaturationValueBox_MouseLeftButtonDown;
+            this.PART_SaturationValueBox.MouseLeftButtonUp += this.PART_SaturationValueBox_MouseLeftButtonUp;
 
-            PART_PickColorFromScreen = (Button)base.GetTemplateChild("PART_PickColorFromScreen");
-            PART_PickColorFromScreen.PreviewMouseLeftButtonDown += PART_PickColorFromScreen_PreviewMouseDown; ;
-            PART_PickColorFromScreen.PreviewMouseLeftButtonUp += PART_PickColorFromScreen_PreviewMouseUp; ;
-
+            this.PART_PickColorFromScreen = (Button)this.GetTemplateChild("PART_PickColorFromScreen");
+            this.PART_PickColorFromScreen.PreviewMouseLeftButtonDown += this.PART_PickColorFromScreen_PreviewMouseDown;
+            ;
+            this.PART_PickColorFromScreen.PreviewMouseLeftButtonUp += this.PART_PickColorFromScreen_PreviewMouseUp;
+            ;
         }
 
         private void PART_PickColorFromScreen_PreviewMouseUp(object sender, MouseEventArgs e)
         {
             Mouse.Capture(null);
-            PART_PickColorFromScreen.MouseMove -= PART_PickColorFromScreen_PreviewMouseMove;
+            this.PART_PickColorFromScreen.MouseMove -= this.PART_PickColorFromScreen_PreviewMouseMove;
 
-            PART_PickColorFromScreen.Cursor = Cursors.Arrow;
+            this.PART_PickColorFromScreen.Cursor = Cursors.Arrow;
 
-            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
             {
                 toolTip.IsOpen = false;
             }
 
-            if (!PART_PickColorFromScreen.IsMouseOver)
+            if (!this.PART_PickColorFromScreen.IsMouseOver)
             {
                 Point pointToWindow = Mouse.GetPosition(this);
-                Point pointToScreen = PointToScreen(pointToWindow);
-                SelectedColor = ColorHelper.GetPixelColor(pointToScreen);
+                Point pointToScreen = this.PointToScreen(pointToWindow);
+                this.SelectedColor = ColorHelper.GetPixelColor(pointToScreen);
             }
 
-            UpdateTooltip_Timer = null;
+            this.UpdateTooltip_Timer = null;
         }
 
         private void PART_PickColorFromScreen_PreviewMouseDown(object sender, MouseEventArgs e)
         {
-            PART_PickColorFromScreen.PreviewMouseMove += PART_PickColorFromScreen_PreviewMouseMove;
-            PART_PickColorFromScreen.Cursor = (Cursor)PART_PickColorFromScreen.Resources["MahApps.Cursors.EyeDropper"];
-            Mouse.Capture(PART_PickColorFromScreen);
+            this.PART_PickColorFromScreen.PreviewMouseMove += this.PART_PickColorFromScreen_PreviewMouseMove;
+            this.PART_PickColorFromScreen.Cursor = (Cursor)this.PART_PickColorFromScreen.Resources["MahApps.Cursors.EyeDropper"];
+            Mouse.Capture(this.PART_PickColorFromScreen);
 
-            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
             {
                 toolTip.IsOpen = true;
                 toolTip.StaysOpen = true;
                 toolTip.Placement = PlacementMode.MousePoint;
-                toolTip.HorizontalOffset = Mouse.GetPosition(PART_PickColorFromScreen).X + 18;
-                toolTip.VerticalOffset = Mouse.GetPosition(PART_PickColorFromScreen).Y - 18;
+                toolTip.HorizontalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).X + 18;
+                toolTip.VerticalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).Y - 18;
 
-                UpdateTooltip_Timer = new DispatcherTimer();
-                UpdateTooltip_Timer.Interval = TimeSpan.FromSeconds(0.1);
-                UpdateTooltip_Timer.Tick += PART_PickColorFromScreen_UpdateTooltip;
-                UpdateTooltip_Timer.Start();
+                this.UpdateTooltip_Timer = new DispatcherTimer();
+                this.UpdateTooltip_Timer.Interval = TimeSpan.FromSeconds(0.1);
+                this.UpdateTooltip_Timer.Tick += this.PART_PickColorFromScreen_UpdateTooltip;
+                this.UpdateTooltip_Timer.Start();
             }
 
-            PART_PickColorFromScreen_UpdateTooltip(this, new EventArgs());
+            this.PART_PickColorFromScreen_UpdateTooltip(this, new EventArgs());
 
             e.Handled = true;
         }
 
         private void PART_PickColorFromScreen_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
             {
                 toolTip.IsOpen = true;
                 toolTip.StaysOpen = true;
                 toolTip.Placement = PlacementMode.MousePoint;
-                toolTip.HorizontalOffset = Mouse.GetPosition(PART_PickColorFromScreen).X + 18;
-                toolTip.VerticalOffset = Mouse.GetPosition(PART_PickColorFromScreen).Y - 18;
+                toolTip.HorizontalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).X + 18;
+                toolTip.VerticalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).Y - 18;
             }
         }
 
         private DispatcherTimer UpdateTooltip_Timer;
+
         private void PART_PickColorFromScreen_UpdateTooltip(object sender, EventArgs e)
         {
-            if (PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
+            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
             {
                 Point pointToWindow = Mouse.GetPosition(this);
-                Point pointToScreen = PointToScreen(pointToWindow);
+                Point pointToScreen = this.PointToScreen(pointToWindow);
                 toolTip.DataContext = ColorHelper.GetPixelColor(pointToScreen);
             }
         }
-        #endregion
 
+        #endregion
     }
 }
