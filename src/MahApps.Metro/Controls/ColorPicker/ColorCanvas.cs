@@ -166,7 +166,7 @@ namespace MahApps.Metro.Controls
 
         private void PART_SaturationValueBox_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Mouse.Capture(null);
+            this.PART_SaturationValueBox.ReleaseMouseCapture();
             this.PART_SaturationValueBox.MouseMove -= this.PART_SaturationValueBox_MouseMove;
         }
 
@@ -229,7 +229,7 @@ namespace MahApps.Metro.Controls
 
         private void PART_PickColorFromScreen_PreviewMouseUp(object sender, MouseEventArgs e)
         {
-            Mouse.Capture(null);
+            this.PART_PickColorFromScreen.ReleaseMouseCapture();
             this.PART_PickColorFromScreen.MouseMove -= this.PART_PickColorFromScreen_PreviewMouseMove;
 
             this.PART_PickColorFromScreen.Cursor = Cursors.Arrow;
