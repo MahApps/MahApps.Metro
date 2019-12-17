@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controlzEx="urn:controlzex"
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters"
@@ -69,7 +69,6 @@
                     <DockPanel Grid.Row="1"
                                Grid.Column="2"
                                VerticalAlignment="Top"
-                               Panel.ZIndex="1"
                                Focusable="False">
                         <!--  the left window commands  -->
                         <ContentPresenter x:Name="PART_LeftWindowCommands"
