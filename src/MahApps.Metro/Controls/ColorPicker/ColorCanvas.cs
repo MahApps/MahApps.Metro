@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,14 +12,14 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = "PART_SaturationValueBox", Type = typeof(Control))]
     [TemplatePart(Name = "PART_SaturationValueBox_Background", Type = typeof(SolidColorBrush))]
-    [TemplatePart(Name = "PART_PickColorFromScreen", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_PickColorFromScreen", Type = typeof(ColorEyeDropper))]
     public class ColorCanvas : Control
     {
         #region private Members
 
         SolidColorBrush PART_SaturationValueBox_Background;
         FrameworkElement PART_SaturationValueBox;
-        Button PART_PickColorFromScreen;
+        ColorEyeDropper PART_PickColorFromScreen;
 
         bool ColorIsUpdating = false;
 
@@ -38,6 +39,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register("Saturation", typeof(double), typeof(ColorCanvas), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(ColorCanvas), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
 
+        public static readonly DependencyProperty EyeDropperPreviewColorProperty = DependencyProperty.Register("EyeDropperPreviewColor", typeof(Color), typeof(ColorCanvas), new FrameworkPropertyMetadata(Colors.White));
+        
         public Color SelectedColor
         {
             get { return (Color)this.GetValue(SelectedColorProperty); }
@@ -155,6 +158,7 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(ValueProperty, value); }
         }
 
+
         private static void HSV_Values_Changed(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorCanvas colorCanvas && !colorCanvas.ColorIsUpdating)
@@ -220,84 +224,8 @@ namespace MahApps.Metro.Controls
             this.PART_SaturationValueBox.MouseLeftButtonDown += this.PART_SaturationValueBox_MouseLeftButtonDown;
             this.PART_SaturationValueBox.MouseLeftButtonUp += this.PART_SaturationValueBox_MouseLeftButtonUp;
 
-            this.PART_PickColorFromScreen = (Button)this.GetTemplateChild("PART_PickColorFromScreen");
-            this.PART_PickColorFromScreen.PreviewMouseLeftButtonDown += this.PART_PickColorFromScreen_PreviewMouseDown;
-            ;
-            this.PART_PickColorFromScreen.PreviewMouseLeftButtonUp += this.PART_PickColorFromScreen_PreviewMouseUp;
-            ;
+            this.PART_PickColorFromScreen = (ColorEyeDropper)this.GetTemplateChild("PART_PickColorFromScreen");
         }
-
-        private void PART_PickColorFromScreen_PreviewMouseUp(object sender, MouseEventArgs e)
-        {
-            this.PART_PickColorFromScreen.ReleaseMouseCapture();
-            this.PART_PickColorFromScreen.MouseMove -= this.PART_PickColorFromScreen_PreviewMouseMove;
-
-            this.PART_PickColorFromScreen.Cursor = Cursors.Arrow;
-
-            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
-            {
-                toolTip.IsOpen = false;
-            }
-
-            if (!this.PART_PickColorFromScreen.IsMouseOver)
-            {
-                Point pointToWindow = Mouse.GetPosition(this);
-                Point pointToScreen = this.PointToScreen(pointToWindow);
-                this.SelectedColor = ColorHelper.GetPixelColor(pointToScreen);
-            }
-
-            this.UpdateTooltip_Timer = null;
-        }
-
-        private void PART_PickColorFromScreen_PreviewMouseDown(object sender, MouseEventArgs e)
-        {
-            this.PART_PickColorFromScreen.PreviewMouseMove += this.PART_PickColorFromScreen_PreviewMouseMove;
-            this.PART_PickColorFromScreen.Cursor = (Cursor)this.PART_PickColorFromScreen.Resources["MahApps.Cursors.EyeDropper"];
-            Mouse.Capture(this.PART_PickColorFromScreen);
-
-            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
-            {
-                toolTip.IsOpen = true;
-                toolTip.StaysOpen = true;
-                toolTip.Placement = PlacementMode.MousePoint;
-                toolTip.HorizontalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).X + 18;
-                toolTip.VerticalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).Y - 18;
-
-                this.UpdateTooltip_Timer = new DispatcherTimer();
-                this.UpdateTooltip_Timer.Interval = TimeSpan.FromSeconds(0.1);
-                this.UpdateTooltip_Timer.Tick += this.PART_PickColorFromScreen_UpdateTooltip;
-                this.UpdateTooltip_Timer.Start();
-            }
-
-            this.PART_PickColorFromScreen_UpdateTooltip(this, new EventArgs());
-
-            e.Handled = true;
-        }
-
-        private void PART_PickColorFromScreen_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
-            {
-                toolTip.IsOpen = true;
-                toolTip.StaysOpen = true;
-                toolTip.Placement = PlacementMode.MousePoint;
-                toolTip.HorizontalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).X + 18;
-                toolTip.VerticalOffset = Mouse.GetPosition(this.PART_PickColorFromScreen).Y - 18;
-            }
-        }
-
-        private DispatcherTimer UpdateTooltip_Timer;
-
-        private void PART_PickColorFromScreen_UpdateTooltip(object sender, EventArgs e)
-        {
-            if (this.PART_PickColorFromScreen.ToolTip is ToolTip toolTip)
-            {
-                Point pointToWindow = Mouse.GetPosition(this);
-                Point pointToScreen = this.PointToScreen(pointToWindow);
-                toolTip.DataContext = ColorHelper.GetPixelColor(pointToScreen);
-            }
-        }
-
         #endregion
     }
 }
