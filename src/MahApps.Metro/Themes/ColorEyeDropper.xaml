@@ -96,7 +96,7 @@
                                  Stroke="{DynamicResource MahApps.Brushes.GrayNormal}"
                                  StrokeThickness="1" />
 
-                        <TextBlock Text="{Binding PreviewColor}"
+                        <TextBlock Text="{Binding PreviewBrush}"
                                    Grid.Row="1"
                                    Grid.Column="1"
                                    Margin="5" />

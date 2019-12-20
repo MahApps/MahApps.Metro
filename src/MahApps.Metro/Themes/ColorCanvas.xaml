@@ -348,7 +348,7 @@
                                                               Grid.Column="2"
                                                               Width="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}"
                                                               Height="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}"
-                                                              SelectedColor="{TemplateBinding SelectedColor}" />
+                                                              SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
                                 </Grid>
                             </Grid>
                         </Border>
