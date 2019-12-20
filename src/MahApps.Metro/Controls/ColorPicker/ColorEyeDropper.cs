@@ -17,6 +17,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PreviewImageSourceProperty = DependencyProperty.Register("PreviewImageSource", typeof(BitmapSource), typeof(ColorEyeDropper), new PropertyMetadata(null));
         public static readonly DependencyProperty PreviewImageOuterPixelCountProperty = DependencyProperty.Register("PreviewImageOuterPixelCount", typeof(int), typeof(ColorEyeDropper), new PropertyMetadata(2));
 
+        public static readonly DependencyProperty EyeDropperCursorProperty = DependencyProperty.Register("EyeDropperCursor", typeof(Cursor), typeof(ColorEyeDropper), new PropertyMetadata(null));
+
+
         public Color SelectedColor
         {
             get { return (Color)this.GetValue(SelectedColorProperty); }
@@ -42,6 +45,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(PreviewImageOuterPixelCountProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or Sets the Cursor in Selecting Color Mode
+        /// </summary>
+        public Cursor EyeDropperCursor
+        {
+            get { return (Cursor)GetValue(EyeDropperCursorProperty); }
+            set { SetValue(EyeDropperCursorProperty, value); }
+        }
+
+
         private void ColorEyeDropper_PreviewMouseUp(object sender, MouseEventArgs e)
         {
             this.ReleaseMouseCapture();
@@ -64,16 +77,17 @@ namespace MahApps.Metro.Controls
         private void ColorEyeDropper_PreviewMouseDown(object sender, MouseEventArgs e)
         {
             this.PreviewMouseMove += this.ColorEyeDropper_PreviewMouseMove;
-            this.Cursor = (Cursor)this.Resources["MahApps.Cursors.EyeDropper"];
+            this.Cursor = this.EyeDropperCursor;
             Mouse.Capture(this);
 
             if (this.ToolTip is ToolTip toolTip)
             {
+                toolTip.PlacementTarget = this;
+                toolTip.Placement = System.Windows.Controls.Primitives.PlacementMode.Mouse;
                 toolTip.IsOpen = true;
-                toolTip.StaysOpen = true;
             }
 
-            SetPreview();
+            SetPreviewAsync();
             
         }
 

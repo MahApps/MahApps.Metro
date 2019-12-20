@@ -136,7 +136,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Margin="0,2" Text="Preview" />
+                                    <TextBlock Text="Preview" Margin="0,2" />
 
 
                                     <Border Grid.Row="0"
@@ -153,10 +153,10 @@
                                         </Rectangle>
                                     </Border>
 
-                                    <TextBlock Grid.Row="1"
+                                    <TextBlock Text="Opacity"
+                                               Grid.Row="1"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center"
-                                               Text="Opacity" />
+                                               VerticalAlignment="Center" />
 
                                     <Grid Grid.Row="1" Grid.Column="1">
                                         <Grid.ColumnDefinitions>
@@ -201,10 +201,10 @@
                                         </Grid.RowDefinitions>
 
                                         <!--  R  -->
-                                        <TextBlock Grid.Row="0"
+                                        <TextBlock Text="R"
+                                                   Grid.Row="0"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center"
-                                                   Text="R" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="0"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -218,10 +218,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
 
                                         <!--  G  -->
-                                        <TextBlock Grid.Row="1"
+                                        <TextBlock Text="G"
+                                                   Grid.Row="1"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center"
-                                                   Text="G" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="1"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -235,10 +235,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
 
                                         <!--  B  -->
-                                        <TextBlock Grid.Row="2"
+                                        <TextBlock Text="B"
+                                                   Grid.Row="2"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center"
-                                                   Text="B" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="2"
                                                 Grid.Column="1"
                                                 Maximum="255"
@@ -252,11 +252,11 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
 
                                         <!--  H  -->
-                                        <TextBlock Grid.Row="3"
+                                        <TextBlock Text="H"
+                                                   Grid.Row="3"
                                                    Grid.Column="0"
                                                    Margin="0,8,0,0"
-                                                   VerticalAlignment="Center"
-                                                   Text="H" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="3"
                                                 Grid.Column="1"
                                                 Margin="0,8,0,0"
@@ -272,10 +272,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
                                         <!--  S  -->
-                                        <TextBlock Grid.Row="4"
+                                        <TextBlock Text="S"
+                                                   Grid.Row="4"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center"
-                                                   Text="S" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="4"
                                                 Grid.Column="1"
                                                 Maximum="1"
@@ -290,10 +290,10 @@
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
 
                                         <!--  Value  -->
-                                        <TextBlock Grid.Row="5"
+                                        <TextBlock Text="V"
+                                                   Grid.Row="5"
                                                    Grid.Column="0"
-                                                   VerticalAlignment="Center"
-                                                   Text="V" />
+                                                   VerticalAlignment="Center" />
                                         <Slider Grid.Row="5"
                                                 Grid.Column="1"
                                                 Maximum="1"
@@ -324,24 +324,24 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0"
+                                    <TextBlock Text="Hex-Code "
+                                               Grid.Row="0"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center"
-                                               Text="Hex-Code " />
+                                               VerticalAlignment="Center" />
                                     <TextBox x:Name="TextBox_HexCode"
+                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
                                              Grid.Row="0"
                                              Grid.Column="1"
-                                             Margin="2"
-                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}" />
-                                    <TextBlock Grid.Row="1"
+                                             Margin="2" />
+                                    <TextBlock Text="Name "
+                                               Grid.Row="1"
                                                Grid.Column="0"
-                                               VerticalAlignment="Center"
-                                               Text="Name " />
-                                    <TextBox Grid.Row="1"
+                                               VerticalAlignment="Center" />
+                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
+                                             Grid.Row="1"
                                              Grid.Column="1"
                                              Margin="2"
-                                             IsReadOnly="True"
-                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}" />
+                                             IsReadOnly="True" />
 
                                     <Controls:ColorEyeDropper x:Name="PART_PickColorFromScreen"
                                                               Grid.Row="0"

@@ -5,23 +5,24 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <conv:BackgroundToForegroundConverter x:Key="BackgroundToForegroundConverter" />
+    <Cursor x:Key="MahApps.Cursors.EyeDropper">../Controls/ColorPicker/Eyedropper.cur</Cursor>
 
     <Style TargetType="{x:Type mah:ColorEyeDropper}">
+
+        <Setter Property="EyeDropperCursor" Value="{StaticResource MahApps.Cursors.EyeDropper}" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorEyeDropper}">
-                    <ControlTemplate.Resources>
-                        <Cursor x:Key="MahApps.Cursors.EyeDropper">../Controls/ColorPicker/Eyedropper.cur</Cursor>
-                    </ControlTemplate.Resources>
 
-                    <Button Width="{TemplateBinding Width}"
+
+                    <Button Content="{TemplateBinding Content}"
+                            Width="{TemplateBinding Width}"
                             Height="{TemplateBinding Height}"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
 
                     <ControlTemplate.Triggers>
@@ -38,6 +39,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
@@ -48,7 +50,8 @@
             <Setter.Value>
                 <ToolTip controlzEx:ToolTipAssist.AutoMove="True"
                          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}, Path=PlacementTarget}"
-                         Placement="Mouse">
+                         Placement="Mouse"
+                         StaysOpen="True">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -93,10 +96,10 @@
                                  Stroke="{DynamicResource MahApps.Brushes.GrayNormal}"
                                  StrokeThickness="1" />
 
-                        <TextBlock Grid.Row="1"
+                        <TextBlock Text="{Binding PreviewColor}"
+                                   Grid.Row="1"
                                    Grid.Column="1"
-                                   Margin="5"
-                                   Text="{Binding PreviewColor}" />
+                                   Margin="5" />
                     </Grid>
                 </ToolTip>
             </Setter.Value>
