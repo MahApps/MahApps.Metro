@@ -37,7 +37,7 @@
                                                        FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
                                                        FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <Border Grid.Row="1"

@@ -100,7 +100,7 @@
                                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                                   RecognizesAccessKey="True"
+                                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                    UseLayoutRounding="False" />
                                     </StackPanel>

@@ -168,6 +168,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}" />
 
                         <Controls:ContentControlEx x:Name="HeaderContent"
+                                                   Grid.Column="0"
                                                    Margin="{TemplateBinding BorderThickness}"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -177,7 +178,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                         <Path x:Name="SortArrow"

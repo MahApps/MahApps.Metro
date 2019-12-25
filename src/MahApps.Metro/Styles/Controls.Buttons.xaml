@@ -47,7 +47,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
@@ -95,7 +95,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
@@ -288,7 +288,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                 </ControlTemplate>
@@ -424,7 +424,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -484,7 +484,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -564,7 +564,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -725,7 +725,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="True"
+                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -808,7 +808,7 @@
                                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="True"
+                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>
@@ -918,7 +918,7 @@
                                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="True"
+                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>

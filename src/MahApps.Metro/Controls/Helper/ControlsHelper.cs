@@ -66,7 +66,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(ContentCharacterCasingProperty, value);
         }
 
+        public static readonly DependencyProperty RecognizesAccessKeyProperty
+            = DependencyProperty.RegisterAttached(
+                "RecognizesAccessKey",
+                typeof(bool),
+                typeof(ControlsHelper),
+                new FrameworkPropertyMetadata(true));
 
+        /// <summary> 
+        /// Gets the value if the inner ContentPresenter use AccessText in its style.
+        /// </summary> 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(SplitButton))]
+        public static bool GetRecognizesAccessKey(UIElement element)
+        {
+            return (bool)element.GetValue(RecognizesAccessKeyProperty);
+        }
+
+        /// <summary> 
+        /// Sets the value if the inner ContentPresenter should use AccessText in its style.
+        /// </summary> 
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(SplitButton))]
+        public static void SetRecognizesAccessKey(UIElement element, bool value)
+        {
+            element.SetValue(RecognizesAccessKeyProperty, value);
+        }
 
         public static readonly DependencyProperty FocusBorderBrushProperty
             = DependencyProperty.RegisterAttached("FocusBorderBrush",

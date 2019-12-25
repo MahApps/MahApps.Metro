@@ -45,7 +45,7 @@
                                                        FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
                                                        FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
                                                        FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                        UseLayoutRounding="False">
                                 <TextElement.Foreground>
