@@ -87,7 +87,6 @@
                                                        FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
                                                        FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
                                                        FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
-                                                       RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     <ContentPresenter x:Name="PART_Content"
                                       ContentSource="Content"

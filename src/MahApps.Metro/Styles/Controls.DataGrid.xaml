@@ -257,7 +257,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  RecognizesAccessKey="True"
+                                                  RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Control Grid.Column="1"
                                          Focusable="False"

@@ -77,8 +77,7 @@ namespace MahApps.Metro.Controls
         /// Gets the value if the inner ContentPresenter use AccessText in its style.
         /// </summary> 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
         [AttachedPropertyBrowsableForType(typeof(SplitButton))]
         public static bool GetRecognizesAccessKey(UIElement element)
@@ -90,8 +89,7 @@ namespace MahApps.Metro.Controls
         /// Sets the value if the inner ContentPresenter should use AccessText in its style.
         /// </summary> 
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(ButtonBase))]
-        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
         [AttachedPropertyBrowsableForType(typeof(SplitButton))]
         public static void SetRecognizesAccessKey(UIElement element, bool value)
