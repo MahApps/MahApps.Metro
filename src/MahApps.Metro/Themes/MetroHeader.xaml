@@ -32,7 +32,7 @@
                                                        FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                                        IsTabStop="False"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <Grid Grid.Row="1" Background="{TemplateBinding Background}">
