@@ -350,11 +350,13 @@
             <CheckBox Margin="{StaticResource ControlMargin}" Content="_Enabled" />
             <CheckBox Margin="{StaticResource ControlMargin}"
                       Content="Enabled"
-                      IsChecked="True" />
+                      IsChecked="True"
+                      IsThreeState="True" />
             <CheckBox Margin="{StaticResource ControlMargin}"
                       Content="Enabled"
                       IsChecked="{x:Null}"
-                      IsThreeState="True" />
+                      IsThreeState="True"
+                      Style="{StaticResource MahApps.Styles.CheckBox.Win10}" />
             <CheckBox Margin="{StaticResource ControlMargin}"
                       Content="Disabled"
                       IsEnabled="False" />

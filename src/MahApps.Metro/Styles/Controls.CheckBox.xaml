@@ -5,9 +5,35 @@
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
     <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundBrushChecked" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundBrushIntermediate" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundBrushUnchecked" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIntermediate" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphCheckedTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="12"
+                          Height="10"
+                          Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
+                          Fill="{DynamicResource MahApps.Brushes.Highlight}"
+                          Stretch="Fill"
+                          UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Rectangle Width="8"
+                               Height="3"
+                               Fill="{DynamicResource MahApps.Brushes.Gray3}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
@@ -21,35 +47,65 @@
                 <ControlTemplate TargetType="CheckBox">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="LeftCol" Width="18" />
+                            <ColumnDefinition x:Name="LeftCol" Width="Auto" />
                             <ColumnDefinition x:Name="RightCol" Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_CHECKBOX">
                             <Rectangle Margin="-6 0" Fill="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-                            <Border x:Name="normal"
-                                    Width="18"
-                                    Height="18"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
+                            <Border x:Name="CheckedBorder"
+                                    Width="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    Height="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="{TemplateBinding Controls:CheckBoxHelper.CheckBackgroundBrushChecked}"
+                                    BorderBrush="{TemplateBinding Controls:CheckBoxHelper.CheckBorderBrushChecked}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Path x:Name="checkBox"
-                                  Width="12"
-                                  Height="10"
-                                  Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
-                                  Fill="{DynamicResource MahApps.Brushes.Highlight}"
-                                  Opacity="0"
-                                  Stretch="Fill"
-                                  UseLayoutRounding="False" />
-                            <Rectangle x:Name="IndeterminateCheck"
-                                       Width="8"
-                                       Height="3"
-                                       Fill="{DynamicResource MahApps.Brushes.Gray3}"
-                                       Opacity="0" />
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <ContentControl Content="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphChecked}"
+                                                ContentTemplate="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphCheckedTemplate}"
+                                                Focusable="False"
+                                                IsTabStop="False" />
+                            </Border>
+
+                            <Border x:Name="UnCheckedBorder"
+                                    Width="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    Height="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="{TemplateBinding Controls:CheckBoxHelper.CheckBackgroundBrushUnchecked}"
+                                    BorderBrush="{TemplateBinding Controls:CheckBoxHelper.CheckBorderBrushUnchecked}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <ContentControl Content="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphUnchecked}"
+                                                ContentTemplate="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate}"
+                                                Focusable="False"
+                                                IsTabStop="False" />
+                            </Border>
+
+                            <Border x:Name="IntermediateBorder"
+                                    Width="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    Height="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="{TemplateBinding Controls:CheckBoxHelper.CheckBackgroundBrushIntermediate}"
+                                    BorderBrush="{TemplateBinding Controls:CheckBoxHelper.CheckBorderBrushIntermediate}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                    Opacity="0"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <ContentControl Content="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphIntermediate}"
+                                                ContentTemplate="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate}"
+                                                Focusable="False"
+                                                IsTabStop="False" />
+                            </Border>
+
                             <Border x:Name="disabled"
-                                    Width="18"
-                                    Height="18"
+                                    Width="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                    Height="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
                                     Background="{DynamicResource MahApps.Brushes.SemiTransparentWhite}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
@@ -85,16 +141,23 @@
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="checkBox"
+                                        <DoubleAnimation Storyboard.TargetName="CheckedBorder"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          To="1"
                                                          Duration="0" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="UnCheckedBorder"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To="1"
+                                                         Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="Indeterminate">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="IndeterminateCheck"
+                                        <DoubleAnimation Storyboard.TargetName="IntermediateBorder"
                                                          Storyboard.TargetProperty="(UIElement.Opacity)"
                                                          To="1"
                                                          Duration="0" />
@@ -105,16 +168,32 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="CheckedBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="IntermediateBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                            <Setter TargetName="UnCheckedBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                            <Setter TargetName="CheckedBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                            <Setter TargetName="IntermediateBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                            <Setter TargetName="UnCheckedBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="CheckedBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="IntermediateBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="UnCheckedBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="FlowDirection" Value="RightToLeft">
-                            <Setter TargetName="checkBox" Property="LayoutTransform">
+                            <Setter TargetName="CheckedBorder" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="IntermediateBorder" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="UnCheckedBorder" Property="LayoutTransform">
                                 <Setter.Value>
                                     <ScaleTransform ScaleX="-1" />
                                 </Setter.Value>
@@ -124,7 +203,7 @@
                             <Setter Property="Padding" Value="0 0 6 0" />
                             <Setter TargetName="LeftCol" Property="Width" Value="*" />
                             <Setter TargetName="PART_CHECKBOX" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="RightCol" Property="Width" Value="18" />
+                            <Setter TargetName="RightCol" Property="Width" Value="Auto" />
                             <Setter TargetName="contentPresenter" Property="Grid.Column" Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -132,5 +211,33 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CheckBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox}"
+           TargetType="CheckBox">
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundBrushChecked" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushChecked" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphCheckedTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="M90.890625,12.890625L95.109375,17.109375 30,82.265625 0.890625,53.109375 5.10937547683716,48.890625 30,73.734375 90.890625,12.890625z"
+                          Stretch="Uniform"
+                          Stroke="{DynamicResource MahApps.Brushes.IdealForeground}"
+                          UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Rectangle Margin="4" Fill="{DynamicResource MahApps.Brushes.Gray3}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckSize" Value="20" />
     </Style>
 </ResourceDictionary>
