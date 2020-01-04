@@ -2,10 +2,12 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
+    </PropertyGroup>
+    <PropertyGroup>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -39,7 +41,7 @@
         <None Include="app.manifest" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>

@@ -32,7 +32,7 @@
         <None Include="app.manifest" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>

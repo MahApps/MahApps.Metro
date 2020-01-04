@@ -2,7 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Tests</AssemblyName>
         <RootNamespace>MahApps.Metro.Tests</RootNamespace>
     </PropertyGroup>
@@ -25,7 +24,7 @@
     <ItemGroup>
         <None Remove="TestApp.config" />
         <AppConfigWithTargetPath Include="TestApp.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
