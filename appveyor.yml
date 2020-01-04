@@ -31,6 +31,9 @@ build_script:
   - ps: .\build.ps1 --bootstrap
   - ps: .\build.ps1 -target appveyor
 
+after_build:
+  - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
+
 artifacts:
   - path: \Publish\*.*
 
