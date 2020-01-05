@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net45;net46;net47</TargetFrameworks>
+        <TargetFrameworks>net452;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
@@ -32,7 +32,7 @@
         <None Include="app.manifest" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
