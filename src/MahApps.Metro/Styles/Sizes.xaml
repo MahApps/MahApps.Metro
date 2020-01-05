@@ -8,4 +8,10 @@
     <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</System:Double>
     <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</System:Double>
 
+    <!-- MUI -->
+
+    <System:Double x:Key="MahApps.Sizes.Button.Close.Width.Mui">32</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Button.System.Height.Mui">24</System:Double>
+    <System:Double x:Key="MahApps.Sizes.Button.System.Width.Mui">32</System:Double>
+
 </ResourceDictionary>
