@@ -325,7 +325,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <Thumb x:Name="PART_HeaderGripper"

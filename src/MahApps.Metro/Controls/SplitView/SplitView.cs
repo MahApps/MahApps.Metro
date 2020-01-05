@@ -267,6 +267,14 @@
         {
             this.DefaultStyleKey = typeof(SplitView);
             this.TemplateSettings = new SplitViewTemplateSettings(this);
+            this.DataContextChanged += this.SplitViewDataContextChanged;
+        }
+
+        private void SplitViewDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            // MahApps add this pane to the SplitView with AddLogicalChild method.
+            // This has the side effect that the DataContext doesn't update, so do this now here.
+            if (this.Pane is FrameworkElement elementPane) elementPane.DataContext = this.DataContext;
         }
 
         /// <summary>

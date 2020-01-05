@@ -12,7 +12,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
+            <Style x:Key="DescriptionHeaderStyle"
+                   BasedOn="{StaticResource {x:Type Label}}"
+                   TargetType="{x:Type Label}">
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>

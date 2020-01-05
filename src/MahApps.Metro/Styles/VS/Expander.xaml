@@ -73,7 +73,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
@@ -122,7 +122,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Grid x:Name="ArrowGrid"
                                   Grid.Column="1"
@@ -219,7 +219,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
@@ -266,7 +266,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Grid x:Name="ArrowGrid"
                                   Grid.Column="1"

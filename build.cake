@@ -217,6 +217,7 @@ void SignFiles(IEnumerable<FilePath> files, string description)
 }
 
 Task("Sign")
+    .WithCriteria(() => !isPullRequest)
     .ContinueOnError()
     .Does(() =>
 {
@@ -228,6 +229,7 @@ Task("Sign")
 });
 
 Task("SignNuGet")
+    .WithCriteria(() => !isPullRequest)
     .ContinueOnError()
     .Does(() =>
 {

@@ -55,7 +55,7 @@
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                          RecognizesAccessKey="True" />
+                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />

@@ -57,7 +57,8 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ContentPresenter Grid.Row="0"
+            <ContentPresenter x:Name="PART_Top"
+                              Grid.Row="0"
                               AutomationProperties.Name="Dialog top"
                               Content="{TemplateBinding DialogTop}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -80,7 +81,8 @@
                                Foreground="{TemplateBinding Foreground}"
                                Text="{TemplateBinding Title}"
                                TextWrapping="Wrap" />
-                    <ContentPresenter Grid.Row="1"
+                    <ContentPresenter x:Name="PART_Content"
+                                      Grid.Row="1"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       AutomationProperties.Name="Dialog content"
@@ -91,7 +93,8 @@
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </Grid>
             </Grid>
-            <ContentPresenter Grid.Row="2"
+            <ContentPresenter x:Name="PART_Bottom"
+                              Grid.Row="2"
                               AutomationProperties.Name="Dialog bottom"
                               Content="{TemplateBinding DialogBottom}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

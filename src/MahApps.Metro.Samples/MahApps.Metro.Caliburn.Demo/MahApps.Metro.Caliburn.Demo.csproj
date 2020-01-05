@@ -5,7 +5,7 @@
         <TargetFrameworks>net45;net46;net47</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
-        <DisableFody Condition="'$(Configuration)' == 'Debug' or '$(TargetFramework)' == 'netcoreapp3.0'">true</DisableFody>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -20,7 +20,7 @@
         <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha*" />
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.*" />
         <PackageReference Include="Caliburn.Micro" Version="3.*" />
         <PackageReference Include="Fody" Version="6.*">
           <PrivateAssets>all</PrivateAssets>

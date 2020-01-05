@@ -54,7 +54,7 @@
                                                            FontStyle="{TemplateBinding FontStyle}"
                                                            FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                            Foreground="{TemplateBinding Foreground}"
-                                                           RecognizesAccessKey="True"
+                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Button x:Name="PART_CloseButton"
                                         Grid.Column="1"

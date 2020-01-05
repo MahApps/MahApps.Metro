@@ -6,6 +6,9 @@
   <p>
     A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
   </p>
+  <p>
+    Supporting .NET Framework (4.5+) and .NET Core (3.0 and 3.1)
+  </p>
   <a href="https://gitter.im/MahApps/MahApps.Metro">
     <img src="https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square">
   </a>

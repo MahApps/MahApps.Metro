@@ -57,7 +57,7 @@
                                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                            IsHitTestVisible="False"
-                                                           RecognizesAccessKey="True"
+                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
                             </StackPanel>
@@ -185,7 +185,7 @@
                                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                            IsHitTestVisible="False"
-                                                           RecognizesAccessKey="True"
+                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                            UseLayoutRounding="False" />
                             </StackPanel>
