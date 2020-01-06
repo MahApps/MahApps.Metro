@@ -7,8 +7,9 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public abstract class IconElement : Control
     {
-        internal IconElement()
+        protected IconElement()
         {
+            // nothing here
         }
     }
 }
