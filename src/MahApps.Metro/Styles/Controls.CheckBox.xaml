@@ -5,132 +5,519 @@
     <!--  ********************************** CheckBoxStyle **********************************  -->
     <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
     <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphCheckedTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Path Width="12"
+                          Height="10"
+                          Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
+                          Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                          Stretch="Fill"
+                          UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundChecked" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Rectangle Width="8"
+                               Height="3"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                               UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.ForegroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedPressed}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Label.Text}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUnchecked}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="6 0 0 0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="LeftCol" Width="18" />
-                            <ColumnDefinition x:Name="RightCol" Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid x:Name="PART_CHECKBOX">
-                            <Rectangle Margin="-6 0" Fill="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-                            <Border x:Name="normal"
-                                    Width="18"
-                                    Height="18"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Path x:Name="checkBox"
-                                  Width="12"
-                                  Height="10"
-                                  Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
-                                  Fill="{DynamicResource MahApps.Brushes.Highlight}"
-                                  Opacity="0"
-                                  Stretch="Fill"
-                                  UseLayoutRounding="False" />
-                            <Rectangle x:Name="IndeterminateCheck"
-                                       Width="8"
-                                       Height="3"
-                                       Fill="{DynamicResource MahApps.Brushes.Gray3}"
-                                       Opacity="0" />
-                            <Border x:Name="disabled"
-                                    Width="18"
-                                    Height="18"
-                                    Background="{DynamicResource MahApps.Brushes.SemiTransparentWhite}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                    Opacity="0"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="RootBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="LeftCol" Width="Auto" />
+                                <ColumnDefinition x:Name="RightCol" Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="Check"
+                                  Grid.Column="0"
+                                  Width="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                  Height="{TemplateBinding Controls:CheckBoxHelper.CheckSize}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <Border x:Name="CheckBorder"
+                                        Background="{TemplateBinding Controls:CheckBoxHelper.CheckBackgroundUnchecked}"
+                                        BorderBrush="{TemplateBinding Controls:CheckBoxHelper.CheckBorderBrushUnchecked}"
+                                        BorderThickness="{TemplateBinding Controls:CheckBoxHelper.CheckBorderThickness}"
+                                        CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        UseLayoutRounding="False" />
+                                <ContentControl x:Name="CheckGlyph"
+                                                Content="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphUnchecked}"
+                                                ContentTemplate="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate}"
+                                                Focusable="False"
+                                                Foreground="{TemplateBinding Controls:CheckBoxHelper.CheckGlyphForegroundUnchecked}"
+                                                IsTabStop="False" />
+                            </Grid>
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              Grid.Column="1"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
-                        <ContentPresenter x:Name="contentPresenter"
-                                          Grid.Column="1"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}" />
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="contentPresenter"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To=".55"
-                                                         Duration="0" />
-                                        <DoubleAnimation Storyboard.TargetName="disabled"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1"
-                                                         Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="CheckStates">
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="checkBox"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1"
-                                                         Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unchecked" />
-                                <VisualState x:Name="Indeterminate">
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="IndeterminateCheck"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         To="1"
-                                                         Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="normal" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                        </Trigger>
+                        <!--  UncheckedNormal  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundUnchecked)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundUnchecked)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundUnchecked)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushUnchecked)}" />
+                        </MultiTrigger>
+                        <!--  UncheckedMouseOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundUncheckedMouseOver)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushUncheckedMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundUncheckedMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundUncheckedMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushUncheckedMouseOver)}" />
+                        </MultiTrigger>
+                        <!--  UncheckedPressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundUncheckedPressed)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushUncheckedPressed)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedPressed)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundUncheckedPressed)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundUncheckedPressed)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushUncheckedPressed)}" />
+                        </MultiTrigger>
+                        <!--  UncheckedDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundUncheckedDisabled)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushUncheckedDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUnchecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphUncheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundUncheckedDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundUncheckedDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushUncheckedDisabled)}" />
+                        </MultiTrigger>
+
+                        <!--  CheckedNormal  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundChecked)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphCheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundChecked)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundChecked)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushChecked)}" />
+                        </MultiTrigger>
+                        <!--  CheckedMouseOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundCheckedMouseOver)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushCheckedMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphCheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundCheckedMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundCheckedMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundCheckedMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushCheckedMouseOver)}" />
+                        </MultiTrigger>
+                        <!--  CheckedPressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundCheckedPressed)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushCheckedPressed)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphCheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundCheckedPressed)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundCheckedPressed)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundCheckedPressed)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushCheckedPressed)}" />
+                        </MultiTrigger>
+                        <!--  CheckedDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundCheckedDisabled)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushCheckedDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphChecked)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphCheckedTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundCheckedDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundCheckedDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundCheckedDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushCheckedDisabled)}" />
+                        </MultiTrigger>
+
+                        <!--  IndeterminateNormal  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundIndeterminate)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundIndeterminate)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundIndeterminate)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushIndeterminate)}" />
+                        </MultiTrigger>
+                        <!--  IndeterminateMouseOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundIndeterminateMouseOver)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushIndeterminateMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateMouseOver)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundIndeterminateMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundIndeterminateMouseOver)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushIndeterminateMouseOver)}" />
+                        </MultiTrigger>
+                        <!--  IndeterminatePressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundIndeterminatePressed)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushIndeterminatePressed)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminatePressed)}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundIndeterminatePressed)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundIndeterminatePressed)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushIndeterminatePressed)}" />
+                        </MultiTrigger>
+                        <!--  IndeterminateDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBackgroundIndeterminateDisabled)}" />
+                            <Setter TargetName="CheckBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckBorderBrushIndeterminateDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminate)}" />
+                            <Setter TargetName="CheckGlyph" Property="ContentTemplate" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate)}" />
+                            <Setter TargetName="CheckGlyph" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateDisabled)}" />
+                            <Setter TargetName="CheckGlyph" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.ForegroundIndeterminateDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BackgroundIndeterminateDisabled)}" />
+                            <Setter TargetName="RootBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:CheckBoxHelper.BorderBrushIndeterminateDisabled)}" />
+                        </MultiTrigger>
+
                         <Trigger Property="FlowDirection" Value="RightToLeft">
-                            <Setter TargetName="checkBox" Property="LayoutTransform">
+                            <Setter TargetName="Check" Property="LayoutTransform">
                                 <Setter.Value>
                                     <ScaleTransform ScaleX="-1" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+
                         <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
-                            <Setter Property="Padding" Value="0 0 6 0" />
+                            <Setter TargetName="Check" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="0" />
                             <Setter TargetName="LeftCol" Property="Width" Value="*" />
-                            <Setter TargetName="PART_CHECKBOX" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="RightCol" Property="Width" Value="18" />
-                            <Setter TargetName="contentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="RightCol" Property="Width" Value="Auto" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                <Setter Property="Padding" Value="0 0 6 0" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CheckBox.Win10"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox}"
+           TargetType="CheckBox">
+        <Setter Property="Controls:CheckBoxHelper.BackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBackgroundUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBorderThickness" Value="2" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphCheckedTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Controls:FontIcon x:Name="CheckGlyph"
+                                       FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                       FontSize="20"
+                                       Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                                       Glyph="&#xE001;"
+                                       UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckGlyphIndeterminateTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Controls:FontIcon x:Name="CheckGlyph"
+                                       FontFamily="{DynamicResource MahApps.Fonts.Family.SymbolTheme}"
+                                       FontSize="20"
+                                       Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Foreground}"
+                                       Glyph="&#xE73C;"
+                                       UseLayoutRounding="False" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Controls:CheckBoxHelper.CheckSize" Value="20" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundChecked}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundCheckedPressed}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminate}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminateDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminateMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundIndeterminatePressed}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUnchecked}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedDisabled}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedMouseOver}" />
+        <Setter Property="Controls:CheckBoxHelper.ForegroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUncheckedPressed}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="Padding" Value="8 0 0 0" />
+        <Style.Triggers>
+            <!--  UncheckedPressed  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="False" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Controls:CheckBoxHelper.CheckBorderThickness" Value="0" />
+            </MultiTrigger>
+            <!--  CheckedNormal  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsMouseOver" Value="False" />
+                    <Condition Property="IsPressed" Value="False" />
+                    <Condition Property="IsEnabled" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Controls:CheckBoxHelper.CheckBorderThickness" Value="0" />
+            </MultiTrigger>
+            <!--  CheckedPressed  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Controls:CheckBoxHelper.CheckBorderThickness" Value="0" />
+            </MultiTrigger>
+
+            <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                <Setter Property="Padding" Value="0 0 8 0" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
