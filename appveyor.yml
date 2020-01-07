@@ -22,13 +22,12 @@ image: Visual Studio 2019
 test: off
 
 install:
-  - cinst dotnetcore-sdk --version=3.1.100
+  #- cinst dotnetcore-sdk --version=3.1.100
 
 pull_requests:
   do_not_increment_build_number: false
 
 build_script:
-  - ps: .\build.ps1 --bootstrap
   - ps: .\build.ps1 -target appveyor
 
 after_build:
