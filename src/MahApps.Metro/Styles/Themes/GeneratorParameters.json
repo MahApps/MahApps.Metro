@@ -72,7 +72,14 @@
         "MahApps.Colors.SystemChromeGray": "#FF767676",
         "MahApps.Colors.SystemListLow": "#19FFFFFF",
         "MahApps.Colors.SystemListMedium": "#33FFFFFF",
-        "MahApps.Colors.SystemErrorText": "#FFF000"
+        "MahApps.Colors.SystemErrorText": "#FFF000",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.9",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.8",
+        "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.9",
+        "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8",
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36"
       }
     },
     {
@@ -143,7 +150,14 @@
         "MahApps.Colors.SystemChromeGray": "#FF767676",
         "MahApps.Colors.SystemListLow": "#19000000",
         "MahApps.Colors.SystemListMedium": "#33000000",
-        "MahApps.Colors.SystemErrorText": "#C50500"
+        "MahApps.Colors.SystemErrorText": "#C50500",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.7",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.4",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.7",
+        "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.4",
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14"
       }
     }
   ],
