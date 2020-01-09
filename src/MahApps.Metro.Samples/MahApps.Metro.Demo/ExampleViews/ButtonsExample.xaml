@@ -444,7 +444,7 @@
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Circle}" />
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
+                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Circle}" />
                     <Setter Property="Height" Value="48" />
                     <Setter Property="Width" Value="48" />
                 </Style>
