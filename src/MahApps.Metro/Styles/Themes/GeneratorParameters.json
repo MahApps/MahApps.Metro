@@ -176,11 +176,11 @@
     {
       "Name": "Blue",
       "Values": {
-        "MahApps.Colors.AccentBase": "#FF2B579A",
-        "MahApps.Colors.Accent": "#CC2B579A",
-        "MahApps.Colors.Accent2": "#992B579A",
-        "MahApps.Colors.Accent3": "#662B579A",
-        "MahApps.Colors.Accent4": "#332B579A",
+        "MahApps.Colors.AccentBase": "#FF0078D7",
+        "MahApps.Colors.Accent": "#CC0078D7",
+        "MahApps.Colors.Accent2": "#990078D7",
+        "MahApps.Colors.Accent3": "#660078D7",
+        "MahApps.Colors.Accent4": "#330078D7",
         "MahApps.Colors.Highlight": "#FF086F9E"
       }
     },
