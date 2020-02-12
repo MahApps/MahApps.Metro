@@ -345,28 +345,71 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="2"
-                    HorizontalAlignment="Center">
-            <Label Content="Checkbox" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <CheckBox Margin="{StaticResource ControlMargin}" Content="_Enabled" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Enabled"
-                      IsChecked="True" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Enabled"
-                      IsChecked="{x:Null}"
-                      IsThreeState="True" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled"
-                      IsEnabled="False" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled"
-                      IsChecked="True"
-                      IsEnabled="False" />
-            <CheckBox Margin="{StaticResource ControlMargin}"
-                      Content="Disabled"
-                      IsChecked="{x:Null}"
-                      IsEnabled="False"
-                      IsThreeState="True" />
+                    HorizontalAlignment="Center"
+                    UseLayoutRounding="True">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}" TargetType="{x:Type CheckBox}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="IsChecked={0}, IsEnabled={1}">
+                                                <Binding Path="IsChecked"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}"
+                                                         TargetNullValue="Null" />
+                                                <Binding Path="IsEnabled" RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="Checkbox Win10 Style" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <CheckBox IsChecked="False" IsEnabled="True" />
+                <CheckBox IsChecked="False" IsEnabled="False" />
+                <CheckBox IsChecked="True" IsEnabled="False" />
+                <CheckBox IsChecked="True" IsEnabled="True" />
+                <CheckBox IsChecked="{x:Null}" IsEnabled="True" />
+                <CheckBox IsChecked="{x:Null}" IsEnabled="False" />
+            </StackPanel>
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="IsChecked={0}, IsEnabled={1}">
+                                                <Binding Path="IsChecked"
+                                                         RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}"
+                                                         TargetNullValue="Null" />
+                                                <Binding Path="IsEnabled" RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="Checkbox" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <CheckBox IsChecked="False" IsEnabled="True" />
+                <CheckBox IsChecked="False" IsEnabled="False" />
+                <CheckBox IsChecked="True" IsEnabled="False" />
+                <CheckBox IsChecked="True" IsEnabled="True" />
+                <CheckBox IsChecked="{x:Null}" IsEnabled="True" />
+                <CheckBox IsChecked="{x:Null}" IsEnabled="False" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -401,7 +444,7 @@
                     <Setter Property="ArrowVisibility" Value="Collapsed" />
                     <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Circle}" />
-                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.MetroCircleFocusVisual}" />
+                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Circle}" />
                     <Setter Property="Height" Value="48" />
                     <Setter Property="Width" Value="48" />
                 </Style>

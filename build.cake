@@ -52,6 +52,7 @@ if (FileExists(msBuildPathExe) == false)
 // Directories and Paths
 var solution = "./src/MahApps.Metro.sln";
 var publishDir = "./Publish";
+var testResultsDir = Directory("./TestResults");
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -108,7 +109,7 @@ Task("Build")
         Verbosity = verbosity
         , ToolPath = msBuildPathExe
         , Configuration = configuration
-        , ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once it’s done
+        , ArgumentCustomization = args => args.Append("/m").Append("/nr:false") // The /nr switch tells msbuild to quite once itï¿½s done
         , BinaryLogger = new MSBuildBinaryLogSettings() { Enabled = isLocal }
     };
     MSBuild(solution, msBuildSettings
@@ -315,10 +316,19 @@ Task("Tests")
     .ContinueOnError()
     .Does(() =>
 {
-    XUnit2(
-        "./src/Mahapps.Metro.Tests/bin/" + configuration + "/**/*.Tests.dll",
-        new XUnit2Settings { ToolTimeout = TimeSpan.FromMinutes(5) }
-    );
+    CleanDirectory(testResultsDir);
+
+    var settings = new DotNetCoreTestSettings
+        {
+            Configuration = configuration,
+            NoBuild = true,
+            NoRestore = true,
+            Logger = "trx",
+            ResultsDirectory = testResultsDir,
+            Verbosity = DotNetCoreVerbosity.Normal
+        };
+
+    DotNetCoreTest("./src/Mahapps.Metro.Tests/Mahapps.Metro.Tests.csproj", settings);
 });
 
 Task("CreateRelease")

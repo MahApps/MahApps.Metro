@@ -38,7 +38,7 @@
     <!-- Key to generating the xaml files at the right point in time is to do this before DispatchToInnerBuilds -->
     <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
         <!--TargetFramework=once is critical here, as it will not execute task from same project with same properties multiple times. 
-        We need to unify TargetFramework between empty, net45, netcoreapp3.0 etc.-->
+            We need to unify TargetFramework between empty, net45, netcoreapp3.0 etc.-->
         <MSBuild Projects="$(MSBuildProjectFile)" Targets="GenerateXamlFilesInner" Properties="TargetFramework=once" />
     </Target>
     <ItemGroup>
