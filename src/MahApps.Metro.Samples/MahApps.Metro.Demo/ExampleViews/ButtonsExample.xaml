@@ -353,16 +353,7 @@
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="IsChecked={0}, IsEnabled={1}">
-                                                <Binding Path="IsChecked"
-                                                         RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}"
-                                                         TargetNullValue="Null" />
-                                                <Binding Path="IsEnabled" RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type CheckBox}}, Path=IsChecked, TargetNullValue='IsChecked = Null', Mode=OneWay, StringFormat='{}IsChecked = {0}'}" />
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -370,7 +361,7 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Label Content="Checkbox Win10 Style" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="CheckBox Win10" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <CheckBox IsChecked="False" IsEnabled="True" />
                 <CheckBox IsChecked="False" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="False" />
@@ -385,16 +376,7 @@
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="IsChecked={0}, IsEnabled={1}">
-                                                <Binding Path="IsChecked"
-                                                         RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}"
-                                                         TargetNullValue="Null" />
-                                                <Binding Path="IsEnabled" RelativeSource="{RelativeSource AncestorType={x:Type CheckBox}}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type CheckBox}}, Path=IsChecked, TargetNullValue='IsChecked = Null', Mode=OneWay, StringFormat='{}IsChecked = {0}'}" />
                                 </DataTemplate>
                             </Setter.Value>
                         </Setter>
@@ -402,7 +384,7 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Label Content="Checkbox" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="CheckBox" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <CheckBox IsChecked="False" IsEnabled="True" />
                 <CheckBox IsChecked="False" IsEnabled="False" />
                 <CheckBox IsChecked="True" IsEnabled="False" />
@@ -414,24 +396,65 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="3"
-                    HorizontalAlignment="Center">
-            <Label Content="Radio button" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="E_nabled"
-                         GroupName="1" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Enabled"
-                         GroupName="1"
-                         IsChecked="True" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Disabled"
-                         GroupName="2"
-                         IsEnabled="False" />
-            <RadioButton Margin="{StaticResource ControlMargin}"
-                         Content="Disabled"
-                         GroupName="2"
-                         IsChecked="True"
-                         IsEnabled="False" />
+                    HorizontalAlignment="Center"
+                    UseLayoutRounding="True">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton.Win10}" TargetType="{x:Type RadioButton}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}, Path=IsChecked, Mode=OneWay, StringFormat='{}IsChecked = {0}'}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="RadioButton Win10" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <RadioButton GroupName="GW1"
+                             IsChecked="True"
+                             IsEnabled="True" />
+                <RadioButton GroupName="GW1"
+                             IsChecked="False"
+                             IsEnabled="True" />
+                <RadioButton GroupName="GW1"
+                             IsChecked="False"
+                             IsEnabled="False" />
+                <RadioButton GroupName="GW2"
+                             IsChecked="True"
+                             IsEnabled="False" />
+            </StackPanel>
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.RadioButton}" TargetType="{x:Type RadioButton}">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}, Path=IsChecked, Mode=OneWay, StringFormat='{}IsChecked = {0}'}" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="{StaticResource ControlMargin}" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Label Content="RadioButton" Style="{DynamicResource DescriptionHeaderStyle}" />
+                <RadioButton GroupName="G1"
+                             IsChecked="True"
+                             IsEnabled="True" />
+                <RadioButton GroupName="G1"
+                             IsChecked="False"
+                             IsEnabled="True" />
+                <RadioButton GroupName="G1"
+                             IsChecked="False"
+                             IsEnabled="False" />
+                <RadioButton GroupName="G2"
+                             IsChecked="True"
+                             IsEnabled="False" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="1"

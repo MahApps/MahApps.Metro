@@ -443,4 +443,42 @@
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMedium" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
 
+    <!--  Resources for MahApps.Styles.RadioButton.Win10  -->
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.Foreground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundPressed" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.ForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.Background" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BackgroundDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrush" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.BorderBrushDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStroke" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokePointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseStrokeDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFill" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillPointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillPressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseFillDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStroke" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedStrokeDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFill" ResourceKey="MahApps.Brushes.SystemControlHighlightAltTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.OuterEllipseCheckedFillDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFill" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillPointerOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphFillDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStroke" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokePointerOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokePressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokeDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+
 </ResourceDictionary>
