@@ -51,7 +51,7 @@ namespace MahApps.Metro.Controls
         private readonly QuaternionRotation3D _quaternionRotation = new QuaternionRotation3D();
         private readonly RotateTransform3D _rotationTransform = new RotateTransform3D();
         private readonly ScaleTransform3D _scaleTransform = new ScaleTransform3D();
-        private FrameworkElement _logicalChild;
+        private Decorator _logicalChild;
         private FrameworkElement _originalChild;
         private Viewport3D _viewport3D;
         private FrameworkElement _visualChild;
@@ -199,6 +199,19 @@ namespace MahApps.Metro.Controls
             UpdateRotation();
 
             return _viewport3D;
+        }
+
+        public void Refresh()
+        {
+            if (this._logicalChild != null)
+            {
+                // #3720 I didn't find a better solution to update the child after changing accent/theme
+                _logicalChild.Child = null;
+                _logicalChild.Child = this.Child;
+
+                InvalidateVisual();
+                InvalidateMeasure();
+            }
         }
 
         private void SetCachingForObject(DependencyObject d)
