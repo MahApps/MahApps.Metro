@@ -45,11 +45,6 @@
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{StaticResource MahApps.Colors.White}" options:Freeze="True" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{StaticResource MahApps.Colors.Black}" options:Freeze="True" />
 
-    <LinearGradientBrush x:Key="MahApps.Brushes.CheckBox.Background" StartPoint="0.5,0" EndPoint="0.5,1" options:Freeze="True">
-        <GradientStop Offset="0" Color="{StaticResource MahApps.Colors.Gray7}" />
-        <GradientStop Offset="1" Color="{StaticResource MahApps.Colors.White}" />
-    </LinearGradientBrush>
-
     <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.HoverBackground" Color="#40808080" options:Freeze="True" />
 
     <!--  Foreground  -->
