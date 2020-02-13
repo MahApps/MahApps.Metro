@@ -31,18 +31,18 @@
         <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedDisabled}" />
         <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedMouseOver}" />
         <Setter Property="Controls:CheckBoxHelper.BorderBrushUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUncheckedPressed}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundChecked" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
-        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.CheckBox.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundChecked" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundCheckedPressed" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminate" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminateMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundIndeterminatePressed" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUnchecked" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedDisabled" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedMouseOver" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
+        <Setter Property="Controls:CheckBoxHelper.CheckBackgroundUncheckedPressed" Value="{DynamicResource MahApps.Brushes.SystemControlTransparent}" />
         <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushChecked" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedDisabled" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="Controls:CheckBoxHelper.CheckBorderBrushCheckedMouseOver" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
