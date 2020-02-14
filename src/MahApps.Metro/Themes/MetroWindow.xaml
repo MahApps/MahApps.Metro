@@ -561,9 +561,9 @@
         <Setter Property="FlyoutOverlayBrush" Value="{DynamicResource MahApps.Brushes.Window.FlyoutOverlay}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
-        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
-        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />
         <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
