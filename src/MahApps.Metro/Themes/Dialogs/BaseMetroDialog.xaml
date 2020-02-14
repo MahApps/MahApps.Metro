@@ -112,7 +112,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.BaseMetroDialog" TargetType="{x:Type Dialogs:BaseMetroDialog}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="DialogButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Button}" />
         <Setter Property="DialogMessageFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Message}" />
         <Setter Property="DialogTitleFontSize" Value="{DynamicResource MahApps.Font.Size.Dialog.Title}" />
