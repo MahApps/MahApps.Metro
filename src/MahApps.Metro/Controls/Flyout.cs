@@ -342,7 +342,6 @@ namespace MahApps.Metro.Controls
             resources["MahApps.Brushes.Flyout.Background"] = newBrush;
             resources["MahApps.Brushes.Control.Background"] = newBrush;
             resources["MahApps.Brushes.ThemeBackground"] = newBrush;
-            resources["MahApps.Brushes.DisabledWhite"] = newBrush;
             resources["MahApps.Brushes.Window.Background"] = newBrush;
             resources[SystemColors.WindowBrushKey] = newBrush;
 
