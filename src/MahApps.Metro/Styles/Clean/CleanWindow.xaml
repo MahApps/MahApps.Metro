@@ -5,7 +5,7 @@
     <Style x:Key="MahApps.Styles.MetroWindow.Clean" TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="TitleAlignment" Value="Center" />
-        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="WindowTitleBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
     </Style>
 

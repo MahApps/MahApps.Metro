@@ -7,10 +7,10 @@
     {
       "Name": "Dark",
       "Values": {
-        "MahApps.Colors.Black": "#FFFFFFFF",
-        "MahApps.Colors.Black20": "#51FFFFFF",
-        "MahApps.Colors.White": "#FF252525",
-        "MahApps.Colors.White20": "#51252525",
+        "MahApps.Colors.ThemeForeground": "#FFFFFFFF",
+        "MahApps.Colors.ThemeForeground20": "#51FFFFFF",
+        "MahApps.Colors.ThemeBackground": "#FF252525",
+        "MahApps.Colors.ThemeBackground20": "#51252525",
         "MahApps.Colors.Gray1": "#FFF9F9F9",
         "MahApps.Colors.Gray2": "#FF7F7F7F",
         "MahApps.Colors.Gray3": "#FF9D9D9D",
@@ -85,10 +85,10 @@
     {
       "Name": "Light",
       "Values": {
-        "MahApps.Colors.Black": "#FF000000",
-        "MahApps.Colors.Black20": "#51000000",
-        "MahApps.Colors.White": "#FFFFFFFF",
-        "MahApps.Colors.White20": "#51FFFFFF",
+        "MahApps.Colors.ThemeForeground": "#FF000000",
+        "MahApps.Colors.ThemeForeground20": "#51000000",
+        "MahApps.Colors.ThemeBackground": "#FFFFFFFF",
+        "MahApps.Colors.ThemeBackground20": "#51FFFFFF",
         "MahApps.Colors.Gray1": "#FF333333",
         "MahApps.Colors.Gray2": "#FF7F7F7F",
         "MahApps.Colors.Gray3": "#FF9D9D9D",

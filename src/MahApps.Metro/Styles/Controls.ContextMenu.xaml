@@ -25,7 +25,7 @@
                                    UseLayoutRounding="True" />
                         <Rectangle Height="1"
                                    Margin="20 1 1 0"
-                                   Fill="{DynamicResource MahApps.Brushes.White}"
+                                   Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    UseLayoutRounding="True" />
                     </Grid>

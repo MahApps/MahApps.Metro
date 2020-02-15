@@ -8,13 +8,13 @@
     <Style x:Key="MahApps.Styles.StatusBar.Clean"
            BasedOn="{StaticResource MahApps.Styles.StatusBar}"
            TargetType="{x:Type StatusBar}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Separator.Clean"
            BasedOn="{StaticResource MahApps.Styles.Separator.StatusBar}"
            TargetType="{x:Type Separator}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
     </Style>
 
 </ResourceDictionary>

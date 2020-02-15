@@ -224,12 +224,12 @@
                                        Height="1"
                                        Margin="2 8"
                                        VerticalAlignment="Bottom"
-                                       Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                       Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Path Name="Arrow"
                                   Margin="2 3"
                                   VerticalAlignment="Bottom"
                                   Data="M 0 0 L 6 0 3 3 Z"
-                                  Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <ContentPresenter />
                         </Grid>
                     </Border>
@@ -245,9 +245,9 @@
                             <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />

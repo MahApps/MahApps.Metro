@@ -555,15 +555,15 @@
     </Storyboard>
 
     <Style TargetType="{x:Type mah:MetroWindow}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FlyoutOverlayBrush" Value="{DynamicResource MahApps.Brushes.Window.FlyoutOverlay}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
-        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource MahApps.Brushes.WindowTitle.NonActive}" />
-        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="OverlayFadeIn" Value="{StaticResource OverlayFastSemiFadeIn}" />
         <Setter Property="OverlayFadeOut" Value="{StaticResource OverlayFastSemiFadeOut}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

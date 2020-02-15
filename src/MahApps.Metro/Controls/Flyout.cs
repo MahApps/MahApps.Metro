@@ -334,14 +334,14 @@ namespace MahApps.Metro.Controls
             resources.BeginInit();
 
             var fromColor = (Color)resources[fromColorKey];
-            resources["MahApps.Colors.White"] = fromColor;
+            resources["MahApps.Colors.ThemeBackground"] = fromColor;
             resources["MahApps.Colors.Flyout"] = fromColor;
 
             var newBrush = new SolidColorBrush(fromColor);
             newBrush.Freeze();
             resources["MahApps.Brushes.Flyout.Background"] = newBrush;
             resources["MahApps.Brushes.Control.Background"] = newBrush;
-            resources["MahApps.Brushes.White"] = newBrush;
+            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
             resources["MahApps.Brushes.DisabledWhite"] = newBrush;
             resources["MahApps.Brushes.Window.Background"] = newBrush;
             resources[SystemColors.WindowBrushKey] = newBrush;

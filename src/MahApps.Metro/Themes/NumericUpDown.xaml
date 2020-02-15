@@ -211,16 +211,16 @@
                             <Setter TargetName="PolygonUp" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_NumericUp" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_NumericUp" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PolygonUp" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_NumericUp" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PolygonUp" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
                         <Trigger SourceName="PART_NumericDown" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_NumericDown" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
                             <Setter TargetName="PolygonDown" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_NumericDown" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_NumericDown" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PolygonDown" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_NumericDown" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PolygonDown" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />

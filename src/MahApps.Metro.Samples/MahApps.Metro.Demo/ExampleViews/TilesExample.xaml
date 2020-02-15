@@ -44,7 +44,7 @@
                    FontFamily="Segoe UI"
                    FontSize="30"
                    FontWeight="Light"
-                   Foreground="{DynamicResource MahApps.Brushes.Black}"
+                   Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                    Text="Only some Tiles in a WrapPanel" />
 
         <WrapPanel Grid.Row="1"
@@ -55,7 +55,7 @@
                    VerticalAlignment="Top">
             <Controls:Tile Title="Mail"
                            Margin="3"
-                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                            Background="Teal"
                            HorizontalTitleAlignment="Right"
                            Style="{StaticResource LargeTileStyle}">
@@ -65,7 +65,7 @@
             </Controls:Tile>
             <Controls:Tile Title="Desktop"
                            Margin="3"
-                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                           Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                            Style="{StaticResource LargeTileStyle}">
                 <iconPacks:PackIconFontAwesome Width="40"
                                                Height="40"

@@ -27,7 +27,7 @@
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
                                     <Rectangle x:Name="PART_BackgroundOverlay"
-                                               Fill="{DynamicResource MahApps.Brushes.White}"
+                                               Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                                Opacity="0" />
                                 </Grid>
                             </Border>
@@ -82,7 +82,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="Width" Value="70" />
@@ -247,7 +247,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray4}" />
         <Setter Property="ThumbIndicatorWidth" Value="13" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{DynamicResource MahApps.Styles.ToggleSwitchButton}" />

@@ -27,7 +27,7 @@ namespace MahApps.Metro.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.GetTheme("Dark.Blue").Resources["MahApps.Brushes.Black"]).Color;
+            Color expectedColor = ((SolidColorBrush)ThemeManager.GetTheme("Dark.Blue").Resources["MahApps.Brushes.ThemeForeground"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }

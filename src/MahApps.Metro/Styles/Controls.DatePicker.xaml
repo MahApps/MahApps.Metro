@@ -77,7 +77,7 @@
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkAlignment), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkTrimming="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.WatermarkTrimming), Mode=OneWay}"
-                                               CaretBrush="{DynamicResource MahApps.Brushes.Black}"
+                                               CaretBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                ContextMenu="{TemplateBinding ContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
@@ -218,8 +218,8 @@
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <Trigger Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}">
@@ -245,8 +245,8 @@
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <MultiDataTrigger>
