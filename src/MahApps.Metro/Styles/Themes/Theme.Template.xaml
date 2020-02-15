@@ -138,7 +138,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.PressedBackground" Color="#7C0000" options:Freeze="True" />
 
     <!--  CONTROL VALIDATION BRUSHES  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.Controls.Validation" Color="#FFDB000C" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Validation" Color="#FFDB000C" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation1" Color="#052A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation2" Color="#152A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation3" Color="#252A2E31" options:Freeze="True" />
