@@ -438,7 +438,7 @@
             <Path Width="20"
                   Height="20"
                   Data="m 31.630585,39.233818 24.6309,-24.6308 c 0.6183,-0.6184 1.6208,-0.6184 2.2392,0 l 24.6308,24.6308 c 0.6184,0.6184 0.6184,1.6209 0,2.2392 l -24.6308,24.6309 c -0.6183,0.6183 -1.6209,0.6183 -2.2392,0 l -24.6309,-24.6309 c -0.6183,-0.6183 -0.6183,-1.6208 0,-2.2392 z"
-                  Fill="{DynamicResource MahApps.Brushes.Controls.Validation}"
+                  Fill="{DynamicResource MahApps.Brushes.Control.Validation}"
                   Stretch="Uniform" />
             <Path Width="10"
                   Height="10"
