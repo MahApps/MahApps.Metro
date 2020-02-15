@@ -4,7 +4,7 @@
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <Style x:Key="MahApps.Styles.Label" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Label.Text}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
