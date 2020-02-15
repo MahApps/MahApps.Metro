@@ -353,7 +353,6 @@ namespace MahApps.Metro.Controls
                 newBrush.Freeze();
                 resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
                 resources["MahApps.Brushes.Text"] = newBrush;
-                resources["MahApps.Brushes.Label.Text"] = newBrush;
 
                 if (resources.Contains("MahApps.Colors.AccentBase"))
                 {
