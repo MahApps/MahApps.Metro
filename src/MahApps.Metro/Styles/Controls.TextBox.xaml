@@ -146,8 +146,8 @@
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
@@ -377,8 +377,8 @@
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
@@ -669,8 +669,8 @@
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
@@ -878,8 +878,8 @@
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"

@@ -409,7 +409,7 @@
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
@@ -470,7 +470,7 @@
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
@@ -550,7 +550,7 @@
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
@@ -710,7 +710,7 @@
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="0"

@@ -73,7 +73,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TransparentWhite" Color="#00FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentWhite" Color="#55FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentGray" Color="#40808080" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.Controls.Disabled" Color="#A5FFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="#A5FFFFFF" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.AccentBase" Color="{StaticResource MahApps.Colors.AccentBase}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Accent" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />

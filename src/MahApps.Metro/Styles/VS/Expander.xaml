@@ -342,7 +342,7 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
