@@ -370,10 +370,10 @@
                             </Grid>
                         </Border>
                         <Rectangle x:Name="PART_DisabledVisual"
-                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    Opacity="0"
                                    Stretch="Fill"
-                                   Stroke="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Stroke="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    StrokeThickness="1"
                                    Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
