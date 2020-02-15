@@ -272,7 +272,7 @@
                                    PopupAnimation="Fade"
                                    StaysOpen="False">
                                 <Border x:Name="PART_PopupContainer"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.Controls.Border}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                                         BorderThickness="1">
                                     <StackPanel x:Name="StackPanel" Background="{DynamicResource MahApps.Brushes.Control.Background}">
                                         <Calendar x:Name="PART_Calendar"

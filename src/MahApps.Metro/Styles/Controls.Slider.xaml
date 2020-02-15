@@ -257,7 +257,7 @@
 
     <!--  Slider Style  -->
     <Style x:Key="MahApps.Styles.Slider" TargetType="{x:Type Slider}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.Gray2}" />
         <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
@@ -510,7 +510,7 @@
 
     <!--  Slider Win10 Style  -->
     <Style x:Key="MahApps.Styles.Slider.Win10" TargetType="{x:Type Slider}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Controls.Border}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:SliderHelper.ThumbFillBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
         <Setter Property="Controls:SliderHelper.ThumbFillDisabledBrush" Value="{DynamicResource MahApps.Brushes.Gray6}" />
