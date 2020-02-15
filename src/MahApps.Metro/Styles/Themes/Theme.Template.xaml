@@ -59,7 +59,6 @@
     <!--  PROJECT TEMPLATE BRUSHES  -->
 
     <!--  UNIVERSAL CONTROL BRUSHES  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.Control.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ThemeBackground" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ThemeForeground" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Text" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
@@ -73,7 +72,6 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TransparentWhite" Color="#00FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentWhite" Color="#55FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentGray" Color="#40808080" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="#A5FFFFFF" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.AccentBase" Color="{StaticResource MahApps.Colors.AccentBase}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Accent" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
@@ -96,11 +94,16 @@
     <SolidColorBrush x:Key="MahApps.Brushes.GrayHover" Color="{StaticResource MahApps.Colors.GrayHover}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.Control.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.FocusBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.TextBox.MouseOverBorder" Color="{StaticResource MahApps.Colors.Gray2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border.MouseOver" Color="{StaticResource MahApps.Colors.Gray2}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="#A5FFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Validation" Color="#FFDB000C" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Button.MouseOverBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+
     <SolidColorBrush x:Key="MahApps.Brushes.ComboBox.MouseOverBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ComboBox.FocusBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ComboBox.PopupBorder" Color="{StaticResource MahApps.Colors.Gray4}" options:Freeze="True" />
@@ -138,7 +141,6 @@
     <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.PressedBackground" Color="#7C0000" options:Freeze="True" />
 
     <!--  CONTROL VALIDATION BRUSHES  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.Control.Validation" Color="#FFDB000C" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation1" Color="#052A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation2" Color="#152A2E31" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Validation3" Color="#252A2E31" options:Freeze="True" />
