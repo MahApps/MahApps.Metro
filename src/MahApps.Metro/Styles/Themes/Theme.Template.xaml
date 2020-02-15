@@ -96,7 +96,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.GrayHover" Color="{StaticResource MahApps.Colors.GrayHover}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.Controls.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Control.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.FocusBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.MouseOverBorder" Color="{StaticResource MahApps.Colors.Gray2}" options:Freeze="True" />
 

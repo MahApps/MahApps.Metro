@@ -286,7 +286,7 @@
                                        StaysOpen="false">
                                     <Border x:Name="DropDownBorder"
                                             Background="{DynamicResource MahApps.Brushes.Control.Background}"
-                                            BorderBrush="{DynamicResource MahApps.Brushes.Controls.Border}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                                             BorderThickness="1">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
                                                               Margin="2"
