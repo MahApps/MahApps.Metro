@@ -274,7 +274,7 @@
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />

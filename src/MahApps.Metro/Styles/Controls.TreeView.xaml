@@ -12,7 +12,7 @@
     <Style x:Key="MahApps.Styles.ToggleButton.ExpandCollapse" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Height" Value="16" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="MinWidth" Value="19" />
@@ -68,7 +68,7 @@
     <Converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
     <Style x:Key="MahApps.Styles.TreeViewItem" TargetType="{x:Type TreeViewItem}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
         <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
@@ -186,8 +186,8 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.TreeView" TargetType="{x:Type TreeView}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <!--  default to 0  -->
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

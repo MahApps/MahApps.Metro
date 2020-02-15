@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls.Dialogs
         protected override void OnLoaded()
         {
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
-            this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "MahApps.Brushes.Accent" : "MahApps.Brushes.Black");
+            this.SetResourceReference(ProgressBarForegroundProperty, this.DialogSettings.ColorScheme == MetroDialogColorScheme.Theme ? "MahApps.Brushes.Accent" : "MahApps.Brushes.ThemeForeground");
         }
 
         internal CancellationToken CancellationToken => this.DialogSettings.CancellationToken;

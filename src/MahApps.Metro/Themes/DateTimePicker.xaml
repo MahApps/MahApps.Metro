@@ -175,7 +175,7 @@
                                                Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                Controls:TextBoxHelper.WatermarkAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                                Controls:TextBoxHelper.WatermarkTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
-                                               CaretBrush="{DynamicResource MahApps.Brushes.Black}"
+                                               CaretBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                ContextMenu="{TemplateBinding ContextMenu}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontFamily="{TemplateBinding FontFamily}"
@@ -316,7 +316,7 @@
                                                                Width="2"
                                                                Height="51"
                                                                HorizontalAlignment="Center"
-                                                               Fill="{DynamicResource MahApps.Brushes.Black}"
+                                                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                                RenderTransformOrigin=".5,1">
                                                         <Rectangle.RenderTransform>
                                                             <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
@@ -328,7 +328,7 @@
                                                                Width="2"
                                                                Height="30"
                                                                HorizontalAlignment="Center"
-                                                               Fill="{DynamicResource MahApps.Brushes.Black}"
+                                                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                                RenderTransformOrigin=".5,1">
                                                         <Rectangle.RenderTransform>
                                                             <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource HourDegreeConverter}, ConverterParameter='h', Mode=OneWay}" />
@@ -338,7 +338,7 @@
                                                              Canvas.Top="54"
                                                              Width="6"
                                                              Height="6"
-                                                             Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                                             Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                                                     <Rectangle x:Name="PART_SecondHand"
                                                                Canvas.Left="0.75"
                                                                Canvas.Top="6"
@@ -346,7 +346,7 @@
                                                                Height="61"
                                                                Margin="0 5 0 0"
                                                                HorizontalAlignment="Center"
-                                                               Fill="{DynamicResource MahApps.Brushes.Black}"
+                                                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                                Opacity=".25"
                                                                RenderTransformOrigin=".5,.75">
                                                         <Rectangle.RenderTransform>
@@ -453,8 +453,8 @@
                             <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_Button" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <Trigger Property="IsClockVisible" Value="False">
@@ -490,8 +490,8 @@
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <MultiDataTrigger>

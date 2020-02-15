@@ -48,7 +48,7 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
@@ -63,7 +63,7 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />

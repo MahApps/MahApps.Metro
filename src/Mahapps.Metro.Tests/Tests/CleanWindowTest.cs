@@ -18,7 +18,7 @@ namespace MahApps.Metro.Tests
             var theme = ThemeManager.DetectTheme();
             Assert.NotNull(theme);
 
-            var brush = theme.Resources["MahApps.Brushes.Black"] as SolidColorBrush;
+            var brush = theme.Resources["MahApps.Brushes.ThemeForeground"] as SolidColorBrush;
             Assert.NotNull(brush);
 
             var blackBrushColor = brush.Color;

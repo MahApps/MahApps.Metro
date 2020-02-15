@@ -21,7 +21,7 @@
                 <TextBlock Grid.Row="0"
                            HorizontalAlignment="Center"
                            FontSize="24"
-                           Foreground="{DynamicResource MahApps.Brushes.Black}"
+                           Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                            Text="you should see google below" />
                 <WindowsFormsHost Grid.Row="1">
                     <winForms:WebBrowser Url="http://www.google.com" />

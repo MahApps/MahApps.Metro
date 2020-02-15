@@ -153,7 +153,7 @@
                    TargetType="{x:Type Controls:HamburgerMenu}">
                 <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
                 <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.White}" />
+                <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                 <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
                 <Setter Property="ShowSelectionIndicator" Value="True" />
             </Style>

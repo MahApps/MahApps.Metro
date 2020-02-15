@@ -71,7 +71,7 @@
     <Style x:Key="MahApps.Styles.NumericUpDown.DataGridColumnEditing"
            BasedOn="{StaticResource MahApps.Styles.NumericUpDown.DataGridColumn}"
            TargetType="{x:Type Controls:NumericUpDown}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="HideUpDownButtons" Value="False" />
     </Style>
 
@@ -140,13 +140,13 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.DataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="BorderThickness" Value="0 0 0 3" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
@@ -517,7 +517,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.DataGrid" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="CellStyle" Value="{StaticResource MahApps.Styles.DataGridCell}" />

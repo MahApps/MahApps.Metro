@@ -5,7 +5,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Black}" Opacity="0.5" />
+                    <Rectangle Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" Opacity="0.5" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

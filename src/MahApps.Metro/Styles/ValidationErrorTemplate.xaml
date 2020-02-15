@@ -39,7 +39,7 @@
                               Fill="{DynamicResource MahApps.Brushes.Validation5}" />
                         <Path Margin="1 3 0 0"
                               Data="M 0,0 L2,0 L 8,6 L8,8"
-                              Fill="{DynamicResource MahApps.Brushes.White}" />
+                              Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                     </Grid>
                 </Border>
 

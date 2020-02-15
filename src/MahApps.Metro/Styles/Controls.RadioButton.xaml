@@ -5,7 +5,7 @@
 
     <!--  ********************************** RadioButton Style **********************************  -->
     <Style x:Key="MahApps.Styles.RadioButton" TargetType="RadioButton">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
@@ -94,10 +94,10 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                             <Setter TargetName="CheckGlyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPointerOver}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
                             <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPointerOver}" />
                             <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPointerOver}" />
@@ -105,10 +105,10 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource MahApps.Brushes.Highlight}" />
                             <Setter TargetName="CheckGlyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundPressed}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox.MouseOver}" />
                             <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundPressed}" />
                             <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushPressed}" />
@@ -116,10 +116,10 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="CheckGlyph" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent2}" />
                             <Setter TargetName="CheckGlyph" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="CheckOuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="CheckOuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.RadioButton.ForegroundDisabled}" />
-                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="OuterEllipse" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="OuterEllipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CheckBox}" />
                             <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource MahApps.Brushes.RadioButton.BackgroundDisabled}" />
                             <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.RadioButton.BorderBrushDisabled}" />

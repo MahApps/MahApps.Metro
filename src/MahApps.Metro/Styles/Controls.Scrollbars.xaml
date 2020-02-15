@@ -95,12 +95,12 @@
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="MouseOverRectangle"
-                                   Fill="{DynamicResource MahApps.Brushes.Black}"
+                                   Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />
                         <Rectangle x:Name="PressedRectangle"
-                                   Fill="{DynamicResource MahApps.Brushes.Black}"
+                                   Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                    Opacity="0"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    StrokeThickness="{TemplateBinding BorderThickness}" />

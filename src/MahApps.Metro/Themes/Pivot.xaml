@@ -10,7 +10,7 @@
 
     <Style x:Key="MahApps.Styles.ListViewItem.Pivot" TargetType="{x:Type ListViewItem}">
         <Setter Property="Border.BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
