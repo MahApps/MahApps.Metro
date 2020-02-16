@@ -251,7 +251,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.FocusBorder}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border.MouseOver}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.MouseOver}" />
         <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />

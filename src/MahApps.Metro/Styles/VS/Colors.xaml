@@ -29,7 +29,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Text" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border.Focus" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Border.MouseOver" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.ComboBox.MouseOverBorder" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ComboBox.Border.MouseOver" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.Control.Background" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ThemeBackground" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
