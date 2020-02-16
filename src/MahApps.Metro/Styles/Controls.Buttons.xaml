@@ -389,7 +389,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderThickness" Value="2" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
@@ -691,7 +691,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.MouseOverBorder}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
         <Setter Property="FontWeight" Value="Bold" />
