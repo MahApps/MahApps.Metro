@@ -20,6 +20,7 @@ using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
 using System.Collections.ObjectModel;
+using ControlzEx.Theming;
 
 namespace MetroDemo
 {
@@ -65,8 +66,9 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.ColorSchemes
-                                            .Select(a => new AccentColorMenuData { Name = a.Name, ColorBrush = a.ShowcaseBrush })
+            this.AccentColors = ThemeManager.Themes
+                                            .GroupBy(x => x.ColorScheme)
+                                            .Select(a => new AccentColorMenuData { Name = a.Key, ColorBrush = a.First().ShowcaseBrush })
                                             .ToList();
 
             // create metro theme color menu items for the demo
@@ -74,6 +76,7 @@ namespace MetroDemo
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
                                          .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+                                         .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.GetResource("MahApps.Brushes.BlackColor") as Brush, ColorBrush = a.GetResource("MahApps.Brushes.WhiteColor") as Brush })
                                          .ToList();
 
             this.Albums = SampleData.Albums;
@@ -407,13 +410,16 @@ namespace MetroDemo
             {
                 var theme = ThemeManager.DetectTheme(Application.Current.MainWindow);
 
-                var resources = theme.Resources.Keys.Cast<object>()
-                                     .Where(key => theme.Resources[key] is SolidColorBrush)
+                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.First();
+
+                var brushResources = resources.Keys
+                                     .Cast<object>()
+                                     .Where(key => resources[key] is SolidColorBrush)
                                      .Select(key => key.ToString())
                                      .OrderBy(s => s)
                                      .ToList();
 
-                return resources;
+                return brushResources;
             }
 
             return Enumerable.Empty<string>();

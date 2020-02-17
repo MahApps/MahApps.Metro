@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Xunit;
 using Xunit.Sdk;

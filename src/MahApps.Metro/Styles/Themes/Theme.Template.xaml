@@ -9,9 +9,11 @@
 
     <!--  Matadata  -->
     <system:String x:Key="Theme.Name">{{ThemeName}}</system:String>
+    <system:String x:Key="Theme.Origin">MahApps.Metro</system:String>
     <system:String x:Key="Theme.DisplayName">{{ThemeDisplayName}}</system:String>
     <system:String x:Key="Theme.BaseColorScheme">{{BaseColorScheme}}</system:String>
     <system:String x:Key="Theme.ColorScheme">{{ColorScheme}}</system:String>
+    <Color x:Key="Theme.PrimaryAccentColor">{{MahApps.Colors.AccentBase}}</Color>
     <SolidColorBrush x:Key="Theme.ShowcaseBrush" Color="{{MahApps.Colors.AccentBase}}" options:Freeze="True" />
 
     <!--  *************COLORS START*************  -->

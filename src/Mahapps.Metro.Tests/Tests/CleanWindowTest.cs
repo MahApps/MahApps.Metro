@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 

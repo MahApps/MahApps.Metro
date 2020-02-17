@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using ControlzEx.Theming;
 using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -230,30 +231,30 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void BaseMetroDialogLoaded(object sender, RoutedEventArgs e)
         {
-            ThemeManager.IsThemeChanged -= this.ThemeManagerIsThemeChanged;
-            ThemeManager.IsThemeChanged += this.ThemeManagerIsThemeChanged;
+            ThemeManager.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.ThemeChanged += this.ThemeManagerIsThemeChanged;
             this.OnLoaded();
         }
 
         private void BaseMetroDialogUnloaded(object sender, RoutedEventArgs e)
         {
-            ThemeManager.IsThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.ThemeChanged -= this.ThemeManagerIsThemeChanged;
         }
 
-        private void ThemeManagerIsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             this.HandleThemeChange();
         }
 
-        private static object TryGetResource(MahApps.Metro.Theme theme, string key)
+        private static object TryGetResource(ControlzEx.Theming.Theme theme, string key)
         {
             if (theme == null)
             {
-                // nothing to do here, we can't found an app style (make sure all custom themes are added!)
+                // nothing to do here, we can't find an app style (make sure all custom themes are added!)
                 return null;
             }
 
-            object themeResource = theme.Resources[key];
+            object themeResource = theme.GetResource(key);
 
             return themeResource;
         }
@@ -316,7 +317,7 @@ namespace MahApps.Metro.Controls.Dialogs
             // nothing here
         }
 
-        private static MahApps.Metro.Theme DetectTheme(BaseMetroDialog dialog)
+        private static ControlzEx.Theming.Theme DetectTheme(BaseMetroDialog dialog)
         {
             if (dialog == null)
             {

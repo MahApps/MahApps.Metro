@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using ControlzEx.Theming;
 using ExposedObject;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;

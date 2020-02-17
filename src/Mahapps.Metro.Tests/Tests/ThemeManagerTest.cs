@@ -7,10 +7,10 @@
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Media;
+    using ControlzEx.Theming;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Tests.TestHelpers;    
     using Xunit;
-    using Theme = MahApps.Metro.Theme;
 
     public class ThemeManagerTest : AutomationTestBase
     {
@@ -49,18 +49,21 @@
         {
             await TestHost.SwitchToAppThread();
 
-            Assert.False(ThemeManager.AddTheme(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Cobalt.xaml")));
+            ThemeManager.AddTheme(new Theme(new LibraryTheme(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Cobalt.xaml"), null, true)));
 
             var resource = new ResourceDictionary
                            {
                                {
-                                   "Theme.Name", "Runtime"
+                                   Theme.ThemeNameKey, "Runtime"
                                },
                                {
-                                   "Theme.DisplayName", "Runtime"
+                                   Theme.ThemeDisplayNameKey, "Runtime"
+                               },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
                                }
                            };
-            Assert.True(ThemeManager.AddTheme(resource));
+            ThemeManager.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
         }
 
         [Fact]
@@ -83,11 +86,14 @@
                                {
                                    Theme.ThemeColorSchemeKey, "Bar"
                                },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
+                               },
                            };
 
-            Assert.True(ThemeManager.AddTheme(resource));
+            ThemeManager.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
             Assert.Equal(new[] { ThemeManager.BaseColorLight, ThemeManager.BaseColorDark, "Foo" }, ThemeManager.BaseColors);
-            Assert.Contains("Bar", ThemeManager.ColorSchemes.Select(x => x.Name));
+            Assert.Contains("Bar", ThemeManager.ColorSchemes.Select(x => x));
         }
 
         [Fact]
@@ -267,13 +273,16 @@
             var resource = new ResourceDictionary
                            {
                                {
-                                   "Theme.Name", "Runtime"
+                                   Theme.ThemeNameKey, "Runtime"
                                },
                                {
-                                   "Theme.DisplayName", "Runtime"
-                               }
+                                   Theme.ThemeDisplayNameKey, "Runtime"
+                               },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
+                               },
                            };
-            var theme = new Theme(resource);
+            var theme = ThemeManager.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
 
             var inverseTheme = ThemeManager.GetInverseTheme(theme);
 
@@ -289,7 +298,7 @@
             var theme = ThemeManager.GetTheme("dark.blue");
 
             Assert.NotNull(theme);
-            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.Resources.Source.ToString().ToLower());
+            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.LibraryThemes.First().Resources.First().Source.ToString().ToLower());
         }
 
         [Fact]
@@ -397,19 +406,19 @@
 
             var applicationTheme = ThemeManager.DetectTheme(Application.Current);
 
-            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red, "CustomAccentRed", changeImmediately: true));
+            var ex = Record.Exception(() => ThemeManager.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)));
             Assert.Null(ex);
 
             var detected = ThemeManager.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal("CustomAccentRed", detected.Name);
+            Assert.Equal("Dark.Runtime_#FFFF0000", detected.Name);
 
-            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Green, "CustomAccentGreen", changeImmediately: true));
+            ex = Record.Exception(() => ThemeManager.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Green)));
             Assert.Null(ex);
 
             detected = ThemeManager.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal("CustomAccentGreen", detected.Name);
+            Assert.Equal("Light.Runtime_#FF008000", detected.Name);
 
             ThemeManager.ChangeTheme(Application.Current, applicationTheme);
         }
@@ -422,14 +431,14 @@
 
             var applicationTheme = ThemeManager.DetectTheme(Application.Current);
 
-            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red));
+            var ex = Record.Exception(() => ThemeManager.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)));
             Assert.Null(ex);
-            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Red, changeImmediately: true));
+            ex = Record.Exception(() => ThemeManager.AddTheme(ThemeManager.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Red))));
             Assert.Null(ex);
 
             var detected = ThemeManager.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal(Colors.Red.ToString().Replace("#", string.Empty), detected.ColorScheme);
+            Assert.Equal(Colors.Red.ToString(), detected.ColorScheme);
 
             var newTheme = ThemeManager.ChangeThemeBaseColor(Application.Current, "Dark");
             Assert.NotNull(newTheme);

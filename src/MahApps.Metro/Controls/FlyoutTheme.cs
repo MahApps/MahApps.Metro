@@ -1,5 +1,7 @@
 ﻿namespace MahApps.Metro.Controls
 {
+    using ControlzEx.Theming;
+
     public enum FlyoutTheme
     {
         /// <summary>

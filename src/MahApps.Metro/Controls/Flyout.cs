@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ControlzEx;
+using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls
 {
@@ -289,7 +290,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal void ChangeFlyoutTheme(MahApps.Metro.Theme windowTheme)
+        internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)
@@ -371,7 +372,7 @@ namespace MahApps.Metro.Controls
             resources.EndInit();
         }
 
-        private static MahApps.Metro.Theme DetectTheme(Flyout flyout)
+        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
         {
             if (flyout == null)
                 return null;
