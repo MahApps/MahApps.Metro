@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Markup;
     using System.Windows.Media;
@@ -33,6 +34,8 @@
 
             var xamlContent = new ColorSchemeGenerator().GenerateColorSchemeFileContent(generatorParameters, variant, colorScheme, themeTemplateContent, name, name);
 
+            xamlContent = FixXamlReaderBug(xamlContent);
+
             var resourceDictionary = (ResourceDictionary)XamlReader.Parse(xamlContent);
 
             var newTheme = new Theme(resourceDictionary);
@@ -46,6 +49,29 @@
             }
 
             return resourceDictionary;
+        }
+
+        private static string FixXamlReaderBug(string xamlContent)
+        {
+            // Check if we have to fix something
+            if (xamlContent.Contains("WithAssembly=\"") == false)
+            {
+                return xamlContent;
+            }
+
+            var withAssemblyMatches = Regex.Matches(xamlContent, @"\s*xmlns:(.+?)WithAssembly=("".+?"")");
+
+            foreach (Match withAssemblyMatch in withAssemblyMatches)
+            {
+                var originalMatches = Regex.Matches(xamlContent, $@"\s*xmlns:({withAssemblyMatch.Groups[1].Value})=("".+?"")");
+
+                foreach (Match originalMatch in originalMatches)
+                {
+                    xamlContent = xamlContent.Replace(originalMatch.Groups[2].Value, withAssemblyMatch.Groups[2].Value);
+                }
+            }
+
+            return xamlContent;
         }
 
         /// <summary>

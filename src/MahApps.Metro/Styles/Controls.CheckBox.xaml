@@ -3,7 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <!--  ********************************** CheckBoxStyle **********************************  -->
-    <!--  adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/  -->
     <Style x:Key="MahApps.Styles.CheckBox" TargetType="CheckBox">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}" />
@@ -378,6 +377,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
                 <Setter Property="Padding" Value="0 0 6 0" />
             </Trigger>
         </Style.Triggers>
@@ -516,6 +516,7 @@
             </MultiTrigger>
 
             <Trigger Property="Controls:ToggleButtonHelper.ContentDirection" Value="RightToLeft">
+                <Setter Property="HorizontalContentAlignment" Value="Right" />
                 <Setter Property="Padding" Value="0 0 8 0" />
             </Trigger>
         </Style.Triggers>
