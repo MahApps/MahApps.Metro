@@ -19,17 +19,16 @@
                 </Style.Triggers>
             </Style>
         </Style.Resources>
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Padding" Value="10 5 10 5" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -55,6 +54,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
@@ -85,17 +85,16 @@
                 </Style.Triggers>
             </Style>
         </Style.Resources>
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Padding" Value="10 5 10 5" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -121,6 +120,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
@@ -139,11 +139,11 @@
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
 
     <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
