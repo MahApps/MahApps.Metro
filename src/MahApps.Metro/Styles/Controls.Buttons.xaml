@@ -11,7 +11,7 @@
                 <ControlTemplate>
                     <Rectangle Margin="2"
                                SnapsToDevicePixels="True"
-                               Stroke="{DynamicResource MahApps.Brushes.FlatButton.Foreground}"
+                               Stroke="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}"
                                StrokeDashArray="1 2"
                                StrokeThickness="1"
                                UseLayoutRounding="True" />
@@ -21,11 +21,11 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Flat" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -55,11 +55,11 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="DarkGray" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
@@ -69,11 +69,11 @@
 
     <!--  style for flat toggle button like MahApps.Styles.ToggleButton.Flat  -->
     <Style x:Key="MahApps.Styles.ToggleButton.Flat" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.Background}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -104,7 +104,7 @@
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </Trigger>
 
             <MultiTrigger>
@@ -112,7 +112,7 @@
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsChecked" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="DarkGray" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.MouseOver}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -120,7 +120,7 @@
                     <Condition Property="IsChecked" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </MultiTrigger>
 
             <MultiTrigger>
@@ -128,16 +128,16 @@
                     <Condition Property="IsPressed" Value="True" />
                     <Condition Property="IsChecked" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedBackground}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsPressed" Value="True" />
                     <Condition Property="IsChecked" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.FlatButton.PressedForeground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
             </MultiTrigger>
 
             <Trigger Property="IsEnabled" Value="False">
