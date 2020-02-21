@@ -25,7 +25,7 @@
 
     <!--  dark button style for min, max and close window buttons  -->
     <Style x:Key="MahApps.Styles.Button.CleanWindow.Dark"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -47,11 +47,11 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Foreground.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.Pressed}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -62,11 +62,11 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.Background}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Foreground.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CleanWindowCloseButton.PressedBackground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.CleanWindow.Close.Background.Pressed}" />
             </Trigger>
         </Style.Triggers>
     </Style>

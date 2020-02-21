@@ -139,8 +139,9 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background.Pressed" Color="{{MahApps.Colors.Button.Flat.Background.Pressed}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground.Pressed" Color="{{MahApps.Colors.Button.Flat.Foreground.Pressed}}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.Background" Color="#EB2F2F" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.PressedBackground" Color="#7C0000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver" Color="#EB2F2F" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Foreground.MouseOver" Color="#FFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Background.Pressed" Color="#7C0000" options:Freeze="True" />
 
     <!--  CONTROL VALIDATION BRUSHES  -->
     <SolidColorBrush x:Key="MahApps.Brushes.Validation1" Color="#052A2E31" options:Freeze="True" />
