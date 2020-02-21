@@ -141,7 +141,7 @@
 
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background" Color="#D5D5D5" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground" Color="#222222" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.MouseOver" Color="#A9A9A9" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background.MouseOver" Color="#A9A9A9" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background.Pressed" Color="{{MahApps.Colors.Button.Flat.Background.Pressed}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground.Pressed" Color="{{MahApps.Colors.Button.Flat.Foreground.Pressed}}" options:Freeze="True" />
 
