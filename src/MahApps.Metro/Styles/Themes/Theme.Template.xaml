@@ -192,8 +192,8 @@
     <SolidColorBrush x:Key="MahApps.Brushes.TopMenuItem.SelectionStroke" Color="{{MahApps.Colors.TopMenuItem.SelectionStroke}}" options:Freeze="True" />
 
     <!--  original #FF9A9A9A"  -->
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledForeground" Color="{{MahApps.Colors.MenuItem.DisabledForeground}}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.DisabledGlyphPanel" Color="#848589" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.Foreground.Disabled" Color="{{MahApps.Colors.MenuItem.DisabledForeground}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.MenuItem.GlyphPanel.Disabled" Color="#848589" options:Freeze="True" />
 
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
 
