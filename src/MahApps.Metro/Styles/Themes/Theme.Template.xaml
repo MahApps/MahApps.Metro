@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:markup="clr-namespace:MahApps.Metro.Markup"
                     xmlns:markupWithAssembly="clr-namespace:MahApps.Metro.Markup;assembly=MahApps.Metro"
@@ -33,6 +33,8 @@
     <!--  BASE COLORS  -->
     <Color x:Key="MahApps.Colors.ThemeForeground">{{MahApps.Colors.ThemeForeground}}</Color>
     <Color x:Key="MahApps.Colors.ThemeBackground">{{MahApps.Colors.ThemeBackground}}</Color>
+    <Color x:Key="MahApps.Colors.IdealForeground">{{MahApps.Colors.IdealForeground}}</Color>
+
     <Color x:Key="MahApps.Colors.Gray1">{{MahApps.Colors.Gray1}}</Color>
     <Color x:Key="MahApps.Colors.Gray2">{{MahApps.Colors.Gray2}}</Color>
     <Color x:Key="MahApps.Colors.Gray3">{{MahApps.Colors.Gray3}}</Color>
@@ -62,6 +64,10 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ThemeBackground" Color="{StaticResource MahApps.Colors.ThemeBackground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ThemeForeground" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Text" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="MahApps.Brushes.IdealForeground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.IdealForegroundDisabled" Color="#FFADADAD" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Selected.Foreground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.WindowTitle" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.WindowTitle.NonActive" Color="#808080" options:Freeze="True" />
@@ -190,12 +196,6 @@
     <SolidColorBrush x:Key="MahApps.Brushes.RightArrowFill" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
 
     <Color x:Key="MahApps.Colors.MenuShadow">{{MahApps.Colors.MenuShadow}}</Color>
-
-    <Color x:Key="MahApps.Colors.IdealForeground">{{MahApps.Colors.IdealForeground}}</Color>
-
-    <SolidColorBrush x:Key="MahApps.Brushes.IdealForeground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.IdealForegroundDisabled" Color="#FFADADAD" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.AccentSelectedColor" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.Background.MouseOver" Color="#66DCDCDC" options:Freeze="True" />
 

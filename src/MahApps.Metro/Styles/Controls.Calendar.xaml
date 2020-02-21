@@ -127,7 +127,7 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=IsTodayHighlighted}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsToday}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
                             <Setter TargetName="TodayBackground" Property="Opacity" Value="1" />
                         </MultiDataTrigger>
                         <MultiTrigger>
