@@ -196,7 +196,7 @@
     <SolidColorBrush x:Key="MahApps.Brushes.IdealForegroundDisabled" Color="#FFADADAD" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.AccentSelectedColor" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.HoverBackground" Color="#66DCDCDC" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.Background.MouseOver" Color="#66DCDCDC" options:Freeze="True" />
 
     <!--  DataGrid brushes  -->
 

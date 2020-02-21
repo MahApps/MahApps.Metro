@@ -322,7 +322,7 @@
         <Setter Property="Width" Value="34" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.HoverBackground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
@@ -340,7 +340,7 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.HoverBackground}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
