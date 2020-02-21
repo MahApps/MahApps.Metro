@@ -139,7 +139,6 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Background.Pressed" Color="{{MahApps.Colors.Button.Flat.Background.Pressed}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.Flat.Foreground.Pressed" Color="{{MahApps.Colors.Button.Flat.Foreground.Pressed}}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.DarkIdealForegroundDisabled" Color="#ADADAD" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.Background" Color="#EB2F2F" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.CleanWindowCloseButton.PressedBackground" Color="#7C0000" options:Freeze="True" />
 
@@ -194,7 +193,7 @@
     <Color x:Key="MahApps.Colors.IdealForeground">{{MahApps.Colors.IdealForeground}}</Color>
 
     <SolidColorBrush x:Key="MahApps.Brushes.IdealForeground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.IdealForegroundDisabled" Opacity="0.4" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.IdealForegroundDisabled" Color="#FFADADAD" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.AccentSelectedColor" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.WindowButtonCommands.HoverBackground" Color="#66DCDCDC" options:Freeze="True" />
