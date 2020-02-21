@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:markup="clr-namespace:MahApps.Metro.Markup"
                     xmlns:markupWithAssembly="clr-namespace:MahApps.Metro.Markup;assembly=MahApps.Metro"
@@ -148,6 +148,11 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Background.MouseOver" Color="#EB2F2F" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Foreground.MouseOver" Color="#FFFFFF" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Button.CleanWindow.Close.Background.Pressed" Color="#7C0000" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.Square.Background.MouseOver" Color="{StaticResource MahApps.Colors.Gray8}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.Square.Foreground.MouseOver" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.AccentedSquare.Background.MouseOver" Color="#66000000" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <!--  CONTROL VALIDATION BRUSHES  -->
     <SolidColorBrush x:Key="MahApps.Brushes.Validation1" Color="#052A2E31" options:Freeze="True" />
