@@ -35,7 +35,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.Control.WindowCommands" TargetType="{x:Type Control}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Opacity" Value="0.5" />
@@ -98,7 +98,7 @@
         <Setter Property="ArrowBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="ArrowMouseOverBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="ArrowPressedBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ButtonArrowStyle" Value="{StaticResource MahApps.Styles.SplitButton.ButtonArrow.WindowCommands}" />
         <Setter Property="ButtonStyle" Value="{StaticResource MahApps.Styles.SplitButton.Button.WindowCommands}" />
@@ -126,7 +126,7 @@
         <Setter Property="ArrowBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="ArrowMouseOverBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
         <Setter Property="ArrowPressedBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ButtonStyle" Value="{StaticResource MahApps.Styles.DropDownButton.Button.WindowCommands}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), Mode=OneWay}" />
@@ -145,7 +145,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ToggleButton.ToolBarOverflow" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
@@ -270,7 +270,7 @@
                 <Style BasedOn="{StaticResource MahApps.Styles.DropDownButton.WindowCommands}" TargetType="{x:Type Controls:DropDownButton}" />
             </ResourceDictionary>
         </Style.Resources>
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="DarkTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

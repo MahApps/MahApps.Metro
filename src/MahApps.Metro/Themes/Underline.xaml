@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="{x:Type controls:Underline}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />

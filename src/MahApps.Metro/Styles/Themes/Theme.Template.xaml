@@ -46,8 +46,9 @@
     <Color x:Key="MahApps.Colors.Gray9">{{MahApps.Colors.Gray9}}</Color>
     <Color x:Key="MahApps.Colors.Gray10">{{MahApps.Colors.Gray10}}</Color>
 
-    <Color x:Key="MahApps.Colors.GrayNormal">{{MahApps.Colors.GrayNormal}}</Color>
-    <Color x:Key="MahApps.Colors.GrayHover">{{MahApps.Colors.GrayHover}}</Color>
+    <Color x:Key="MahApps.Colors.Gray">{{MahApps.Colors.Gray}}</Color>
+    <Color x:Key="MahApps.Colors.Gray.MouseOver">{{MahApps.Colors.Gray.MouseOver}}</Color>
+    <Color x:Key="MahApps.Colors.Gray.SemiTransparent">{{MahApps.Colors.Gray.SemiTransparent}}</Color>
 
     <Color x:Key="MahApps.Colors.Flyout">{{MahApps.Colors.Flyout}}</Color>
 
@@ -75,9 +76,8 @@
 
     <SolidColorBrush x:Key="MahApps.Brushes.Highlight" Color="{StaticResource MahApps.Colors.Highlight}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.TransparentWhite" Color="#00FFFFFF" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentWhite" Color="#55FFFFFF" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparentGray" Color="#40808080" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Transparent" Color="Transparent" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.SemiTransparent" Color="{{MahApps.Colors.SemiTransparent}}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.AccentBase" Color="{StaticResource MahApps.Colors.AccentBase}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Accent" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
@@ -96,8 +96,9 @@
     <SolidColorBrush x:Key="MahApps.Brushes.Gray9" Color="{StaticResource MahApps.Colors.Gray9}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.Gray10" Color="{StaticResource MahApps.Colors.Gray10}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.GrayNormal" Color="{StaticResource MahApps.Colors.GrayNormal}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.GrayHover" Color="{StaticResource MahApps.Colors.GrayHover}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Gray" Color="{StaticResource MahApps.Colors.Gray}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Gray.MouseOver" Color="{StaticResource MahApps.Colors.Gray.MouseOver}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Gray.SemiTransparent" Color="{StaticResource MahApps.Colors.Gray.SemiTransparent}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border" Color="{StaticResource MahApps.Colors.Gray6}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.TextBox.Border.Focus" Color="{StaticResource MahApps.Colors.ThemeForeground}" options:Freeze="True" />

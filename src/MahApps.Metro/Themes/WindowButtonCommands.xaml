@@ -236,7 +236,7 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Base" TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />

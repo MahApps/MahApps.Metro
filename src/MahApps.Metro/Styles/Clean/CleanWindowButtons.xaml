@@ -11,7 +11,7 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -29,7 +29,7 @@
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparentGray}" />
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray.SemiTransparent}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />

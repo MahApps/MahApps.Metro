@@ -76,9 +76,9 @@
                    TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
                 <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
                 <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
                 <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
                 <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
                 <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />

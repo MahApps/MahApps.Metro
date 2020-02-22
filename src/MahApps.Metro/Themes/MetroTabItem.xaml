@@ -62,7 +62,7 @@
                                         Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
                                         Margin="{TemplateBinding CloseButtonMargin}"
                                         VerticalAlignment="Top"
-                                        Background="{DynamicResource MahApps.Brushes.GrayNormal}"
+                                        Background="{DynamicResource MahApps.Brushes.Gray}"
                                         IsTabStop="False"
                                         Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                         Visibility="Collapsed">
@@ -172,7 +172,7 @@
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
                         </Trigger>
 
                         <MultiDataTrigger>
@@ -191,7 +191,7 @@
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.GrayHover}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
                         <MultiTrigger>
@@ -199,7 +199,7 @@
                                 <Condition SourceName="Border" Property="IsMouseOver" Value="True" />
                                 <Condition SourceName="PART_CloseButton" Property="IsEnabled" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_CloseButton" Property="Background" Value="{DynamicResource MahApps.Brushes.GrayHover}" />
+                            <Setter TargetName="PART_CloseButton" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                         </MultiTrigger>
                         <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_CloseButton" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
@@ -249,7 +249,7 @@
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.GrayHover}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=(Controls:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
 
