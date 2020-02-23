@@ -234,7 +234,10 @@
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorPressed.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicatorPressed.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.ThumbIndicatorDisabled.Win10}}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="MahApps.Brushes.Badged.DisabledBackground" Color="{{MahApps.Colors.Badged.DisabledBackground}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background" Color="{StaticResource MahApps.Colors.AccentBase}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Badged.Background.Disabled" Color="{{MahApps.Colors.Badged.Background.Disabled}}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Badged.Foreground" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.Badged.Foreground.Disabled" Color="{{MahApps.Colors.Badged.Foreground.Disabled}}" options:Freeze="True" />
 
     <!--  HamburgerMenu  -->
 

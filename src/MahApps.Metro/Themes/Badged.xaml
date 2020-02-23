@@ -20,9 +20,9 @@
     </Storyboard>
 
     <Style TargetType="{x:Type controls:Badged}">
-        <Setter Property="BadgeBackground" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="BadgeBackground" Value="{DynamicResource MahApps.Brushes.Badged.Background}" />
         <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
-        <Setter Property="BadgeForeground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+        <Setter Property="BadgeForeground" Value="{DynamicResource MahApps.Brushes.Badged.Foreground}" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
@@ -57,7 +57,8 @@
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
-                            <ContentControl Margin="1 0 1 0"
+                            <ContentControl x:Name="PART_BadgeContent"
+                                            Margin="1 0 1 0"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Content="{TemplateBinding Badge}"
@@ -100,7 +101,8 @@
                             <Setter TargetName="PART_BadgeContainer" Property="VerticalAlignment" Value="Center" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_BadgeContainer" Property="Background" Value="{DynamicResource ResourceKey=MahApps.Brushes.Badged.DisabledBackground}" />
+                            <Setter TargetName="PART_BadgeContainer" Property="Background" Value="{DynamicResource MahApps.Brushes.Badged.Background.Disabled}" />
+                            <Setter TargetName="PART_BadgeContent" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Badged.Foreground.Disabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
