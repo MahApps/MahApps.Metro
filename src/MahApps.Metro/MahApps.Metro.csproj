@@ -28,7 +28,7 @@
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
 
-    <Target Name="GenerateXamlFiles" BeforeTargets="Build">
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
         <PropertyGroup>
             <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
             <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
