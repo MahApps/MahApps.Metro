@@ -241,8 +241,8 @@
 
     <!--  HamburgerMenu  -->
 
-    <SolidColorBrush x:Key="MahApps.HamburgerMenu.PaneBackground" Color="#FF444444" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.HamburgerMenu.PaneForeground" Color="#FFFFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.HamburgerMenu.Pane.Background" Color="#FF444444" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.HamburgerMenu.Pane.Foreground" Color="#FFFFFFFF" options:Freeze="True" />
 
     <!--
         ******************************************************************

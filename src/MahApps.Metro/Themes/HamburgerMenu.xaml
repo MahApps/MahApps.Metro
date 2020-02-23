@@ -28,8 +28,8 @@
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
         <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}" />
-        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.HamburgerMenu.PaneBackground}" />
-        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.HamburgerMenu.PaneForeground}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Background}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Foreground}" />
         <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
         <Setter Property="PaneMargin" Value="0 0 0 8" />
         <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuSeparator}" />
