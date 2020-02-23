@@ -207,13 +207,18 @@
 
     <!--  DataGrid brushes  -->
 
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Highlight" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.DisabledHighlight" Color="{StaticResource MahApps.Colors.Gray7}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.HighlightText" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.MouseOverHighlight" Color="{StaticResource MahApps.Colors.Accent3}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.FocusBorder" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.InactiveSelectionHighlight" Color="{StaticResource MahApps.Colors.Accent2}" options:Freeze="True" />
-    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.InactiveSelectionHighlightText" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Background" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.BorderBrush" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Background.Disabled" Color="{StaticResource MahApps.Colors.Gray7}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.BorderBrush.Disabled" Color="{StaticResource MahApps.Colors.Gray7}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Text" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Text.Disabled" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Background.MouseOver" Color="{StaticResource MahApps.Colors.Accent3}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver" Color="{StaticResource MahApps.Colors.Accent3}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.BorderBrush.Focus" Color="{StaticResource MahApps.Colors.Accent}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Background.Inactive" Color="{StaticResource MahApps.Colors.Accent2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.BorderBrush.Inactive" Color="{StaticResource MahApps.Colors.Accent2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.DataGrid.Selection.Text.Inactive" Color="{StaticResource MahApps.Colors.IdealForeground}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.Pressed.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.Pressed.Win10}}" options:Freeze="True" />
     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10" Color="{{MahApps.Colors.ToggleSwitchButton.OffBorder.Win10}}" options:Freeze="True" />
