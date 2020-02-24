@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
@@ -9,17 +10,18 @@
 
     <!--  Win10 style  -->
 
-    <converters:ThicknessToDoubleConverter x:Key="ThicknessToDouble" TakeThicknessSide="Left" />
+    <system:Double x:Key="ToggleSwitchOnStrokeThickness">0</system:Double>
+    <system:Double x:Key="ToggleSwitchOffStrokeThickness">2</system:Double>
 
     <Style x:Key="MahApps.Styles.ToggleSwitchButton.Win10"
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
            TargetType="{x:Type Controls:ToggleSwitchButton}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffBorder.Win10}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Height" Value="20" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffSwitch.Win10}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OnSwitch.Win10}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOff}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOn}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
@@ -28,22 +30,23 @@
                         <Grid x:Name="PART_SwitchTrack"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               UseLayoutRounding="False">
-                            <Rectangle x:Name="PART_SwitchBrushOuterBorder"
+                            <Rectangle x:Name="OuterBorder"
                                        Width="{TemplateBinding Width}"
                                        Height="{TemplateBinding Height}"
                                        Fill="{TemplateBinding OffSwitchBrush}"
                                        RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
                                        RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
-                                       Stroke="{TemplateBinding BorderBrush}"
-                                       StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessToDouble}}" />
-                            <Rectangle x:Name="PART_SwitchBrushBorder"
+                                       Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOff}"
+                                       StrokeThickness="{DynamicResource ToggleSwitchOffStrokeThickness}" />
+                            <Rectangle x:Name="SwitchKnobBounds"
                                        Width="{TemplateBinding Width}"
                                        Height="{TemplateBinding Height}"
                                        Fill="{TemplateBinding OnSwitchBrush}"
                                        Opacity="0"
                                        RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
                                        RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={converters:RectangleHeightToRadiusConverter}, Mode=OneWay}"
-                                       StrokeThickness="0" />
+                                       Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOn}"
+                                       StrokeThickness="{DynamicResource ToggleSwitchOnStrokeThickness}" />
                             <Grid x:Name="PART_ThumbIndicator"
                                   Width="{TemplateBinding Height}"
                                   Height="{TemplateBinding Height}"
@@ -52,10 +55,15 @@
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate" />
                                 </Grid.RenderTransform>
-                                <Ellipse x:Name="PART_ThumbIndicatorInner"
+                                <Ellipse x:Name="SwitchKnobOn"
+                                         Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOn}"
                                          Width="{TemplateBinding ThumbIndicatorWidth}"
                                          Height="{TemplateBinding ThumbIndicatorWidth}"
-                                         Fill="{TemplateBinding ThumbIndicatorBrush}" />
+                                         Opacity="0" />
+                                <Ellipse x:Name="SwitchKnobOff"
+                                         Width="{TemplateBinding ThumbIndicatorWidth}"
+                                         Height="{TemplateBinding ThumbIndicatorWidth}"
+                                         Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOff}" />
                             </Grid>
                         </Grid>
                         <Thumb x:Name="PART_DraggingThumb">
@@ -65,72 +73,56 @@
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Pressed" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--  Checked  -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Opacity" Value="1" />
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Opacity" Value="0" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorChecked.Win10}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Opacity" Value="1" />
+                            <Setter TargetName="OuterBorder" Property="Opacity" Value="0" />
+                            <Setter TargetName="SwitchKnobOn" Property="Opacity" Value="1" />
+                            <Setter TargetName="SwitchKnobOff" Property="Opacity" Value="0" />
                         </Trigger>
+
                         <!--  MouseOver  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                                <Condition Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffMouseOverBorder.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorMouseOver.Win10}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="True" />
-                                <Condition Property="IsEnabled" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OnSwitchMouseOver.Win10}" />
-                        </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver}" />
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffPointerOver}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffPointerOver}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnPointerOver}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnPointerOver}" />
+                            <!-- <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPointerOver}" /> -->
+                        </Trigger>
+
                         <!--  Pressed  -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.Pressed.Win10}" />
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Opacity" Value="1" />
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Opacity" Value="0" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorPressed.Win10}" />
+                            <Setter TargetName="OuterBorder" Property="StrokeThickness" Value="0" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPressed}" />
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffPressed}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnPressed}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnPressed}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffPressed}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnPressed}" />
+                            <!-- <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPressed}" /> -->
                         </Trigger>
+
                         <!--  Disabled  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsChecked" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OnSwitchDisabled.Win10}" />
-                            <Setter TargetName="PART_SwitchBrushBorder" Property="Opacity" Value="1" />
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Opacity" Value="0" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_SwitchBrushOuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffDisabledBorder.Win10}" />
-                            <Setter TargetName="PART_ThumbIndicatorInner" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
-                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <!-- <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForegroundDisabled}" /> -->
+                            <!-- <Setter TargetName="OffContentPresenter" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" /> -->
+                            <!-- <Setter TargetName="OnContentPresenter" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" /> -->
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffDisabled}" />
+                            <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffDisabled}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnDisabled}" />
+                            <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnDisabled}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffDisabled}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled}" />
+                            <!-- <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundDisabled}" /> -->
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10}" />
-        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="Width" Value="44" />
     </Style>
@@ -143,11 +135,10 @@
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header.Win10}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Win10}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForeground}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header.Win10}" />
-        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OffSwitch.Win10}" />
-        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.OnSwitch.Win10}" />
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicator.Win10}" />
-        <Setter Property="ThumbIndicatorDisabledBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitchButton.ThumbIndicatorDisabled.Win10}" />
+        <Setter Property="OffSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOff}" />
+        <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOn}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Styles.ToggleSwitchButton.Win10}" />
         <Style.Triggers>
