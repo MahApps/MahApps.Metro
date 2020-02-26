@@ -12,6 +12,7 @@
 
     <system:Double x:Key="ToggleSwitchOnStrokeThickness">0</system:Double>
     <system:Double x:Key="ToggleSwitchOffStrokeThickness">2</system:Double>
+    <system:Double x:Key="ToggleSwitchThemeMinWidth">154</system:Double>
 
     <Style x:Key="MahApps.Styles.ToggleSwitchButton.Win10"
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
@@ -131,7 +132,8 @@
            BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
            TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="ContentDirection" Value="RightToLeft" />
-        <Setter Property="ContentPadding" Value="0 0 10 0" />
+        <Setter Property="ContentPadding" Value="0 0 12 0" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="0 0 0 4" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header.Win10}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Win10}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Win10}" />
@@ -141,9 +143,164 @@
         <Setter Property="OnSwitchBrush" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOn}" />
         <Setter Property="ThumbIndicatorWidth" Value="10" />
         <Setter Property="ToggleSwitchButtonStyle" Value="{StaticResource MahApps.Styles.ToggleSwitchButton.Win10}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
+                    <Border Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid Background="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="HeaderContentPresenter"
+                                              Grid.Row="0"
+                                              Grid.Column="0"
+                                              TextElement.Foreground="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}"
+                                              Margin="{TemplateBinding Controls:HeaderedControlHelper.HeaderMargin}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              TextElement.FontFamily="{TemplateBinding HeaderFontFamily}"
+                                              TextElement.FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
+                                              IsHitTestVisible="False" />
+                            <Grid Grid.Row="1"
+                                  MinWidth="{DynamicResource ToggleSwitchThemeMinWidth}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="firstCol" Width="Auto" />
+                                    <ColumnDefinition x:Name="secCol" Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid x:Name="SwitchAreaGrid"
+                                      Grid.ColumnSpan="2"
+                                      Margin="0 5"
+                                      Background="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackground}" />
+
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.Column="0"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"
+                                                  IsHitTestVisible="False"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}" />
+                                <ContentPresenter x:Name="OnContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.Column="0"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"
+                                                  IsHitTestVisible="False"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding OnLabel}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  Visibility="Hidden" />
+                                <ContentPresenter x:Name="OffContentPresenter"
+                                                  Grid.Row="0"
+                                                  Grid.Column="0"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"
+                                                  IsHitTestVisible="False"
+                                                  Margin="{TemplateBinding ContentPadding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Content="{TemplateBinding OffLabel}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  Visibility="Hidden" />
+                                <Controls:ToggleSwitchButton x:Name="Switch"
+                                                         Grid.Row="0"
+                                                         Grid.Column="1"
+                                                         VerticalAlignment="Center"
+                                                         Background="{TemplateBinding Background}"
+                                                         FocusVisualStyle="{x:Null}"
+                                                         IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
+                                                         OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
+                                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                         Style="{TemplateBinding ToggleSwitchButtonStyle}"
+                                                         ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
+                                                         ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
+                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="OnContentPresenter" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="OffContentPresenter" Property="Visibility" Value="Hidden" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="OnContentPresenter" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="OffContentPresenter" Property="Visibility" Value="Visible" />
+                        </MultiTrigger>
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}" Value="{x:Null}">
+                            <Setter TargetName="HeaderContentPresenter" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <Trigger Property="ContentDirection" Value="RightToLeft">
+                            <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="OffContentPresenter" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="OnContentPresenter" Property="Grid.Column" Value="1" />
+                            <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="firstCol" Property="Width" Value="Auto" />
+                            <Setter TargetName="secCol" Property="Width" Value="Auto" />
+                        </Trigger>
+
+                        <!--  MouseOver  -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPointerOver}" />
+                        </Trigger>
+
+                        <!--  Pressed  -->
+                        <Trigger SourceName="Switch" Property="IsPressed" Value="True">
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPressed}" />
+                        </Trigger>
+
+                        <!--  Disabled  -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="HeaderContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForegroundDisabled}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
+                            <Setter TargetName="OffContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
+                            <Setter TargetName="OnContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="ContentDirection" Value="RightToLeft">
-                <Setter Property="ContentPadding" Value="10 0 0 0" />
+                <Setter Property="ContentPadding" Value="12 0 0 0" />
             </Trigger>
         </Style.Triggers>
     </Style>
