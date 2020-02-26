@@ -236,12 +236,12 @@
     </ControlTemplate>
 
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Base" TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />
         <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light}" />

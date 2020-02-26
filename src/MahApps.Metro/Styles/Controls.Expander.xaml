@@ -84,8 +84,8 @@
                             <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -158,8 +158,8 @@
                             <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -231,8 +231,8 @@
                             <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -294,8 +294,8 @@
                             <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -335,7 +335,7 @@
         <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -343,7 +343,7 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    IsHitTestVisible="false"
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">

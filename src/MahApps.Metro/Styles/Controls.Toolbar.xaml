@@ -19,8 +19,8 @@
                 </Style.Triggers>
             </Style>
         </Style.Resources>
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
@@ -85,8 +85,8 @@
                 </Style.Triggers>
             </Style>
         </Style.Resources>
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Transparent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
@@ -224,12 +224,12 @@
                                        Height="1"
                                        Margin="2 8"
                                        VerticalAlignment="Bottom"
-                                       Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                       Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Path Name="Arrow"
                                   Margin="2 3"
                                   VerticalAlignment="Bottom"
                                   Data="M 0 0 L 6 0 3 3 Z"
-                                  Fill="{DynamicResource MahApps.Brushes.Black}" />
+                                  Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <ContentPresenter />
                         </Grid>
                     </Border>
@@ -245,13 +245,13 @@
                             <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Black}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
-                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.TransparentWhite}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource MahApps.Brushes.Transparent}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -267,8 +267,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolBar}">
                     <Border x:Name="Border"
-                            Background="{DynamicResource MahApps.Brushes.TransparentWhite}"
-                            BorderBrush="{DynamicResource MahApps.Brushes.TransparentWhite}"
+                            Background="{DynamicResource MahApps.Brushes.Transparent}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.Transparent}"
                             BorderThickness="1"
                             CornerRadius="2">
                         <DockPanel>
@@ -286,7 +286,7 @@
                                        StaysOpen="false">
                                     <Border x:Name="DropDownBorder"
                                             Background="{DynamicResource MahApps.Brushes.Control.Background}"
-                                            BorderBrush="{DynamicResource MahApps.Brushes.Controls.Border}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                                             BorderThickness="1">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
                                                               Margin="2"

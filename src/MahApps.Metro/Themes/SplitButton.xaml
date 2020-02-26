@@ -90,7 +90,7 @@
                     <Border x:Name="PopupBorder"
                             Height="Auto"
                             HorizontalAlignment="Stretch"
-                            Background="{DynamicResource MahApps.Brushes.White}"
+                            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -218,7 +218,7 @@
                     <Border x:Name="PopupBorder"
                             Height="Auto"
                             HorizontalAlignment="Stretch"
-                            Background="{DynamicResource MahApps.Brushes.White}"
+                            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -273,18 +273,18 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:SplitButton}">
-        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WhiteColor}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.SplitArrow}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.FocusVisualStyle.ButtonSplit}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="2" />

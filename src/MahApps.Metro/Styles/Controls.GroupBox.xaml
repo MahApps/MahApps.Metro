@@ -15,7 +15,7 @@
         <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

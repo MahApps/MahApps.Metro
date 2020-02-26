@@ -148,8 +148,8 @@
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                         </Trigger>
 
                         <MultiTrigger>
@@ -236,8 +236,8 @@
                             <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </DataTrigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.Black}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.White}" />
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                             <Setter TargetName="ToggleButtonRootGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -250,8 +250,8 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Control.Background}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.Border}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.MouseOverInnerBorder}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.TextBox.MouseOverBorder}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.Focus}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ComboBox.Border.MouseOver}" />
         <Setter Property="Controls:TextBoxHelper.ButtonFontSize" Value="{DynamicResource MahApps.Font.Size.Button.ClearText}" />
         <Setter Property="Controls:TextBoxHelper.ButtonWidth" Value="22" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
@@ -411,8 +411,8 @@
 
                         <Border x:Name="DisabledVisualElement"
                                 Grid.ColumnSpan="3"
-                                Background="{DynamicResource MahApps.Brushes.Controls.Disabled}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                BorderBrush="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 IsHitTestVisible="False"
@@ -431,7 +431,7 @@
                                 <Border x:Name="PopupBorder"
                                         Height="Auto"
                                         HorizontalAlignment="Stretch"
-                                        Background="{DynamicResource MahApps.Brushes.White}"
+                                        Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                         BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -599,17 +599,17 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ComboBoxItem" TargetType="ComboBoxItem">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
         <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
         <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="MinHeight" Value="22" />

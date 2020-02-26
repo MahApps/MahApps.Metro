@@ -127,7 +127,7 @@
                                 <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}, Path=IsTodayHighlighted}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsToday}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+                            <Setter TargetName="NormalText" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
                             <Setter TargetName="TodayBackground" Property="Opacity" Value="1" />
                         </MultiDataTrigger>
                         <MultiTrigger>
@@ -159,7 +159,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontWeight="Bold"
-                                       Foreground="{DynamicResource MahApps.Brushes.Black}"
+                                       Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                        Opacity="0.8"
                                        Text="{Binding}" />
                         </DataTemplate>
@@ -370,10 +370,10 @@
                             </Grid>
                         </Border>
                         <Rectangle x:Name="PART_DisabledVisual"
-                                   Fill="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    Opacity="0"
                                    Stretch="Fill"
-                                   Stroke="{DynamicResource MahApps.Brushes.Controls.Disabled}"
+                                   Stroke="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    StrokeThickness="1"
                                    Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
@@ -533,8 +533,8 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Calendar.Base" TargetType="{x:Type Calendar}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CalendarButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarButton}" />
         <Setter Property="CalendarDayButtonStyle" Value="{DynamicResource MahApps.Styles.CalendarDayButton}" />

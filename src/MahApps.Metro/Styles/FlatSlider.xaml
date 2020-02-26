@@ -148,7 +148,7 @@
 
     <Style x:Key="MahApps.Styles.Slider.Flat" TargetType="{x:Type Slider}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SliderTrack.Normal}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Maximum" Value="100" />

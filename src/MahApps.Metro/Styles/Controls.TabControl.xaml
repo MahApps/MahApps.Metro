@@ -6,12 +6,12 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <Style x:Key="MahApps.Styles.TabControl" TargetType="{x:Type TabControl}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <!--  special property for header font size  -->
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.TabItem}" />
-        <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
-        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource MahApps.Brushes.GrayHover}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:TabControlHelper.UnderlineMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
         <Setter Property="Controls:TabControlHelper.UnderlineMouseOverSelectedBrush" Value="{DynamicResource MahApps.Brushes.Highlight}" />
         <Setter Property="Controls:TabControlHelper.UnderlineSelectedBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -222,7 +222,7 @@
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineSelectedBrush), Mode=OneWay}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="false">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray}" />
                         </Trigger>
 
                         <MultiDataTrigger>
@@ -241,7 +241,7 @@
                         </MultiDataTrigger>
 
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.GrayHover}" />
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray.MouseOver}" />
                             <Setter TargetName="Underline" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.UnderlineMouseOverBrush), Mode=OneWay}" />
                         </Trigger>
 

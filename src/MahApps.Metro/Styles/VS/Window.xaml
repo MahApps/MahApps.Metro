@@ -20,7 +20,7 @@
         <Style.Triggers>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.BlackColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
             </Trigger>
         </Style.Triggers>
     </Style>

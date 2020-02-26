@@ -95,8 +95,8 @@
     -->
     <Style x:Key="MahApps.Styles.ListView" TargetType="{x:Type ListView}">
         <Setter Property="AlternationCount" Value="2" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
@@ -151,17 +151,17 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.ListViewItem" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
         <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
         <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
@@ -248,7 +248,7 @@
     <!--  Gives the impression that items cannot be selected on the ListView  -->
     <Style x:Key="MahApps.Styles.ListViewItem.NonSelectable" TargetType="{x:Type ListViewItem}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray1}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="0" />

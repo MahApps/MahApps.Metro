@@ -21,7 +21,7 @@
                            DataContext="{Binding ElementName=placeholder}"
                            StrokeThickness="0" />
                 <Border x:Name="ValidationErrorElement"
-                        BorderBrush="{DynamicResource MahApps.Brushes.Controls.Validation}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Control.Validation}"
                         BorderThickness="{Binding ElementName=placeholder, Path=AdornedElement.BorderThickness, FallbackValue=1, TargetNullValue=1}"
                         CornerRadius="{Binding ElementName=placeholder, Path=(mah:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.TopRight}}"
                         DataContext="{Binding ElementName=placeholder}"
@@ -39,7 +39,7 @@
                               Fill="{DynamicResource MahApps.Brushes.Validation5}" />
                         <Path Margin="1 3 0 0"
                               Data="M 0,0 L2,0 L 8,6 L8,8"
-                              Fill="{DynamicResource MahApps.Brushes.WhiteColor}" />
+                              Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                     </Grid>
                 </Border>
 

@@ -591,17 +591,16 @@
                       Margin="4 2"
                       Header="HotKeyBox">
                 <StackPanel>
+                    <CheckBox x:Name="ModifierKeysRequired"
+                              Margin="{StaticResource ControlMargin}"
+                              Content="Require modifier keys" />
+                    <TextBlock Margin="{StaticResource ControlMargin}"
+                               Text="Try SHIFT+D to demonstrate validation" />
                     <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         Controls:TextBoxHelper.Watermark="Enter hot key"
                                         AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
                                         HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                    <TextBlock Margin="{StaticResource ControlMargin}"
-                               Foreground="{DynamicResource MahApps.Brushes.DarkIdealForegroundDisabled}"
-                               Text="Try SHIFT+D to demonstrate validation" />
-                    <CheckBox x:Name="ModifierKeysRequired"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="Require modifier keys" />
                 </StackPanel>
             </GroupBox>
         </Grid>

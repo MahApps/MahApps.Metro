@@ -8,7 +8,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Tooltip}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Padding" Value="6 3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">

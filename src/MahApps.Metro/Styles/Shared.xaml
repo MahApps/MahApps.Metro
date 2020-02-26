@@ -11,7 +11,7 @@
                       BlurRadius="10"
                       Opacity="0"
                       ShadowDepth="0"
-                      Color="{DynamicResource MahApps.Colors.Black}"
+                      Color="{DynamicResource MahApps.Colors.ThemeForeground}"
                       po:Freeze="True" />
 
     <Storyboard x:Key="MahApps.Storyboard.EnterGotFocus" po:Freeze="True">

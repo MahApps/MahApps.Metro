@@ -35,7 +35,7 @@
 
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch">14.667</System:Double>
     <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header">16</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Win10">15</System:Double>
-    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header.Win10">15</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Win10">14</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.ToggleSwitch.Header.Win10">14</System:Double>
 
 </ResourceDictionary>

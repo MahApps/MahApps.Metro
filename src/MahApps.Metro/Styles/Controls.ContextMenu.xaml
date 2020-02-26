@@ -25,7 +25,7 @@
                                    UseLayoutRounding="True" />
                         <Rectangle Height="1"
                                    Margin="20 1 1 0"
-                                   Fill="{DynamicResource MahApps.Brushes.White}"
+                                   Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                    UseLayoutRounding="True" />
                     </Grid>
@@ -381,8 +381,8 @@
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -430,8 +430,8 @@
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.TopMenuItem.PressedStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -537,8 +537,8 @@
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -596,8 +596,8 @@
                 <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledForeground}" />
-                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.DisabledGlyphPanel}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
