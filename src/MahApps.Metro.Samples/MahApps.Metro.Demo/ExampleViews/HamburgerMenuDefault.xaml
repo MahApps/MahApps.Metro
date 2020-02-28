@@ -107,13 +107,13 @@
             <StackPanel Margin="0 0 0 10" Orientation="Vertical">
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="HamburgerMenuItem About:"
-                                       IsChecked="{Binding CanShowHamburgerAboutCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                       OffLabel="Disabled"
-                                       OnLabel="Enabled" />
+                                       IsOn="{Binding CanShowHamburgerAboutCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       OffContent="Disabled"
+                                       OnContent="Enabled" />
 
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="IsPaneOpen:"
-                                       IsChecked="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                       IsOn="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Controls:MetroHeader Margin="0 10 0 5" Header="PanePlacement:">
                     <ComboBox MinWidth="150"

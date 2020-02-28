@@ -113,7 +113,7 @@
             <StackPanel Margin="0 0 0 10" Orientation="Vertical">
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="IsPaneOpen:"
-                                       IsChecked="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
                     <ComboBox MinWidth="150"

@@ -282,8 +282,8 @@
 
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" Header="Header" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="False" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" OnLabel="Enabled" OffLabel="Disabled" IsChecked="True" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" OnLabel="Enabled" OffLabel="Disabled" IsChecked="True" IsEnabled="False" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" OnContent="Enabled" OffContent="Disabled" IsOn="True" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" OnContent="Enabled" OffContent="Disabled" IsOn="True" IsEnabled="False" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"
