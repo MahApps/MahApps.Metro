@@ -131,9 +131,12 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsOnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var toggleSwitch = (ToggleSwitch)d;
-            toggleSwitch.OnToggled();
-            toggleSwitch.UpdateVisualStates(true);
+            if (e.NewValue != e.OldValue)
+            {
+                var toggleSwitch = (ToggleSwitch)d;
+                toggleSwitch.OnToggled();
+                toggleSwitch.UpdateVisualStates(true);
+            }
         }
 
         /// <summary>
