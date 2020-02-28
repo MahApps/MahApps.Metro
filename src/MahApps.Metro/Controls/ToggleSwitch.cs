@@ -344,6 +344,7 @@ namespace MahApps.Metro.Controls
         static ToggleSwitch()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
+            EventManager.RegisterClassHandler(typeof(ToggleSwitch), MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
         }
 
         public ToggleSwitch()
@@ -389,13 +390,11 @@ namespace MahApps.Metro.Controls
             this.UpdateVisualStates(true);
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        private static void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
-
-            if (!this.IsKeyboardFocusWithin)
+            if (sender is ToggleSwitch toggle && !toggle.IsKeyboardFocusWithin)
             {
-                e.Handled = this.Focus() || e.Handled;
+                e.Handled = toggle.Focus() || e.Handled;
             }
         }
 

@@ -164,6 +164,9 @@
                                         <Grid.RenderTransform>
                                             <TranslateTransform x:Name="KnobTranslateTransform" />
                                         </Grid.RenderTransform>
+                                        <Grid.CacheMode>
+                                            <BitmapCache RenderAtScale="2" />
+                                        </Grid.CacheMode>
                                     </Grid>
                                 </Grid>
                                 <Thumb x:Name="SwitchThumb"
