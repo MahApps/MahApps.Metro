@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -558,6 +559,16 @@ namespace MahApps.Metro.Controls
         private void Toggle()
         {
             this.SetCurrentValue(IsOnProperty, !this.IsOn);
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new ToggleSwitchAutomationPeer(this);
+        }
+
+        internal void AutomationPeerToggle()
+        {
+            this.Toggle();
         }
     }
 }
