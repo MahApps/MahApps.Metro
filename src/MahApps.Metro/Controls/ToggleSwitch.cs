@@ -62,25 +62,6 @@ namespace MahApps.Metro.Controls
 
         private Thumb SwitchThumb { get; set; }
 
-        /// <summary>Identifies the <see cref="HeaderFontFamily"/> dependency property.</summary>
-        public static readonly DependencyProperty HeaderFontFamilyProperty
-            = DependencyProperty.Register(nameof(HeaderFontFamily),
-                                          typeof(FontFamily),
-                                          typeof(ToggleSwitch),
-                                          new PropertyMetadata(SystemFonts.MessageFontFamily));
-
-        /// <summary>
-        /// Gets or set the font family of the header content presenter.
-        /// </summary> 
-        [Bindable(true)]
-        [Localizability(LocalizationCategory.Font)]
-        [Category(AppName.MahApps)]
-        public FontFamily HeaderFontFamily
-        {
-            get => (FontFamily)this.GetValue(HeaderFontFamilyProperty);
-            set => this.SetValue(HeaderFontFamilyProperty, value);
-        }
-
         /// <summary>Identifies the <see cref="ContentDirection"/> dependency property.</summary>
         public static readonly DependencyProperty ContentDirectionProperty
             = DependencyProperty.Register(nameof(ContentDirection),

@@ -20,7 +20,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForeground}" />
-        <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -47,9 +47,10 @@
                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                               IsHitTestVisible="False"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                              TextElement.FontFamily="{TemplateBinding HeaderFontFamily}"
+                                              TextElement.FontFamily="{TemplateBinding mah:HeaderedControlHelper.HeaderFontFamily}"
                                               TextElement.FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
                                               TextElement.FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
+                                              TextElement.FontStretch="{TemplateBinding mah:HeaderedControlHelper.HeaderFontStretch}"
                                               TextElement.Foreground="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}"
                                               Visibility="Collapsed" />
 
