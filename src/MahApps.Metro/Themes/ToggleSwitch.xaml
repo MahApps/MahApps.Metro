@@ -5,6 +5,7 @@
 
     <GridLength x:Key="ToggleSwitchPreContentMargin">6</GridLength>
     <GridLength x:Key="ToggleSwitchPostContentMargin">6</GridLength>
+    <GridLength x:Key="ToggleSwitchContentSpaceMargin">12</GridLength>
 
     <Thickness x:Key="ToggleSwitchTopHeaderMargin">0 0 0 4</Thickness>
 
@@ -15,19 +16,14 @@
     <KeyTime x:Key="ToggleSwitchTranslateDuration">0:0:0.500</KeyTime>
 
     <Style x:Key="MahApps.Styles.ToggleSwitch" TargetType="{x:Type mah:ToggleSwitch}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="ContentDirection" Value="RightToLeft" />
-        <Setter Property="ContentPadding" Value="0 0 12 0" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{StaticResource ToggleSwitchTopHeaderMargin}" />
-        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForeground}" />
         <Setter Property="HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ToggleSwitch}">
@@ -44,48 +40,46 @@
 
                             <ContentPresenter x:Name="HeaderContentPresenter"
                                               Grid.Row="0"
-                                              TextElement.Foreground="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}"
                                               Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
                                               Content="{TemplateBinding Header}"
                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              IsHitTestVisible="False"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               TextElement.FontFamily="{TemplateBinding HeaderFontFamily}"
                                               TextElement.FontSize="{TemplateBinding mah:HeaderedControlHelper.HeaderFontSize}"
                                               TextElement.FontWeight="{TemplateBinding mah:HeaderedControlHelper.HeaderFontWeight}"
-                                              Visibility="Collapsed"
-                                              IsHitTestVisible="False" />
+                                              TextElement.Foreground="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForeground}"
+                                              Visibility="Collapsed" />
 
                             <Grid Grid.Row="1"
-                                  MinWidth="{StaticResource ToggleSwitchThemeMinWidth}"
+                                  MinWidth="{DynamicResource ToggleSwitchThemeMinWidth}"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Top">
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{StaticResource ToggleSwitchPreContentMargin}" />
+                                    <RowDefinition Height="{DynamicResource ToggleSwitchPreContentMargin}" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="{StaticResource ToggleSwitchPostContentMargin}" />
+                                    <RowDefinition Height="{DynamicResource ToggleSwitchPostContentMargin}" />
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="{DynamicResource ToggleSwitchContentSpaceMargin}" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Grid x:Name="SwitchAreaGrid"
                                       Grid.RowSpan="3"
-                                      Grid.ColumnSpan="2"
+                                      Grid.ColumnSpan="3"
                                       Margin="0 5"
                                       Background="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackground}" />
 
                                 <ContentPresenter x:Name="OffContentPresenter"
                                                   Grid.Row="0"
                                                   Grid.RowSpan="3"
-                                                  Grid.Column="0"
-                                                  Opacity="0"
-                                                  TextElement.Foreground="{TemplateBinding Foreground}"
-                                                  IsHitTestVisible="False"
+                                                  Grid.Column="2"
                                                   Margin="{TemplateBinding ContentPadding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -93,16 +87,16 @@
                                                   ContentStringFormat="{TemplateBinding OffContentStringFormat}"
                                                   ContentTemplate="{TemplateBinding OffContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding OffContentTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  Opacity="0"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   TextElement.FontFamily="{TemplateBinding FontFamily}"
-                                                  TextElement.FontSize="{TemplateBinding FontSize}" />
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}" />
                                 <ContentPresenter x:Name="OnContentPresenter"
                                                   Grid.Row="0"
                                                   Grid.RowSpan="3"
-                                                  Grid.Column="0"
-                                                  Opacity="0"
-                                                  TextElement.Foreground="{TemplateBinding Foreground}"
-                                                  IsHitTestVisible="False"
+                                                  Grid.Column="2"
                                                   Margin="{TemplateBinding ContentPadding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -110,14 +104,16 @@
                                                   ContentStringFormat="{TemplateBinding OnContentStringFormat}"
                                                   ContentTemplate="{TemplateBinding OnContentTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding OnContentTemplateSelector}"
+                                                  IsHitTestVisible="False"
+                                                  Opacity="0"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   TextElement.FontFamily="{TemplateBinding FontFamily}"
-                                                  TextElement.FontSize="{TemplateBinding FontSize}" />
+                                                  TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}" />
                                 <ContentPresenter x:Name="ContentPresenter"
                                                   Grid.Row="0"
                                                   Grid.RowSpan="3"
-                                                  Grid.Column="0"
-                                                  TextElement.Foreground="{TemplateBinding Foreground}"
+                                                  Grid.Column="2"
                                                   Margin="{TemplateBinding ContentPadding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -128,41 +124,42 @@
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   TextElement.FontFamily="{TemplateBinding FontFamily}"
                                                   TextElement.FontSize="{TemplateBinding FontSize}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"
                                                   Visibility="Collapsed" />
 
                                 <Grid x:Name="Switch"
                                       Grid.Row="1"
-                                      Grid.Column="1"
-                                      Height="20"
+                                      Grid.Column="0"
                                       Width="44"
+                                      Height="20"
                                       HorizontalAlignment="Left"
                                       SnapsToDevicePixels="False">
                                     <Rectangle x:Name="OuterBorder"
-                                               RadiusX="10"
-                                               RadiusY="10"
                                                Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOff}"
-                                               Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOff}"
-                                               StrokeThickness="{StaticResource ToggleSwitchOffStrokeThickness}" />
-                                    <Rectangle x:Name="SwitchKnobBounds"
                                                RadiusX="10"
                                                RadiusY="10"
+                                               Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOff}"
+                                               StrokeThickness="{DynamicResource ToggleSwitchOffStrokeThickness}" />
+                                    <Rectangle x:Name="SwitchKnobBounds"
                                                Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOn}"
+                                               Opacity="0"
+                                               RadiusX="10"
+                                               RadiusY="10"
                                                Stroke="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOn}"
-                                               StrokeThickness="{StaticResource ToggleSwitchOnStrokeThickness}"
-                                               Opacity="0" />
+                                               StrokeThickness="{DynamicResource ToggleSwitchOnStrokeThickness}" />
                                     <Grid x:Name="SwitchKnob"
-                                          HorizontalAlignment="Left"
+                                          Width="20"
                                           Height="20"
-                                          Width="20">
+                                          HorizontalAlignment="Left">
                                         <Ellipse x:Name="SwitchKnobOn"
-                                             Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOn}"
-                                             Width="10"
-                                             Height="10"
-                                             Opacity="0" />
+                                                 Width="10"
+                                                 Height="10"
+                                                 Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOn}"
+                                                 Opacity="0" />
                                         <Ellipse x:Name="SwitchKnobOff"
-                                             Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOff}"
-                                             Width="10"
-                                             Height="10" />
+                                                 Width="10"
+                                                 Height="10"
+                                                 Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOff}" />
                                         <Grid.RenderTransform>
                                             <TranslateTransform x:Name="KnobTranslateTransform" />
                                         </Grid.RenderTransform>
@@ -174,8 +171,8 @@
                                 <Thumb x:Name="SwitchThumb"
                                        Grid.Row="0"
                                        Grid.RowSpan="3"
-                                       Grid.ColumnSpan="2"
-                                       Grid.Column="0">
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="3">
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="Thumb">
                                             <Rectangle Fill="Transparent" />
@@ -190,13 +187,13 @@
                             <VisualStateGroup x:Name="ToggleStates">
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition x:Name="DraggingToOnTransition"
+                                                      GeneratedDuration="0"
                                                       From="Dragging"
-                                                      To="On"
-                                                      GeneratedDuration="0">
+                                                      To="On">
 
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame Value="24" KeyTime="{StaticResource ToggleSwitchTranslateDuration}">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="24">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase Exponent="9" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -217,13 +214,13 @@
                                         </Storyboard>
                                     </VisualTransition>
                                     <VisualTransition x:Name="DraggingToOffTransition"
+                                                      GeneratedDuration="0"
                                                       From="Dragging"
-                                                      To="Off"
-                                                      GeneratedDuration="0">
+                                                      To="Off">
 
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="{StaticResource ToggleSwitchTranslateDuration}">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="0">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase Exponent="9" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -232,13 +229,13 @@
                                         </Storyboard>
                                     </VisualTransition>
                                     <VisualTransition x:Name="OnToOffTransition"
+                                                      GeneratedDuration="0"
                                                       From="On"
-                                                      To="Off"
-                                                      GeneratedDuration="0">
+                                                      To="Off">
 
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame Value="0" KeyTime="{StaticResource ToggleSwitchTranslateDuration}">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="0">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase Exponent="9" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -248,13 +245,13 @@
                                     </VisualTransition>
 
                                     <VisualTransition x:Name="OffToOnTransition"
+                                                      GeneratedDuration="0"
                                                       From="Off"
-                                                      To="On"
-                                                      GeneratedDuration="0">
+                                                      To="On">
 
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobTranslateTransform" Storyboard.TargetProperty="X">
-                                                <EasingDoubleKeyFrame Value="24" KeyTime="{StaticResource ToggleSwitchTranslateDuration}">
+                                                <EasingDoubleKeyFrame KeyTime="{StaticResource ToggleSwitchTranslateDuration}" Value="24">
                                                     <EasingDoubleKeyFrame.EasingFunction>
                                                         <ExponentialEase Exponent="9" />
                                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -280,20 +277,18 @@
                                 <VisualState x:Name="Dragging" />
                                 <VisualState x:Name="Off">
                                     <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="KnobTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            To="0"
-                                            Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="KnobTranslateTransform"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="0"
+                                                         Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="On">
                                     <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="KnobTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            To="24"
-                                            Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="KnobTranslateTransform"
+                                                         Storyboard.TargetProperty="X"
+                                                         To="24"
+                                                         Duration="0" />
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SwitchKnobBounds" Storyboard.TargetProperty="Opacity">
                                             <DiscreteDoubleKeyFrame KeyTime="0" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
@@ -314,10 +309,10 @@
                                 <VisualState x:Name="OffContent">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="OffContentPresenter"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="1"
-                                                        Duration="0" />
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="OffContentPresenter">
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OffContentPresenter" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <system:Boolean>True</system:Boolean>
@@ -329,10 +324,10 @@
                                 <VisualState x:Name="OnContent">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="OnContentPresenter"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="1"
-                                                        Duration="0" />
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="OnContentPresenter">
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OnContentPresenter" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <system:Boolean>True</system:Boolean>
@@ -347,59 +342,58 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="ContentDirection" Value="RightToLeft">
-                            <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="OffContentPresenter" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="OnContentPresenter" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="Switch" Property="Grid.Column" Value="0" />
+                        <Trigger Property="ContentDirection" Value="LeftToRight">
+                            <Setter TargetName="ContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="OffContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="OnContentPresenter" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="Switch" Property="Grid.Column" Value="2" />
                         </Trigger>
 
                         <!--  MouseOver  -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver}" />
                             <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffPointerOver}" />
-                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffPointerOver}" />
-                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPointerOver}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnPointerOver}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnPointerOver}" />
-                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPointerOver}" />
+                            <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffPointerOver}" />
+                            <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnPointerOver}" />
                         </Trigger>
 
                         <!--  Pressed  -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="OuterBorder" Property="StrokeThickness" Value="0" />
-                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPressed}" />
                             <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffPressed}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffPressed}" />
+                            <Setter TargetName="OuterBorder" Property="StrokeThickness" Value="0" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPressed}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnPressed}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnPressed}" />
                             <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffPressed}" />
                             <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnPressed}" />
-                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundPressed}" />
                         </Trigger>
 
                         <!--  Disabled  -->
                         <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
                             <Setter TargetName="HeaderContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.HeaderForegroundDisabled}" />
                             <Setter TargetName="OffContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
                             <Setter TargetName="OnContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
-                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled}" />
-                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffDisabled}" />
                             <Setter TargetName="OuterBorder" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOffDisabled}" />
+                            <Setter TargetName="OuterBorder" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOffDisabled}" />
+                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundDisabled}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOnDisabled}" />
                             <Setter TargetName="SwitchKnobBounds" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.StrokeOnDisabled}" />
                             <Setter TargetName="SwitchKnobOff" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOffDisabled}" />
                             <Setter TargetName="SwitchKnobOn" Property="Fill" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.KnobFillOnDisabled}" />
-                            <Setter TargetName="SwitchAreaGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.ToggleSwitch.ContainerBackgroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="ContentDirection" Value="RightToLeft">
-                <Setter Property="ContentPadding" Value="12 0 0 0" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.ToggleSwitch.Header}" />
+        <Setter Property="mah:HeaderedControlHelper.HeaderMargin" Value="{DynamicResource ToggleSwitchTopHeaderMargin}" />
     </Style>
 
 </ResourceDictionary>
