@@ -402,30 +402,30 @@
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.BorderBrushIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminate" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBorderBrushIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundAccent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundIndeterminate" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
-    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUnchecked" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseMediumHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseHigh" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminate" ResourceKey="MahApps.Brushes.SystemControlForegroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundStrokeIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUnchecked" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlBackgroundBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillUncheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillChecked" ResourceKey="MahApps.Brushes.SystemControlHighlightAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlBackgroundAccent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightBaseMedium" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillCheckedDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminate" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminateMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminatePressed" ResourceKey="MahApps.Brushes.SystemControlHighlightTransparent" />
+    <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckBackgroundFillIndeterminateDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUnchecked" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedMouseOver" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />
     <markup:StaticResource x:Key="MahApps.Brushes.CheckBox.CheckGlyphForegroundUncheckedPressed" ResourceKey="MahApps.Brushes.SystemControlHighlightAltChromeWhite" />

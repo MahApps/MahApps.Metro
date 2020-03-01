@@ -34,31 +34,31 @@ namespace MahApps.Metro.Controls
             obj.SetValue(CheckSizeProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderThicknessProperty
+        public static readonly DependencyProperty CheckStrokeThicknessProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderThickness",
-                typeof(Thickness),
+                "CheckStrokeThickness",
+                typeof(double),
                 typeof(CheckBoxHelper),
-                new FrameworkPropertyMetadata(new Thickness(1)));
+                new FrameworkPropertyMetadata(1d));
 
         /// <summary>
-        /// Gets the Thickness of the CheckBox itself.
+        /// Gets the stroke thickness of the CheckBox itself.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Thickness GetCheckBorderThickness(DependencyObject obj)
+        public static double GetCheckStrokeThickness(DependencyObject obj)
         {
-            return (Thickness)obj.GetValue(CheckBorderThicknessProperty);
+            return (double)obj.GetValue(CheckStrokeThicknessProperty);
         }
 
         /// <summary>
-        /// Sets the Thickness of the CheckBox itself.
+        /// Sets the stroke thickness of the CheckBox itself.
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderThickness(DependencyObject obj, Thickness value)
+        public static void SetCheckStrokeThickness(DependencyObject obj, double value)
         {
-            obj.SetValue(CheckBorderThicknessProperty, value);
+            obj.SetValue(CheckStrokeThicknessProperty, value);
         }
 
         #region Unchecked
@@ -198,9 +198,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushUncheckedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundUncheckedProperty
+        public static readonly DependencyProperty CheckBackgroundFillUncheckedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundUnchecked",
+                "CheckBackgroundFillUnchecked",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -210,9 +210,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundUnchecked(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillUnchecked(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundUncheckedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillUncheckedProperty);
         }
 
         /// <summary>
@@ -220,14 +220,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundUnchecked(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillUnchecked(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundUncheckedProperty, value);
+            obj.SetValue(CheckBackgroundFillUncheckedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushUncheckedProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeUncheckedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushUnchecked",
+                "CheckBackgroundStrokeUnchecked",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -237,9 +237,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushUnchecked(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeUnchecked(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushUncheckedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeUncheckedProperty);
         }
 
         /// <summary>
@@ -247,9 +247,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushUnchecked(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeUnchecked(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushUncheckedProperty, value);
+            obj.SetValue(CheckBackgroundStrokeUncheckedProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundUncheckedProperty
@@ -360,9 +360,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushUncheckedMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundUncheckedMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundFillUncheckedMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundUncheckedMouseOver",
+                "CheckBackgroundFillUncheckedMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -372,9 +372,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundUncheckedMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillUncheckedMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundUncheckedMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillUncheckedMouseOverProperty);
         }
 
         /// <summary>
@@ -382,14 +382,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundUncheckedMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillUncheckedMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundUncheckedMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundFillUncheckedMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushUncheckedMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeUncheckedMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushUncheckedMouseOver",
+                "CheckBackgroundStrokeUncheckedMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -399,9 +399,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushUncheckedMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeUncheckedMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushUncheckedMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeUncheckedMouseOverProperty);
         }
 
         /// <summary>
@@ -409,9 +409,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushUncheckedMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeUncheckedMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushUncheckedMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundStrokeUncheckedMouseOverProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundUncheckedMouseOverProperty
@@ -522,9 +522,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushUncheckedPressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundUncheckedPressedProperty
+        public static readonly DependencyProperty CheckBackgroundFillUncheckedPressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundUncheckedPressed",
+                "CheckBackgroundFillUncheckedPressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -534,9 +534,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundUncheckedPressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillUncheckedPressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundUncheckedPressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillUncheckedPressedProperty);
         }
 
         /// <summary>
@@ -544,14 +544,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundUncheckedPressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillUncheckedPressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundUncheckedPressedProperty, value);
+            obj.SetValue(CheckBackgroundFillUncheckedPressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushUncheckedPressedProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeUncheckedPressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushUncheckedPressed",
+                "CheckBackgroundStrokeUncheckedPressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -561,9 +561,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushUncheckedPressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeUncheckedPressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushUncheckedPressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeUncheckedPressedProperty);
         }
 
         /// <summary>
@@ -571,9 +571,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushUncheckedPressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeUncheckedPressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushUncheckedPressedProperty, value);
+            obj.SetValue(CheckBackgroundStrokeUncheckedPressedProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundUncheckedPressedProperty
@@ -684,9 +684,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushUncheckedDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundUncheckedDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundFillUncheckedDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundUncheckedDisabled",
+                "CheckBackgroundFillUncheckedDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -696,9 +696,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundUncheckedDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillUncheckedDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundUncheckedDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillUncheckedDisabledProperty);
         }
 
         /// <summary>
@@ -706,14 +706,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundUncheckedDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillUncheckedDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundUncheckedDisabledProperty, value);
+            obj.SetValue(CheckBackgroundFillUncheckedDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushUncheckedDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeUncheckedDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushUncheckedDisabled",
+                "CheckBackgroundStrokeUncheckedDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -723,9 +723,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushUncheckedDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeUncheckedDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushUncheckedDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeUncheckedDisabledProperty);
         }
 
         /// <summary>
@@ -733,9 +733,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushUncheckedDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeUncheckedDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushUncheckedDisabledProperty, value);
+            obj.SetValue(CheckBackgroundStrokeUncheckedDisabledProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundUncheckedDisabledProperty
@@ -904,9 +904,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushCheckedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundCheckedProperty
+        public static readonly DependencyProperty CheckBackgroundFillCheckedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundChecked",
+                "CheckBackgroundFillChecked",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -916,9 +916,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundChecked(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillChecked(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundCheckedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillCheckedProperty);
         }
 
         /// <summary>
@@ -926,14 +926,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundChecked(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillChecked(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundCheckedProperty, value);
+            obj.SetValue(CheckBackgroundFillCheckedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushCheckedProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeCheckedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushChecked",
+                "CheckBackgroundStrokeChecked",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -943,9 +943,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushChecked(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeChecked(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushCheckedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeCheckedProperty);
         }
 
         /// <summary>
@@ -953,9 +953,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushChecked(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeChecked(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushCheckedProperty, value);
+            obj.SetValue(CheckBackgroundStrokeCheckedProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundCheckedProperty
@@ -1066,9 +1066,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushCheckedMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundCheckedMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundFillCheckedMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundCheckedMouseOver",
+                "CheckBackgroundFillCheckedMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1078,9 +1078,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundCheckedMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillCheckedMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundCheckedMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillCheckedMouseOverProperty);
         }
 
         /// <summary>
@@ -1088,14 +1088,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundCheckedMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillCheckedMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundCheckedMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundFillCheckedMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushCheckedMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeCheckedMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushCheckedMouseOver",
+                "CheckBackgroundStrokeCheckedMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1105,9 +1105,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushCheckedMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeCheckedMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushCheckedMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeCheckedMouseOverProperty);
         }
 
         /// <summary>
@@ -1115,9 +1115,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushCheckedMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeCheckedMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushCheckedMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundStrokeCheckedMouseOverProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundCheckedMouseOverProperty
@@ -1228,9 +1228,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushCheckedPressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundCheckedPressedProperty
+        public static readonly DependencyProperty CheckBackgroundFillCheckedPressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundCheckedPressed",
+                "CheckBackgroundFillCheckedPressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1240,9 +1240,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundCheckedPressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillCheckedPressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundCheckedPressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillCheckedPressedProperty);
         }
 
         /// <summary>
@@ -1250,14 +1250,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundCheckedPressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillCheckedPressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundCheckedPressedProperty, value);
+            obj.SetValue(CheckBackgroundFillCheckedPressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushCheckedPressedProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeCheckedPressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushCheckedPressed",
+                "CheckBackgroundStrokeCheckedPressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1267,9 +1267,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushCheckedPressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeCheckedPressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushCheckedPressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeCheckedPressedProperty);
         }
 
         /// <summary>
@@ -1277,9 +1277,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushCheckedPressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeCheckedPressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushCheckedPressedProperty, value);
+            obj.SetValue(CheckBackgroundStrokeCheckedPressedProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundCheckedPressedProperty
@@ -1390,9 +1390,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushCheckedDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundCheckedDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundFillCheckedDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundCheckedDisabled",
+                "CheckBackgroundFillCheckedDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1402,9 +1402,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundCheckedDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillCheckedDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundCheckedDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillCheckedDisabledProperty);
         }
 
         /// <summary>
@@ -1412,14 +1412,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundCheckedDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillCheckedDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundCheckedDisabledProperty, value);
+            obj.SetValue(CheckBackgroundFillCheckedDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushCheckedDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeCheckedDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushCheckedDisabled",
+                "CheckBackgroundStrokeCheckedDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1429,9 +1429,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushCheckedDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeCheckedDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushCheckedDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeCheckedDisabledProperty);
         }
 
         /// <summary>
@@ -1439,9 +1439,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushCheckedDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeCheckedDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushCheckedDisabledProperty, value);
+            obj.SetValue(CheckBackgroundStrokeCheckedDisabledProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundCheckedDisabledProperty
@@ -1610,9 +1610,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushIndeterminateProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundIndeterminateProperty
+        public static readonly DependencyProperty CheckBackgroundFillIndeterminateProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundIndeterminate",
+                "CheckBackgroundFillIndeterminate",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1622,9 +1622,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundIndeterminate(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillIndeterminate(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundIndeterminateProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillIndeterminateProperty);
         }
 
         /// <summary>
@@ -1632,14 +1632,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundIndeterminate(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillIndeterminate(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundIndeterminateProperty, value);
+            obj.SetValue(CheckBackgroundFillIndeterminateProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushIndeterminateProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeIndeterminateProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushIndeterminate",
+                "CheckBackgroundStrokeIndeterminate",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1649,9 +1649,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushIndeterminate(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeIndeterminate(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushIndeterminateProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeIndeterminateProperty);
         }
 
         /// <summary>
@@ -1659,9 +1659,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushIndeterminate(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeIndeterminate(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushIndeterminateProperty, value);
+            obj.SetValue(CheckBackgroundStrokeIndeterminateProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundIndeterminateProperty
@@ -1772,9 +1772,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushIndeterminateMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundIndeterminateMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundFillIndeterminateMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundIndeterminateMouseOver",
+                "CheckBackgroundFillIndeterminateMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1784,9 +1784,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundIndeterminateMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillIndeterminateMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundIndeterminateMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillIndeterminateMouseOverProperty);
         }
 
         /// <summary>
@@ -1794,14 +1794,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundIndeterminateMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillIndeterminateMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundIndeterminateMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundFillIndeterminateMouseOverProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushIndeterminateMouseOverProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeIndeterminateMouseOverProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushIndeterminateMouseOver",
+                "CheckBackgroundStrokeIndeterminateMouseOver",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1811,9 +1811,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushIndeterminateMouseOver(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeIndeterminateMouseOver(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushIndeterminateMouseOverProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeIndeterminateMouseOverProperty);
         }
 
         /// <summary>
@@ -1821,9 +1821,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushIndeterminateMouseOver(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeIndeterminateMouseOver(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushIndeterminateMouseOverProperty, value);
+            obj.SetValue(CheckBackgroundStrokeIndeterminateMouseOverProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundIndeterminateMouseOverProperty
@@ -1934,9 +1934,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushIndeterminatePressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundIndeterminatePressedProperty
+        public static readonly DependencyProperty CheckBackgroundFillIndeterminatePressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundIndeterminatePressed",
+                "CheckBackgroundFillIndeterminatePressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1946,9 +1946,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundIndeterminatePressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillIndeterminatePressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundIndeterminatePressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillIndeterminatePressedProperty);
         }
 
         /// <summary>
@@ -1956,14 +1956,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundIndeterminatePressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillIndeterminatePressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundIndeterminatePressedProperty, value);
+            obj.SetValue(CheckBackgroundFillIndeterminatePressedProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushIndeterminatePressedProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeIndeterminatePressedProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushIndeterminatePressed",
+                "CheckBackgroundStrokeIndeterminatePressed",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -1973,9 +1973,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushIndeterminatePressed(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeIndeterminatePressed(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushIndeterminatePressedProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeIndeterminatePressedProperty);
         }
 
         /// <summary>
@@ -1983,9 +1983,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushIndeterminatePressed(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeIndeterminatePressed(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushIndeterminatePressedProperty, value);
+            obj.SetValue(CheckBackgroundStrokeIndeterminatePressedProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundIndeterminatePressedProperty
@@ -2096,9 +2096,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(BorderBrushIndeterminateDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBackgroundIndeterminateDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundFillIndeterminateDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBackgroundIndeterminateDisabled",
+                "CheckBackgroundFillIndeterminateDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -2108,9 +2108,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBackgroundIndeterminateDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundFillIndeterminateDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBackgroundIndeterminateDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundFillIndeterminateDisabledProperty);
         }
 
         /// <summary>
@@ -2118,14 +2118,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBackgroundIndeterminateDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundFillIndeterminateDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBackgroundIndeterminateDisabledProperty, value);
+            obj.SetValue(CheckBackgroundFillIndeterminateDisabledProperty, value);
         }
 
-        public static readonly DependencyProperty CheckBorderBrushIndeterminateDisabledProperty
+        public static readonly DependencyProperty CheckBackgroundStrokeIndeterminateDisabledProperty
             = DependencyProperty.RegisterAttached(
-                "CheckBorderBrushIndeterminateDisabled",
+                "CheckBackgroundStrokeIndeterminateDisabled",
                 typeof(Brush),
                 typeof(CheckBoxHelper),
                 new FrameworkPropertyMetadata(default(Brush)));
@@ -2135,9 +2135,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static Brush GetCheckBorderBrushIndeterminateDisabled(DependencyObject obj)
+        public static Brush GetCheckBackgroundStrokeIndeterminateDisabled(DependencyObject obj)
         {
-            return (Brush)obj.GetValue(CheckBorderBrushIndeterminateDisabledProperty);
+            return (Brush)obj.GetValue(CheckBackgroundStrokeIndeterminateDisabledProperty);
         }
 
         /// <summary>
@@ -2145,9 +2145,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
-        public static void SetCheckBorderBrushIndeterminateDisabled(DependencyObject obj, Brush value)
+        public static void SetCheckBackgroundStrokeIndeterminateDisabled(DependencyObject obj, Brush value)
         {
-            obj.SetValue(CheckBorderBrushIndeterminateDisabledProperty, value);
+            obj.SetValue(CheckBackgroundStrokeIndeterminateDisabledProperty, value);
         }
 
         public static readonly DependencyProperty CheckGlyphForegroundIndeterminateDisabledProperty
