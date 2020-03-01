@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
     [TemplateVisualState(GroupName = ToggleStatesGroup, Name = DraggingState)]
     [TemplateVisualState(GroupName = ToggleStatesGroup, Name = OffState)]
     [TemplateVisualState(GroupName = ToggleStatesGroup, Name = OnState)]
-    public class ToggleSwitch : HeaderedContentControl
+    public class ToggleSwitch : HeaderedContentControl, ICommandSource
     {
         private const string ContentStatesGroup = "ContentStates";
         private const string OffContentState = "OffContent";
@@ -304,6 +304,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(ToggleSwitch),
                                                   null);
 
+        /// <summary>Identifies the <see cref="IsPressed"/> dependency property.</summary>
         public static readonly DependencyProperty IsPressedProperty = IsPressedPropertyKey.DependencyProperty;
 
         [Browsable(false)]
@@ -313,6 +314,57 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(IsPressedProperty);
             protected set => this.SetValue(IsPressedPropertyKey, value);
+        }
+
+        /// <summary>Identifies the <see cref="Command"/> dependency property.</summary>
+        public static readonly DependencyProperty CommandProperty
+            = DependencyProperty.Register(nameof(Command),
+                                          typeof(ICommand),
+                                          typeof(ToggleSwitch),
+                                          new PropertyMetadata(null, OnCommandChanged));
+
+        /// <summary>
+        /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
+        /// </summary>
+        public ICommand Command
+        {
+            get => (ICommand)this.GetValue(CommandProperty);
+            set => this.SetValue(CommandProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="CommandParameter"/> dependency property.</summary>
+        public static readonly DependencyProperty CommandParameterProperty
+            = DependencyProperty.Register(nameof(CommandParameter),
+                                          typeof(object),
+                                          typeof(ToggleSwitch),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the command parameter which will be passed by the Command.
+        /// </summary>
+        public object CommandParameter
+        {
+            get => this.GetValue(CommandParameterProperty);
+            set => this.SetValue(CommandParameterProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="CommandTarget"/> dependency property.</summary>
+        public static readonly DependencyProperty CommandTargetProperty
+            = DependencyProperty.Register(nameof(CommandTarget),
+                                          typeof(IInputElement),
+                                          typeof(ToggleSwitch),
+                                          new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the element on which to raise the specified Command.
+        /// </summary>
+        /// <returns>
+        /// Element on which to raise the Command.
+        /// </returns>
+        public IInputElement CommandTarget
+        {
+            get => (IInputElement)this.GetValue(CommandTargetProperty);
+            set => this.SetValue(CommandTargetProperty, value);
         }
 
         /// <summary>
@@ -540,6 +592,68 @@ namespace MahApps.Metro.Controls
         private void Toggle()
         {
             this.SetCurrentValue(IsOnProperty, !this.IsOn);
+
+            CommandHelpers.ExecuteCommandSource(this);
+        }
+
+        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((ToggleSwitch)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+        }
+
+        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        {
+            if (oldCommand != null)
+            {
+                this.UnhookCommand(oldCommand);
+            }
+
+            if (newCommand != null)
+            {
+                this.HookCommand(newCommand);
+            }
+        }
+
+        private void UnhookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.RemoveHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void HookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.AddHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void OnCanExecuteChanged(object sender, EventArgs e)
+        {
+            this.UpdateCanExecute();
+        }
+
+        private void UpdateCanExecute()
+        {
+            this.CanExecute = this.Command == null || CommandHelpers.CanExecuteCommandSource(this);
+        }
+
+        /// <inheritdoc />
+        protected override bool IsEnabledCore => base.IsEnabledCore && this.CanExecute;
+
+        private bool canExecute = true;
+
+        private bool CanExecute
+        {
+            get => this.canExecute;
+            set
+            {
+                if (value == this.canExecute)
+                {
+                    return;
+                }
+
+                this.canExecute = value;
+                this.CoerceValue(IsEnabledProperty);
+            }
         }
 
         protected override AutomationPeer OnCreateAutomationPeer()
