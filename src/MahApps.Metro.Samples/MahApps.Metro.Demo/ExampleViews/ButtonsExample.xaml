@@ -280,8 +280,8 @@
                     HorizontalAlignment="Center">
             <Label Content="ToggleSwitch" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" Header="Header" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="False" />
+            <Controls:ToggleSwitch x:Name="TestToggleSwitch" Margin="{StaticResource ControlMargin}" Header="Header" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="{Binding ElementName=TestToggleSwitch, Path=IsOn, Mode=OneWay}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
                                    IsOn="True"
                                    OffContent="Disabled"
