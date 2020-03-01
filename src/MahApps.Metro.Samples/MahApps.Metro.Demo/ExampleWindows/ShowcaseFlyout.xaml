@@ -129,17 +129,16 @@
                                        Grid.Column="1"
                                        Margin="2"
                                        Header="Flyout closing"
-                                       IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                       OffLabel="Disabled"
-                                       OnLabel="Allowed" />
+                                       IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       OffContent="Disabled"
+                                       OnContent="Allowed" />
                 <controls:ToggleSwitch Grid.Row="3"
                                        Grid.Column="1"
                                        Margin="2"
                                        Header="Flyout closing"
-                                       IsChecked="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                       OffLabel="Disabled"
-                                       OnLabel="Allowed"
-                                       Style="{DynamicResource MahApps.Styles.ToggleSwitch.Win10}" />
+                                       IsOn="{Binding CanCloseFlyout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                       OffContent="Disabled"
+                                       OnContent="Allowed" />
 
             </Grid>
 

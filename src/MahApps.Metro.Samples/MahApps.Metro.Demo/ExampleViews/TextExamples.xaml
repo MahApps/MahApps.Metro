@@ -594,8 +594,7 @@
                     <CheckBox x:Name="ModifierKeysRequired"
                               Margin="{StaticResource ControlMargin}"
                               Content="Require modifier keys" />
-                    <TextBlock Margin="{StaticResource ControlMargin}"
-                               Text="Try SHIFT+D to demonstrate validation" />
+                    <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
                     <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         Controls:TextBoxHelper.Watermark="Enter hot key"

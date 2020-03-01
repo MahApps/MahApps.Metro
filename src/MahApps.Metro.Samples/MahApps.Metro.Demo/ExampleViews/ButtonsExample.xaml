@@ -273,78 +273,28 @@
             </StackPanel>
         </StackPanel>
 
+        <!--  Row 1  -->
+
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
                     HorizontalAlignment="Center">
-            <StackPanel.Resources>
-                <Style x:Key="CustomMetroToggleSwitch"
-                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}"
-                       TargetType="{x:Type Controls:ToggleSwitch}">
-                    <Setter Property="OffLabel" Value="False" />
-                    <Setter Property="OffSwitchBrush" Value="Red" />
-                    <Setter Property="OnLabel" Value="True" />
-                    <Setter Property="OnSwitchBrush" Value="Green" />
-                </Style>
-                <Style x:Key="CustomMetroToggleSwitchButton"
-                       BasedOn="{StaticResource MahApps.Styles.ToggleSwitchButton}"
-                       TargetType="{x:Type Controls:ToggleSwitchButton}">
-                    <Setter Property="OffSwitchBrush" Value="DarkRed" />
-                    <Setter Property="OnSwitchBrush" Value="DarkGreen" />
-                </Style>
-            </StackPanel.Resources>
-            <Label Content="Toggle switch" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="ToggleSwitch" Style="{DynamicResource DescriptionHeaderStyle}" />
+
+            <Controls:ToggleSwitch x:Name="TestToggleSwitch" Margin="{StaticResource ControlMargin}" Header="Header" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="{Binding ElementName=TestToggleSwitch, Path=IsOn, Mode=OneWay}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   Header="ToggleSwitch Header"
-                                   IsChecked="True"
-                                   ToggleSwitchButtonStyle="{StaticResource CustomMetroToggleSwitchButton}" />
+                                   IsOn="True"
+                                   OffContent="Disabled"
+                                   OnContent="Enabled" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True"
-                                   Style="{DynamicResource CustomMetroToggleSwitch}" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True"
-                                   IsEnabled="False" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="False" />
+                                   IsEnabled="False"
+                                   IsOn="True"
+                                   OffContent="Disabled"
+                                   OnContent="Enabled" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalAlignment="Center">
-            <StackPanel.Resources>
-                <BooleanToVisibilityConverter x:Key="btv" />
-            </StackPanel.Resources>
-            <Label Content="Enable / Visible" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Controls:ToggleSwitch x:Name="enabledSwitch"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Header="Win10 Style"
-                                   IsChecked="True"
-                                   OffLabel="Disabled"
-                                   OnLabel="Enabled"
-                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
-            <Controls:ToggleSwitch x:Name="visibleSwitch"
-                                   Margin="{StaticResource ControlMargin}"
-                                   Controls:ValidationHelper.CloseOnMouseLeftButtonDown="True"
-                                   Controls:ValidationHelper.ShowValidationErrorOnMouseOver="True"
-                                   IsChecked="{Binding IsToggleSwitchVisible, ValidatesOnDataErrors=True}"
-                                   OffLabel="Collapsed"
-                                   OnLabel="Visible"
-                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
-                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}"
-                                   Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
-
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="True"
-                                   IsEnabled="False"
-                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
-                                   IsChecked="False"
-                                   IsEnabled="False"
-                                   Style="{StaticResource MahApps.Styles.ToggleSwitch.Win10}" />
-        </StackPanel>
-
-        <StackPanel Grid.Row="1"
-                    Grid.Column="2"
                     HorizontalAlignment="Center"
                     UseLayoutRounding="True">
             <StackPanel>
@@ -395,7 +345,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1"
-                    Grid.Column="3"
+                    Grid.Column="2"
                     HorizontalAlignment="Center"
                     UseLayoutRounding="True">
             <StackPanel>
@@ -458,7 +408,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1"
-                    Grid.Column="4"
+                    Grid.Column="3"
                     HorizontalAlignment="Stretch">
             <StackPanel.Resources>
                 <Style x:Key="CircleDropDownButton"
@@ -523,7 +473,11 @@
                     </Controls:DropDownButton.Icon>
                 </Controls:DropDownButton>
             </StackPanel>
+        </StackPanel>
 
+        <StackPanel Grid.Row="1"
+                    Grid.Column="4"
+                    HorizontalAlignment="Stretch">
             <Label Content="SplitButton" Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:SplitButton Margin="5"
@@ -549,7 +503,6 @@
                     <iconPacks:PackIconModern Margin="6" Kind="Book" />
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
-
         </StackPanel>
     </Grid>
 

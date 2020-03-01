@@ -477,7 +477,7 @@
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokePressed" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
     <markup:StaticResource x:Key="MahApps.Brushes.RadioButton.CheckGlyphStrokeDisabled" ResourceKey="MahApps.Brushes.SystemControlTransparent" />
 
-    <!-- Resources for MahApps.Styles.ToggleSwitchButton.Win10 and MahApps.Styles.ToggleSwitch.Win10 -->
+    <!--  Resources for MahApps.Styles.ToggleSwitch  -->
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContentForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.ContentForegroundDisabled" ResourceKey="MahApps.Brushes.SystemControlDisabledBaseMediumLow" />
     <markup:StaticResource x:Key="MahApps.Brushes.ToggleSwitch.HeaderForeground" ResourceKey="MahApps.Brushes.SystemControlForegroundBaseHigh" />
