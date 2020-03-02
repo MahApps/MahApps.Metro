@@ -277,6 +277,9 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Continue" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
         <Setter Property="LightTemplate" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowCommands}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
