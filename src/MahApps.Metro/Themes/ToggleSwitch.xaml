@@ -390,6 +390,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource MahApps.Templates.ValidationError}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="mah:HeaderedControlHelper.HeaderFontFamily" Value="{DynamicResource MahApps.Fonts.Family.ToggleSwitch.Header}" />
