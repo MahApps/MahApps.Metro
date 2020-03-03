@@ -254,7 +254,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 return null;
             }
 
-            object themeResource = theme.GetResource(key);
+            object themeResource = theme.ResourceDictionary[key];
 
             return themeResource;
         }

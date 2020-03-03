@@ -14,7 +14,7 @@
     </ItemGroup>
     <ItemGroup>
         <!-- <PackageReference Include="ControlzEx" Version="[4.*, 5.0)" /> -->
-        <PackageReference Include="ControlzEx" version="4.3.0-alpha*" />
+        <PackageReference Include="ControlzEx" version="4.3.0-alpha0061" />
         <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
         <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-alpha*" privateAssets="all" includeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">

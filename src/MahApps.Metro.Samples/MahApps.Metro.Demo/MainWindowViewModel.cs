@@ -410,7 +410,7 @@ namespace MetroDemo
             {
                 var theme = ThemeManager.DetectTheme(Application.Current.MainWindow);
 
-                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.First();
+                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").ResourceDictionary.MergedDictionaries.First();
 
                 var brushResources = resources.Keys
                                      .Cast<object>()
