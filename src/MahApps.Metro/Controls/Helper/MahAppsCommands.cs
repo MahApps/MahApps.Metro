@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using MahApps.Metro.Behaviors;
 
@@ -12,7 +13,38 @@ namespace MahApps.Metro.Controls
         static MahAppsCommands()
         {
             // Register CommandBinding for all windows.
-            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (sender, args) => ClearControl(args)));
+            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (sender, args) => ClearControl(args), (sender, args) => CanClearControl(args)));
+        }
+
+        private static void CanClearControl(CanExecuteRoutedEventArgs args)
+        {
+            if (args.Handled)
+            {
+                return;
+            }
+
+            if (!(args.OriginalSource is DependencyObject control) || false == TextBoxHelper.GetClearTextButton(control))
+            {
+                return;
+            }
+
+            args.CanExecute = true;
+
+            switch (control)
+            {
+                case DatePicker datePicker:
+                    args.CanExecute = !ControlsHelper.GetIsReadOnly(datePicker);
+                    break;
+                case TimePickerBase timePicker:
+                    args.CanExecute = !timePicker.IsReadOnly;
+                    break;
+                case TextBoxBase textBox:
+                    args.CanExecute = !textBox.IsReadOnly;
+                    break;
+                case ComboBox comboBox:
+                    args.CanExecute = !comboBox.IsReadOnly;
+                    break;
+            }
         }
 
         public static void ClearControl(ExecutedRoutedEventArgs args)

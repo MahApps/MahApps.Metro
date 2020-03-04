@@ -102,14 +102,17 @@
 
                 <GroupBox Margin="{StaticResource ControlMargin}" Header="Try it yourself">
                     <StackPanel>
-                        <CheckBox Name="DateTimePickerIsEnabled"
+                        <CheckBox x:Name="DateTimePickerClearTextButton"
+                                  Margin="{StaticResource ControlMargin}"
+                                  Content="ClearTextButton" />
+                        <CheckBox x:Name="DateTimePickerIsEnabled"
                                   Margin="{StaticResource ControlMargin}"
                                   Content="IsEnabled"
                                   IsChecked="True" />
-                        <CheckBox Name="DateTimePickerIsReadOnly"
+                        <CheckBox x:Name="DateTimePickerIsReadOnly"
                                   Margin="{StaticResource ControlMargin}"
                                   Content="IsReadOnly" />
-                        <CheckBox Name="DateTimePickerIsClockVisible"
+                        <CheckBox x:Name="DateTimePickerIsClockVisible"
                                   Margin="{StaticResource ControlMargin}"
                                   Content="IsClockVisible"
                                   IsChecked="True" />
@@ -247,6 +250,7 @@
                         </Grid>
 
                         <Controls:DateTimePicker Margin="{StaticResource ControlMargin}"
+                                                 Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                                  Controls:TextBoxHelper.UseFloatingWatermark="True"
                                                  Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
@@ -266,6 +270,7 @@
                         <StackPanel>
                             <Controls:DateTimePicker x:Name="DateTimePicker"
                                                      Margin="{StaticResource ControlMargin}"
+                                                     Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                                      Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                      HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                      IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}"
@@ -281,6 +286,7 @@
                             </Controls:DateTimePicker>
 
                             <Controls:TimePicker Margin="{StaticResource ControlMargin}"
+                                                 Controls:TextBoxHelper.ClearTextButton="{Binding Path=IsChecked, ElementName=DateTimePickerClearTextButton, Mode=TwoWay}"
                                                  Culture="{Binding CurrentCulture, Mode=OneWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"

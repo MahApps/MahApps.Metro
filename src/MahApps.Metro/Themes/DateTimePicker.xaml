@@ -473,14 +473,7 @@
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
-                                <Condition Property="Controls:TextBoxHelper.ClearTextButton" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="Controls:ControlsHelper.IsReadOnly" Value="True" />
+                                <Condition Property="IsReadOnly" Value="True" />
                                 <Condition Property="Controls:TextBoxHelper.ButtonCommand" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
