@@ -9,6 +9,12 @@ namespace MahApps.Metro.Controls
     {
         public static ICommand ClearControlCommand { get; } = new RoutedUICommand("Clear", "ClearControlCommand", typeof(MahAppsCommands));
 
+        static MahAppsCommands()
+        {
+            // Register CommandBinding for all windows.
+            CommandManager.RegisterClassCommandBinding(typeof(Window), new CommandBinding(ClearControlCommand, (sender, args) => ClearControl(args)));
+        }
+
         public static void ClearControl(ExecutedRoutedEventArgs args)
         {
             if (args.Handled)
