@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MetroDemo.ExampleViews.ButtonsExample"
+<UserControl x:Class="MetroDemo.ExampleViews.ButtonsExample"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
@@ -277,7 +277,8 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    UseLayoutRounding="True">
             <Label Content="ToggleSwitch" Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:ToggleSwitch x:Name="TestToggleSwitch"

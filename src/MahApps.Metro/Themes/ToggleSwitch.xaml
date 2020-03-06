@@ -132,8 +132,7 @@
                                       Grid.Column="0"
                                       Width="44"
                                       Height="20"
-                                      HorizontalAlignment="Left"
-                                      SnapsToDevicePixels="False">
+                                      HorizontalAlignment="Left">
                                     <Rectangle x:Name="OuterBorder"
                                                Fill="{DynamicResource MahApps.Brushes.ToggleSwitch.FillOff}"
                                                RadiusX="10"
@@ -163,9 +162,6 @@
                                         <Grid.RenderTransform>
                                             <TranslateTransform x:Name="KnobTranslateTransform" />
                                         </Grid.RenderTransform>
-                                        <Grid.CacheMode>
-                                            <BitmapCache RenderAtScale="2" />
-                                        </Grid.CacheMode>
                                     </Grid>
                                 </Grid>
                                 <Thumb x:Name="SwitchThumb"
