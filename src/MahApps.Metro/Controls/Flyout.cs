@@ -317,12 +317,12 @@ namespace MahApps.Metro.Controls
                     break;
 
                 case FlyoutTheme.Dark:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorDark && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorLight && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
             }
