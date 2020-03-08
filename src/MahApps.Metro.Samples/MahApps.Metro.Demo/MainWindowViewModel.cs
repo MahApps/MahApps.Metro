@@ -194,6 +194,14 @@ namespace MetroDemo
 
         public ICommand OpenFirstFlyoutCommand { get; }
 
+        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand(execute: x =>
+            {
+                ThemeManager.ThemeSyncMode = (ThemeSyncMode)x;
+                ThemeManager.SyncTheme();
+            });
+
+        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand(execute: x => ThemeManager.SyncTheme());
+
         public void Dispose()
         {
             HotkeyManager.Current.Remove("demo");
