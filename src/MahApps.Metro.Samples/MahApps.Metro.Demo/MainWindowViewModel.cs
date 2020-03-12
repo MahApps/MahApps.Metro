@@ -76,7 +76,6 @@ namespace MetroDemo
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
                                          .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
-                                         .Select(a => new AppThemeMenuData { Name = a.BaseColorScheme, BorderColorBrush = a.GetResource("MahApps.Brushes.BlackColor") as Brush, ColorBrush = a.GetResource("MahApps.Brushes.WhiteColor") as Brush })
                                          .ToList();
 
             this.Albums = SampleData.Albums;
@@ -418,7 +417,7 @@ namespace MetroDemo
             {
                 var theme = ThemeManager.DetectTheme(Application.Current.MainWindow);
 
-                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").ResourceDictionary.MergedDictionaries.First();
+                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
 
                 var brushResources = resources.Keys
                                      .Cast<object>()

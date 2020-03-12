@@ -298,7 +298,7 @@
             var theme = ThemeManager.GetTheme("dark.blue");
 
             Assert.NotNull(theme);
-            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.LibraryThemes.First().ResourceDictionary.MergedDictionaries.First().Source.ToString().ToLower());
+            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.LibraryThemes.First().Resources.MergedDictionaries.First().Source.ToString().ToLower());
         }
 
         [Fact]
