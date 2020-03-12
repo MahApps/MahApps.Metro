@@ -147,7 +147,7 @@
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeThemeBaseColor(control.Resources, currentTheme, ThemeManager.GetInverseTheme(currentTheme).BaseColorScheme);
+                ThemeManager.ChangeThemeBaseColor(control, control.Resources, currentTheme, ThemeManager.GetInverseTheme(currentTheme).BaseColorScheme);
 
                 Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
                 Assert.Equal(currentTheme.ColorScheme, ThemeManager.DetectTheme(control.Resources).ColorScheme);
@@ -189,7 +189,7 @@
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeThemeColorScheme(control.Resources, currentTheme, "Red");
+                ThemeManager.ChangeThemeColorScheme(control, control.Resources, currentTheme, "Red");
 
                 Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
                 Assert.Equal("Red", ThemeManager.DetectTheme(control.Resources).ColorScheme);
@@ -233,7 +233,7 @@
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeTheme(control.Resources, currentTheme, ThemeManager.BaseColorDark, "Red");
+                ThemeManager.ChangeTheme(control, control.Resources, currentTheme, ThemeManager.BaseColorDark, "Red");
 
                 Assert.Equal(ThemeManager.BaseColorDark, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
                 Assert.Equal("Red", ThemeManager.DetectTheme(control.Resources).ColorScheme);
