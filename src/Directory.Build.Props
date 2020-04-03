@@ -16,7 +16,7 @@
     <!-- Add the references for all projects and targets -->
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2019.*" PrivateAssets="All" />
-        <PackageReference Include="WpfAnalyzers" Version="2.2.*" PrivateAssets="All" />
+        <PackageReference Include="WpfAnalyzers" Version="2.4.*" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

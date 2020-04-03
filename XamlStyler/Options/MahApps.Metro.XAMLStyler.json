@@ -4,7 +4,7 @@
     "KeepFirstAttributeOnSameLine": true,
     "MaxAttributeCharatersPerLine": 0,
     "MaxAttributesPerLine": 1,
-    "NewlineExemptionElements": "RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransfom, SkewTransform, RotateTransform, TranslateTransform, Trigger, MultiTrigger, DataTrigger, MultiDataTrigger, Condition, Setter, SolidColorBrush, LinearGradientBrush",
+    "NewlineExemptionElements": "RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, Trigger, MultiTrigger, DataTrigger, MultiDataTrigger, Condition, Setter, SolidColorBrush",
     "SeparateByGroups": false,
     "AttributeIndentation": 0,
     "AttributeIndentationStyle": 1,
