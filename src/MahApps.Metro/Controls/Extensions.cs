@@ -13,17 +13,19 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (func == null)
             {
                 throw new ArgumentNullException(nameof(func));
             }
+
             if (dispatcherObject.Dispatcher.CheckAccess())
             {
                 return func();
             }
             else
             {
-                return (T)dispatcherObject.Dispatcher.Invoke(new Func<T>(func));
+                return dispatcherObject.Dispatcher.Invoke(func);
             }
         }
 
@@ -33,10 +35,12 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (invokeAction == null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
+
             if (dispatcherObject.Dispatcher.CheckAccess())
             {
                 invokeAction();
@@ -59,23 +63,28 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (invokeAction == null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
+
             dispatcherObject.Dispatcher.BeginInvoke(priority, invokeAction);
         }
 
-        public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background) where T: DispatcherObject
+        public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
+            where T : DispatcherObject
         {
             if (dispatcherObject == null)
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (invokeAction == null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
+
             dispatcherObject.Dispatcher?.BeginInvoke(priority, new Action(() => invokeAction(dispatcherObject)));
         }
 
@@ -92,14 +101,13 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                RoutedEventHandler handler = null;
-                handler = (o, a) =>
-                    {
-                        element.Loaded -= handler;
-                        element.Invoke(invokeAction);
-                    };
+                void ElementLoaded(object o, RoutedEventArgs a)
+                {
+                    element.Loaded -= ElementLoaded;
+                    element.Invoke(invokeAction);
+                }
 
-                element.Loaded += handler;
+                element.Loaded += ElementLoaded;
             }
         }
     }

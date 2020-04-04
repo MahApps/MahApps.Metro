@@ -13,13 +13,14 @@ namespace MahApps.Metro.Controls
             {
                 return false;
             }
+
             var commandParameter = commandSource.CommandParameter ?? commandSource;
-            var routedCommand = command as RoutedCommand;
-            if (routedCommand != null)
+            if (command is RoutedCommand routedCommand)
             {
                 var target = commandSource.CommandTarget ?? commandSource as IInputElement;
                 return routedCommand.CanExecute(commandParameter, target);
             }
+
             return command.CanExecute(commandParameter);
         }
 
@@ -38,9 +39,9 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var commandParameter = commandSource.CommandParameter ?? commandSource;
-            var routedCommand = command as RoutedCommand;
-            if (routedCommand != null)
+            if (command is RoutedCommand routedCommand)
             {
                 var target = commandSource.CommandTarget ?? commandSource as IInputElement;
                 if (routedCommand.CanExecute(commandParameter, target))

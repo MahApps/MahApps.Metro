@@ -18,6 +18,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(ProgressRing),
                                                   new PropertyMetadata(default(double), OnBindableWidthPropertyChanged));
 
+        /// <summary>Identifies the <see cref="BindableWidth"/> dependency property.</summary>
         public static readonly DependencyProperty BindableWidthProperty = BindableWidthPropertyKey.DependencyProperty;
 
         public double BindableWidth
@@ -59,6 +60,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(ProgressRing),
                                                   new PropertyMetadata(default(double)));
 
+        /// <summary>Identifies the <see cref="MaxSideLength"/> dependency property.</summary>
         public static readonly DependencyProperty MaxSideLengthProperty = MaxSideLengthPropertyKey.DependencyProperty;
 
         public double MaxSideLength
@@ -74,6 +76,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(ProgressRing),
                                                   new PropertyMetadata(default(double)));
 
+        /// <summary>Identifies the <see cref="EllipseDiameter"/> dependency property.</summary>
         public static readonly DependencyProperty EllipseDiameterProperty = EllipseDiameterPropertyKey.DependencyProperty;
 
         public double EllipseDiameter
@@ -89,6 +92,7 @@ namespace MahApps.Metro.Controls
                                                   typeof(ProgressRing),
                                                   new PropertyMetadata(default(Thickness)));
 
+        /// <summary>Identifies the <see cref="EllipseOffset"/> dependency property.</summary>
         public static readonly DependencyProperty EllipseOffsetProperty = EllipseOffsetPropertyKey.DependencyProperty;
 
         public Thickness EllipseOffset

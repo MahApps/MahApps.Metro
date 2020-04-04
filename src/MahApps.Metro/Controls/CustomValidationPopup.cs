@@ -31,8 +31,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool CloseOnMouseLeftButtonDown
         {
-            get { return (bool)this.GetValue(CloseOnMouseLeftButtonDownProperty); }
-            set { this.SetValue(CloseOnMouseLeftButtonDownProperty, value); }
+            get => (bool)this.GetValue(CloseOnMouseLeftButtonDownProperty);
+            set => this.SetValue(CloseOnMouseLeftButtonDownProperty, value);
         }
 
         public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
@@ -46,8 +46,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public bool ShowValidationErrorOnMouseOver
         {
-            get { return (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty); }
-            set { this.SetValue(ShowValidationErrorOnMouseOverProperty, value); }
+            get => (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty);
+            set => this.SetValue(ShowValidationErrorOnMouseOverProperty, value);
         }
 
         public CustomValidationPopup()
@@ -78,8 +78,7 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            var target = this.PlacementTarget as FrameworkElement;
-            if (target == null)
+            if (!(this.PlacementTarget is FrameworkElement target))
             {
                 return;
             }
@@ -124,8 +123,7 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
         {
-            var target = this.PlacementTarget as FrameworkElement;
-            if (target != null)
+            if (this.PlacementTarget is FrameworkElement target)
             {
                 target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             }
@@ -190,7 +188,6 @@ namespace MahApps.Metro.Controls
             }
 
             var hwndSource = (PresentationSource.FromVisual(this.Child)) as HwndSource;
-
             if (hwndSource == null)
             {
                 return;

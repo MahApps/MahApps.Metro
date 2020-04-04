@@ -11,195 +11,200 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Max", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(LightMinButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(LightMaxButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(LightCloseButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(DarkMinButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(DarkMaxButtonStyle), StyleTargetType = typeof(Button))]
+    [StyleTypedProperty(Property = nameof(DarkCloseButtonStyle), StyleTargetType = typeof(Button))]
     public class WindowButtonCommands : ContentControl
     {
         public event ClosingWindowEventHandler ClosingWindow;
 
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
+        /// <summary>Identifies the <see cref="LightMinButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty LightMinButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(LightMinButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(LightMinButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the minimize button.
         /// </summary>
         public Style LightMinButtonStyle
         {
-            get { return (Style)this.GetValue(LightMinButtonStyleProperty); }
-            set { this.SetValue(LightMinButtonStyleProperty, value); }
+            get => (Style)this.GetValue(LightMinButtonStyleProperty);
+            set => this.SetValue(LightMinButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="LightMaxButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty LightMaxButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(LightMaxButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(LightMaxButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the maximize button.
         /// </summary>
         public Style LightMaxButtonStyle
         {
-            get { return (Style)this.GetValue(LightMaxButtonStyleProperty); }
-            set { this.SetValue(LightMaxButtonStyleProperty, value); }
+            get => (Style)this.GetValue(LightMaxButtonStyleProperty);
+            set => this.SetValue(LightMaxButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="LightCloseButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty LightCloseButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(LightCloseButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(LightCloseButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current light style for the close button.
         /// </summary>
         public Style LightCloseButtonStyle
         {
-            get { return (Style)this.GetValue(LightCloseButtonStyleProperty); }
-            set { this.SetValue(LightCloseButtonStyleProperty, value); }
+            get => (Style)this.GetValue(LightCloseButtonStyleProperty);
+            set => this.SetValue(LightCloseButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="DarkMinButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty DarkMinButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(DarkMinButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(DarkMinButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current dark style for the minimize button.
         /// </summary>
         public Style DarkMinButtonStyle
         {
-            get { return (Style)this.GetValue(DarkMinButtonStyleProperty); }
-            set { this.SetValue(DarkMinButtonStyleProperty, value); }
+            get => (Style)this.GetValue(DarkMinButtonStyleProperty);
+            set => this.SetValue(DarkMinButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="DarkMaxButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty DarkMaxButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(DarkMaxButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(DarkMaxButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current dark style for the maximize button.
         /// </summary>
         public Style DarkMaxButtonStyle
         {
-            get { return (Style)this.GetValue(DarkMaxButtonStyleProperty); }
-            set { this.SetValue(DarkMaxButtonStyleProperty, value); }
+            get => (Style)this.GetValue(DarkMaxButtonStyleProperty);
+            set => this.SetValue(DarkMaxButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="DarkCloseButtonStyle"/> dependency property.</summary>
         public static readonly DependencyProperty DarkCloseButtonStyleProperty
-            = DependencyProperty.Register(
-                nameof(DarkCloseButtonStyle),
-                typeof(Style),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(DarkCloseButtonStyle),
+                                          typeof(Style),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the value indicating current dark style for the close button.
         /// </summary>
         public Style DarkCloseButtonStyle
         {
-            get { return (Style)this.GetValue(DarkCloseButtonStyleProperty); }
-            set { this.SetValue(DarkCloseButtonStyleProperty, value); }
+            get => (Style)this.GetValue(DarkCloseButtonStyleProperty);
+            set => this.SetValue(DarkCloseButtonStyleProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Theme"/> dependency property.</summary>
         public static readonly DependencyProperty ThemeProperty
-            = DependencyProperty.Register(
-                nameof(Theme),
-                typeof(Theme),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(Theme.Light));
+            = DependencyProperty.Register(nameof(Theme),
+                                          typeof(Theme),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(Theme.Light));
 
         /// <summary>
         /// Gets or sets the value indicating current theme.
         /// </summary>
         public Theme Theme
         {
-            get { return (Theme)this.GetValue(ThemeProperty); }
-            set { this.SetValue(ThemeProperty, value); }
+            get => (Theme)this.GetValue(ThemeProperty);
+            set => this.SetValue(ThemeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Minimize"/> dependency property.</summary>
         public static readonly DependencyProperty MinimizeProperty
-            = DependencyProperty.Register(
-                nameof(Minimize),
-                typeof(string),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(Minimize),
+                                          typeof(string),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the minimize button tooltip.
         /// </summary>
         public string Minimize
         {
-            get { return (string)this.GetValue(MinimizeProperty); }
-            set { this.SetValue(MinimizeProperty, value); }
+            get => (string)this.GetValue(MinimizeProperty);
+            set => this.SetValue(MinimizeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Maximize"/> dependency property.</summary>
         public static readonly DependencyProperty MaximizeProperty
-            = DependencyProperty.Register(
-                nameof(Maximize),
-                typeof(string),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(Maximize),
+                                          typeof(string),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the maximize button tooltip.
         /// </summary>
         public string Maximize
         {
-            get { return (string)this.GetValue(MaximizeProperty); }
-            set { this.SetValue(MaximizeProperty, value); }
+            get => (string)this.GetValue(MaximizeProperty);
+            set => this.SetValue(MaximizeProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Close"/> dependency property.</summary>
         public static readonly DependencyProperty CloseProperty
-            = DependencyProperty.Register(
-                nameof(Close),
-                typeof(string),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(Close),
+                                          typeof(string),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the close button tooltip.
         /// </summary>
         public string Close
         {
-            get { return (string)this.GetValue(CloseProperty); }
-            set { this.SetValue(CloseProperty, value); }
+            get => (string)this.GetValue(CloseProperty);
+            set => this.SetValue(CloseProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="Restore"/> dependency property.</summary>
         public static readonly DependencyProperty RestoreProperty
-            = DependencyProperty.Register(
-                nameof(Restore),
-                typeof(string),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            = DependencyProperty.Register(nameof(Restore),
+                                          typeof(string),
+                                          typeof(WindowButtonCommands),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the restore button tooltip.
         /// </summary>
         public string Restore
         {
-            get { return (string)this.GetValue(RestoreProperty); }
-            set { this.SetValue(RestoreProperty, value); }
+            get => (string)this.GetValue(RestoreProperty);
+            set => this.SetValue(RestoreProperty, value);
         }
 
         /// <summary>Identifies the <see cref="ParentWindow"/> dependency property.</summary>
         public static readonly DependencyPropertyKey ParentWindowPropertyKey =
-            DependencyProperty.RegisterReadOnly(
-                nameof(ParentWindow),
-                typeof(Window),
-                typeof(WindowButtonCommands),
-                new PropertyMetadata(null));
+            DependencyProperty.RegisterReadOnly(nameof(ParentWindow),
+                                                typeof(Window),
+                                                typeof(WindowButtonCommands),
+                                                new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="ParentWindow"/> dependency property.</summary>
         public static readonly DependencyProperty ParentWindowProperty = ParentWindowPropertyKey.DependencyProperty;
@@ -209,8 +214,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Window ParentWindow
         {
-            get { return (Window)this.GetValue(ParentWindowProperty); }
-            private set { this.SetValue(ParentWindowPropertyKey, value); }
+            get => (Window)this.GetValue(ParentWindowProperty);
+            protected set => this.SetValue(ParentWindowPropertyKey, value);
         }
 
         static WindowButtonCommands()
