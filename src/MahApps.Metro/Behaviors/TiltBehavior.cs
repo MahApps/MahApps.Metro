@@ -110,7 +110,7 @@ namespace MahApps.Metro.Behaviors
             this.RotatorParent.Child = this.attachedElement;
 
             CompositionTarget.Rendering += this.CompositionTargetRendering;
-            ThemeManager.ThemeChanged += this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
         }
 
         private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
@@ -121,7 +121,7 @@ namespace MahApps.Metro.Behaviors
         protected override void OnDetaching()
         {
             CompositionTarget.Rendering -= this.CompositionTargetRendering;
-            ThemeManager.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
             base.OnDetaching();
         }
 

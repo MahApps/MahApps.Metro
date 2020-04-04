@@ -16,7 +16,7 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>().ConfigureAwait(false);
 
-            var theme = ThemeManager.DetectTheme();
+            var theme = ThemeManager.Current.DetectTheme();
             Assert.NotNull(theme);
 
             var brush = theme.Resources["MahApps.Brushes.ThemeForeground"] as SolidColorBrush;

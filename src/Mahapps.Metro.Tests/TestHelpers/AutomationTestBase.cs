@@ -58,7 +58,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             Application.Current.Invoke(() =>
                 {
-                    ThemeManager.ChangeTheme(Application.Current, "Light.Blue");
+                    ThemeManager.Current.ChangeTheme(Application.Current, "Light.Blue");
                 });
         }
 

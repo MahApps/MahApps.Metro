@@ -296,33 +296,33 @@ namespace MahApps.Metro.Controls
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
-                    var inverseTheme = ThemeManager.GetInverseTheme(windowTheme);
+                    var inverseTheme = ThemeManager.Current.GetInverseTheme(windowTheme);
 
                     if (inverseTheme == null)
                         throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.GetInverseTheme(windowTheme));
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.GetInverseTheme(windowTheme));
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
             }
@@ -379,7 +379,7 @@ namespace MahApps.Metro.Controls
 
             // first look for owner
             var window = flyout.ParentWindow;
-            var theme = window != null ? ThemeManager.DetectTheme(window) : null;
+            var theme = window != null ? ThemeManager.Current.DetectTheme(window) : null;
             if (theme != null)
             {
                 return theme;
@@ -389,14 +389,14 @@ namespace MahApps.Metro.Controls
             if (Application.Current != null)
             {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.Current.DetectTheme(mainWindow) : null;
                 if (theme != null)
                 {
                     return theme;
                 }
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectTheme(Application.Current);
+                theme = ThemeManager.Current.DetectTheme(Application.Current);
                 if (theme != null)
                 {
                     return theme;

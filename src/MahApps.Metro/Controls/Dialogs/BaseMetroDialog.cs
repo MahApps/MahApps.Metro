@@ -231,14 +231,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void BaseMetroDialogLoaded(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ThemeChanged -= this.ThemeManagerIsThemeChanged;
-            ThemeManager.ThemeChanged += this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
             this.OnLoaded();
         }
 
         private void BaseMetroDialogUnloaded(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
         }
 
         private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
@@ -274,24 +274,24 @@ namespace MahApps.Metro.Controls.Dialogs
                 switch (this.DialogSettings.ColorScheme)
                 {
                     case MetroDialogColorScheme.Theme:
-                        ThemeManager.ChangeTheme(this, this.Resources, theme);
+                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
                         this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
                         this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
                         break;
                     case MetroDialogColorScheme.Inverted:
-                        theme = ThemeManager.GetInverseTheme(theme);
+                        theme = ThemeManager.Current.GetInverseTheme(theme);
                         if (theme == null)
                         {
                             throw new InvalidOperationException("The inverse dialog theme only works if the window theme abides the naming convention. " +
                                                                 "See ThemeManager.GetInverseAppTheme for more infos");
                         }
 
-                        ThemeManager.ChangeTheme(this, this.Resources, theme);
+                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
                         this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeBackground"));
                         this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.ThemeForeground"));
                         break;
                     case MetroDialogColorScheme.Accented:
-                        ThemeManager.ChangeTheme(this, this.Resources, theme);
+                        ThemeManager.Current.ChangeTheme(this, this.Resources, theme);
                         this.SetValue(BackgroundProperty, TryGetResource(theme, "MahApps.Brushes.Highlight"));
                         this.SetValue(ForegroundProperty, TryGetResource(theme, "MahApps.Brushes.IdealForeground"));
                         break;
@@ -326,7 +326,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             // first look for owner
             var window = dialog.OwningWindow ?? dialog.TryFindParent<MetroWindow>();
-            var theme = window != null ? ThemeManager.DetectTheme(window) : null;
+            var theme = window != null ? ThemeManager.Current.DetectTheme(window) : null;
             if (theme != null)
             {
                 return theme;
@@ -336,14 +336,14 @@ namespace MahApps.Metro.Controls.Dialogs
             if (Application.Current != null)
             {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.Current.DetectTheme(mainWindow) : null;
                 if (theme != null)
                 {
                     return theme;
                 }
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectTheme(Application.Current);
+                theme = ThemeManager.Current.DetectTheme(Application.Current);
                 if (theme != null)
                 {
                     return theme;

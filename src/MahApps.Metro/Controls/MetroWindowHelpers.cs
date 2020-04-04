@@ -106,9 +106,9 @@ namespace MahApps.Metro.Controls
 
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            var currentAppTheme = ThemeManager.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.DetectTheme(Application.Current);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
 
             window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
@@ -116,9 +116,9 @@ namespace MahApps.Metro.Controls
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            var currentAppTheme = ThemeManager.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.DetectTheme(Application.Current);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
 
             window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentAppTheme, flyout.Theme, flyout.Position);

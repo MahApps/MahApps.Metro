@@ -946,8 +946,8 @@ namespace MahApps.Metro.Controls
 
             this.ResetAllWindowCommandsBrush();
 
-            ThemeManager.ThemeChanged += ThemeManagerOnIsThemeChanged;
-            this.Unloaded += (o, args) => ThemeManager.ThemeChanged -= ThemeManagerOnIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += ThemeManagerOnIsThemeChanged;
+            this.Unloaded += (o, args) => ThemeManager.Current.ThemeChanged -= ThemeManagerOnIsThemeChanged;
         }
 
         private void InitializeWindowChromeBehavior()
@@ -1085,6 +1085,7 @@ namespace MahApps.Metro.Controls
                 {
                     flyout.ChangeFlyoutTheme(e.NewTheme);
                 }
+                
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
         }
