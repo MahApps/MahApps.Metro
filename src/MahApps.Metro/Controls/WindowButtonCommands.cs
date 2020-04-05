@@ -125,7 +125,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(Theme),
                                           typeof(string),
                                           typeof(WindowButtonCommands),
-                                          new PropertyMetadata(Theme.Light));
+                                          new PropertyMetadata(ThemeManager.BaseColorLight));
 
         /// <summary>
         /// Gets or sets the value indicating current theme.

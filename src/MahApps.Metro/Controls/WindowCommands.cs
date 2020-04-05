@@ -16,11 +16,10 @@ namespace MahApps.Metro.Controls
     {
         /// <summary>Identifies the <see cref="Theme"/> dependency property.</summary>
         public static readonly DependencyProperty ThemeProperty
-            = DependencyProperty.Register(
-                nameof(Theme),
-                typeof(string),
-                typeof(WindowCommands),
-                new PropertyMetadata(ThemeManager.BaseColorLight, OnThemePropertyChanged));
+            = DependencyProperty.Register(nameof(Theme),
+                                          typeof(string),
+                                          typeof(WindowCommands),
+                                          new PropertyMetadata(ThemeManager.BaseColorLight, OnThemePropertyChanged));
 
         private static void OnThemePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
