@@ -113,9 +113,15 @@ namespace MahApps.Metro.Controls
 
         private static void OnIsOnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue)
+            if (d is ToggleSwitch toggleSwitch && e.NewValue != e.OldValue && e.NewValue is bool newValue && e.OldValue is bool oldValue)
             {
-                var toggleSwitch = (ToggleSwitch)d;
+                // doing soft casting here because the peer can be that of RadioButton and it is not derived from
+                // ToggleButtonAutomationPeer - specifically to avoid implementing TogglePattern
+                if (UIElementAutomationPeer.FromElement(toggleSwitch) is ToggleSwitchAutomationPeer peer)
+                {
+                    peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
+                }
+
                 toggleSwitch.OnToggled();
                 toggleSwitch.UpdateVisualStates(true);
             }
