@@ -25,6 +25,7 @@ using NHotkey.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using ControlzEx.Theming;
+using System.Reflection;
 
 namespace MetroDemo
 {
@@ -523,5 +524,7 @@ namespace MetroDemo
         public bool IsNoScaleSmallerFrame => ((MetroWindow)Application.Current.MainWindow).IconScalingMode == MultiFrameImageMode.NoScaleSmallerFrame;
 
         public bool IsToggleSwitchVisible { get; set; }
+
+        public static List<Color> WPF_BuildInColors { get; } = typeof(Colors).GetProperties().Where(x => x.PropertyType == typeof(Color)).Select(x => (Color)x.GetValue(null)).ToList();
     }
 }

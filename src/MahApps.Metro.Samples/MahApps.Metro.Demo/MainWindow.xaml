@@ -339,7 +339,7 @@
             </TabItem>
 
             <TabItem Header="ColorPicker">
-                <Controls:ColorCanvas />
+                <Controls:ColorListBox Header="Buildin-Colors" ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
             </TabItem>
 
         </Controls:MetroAnimatedSingleRowTabControl>
