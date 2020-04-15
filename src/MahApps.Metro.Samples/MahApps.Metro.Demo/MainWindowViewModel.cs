@@ -68,6 +68,7 @@ namespace MetroDemo
             // create accent color menu items for the demo
             this.AccentColors = ThemeManager.Current.Themes
                                             .GroupBy(x => x.ColorScheme)
+                                            .OrderBy(a => a.Key)
                                             .Select(a => new AccentColorMenuData { Name = a.Key, ColorBrush = a.First().ShowcaseBrush })
                                             .ToList();
 
