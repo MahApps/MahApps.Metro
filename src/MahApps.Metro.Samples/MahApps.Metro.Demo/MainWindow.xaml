@@ -34,9 +34,9 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ObjectDataProvider MethodName="GetValues"
-                                ObjectType="{x:Type theming:ThemeSyncMode}"
-                                x:Key="SyncModePreferenceEnumValues">
+            <ObjectDataProvider x:Key="SyncModePreferenceEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type theming:ThemeSyncMode}">
                 <ObjectDataProvider.MethodParameters>
                     <x:Type TypeName="theming:ThemeSyncMode" />
                 </ObjectDataProvider.MethodParameters>
@@ -169,8 +169,7 @@
                           IsCheckable="True"
                           IsChecked="{Binding ColorOptions.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
 
-                <MenuItem Header="Sync now"
-                          Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
             </MenuItem>
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
