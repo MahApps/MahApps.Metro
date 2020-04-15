@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using ControlzEx.Windows.Shell;
 using JetBrains.Annotations;
 
@@ -105,9 +106,9 @@ namespace MahApps.Metro.Controls
 
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            var currentAppTheme = ThemeManager.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.DetectTheme(Application.Current);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
 
             window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
@@ -115,15 +116,15 @@ namespace MahApps.Metro.Controls
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            var currentAppTheme = ThemeManager.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.DetectTheme(Application.Current);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
 
             window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
             window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentAppTheme, flyout.Theme, flyout.Position);
         }
 
-        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, Metro.Theme currentAppTheme)
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme)
         {
             if (foregroundBrush == null)
             {
@@ -132,9 +133,9 @@ namespace MahApps.Metro.Controls
             }
 
             // set the theme based on current application or window theme
-            var theme = currentAppTheme != null && currentAppTheme.Type == ThemeType.Dark
-                ? Theme.Dark
-                : Theme.Light;
+            var theme = currentAppTheme != null && currentAppTheme.BaseColorScheme == ThemeManager.BaseColorDark
+                ? ThemeManager.BaseColorDark
+                : ThemeManager.BaseColorLight;
 
             // set the theme to light by default
             window.LeftWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
@@ -148,7 +149,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, Metro.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
+        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
         {
             if (position == Position.Right || position == Position.Top)
             {
@@ -159,21 +160,21 @@ namespace MahApps.Metro.Controls
 
                 // set the theme based on color lightness
                 // otherwise set the theme based on current application or window theme
-                var theme = currentAppTheme != null && currentAppTheme.Type == ThemeType.Dark
-                    ? Theme.Dark
-                    : Theme.Light;
+                var theme = currentAppTheme != null && currentAppTheme.BaseColorScheme == ThemeManager.BaseColorDark
+                    ? ThemeManager.BaseColorDark
+                    : ThemeManager.BaseColorLight;
 
                 if (flyoutTheme == FlyoutTheme.Light)
                 {
-                    theme = Theme.Light;
+                    theme = ThemeManager.BaseColorLight;
                 }
                 else if (flyoutTheme == FlyoutTheme.Dark)
                 {
-                    theme = Theme.Dark;
+                    theme = ThemeManager.BaseColorDark;
                 }
                 else if (flyoutTheme == FlyoutTheme.Inverse)
                 {
-                    theme = theme == Theme.Light ? Theme.Dark : Theme.Light;
+                    theme = theme == ThemeManager.BaseColorLight ? ThemeManager.BaseColorDark : ThemeManager.BaseColorLight;
                 }
 
                 window.WindowButtonCommands?.SetValue(WindowButtonCommands.ThemeProperty, theme);

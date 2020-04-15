@@ -8,6 +8,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:theming="urn:controlzex"
                       Title="MahApps.Metro - Demo Application"
                       Width="900"
                       Height="600"
@@ -33,6 +34,14 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <ObjectDataProvider x:Key="SyncModePreferenceEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type theming:ThemeSyncMode}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="theming:ThemeSyncMode" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -60,6 +69,14 @@
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+            </Style>
+
+            <Style x:Key="SyncModeMenuItemStyle"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Command" Value="{Binding DataContext.ChangeSyncModeCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="CommandParameter" Value="{Binding Mode=OneTime}" />
+                <Setter Property="Header" Value="{Binding Mode=OneTime}" />
             </Style>
 
             <UserControl x:Key="CustomDialogTest"
@@ -144,6 +161,16 @@
             <MenuItem Header="Accent"
                       ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
                       ItemsSource="{Binding AccentColors, Mode=OneWay}" />
+            <MenuItem Header="ThemeManager">
+                <MenuItem Header="SyncMode"
+                          ItemContainerStyle="{StaticResource SyncModeMenuItemStyle}"
+                          ItemsSource="{Binding Source={StaticResource SyncModePreferenceEnumValues}}" />
+                <MenuItem Header="Use HSL colors?"
+                          IsCheckable="True"
+                          IsChecked="{Binding ColorOptions.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
+
+                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
+            </MenuItem>
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
                           IsCheckable="True"

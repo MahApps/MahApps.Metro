@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
@@ -109,10 +110,10 @@ namespace MahApps.Metro.Behaviors
             this.RotatorParent.Child = this.attachedElement;
 
             CompositionTarget.Rendering += this.CompositionTargetRendering;
-            ThemeManager.IsThemeChanged += this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
         }
 
-        private void ThemeManagerIsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
             this.RotatorParent?.Refresh();
         }
@@ -120,7 +121,7 @@ namespace MahApps.Metro.Behaviors
         protected override void OnDetaching()
         {
             CompositionTarget.Rendering -= this.CompositionTargetRendering;
-            ThemeManager.IsThemeChanged -= this.ThemeManagerIsThemeChanged;
+            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
             base.OnDetaching();
         }
 

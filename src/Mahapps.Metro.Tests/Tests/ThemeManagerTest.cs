@@ -7,16 +7,16 @@
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Media;
+    using ControlzEx.Theming;
     using MahApps.Metro.Controls;
     using MahApps.Metro.Tests.TestHelpers;    
     using Xunit;
-    using Theme = MahApps.Metro.Theme;
 
     public class ThemeManagerTest : AutomationTestBase
     {
         public override void Dispose()
         {
-            Application.Current.Dispatcher.Invoke(ThemeManager.ClearThemes);
+            Application.Current.Dispatcher.Invoke(ThemeManager.Current.ClearThemes);
 
             base.Dispose();
         }
@@ -27,8 +27,8 @@
         {
             await TestHost.SwitchToAppThread();
 
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme((Application)null, ThemeManager.GetTheme("Light.Red")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme(Application.Current, ThemeManager.GetTheme("UnknownTheme")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.Current.ChangeTheme((Application)null, ThemeManager.Current.GetTheme("Light.Red")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.Current.ChangeTheme(Application.Current, ThemeManager.Current.GetTheme("UnknownTheme")));
         }
 
         [Fact]
@@ -39,8 +39,8 @@
 
             await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme((Window)null, ThemeManager.GetTheme("Light.Red")));
-            Assert.Throws<ArgumentNullException>(() => ThemeManager.ChangeTheme(Application.Current.MainWindow, ThemeManager.GetTheme("UnknownTheme")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.Current.ChangeTheme((Window)null, ThemeManager.Current.GetTheme("Light.Red")));
+            Assert.Throws<ArgumentNullException>(() => ThemeManager.Current.ChangeTheme(Application.Current.MainWindow, ThemeManager.Current.GetTheme("UnknownTheme")));
         }
 
         [Fact]
@@ -49,18 +49,21 @@
         {
             await TestHost.SwitchToAppThread();
 
-            Assert.False(ThemeManager.AddTheme(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Cobalt.xaml")));
+            ThemeManager.Current.AddTheme(new Theme(new LibraryTheme(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Cobalt.xaml"), null, true)));
 
             var resource = new ResourceDictionary
                            {
                                {
-                                   "Theme.Name", "Runtime"
+                                   Theme.ThemeNameKey, "Runtime"
                                },
                                {
-                                   "Theme.DisplayName", "Runtime"
+                                   Theme.ThemeDisplayNameKey, "Runtime"
+                               },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
                                }
                            };
-            Assert.True(ThemeManager.AddTheme(resource));
+            ThemeManager.Current.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
         }
 
         [Fact]
@@ -83,11 +86,14 @@
                                {
                                    Theme.ThemeColorSchemeKey, "Bar"
                                },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
+                               },
                            };
 
-            Assert.True(ThemeManager.AddTheme(resource));
-            Assert.Equal(new[] { ThemeManager.BaseColorLight, ThemeManager.BaseColorDark, "Foo" }, ThemeManager.BaseColors);
-            Assert.Contains("Bar", ThemeManager.ColorSchemes.Select(x => x.Name));
+            ThemeManager.Current.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
+            Assert.Equal(new[] { ThemeManager.BaseColorLight, ThemeManager.BaseColorDark, "Foo" }, ThemeManager.Current.BaseColors);
+            Assert.Contains("Bar", ThemeManager.Current.ColorSchemes.Select(x => x));
         }
 
         [Fact]
@@ -98,11 +104,11 @@
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
             {
-                var expectedTheme = ThemeManager.GetTheme("Dark.Teal");
-                ThemeManager.ChangeTheme(Application.Current, expectedTheme);
+                var expectedTheme = ThemeManager.Current.GetTheme("Dark.Teal");
+                ThemeManager.Current.ChangeTheme(Application.Current, expectedTheme);
 
-                Assert.Equal(expectedTheme, ThemeManager.DetectTheme(Application.Current));
-                Assert.Equal(expectedTheme, ThemeManager.DetectTheme(window));
+                Assert.Equal(expectedTheme, ThemeManager.Current.DetectTheme(Application.Current));
+                Assert.Equal(expectedTheme, ThemeManager.Current.DetectTheme(window));
             }
         }
 
@@ -113,38 +119,38 @@
             await TestHost.SwitchToAppThread();
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
-                ThemeManager.ChangeThemeBaseColor(Application.Current, ThemeManager.GetInverseTheme(currentTheme).BaseColorScheme);
+                ThemeManager.Current.ChangeThemeBaseColor(Application.Current, ThemeManager.Current.GetInverseTheme(currentTheme).BaseColorScheme);
 
-                Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(Application.Current).BaseColorScheme);
-                Assert.Equal(currentTheme.ColorScheme, ThemeManager.DetectTheme(Application.Current).ColorScheme);
+                Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(Application.Current).BaseColorScheme);
+                Assert.Equal(currentTheme.ColorScheme, ThemeManager.Current.DetectTheme(Application.Current).ColorScheme);
             }
 
             {
                 var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();                
                 {
-                    var currentTheme = ThemeManager.DetectTheme(window);
+                    var currentTheme = ThemeManager.Current.DetectTheme(window);
 
                     Assert.NotNull(currentTheme);
-                    ThemeManager.ChangeThemeBaseColor(window, ThemeManager.GetInverseTheme(currentTheme).BaseColorScheme);
+                    ThemeManager.Current.ChangeThemeBaseColor(window, ThemeManager.Current.GetInverseTheme(currentTheme).BaseColorScheme);
 
-                    Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(window).BaseColorScheme);
-                    Assert.Equal(currentTheme.ColorScheme, ThemeManager.DetectTheme(window).ColorScheme);
+                    Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(window).BaseColorScheme);
+                    Assert.Equal(currentTheme.ColorScheme, ThemeManager.Current.DetectTheme(window).ColorScheme);
                 }
             }
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeThemeBaseColor(control.Resources, currentTheme, ThemeManager.GetInverseTheme(currentTheme).BaseColorScheme);
+                ThemeManager.Current.ChangeThemeBaseColor(control, control.Resources, currentTheme, ThemeManager.Current.GetInverseTheme(currentTheme).BaseColorScheme);
 
-                Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
-                Assert.Equal(currentTheme.ColorScheme, ThemeManager.DetectTheme(control.Resources).ColorScheme);
+                Assert.NotEqual(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(control.Resources).BaseColorScheme);
+                Assert.Equal(currentTheme.ColorScheme, ThemeManager.Current.DetectTheme(control.Resources).ColorScheme);
             }
         }
 
@@ -155,41 +161,41 @@
             await TestHost.SwitchToAppThread();
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
-                ThemeManager.ChangeThemeColorScheme(Application.Current, "Yellow");
+                ThemeManager.Current.ChangeThemeColorScheme(Application.Current, "Yellow");
 
-                Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(Application.Current).BaseColorScheme);
-                Assert.Equal("Yellow", ThemeManager.DetectTheme(Application.Current).ColorScheme);
+                Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(Application.Current).BaseColorScheme);
+                Assert.Equal("Yellow", ThemeManager.Current.DetectTheme(Application.Current).ColorScheme);
             }
 
             {
                 var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
                 {
-                    var currentTheme = ThemeManager.DetectTheme(window);
+                    var currentTheme = ThemeManager.Current.DetectTheme(window);
 
                     Assert.NotNull(currentTheme);
-                    ThemeManager.ChangeThemeColorScheme(window, "Green");
+                    ThemeManager.Current.ChangeThemeColorScheme(window, "Green");
 
-                    Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(window).BaseColorScheme);
-                    Assert.Equal("Green", ThemeManager.DetectTheme(window).ColorScheme);
+                    Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(window).BaseColorScheme);
+                    Assert.Equal("Green", ThemeManager.Current.DetectTheme(window).ColorScheme);
                 }
             }
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeThemeColorScheme(control.Resources, currentTheme, "Red");
+                ThemeManager.Current.ChangeThemeColorScheme(control, control.Resources, currentTheme, "Red");
 
-                Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
-                Assert.Equal("Red", ThemeManager.DetectTheme(control.Resources).ColorScheme);
+                Assert.Equal(currentTheme.BaseColorScheme, ThemeManager.Current.DetectTheme(control.Resources).BaseColorScheme);
+                Assert.Equal("Red", ThemeManager.Current.DetectTheme(control.Resources).ColorScheme);
             }
 
-            Assert.Equal("Yellow", ThemeManager.DetectTheme(Application.Current).ColorScheme);
+            Assert.Equal("Yellow", ThemeManager.Current.DetectTheme(Application.Current).ColorScheme);
         }
 
         [Fact]
@@ -199,41 +205,41 @@
             await TestHost.SwitchToAppThread();
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
-                ThemeManager.ChangeTheme(Application.Current, ThemeManager.BaseColorDark, "Yellow");
+                ThemeManager.Current.ChangeTheme(Application.Current, ThemeManager.BaseColorDark, "Yellow");
 
-                Assert.Equal(ThemeManager.BaseColorDark, ThemeManager.DetectTheme(Application.Current).BaseColorScheme);
-                Assert.Equal("Yellow", ThemeManager.DetectTheme(Application.Current).ColorScheme);
+                Assert.Equal(ThemeManager.BaseColorDark, ThemeManager.Current.DetectTheme(Application.Current).BaseColorScheme);
+                Assert.Equal("Yellow", ThemeManager.Current.DetectTheme(Application.Current).ColorScheme);
             }
 
             {
                 var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
                 {
-                    var currentTheme = ThemeManager.DetectTheme(window);
+                    var currentTheme = ThemeManager.Current.DetectTheme(window);
 
                     Assert.NotNull(currentTheme);
-                    ThemeManager.ChangeTheme(window, ThemeManager.BaseColorLight, "Green");
+                    ThemeManager.Current.ChangeTheme(window, ThemeManager.BaseColorLight, "Green");
 
-                    Assert.Equal(ThemeManager.BaseColorLight, ThemeManager.DetectTheme(window).BaseColorScheme);
-                    Assert.Equal("Green", ThemeManager.DetectTheme(window).ColorScheme);
+                    Assert.Equal(ThemeManager.BaseColorLight, ThemeManager.Current.DetectTheme(window).BaseColorScheme);
+                    Assert.Equal("Green", ThemeManager.Current.DetectTheme(window).ColorScheme);
                 }
             }
 
             {
-                var currentTheme = ThemeManager.DetectTheme(Application.Current);
+                var currentTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
                 Assert.NotNull(currentTheme);
 
                 var control = new Control();
-                ThemeManager.ChangeTheme(control.Resources, currentTheme, ThemeManager.BaseColorDark, "Red");
+                ThemeManager.Current.ChangeTheme(control, control.Resources, currentTheme, ThemeManager.BaseColorDark, "Red");
 
-                Assert.Equal(ThemeManager.BaseColorDark, ThemeManager.DetectTheme(control.Resources).BaseColorScheme);
-                Assert.Equal("Red", ThemeManager.DetectTheme(control.Resources).ColorScheme);
+                Assert.Equal(ThemeManager.BaseColorDark, ThemeManager.Current.DetectTheme(control.Resources).BaseColorScheme);
+                Assert.Equal("Red", ThemeManager.Current.DetectTheme(control.Resources).ColorScheme);
             }
 
-            Assert.Equal("Yellow", ThemeManager.DetectTheme(Application.Current).ColorScheme);
+            Assert.Equal("Yellow", ThemeManager.Current.DetectTheme(Application.Current).ColorScheme);
         }
 
         [Fact]
@@ -242,7 +248,7 @@
         {
             await TestHost.SwitchToAppThread();
 
-            var theme = ThemeManager.GetInverseTheme(ThemeManager.GetTheme("Light.Blue"));
+            var theme = ThemeManager.Current.GetInverseTheme(ThemeManager.Current.GetTheme("Light.Blue"));
 
             Assert.Equal("Dark.Blue", theme.Name);
         }
@@ -253,7 +259,7 @@
         {
             await TestHost.SwitchToAppThread();
 
-            var theme = ThemeManager.GetInverseTheme(ThemeManager.GetTheme("Dark.Blue"));
+            var theme = ThemeManager.Current.GetInverseTheme(ThemeManager.Current.GetTheme("Dark.Blue"));
 
             Assert.Equal("Light.Blue", theme.Name);            
         }
@@ -267,15 +273,18 @@
             var resource = new ResourceDictionary
                            {
                                {
-                                   "Theme.Name", "Runtime"
+                                   Theme.ThemeNameKey, "Runtime"
                                },
                                {
-                                   "Theme.DisplayName", "Runtime"
-                               }
+                                   Theme.ThemeDisplayNameKey, "Runtime"
+                               },
+                               {
+                                   Theme.ThemePrimaryAccentColorKey, Colors.Red
+                               },
                            };
-            var theme = new Theme(resource);
+            var theme = ThemeManager.Current.AddTheme(new Theme(new LibraryTheme(resource, null, true)));
 
-            var inverseTheme = ThemeManager.GetInverseTheme(theme);
+            var inverseTheme = ThemeManager.Current.GetInverseTheme(theme);
 
             Assert.Null(inverseTheme);
         }
@@ -286,10 +295,10 @@
         {
             await TestHost.SwitchToAppThread();
 
-            var theme = ThemeManager.GetTheme("dark.blue");
+            var theme = ThemeManager.Current.GetTheme("dark.blue");
 
             Assert.NotNull(theme);
-            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.Resources.Source.ToString().ToLower());
+            Assert.Equal("pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml".ToLower(), theme.LibraryThemes.First().Resources.MergedDictionaries.First().Source.ToString().ToLower());
         }
 
         [Fact]
@@ -303,7 +312,7 @@
                           Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Themes/daRK.Blue.xaml")
                       };
 
-            var theme = ThemeManager.GetTheme(dic);
+            var theme = ThemeManager.Current.GetTheme(dic);
 
             Assert.NotNull(theme);
             Assert.Equal("Dark.Blue", theme.Name);
@@ -364,7 +373,7 @@
                                      "Yellow (Dark)",
                                      "Yellow (Light)"
                                  };
-            Assert.Equal(expectedThemes, CollectionViewSource.GetDefaultView(ThemeManager.Themes).Cast<Theme>().Select(x => x.DisplayName).ToList());
+            Assert.Equal(expectedThemes, CollectionViewSource.GetDefaultView(ThemeManager.Current.Themes).Cast<Theme>().Select(x => x.DisplayName).ToList());
         }
 
         [Fact]
@@ -373,9 +382,9 @@
         {
             await TestHost.SwitchToAppThread();
 
-            ThemeManager.ClearThemes();
+            ThemeManager.Current.ClearThemes();
 
-            Assert.NotEmpty(ThemeManager.BaseColors);
+            Assert.NotEmpty(ThemeManager.Current.BaseColors);
         }
 
         [Fact]
@@ -384,9 +393,9 @@
         {
             await TestHost.SwitchToAppThread();
 
-            ThemeManager.ClearThemes();
+            ThemeManager.Current.ClearThemes();
 
-            Assert.NotEmpty(ThemeManager.ColorSchemes);
+            Assert.NotEmpty(ThemeManager.Current.ColorSchemes);
         }
 
         [Fact]
@@ -395,23 +404,23 @@
         {
             await TestHost.SwitchToAppThread();
 
-            var applicationTheme = ThemeManager.DetectTheme(Application.Current);
+            var applicationTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
-            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red, "CustomAccentRed", changeImmediately: true));
+            var ex = Record.Exception(() => ThemeManager.Current.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)));
             Assert.Null(ex);
 
-            var detected = ThemeManager.DetectTheme(Application.Current);
+            var detected = ThemeManager.Current.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal("CustomAccentRed", detected.Name);
+            Assert.Equal("Dark.Runtime_#FFFF0000", detected.Name);
 
-            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Green, "CustomAccentGreen", changeImmediately: true));
+            ex = Record.Exception(() => ThemeManager.Current.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Green)));
             Assert.Null(ex);
 
-            detected = ThemeManager.DetectTheme(Application.Current);
+            detected = ThemeManager.Current.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal("CustomAccentGreen", detected.Name);
+            Assert.Equal("Light.Runtime_#FF008000", detected.Name);
 
-            ThemeManager.ChangeTheme(Application.Current, applicationTheme);
+            ThemeManager.Current.ChangeTheme(Application.Current, applicationTheme);
         }
 
         [Fact]
@@ -420,24 +429,24 @@
         {
             await TestHost.SwitchToAppThread();
 
-            var applicationTheme = ThemeManager.DetectTheme(Application.Current);
+            var applicationTheme = ThemeManager.Current.DetectTheme(Application.Current);
 
-            var ex = Record.Exception(() => ThemeHelper.CreateTheme("Dark", Colors.Red));
+            var ex = Record.Exception(() => ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", Colors.Red)));
             Assert.Null(ex);
-            ex = Record.Exception(() => ThemeHelper.CreateTheme("Light", Colors.Red, changeImmediately: true));
+            ex = Record.Exception(() => ThemeManager.Current.AddTheme(ThemeManager.Current.ChangeTheme(Application.Current, RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", Colors.Red))));
             Assert.Null(ex);
 
-            var detected = ThemeManager.DetectTheme(Application.Current);
+            var detected = ThemeManager.Current.DetectTheme(Application.Current);
             Assert.NotNull(detected);
-            Assert.Equal(Colors.Red.ToString().Replace("#", string.Empty), detected.ColorScheme);
+            Assert.Equal(Colors.Red.ToString(), detected.ColorScheme);
 
-            var newTheme = ThemeManager.ChangeThemeBaseColor(Application.Current, "Dark");
+            var newTheme = ThemeManager.Current.ChangeThemeBaseColor(Application.Current, "Dark");
             Assert.NotNull(newTheme);
 
-            newTheme = ThemeManager.ChangeThemeBaseColor(Application.Current, "Light");
+            newTheme = ThemeManager.Current.ChangeThemeBaseColor(Application.Current, "Light");
             Assert.NotNull(newTheme);
 
-            ThemeManager.ChangeTheme(Application.Current, applicationTheme);
+            ThemeManager.Current.ChangeTheme(Application.Current, applicationTheme);
         }
     }
 }

@@ -58,10 +58,7 @@
                         <Trigger Property="Button.IsPressed" Value="True">
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
-                                    <ScaleTransform CenterX="0.5"
-                                                    CenterY="0.5"
-                                                    ScaleX="0.98"
-                                                    ScaleY="0.98" />
+                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.98" ScaleY="0.98" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

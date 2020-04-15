@@ -1,4 +1,5 @@
 ﻿using ControlzEx.Native;
+using ControlzEx.Theming;
 using System;
 using System.Text;
 using System.Windows;
@@ -122,16 +123,16 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Theme"/> dependency property.</summary>
         public static readonly DependencyProperty ThemeProperty
             = DependencyProperty.Register(nameof(Theme),
-                                          typeof(Theme),
+                                          typeof(string),
                                           typeof(WindowButtonCommands),
-                                          new PropertyMetadata(Theme.Light));
+                                          new PropertyMetadata(ThemeManager.BaseColorLight));
 
         /// <summary>
         /// Gets or sets the value indicating current theme.
         /// </summary>
-        public Theme Theme
+        public string Theme
         {
-            get => (Theme)this.GetValue(ThemeProperty);
+            get => (string)this.GetValue(ThemeProperty);
             set => this.SetValue(ThemeProperty, value);
         }
 

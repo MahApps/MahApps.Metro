@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Xunit;
 using Xunit.Sdk;
@@ -57,7 +58,7 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             Application.Current.Invoke(() =>
                 {
-                    ThemeManager.ChangeTheme(Application.Current, "Light.Blue");
+                    ThemeManager.Current.ChangeTheme(Application.Current, "Light.Blue");
                 });
         }
 

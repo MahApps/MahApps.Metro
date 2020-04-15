@@ -13,9 +13,10 @@
         <Reference Include="System.Configuration" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="ControlzEx" Version="[4.*, 5.0)" />
+        <!-- <PackageReference Include="ControlzEx" Version="[4.*, 5.0)" /> -->
+        <PackageReference Include="ControlzEx" version="4.3.0-alpha*" />
         <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
-        <PackageReference Include="XamlColorSchemeGenerator" Version="3.0.0.31" PrivateAssets="All" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4.0.0-rc*" privateAssets="all" includeAssets="build" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -26,21 +27,19 @@
         <EmbeddedResource Include="**\*.Template.xaml" />
         <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
-    <Target Name="GenerateXamlFilesInner">
+
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
         <PropertyGroup>
-            <!-- <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot> -->
-            <!-- <NuGetPackageRoot>$(MSBuildProjectDirectory)\..\..\packages\</NuGetPackageRoot> -->
-            <XamlColorSchemeGeneratorVersion Condition="'%(PackageReference.Identity)' == 'XamlColorSchemeGenerator'">%(PackageReference.Version)</XamlColorSchemeGeneratorVersion>
-        </PropertyGroup>
-        <Exec Command="&quot;$(NuGetPackageRoot)\xamlcolorschemegenerator\$(XamlColorSchemeGeneratorVersion)\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" />
-        <!-- <Exec Command="&quot;$(NuGetPackageRoot)xamlcolorschemegenerator\tools\XamlColorSchemeGenerator.exe&quot; &quot;$(MSBuildProjectDirectory)\Styles\Themes\GeneratorParameters.json&quot;" /> -->
+            <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
+            <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
+        </PropertyGroup>       
+        <!-- Generate theme files -->
+        <Message Text="$(XamlColorSchemeGeneratorExecutable)" />
+        <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
+        <!-- Combine xaml files -->
+        <!-- <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;Styles.txt&quot; &quot;Styles.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" /> -->
     </Target>
-    <!-- Key to generating the xaml files at the right point in time is to do this before DispatchToInnerBuilds -->
-    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
-        <!--TargetFramework=once is critical here, as it will not execute task from same project with same properties multiple times. 
-            We need to unify TargetFramework between empty, net45, netcoreapp3.0 etc.-->
-        <MSBuild Projects="$(MSBuildProjectFile)" Targets="GenerateXamlFilesInner" Properties="TargetFramework=once" />
-    </Target>
+
     <ItemGroup>
         <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
         <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />

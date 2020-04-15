@@ -20,6 +20,7 @@ using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
 using System.Collections.ObjectModel;
+using ControlzEx.Theming;
 
 namespace MetroDemo
 {
@@ -40,7 +41,7 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            ThemeManager.ChangeThemeColorScheme(Application.Current, this.Name);
+            ThemeManager.Current.ChangeThemeColorScheme(Application.Current, this.Name);
         }
     }
 
@@ -48,7 +49,7 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            ThemeManager.ChangeThemeBaseColor(Application.Current, this.Name);
+            ThemeManager.Current.ChangeThemeBaseColor(Application.Current, this.Name);
         }
     }
 
@@ -65,12 +66,14 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.ColorSchemes
-                                            .Select(a => new AccentColorMenuData { Name = a.Name, ColorBrush = a.ShowcaseBrush })
+            this.AccentColors = ThemeManager.Current.Themes
+                                            .GroupBy(x => x.ColorScheme)
+                                            .OrderBy(a => a.Key)
+                                            .Select(a => new AccentColorMenuData { Name = a.Key, ColorBrush = a.First().ShowcaseBrush })
                                             .ToList();
 
             // create metro theme color menu items for the demo
-            this.AppThemes = ThemeManager.Themes
+            this.AppThemes = ThemeManager.Current.Themes
                                          .GroupBy(x => x.BaseColorScheme)
                                          .Select(x => x.First())
                                          .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
@@ -190,6 +193,14 @@ namespace MetroDemo
         public ICommand ShowHamburgerAboutCommand { get; }
 
         public ICommand OpenFirstFlyoutCommand { get; }
+
+        public ICommand ChangeSyncModeCommand { get; } = new SimpleCommand(execute: x =>
+            {
+                ThemeManager.Current.ThemeSyncMode = (ThemeSyncMode)x;
+                ThemeManager.Current.SyncTheme();
+            });
+
+        public ICommand SyncThemeNowCommand { get; } = new SimpleCommand(execute: x => ThemeManager.Current.SyncTheme());
 
         public void Dispose()
         {
@@ -405,15 +416,18 @@ namespace MetroDemo
         {
             if (Application.Current.MainWindow != null)
             {
-                var theme = ThemeManager.DetectTheme(Application.Current.MainWindow);
+                var theme = ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
 
-                var resources = theme.Resources.Keys.Cast<object>()
-                                     .Where(key => theme.Resources[key] is SolidColorBrush)
+                var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
+
+                var brushResources = resources.Keys
+                                     .Cast<object>()
+                                     .Where(key => resources[key] is SolidColorBrush)
                                      .Select(key => key.ToString())
                                      .OrderBy(s => s)
                                      .ToList();
 
-                return resources;
+                return brushResources;
             }
 
             return Enumerable.Empty<string>();

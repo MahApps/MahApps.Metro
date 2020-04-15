@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using ControlzEx;
+using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls
 {
@@ -16,19 +17,19 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="Theme"/> dependency property.</summary>
         public static readonly DependencyProperty ThemeProperty
             = DependencyProperty.Register(nameof(Theme),
-                                          typeof(Theme),
+                                          typeof(string),
                                           typeof(WindowCommands),
-                                          new PropertyMetadata(Theme.Light, OnThemePropertyChanged));
+                                          new PropertyMetadata(ThemeManager.BaseColorLight, OnThemePropertyChanged));
 
         private static void OnThemePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != e.OldValue && e.NewValue is Theme theme)
+            if (e.NewValue != e.OldValue && e.NewValue is string baseColor)
             {
                 var windowCommands = (WindowCommands)d;
 
-                switch (theme)
+                switch (baseColor)
                 {
-                    case Theme.Light:
+                    case ThemeManager.BaseColorLightConst:
                     {
                         if (windowCommands.LightTemplate != null)
                         {
@@ -37,7 +38,7 @@ namespace MahApps.Metro.Controls
 
                         break;
                     }
-                    case Theme.Dark:
+                    case ThemeManager.BaseColorDarkConst:
                     {
                         if (windowCommands.DarkTemplate != null)
                         {
@@ -53,9 +54,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the value indicating the current theme.
         /// </summary>
-        public Theme Theme
+        public string Theme
         {
-            get => (Theme)this.GetValue(ThemeProperty);
+            get => (string)this.GetValue(ThemeProperty);
             set => this.SetValue(ThemeProperty, value);
         }
 
