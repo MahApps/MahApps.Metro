@@ -338,8 +338,12 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="ColorPicker">
+            <TabItem Header="ColorList">
                 <Controls:ColorListBox Header="Buildin-Colors" ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
+            </TabItem>
+            
+            <TabItem Header="ColorCanvas">
+                <Controls:ColorCanvas  />
             </TabItem>
 
         </Controls:MetroAnimatedSingleRowTabControl>

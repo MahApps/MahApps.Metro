@@ -22,6 +22,7 @@ namespace MahApps.Metro.Controls
         ColorEyeDropper PART_PickColorFromScreen;
 
         bool ColorIsUpdating = false;
+        bool UpdateHsvValues = true;
 
         #endregion
 
@@ -72,17 +73,20 @@ namespace MahApps.Metro.Controls
                 colorCanvas.SetCurrentValue(HexCodeProperty, colorCanvas.SelectedColor.ToString());
                 colorCanvas.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorCanvas.SelectedColor));
 
-                var hsv = new HSVColor(colorCanvas.SelectedColor);
-                colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
-                colorCanvas.SetCurrentValue(SaturationProperty, hsv.Saturation);
-                colorCanvas.SetCurrentValue(ValueProperty, hsv.Value);
-
+                if (colorCanvas.UpdateHsvValues)
+                {
+                    var hsv = new HSVColor(colorCanvas.SelectedColor);
+                    colorCanvas.SetCurrentValue(HueProperty, hsv.Hue);
+                    colorCanvas.SetCurrentValue(SaturationProperty, hsv.Saturation);
+                    colorCanvas.SetCurrentValue(ValueProperty, hsv.Value);
+                }
+                
                 colorCanvas.SetCurrentValue(AProperty, colorCanvas.SelectedColor.A);
                 colorCanvas.SetCurrentValue(RProperty, colorCanvas.SelectedColor.R);
                 colorCanvas.SetCurrentValue(GProperty, colorCanvas.SelectedColor.G);
                 colorCanvas.SetCurrentValue(BProperty, colorCanvas.SelectedColor.B);
 
-                colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(hsv.Hue, 1, 1).ToColor();
+                colorCanvas.PART_SaturationValueBox_Background.Color = new HSVColor(colorCanvas.Hue, 1, 1).ToColor();
 
                 colorCanvas.ColorIsUpdating = false;
             }
@@ -164,7 +168,10 @@ namespace MahApps.Metro.Controls
             if (dependencyObject is ColorCanvas colorCanvas && !colorCanvas.ColorIsUpdating)
             {
                 var hsv = new HSVColor(colorCanvas.Hue, colorCanvas.Saturation, colorCanvas.Value);
+                
+                colorCanvas.UpdateHsvValues = false;
                 colorCanvas.SetCurrentValue(SelectedColorProperty, hsv.ToColor(colorCanvas.A));
+                colorCanvas.UpdateHsvValues = true;
             }
         }
 

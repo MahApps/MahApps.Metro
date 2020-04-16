@@ -16,7 +16,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Black}" BorderThickness="1">
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}" BorderThickness="1">
 
                         <Grid>
                             <Grid.Background>
@@ -54,17 +54,17 @@
                                                 <Grid Background="Transparent">
                                                     <Rectangle Height="1"
                                                                VerticalAlignment="Center"
-                                                               Fill="{DynamicResource MahApps.Brushes.Black}" />
-                                                    <Path Fill="{DynamicResource MahApps.Brushes.White}"
-                                                          Stroke="{DynamicResource MahApps.Brushes.Black}"
+                                                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                                                    <Path Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                          Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                           StrokeThickness="1">
                                                         <Path.Data>
                                                             <PathGeometry Figures="M 0 0 8 5 0 10 Z" FillRule="NonZero" />
                                                         </Path.Data>
                                                     </Path>
                                                     <Path HorizontalAlignment="Right"
-                                                          Fill="{DynamicResource MahApps.Brushes.White}"
-                                                          Stroke="{DynamicResource MahApps.Brushes.Black}"
+                                                          Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                                          Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                                           StrokeThickness="1">
                                                         <Path.Data>
                                                             <PathGeometry Figures="M 8 0 0 5 8 10 Z" FillRule="NonZero" />

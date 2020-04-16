@@ -12,19 +12,50 @@
 
     <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
 
-    <DrawingBrush x:Key="CheckerdBrush"
+    <DrawingBrush x:Key="MahApps.Brushes.Checkerd"
                   TileMode="Tile"
                   Viewport="0,0,20,20"
                   ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
-            <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
-                <GeometryDrawing.Geometry>
-                    <GeometryGroup>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.ThemeBackground}">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,20,20" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,10,10" />
+                            <RectangleGeometry Rect="10,10,10,10" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="MahApps.Brushes.Checkerd.Small"
+                  TileMode="Tile"
+                  Viewport="0,0,10,10"
+                  ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.ThemeBackground}">
+                    <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="0,0,10,10" />
-                        <RectangleGeometry Rect="10,10,10,10" />
-                    </GeometryGroup>
-                </GeometryDrawing.Geometry>
-            </GeometryDrawing>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="{DynamicResource MahApps.Brushes.Gray7}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0,0,5,5" />
+                            <RectangleGeometry Rect="5,5,5,5" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
@@ -56,7 +87,7 @@
                                         Grid.Row="0"
                                         Grid.Column="0"
                                         Margin="5"
-                                        BorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                                        BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                         BorderThickness="1">
                                     <Border.Background>
                                         <SolidColorBrush x:Name="PART_SaturationValueBox_Background" Color="Red" />
@@ -143,8 +174,8 @@
                                             Grid.Column="1"
                                             Height="30"
                                             Margin="5,0,0,5"
-                                            Background="{StaticResource CheckerdBrush}"
-                                            BorderBrush="{DynamicResource MahApps.Brushes.Black}"
+                                            Background="{StaticResource MahApps.Brushes.Checkerd}"
+                                            BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                             BorderThickness="1">
                                         <Rectangle>
                                             <Rectangle.Fill>
@@ -280,12 +311,15 @@
                                                 Grid.Column="1"
                                                 Maximum="1"
                                                 Minimum="0"
+                                                SmallChange="0.01"
+                                                LargeChange="0.05"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
                                         <Controls:NumericUpDown Grid.Row="4"
                                                                 Grid.Column="2"
                                                                 Margin="2"
                                                                 Maximum="1"
                                                                 Minimum="0"
+                                                                Interval="0.01"
                                                                 StringFormat="p0"
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
 
@@ -298,12 +332,15 @@
                                                 Grid.Column="1"
                                                 Maximum="1"
                                                 Minimum="0"
+                                                SmallChange="0.01"
+                                                LargeChange="0.05"
                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
                                         <Controls:NumericUpDown Grid.Row="5"
                                                                 Grid.Column="2"
                                                                 Margin="2"
                                                                 Maximum="1"
                                                                 Minimum="0"
+                                                                Interval="0.01"
                                                                 StringFormat="p0"
                                                                 Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
 

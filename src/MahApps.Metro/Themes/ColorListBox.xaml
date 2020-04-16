@@ -92,7 +92,7 @@
         <Border Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Center"
-                Background="{DynamicResource CheckerdBrush}"
+                Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
                 VerticalAlignment="Center"
                 ToolTip="{Binding Converter={StaticResource MahApps.Converters.ColorToName}}" >
             <Grid>
