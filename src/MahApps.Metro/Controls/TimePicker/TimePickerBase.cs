@@ -175,6 +175,7 @@ namespace MahApps.Metro.Controls
         private UIElement _secondHand;
         private Selector _secondInput;
         protected DatePickerTextBox _textBox;
+        protected bool _deactivateAdjustTimeOnDateChange;
 
         static TimePickerBase()
         {
@@ -485,7 +486,10 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + this.GetSelectedTimeFromGUI());
+            // If we do not have a date yet we should use Today instead of DateTime.Min
+            var newDateTime = SelectedDateTime ?? DateTime.Today;
+
+            this.SetCurrentValue(SelectedDateTimeProperty, newDateTime.Date + this.GetSelectedTimeFromGUI());
         }
 
         protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
@@ -687,6 +691,13 @@ namespace MahApps.Metro.Controls
 
             if (timePartPickerBase._deactivateRangeBaseEvent)
             {
+                return;
+            }
+
+            // if just the DatePart changed, we should set the old TimePart for the NewValue
+            if (!timePartPickerBase._deactivateAdjustTimeOnDateChange && e.OldValue is DateTime oldVal && e.NewValue is DateTime newVal && oldVal.Date != newVal.Date && newVal.TimeOfDay.Ticks == 0 && oldVal.TimeOfDay.Ticks != 0)
+            {
+                timePartPickerBase.SetCurrentValue(SelectedDateTimeProperty, ((DateTime?)e.NewValue)?.Date + ((DateTime?)e.OldValue)?.TimeOfDay);
                 return;
             }
 

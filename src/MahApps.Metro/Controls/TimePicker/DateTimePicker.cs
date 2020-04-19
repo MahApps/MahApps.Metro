@@ -192,7 +192,9 @@
             DateTime ts;
             if (DateTime.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out ts))
             {
+                this._deactivateAdjustTimeOnDateChange = true;
                 this.SetCurrentValue(SelectedDateTimeProperty, ts);
+                this._deactivateAdjustTimeOnDateChange = false;
             }
             else
             {
