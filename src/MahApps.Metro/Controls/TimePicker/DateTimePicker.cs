@@ -1,41 +1,67 @@
-﻿namespace MahApps.Metro.Controls
-{
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Threading;
 
+namespace MahApps.Metro.Controls
+{
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
     /// </summary>
     [TemplatePart(Name = ElementCalendar, Type = typeof(Calendar))]
     public class DateTimePicker : TimePickerBase
     {
-        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty SelectedDateFormatProperty = DatePicker.SelectedDateFormatProperty.AddOwner(
-            typeof(DateTimePicker), 
-            new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation", 
-            typeof(Orientation), 
-            typeof(DateTimePicker), 
-            new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
-
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
         private bool _deactivateWriteValueToTextBox;
+
+        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
+        
+        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
+        
+        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
+        
+        public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
+        
+        public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
+        
+        public static readonly DependencyProperty SelectedDateFormatProperty
+            = DatePicker.SelectedDateFormatProperty.AddOwner(typeof(DateTimePicker), 
+                                                             new FrameworkPropertyMetadata(DatePickerFormat.Short, OnSelectedDateFormatChanged));
+
+        public static readonly DependencyProperty OrientationProperty
+            = DependencyProperty.Register("Orientation", 
+                                          typeof(Orientation), 
+                                          typeof(DateTimePicker), 
+                                          new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
 
         static DateTimePicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             IsClockVisibleProperty.OverrideMetadata(typeof(DateTimePicker), new PropertyMetadata(OnClockVisibilityChanged));
+        }
+
+        /// <inheritdoc />
+        protected override void FocusElementAfterIsDropDownOpenChanged()
+        {
+            if (this._calendar is null)
+            {
+                return;
+            }
+            
+            // When the popup is opened set focus to the DisplayDate button.
+            // Do this asynchronously because the IsDropDownOpen could
+            // have been set even before the template for the DatePicker is
+            // applied. And this would mean that the visuals wouldn't be available yet.
+
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate ()
+                {
+                    // setting the focus to the calendar will focus the correct date.
+                    this._calendar.Focus();
+                });
         }
 
         /// <summary>
@@ -120,23 +146,14 @@
 
         public override void OnApplyTemplate()
         {
-            _calendar = GetTemplateChild(ElementCalendar) as Calendar;
-            base.OnApplyTemplate();
-            SetDatePartValues();
-        }
-
-        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var dtp = d as DateTimePicker;
-            if (dtp != null)
+            if (_calendar != null)
             {
-                dtp.WriteValueToTextBox();
+                _calendar.SelectedDatesChanged -= OnSelectedDateChanged;
             }
-        }
 
-        protected override void ApplyBindings()
-        {
-            base.ApplyBindings();
+            base.OnApplyTemplate();
+
+            _calendar = GetTemplateChild(ElementCalendar) as Calendar;
 
             if (_calendar != null)
             {
@@ -148,6 +165,33 @@
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
                 _calendar.SelectedDatesChanged += OnSelectedDateChanged;
+            }
+
+            SetDatePartValues();
+        }
+
+        protected override void OnPopUpOpened()
+        {
+            if (this._calendar != null)
+            {
+                this._calendar.DisplayMode = CalendarMode.Month;
+                this._calendar.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            }
+        }
+
+        protected override void OnPopUpClosed()
+        {
+            if (_calendar.IsKeyboardFocusWithin)
+            {
+                this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            }
+        }
+
+        private static void OnSelectedDateFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is DateTimePicker dateTimePicker)
+            {
+                dateTimePicker.WriteValueToTextBox();
             }
         }
 
@@ -171,15 +215,6 @@
             return valueForTextBox;
         }
 
-        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
-        {
-            base.OnPreviewMouseUp(e);
-            if (Mouse.Captured is CalendarItem)
-            {
-                Mouse.Capture(null);
-            }
-        }
-
         protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
             base.OnRangeBaseValueChanged(sender, e);
@@ -189,21 +224,25 @@
 
         protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            DateTime ts;
-            if (DateTime.TryParse(((DatePickerTextBox)sender).Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out ts))
+            if (!(sender is DatePickerTextBox textBox))
+            {
+                return;
+            }
+
+            if (DateTime.TryParse(textBox.Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out var dateTime))
             {
                 this._deactivateAdjustTimeOnDateChange = true;
-                this.SetCurrentValue(SelectedDateTimeProperty, ts);
+                this.SetCurrentValue(SelectedDateTimeProperty, dateTime);
                 this._deactivateAdjustTimeOnDateChange = false;
             }
             else
             {
+                this.SetCurrentValue(SelectedDateTimeProperty, null);
                 if (SelectedDateTime == null)
                 {
                     // if already null, overwrite wrong data in textbox
                     WriteValueToTextBox();
                 }
-                this.SetCurrentValue(SelectedDateTimeProperty, null);
             }
         }
 
@@ -274,7 +313,7 @@
             if (dateTime != null)
             {
                 this.SetCurrentValue(DisplayDateProperty, dateTime.Value > DateTime.MinValue && dateTime.Value < DateTime.MaxValue ? dateTime.Value : DateTime.Today);
-                if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (Popup != null && Popup.IsOpen))
+                if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (this._popUp != null && this._popUp.IsOpen))
                 {
                     this.SetCurrentValue(SelectedDateTimeProperty, DisplayDate);
                 }

@@ -1,18 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Markup;
+
 namespace MahApps.Metro.Controls
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Markup;
-
     /// <summary>
     ///     Represents a base-class for time picking.
     /// </summary>
@@ -25,9 +25,38 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
     [TemplatePart(Name = ElementTextBox, Type = typeof(DatePickerTextBox))]
+    [TemplatePart(Name = ElementPopup, Type = typeof(Popup))]
     [DefaultEvent("SelectedDateTimeChanged")]
     public abstract class TimePickerBase : Control
     {
+        private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
+        private const string ElementButton = "PART_Button";
+        private const string ElementHourHand = "PART_HourHand";
+        private const string ElementHourPicker = "PART_HourPicker";
+        private const string ElementMinuteHand = "PART_MinuteHand";
+        private const string ElementMinutePicker = "PART_MinutePicker";
+        private const string ElementPopup = "PART_Popup";
+        private const string ElementSecondHand = "PART_SecondHand";
+        private const string ElementSecondPicker = "PART_SecondPicker";
+        private const string ElementTextBox = "PART_TextBox";
+
+        private Selector _ampmSwitcher;
+        private Button _dropDownButton;
+        private bool _deactivateRangeBaseEvent;
+        private bool _deactivateTextChangedEvent;
+        private bool _textInputChanged;
+        private UIElement _hourHand;
+        public Selector _hourInput;
+        private UIElement _minuteHand;
+        private Selector _minuteInput;
+        protected Popup _popUp;
+        private bool _disablePopupReopen;
+        private UIElement _secondHand;
+        private Selector _secondInput;
+        protected DatePickerTextBox _textBox;
+        protected bool _deactivateAdjustTimeOnDateChange;
+        private DateTime? _originalSelectedDateTime;
+
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
           typeof(IEnumerable<int>),
@@ -46,7 +75,52 @@ namespace MahApps.Metro.Controls
             typeof(TimePickerBase),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
 
-        public static readonly DependencyProperty IsDropDownOpenProperty = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty IsDropDownOpenProperty
+            = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase),
+                                                         new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged, OnCoerceIsDropDownOpen));
+
+        private static object OnCoerceIsDropDownOpen(DependencyObject d, object baseValue)
+        {
+            if (d is TimePickerBase tp && !tp.IsEnabled)
+            {
+                return false;
+            }
+
+            return baseValue;
+        }
+
+        /// <summary>
+        /// IsDropDownOpenProperty property changed handler.
+        /// </summary>
+        /// <param name="d">DatePicker that changed its IsDropDownOpen.</param>
+        /// <param name="e">DependencyPropertyChangedEventArgs.</param>
+        private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is TimePickerBase tp))
+            {
+                return;
+            }
+
+            bool newValue = (bool)e.NewValue;
+            if (tp._popUp != null && tp._popUp.IsOpen != newValue)
+            {
+                tp._popUp.IsOpen = newValue;
+                if (newValue)
+                {
+                    tp._originalSelectedDateTime = tp.SelectedDateTime;
+                    
+                    tp.FocusElementAfterIsDropDownOpenChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method is invoked when the <see cref="IsDropDownOpenProperty"/> changes.
+        /// </summary>
+        protected virtual void FocusElementAfterIsDropDownOpenChanged()
+        {
+            // noting here
+        }
 
         public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
             "IsClockVisible",
@@ -102,17 +176,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty SecondsItemStringFormatProperty = DependencyProperty.Register(nameof(SecondsItemStringFormat), typeof(string), typeof(TimePickerBase), new FrameworkPropertyMetadata(null));
 
-        private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
-        private const string ElementButton = "PART_Button";
-        private const string ElementHourHand = "PART_HourHand";
-        private const string ElementHourPicker = "PART_HourPicker";
-        private const string ElementMinuteHand = "PART_MinuteHand";
-        private const string ElementMinutePicker = "PART_MinutePicker";
-        private const string ElementPopup = "PART_Popup";
-        private const string ElementSecondHand = "PART_SecondHand";
-        private const string ElementSecondPicker = "PART_SecondPicker";
-        private const string ElementTextBox = "PART_TextBox";
-
         #region Do not change order of fields inside this region
 
         /// <summary>
@@ -161,21 +224,6 @@ namespace MahApps.Metro.Controls
         /// Returns a list containing {0, 15, 30, 45}.
         /// </returns>
         public static readonly IEnumerable<int> IntervalOf15 = CreateValueList(15);
-
-        private Selector _ampmSwitcher;
-        private Button _button;
-        private bool _deactivateRangeBaseEvent;
-        private bool _deactivateTextChangedEvent;
-        private bool _textInputChanged;
-        private UIElement _hourHand;
-        private Selector _hourInput;
-        private UIElement _minuteHand;
-        private Selector _minuteInput;
-        private Popup _popup;
-        private UIElement _secondHand;
-        private Selector _secondInput;
-        protected DatePickerTextBox _textBox;
-        protected bool _deactivateAdjustTimeOnDateChange;
 
         static TimePickerBase()
         {
@@ -386,11 +434,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected internal Popup Popup
-        {
-            get { return _popup; }
-        }
-
         protected CultureInfo SpecificCultureInfo
         {
             get { return Culture ?? Language.GetSpecificCulture(); }
@@ -406,8 +449,9 @@ namespace MahApps.Metro.Controls
 
             base.OnApplyTemplate();
 
-            _popup = GetTemplateChild(ElementPopup) as Popup;
-            _button = GetTemplateChild(ElementButton) as Button;
+            this._popUp = GetTemplateChild(ElementPopup) as Popup;
+
+            this._dropDownButton = GetTemplateChild(ElementButton) as Button;
             _hourInput = GetTemplateChild(ElementHourPicker) as Selector;
             _minuteInput = GetTemplateChild(ElementMinutePicker) as Selector;
             _secondInput = GetTemplateChild(ElementSecondPicker) as Selector;
@@ -426,16 +470,6 @@ namespace MahApps.Metro.Controls
             SetDefaultTimeOfDayValues();
             SubscribeEvents();
             ApplyCulture();
-            ApplyBindings();
-
-        }
-
-        protected virtual void ApplyBindings()
-        {
-            if (Popup != null)
-            {
-                Popup.SetBinding(Popup.IsOpenProperty, GetBinding(IsDropDownOpenProperty));
-            }
         }
 
         protected virtual void ApplyCulture()
@@ -499,8 +533,7 @@ namespace MahApps.Metro.Controls
 
         private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var tp = d as TimePickerBase;
-            if (tp != null)
+            if (d is TimePickerBase tp)
             {
                 tp.WriteValueToTextBox();
             }
@@ -516,12 +549,26 @@ namespace MahApps.Metro.Controls
 
         protected virtual void SubscribeEvents()
         {
+            if (_popUp != null)
+            {
+                _popUp.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
+                _popUp.Opened += PopUp_Opened;
+                _popUp.Closed += PopUp_Closed;
+
+                if (this.IsDropDownOpen)
+                {
+                    this._popUp.IsOpen = true;
+                }
+            }
+            
             SubscribeRangeBaseValueChanged(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
 
-            if (_button != null)
+            if (this._dropDownButton != null)
             {
-                _button.Click += OnButtonClicked;
+                this._dropDownButton.Click += this.OnDropDownButtonClicked;
+                _dropDownButton.AddHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave), true);
             }
+            
             if (_textBox != null)
             {
                 _textBox.TextChanged += OnTextChanged;
@@ -529,19 +576,89 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
+        {
+            if (this.IsDropDownOpen)
+            {
+                if (!(this._dropDownButton?.InputHitTest(e.GetPosition(this._dropDownButton)) is null))
+                {
+                    return;
+                }
+
+                this.SetCurrentValue(IsDropDownOpenProperty, false);
+            }
+        }
+
         protected virtual void UnSubscribeEvents()
         {
+            if (_popUp != null)
+            {
+                _popUp.RemoveHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
+                _popUp.Opened -= PopUp_Opened;
+                _popUp.Closed -= PopUp_Closed;
+            }
+            
             UnsubscribeRangeBaseValueChanged(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
 
-            if (_button != null)
+            if (this._dropDownButton != null)
             {
-                _button.Click -= OnButtonClicked;
+                this._dropDownButton.Click -= this.OnDropDownButtonClicked;
+                _dropDownButton.RemoveHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave));
             }
+            
             if (_textBox != null)
             {
                 _textBox.TextChanged -= OnTextChanged;
                 _textBox.LostFocus -= InternalOnTextBoxLostFocus;
             }
+        }
+
+        private void PopUp_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Popup popup && !popup.StaysOpen)
+            {
+                if (this._dropDownButton?.InputHitTest(e.GetPosition(this._dropDownButton)) != null)
+                {
+                    // This popup is being closed by a mouse press on the drop down button
+                    // The following mouse release will cause the closed popup to immediately reopen.
+                    // Raise a flag to block reopeneing the popup
+                    this._disablePopupReopen = true;
+                }
+            }
+        }
+
+        private void PopUp_Opened(object sender, EventArgs e)
+        {
+            if (!this.IsDropDownOpen)
+            {
+                this.SetCurrentValue(IsDropDownOpenProperty, true);
+            }
+
+            this.OnPopUpOpened();
+
+            // this.OnCalendarOpened(new RoutedEventArgs());
+        }
+
+        protected virtual void OnPopUpOpened()
+        {
+            // nothing here
+        }
+
+        private void PopUp_Closed(object sender, EventArgs e)
+        {
+            if (this.IsDropDownOpen)
+            {
+                this.SetCurrentValue(IsDropDownOpenProperty, false);
+            }
+
+            this.OnPopUpClosed();
+
+            // OnCalendarClosed(new RoutedEventArgs());
+        }
+
+        protected virtual void OnPopUpClosed()
+        {
+            // nothing here
         }
 
         protected void WriteValueToTextBox(string value)
@@ -627,21 +744,6 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.Language = e.NewValue as XmlLanguage ?? XmlLanguage.Empty;
 
             timePartPickerBase.ApplyCulture();
-        }
-
-        protected override void OnIsKeyboardFocusWithinChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnIsKeyboardFocusWithinChanged(e);
-            // To hide the popup when the user e.g. alt+tabs, monitor for when the window becomes a background window.
-            if (!(bool)e.NewValue)
-            {
-                this.IsDropDownOpen = false;
-            }
-        }
-
-        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs e)
-        {
-            this.IsDropDownOpen = false;
         }
 
         private static void OnGotFocus(object sender, RoutedEventArgs e)
@@ -816,12 +918,33 @@ namespace MahApps.Metro.Controls
             return 0;
         }
 
-        private void OnButtonClicked(object sender, RoutedEventArgs e)
+        private void OnDropDownButtonClicked(object sender, RoutedEventArgs e)
         {
-            IsDropDownOpen = !IsDropDownOpen;
-            if (Popup != null)
+            TogglePopUp();
+        }
+
+        private void DropDownButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this._disablePopupReopen = false;
+        }
+
+        private void TogglePopUp()
+        {
+            if (this.IsDropDownOpen)
             {
-                Popup.IsOpen = IsDropDownOpen;
+                this.SetCurrentValue(IsDropDownOpenProperty, false);
+            }
+            else
+            {
+                if (this._disablePopupReopen)
+                {
+                    this._disablePopupReopen = false;
+                }
+                else
+                {
+                    // SetSelectedDate();
+                    this.SetCurrentValue(IsDropDownOpenProperty, true);
+                }
             }
         }
 
