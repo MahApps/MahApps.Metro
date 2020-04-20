@@ -338,12 +338,19 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="ColorList">
-                <Controls:ColorListBox Header="Buildin-Colors" ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
-            </TabItem>
             
-            <TabItem Header="ColorCanvas">
-                <Controls:ColorCanvas  />
+            <TabItem Header="ColorPicker (Preview)">
+                <ScrollViewer>
+                    <StackPanel>
+                        <GroupBox Header="Color Canvas" Margin="10">
+                            <Controls:ColorCanvas x:Name="ColorCanvasExample" />
+                        </GroupBox>
+                        <Controls:ColorListBox Header="Buildin-Colors" Margin="5,0,5,5"
+                                       SelectedItem="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}"
+                                       ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
+                    </StackPanel>
+                </ScrollViewer>
+                
             </TabItem>
 
         </Controls:MetroAnimatedSingleRowTabControl>

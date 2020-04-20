@@ -26,7 +26,14 @@ namespace MahApps.Metro.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is string text)
+            {
+                return ColorHelper.ColorFromString(text) ?? Binding.DoNothing;
+            }
+            else
+            {
+                throw new InvalidCastException("Unable to convert the provided value to System.Windows.Media.Color");
+            }
         }
     }
 }

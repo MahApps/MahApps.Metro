@@ -113,7 +113,7 @@ namespace MahApps.Metro.Controls.ColorPicker
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
         public static string GetColorName(Color color)
         {
-            return ColorNames.TryGetValue(color, out string name) ? name : null;
+            return ColorNames.TryGetValue(color, out string name) ? name : color.ToString();
         }
 
     }

@@ -7,10 +7,14 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MahApps.Styles.ColorCanvas.Slider.HueSlider.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorComponentSlider.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Converters:PercentageToGridLengthConverter x:Key="PercentageToGridLengthConverter" />
+    <Converters:ColorChannelMinMaxConverter x:Key="ColorChannelMinMaxConverter" />
+    <Converters:InvertBoolConverter x:Key="InvertBoolConverter" />
+    <Converters:ColorToNameConverter x:Key="ColorToNameConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DrawingBrush x:Key="MahApps.Brushes.Checkerd"
                   TileMode="Tile"
@@ -71,15 +75,18 @@
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MinWidth="110" />
-                                    <ColumnDefinition Width="25" />
-                                    <ColumnDefinition Width="*" MinWidth="110" />
+                                    <ColumnDefinition Width="*"
+                                                      MinWidth="110"
+                                                      MaxWidth="310" />
+                                    <ColumnDefinition Width="*"
+                                                      MinWidth="110"
+                                                      MaxWidth="310" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"
                                                    MinHeight="110"
                                                    MaxHeight="310" />
-                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
 
                                 <!--  Saturation and Value  -->
@@ -148,31 +155,20 @@
                                     </Grid>
                                 </Border>
 
-                                <!--  HueSlider  -->
-                                <Slider Grid.Column="1"
-                                        Margin="0,5,5,5"
-                                        IsMoveToPointEnabled="True"
-                                        Style="{StaticResource MahApps.Styles.Slider.HueSlider}"
-                                        Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
-
-                                <!--  Selected Color Preview and Opacity  -->
+                                <!--  Selected Color Preview  -->
                                 <Grid Grid.Row="1" Margin="5,0,5,5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="Preview" Margin="0,2" />
+                                    <TextBlock Text="Preview"
+                                               Margin="2,0,0,5"
+                                               VerticalAlignment="Center" />
 
 
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
-                                            Height="30"
                                             Margin="5,0,0,5"
                                             Background="{StaticResource MahApps.Brushes.Checkerd}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
@@ -184,207 +180,254 @@
                                         </Rectangle>
                                     </Border>
 
-                                    <TextBlock Text="Opacity"
-                                               Grid.Row="1"
-                                               Grid.Column="0"
-                                               VerticalAlignment="Center" />
-
-                                    <Grid Grid.Row="1" Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" MinWidth="110" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Slider Grid.Column="0"
-                                                Margin="5,0,2,0"
-                                                Maximum="255"
-                                                Minimum="0"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
-                                        <Controls:NumericUpDown Grid.Column="1"
-                                                                Maximum="255"
-                                                                Minimum="0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
-
-                                    </Grid>
-
                                 </Grid>
 
                                 <!--  Sliders for Values  -->
-                                <ScrollViewer Grid.Column="2"
+                                <ScrollViewer Grid.Column="1"
                                               Margin="0,5,5,5"
+                                              Grid.IsSharedSizeScope="True"
                                               HorizontalScrollBarVisibility="Auto"
                                               VerticalScrollBarVisibility="Auto">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" MinWidth="{DynamicResource MahApps.Sizes.Font.Normal}" />
-                                            <ColumnDefinition Width="*" MinWidth="50" />
-                                            <ColumnDefinition Width="Auto" MinWidth="100" />
-                                        </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"
+                                                                  MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                                  SharedSizeGroup="Label" />
+                                                <ColumnDefinition Width="*" MinWidth="50" />
+                                                <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                        <!--  R  -->
-                                        <TextBlock Text="R"
-                                                   Grid.Row="0"
-                                                   Grid.Column="0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="0"
-                                                Grid.Column="1"
-                                                Maximum="255"
-                                                Minimum="0"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
-                                        <Controls:NumericUpDown Grid.Row="0"
-                                                                Grid.Column="2"
-                                                                Margin="2"
-                                                                Maximum="255"
-                                                                Minimum="0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
+                                            <!--  R  -->
+                                            <TextBlock Text="R"
+                                                       Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=RMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=RMax}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="0"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Maximum="255"
+                                                                    Minimum="0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
 
-                                        <!--  G  -->
-                                        <TextBlock Text="G"
-                                                   Grid.Row="1"
-                                                   Grid.Column="0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="1"
-                                                Grid.Column="1"
-                                                Maximum="255"
-                                                Minimum="0"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
-                                        <Controls:NumericUpDown Grid.Row="1"
-                                                                Grid.Column="2"
-                                                                Margin="2"
-                                                                Maximum="255"
-                                                                Minimum="0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
+                                            <!--  G  -->
+                                            <TextBlock Text="G"
+                                                       Grid.Row="1"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=GMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=GMax}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="1"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Maximum="255"
+                                                                    Minimum="0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
 
-                                        <!--  B  -->
-                                        <TextBlock Text="B"
-                                                   Grid.Row="2"
-                                                   Grid.Column="0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="2"
-                                                Grid.Column="1"
-                                                Maximum="255"
-                                                Minimum="0"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
-                                        <Controls:NumericUpDown Grid.Row="2"
-                                                                Grid.Column="2"
-                                                                Margin="2"
-                                                                Maximum="255"
-                                                                Minimum="0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
+                                            <!--  B  -->
+                                            <TextBlock Text="B"
+                                                       Grid.Row="2"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=BMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=BMax}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="2"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Maximum="255"
+                                                                    Minimum="0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=B}" />
+                                        </Grid>
 
-                                        <!--  H  -->
-                                        <TextBlock Text="H"
-                                                   Grid.Row="3"
-                                                   Grid.Column="0"
-                                                   Margin="0,8,0,0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="3"
-                                                Grid.Column="1"
-                                                Margin="0,8,0,0"
-                                                Maximum="360"
-                                                Minimum="0"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
-                                        <Controls:NumericUpDown Grid.Row="3"
-                                                                Grid.Column="2"
-                                                                Margin="2,10,2,2"
-                                                                Maximum="360"
-                                                                Minimum="0"
-                                                                StringFormat="0 °"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
+                                        <Grid Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"
+                                                                  MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                                  SharedSizeGroup="Label" />
+                                                <ColumnDefinition Width="*" MinWidth="50" />
+                                                <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            </Grid.ColumnDefinitions>
 
-                                        <!--  S  -->
-                                        <TextBlock Text="S"
-                                                   Grid.Row="4"
-                                                   Grid.Column="0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="4"
-                                                Grid.Column="1"
-                                                Maximum="1"
-                                                Minimum="0"
-                                                SmallChange="0.01"
-                                                LargeChange="0.05"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
-                                        <Controls:NumericUpDown Grid.Row="4"
-                                                                Grid.Column="2"
-                                                                Margin="2"
-                                                                Maximum="1"
-                                                                Minimum="0"
-                                                                Interval="0.01"
-                                                                StringFormat="p0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                        <!--  Value  -->
-                                        <TextBlock Text="V"
-                                                   Grid.Row="5"
-                                                   Grid.Column="0"
-                                                   VerticalAlignment="Center" />
-                                        <Slider Grid.Row="5"
-                                                Grid.Column="1"
-                                                Maximum="1"
-                                                Minimum="0"
-                                                SmallChange="0.01"
-                                                LargeChange="0.05"
-                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
-                                        <Controls:NumericUpDown Grid.Row="5"
-                                                                Grid.Column="2"
-                                                                Margin="2"
-                                                                Maximum="1"
-                                                                Minimum="0"
-                                                                Interval="0.01"
-                                                                StringFormat="p0"
-                                                                Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
+                                            <!--  H  -->
+                                            <TextBlock Text="H"
+                                                       Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.Hue}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Controls:NumericUpDown Grid.Row="0"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Maximum="360"
+                                                                    Minimum="0"
+                                                                    StringFormat="0 °"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
-                                    </Grid>
+                                            <!--  S  -->
+                                            <TextBlock Text="S"
+                                                       Grid.Row="1"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="White" />
+                                                        <GradientStop Offset="1" Color="{Binding ElementName=PART_SaturationValueBox_Background, Path=Color}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="1"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Interval="0.01"
+                                                                    Maximum="1"
+                                                                    Minimum="0"
+                                                                    StringFormat="p0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
+
+                                            <!--  Value  -->
+                                            <TextBlock Text="V"
+                                                       Grid.Row="2"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="Black" />
+                                                        <GradientStop Offset="1" Color="{Binding ElementName=PART_SaturationValueBox_Background, Path=Color}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="2"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Interval="0.01"
+                                                                    Maximum="1"
+                                                                    Minimum="0"
+                                                                    StringFormat="p0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}" />
+
+                                        </Grid>
+
+                                        <Grid Margin="0,10,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"
+                                                                  MinWidth="{DynamicResource MahApps.Font.Size.Content}"
+                                                                  SharedSizeGroup="Label" />
+                                                <ColumnDefinition Width="*" MinWidth="50" />
+                                                <ColumnDefinition Width="Auto" MinWidth="100" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--  A  -->
+                                            <TextBlock Text="A"
+                                                       Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       VerticalAlignment="Center" />
+                                            <Slider Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
+                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=AMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=AMax}" />
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <Controls:NumericUpDown Grid.Row="0"
+                                                                    Grid.Column="2"
+                                                                    Margin="2"
+                                                                    Maximum="255"
+                                                                    Minimum="0"
+                                                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=A}" />
+                                        </Grid>
+                                    </StackPanel>
+
                                 </ScrollViewer>
 
                                 <!--  HTML String und Name  -->
 
                                 <Grid Grid.Row="2"
                                       Grid.Column="2"
-                                      Margin="5">
+                                      Margin="5,0,5,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="Hex-Code "
-                                               Grid.Row="0"
-                                               Grid.Column="0"
-                                               VerticalAlignment="Center" />
-                                    <TextBox x:Name="TextBox_HexCode"
-                                             Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
-                                             Grid.Row="0"
+
+                                    <UniformGrid Grid.Column="0" Columns="2">
+                                        <ToggleButton x:Name="PART_ToggleShowName"
+                                                      Content="Name"
+                                                      Margin="2,0,0,5" />
+                                        <ToggleButton x:Name="PART_ToggleShowHex"
+                                                      Content="Hex"
+                                                      Margin="2,0,0,5"
+                                                      IsChecked="{Binding ElementName=PART_ToggleShowName, Path=IsChecked, Converter={StaticResource InvertBoolConverter}, Mode=TwoWay}" />
+                                    </UniformGrid>
+
+                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
                                              Grid.Column="1"
-                                             Margin="2" />
-                                    <TextBlock Text="Name "
-                                               Grid.Row="1"
-                                               Grid.Column="0"
-                                               VerticalAlignment="Center" />
-                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, Mode=OneWay, TargetNullValue='Unknown'}"
-                                             Grid.Row="1"
+                                             Margin="2,0,0,5"
+                                             Visibility="{Binding ElementName=PART_ToggleShowHex, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}"
                                              Grid.Column="1"
-                                             Margin="2"
-                                             IsReadOnly="True" />
+                                             Margin="2,0,0,5"
+                                             Visibility="{Binding ElementName=PART_ToggleShowName, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                                     <Controls:ColorEyeDropper x:Name="PART_PickColorFromScreen"
-                                                              Grid.Row="0"
                                                               Grid.Column="2"
-                                                              Width="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}"
-                                                              Height="{Binding ElementName=TextBox_HexCode, Path=ActualHeight}"
+                                                              Height="auto"
+                                                              Margin="2,0,0,5"
                                                               SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
                                 </Grid>
                             </Grid>
