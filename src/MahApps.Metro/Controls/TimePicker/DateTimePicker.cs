@@ -148,7 +148,8 @@ namespace MahApps.Metro.Controls
         {
             if (_calendar != null)
             {
-                _calendar.SelectedDatesChanged -= OnSelectedDateChanged;
+                _calendar.SelectedDatesChanged -= OnCalendarSelectedDateChanged;
+                _calendar.PreviewMouseUp -= OnCalendarPreviewMouseUp;
             }
 
             base.OnApplyTemplate();
@@ -164,10 +165,19 @@ namespace MahApps.Metro.Controls
                 _calendar.SetBinding(Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
-                _calendar.SelectedDatesChanged += OnSelectedDateChanged;
+                _calendar.SelectedDatesChanged += OnCalendarSelectedDateChanged;
+                _calendar.PreviewMouseUp += OnCalendarPreviewMouseUp;
             }
 
             SetDatePartValues();
+        }
+
+        private static void OnCalendarPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.Captured is CalendarItem)
+            {
+                Mouse.Capture(null);
+            }
         }
 
         protected override void OnPopUpOpened()
@@ -269,7 +279,7 @@ namespace MahApps.Metro.Controls
             d.CoerceValue(OrientationProperty);
         }
 
-        private static void OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private static void OnCalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var dateTimePicker = (DateTimePicker)((Calendar)sender).TemplatedParent;
 
