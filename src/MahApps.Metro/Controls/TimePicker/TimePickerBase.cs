@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace MahApps.Metro.Controls
         private Selector _secondInput;
         protected DatePickerTextBox _textBox;
         protected bool _deactivateAdjustTimeOnDateChange;
-        private DateTime? _originalSelectedDateTime;
+        protected DateTime? _originalSelectedDateTime;
 
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
           "SourceHours",
@@ -547,7 +548,7 @@ namespace MahApps.Metro.Controls
             SetDefaultTimeOfDayValue(_ampmSwitcher);
         }
 
-        protected virtual void SubscribeEvents()
+        private void SubscribeEvents()
         {
             if (_popUp != null)
             {
@@ -561,7 +562,7 @@ namespace MahApps.Metro.Controls
                 }
             }
             
-            SubscribeRangeBaseValueChanged(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
+            this.SubscribeTimePickerEvents(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
 
             if (this._dropDownButton != null)
             {
@@ -571,8 +572,34 @@ namespace MahApps.Metro.Controls
             
             if (_textBox != null)
             {
-                _textBox.TextChanged += OnTextChanged;
-                _textBox.LostFocus += InternalOnTextBoxLostFocus;
+                _textBox.AddHandler(TextBox.KeyDownEvent, new KeyEventHandler(TextBox_KeyDown), true);
+                _textBox.TextChanged += this.TextBox_TextChanged;
+                _textBox.LostFocus += this.TextBox_LostFocus;
+            }
+        }
+
+        private void UnSubscribeEvents()
+        {
+            if (_popUp != null)
+            {
+                _popUp.RemoveHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
+                _popUp.Opened -= PopUp_Opened;
+                _popUp.Closed -= PopUp_Closed;
+            }
+
+            this.UnsubscribeTimePickerEvents(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
+
+            if (this._dropDownButton != null)
+            {
+                this._dropDownButton.Click -= this.OnDropDownButtonClicked;
+                _dropDownButton.RemoveHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave));
+            }
+
+            if (_textBox != null)
+            {
+                _textBox.RemoveHandler(TextBox.KeyDownEvent, new KeyEventHandler(TextBox_KeyDown));
+                _textBox.TextChanged -= this.TextBox_TextChanged;
+                _textBox.LostFocus -= this.TextBox_LostFocus;
             }
         }
 
@@ -586,30 +613,6 @@ namespace MahApps.Metro.Controls
                 }
 
                 this.SetCurrentValue(IsDropDownOpenProperty, false);
-            }
-        }
-
-        protected virtual void UnSubscribeEvents()
-        {
-            if (_popUp != null)
-            {
-                _popUp.RemoveHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(PopUp_PreviewMouseLeftButtonDown));
-                _popUp.Opened -= PopUp_Opened;
-                _popUp.Closed -= PopUp_Closed;
-            }
-            
-            UnsubscribeRangeBaseValueChanged(_hourInput, _minuteInput, _secondInput, _ampmSwitcher);
-
-            if (this._dropDownButton != null)
-            {
-                this._dropDownButton.Click -= this.OnDropDownButtonClicked;
-                _dropDownButton.RemoveHandler(MouseLeaveEvent, new MouseEventHandler(DropDownButton_MouseLeave));
-            }
-            
-            if (_textBox != null)
-            {
-                _textBox.TextChanged -= OnTextChanged;
-                _textBox.LostFocus -= InternalOnTextBoxLostFocus;
             }
         }
 
@@ -709,17 +712,30 @@ namespace MahApps.Metro.Controls
             return Enumerable.Empty<int>();
         }
 
-        private void InternalOnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        private void TimePickerPreviewKeyDown(object sender, RoutedEventArgs e)
         {
-            if (_textInputChanged)
+            if (!(e.OriginalSource is Selector))
             {
-                _textInputChanged = false;
+                return;
+            }
 
-                OnTextBoxLostFocus(sender, e);
+            var selector = sender as Selector;
+            var keyEventArgs = (KeyEventArgs)e;
+
+            Debug.Assert(selector != null);
+            Debug.Assert(keyEventArgs != null);
+
+            if (keyEventArgs.Key == Key.Escape || keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space)
+            {
+                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                if (keyEventArgs.Key == Key.Escape)
+                {
+                    this.SetCurrentValue(SelectedDateTimeProperty, this._originalSelectedDateTime);
+                }
             }
         }
 
-        private void InternalOnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePickerSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!_deactivateRangeBaseEvent)
             {
@@ -808,14 +824,6 @@ namespace MahApps.Metro.Controls
             timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<DateTime?>(SelectedDateTimeChangedEvent, (DateTime?)e.OldValue, (DateTime?)e.NewValue));
 
             timePartPickerBase.WriteValueToTextBox();
-        }
-
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!_deactivateTextChangedEvent)
-            {
-                _textInputChanged = true;
-            }
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
@@ -1015,19 +1023,77 @@ namespace MahApps.Metro.Controls
             SetAmPmVisibility();
         }
 
-        private void SubscribeRangeBaseValueChanged(params Selector[] selectors)
+        private void UnsubscribeTimePickerEvents(params Selector[] selectors)
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged += InternalOnRangeBaseValueChanged;
+                selector.PreviewKeyDown -= this.TimePickerPreviewKeyDown;
+                selector.SelectionChanged -= this.TimePickerSelectionChanged;
             }
         }
 
-        private void UnsubscribeRangeBaseValueChanged(params Selector[] selectors)
+        private void SubscribeTimePickerEvents(params Selector[] selectors)
         {
             foreach (var selector in selectors.Where(i => i != null))
             {
-                selector.SelectionChanged -= InternalOnRangeBaseValueChanged;
+                selector.PreviewKeyDown += this.TimePickerPreviewKeyDown;
+                selector.SelectionChanged += this.TimePickerSelectionChanged;
+            }
+        }
+
+        private bool ProcessKey(KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.System:
+                {
+                    switch (e.SystemKey)
+                    {
+                        case Key.Down:
+                        {
+                            if ((Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+                            {
+                                TogglePopUp();
+                                return true;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+
+                case Key.Enter:
+                {
+                    // SetSelectedDate();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_textInputChanged)
+            {
+                _textInputChanged = false;
+
+                OnTextBoxLostFocus(sender, e);
+            }
+        }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = ProcessKey(e) || e.Handled;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_deactivateTextChangedEvent)
+            {
+                _textInputChanged = true;
             }
         }
     }
