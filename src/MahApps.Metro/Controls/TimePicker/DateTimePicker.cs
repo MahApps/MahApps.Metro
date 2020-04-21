@@ -150,6 +150,7 @@ namespace MahApps.Metro.Controls
             if (_calendar != null)
             {
                 _calendar.PreviewKeyDown -= this.CalendarPreviewKeyDown;
+                _calendar.DisplayDateChanged -= this.CalendarDisplayDateChanged;
                 _calendar.SelectedDatesChanged -= CalendarSelectedDateChanged;
                 _calendar.PreviewMouseUp -= CalendarPreviewMouseUp;
             }
@@ -161,6 +162,7 @@ namespace MahApps.Metro.Controls
             if (_calendar != null)
             {
                 _calendar.PreviewKeyDown += this.CalendarPreviewKeyDown;
+                _calendar.DisplayDateChanged += this.CalendarDisplayDateChanged;
                 _calendar.SelectedDatesChanged += CalendarSelectedDateChanged;
                 _calendar.PreviewMouseUp += CalendarPreviewMouseUp;
                 
@@ -181,6 +183,14 @@ namespace MahApps.Metro.Controls
             if (Mouse.Captured is CalendarItem)
             {
                 Mouse.Capture(null);
+            }
+        }
+
+        private void CalendarDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
+        {
+            if (e.AddedDate is DateTime addedDate && addedDate != this.DisplayDate)
+            {
+                SetCurrentValue(DisplayDateProperty, addedDate);
             }
         }
 
