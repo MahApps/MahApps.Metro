@@ -9,15 +9,15 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
-    public class ColorListBox : ListBox
+    public class ColorPalette : ListBox
     {
-        static ColorListBox()
+        static ColorPalette()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorListBox), new FrameworkPropertyMetadata(typeof(ColorListBox)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPalette), new FrameworkPropertyMetadata(typeof(ColorPalette)));
         }
 
         // Using a DependencyProperty as the backing store for Header.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ColorListBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(object), typeof(ColorPalette), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or Sets the Header of this Control

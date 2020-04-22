@@ -79,6 +79,9 @@ namespace MahApps.Metro.Controls.ColorPicker
 
             try
             {
+                // if we don't have a string, we cannot have any Color
+                if (string.IsNullOrWhiteSpace(ColorName)) return null;
+
                 if (! ColorName.StartsWith("#"))
                 {
                     result = ColorNames.FirstOrDefault(x => string.Equals(x.Value, ColorName, StringComparison.OrdinalIgnoreCase)).Key as Color?;

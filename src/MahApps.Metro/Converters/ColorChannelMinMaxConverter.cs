@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using MahApps.Metro.Controls.ColorPicker;
 
 namespace MahApps.Metro.Converters
 {
@@ -50,6 +51,9 @@ namespace MahApps.Metro.Converters
                     case "amax":
                         return Color.FromArgb(255, color.R, color.G, color.B);
 
+                    case "svmax":
+                        HSVColor hsv = new HSVColor(color);
+                        return (new HSVColor(hsv.Hue, 1, 1)).ToColor();
                     default:
                         break;
                 }

@@ -97,7 +97,7 @@
                                         BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                         BorderThickness="1">
                                     <Border.Background>
-                                        <SolidColorBrush x:Name="PART_SaturationValueBox_Background" Color="Red" />
+                                        <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SVMax}" />
                                     </Border.Background>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -318,7 +318,7 @@
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                         <GradientStop Offset="0" Color="White" />
-                                                        <GradientStop Offset="1" Color="{Binding ElementName=PART_SaturationValueBox_Background, Path=Color}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SVMax}" />
                                                     </LinearGradientBrush>
                                                 </Slider.Background>
                                             </Slider>
@@ -343,7 +343,7 @@
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                         <GradientStop Offset="0" Color="Black" />
-                                                        <GradientStop Offset="1" Color="{Binding ElementName=PART_SaturationValueBox_Background, Path=Color}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SVMax}" />
                                                     </LinearGradientBrush>
                                                 </Slider.Background>
                                             </Slider>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -519,6 +520,11 @@ namespace MetroDemo
                                                   ? mySettings.AffirmativeButtonText
                                                   : mySettings.NegativeButtonText +
                                                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+        }
+
+        private void ColorCanvasExample_SelectedColorChanged(object sender, TimePickerBaseSelectionChangedEventArgs<Color> e)
+        {
+            ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", e.NewValue, new SolidColorBrush(e.NewValue), true));
         }
     }
 }

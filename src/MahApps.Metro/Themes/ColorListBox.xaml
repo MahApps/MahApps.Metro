@@ -7,21 +7,22 @@
 
     <Style x:Key="MahApps.Styles.ListBoxItem.ColorListItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.GrayNormal}" />
         <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-        <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
-        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
         <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-        <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentSelectedColor}" />
+        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="1" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="RenderOptions.ClearTypeHint" Value="{Binding Path=(RenderOptions.ClearTypeHint), Mode=OneWay, FallbackValue=Auto, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -30,27 +31,28 @@
                     <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        <Border Margin="{TemplateBinding Padding}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedBackgroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1" />
                             <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
                         </MultiTrigger>
 
@@ -103,7 +105,7 @@
         </Border>
     </DataTemplate>
 
-    <Style x:Key="MahApps.Styles.ColorListBox" TargetType="mah:ColorListBox">
+    <Style x:Key="MahApps.Styles.ColorListBox" TargetType="mah:ColorPalette">
         <Setter Property="Header" Value="Default Colors" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -124,7 +126,7 @@
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="mah:ColorListBox">
+                <ControlTemplate TargetType="mah:ColorPalette">
                     <GroupBox Margin="{TemplateBinding Margin}"
                               Padding="{TemplateBinding Padding}"
                               mah:HeaderedControlHelper.HeaderBackground="{TemplateBinding mah:HeaderedControlHelper.HeaderBackground}"

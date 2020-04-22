@@ -343,11 +343,12 @@
                 <ScrollViewer>
                     <StackPanel>
                         <GroupBox Header="Color Canvas" Margin="10">
-                            <Controls:ColorCanvas x:Name="ColorCanvasExample" />
+                            <Controls:ColorCanvas x:Name="ColorCanvasExample"
+                                                  SelectedColorChanged="ColorCanvasExample_SelectedColorChanged"/>
                         </GroupBox>
-                        <Controls:ColorListBox Header="Buildin-Colors" Margin="5,0,5,5"
-                                       SelectedItem="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}"
-                                       ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
+                        <Controls:ColorPalette Header="Buildin-Colors" Margin="5,0,5,5"
+                                               SelectedValue="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}"
+                                               ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
                     </StackPanel>
                 </ScrollViewer>
                 
