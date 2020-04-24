@@ -49,6 +49,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/FlipView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorCanvas.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorEyeDropper.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

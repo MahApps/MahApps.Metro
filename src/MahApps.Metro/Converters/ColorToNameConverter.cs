@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls.ColorPicker;
+﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

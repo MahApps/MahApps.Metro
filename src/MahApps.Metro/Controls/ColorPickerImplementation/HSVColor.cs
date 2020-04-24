@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace MahApps.Metro.Controls.ColorPicker
+namespace MahApps.Metro.Controls
 {
     public struct HSVColor
     {
-
         public double Hue { get; private set; }
         public double Saturation { get; private set; }
         public double Value { get; private set; }

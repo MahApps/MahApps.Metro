@@ -6,7 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using MahApps.Metro.Controls.ColorPicker;
 
 namespace MahApps.Metro.Controls
 {

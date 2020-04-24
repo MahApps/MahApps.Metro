@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using MahApps.Metro.Controls.ColorPicker;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Converters
 {
@@ -25,6 +25,7 @@ namespace MahApps.Metro.Converters
 
             if (value is Color color && parameter is string channel)
             {
+                HSVColor hsv;
                 switch (channel.ToLower())
                 {
                     case "rmin":
@@ -51,8 +52,24 @@ namespace MahApps.Metro.Converters
                     case "amax":
                         return Color.FromArgb(255, color.R, color.G, color.B);
 
+                    case "smin":
+                        hsv = new HSVColor(color);
+                        return (new HSVColor(hsv.Hue, 0, hsv.Value)).ToColor();
+
+                    case "smax":
+                        hsv = new HSVColor(color);
+                        return (new HSVColor(hsv.Hue, 1, hsv.Value)).ToColor();
+
+                    case "vmin":
+                        hsv = new HSVColor(color);
+                        return (new HSVColor(hsv.Hue, hsv.Saturation, 0)).ToColor();
+
+                    case "vmax":
+                        hsv = new HSVColor(color);
+                        return (new HSVColor(hsv.Hue, hsv.Saturation, 1)).ToColor();
+
                     case "svmax":
-                        HSVColor hsv = new HSVColor(color);
+                        hsv = new HSVColor(color);
                         return (new HSVColor(hsv.Hue, 1, 1)).ToColor();
                     default:
                         break;

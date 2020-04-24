@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 
-namespace MahApps.Metro.Controls.ColorPicker
+namespace MahApps.Metro.Controls
 {
 
     /// <summary>

@@ -317,8 +317,8 @@
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                        <GradientStop Offset="0" Color="White" />
-                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SVMax}" />
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SMax}" />
                                                     </LinearGradientBrush>
                                                 </Slider.Background>
                                             </Slider>
@@ -342,8 +342,8 @@
                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Value}">
                                                 <Slider.Background>
                                                     <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                        <GradientStop Offset="0" Color="Black" />
-                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=SVMax}" />
+                                                        <GradientStop Offset="0" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=VMin}" />
+                                                        <GradientStop Offset="1" Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor, Converter={StaticResource ColorChannelMinMaxConverter}, ConverterParameter=VMax}" />
                                                     </LinearGradientBrush>
                                                 </Slider.Background>
                                             </Slider>

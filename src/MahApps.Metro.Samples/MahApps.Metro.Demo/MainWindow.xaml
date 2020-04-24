@@ -342,6 +342,25 @@
             <TabItem Header="ColorPicker (Preview)">
                 <ScrollViewer>
                     <StackPanel>
+                        <Controls:ColorPicker SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" Margin="10,10,10,0"
+                                              SelectedColorTemplate="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}">
+                            <Controls:ColorPicker.ColorPalettes>
+                                <Controls:ColorPalette Header="Test">
+                                    <Color>black</Color>
+                                    <Color>white</Color>
+                                    <Color>red</Color>
+                                    <Color>blue</Color>
+                                    <Color>yellow</Color>
+                                    <Color>orange</Color>
+                                </Controls:ColorPalette>
+                                
+                                <Controls:ColorPalette Header="Test 2">
+                                    <Color>green</Color>
+                                </Controls:ColorPalette>
+                                
+                            </Controls:ColorPicker.ColorPalettes>
+                        </Controls:ColorPicker>
+
                         <GroupBox Header="Color Canvas" Margin="10">
                             <Controls:ColorCanvas x:Name="ColorCanvasExample"
                                                   SelectedColorChanged="ColorCanvasExample_SelectedColorChanged"/>

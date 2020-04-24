@@ -39,6 +39,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ContentControlEx.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ColorPicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <theming:MahAppsLibraryThemeProvider x:Key="{x:Static theming:MahAppsLibraryThemeProvider.DefaultInstance}" />
@@ -60,5 +61,6 @@
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ColorListBox}" TargetType="{x:Type Controls:ColorPalette}" />
     <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type Controls:FlipView}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ColorPicker}" TargetType="{x:Type Controls:ColorPicker}" />
 
 </ResourceDictionary>
