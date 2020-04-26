@@ -345,29 +345,18 @@
                         <Controls:ColorPicker SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" Margin="10,10,10,0"
                                               SelectedColorTemplate="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}">
                             <Controls:ColorPicker.ColorPalettes>
-                                <Controls:ColorPalette Header="Test">
-                                    <Color>black</Color>
-                                    <Color>white</Color>
-                                    <Color>red</Color>
-                                    <Color>blue</Color>
-                                    <Color>yellow</Color>
-                                    <Color>orange</Color>
+                                <Controls:ColorPalette Header="Primary Colors" ItemsSource="{x:Static Controls:ColorPalette.PrimaryColorPalette}" />
+                                <Controls:ColorPalette Header="WPF Colors" ItemsSource="{x:Static Controls:ColorPalette.WpfColorPalette}" />
+                                <Controls:ColorPalette Header="TintedColors" ItemsSource="{Binding TintedColors}" >
+                                    <Controls:ColorPalette.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="24" IsItemsHost="True" />
+                                        </ItemsPanelTemplate>
+                                    </Controls:ColorPalette.ItemsPanel>
                                 </Controls:ColorPalette>
-                                
-                                <Controls:ColorPalette Header="Test 2">
-                                    <Color>green</Color>
-                                </Controls:ColorPalette>
-                                
                             </Controls:ColorPicker.ColorPalettes>
                         </Controls:ColorPicker>
 
-                        <GroupBox Header="Color Canvas" Margin="10">
-                            <Controls:ColorCanvas x:Name="ColorCanvasExample"
-                                                  SelectedColorChanged="ColorCanvasExample_SelectedColorChanged"/>
-                        </GroupBox>
-                        <Controls:ColorPalette Header="Buildin-Colors" Margin="5,0,5,5"
-                                               SelectedValue="{Binding ElementName=ColorCanvasExample, Path=SelectedColor, Mode=TwoWay}"
-                                               ItemsSource="{x:Static MetroDemo:MainWindowViewModel.WPF_BuildInColors}" />
                     </StackPanel>
                 </ScrollViewer>
                 

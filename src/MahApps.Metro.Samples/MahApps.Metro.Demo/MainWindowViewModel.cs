@@ -525,6 +525,35 @@ namespace MetroDemo
 
         public bool IsToggleSwitchVisible { get; set; }
 
-        public static List<Color> WPF_BuildInColors { get; } = typeof(Colors).GetProperties().Where(x => x.PropertyType == typeof(Color)).Select(x => (Color)x.GetValue(null)).ToList();
+        public List<Color> TintedColors
+        {
+            get
+            {
+                var list = new List<Color>();
+
+                // Add GrayScale
+                list.Add(Colors.Transparent);
+                for (int i = 0; i < 23; i++)
+                {
+                    list.Add(new HSLColor(1, 0, 0, 1 - i / 22d).ToColor());
+                }
+
+                // Add fully saturated colors
+                for (int i = 0; i < 360; i+= 15)
+                {
+                    list.Add(new HSLColor(1, i, 1, 0.5).ToColor());
+                }
+
+                for (double i = 0.9; i > 0.1; i -= 0.1)
+                {
+                    for (int j = 0; j < 360; j += 15)
+                    {
+                        list.Add(new HSLColor(1, j, 1, i).ToColor());
+                    }
+                }
+
+                return list;
+            }
+        }
     }
 }

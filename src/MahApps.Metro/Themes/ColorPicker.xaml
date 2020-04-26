@@ -69,6 +69,8 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SelectedColorTemplate" Value="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}" />
+        <Setter Property="DropDownWidth" Value="500" />
+        <Setter Property="DropDownHeight" Value="400" />
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -196,12 +198,15 @@
                         <controlzex:PopupEx x:Name="PART_Popup"
                                             StaysOpen="False"
                                             PlacementTarget="{Binding ElementName=PART_DropDownToggle}"
-                               AllowsTransparency="True"
-                               Focusable="False"
-                               IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                               Placement="Bottom"
-                               PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
-                            <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
+                                            AllowsTransparency="True"
+                                            Focusable="False"
+                                            IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Placement="Bottom"
+                                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                            <Grid MinWidth="{TemplateBinding MinWidth}" 
+                                  Width="{TemplateBinding DropDownWidth}"
+                                  Height="{TemplateBinding DropDownHeight}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border x:Name="PopupBorder"
                                         Height="Auto"
                                         HorizontalAlignment="Stretch"
@@ -211,7 +216,17 @@
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <TabControl>
                                         <TabItem Header="Palletes">
-                                            <ItemsControl x:Name="PART_ColorPalettes" ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorPalettes}" />
+                                            <ItemsControl x:Name="PART_ColorPalettes" ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorPalettes}" >
+                                                <ItemsControl.Template>
+                                                    <ControlTemplate>
+                                                        <ScrollViewer x:Name="ScrollViewer" 
+                                                                      VerticalScrollBarVisibility="Auto"
+                                                                      Padding="{TemplateBinding Padding}">
+                                                            <ItemsPresenter />
+                                                        </ScrollViewer>
+                                                    </ControlTemplate>
+                                                </ItemsControl.Template>
+                                            </ItemsControl>
                                         </TabItem>
                                         <TabItem Header="Custom">
                                             <ScrollViewer>

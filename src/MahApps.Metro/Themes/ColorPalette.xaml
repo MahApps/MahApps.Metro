@@ -5,7 +5,7 @@
 
     <conv:ColorToNameConverter x:Key="MahApps.Converters.ColorToName" />
 
-    <Style x:Key="MahApps.Styles.ListBoxItem.ColorListItem" TargetType="{x:Type ListBoxItem}">
+    <Style x:Key="MahApps.Styles.ListBoxItem.ColorPaletteItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.White}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Control.Border}" />
@@ -90,7 +90,7 @@
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Center, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     </Style>
 
-    <DataTemplate x:Key="MahApps.Templates.ColorListBoxItem">
+    <DataTemplate x:Key="MahApps.Templates.ColorPaletteItem">
         <Border Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Center"
@@ -105,7 +105,7 @@
         </Border>
     </DataTemplate>
 
-    <Style x:Key="MahApps.Styles.ColorListBox" TargetType="mah:ColorPalette">
+    <Style x:Key="MahApps.Styles.ColorPalette" TargetType="mah:ColorPalette">
         <Setter Property="Header" Value="Default Colors" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -115,8 +115,9 @@
         <Setter Property="mah:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="mah:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="ItemTemplate" Value="{StaticResource MahApps.Templates.ColorListBoxItem}" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.ColorListItem}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource MahApps.Templates.ColorPaletteItem}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.ColorPaletteItem}" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

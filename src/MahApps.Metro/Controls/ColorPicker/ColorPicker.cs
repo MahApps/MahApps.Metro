@@ -38,7 +38,18 @@ namespace MahApps.Metro.Controls
 
 
         /// <summary>Identifies the <see cref="MaxDropDownHeight"/> dependency property.</summary>
-        public static readonly DependencyProperty MaxDropDownHeightProperty = DependencyProperty.Register("MaxDropDownHeight", typeof(double), typeof(ColorPicker), new FrameworkPropertyMetadata(SystemParameters.PrimaryScreenHeight / 3));
+        public static readonly DependencyProperty MaxDropDownHeightProperty = DependencyProperty.Register(nameof(MaxDropDownHeight), typeof(double), typeof(ColorPicker), new FrameworkPropertyMetadata(SystemParameters.PrimaryScreenHeight / 3));
+
+        /// <summary>Identifies the <see cref="DropDownHeight"/> dependency property.</summary>
+        public static readonly DependencyProperty DropDownHeightProperty = DependencyProperty.Register(nameof(DropDownHeight), typeof(double), typeof(ColorPicker), new PropertyMetadata(300d));
+
+        /// <summary>Identifies the <see cref="MaxDropDownWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty MaxDropDownWidthProperty = DependencyProperty.Register(nameof(MaxDropDownWidth), typeof(double), typeof(ColorPicker), new PropertyMetadata(MaxWidthProperty.DefaultMetadata.DefaultValue));
+
+        /// <summary>Identifies the <see cref="DropDownWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty DropDownWidthProperty = DependencyProperty.Register(nameof(DropDownWidth), typeof(double), typeof(ColorPicker), new PropertyMetadata(300d));
+
+
 
 
         /// <summary>
@@ -51,6 +62,39 @@ namespace MahApps.Metro.Controls
             get { return (double)GetValue(MaxDropDownHeightProperty); }
             set { SetValue(MaxDropDownHeightProperty, value); }
         }
+
+        /// <summary>
+        /// The width of the DropDown
+        /// </summary>
+        public double DropDownHeight
+        {
+            get { return (double)GetValue(DropDownHeightProperty); }
+            set { SetValue(DropDownHeightProperty, value); }
+        }
+
+        /// <summary>
+        /// The maximum width of the DropDown
+        /// </summary>
+        public double MaxDropDownWidth
+        {
+            get { return (double)GetValue(MaxDropDownWidthProperty); }
+            set { SetValue(MaxDropDownWidthProperty, value); }
+        }
+
+        /// <summary>
+        /// The width of the DropDown
+        /// </summary>
+        [Bindable(true), Category("Layout")]
+        [TypeConverter(typeof(LengthConverter))]
+        public double DropDownWidth
+        {
+            get { return (double)GetValue(DropDownWidthProperty); }
+            set { SetValue(DropDownWidthProperty, value); }
+        }
+
+
+
+
 
         /// <summary>
         /// DependencyProperty for IsDropDownOpen
