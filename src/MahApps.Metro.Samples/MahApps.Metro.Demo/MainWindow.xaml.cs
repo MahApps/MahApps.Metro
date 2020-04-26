@@ -524,7 +524,7 @@ namespace MetroDemo
 
         private void ColorCanvasExample_SelectedColorChanged(object sender, TimePickerBaseSelectionChangedEventArgs<Color> e)
         {
-            ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", e.NewValue, new SolidColorBrush(e.NewValue), true));
+            ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", e.NewValue, new SolidColorBrush(e.NewValue), true, false));
         }
     }
 }
