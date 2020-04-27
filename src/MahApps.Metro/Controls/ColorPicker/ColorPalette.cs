@@ -72,6 +72,23 @@ namespace MahApps.Metro.Controls
                 .ThenBy(c => new HSVColor(c).Saturation)
                 .ThenByDescending(c => new HSVColor(c).Value));
 
+
+        public static ObservableCollection<Color> RecentColors { get; } = new ObservableCollection<Color>();
+
+        public static void AddColorToRecentColors(Color color)
+        {
+            var oldIndex = RecentColors.IndexOf(color);
+            if (oldIndex > -1)
+            {
+                RecentColors.Move(oldIndex, 0);
+            }
+            else
+            {
+                RecentColors.Insert(0, color);
+            }
+        }
+
+
         #endregion
 
     }

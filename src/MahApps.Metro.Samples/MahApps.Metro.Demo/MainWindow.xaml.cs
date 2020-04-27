@@ -522,9 +522,14 @@ namespace MetroDemo
                                                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
-        private void ColorCanvasExample_SelectedColorChanged(object sender, TimePickerBaseSelectionChangedEventArgs<Color> e)
+
+        private void ColorPicker_DropDownClosed(object sender, EventArgs e)
         {
-            ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", e.NewValue, new SolidColorBrush(e.NewValue), true, false));
+            if (sender is ColorPicker colorPicker)
+            {
+                ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", colorPicker.SelectedColor, new SolidColorBrush(colorPicker.SelectedColor), true, false));
+                ColorPalette.AddColorToRecentColors(colorPicker.SelectedColor);
+            }
         }
     }
 }

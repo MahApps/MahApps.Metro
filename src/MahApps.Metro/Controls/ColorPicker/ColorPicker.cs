@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
@@ -99,7 +100,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// DependencyProperty for IsDropDownOpen
         /// </summary>
-        public static readonly DependencyProperty IsDropDownOpenProperty = DependencyProperty.Register( "IsDropDownOpen", typeof(bool), typeof(ColorPicker), new FrameworkPropertyMetadata( false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public static readonly DependencyProperty IsDropDownOpenProperty = DependencyProperty.Register( "IsDropDownOpen", typeof(bool), typeof(ColorPicker), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged));
 
         /// <summary>
         /// Whether or not the "popup" for this control is currently open
@@ -111,11 +112,57 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsDropDownOpenProperty, value); }
         }
 
+        public static readonly RoutedEvent DropDownOpenedEvent = EventManager.RegisterRoutedEvent(
+                                                                        nameof(DropDownOpened),
+                                                                        RoutingStrategy.Bubble,
+                                                                        typeof(EventHandler<EventArgs>),
+                                                                        typeof(ColorPicker));
+
+        public static readonly RoutedEvent DropDownClosedEvent = EventManager.RegisterRoutedEvent(
+                                                                nameof(DropDownClosed),
+                                                                RoutingStrategy.Bubble,
+                                                                typeof(EventHandler<EventArgs>),
+                                                                typeof(ColorPicker));
+
+        /// <summary>
+        ///     Occurs when the DropDown is opened.
+        /// </summary>
+        public event EventHandler<EventArgs> DropDownOpened
+        {
+            add { AddHandler(DropDownOpenedEvent, value); }
+            remove { RemoveHandler(DropDownOpenedEvent, value); }
+        }
+
+        /// <summary>
+        ///     Occurs when the DropDown is closed.
+        /// </summary>
+        public event EventHandler<EventArgs> DropDownClosed
+        {
+            add { AddHandler(DropDownClosedEvent, value); }
+            remove { RemoveHandler(DropDownClosedEvent, value); }
+        }
+
+        private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorPicker colorPicker)
+            {
+                if ((bool)e.NewValue)
+                {
+                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownOpenedEvent));
+                }
+                else
+                {
+                    colorPicker.RaiseEvent(new RoutedEventArgs(DropDownClosedEvent));
+                }
+            }
+        }
+
         public override void OnApplyTemplate()
         {
             PART_ColorPalettes = (ItemsControl)this.GetTemplateChild(nameof(PART_ColorPalettes));
             base.OnApplyTemplate();
         }
+
 
         public ObservableCollection<ColorPalette> ColorPalettes { get; } = new ObservableCollection<ColorPalette>();
 
