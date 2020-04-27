@@ -20,6 +20,12 @@ namespace MahApps.Metro.Controls
 
         #region Dependcy Properties
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPickerBase), new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedHSVColor"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedHSVColorProperty = DependencyProperty.Register(nameof(SelectedHSVColor), typeof(HSVColor), typeof(ColorPickerBase), new PropertyMetadata(new HSVColor(Colors.Black)));
+
         public static readonly DependencyProperty HexCodeProperty = DependencyProperty.Register(nameof(HexCode), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata("#FF000000", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorHexcodeChanged), IsValidHexCodeOrName);
         public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(ColorHelper.GetColorName(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged), IsValidHexCodeOrName);
 
@@ -33,16 +39,22 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
         #endregion
 
-        #region SelectedColorChangedEvent   
-
-        #endregion
-
         #region ColorProperties
         public Color SelectedColor
         {
             get { return (Color)this.GetValue(SelectedColorProperty); }
             set { this.SetValue(SelectedColorProperty, value); }
         }
+
+
+        /// <summary>
+        /// Gets the <see cref="SelectedColor"/> as <see cref="HSVColor"/>. This property is read only.
+        /// </summary>
+        public HSVColor SelectedHSVColor
+        {
+            get { return (HSVColor)GetValue(SelectedHSVColorProperty); }
+        }
+
 
         public string HexCode
         {
@@ -85,6 +97,8 @@ namespace MahApps.Metro.Controls
                     colorPicker.SetCurrentValue(SaturationProperty, hsv.Saturation);
                     colorPicker.SetCurrentValue(ValueProperty, hsv.Value);
                 }
+
+                colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
 
                 colorPicker.SetCurrentValue(AProperty, colorPicker.SelectedColor.A);
                 colorPicker.SetCurrentValue(RProperty, colorPicker.SelectedColor.R);
