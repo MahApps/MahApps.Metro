@@ -10,9 +10,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TagProperty = DependencyProperty.Register(nameof(Tag), typeof(object), typeof(HamburgerMenuItemBase), new PropertyMetadata(null));
 
         /// <summary>
-        /// Identifies the <see cref="Visibility" /> dependency property.
+        /// Identifies the <see cref="IsVisible" /> dependency property.
         /// </summary>
-        public static readonly DependencyProperty VisibilityProperty = DependencyProperty.Register(nameof(Visibility), typeof(Visibility), typeof(HamburgerMenuItemBase), new PropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.Register(nameof(IsVisible), typeof(bool), typeof(HamburgerMenuItemBase), new PropertyMetadata(true));
 
         /// <summary>
         /// Gets or sets a value that specifies an user specific value.
@@ -31,15 +31,22 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets or sets the user interface (UI) visibility of this element. This is a dependency property.
+        /// Gets or sets the value indicating whether this element is visible in the user interface (UI). This is a dependency property.
         /// </summary>
         /// <returns>
-        /// A value of the enumeration. The default value is System.Windows.Visibility.Visible.
+        /// true if the item is visible, otherwise false. The default value is true.
         /// </returns>
-        public Visibility Visibility
+        public bool IsVisible
         {
-            get { return (Visibility)GetValue(VisibilityProperty); }
-            set { SetValue(VisibilityProperty, value); }
+            get
+            {
+                return (bool)this.GetValue(IsVisibleProperty);
+            }
+
+            set
+            {
+                this.SetValue(IsVisibleProperty, value);
+            }
         }
 
         protected override Freezable CreateInstanceCore()
