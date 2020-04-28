@@ -191,6 +191,7 @@
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Visibility" Value="{Binding IsVisible, Mode=OneWay, FallbackValue=True, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem"
