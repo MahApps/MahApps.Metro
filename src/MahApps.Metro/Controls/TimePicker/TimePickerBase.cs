@@ -115,6 +115,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TimePickerBase tp)
+            {
+                tp.CoerceValue(IsDropDownOpenProperty);
+            }
+        }
+
         /// <summary>
         /// This method is invoked when the <see cref="IsDropDownOpenProperty"/> changes.
         /// </summary>
@@ -228,10 +236,11 @@ namespace MahApps.Metro.Controls
 
         static TimePickerBase()
         {
-            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(typeof(TimePickerBase)));
+            EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnLanguageChanged));
+            IsEnabledProperty.OverrideMetadata(typeof(DatePicker), new UIPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
         }
 
         protected TimePickerBase()

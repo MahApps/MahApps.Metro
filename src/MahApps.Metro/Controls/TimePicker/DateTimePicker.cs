@@ -47,7 +47,6 @@ namespace MahApps.Metro.Controls
 
         public DateTimePicker()
         {
-            this.SetCurrentValue(DisplayDateProperty, DateTime.Today);
         }
 
         /// <inheritdoc />
