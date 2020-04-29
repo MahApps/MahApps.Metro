@@ -45,6 +45,11 @@ namespace MahApps.Metro.Controls
             IsClockVisibleProperty.OverrideMetadata(typeof(DateTimePicker), new PropertyMetadata(OnClockVisibilityChanged));
         }
 
+        public DateTimePicker()
+        {
+            this.SetCurrentValue(DisplayDateProperty, DateTime.Today);
+        }
+
         /// <inheritdoc />
         protected override void FocusElementAfterIsDropDownOpenChanged()
         {
@@ -151,7 +156,7 @@ namespace MahApps.Metro.Controls
             {
                 _calendar.PreviewKeyDown -= this.CalendarPreviewKeyDown;
                 _calendar.DisplayDateChanged -= this.CalendarDisplayDateChanged;
-                _calendar.SelectedDatesChanged -= CalendarSelectedDateChanged;
+                _calendar.SelectedDatesChanged -= this.CalendarSelectedDateChanged;
                 _calendar.PreviewMouseUp -= CalendarPreviewMouseUp;
             }
 
@@ -163,7 +168,7 @@ namespace MahApps.Metro.Controls
             {
                 _calendar.PreviewKeyDown += this.CalendarPreviewKeyDown;
                 _calendar.DisplayDateChanged += this.CalendarDisplayDateChanged;
-                _calendar.SelectedDatesChanged += CalendarSelectedDateChanged;
+                _calendar.SelectedDatesChanged += this.CalendarSelectedDateChanged;
                 _calendar.PreviewMouseUp += CalendarPreviewMouseUp;
                 
                 _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateTimeProperty));
@@ -175,7 +180,7 @@ namespace MahApps.Metro.Controls
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
             }
 
-            SetDatePartValues();
+            //SetDatePartValues();
         }
 
         private static void CalendarPreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -257,13 +262,6 @@ namespace MahApps.Metro.Controls
             return valueForTextBox;
         }
 
-        protected override void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
-        {
-            base.OnRangeBaseValueChanged(sender, e);
-            
-            SetDatePartValues();
-        }
-
         protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             if (!(sender is DatePickerTextBox textBox))
@@ -311,14 +309,36 @@ namespace MahApps.Metro.Controls
             d.CoerceValue(OrientationProperty);
         }
 
-        private static void CalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void CalendarSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count > 0 && this.SelectedDateTime.HasValue && DateTime.Compare((DateTime)e.AddedItems[0], this.SelectedDateTime.Value) != 0)
+            {
+                this.SetCurrentValue(SelectedDateTimeProperty, (DateTime?)e.AddedItems[0] + this.GetSelectedTimeFromGUI());
+            }
+            else
+            {
+                if (e.AddedItems.Count == 0)
+                {
+                    this.SetCurrentValue(SelectedDateTimeProperty, (DateTime?)null);
+                    return;
+                }
+
+                if (!this.SelectedDateTime.HasValue)
+                {
+                    if (e.AddedItems.Count > 0)
+                    {
+                        this.SetCurrentValue(SelectedDateTimeProperty, (DateTime?)e.AddedItems[0] + this.GetSelectedTimeFromGUI());
+                    }
+                }
+            }
+
+            /*
             var dateTimePicker = (DateTimePicker)((Calendar)sender).TemplatedParent;
 
-            /* Without deactivating changing SelectedTime would callbase.OnSelectedTimeChanged.
-             * This would write too and this would result in duplicate writing.
-             * More problematic would be instead that a short amount of time SelectedTime would be as value in TextBox
-             */
+            // Without deactivating changing SelectedTime would callbase.OnSelectedTimeChanged.
+            // This would write too and this would result in duplicate writing.
+            // More problematic would be instead that a short amount of time SelectedTime would be as value in TextBox
+
             dateTimePicker._deactivateWriteValueToTextBox = true;
 
             var dt =  e.AddedItems.Count > 0 ? (DateTime?)e.AddedItems[0] : default;
@@ -334,6 +354,17 @@ namespace MahApps.Metro.Controls
             dateTimePicker._deactivateWriteValueToTextBox = false;
 
             dateTimePicker.WriteValueToTextBox();
+            */
+        }
+
+        protected override void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
+            var date = SelectedDateTime ?? DateTime.Today;
+
+            this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
+            
+            //SetDatePartValues();
         }
 
         private DateTime? GetSelectedDateTimeFromGUI()

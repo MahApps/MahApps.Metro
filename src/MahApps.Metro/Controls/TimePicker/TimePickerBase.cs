@@ -519,13 +519,7 @@ namespace MahApps.Metro.Controls
 
         protected abstract void OnTextBoxLostFocus(object sender, RoutedEventArgs e);
 
-        protected virtual void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // If we do not have a date yet we should use Today instead of DateTime.Min
-            var newDateTime = SelectedDateTime ?? DateTime.Today;
-
-            this.SetCurrentValue(SelectedDateTimeProperty, newDateTime.Date + this.GetSelectedTimeFromGUI());
-        }
+        protected abstract void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e);
 
         protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
         {
@@ -739,7 +733,7 @@ namespace MahApps.Metro.Controls
         {
             if (!_deactivateRangeBaseEvent)
             {
-                OnRangeBaseValueChanged(sender, e);
+                this.ClockSelectedTimeChanged(sender, e);
             }
         }
 
@@ -876,7 +870,7 @@ namespace MahApps.Metro.Controls
                     return new TimeSpan(hours, minutes, seconds);
                 }
 
-                return this.SelectedDateTime.GetValueOrDefault().TimeOfDay;
+                return null; //this.SelectedDateTime.GetValueOrDefault().TimeOfDay;
             }
         }
 

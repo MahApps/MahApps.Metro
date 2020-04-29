@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 
@@ -38,6 +39,14 @@ namespace MahApps.Metro.Controls
                     // setting the focus to the calendar will focus the correct date.
                     this._hourInput.Focus();
                 });
+        }
+
+        protected override void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
+            var date = SelectedDateTime ?? DateTime.Today;
+
+            this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
         }
 
         protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
