@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MahApps.Metro;
 using MetroDemo.Models;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
@@ -182,6 +181,9 @@ namespace MetroDemo
                 );
 
             this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
+
+            this.ToggleSwitchCommand = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", $"The ToggleSwitch is now {((ToggleSwitch)x).IsOn}."); },
+                                                         canExecute: x => this.CanUseToggleSwitch);
         }
 
         public ICommand ArtistsDropDownCommand { get; }
@@ -201,6 +203,22 @@ namespace MetroDemo
             });
 
         public ICommand SyncThemeNowCommand { get; } = new SimpleCommand(execute: x => ThemeManager.Current.SyncTheme());
+
+        public ICommand ToggleSwitchCommand { get; }
+
+        private bool canUseToggleSwitch = true;
+
+        public bool CanUseToggleSwitch
+        {
+            get => this.canUseToggleSwitch;
+            set => this.Set(ref this.canUseToggleSwitch, value);
+        }
+
+        public ICommand ToggleSwitchOnCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now On."); },
+                                                                           canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
+
+        public ICommand ToggleSwitchOffCommand { get; } = new SimpleCommand(execute: async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("ToggleSwitch", "The ToggleSwitch is now Off."); },
+                                                                            canExecute: x => x is MainWindowViewModel viewModel && viewModel.CanUseToggleSwitch);
 
         public void Dispose()
         {
