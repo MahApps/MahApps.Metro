@@ -57,5 +57,57 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
+
+        internal static bool CanExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        {
+            var command = theCommand;
+            if (command == null)
+            {
+                return false;
+            }
+
+            var commandParameter = commandSource.CommandParameter ?? commandSource;
+            if (command is RoutedCommand routedCommand)
+            {
+                var target = commandSource.CommandTarget ?? commandSource as IInputElement;
+                return routedCommand.CanExecute(commandParameter, target);
+            }
+
+            return command.CanExecute(commandParameter);
+        }
+
+        [SecurityCritical]
+        [SecuritySafeCritical]
+        internal static void ExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        {
+            CriticalExecuteCommandSource(commandSource, theCommand);
+        }
+
+        [SecurityCritical]
+        internal static void CriticalExecuteCommandSource(ICommandSource commandSource, ICommand theCommand)
+        {
+            var command = theCommand;
+            if (command == null)
+            {
+                return;
+            }
+
+            var commandParameter = commandSource.CommandParameter ?? commandSource;
+            if (command is RoutedCommand routedCommand)
+            {
+                var target = commandSource.CommandTarget ?? commandSource as IInputElement;
+                if (routedCommand.CanExecute(commandParameter, target))
+                {
+                    routedCommand.Execute(commandParameter, target);
+                }
+            }
+            else
+            {
+                if (command.CanExecute(commandParameter))
+                {
+                    command.Execute(commandParameter);
+                }
+            }
+        }
     }
 }

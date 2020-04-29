@@ -281,11 +281,15 @@
                     UseLayoutRounding="True">
             <Label Content="ToggleSwitch" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:ToggleSwitch x:Name="TestToggleSwitch"
+            <Controls:ToggleSwitch IsOn="{Binding CanUseToggleSwitch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Margin="{StaticResource ControlMargin}"
                                    Header="Header" />
-            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}" IsEnabled="{Binding ElementName=TestToggleSwitch, Path=IsOn, Mode=OneWay}" />
             <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
+                                   CommandParameter="{Binding}"
+                                   OnCommand="{Binding ToggleSwitchOnCommand}"
+                                   OffCommand="{Binding ToggleSwitchOffCommand}" />
+            <Controls:ToggleSwitch Margin="{StaticResource ControlMargin}"
+                                   Command="{Binding ToggleSwitchCommand}"
                                    IsOn="True"
                                    OffContent="Disabled"
                                    OnContent="Enabled" />

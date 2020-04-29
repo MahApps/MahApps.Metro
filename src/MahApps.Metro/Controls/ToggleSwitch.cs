@@ -332,10 +332,45 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
         /// </summary>
+        [Category(AppName.MahApps)]
         public ICommand Command
         {
             get => (ICommand)this.GetValue(CommandProperty);
             set => this.SetValue(CommandProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OnCommand"/> dependency property.</summary>
+        public static readonly DependencyProperty OnCommandProperty
+            = DependencyProperty.Register(nameof(OnCommand),
+                                          typeof(ICommand),
+                                          typeof(ToggleSwitch),
+                                          new PropertyMetadata(null, OnCommandChanged));
+
+        /// <summary>
+        /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public ICommand OnCommand
+        {
+            get => (ICommand)this.GetValue(OnCommandProperty);
+            set => this.SetValue(OnCommandProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OffCommand"/> dependency property.</summary>
+        public static readonly DependencyProperty OffCommandProperty
+            = DependencyProperty.Register(nameof(OffCommand),
+                                          typeof(ICommand),
+                                          typeof(ToggleSwitch),
+                                          new PropertyMetadata(null, OnCommandChanged));
+
+        /// <summary>
+        /// Gets or sets a command which will be executed when the <see cref="IsOnProperty"/> changes.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public ICommand OffCommand
+        {
+            get => (ICommand)this.GetValue(OffCommandProperty);
+            set => this.SetValue(OffCommandProperty, value);
         }
 
         /// <summary>Identifies the <see cref="CommandParameter"/> dependency property.</summary>
@@ -597,9 +632,11 @@ namespace MahApps.Metro.Controls
 
         private void Toggle()
         {
-            this.SetCurrentValue(IsOnProperty, !this.IsOn);
+            var newValue = !this.IsOn;
+            this.SetCurrentValue(IsOnProperty, newValue);
 
             CommandHelpers.ExecuteCommandSource(this);
+            CommandHelpers.ExecuteCommandSource(this, newValue ? this.OnCommand : this.OffCommand);
         }
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
