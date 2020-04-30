@@ -162,9 +162,9 @@ namespace MahApps.Metro.Controls
             new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
 
         public static readonly RoutedEvent SelectedDateTimeChangedEvent = EventManager.RegisterRoutedEvent(
-            "SelectedDateTimeChanged", 
-            RoutingStrategy.Direct,
-            typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>>), 
+            "SelectedDateTimeChanged",
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<DateTime?>),
             typeof(TimePickerBase));
 
         public static readonly DependencyProperty SelectedDateTimeProperty = DependencyProperty.Register(
@@ -251,7 +251,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Occurs when the <see cref="SelectedDateTime" /> property is changed.
         /// </summary>
-        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<DateTime?>> SelectedDateTimeChanged
+        public event RoutedPropertyChangedEventHandler<DateTime?> SelectedDateTimeChanged
         {
             add { AddHandler(SelectedDateTimeChangedEvent, value); }
             remove { RemoveHandler(SelectedDateTimeChangedEvent, value); }
@@ -530,9 +530,10 @@ namespace MahApps.Metro.Controls
 
         protected abstract void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e);
 
-        protected virtual void OnSelectedTimeChanged(TimePickerBaseSelectionChangedEventArgs<DateTime?> e)
+        protected void RaiseSelectedDateTimeChangedEvent(DateTime? oldValue, DateTime? newValue)
         {
-            RaiseEvent(e);
+            var args = new RoutedPropertyChangedEventArgs<DateTime?>(oldValue, newValue) { RoutedEvent = SelectedDateTimeChangedEvent };
+            this.RaiseEvent(args);
         }
 
         private static void OnSelectedTimeFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -824,7 +825,7 @@ namespace MahApps.Metro.Controls
 
             timePartPickerBase.SetHourPartValues((e.NewValue as DateTime?).GetValueOrDefault().TimeOfDay);
 
-            timePartPickerBase.OnSelectedTimeChanged(new TimePickerBaseSelectionChangedEventArgs<DateTime?>(SelectedDateTimeChangedEvent, (DateTime?)e.OldValue, (DateTime?)e.NewValue));
+            timePartPickerBase.RaiseSelectedDateTimeChangedEvent(e.OldValue as DateTime?, e.NewValue as DateTime?);
 
             timePartPickerBase.WriteValueToTextBox();
         }
