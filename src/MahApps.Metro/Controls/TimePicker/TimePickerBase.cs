@@ -240,7 +240,7 @@ namespace MahApps.Metro.Controls
             EventManager.RegisterClassHandler(typeof(TimePickerBase), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             LanguageProperty.OverrideMetadata(typeof(TimePickerBase), new FrameworkPropertyMetadata(OnLanguageChanged));
-            IsEnabledProperty.OverrideMetadata(typeof(DatePicker), new UIPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
+            IsEnabledProperty.OverrideMetadata(typeof(TimePickerBase), new UIPropertyMetadata(OnIsEnabledChanged));
         }
 
         protected TimePickerBase()
