@@ -18,7 +18,6 @@ namespace MahApps.Metro.Controls
     {
         private const string ElementCalendar = "PART_Calendar";
         private Calendar _calendar;
-        private bool _deactivateWriteValueToTextBox;
 
         public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
         
@@ -286,14 +285,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void WriteValueToTextBox()
-        {
-            if (!_deactivateWriteValueToTextBox)
-            {
-                base.WriteValueToTextBox();
-            }
-        }
-
         private static object CoerceOrientation(DependencyObject d, object basevalue)
         {
             if (((DateTimePicker)d).IsClockVisible)
@@ -331,30 +322,6 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
-
-            /*
-            var dateTimePicker = (DateTimePicker)((Calendar)sender).TemplatedParent;
-
-            // Without deactivating changing SelectedTime would callbase.OnSelectedTimeChanged.
-            // This would write too and this would result in duplicate writing.
-            // More problematic would be instead that a short amount of time SelectedTime would be as value in TextBox
-
-            dateTimePicker._deactivateWriteValueToTextBox = true;
-
-            var dt =  e.AddedItems.Count > 0 ? (DateTime?)e.AddedItems[0] : default;
-            if (dt.HasValue)
-            {
-                dateTimePicker.SetCurrentValue(SelectedDateTimeProperty, dt.Value.Date + dateTimePicker.GetSelectedTimeFromGUI());
-            }
-            else
-            {
-                dateTimePicker.SetDefaultTimeOfDayValues();
-            }
-
-            dateTimePicker._deactivateWriteValueToTextBox = false;
-
-            dateTimePicker.WriteValueToTextBox();
-            */
         }
 
         protected override void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e)
@@ -363,8 +330,6 @@ namespace MahApps.Metro.Controls
             var date = SelectedDateTime ?? DateTime.Today;
 
             this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
-            
-            //SetDatePartValues();
         }
 
         protected override void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
@@ -385,19 +350,6 @@ namespace MahApps.Metro.Controls
             }
 
             return null;
-        }
-
-        private void SetDatePartValues()
-        {
-            var dateTime = GetSelectedDateTimeFromGUI();
-            if (dateTime != null)
-            {
-                this.SetCurrentValue(DisplayDateProperty, dateTime.Value > DateTime.MinValue && dateTime.Value < DateTime.MaxValue ? dateTime.Value : DateTime.Today);
-                if ((SelectedDateTime != DisplayDate && SelectedDateTime != DateTime.MinValue) || (this._popUp != null && this._popUp.IsOpen))
-                {
-                    this.SetCurrentValue(SelectedDateTimeProperty, DisplayDate);
-                }
-            }
         }
     }
 }
