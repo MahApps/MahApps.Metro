@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -170,7 +171,7 @@ namespace MahApps.Metro.Controls
                 _calendar.SelectedDatesChanged += this.CalendarSelectedDateChanged;
                 _calendar.PreviewMouseUp += CalendarPreviewMouseUp;
                 
-                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateTimeProperty));
+                _calendar.SetBinding(Calendar.SelectedDateProperty, GetBinding(SelectedDateTimeProperty, BindingMode.OneWay));
                 _calendar.SetBinding(Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
                 _calendar.SetBinding(Calendar.DisplayDateStartProperty, GetBinding(DisplayDateStartProperty));
                 _calendar.SetBinding(Calendar.DisplayDateEndProperty, GetBinding(DisplayDateEndProperty));
@@ -364,6 +365,13 @@ namespace MahApps.Metro.Controls
             this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
             
             //SetDatePartValues();
+        }
+
+        protected override void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
+        {
+            this._calendar.SetCurrentValue(Calendar.SelectedDateProperty, newValue);
+            
+            base.OnSelectedDateTimeChanged(oldValue, newValue);
         }
 
         private DateTime? GetSelectedDateTimeFromGUI()

@@ -485,6 +485,7 @@ namespace MahApps.Metro.Controls
         protected virtual void ApplyCulture()
         {
             _deactivateRangeBaseEvent = true;
+
             if (_ampmSwitcher != null)
             {
                 _ampmSwitcher.Items.Clear();
@@ -509,14 +510,15 @@ namespace MahApps.Metro.Controls
             }
 
             SetDefaultTimeOfDayValues();
+
             _deactivateRangeBaseEvent = false;
 
             WriteValueToTextBox();
         }
 
-        protected Binding GetBinding(DependencyProperty property)
+        protected Binding GetBinding(DependencyProperty property, BindingMode bindingMode = BindingMode.Default)
         {
-            return new Binding(property.Name) { Source = this };
+            return new Binding(property.Name) { Source = this, Mode = bindingMode };
         }
         
         protected virtual string GetValueForTextBox()
@@ -741,10 +743,12 @@ namespace MahApps.Metro.Controls
 
         private void TimePickerSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!_deactivateRangeBaseEvent)
+            if (_deactivateRangeBaseEvent)
             {
-                this.ClockSelectedTimeChanged(sender, e);
+                return;
             }
+
+            this.ClockSelectedTimeChanged(sender, e);
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -816,18 +820,16 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            // if just the DatePart changed, we should set the old TimePart for the NewValue
-            if (!timePartPickerBase._deactivateAdjustTimeOnDateChange && e.OldValue is DateTime oldVal && e.NewValue is DateTime newVal && oldVal.Date != newVal.Date && newVal.TimeOfDay.Ticks == 0 && oldVal.TimeOfDay.Ticks != 0)
-            {
-                timePartPickerBase.SetCurrentValue(SelectedDateTimeProperty, ((DateTime?)e.NewValue)?.Date + ((DateTime?)e.OldValue)?.TimeOfDay);
-                return;
-            }
-
-            timePartPickerBase.SetHourPartValues((e.NewValue as DateTime?).GetValueOrDefault().TimeOfDay);
-
-            timePartPickerBase.RaiseSelectedDateTimeChangedEvent(e.OldValue as DateTime?, e.NewValue as DateTime?);
+            timePartPickerBase.OnSelectedDateTimeChanged(e.OldValue as DateTime?, e.NewValue as DateTime?);
 
             timePartPickerBase.WriteValueToTextBox();
+
+            timePartPickerBase.RaiseSelectedDateTimeChangedEvent(e.OldValue as DateTime?, e.NewValue as DateTime?);
+        }
+
+        protected virtual void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
+        {
+            this.SetHourPartValues(newValue.GetValueOrDefault().TimeOfDay);
         }
 
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
