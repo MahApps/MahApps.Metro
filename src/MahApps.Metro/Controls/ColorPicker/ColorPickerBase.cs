@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
                                                                         nameof(SelectedColorChanged),
                                                                         RoutingStrategy.Bubble,
-                                                                        typeof(EventHandler<TimePickerBaseSelectionChangedEventArgs<Color>>),
+                                                                        typeof(RoutedPropertyChangedEventHandler<Color>),
                                                                         typeof(ColorPickerBase));
 
         private static void ColorChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -107,7 +107,7 @@ namespace MahApps.Metro.Controls
 
                 colorPicker.ColorIsUpdating = false;
 
-                colorPicker.RaiseEvent(new TimePickerBaseSelectionChangedEventArgs<Color>(SelectedColorChangedEvent, (Color)e.OldValue, (Color)e.NewValue));
+                colorPicker.RaiseEvent(new RoutedPropertyChangedEventArgs<Color>((Color)e.OldValue, (Color)e.NewValue, SelectedColorChangedEvent));
             }
         }
 
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Occurs when the <see cref="SelectedColor" /> property is changed.
         /// </summary>
-        public event EventHandler<TimePickerBaseSelectionChangedEventArgs<Color>> SelectedColorChanged
+        public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
             add { AddHandler(SelectedColorChangedEvent, value); }
             remove { RemoveHandler(SelectedColorChangedEvent, value); }
