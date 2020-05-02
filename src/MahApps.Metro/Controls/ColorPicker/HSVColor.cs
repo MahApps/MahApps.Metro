@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,46 +8,72 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+
+    /// <summary>
+    /// This struct represent a Color in HSV (Hue, Saturation, Value)
+    /// 
+    /// For more information visit: https://en.wikipedia.org/wiki/HSL_and_HSV
+    /// </summary>
     public struct HSVColor
     {
+        /// <summary>
+        /// Gets the Alpha channel.
+        /// </summary>
+        public double A { get; private set; }
+
+        /// <summary>
+        /// Gets the Hue channel.
+        /// </summary>
         public double Hue { get; private set; }
+
+        /// <summary>
+        /// Gets the Saturation channel
+        /// </summary>
         public double Saturation { get; private set; }
+
+        /// <summary>
+        /// Gets the Value channel
+        /// </summary>
         public double Value { get; private set; }
 
+
+        /// <summary>
+        /// Creates a new HSV Color from a given <see cref="Color"/>
+        /// </summary>
+        /// <param name="color">The <see cref="Color"/> to convert</param>
         public HSVColor(Color color)
         {
-            double r = color.R / 255.0;
-            double g = color.G / 255.0;
-            double b = color.B / 255.0;
-
+            A = color.A / 255d;
             Hue = 0;
             Saturation = 0;
             Value = 0;
 
-            var max = Math.Max(r, Math.Max(g,b));
-            var min = Math.Min(r, Math.Min(g,b));
+            var max = Math.Max(color.R, Math.Max(color.G, color.B));
+            var min = Math.Min(color.R, Math.Min(color.G, color.B));
+
+            var delta = max - min;
 
             // H
-            if (max == min)
+            if (delta == 0)
             {
-                // Do nothing
+                // Do nothing, because Hue is already 0
             }
-            else if (max == r)
+            else if (max == color.R)
             {
-                Hue = 60 * (0 + (g-b) / (max - min));
+                Hue = 60 * ((double)(color.G - color.B) / delta % 6);
             }
-            else if (max == g)
+            else if (max == color.G)
             {
-                Hue = 60 * (2 + (b - r) / (max - min));
+                Hue = 60 * (2 + (double)(color.B - color.R) / delta);
             }
-            else if (max == b)
+            else if (max == color.B)
             {
-                Hue = 60 * (4 + (r - g) / (max - min));
+                Hue = 60 * (4 + (double)(color.R - color.G) / delta);
             }
 
             if (Hue < 0)
             {
-                Hue = Hue + 360;
+                Hue += 360;
             }
 
             // S 
@@ -56,85 +83,55 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                Saturation = (max - min) / max;
+                Saturation = (double)delta / max;
             }
 
             // V
-            Value = max;
+            Value = max / 255d;
         }
 
+        /// <summary>
+        /// Creates a new HSV Color 
+        /// </summary>
+        /// <param name="hue"><see cref="Hue"/> channel [0;360]</param>
+        /// <param name="saturation"><see cref="Saturation"/> channel [0;1]</param>
+        /// <param name="value"><see cref="Value"/> channel [0;1]</param>
         public HSVColor(double hue, double saturation, double value)
         {
+            A = 1;
             Hue = hue;
             Saturation = saturation;
             Value = value;
         }
 
-        public Color ToColor ()
+        /// <summary>
+        /// Creates a new HSV Color 
+        /// </summary>
+        /// <param name="a"><see cref="A"/> (Alpha) channel [0;1]</param>
+        /// <param name="hue"><see cref="Hue"/> channel [0;360]</param>
+        /// <param name="saturation"><see cref="Saturation"/> channel [0;1]</param>
+        /// <param name="value"><see cref="Value"/> channel [0;1]</param>
+        public HSVColor(double a, double hue, double saturation, double value)
         {
-            return ToColor(255);
+            A = a;
+            Hue = hue;
+            Saturation = saturation;
+            Value = value;
         }
-        public Color ToColor(byte AlphaChannel)
+
+        /// <summary>
+        /// Gets the <see cref="Color"/> for this HSV Color struct
+        /// </summary>
+        /// <returns><see cref="Color"/></returns>
+        public Color ToColor()
+        {             
+            return Color.FromArgb((byte)Math.Round(A * 255), GetColorComponent(5), GetColorComponent(3), GetColorComponent(1));
+        }
+
+        byte GetColorComponent (int n)
         {
-            if (double.IsNaN(Hue))
-                Hue = 0;
-
-            // Helper Values
-            int h_i = (int)Math.Floor(Hue / 60);
-            double C = Value * Saturation;
-            double X = C * (1 - Math.Abs((Hue / 60) % 2 - 1));
-            double m = Value - C;
-
-            double r, g, b;
-
-            switch (h_i)
-            {
-                case 0:
-                case 6:
-                    r = C;
-                    g = X;
-                    b = 0;
-                    break;
-
-                case 1:
-                    r = X;
-                    g = C;
-                    b = 0;
-                    break;
-
-                case 2:
-                    r = 0;
-                    g = C;
-                    b = X;
-                    break;
-
-                case 3:
-                    r = 0;
-                    g = X;
-                    b = C;
-                    break;
-
-                case 4:
-                    r = X;
-                    g = 0;
-                    b = C;
-                    break;
-
-                case 5:
-                    r = C;
-                    g = 0;
-                    b = X;
-                    break;
-
-                default:
-                    throw new ArgumentException();
-            }
-
-            r = r + m;
-            g = g + m;
-            b = b + m;
-
-            return Color.FromArgb(AlphaChannel, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+            var k = (n + Hue / 60d) % 6;
+            return (byte)Math.Round((Value - Value * Saturation * Math.Max(0, Math.Min(k, Math.Min(4 - k, 1)))) * 255);
         }
     }
 }

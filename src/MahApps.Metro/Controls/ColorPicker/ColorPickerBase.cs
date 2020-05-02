@@ -98,7 +98,7 @@ namespace MahApps.Metro.Controls
                     colorPicker.SetCurrentValue(ValueProperty, hsv.Value);
                 }
 
-                colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
+                colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
 
                 colorPicker.SetCurrentValue(AProperty, colorPicker.SelectedColor.A);
                 colorPicker.SetCurrentValue(RProperty, colorPicker.SelectedColor.R);
@@ -204,10 +204,10 @@ namespace MahApps.Metro.Controls
         {
             if (dependencyObject is ColorPickerBase colorPicker && !colorPicker.ColorIsUpdating)
             {
-                var hsv = new HSVColor(colorPicker.Hue, colorPicker.Saturation, colorPicker.Value);
+                var hsv = new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value);
 
                 colorPicker.UpdateHsvValues = false;
-                colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor(colorPicker.A));
+                colorPicker.SetCurrentValue(SelectedColorProperty, hsv.ToColor());
                 colorPicker.UpdateHsvValues = true;
             }
         }
