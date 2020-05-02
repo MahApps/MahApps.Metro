@@ -167,7 +167,7 @@
                           ItemsSource="{Binding Source={StaticResource SyncModePreferenceEnumValues}}" />
                 <MenuItem Header="Use HSL colors?"
                           IsCheckable="True"
-                          IsChecked="{Binding ColorOptions.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
+                          IsChecked="{Binding Options.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
 
                 <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
             </MenuItem>
