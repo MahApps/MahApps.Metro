@@ -527,7 +527,15 @@ namespace MetroDemo
         {
             if (sender is ColorPicker colorPicker)
             {
-                ThemeManager.Current.ChangeTheme(App.Current, new Theme("Custom", "Custom", ThemeManager.Current.DetectTheme().BaseColorScheme, "custom", colorPicker.SelectedColor, new SolidColorBrush(colorPicker.SelectedColor), true));
+                ThemeManager.Current.ChangeTheme(Application.Current,
+                                                 new Theme("Custom",
+                                                           "Custom",
+                                                           ThemeManager.Current.DetectTheme().BaseColorScheme,
+                                                           "custom",
+                                                           colorPicker.SelectedColor,
+                                                           new SolidColorBrush(colorPicker.SelectedColor),
+                                                           true,
+                                                           false));
                 ColorPalette.AddColorToRecentColors(colorPicker.SelectedColor);
             }
         }
