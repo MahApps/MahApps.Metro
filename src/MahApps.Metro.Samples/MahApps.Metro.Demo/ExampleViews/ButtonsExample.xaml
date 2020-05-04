@@ -45,6 +45,11 @@
             <Controls:Badged x:Name="CountingBadge"
                              Width="100"
                              Margin="{StaticResource ControlMargin}">
+                <Controls:Badged.BadgeTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StringFormat='{}click-count: {0:00}'}" FontSize="12" />
+                    </DataTemplate>
+                </Controls:Badged.BadgeTemplate>
                 <Button Click="CountingButton_OnClick" Content="Click Me" />
             </Controls:Badged>
             <Button Width="100"
