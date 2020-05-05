@@ -26,20 +26,69 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty SelectedHSVColorProperty = DependencyProperty.Register(nameof(SelectedHSVColor), typeof(HSVColor), typeof(ColorPickerBase), new PropertyMetadata(new HSVColor(Colors.Black)));
 
-        public static readonly DependencyProperty HexCodeProperty = DependencyProperty.Register(nameof(HexCode), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata("#FF000000", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorHexcodeChanged), IsValidHexCodeOrName);
-        public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(ColorHelper.GetColorName(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged), IsValidHexCodeOrName);
+        /// <summary>Identifies the <see cref="ColorName"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(ColorHelper.GetColorName(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged));
+        
+        /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPickerBase), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register("A", typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)255, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        public static readonly DependencyProperty RProperty = DependencyProperty.Register("R", typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        public static readonly DependencyProperty GProperty = DependencyProperty.Register("G", typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
-        public static readonly DependencyProperty BProperty = DependencyProperty.Register("B", typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
+        /// <summary>Identifies the <see cref="A"/> dependency property.</summary>
+        public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)255, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
+        
+        /// <summary>Identifies the <see cref="R"/> dependency property.</summary>
+        public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
+        
+        /// <summary>Identifies the <see cref="G"/> dependency property.</summary>
+        public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
+        
+        /// <summary>Identifies the <see cref="B"/> dependency property.</summary>
+        public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPickerBase), new FrameworkPropertyMetadata((byte)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChannelChanged));
 
-        public static readonly DependencyProperty HueProperty = DependencyProperty.Register("Hue", typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
-        public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register("Saturation", typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
+        /// <summary>Identifies the <see cref="Hue"/> dependency property.</summary>
+        public static readonly DependencyProperty HueProperty = DependencyProperty.Register(nameof(Hue), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
+        
+        /// <summary>Identifies the <see cref="Saturation"/> dependency property.</summary>
+        public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(nameof(Saturation), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
+        
+        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(double), typeof(ColorPickerBase), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, HSV_Values_Changed));
+
+
+
+        /// <summary>Identifies the <see cref="LabelAlphaChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelAlphaChannelProperty = DependencyProperty.Register(nameof(LabelAlphaChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("A"));
+
+        /// <summary>Identifies the <see cref="LabelRedChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelRedChannelProperty = DependencyProperty.Register(nameof(LabelRedChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("R"));
+
+        /// <summary>Identifies the <see cref="LabelGreenChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelGreenChannelProperty = DependencyProperty.Register(nameof(LabelGreenChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("G"));
+
+        /// <summary>Identifies the <see cref="LabelBlueChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelBlueChannelProperty = DependencyProperty.Register(nameof(LabelBlueChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("B"));
+
+        /// <summary>Identifies the <see cref="LabelColorPreview"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelColorPreviewProperty = DependencyProperty.Register(nameof(LabelColorPreview), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("Preview"));
+
+        /// <summary>Identifies the <see cref="LabelHueChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelHueChannelProperty = DependencyProperty.Register(nameof(LabelHueChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("H"));
+
+        /// <summary>Identifies the <see cref="LabelSaturationChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelSaturationChannelProperty = DependencyProperty.Register(nameof(LabelSaturationChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("S"));
+
+        /// <summary>Identifies the <see cref="LabelValueChannel"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelValueChannelProperty = DependencyProperty.Register(nameof(LabelValueChannel), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("V"));
+
+        /// <summary>Identifies the <see cref="LabelColorName"/> dependency property.</summary>
+        public static readonly DependencyProperty LabelColorNameProperty = DependencyProperty.Register(nameof(LabelColorName), typeof(object), typeof(ColorPickerBase), new PropertyMetadata("Name"));
+
         #endregion
 
         #region ColorProperties
+
+        /// <summary>
+        /// Gets or Sets the selected <see cref="Color"/>
+        /// </summary>
         public Color SelectedColor
         {
             get { return (Color)this.GetValue(SelectedColorProperty); }
@@ -56,17 +105,21 @@ namespace MahApps.Metro.Controls
         }
 
 
-        public string HexCode
-        {
-            get { return (string)this.GetValue(HexCodeProperty); }
-            set { this.SetValue(HexCodeProperty, value); }
-        }
-
         public string ColorName
         {
             get { return (string)this.GetValue(ColorNameProperty); }
             set { this.SetValue(ColorNameProperty, value); }
         }
+
+
+
+        public Dictionary<Color?, string> ColorNamesDictionary
+        {
+            get { return (Dictionary<Color?, string>)GetValue(ColorNamesDictionaryProperty); }
+            set { SetValue(ColorNamesDictionaryProperty, value); }
+        }
+
+
         #endregion
 
         #region Color changed
@@ -87,8 +140,7 @@ namespace MahApps.Metro.Controls
 
                 colorPicker.ColorIsUpdating = true;
 
-                colorPicker.SetCurrentValue(HexCodeProperty, colorPicker.SelectedColor.ToString());
-                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorPicker.SelectedColor));
+                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorPicker.SelectedColor, colorPicker.ColorNamesDictionary));
 
                 if (colorPicker.UpdateHsvValues)
                 {
@@ -111,24 +163,21 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ColorHexcodeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (dependencyObject is ColorPickerBase colorPicker)
-            {
-                if (ColorHelper.ColorFromString(colorPicker.HexCode) is Color color && !colorPicker.ColorIsUpdating)
-                {
-                    colorPicker.SetCurrentValue(SelectedColorProperty, color);
-                }
-            }
-        }
 
         private static void ColorNameChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorPickerBase colorPicker)
             {
-                if (ColorHelper.ColorFromString(colorPicker.ColorName) is Color color && !colorPicker.ColorIsUpdating)
+                if (!colorPicker.ColorIsUpdating)
                 {
-                    colorPicker.SetCurrentValue(SelectedColorProperty, color);
+                    if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is Color color)
+                    {
+                        colorPicker.SetCurrentValue(SelectedColorProperty, color);
+                    }
+                    else
+                    {
+                        throw new InvalidCastException("Cannot convert the given input to a valid color");
+                    }
                 }
             }
         }
@@ -213,11 +262,76 @@ namespace MahApps.Metro.Controls
         }
         #endregion
 
-        #region Validation
-        private static bool IsValidHexCodeOrName(object value)
+        #region Labels
+
+
+        public object LabelAlphaChannel
         {
-            return ColorHelper.ColorFromString(value?.ToString()).HasValue;
+            get { return (object)GetValue(LabelAlphaChannelProperty); }
+            set { SetValue(LabelAlphaChannelProperty, value); }
         }
+
+
+        public object LabelRedChannel
+        {
+            get { return (object)GetValue(LabelRedChannelProperty); }
+            set { SetValue(LabelRedChannelProperty, value); }
+        }
+
+
+        public object LabelGreenChannel
+        {
+            get { return (object)GetValue(LabelGreenChannelProperty); }
+            set { SetValue(LabelGreenChannelProperty, value); }
+        }
+
+
+        public object LabelBlueChannel
+        {
+            get { return (object)GetValue(LabelBlueChannelProperty); }
+            set { SetValue(LabelBlueChannelProperty, value); }
+        }
+
+        
+      
+
+        public object LabelColorPreview
+        {
+            get { return (object)GetValue(LabelColorPreviewProperty); }
+            set { SetValue(LabelColorPreviewProperty, value); }
+        }
+
+
+
+        public object LabelHueChannel
+        {
+            get { return (object)GetValue(LabelHueChannelProperty); }
+            set { SetValue(LabelHueChannelProperty, value); }
+        }
+
+
+        public object LabelSaturationChannel
+        {
+            get { return (object)GetValue(LabelSaturationChannelProperty); }
+            set { SetValue(LabelSaturationChannelProperty, value); }
+        }
+
+
+        public object LabelValueChannel
+        {
+            get { return (object)GetValue(LabelValueChannelProperty); }
+            set { SetValue(LabelValueChannelProperty, value); }
+        }
+
+
+        public object LabelColorName
+        {
+            get { return (object)GetValue(LabelColorNameProperty); }
+            set { SetValue(LabelColorNameProperty, value); }
+        }
+
+        
         #endregion
+
     }
 }

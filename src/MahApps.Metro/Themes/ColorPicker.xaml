@@ -230,7 +230,17 @@
                                         </TabItem>
                                         <TabItem Header="Custom">
                                             <ScrollViewer>
-                                                <mah:ColorCanvas SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
+                                                <mah:ColorCanvas SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}"
+                                                                 LabelAlphaChannel="{TemplateBinding LabelAlphaChannel}"
+                                                                 LabelRedChannel="{TemplateBinding LabelRedChannel}"
+                                                                 LabelGreenChannel="{TemplateBinding LabelGreenChannel}"
+                                                                 LabelBlueChannel="{TemplateBinding LabelBlueChannel}"
+                                                                 LabelHueChannel="{TemplateBinding LabelHueChannel}"
+                                                                 LabelSaturationChannel="{TemplateBinding LabelSaturationChannel}"
+                                                                 LabelValueChannel="{TemplateBinding LabelValueChannel}"
+                                                                 LabelColorName="{TemplateBinding LabelColorName}"
+                                                                 LabelColorPreview="{TemplateBinding LabelColorPreview}"
+                                                                 ColorNamesDictionary="{TemplateBinding ColorNamesDictionary}" />
                                             </ScrollViewer>
                                         </TabItem>
                                     </TabControl>

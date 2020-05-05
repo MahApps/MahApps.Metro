@@ -163,14 +163,14 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="Preview"
+                                    <ContentPresenter Content="{TemplateBinding LabelColorPreview}"
                                                Margin="2,0,0,5"
                                                VerticalAlignment="Center" />
 
 
                                     <Border Grid.Row="0"
                                             Grid.Column="1"
-                                            Margin="5,0,0,5"
+                                            Margin="5,0,0,0"
                                             Background="{StaticResource MahApps.Brushes.Checkerd}"
                                             BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                                             BorderThickness="1">
@@ -206,7 +206,7 @@
                                             </Grid.RowDefinitions>
 
                                             <!--  R  -->
-                                            <TextBlock Text="R"
+                                            <ContentPresenter Content="{TemplateBinding LabelRedChannel}"
                                                        Grid.Row="0"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -229,7 +229,7 @@
                                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=R}" />
 
                                             <!--  G  -->
-                                            <TextBlock Text="G"
+                                            <ContentPresenter Content="{TemplateBinding LabelGreenChannel}"
                                                        Grid.Row="1"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -252,7 +252,7 @@
                                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=G}" />
 
                                             <!--  B  -->
-                                            <TextBlock Text="B"
+                                            <ContentPresenter Content="{TemplateBinding LabelBlueChannel}"
                                                        Grid.Row="2"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -291,7 +291,7 @@
                                             </Grid.RowDefinitions>
 
                                             <!--  H  -->
-                                            <TextBlock Text="H"
+                                            <ContentPresenter Content="{TemplateBinding LabelHueChannel}"
                                                        Grid.Row="0"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -308,7 +308,7 @@
                                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Hue}" />
 
                                             <!--  S  -->
-                                            <TextBlock Text="S"
+                                            <ContentPresenter Content="{TemplateBinding LabelSaturationChannel}"
                                                        Grid.Row="1"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -333,7 +333,7 @@
                                                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Saturation}" />
 
                                             <!--  Value  -->
-                                            <TextBlock Text="V"
+                                            <ContentPresenter Content="{TemplateBinding LabelValueChannel}"
                                                        Grid.Row="2"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -369,7 +369,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <!--  A  -->
-                                            <TextBlock Text="A"
+                                            <ContentPresenter Content="{TemplateBinding LabelAlphaChannel}"
                                                        Grid.Row="0"
                                                        Grid.Column="0"
                                                        VerticalAlignment="Center" />
@@ -398,37 +398,28 @@
                                 <!--  HTML String und Name  -->
 
                                 <Grid Grid.Row="2"
+                                      VerticalAlignment="Top"
                                       Grid.Column="2"
-                                      Margin="5,0,5,5">
+                                      Margin="0,0,5,5">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <UniformGrid Grid.Column="0" Columns="2">
-                                        <ToggleButton x:Name="PART_ToggleShowName"
-                                                      Content="Name"
-                                                      Margin="2,0,0,5" />
-                                        <ToggleButton x:Name="PART_ToggleShowHex"
-                                                      Content="Hex"
-                                                      Margin="2,0,0,5"
-                                                      IsChecked="{Binding ElementName=PART_ToggleShowName, Path=IsChecked, Converter={StaticResource InvertBoolConverter}, Mode=TwoWay}" />
-                                    </UniformGrid>
 
-                                    <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=HexCode, Mode=TwoWay, ValidatesOnExceptions=True}"
-                                             Grid.Column="1"
-                                             Margin="2,0,0,5"
-                                             Visibility="{Binding ElementName=PART_ToggleShowHex, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <ContentPresenter Content="{TemplateBinding LabelColorName}" 
+                                                      Grid.Column="0"
+                                                      VerticalAlignment="Center" />
+                                    
                                     <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}"
-                                             Grid.Column="1"
-                                             Margin="2,0,0,5"
-                                             Visibility="{Binding ElementName=PART_ToggleShowName, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                             Margin="2,0,0,0"
+                                             Grid.Column="1" />
 
                                     <Controls:ColorEyeDropper x:Name="PART_PickColorFromScreen"
                                                               Grid.Column="2"
                                                               Height="auto"
-                                                              Margin="2,0,0,5"
+                                                              Margin="2,0,0,0"
                                                               SelectedColor="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=SelectedColor}" />
                                 </Grid>
                             </Grid>

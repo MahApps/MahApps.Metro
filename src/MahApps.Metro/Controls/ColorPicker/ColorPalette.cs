@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(nameof(Header), typeof(object), typeof(ColorPalette), new PropertyMetadata(null));
-        public static readonly DependencyProperty ColorDictionaryProperty = DependencyProperty.Register("ColorDictionary", typeof(Dictionary<Color, string>), typeof(ColorPalette), new PropertyMetadata(null));
+        public static readonly DependencyProperty ColorDictionaryProperty = DependencyProperty.Register("ColorDictionary", typeof(Dictionary<Color?, string>), typeof(ColorPalette), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or Sets the Header of this Control
@@ -33,9 +33,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets a custom dictionary for color to name. If null, the degault dictionary will be used.
         /// </summary>
-        public Dictionary<Color, string> ColorDictionary
+        public Dictionary<Color?, string> ColorDictionary
         {
-            get { return (Dictionary<Color, string>)GetValue(ColorDictionaryProperty); }
+            get { return (Dictionary<Color?, string>)GetValue(ColorDictionaryProperty); }
             set { SetValue(ColorDictionaryProperty, value); }
         }
 

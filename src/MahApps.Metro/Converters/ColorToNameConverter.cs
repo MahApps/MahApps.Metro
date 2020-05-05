@@ -12,6 +12,8 @@ namespace MahApps.Metro.Converters
 {
     public class ColorToNameConverter : IValueConverter
     {
+        public Dictionary<Color?, string> ColorNamesDictionary { get; set; }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Color color)

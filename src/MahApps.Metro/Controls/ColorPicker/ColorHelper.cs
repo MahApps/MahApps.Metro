@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
 
         static ColorHelper()
         {
-            ColorNames = new Dictionary<object, string>();
+            ColorNamesDictionary = new Dictionary<Color?, string>();
 
             var rm = new ResourceManager(typeof(Lang.ColorNames));
             ResourceSet resourceSet =rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
         /// <returns>the Color if successfull, else null</returns>
-        public static Color? ColorFromString (string ColorName)
+        public static Color? ColorFromString(string ColorName, Dictionary<Color, string> colorNamesDictionary = null)
         {
             Color? result = null;
 
@@ -106,7 +106,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// A Dictionary with localized Color Names
         /// </summary>
-        public static Dictionary<object, string> ColorNames { get; set; }
+        public static Dictionary<Color, string> ColorNamesDictionary { get; set; }
 
 
         /// <summary>
@@ -114,9 +114,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color color)
+        public static string GetColorName(Color color, Dictionary<Color, string> colorNamesDictionary = null)
         {
-            return ColorNames.TryGetValue(color, out string name) ? name : color.ToString();
+            if (colorNamesDictionary is null)
+            {
+                colorNamesDictionary = ColorNamesDictionary;
+            }
+
+            return colorNamesDictionary.TryGetValue(color, out string name) ? name : color.ToString();
         }
 
     }
