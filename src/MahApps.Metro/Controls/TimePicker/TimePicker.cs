@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
             // have been set even before the template for the DatePicker is
             // applied. And this would mean that the visuals wouldn't be available yet.
 
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate()
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate
                 {
                     // setting the focus to the calendar will focus the correct date.
                     this.hourInput.Focus();

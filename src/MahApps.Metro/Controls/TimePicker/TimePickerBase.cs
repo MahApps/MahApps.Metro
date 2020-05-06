@@ -47,10 +47,10 @@ namespace MahApps.Metro.Controls
         private bool deactivateTextChangedEvent;
         private bool textInputChanged;
         private UIElement hourHand;
-        public Selector hourInput;
+        protected Selector hourInput;
         private UIElement minuteHand;
         private Selector minuteInput;
-        protected Popup popUp;
+        private Popup popUp;
         private bool disablePopupReopen;
         private UIElement secondHand;
         private Selector secondInput;

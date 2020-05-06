@@ -143,7 +143,7 @@ namespace MahApps.Metro.Controls
             // have been set even before the template for the DatePicker is
             // applied. And this would mean that the visuals wouldn't be available yet.
 
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate()
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate
                 {
                     // setting the focus to the calendar will focus the correct date.
                     this.calendar.Focus();
@@ -200,13 +200,11 @@ namespace MahApps.Metro.Controls
 
         private void CalendarPreviewKeyDown(object sender, RoutedEventArgs e)
         {
-            var calendar = sender as Calendar;
             var keyEventArgs = (KeyEventArgs)e;
 
-            Debug.Assert(calendar != null);
             Debug.Assert(keyEventArgs != null);
 
-            if (keyEventArgs.Key == Key.Escape || ((keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space) && calendar.DisplayMode == CalendarMode.Month))
+            if (keyEventArgs.Key == Key.Escape || ((keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space) && this.calendar.DisplayMode == CalendarMode.Month))
             {
                 this.SetCurrentValue(IsDropDownOpenProperty, false);
                 if (keyEventArgs.Key == Key.Escape)
