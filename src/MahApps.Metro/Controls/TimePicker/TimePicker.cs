@@ -16,13 +16,13 @@ namespace MahApps.Metro.Controls
 
         public TimePicker()
         {
-            IsDatePickerVisible = false;
+            this.IsDatePickerVisible = false;
         }
 
         /// <inheritdoc />
         protected override void FocusElementAfterIsDropDownOpenChanged()
         {
-            if (this._hourInput is null)
+            if (this.hourInput is null)
             {
                 return;
             }
@@ -32,31 +32,32 @@ namespace MahApps.Metro.Controls
             // have been set even before the template for the DatePicker is
             // applied. And this would mean that the visuals wouldn't be available yet.
 
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate ()
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate()
                 {
                     // setting the focus to the calendar will focus the correct date.
-                    this._hourInput.Focus();
+                    this.hourInput.Focus();
                 });
         }
 
+        /// <inheritdoc />
         protected override void SetSelectedDateTime()
         {
-            if (this._textBox is null)
+            if (this.textBox is null)
             {
                 return;
             }
 
-            if (TimeSpan.TryParse(_textBox.Text, SpecificCultureInfo, out var timeSpan))
+            if (TimeSpan.TryParse(this.textBox.Text, this.SpecificCultureInfo, out var timeSpan))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan);
             }
             else
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, null);
-                if (SelectedDateTime == null)
+                if (this.SelectedDateTime == null)
                 {
                     // if already null, overwrite wrong data in textbox
-                    WriteValueToTextBox();
+                    this.WriteValueToTextBox();
                 }
             }
         }
