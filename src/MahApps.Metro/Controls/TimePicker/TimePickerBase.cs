@@ -55,7 +55,6 @@ namespace MahApps.Metro.Controls
         private UIElement _secondHand;
         private Selector _secondInput;
         protected DatePickerTextBox _textBox;
-        protected bool _deactivateAdjustTimeOnDateChange;
         protected DateTime? _originalSelectedDateTime;
 
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
@@ -528,9 +527,13 @@ namespace MahApps.Metro.Controls
             return valueForTextBox;
         }
 
-        protected abstract void OnTextBoxLostFocus(object sender, RoutedEventArgs e);
+        protected virtual void ClockSelectedTimeChanged()
+        {
+            var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
+            var date = SelectedDateTime ?? DateTime.Today;
 
-        protected abstract void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e);
+            this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
+        }
 
         protected void RaiseSelectedDateTimeChangedEvent(DateTime? oldValue, DateTime? newValue)
         {
@@ -670,19 +673,14 @@ namespace MahApps.Metro.Controls
             // nothing here
         }
 
-        protected void WriteValueToTextBox(string value)
+        protected virtual void WriteValueToTextBox()
         {
             if (_textBox != null)
             {
                 _deactivateTextChangedEvent = true;
-                _textBox.Text = value;
+                _textBox.Text = GetValueForTextBox();
                 _deactivateTextChangedEvent = false;
             }
-        }
-
-        protected virtual void WriteValueToTextBox()
-        {
-            WriteValueToTextBox(GetValueForTextBox());
         }
 
         private static IList<int> CreateValueList(int interval)
@@ -748,7 +746,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.ClockSelectedTimeChanged(sender, e);
+            this.ClockSelectedTimeChanged();
         }
 
         private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -882,7 +880,7 @@ namespace MahApps.Metro.Controls
                     return new TimeSpan(hours, minutes, seconds);
                 }
 
-                return null; //this.SelectedDateTime.GetValueOrDefault().TimeOfDay;
+                return null;
             }
         }
 
@@ -956,7 +954,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    // SetSelectedDate();
+                    SetSelectedDateTime();
                     this.SetCurrentValue(IsDropDownOpenProperty, true);
                 }
             }
@@ -1072,7 +1070,7 @@ namespace MahApps.Metro.Controls
 
                 case Key.Enter:
                 {
-                    // SetSelectedDate();
+                    SetSelectedDateTime();
                     return true;
                 }
             }
@@ -1080,13 +1078,15 @@ namespace MahApps.Metro.Controls
             return false;
         }
 
+        protected abstract void SetSelectedDateTime();
+
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (_textInputChanged)
             {
                 _textInputChanged = false;
 
-                OnTextBoxLostFocus(sender, e);
+                SetSelectedDateTime();
             }
         }
 

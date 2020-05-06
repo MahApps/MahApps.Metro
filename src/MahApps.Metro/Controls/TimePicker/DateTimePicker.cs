@@ -178,8 +178,6 @@ namespace MahApps.Metro.Controls
                 _calendar.SetBinding(Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
                 _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
             }
-
-            //SetDatePartValues();
         }
 
         private static void CalendarPreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -241,7 +239,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected sealed override void ApplyCulture()
+        protected override void ApplyCulture()
         {
             base.ApplyCulture();
 
@@ -261,18 +259,18 @@ namespace MahApps.Metro.Controls
             return valueForTextBox;
         }
 
-        protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
+        protected override void SetSelectedDateTime()
         {
-            if (!(sender is DatePickerTextBox textBox))
+            if (this._textBox is null)
             {
                 return;
             }
 
-            if (DateTime.TryParse(textBox.Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out var dateTime))
+
+            if (DateTime.TryParse(_textBox.Text, SpecificCultureInfo, System.Globalization.DateTimeStyles.None, out var dateTime))
             {
-                this._deactivateAdjustTimeOnDateChange = true;
                 this.SetCurrentValue(SelectedDateTimeProperty, dateTime);
-                this._deactivateAdjustTimeOnDateChange = false;
+                this.SetCurrentValue(DisplayDateProperty, dateTime);
             }
             else
             {
@@ -324,14 +322,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
-            var date = SelectedDateTime ?? DateTime.Today;
-
-            this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
-        }
-
         protected override void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
         {
             this._calendar.SetCurrentValue(Calendar.SelectedDateProperty, newValue);
@@ -343,7 +333,6 @@ namespace MahApps.Metro.Controls
         {
             // Because Calendar.SelectedDate is bound to this.SelectedDate return this.SelectedDate
             var selectedDate = SelectedDateTime;
-
             if (selectedDate != null)
             {
                 return selectedDate.Value.Date + GetSelectedTimeFromGUI().GetValueOrDefault();

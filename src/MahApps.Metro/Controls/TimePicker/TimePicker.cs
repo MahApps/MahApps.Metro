@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
@@ -41,34 +39,23 @@ namespace MahApps.Metro.Controls
                 });
         }
 
-        protected override void ClockSelectedTimeChanged(object sender, SelectionChangedEventArgs e)
+        protected override void SetSelectedDateTime()
         {
-            var time = this.GetSelectedTimeFromGUI() ?? TimeSpan.Zero;
-            var date = SelectedDateTime ?? DateTime.Today;
-
-            this.SetCurrentValue(SelectedDateTimeProperty, date.Date + time);
-        }
-
-        protected override void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (!(sender is DatePickerTextBox textBox))
+            if (this._textBox is null)
             {
                 return;
             }
 
-            if (TimeSpan.TryParse(textBox.Text, SpecificCultureInfo, out var timeSpan))
+            if (TimeSpan.TryParse(_textBox.Text, SpecificCultureInfo, out var timeSpan))
             {
                 this.SetCurrentValue(SelectedDateTimeProperty, this.SelectedDateTime.GetValueOrDefault().Date + timeSpan);
             }
             else
             {
-                if (string.IsNullOrEmpty(textBox.Text))
+                this.SetCurrentValue(SelectedDateTimeProperty, null);
+                if (SelectedDateTime == null)
                 {
-                    this.SetCurrentValue(SelectedDateTimeProperty, null);
-                    WriteValueToTextBox(string.Empty);
-                }
-                else
-                {
+                    // if already null, overwrite wrong data in textbox
                     WriteValueToTextBox();
                 }
             }
