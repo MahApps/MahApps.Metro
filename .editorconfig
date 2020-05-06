@@ -12,3 +12,8 @@ indent_size = 4
 [*.{md,yml}]
 indent_style = space
 indent_size = 2
+
+
+[*.cs]
+# WPF0011: Containing type should be used as registered owner.
+dotnet_diagnostic.WPF0011.severity = error

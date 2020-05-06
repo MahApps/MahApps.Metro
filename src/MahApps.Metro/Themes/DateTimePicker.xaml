@@ -4,7 +4,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:controlzex="urn:controlzex">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
@@ -261,7 +262,7 @@
                                     IsTabStop="False"
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}" />
 
-                            <Popup x:Name="PART_Popup"
+                            <controlzex:PopupEx x:Name="PART_Popup"
                                    Grid.Row="1"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
@@ -297,14 +298,18 @@
                                                     BorderThickness="2"
                                                     CornerRadius="75">
                                                 <Canvas HorizontalAlignment="Center">
-                                                    <ItemsControl ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
+                                                    <ItemsControl Focusable="False"
+                                                                  IsTabStop="False"
+                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                     </ItemsControl>
-                                                    <ItemsControl ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
+                                                    <ItemsControl Focusable="False"
+                                                                  IsTabStop="False"
+                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />
@@ -322,7 +327,6 @@
                                                             <RotateTransform Angle="{Binding Path=SelectedDateTime, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ClockDegreeConverter}, ConverterParameter='m', Mode=OneWay}" />
                                                         </Rectangle.RenderTransform>
                                                     </Rectangle>
-
                                                     <Rectangle x:Name="PART_HourHand"
                                                                Canvas.Top="27"
                                                                Width="2"
@@ -401,7 +405,7 @@
                                     </StackPanel>
 
                                 </Border>
-                            </Popup>
+                            </controlzex:PopupEx>
                         </Grid>
 
                         <Border x:Name="DisabledVisualElement"
