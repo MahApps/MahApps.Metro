@@ -324,8 +324,8 @@ namespace MahApps.Metro.Controls
 
         protected override void OnSelectedDateTimeChanged(DateTime? oldValue, DateTime? newValue)
         {
-            this._calendar.SetCurrentValue(Calendar.SelectedDateProperty, newValue);
-            
+            this._calendar?.SetCurrentValue(Calendar.SelectedDateProperty, newValue);
+
             base.OnSelectedDateTimeChanged(oldValue, newValue);
         }
 
