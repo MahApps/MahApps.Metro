@@ -95,8 +95,13 @@
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Center"
                 Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
-                VerticalAlignment="Center"
-                ToolTip="{Binding Converter={StaticResource MahApps.Converters.ColorToName}}" >
+                VerticalAlignment="Center">
+            <Border.ToolTip>
+                <MultiBinding Converter="{conv:ColorToNameConverter}">
+                    <Binding />
+                    <Binding Path="ColorNamesDictionary" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=mah:ColorPalette}" />
+                </MultiBinding>
+            </Border.ToolTip>
             <Grid>
                 <Grid.Background>
                     <SolidColorBrush Color="{Binding}" />

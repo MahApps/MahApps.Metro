@@ -88,6 +88,12 @@ namespace MetroDemo
             var cvs = CollectionViewSource.GetDefaultView(this.Albums);
             cvs.GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
 
+            // Create AccentColorPalette
+            foreach (var accent in ThemeManager.Current.Themes.GroupBy(x => x.ColorScheme).OrderBy(a => a.Key).Select(a => a.First()))
+            {
+                this.AccentColorNamesDictionary.Add(accent.PrimaryAccentColor, "MahApps." + accent.ColorScheme);
+            }
+
             this.Artists = SampleData.Artists;
 
             this.FlipViewImages = new Uri[]
@@ -555,5 +561,9 @@ namespace MetroDemo
                 return list;
             }
         }
+
+        public Dictionary<Color?, string> AccentColorNamesDictionary { get; } = new Dictionary<Color?, string>();
+        public IEnumerable<Color?> AccentColorsPalette => AccentColorNamesDictionary.Keys;
+
     }
 }
