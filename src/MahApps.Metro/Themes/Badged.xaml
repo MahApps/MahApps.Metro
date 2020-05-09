@@ -23,7 +23,10 @@
     <Style TargetType="{x:Type controls:Badged}">
         <Setter Property="BadgeBackground" Value="{DynamicResource MahApps.Brushes.Badged.Background}" />
         <Setter Property="BadgeChangedStoryboard" Value="{StaticResource BadgeChangedStoryboard}" />
+        <Setter Property="BadgeFontSize" Value="11" />
+        <Setter Property="BadgeFontWeight" Value="DemiBold" />
         <Setter Property="BadgeForeground" Value="{DynamicResource MahApps.Brushes.Badged.Foreground}" />
+        <Setter Property="BadgeMargin" Value="1 0" />
         <Setter Property="BadgePlacementMode" Value="TopRight" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
@@ -50,22 +53,28 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Background="{TemplateBinding BadgeBackground}"
+                                BorderBrush="{TemplateBinding BadgeBorderBrush}"
+                                BorderThickness="{TemplateBinding BadgeBorderThickness}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight, Converter={converters:SizeToCornerRadiusConverter}}"
                                 RenderTransformOrigin=".5,.5"
-                                TextElement.FontSize="11"
-                                TextElement.FontWeight="DemiBold"
                                 Visibility="{TemplateBinding IsBadgeSet, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Border.RenderTransform>
                                 <ScaleTransform ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
                             <ContentControl x:Name="PART_BadgeContent"
-                                            Margin="1 0 1 0"
+                                            Margin="{TemplateBinding BadgeMargin}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Content="{TemplateBinding Badge}"
+                                            ContentStringFormat="{TemplateBinding BadgeStringFormat}"
                                             ContentTemplate="{TemplateBinding BadgeTemplate}"
                                             ContentTemplateSelector="{TemplateBinding BadgeTemplateSelector}"
                                             Focusable="False"
+                                            FontFamily="{TemplateBinding BadgeFontFamily}"
+                                            FontSize="{TemplateBinding BadgeFontSize}"
+                                            FontStretch="{TemplateBinding BadgeFontStretch}"
+                                            FontStyle="{TemplateBinding BadgeFontStyle}"
+                                            FontWeight="{TemplateBinding BadgeFontWeight}"
                                             Foreground="{TemplateBinding BadgeForeground}"
                                             IsTabStop="False" />
                         </Border>
