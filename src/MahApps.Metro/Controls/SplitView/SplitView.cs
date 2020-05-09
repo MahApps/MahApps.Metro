@@ -15,6 +15,7 @@
     /// </summary>
     [TemplatePart(Name = "PaneClipRectangle", Type = typeof(RectangleGeometry))]
     [TemplatePart(Name = "LightDismissLayer", Type = typeof(Rectangle))]
+    [TemplatePart(Name = "PART_ResizingThumb", Type = typeof(MetroThumb))]
     [TemplateVisualState(Name = "Closed                 ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "ClosedCompactLeft      ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "ClosedCompactRight     ", GroupName = "DisplayModeStates")]
@@ -36,7 +37,8 @@
 
         private static void OnMetricsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var sender = d as SplitView;
+           var sender = d as SplitView;
+            sender?.ValidateOpenPaneLenth();
             sender?.TemplateSettings?.Update();
             sender?.ChangeVisualState(true, true);
         }
@@ -167,6 +169,78 @@
             set { this.SetValue(OpenPaneLengthProperty, value); }
         }
 
+
+
+        /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register("MinimumOpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(100d, OnMetricsChanged));
+
+        /// <summary>
+        ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
+        /// </summary>
+        /// <returns>
+        ///     The minimum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MinimumOpenPaneLength
+        {
+            get { return (double)GetValue(MinimumOpenPaneLengthProperty); }
+            set { SetValue(MinimumOpenPaneLengthProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register("MaximumOpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMetricsChanged));
+
+        /// <summary>
+        ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
+        /// </summary>
+        /// <returns>
+        ///     The maximum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MaximumOpenPaneLength
+        {
+            get { return (double)GetValue(MaximumOpenPaneLengthProperty); }
+            set { SetValue(MaximumOpenPaneLengthProperty, value); }
+        }
+
+        private void ValidateOpenPaneLenth()
+        {
+            double minWidth = 0;
+
+            // Get the minimum needed width
+            if (this.DisplayMode == SplitViewDisplayMode.CompactInline || this.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            {
+                minWidth = Math.Max(this.CompactPaneLength, this.MinimumOpenPaneLength);
+            }
+            else
+            {
+                minWidth = Math.Max(0, this.MinimumOpenPaneLength);
+            }
+
+            if (minWidth < 0)
+            {
+                minWidth = 0;
+            }
+
+            // Get the maximum allowed width
+            double maxWidth = Math.Min(this.ActualWidth, this.MaximumOpenPaneLength);
+
+            // Check if max < min
+            if (maxWidth < minWidth) minWidth = maxWidth;
+
+            // Check is OpenPaneLength is valid
+            if (OpenPaneLength < minWidth)
+            {
+                SetCurrentValue(OpenPaneLengthProperty, minWidth);
+            }
+            else if (OpenPaneLength > maxWidth)
+            {
+                SetCurrentValue(OpenPaneLengthProperty, maxWidth);
+            }
+        }
+
+
         /// <summary>
         ///     Identifies the <see cref="Pane" /> dependency property.
         /// </summary>
@@ -259,6 +333,7 @@
 
         private Rectangle lightDismissLayer;
         private RectangleGeometry paneClipRectangle;
+        private MetroThumb resizingThumb;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SplitView" /> class.
@@ -298,12 +373,23 @@
             {
                 this.lightDismissLayer.MouseDown += this.OnLightDismiss;
             }
+            
+            this.resizingThumb = this.GetTemplateChild("PART_ResizingThumb") as MetroThumb;
+            if (this.resizingThumb != null)
+            {
+                this.resizingThumb.DragDelta += ResizingThumb_DragDelta; ;
+            }
 
             this.ExecuteWhenLoaded(() =>
                 {
                     this.TemplateSettings.Update();
                     this.ChangeVisualState(false);
                 });
+        }
+
+        private void ResizingThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            this.SetCurrentValue(OpenPaneLengthProperty, OpenPaneLength += e.HorizontalChange);
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -349,6 +435,12 @@
         protected override void OnRenderSizeChanged(SizeChangedInfo info)
         {
             base.OnRenderSizeChanged(info);
+
+            if (IsPaneOpen)
+            {
+                ValidateOpenPaneLenth();
+            }
+
             if (this.paneClipRectangle != null)
             {
                 this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight);

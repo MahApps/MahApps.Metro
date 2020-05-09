@@ -1,11 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:local="clr-namespace:MahApps.Metro.Controls" 
+                    xmlns:converter="clr-namespace:MahApps.Metro.Converters">
 
     <Style TargetType="{x:Type local:SplitView}">
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OpenPaneLength" Value="320" />
+        <Setter Property="MinimumOpenPaneLength" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=CompactPaneLength, Converter={converter:MathMultiplyConverter}, ConverterParameter=3}" />
+        <Setter Property="MaximumOpenPaneLength" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth, Converter={converter:MathMultiplyConverter}, ConverterParameter=0.8}" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="Template">
@@ -444,7 +447,7 @@
                         <Grid x:Name="PaneRoot"
                               Grid.Column="0"
                               Grid.ColumnSpan="2"
-                              Width="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength}"
+                              Width="{Binding ElementName=ProxyElement, Path=DataContext.OpenPaneLength, Mode=TwoWay}"
                               HorizontalAlignment="Left"
                               Background="{TemplateBinding PaneBackground}"
                               Visibility="Collapsed">
@@ -469,6 +472,12 @@
                                        HorizontalAlignment="Right"
                                        Fill="Transparent"
                                        Visibility="Collapsed" />
+                            <local:MetroThumb x:Name="PART_ResizingThumb" 
+                                              HorizontalAlignment="Right" 
+                                              VerticalAlignment="Stretch"
+                                              Background="Transparent"
+                                              Cursor="SizeWE"
+                                              Width="3" />
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
