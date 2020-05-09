@@ -21,14 +21,66 @@ namespace MahApps.Metro.Controls
 
         private static void OpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (args.NewValue != args.OldValue)
+            if (args.NewValue != args.OldValue && dependencyObject is HamburgerMenu hamburgerMenu && hamburgerMenu.ValidateOpenPaneLenth())
             {
-                (dependencyObject as HamburgerMenu)?.ChangeItemFocusVisualStyle();
+                hamburgerMenu.ChangeItemFocusVisualStyle();
+            }
+        }
+
+        private bool ValidateOpenPaneLenth()
+        {
+            if (this.ActualWidth > 0)
+            {
+                double minWidth = 0;
+
+                // Get the minimum needed width
+                if (this.DisplayMode == SplitViewDisplayMode.CompactInline || this.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+                {
+                    minWidth = Math.Max(this.CompactPaneLength, this.MinimumOpenPaneLength);
+                }
+                else
+                {
+                    minWidth = Math.Max(0, this.MinimumOpenPaneLength);
+                }
+
+                if (minWidth < 0)
+                {
+                    minWidth = 0;
+                }
+
+                // Get the maximum allowed width
+                double maxWidth = Math.Min(this.ActualWidth, this.MaximumOpenPaneLength);
+
+                // Check if max < min
+                if (maxWidth < minWidth)
+                {
+                    minWidth = maxWidth;
+                }
+
+                // Check is OpenPaneLength is valid
+                if (OpenPaneLength < minWidth)
+                {
+                    SetCurrentValue(OpenPaneLengthProperty, minWidth);
+                    return false;
+                }
+                else if (OpenPaneLength > maxWidth)
+                {
+                    SetCurrentValue(OpenPaneLengthProperty, maxWidth);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
         /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(100d));
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(100d, OpenPaneLengthPropertyChangedCallback));
 
         /// <summary>
         ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -45,7 +97,7 @@ namespace MahApps.Metro.Controls
 
 
         /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(500d));
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(500d, OpenPaneLengthPropertyChangedCallback));
 
         /// <summary>
         ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
