@@ -9,6 +9,7 @@
     using System.Windows.Media;
     using System.Windows.Shapes;
 
+
     /// <summary>
     ///     Represents a container with two views; one view for the main content and another view that is typically used for
     ///     navigation commands.
@@ -26,6 +27,7 @@
     [TemplateVisualState(Name = "OpenCompactOverlayLeft ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "OpenCompactOverlayRight", GroupName = "DisplayModeStates")]
     [ContentProperty("Content")]
+    [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     public class SplitView : Control
     {
         /// <summary>
@@ -37,10 +39,11 @@
 
         private static void OnMetricsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-           var sender = d as SplitView;
-            sender?.ValidateOpenPaneLenth();
-            sender?.TemplateSettings?.Update();
-            sender?.ChangeVisualState(true, true);
+            if (d is SplitView splitView && splitView.ValidateOpenPaneLenth())
+            {
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
         }
 
         /// <summary>
@@ -172,7 +175,7 @@
 
 
         /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register("MinimumOpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(100d, OnMetricsChanged));
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(100d, OnMetricsChanged));
 
         /// <summary>
         ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -189,7 +192,7 @@
 
 
         /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register("MaximumOpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMetricsChanged));
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMetricsChanged));
 
         /// <summary>
         ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -204,40 +207,85 @@
             set { SetValue(MaximumOpenPaneLengthProperty, value); }
         }
 
-        private void ValidateOpenPaneLenth()
-        {
-            double minWidth = 0;
 
-            // Get the minimum needed width
-            if (this.DisplayMode == SplitViewDisplayMode.CompactInline || this.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+        /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or Sets if the open pane can be resized by the user. The default value is true.
+        /// </summary>
+        public bool CanResizeOpenPane
+        {
+            get { return (bool)GetValue(CanResizeOpenPaneProperty); }
+            set { SetValue(CanResizeOpenPaneProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ResizeThumbStyleProperty = DependencyProperty.Register(nameof(ResizeThumbStyle), typeof(Style), typeof(SplitView), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
+        /// </summary>
+        public Style ResizeThumbStyle
+        {
+            get { return (Style)GetValue(ResizeThumbStyleProperty); }
+            set { SetValue(ResizeThumbStyleProperty, value); }
+        }
+
+
+
+        private bool ValidateOpenPaneLenth()
+        {
+            if (this.ActualWidth > 0)
             {
-                minWidth = Math.Max(this.CompactPaneLength, this.MinimumOpenPaneLength);
+                double minWidth = 0;
+
+                // Get the minimum needed width
+                if (this.DisplayMode == SplitViewDisplayMode.CompactInline || this.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+                {
+                    minWidth = Math.Max(this.CompactPaneLength, this.MinimumOpenPaneLength);
+                }
+                else
+                {
+                    minWidth = Math.Max(0, this.MinimumOpenPaneLength);
+                }
+
+                if (minWidth < 0)
+                {
+                    minWidth = 0;
+                }
+
+                // Get the maximum allowed width
+                double maxWidth = Math.Min(this.ActualWidth, this.MaximumOpenPaneLength);
+
+                // Check if max < min
+                if (maxWidth < minWidth)
+                {
+                    minWidth = maxWidth;
+                }
+
+                // Check is OpenPaneLength is valid
+                if (OpenPaneLength < minWidth)
+                {
+                    SetCurrentValue(OpenPaneLengthProperty, minWidth);
+                    return false;
+                }
+                else if (OpenPaneLength > maxWidth)
+                {
+                    SetCurrentValue(OpenPaneLengthProperty, maxWidth);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                minWidth = Math.Max(0, this.MinimumOpenPaneLength);
+                return false;
             }
-
-            if (minWidth < 0)
-            {
-                minWidth = 0;
-            }
-
-            // Get the maximum allowed width
-            double maxWidth = Math.Min(this.ActualWidth, this.MaximumOpenPaneLength);
-
-            // Check if max < min
-            if (maxWidth < minWidth) minWidth = maxWidth;
-
-            // Check is OpenPaneLength is valid
-            if (OpenPaneLength < minWidth)
-            {
-                SetCurrentValue(OpenPaneLengthProperty, minWidth);
-            }
-            else if (OpenPaneLength > maxWidth)
-            {
-                SetCurrentValue(OpenPaneLengthProperty, maxWidth);
-            }
+            
         }
 
 
@@ -377,7 +425,7 @@
             this.resizingThumb = this.GetTemplateChild("PART_ResizingThumb") as MetroThumb;
             if (this.resizingThumb != null)
             {
-                this.resizingThumb.DragDelta += ResizingThumb_DragDelta; ;
+                this.resizingThumb.DragDelta += ResizingThumb_DragDelta;
             }
 
             this.ExecuteWhenLoaded(() =>
@@ -389,7 +437,18 @@
 
         private void ResizingThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            this.SetCurrentValue(OpenPaneLengthProperty, OpenPaneLength += e.HorizontalChange);
+            switch (PanePlacement)
+            {
+                case SplitViewPanePlacement.Left:
+                    this.SetCurrentValue(OpenPaneLengthProperty, OpenPaneLength + e.HorizontalChange);
+                    break;
+                case SplitViewPanePlacement.Right:
+                    this.SetCurrentValue(OpenPaneLengthProperty, OpenPaneLength - e.HorizontalChange);
+                    break;
+                default:
+                    break;
+            }
+            
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)

@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     /// <summary>
     /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
@@ -24,6 +25,65 @@ namespace MahApps.Metro.Controls
             {
                 (dependencyObject as HamburgerMenu)?.ChangeItemFocusVisualStyle();
             }
+        }
+
+        /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(100d));
+
+        /// <summary>
+        ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
+        /// </summary>
+        /// <returns>
+        ///     The minimum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MinimumOpenPaneLength
+        {
+            get { return (double)GetValue(MinimumOpenPaneLengthProperty); }
+            set { SetValue(MinimumOpenPaneLengthProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(HamburgerMenu), new PropertyMetadata(500d));
+
+        /// <summary>
+        ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
+        /// </summary>
+        /// <returns>
+        ///     The maximum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MaximumOpenPaneLength
+        {
+            get { return (double)GetValue(MaximumOpenPaneLengthProperty); }
+            set { SetValue(MaximumOpenPaneLengthProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or Sets if the open pane can be resized by the user. The default value is true.
+        /// </summary>
+        public bool CanResizeOpenPane
+        {
+            get { return (bool)GetValue(CanResizeOpenPaneProperty); }
+            set { SetValue(CanResizeOpenPaneProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ResizeThumbStyleProperty = DependencyProperty.Register(nameof(ResizeThumbStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
+        /// </summary>
+        public Style ResizeThumbStyle
+        {
+            get { return (Style)GetValue(ResizeThumbStyleProperty); }
+            set { SetValue(ResizeThumbStyleProperty, value); }
         }
 
         /// <summary>

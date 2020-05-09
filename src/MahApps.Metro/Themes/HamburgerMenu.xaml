@@ -4,12 +4,14 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
+        <Setter Property="ResizeThumbStyle" Value="{StaticResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
