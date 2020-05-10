@@ -13,7 +13,7 @@
         <Setter Property="ResizeThumbStyle" Value="{DynamicResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
         <Setter Property="MinimumOpenPaneLength" Value="100" />
         <Setter Property="MaximumOpenPaneLength" Value="500" />
-        <Setter Property="CanResizeOpenPane" Value="True" />
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>

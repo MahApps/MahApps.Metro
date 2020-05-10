@@ -26,8 +26,9 @@
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="OpenPaneLength" Value="320" />
-        <Setter Property="MinimumOpenPaneLength" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=CompactPaneLength, Converter={converter:MathMultiplyConverter}, ConverterParameter=3}" />
-        <Setter Property="MaximumOpenPaneLength" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualWidth, Converter={converter:MathMultiplyConverter}, ConverterParameter=0.8}" />
+        <Setter Property="MinimumOpenPaneLength" Value="100" />
+        <Setter Property="MaximumOpenPaneLength" Value="500" />
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="ResizeThumbStyle" Value="{StaticResource MahApps.Styles.MetroThumb.SplitView.Resize}" />

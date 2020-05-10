@@ -27,75 +27,45 @@
 
             <!--  #Templates  -->
             <ControlTemplate x:Key="ConfigDataTemplate">
-                <Grid d:DataContext="{d:DesignInstance controls:SplitView}" Grid.IsSharedSizeScope="True">
+                <ControlTemplate.Resources>
+                    <Style TargetType="controls:MetroHeader" BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" />
+                </ControlTemplate.Resources>
+                <StackPanel d:DataContext="{d:DesignInstance controls:SplitView}" Grid.IsSharedSizeScope="True">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" SharedSizeGroup="labels" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               Margin="2"
-                               VerticalAlignment="Center"
-                               Text="IsOpen" />
-                    <CheckBox Grid.Row="0"
-                              Grid.Column="1"
-                              Margin="2"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding IsPaneOpen}" />
-
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="0"
-                               Margin="2"
-                               VerticalAlignment="Center"
-                               Text="DisplayMode" />
-                    <ComboBox Grid.Row="1"
-                              Grid.Column="1"
-                              Margin="2"
-                              VerticalAlignment="Center"
+                    <controls:MetroHeader Header="IsOpen">
+                        <controls:ToggleSwitch IsOn="{Binding IsPaneOpen}" Margin="2" />
+                    </controls:MetroHeader>
+                    
+                    <controls:MetroHeader Header="DisplayMode">
+                        <ComboBox Margin="2"
                               SelectedValue="{Binding DisplayMode}">
-                        <controls:SplitViewDisplayMode>Inline</controls:SplitViewDisplayMode>
-                        <controls:SplitViewDisplayMode>Overlay</controls:SplitViewDisplayMode>
-                        <controls:SplitViewDisplayMode>CompactInline</controls:SplitViewDisplayMode>
-                        <controls:SplitViewDisplayMode>CompactOverlay</controls:SplitViewDisplayMode>
-                    </ComboBox>
+                            <controls:SplitViewDisplayMode>Inline</controls:SplitViewDisplayMode>
+                            <controls:SplitViewDisplayMode>Overlay</controls:SplitViewDisplayMode>
+                            <controls:SplitViewDisplayMode>CompactInline</controls:SplitViewDisplayMode>
+                            <controls:SplitViewDisplayMode>CompactOverlay</controls:SplitViewDisplayMode>
+                        </ComboBox>
+                    </controls:MetroHeader>
 
-                    <TextBlock Grid.Row="2"
-                               Grid.Column="0"
-                               Margin="2"
-                               VerticalAlignment="Center"
-                               Text="PanePlacement" />
-                    <ComboBox Grid.Row="2"
-                              Grid.Column="1"
-                              Margin="2"
-                              VerticalAlignment="Center"
+                    <controls:MetroHeader Header="CanResizeOpenPane">
+                        <controls:ToggleSwitch IsOn="{Binding CanResizeOpenPane}" Margin="2" />
+                    </controls:MetroHeader>
+
+                    <controls:MetroHeader Header="PanePlacement">
+                        <ComboBox Margin="2"
                               SelectedValue="{Binding PanePlacement}">
-                        <controls:SplitViewPanePlacement>Left</controls:SplitViewPanePlacement>
-                        <controls:SplitViewPanePlacement>Right</controls:SplitViewPanePlacement>
-                    </ComboBox>
-
-                    <TextBlock Grid.Row="3"
-                               Grid.Column="0"
-                               Margin="2"
-                               VerticalAlignment="Center"
-                               Text="CancelClose" />
-                    <CheckBox Grid.Row="3"
-                              Grid.Column="1"
+                            <controls:SplitViewPanePlacement>Left</controls:SplitViewPanePlacement>
+                            <controls:SplitViewPanePlacement>Right</controls:SplitViewPanePlacement>
+                        </ComboBox>
+                    </controls:MetroHeader>
+                    
+                    <controls:MetroHeader Header="CancelClose">
+                        <controls:ToggleSwitch 
                               Margin="2"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding Tag, Mode=TwoWay}" />
-                </Grid>
+                              IsOn="{Binding Tag, Mode=TwoWay}" />
+                    </controls:MetroHeader>
+                    
+                </StackPanel>
             </ControlTemplate>
         </ResourceDictionary>
     </UserControl.Resources>

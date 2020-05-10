@@ -114,10 +114,10 @@ namespace MahApps.Metro.Controls
 
 
         /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
-        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(true));
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
 
         /// <summary>
-        /// Gets or Sets if the open pane can be resized by the user. The default value is true.
+        /// Gets or Sets if the open pane can be resized by the user. The default value is false.
         /// </summary>
         public bool CanResizeOpenPane
         {
