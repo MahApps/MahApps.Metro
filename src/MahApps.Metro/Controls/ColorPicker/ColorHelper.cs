@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
                 try
                 {
                     var color = (Color)ColorConverter.ConvertFromString(entry.Key.ToString());
-                    ColorNames.Add(color, entry.Value.ToString());
+                    ColorNamesDictionary.Add(color, entry.Value.ToString());
                 }
                 catch (Exception)
                 {
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
         /// <returns>the Color if successfull, else null</returns>
-        public static Color? ColorFromString(string ColorName, Dictionary<Color, string> colorNamesDictionary = null)
+        public static Color? ColorFromString(string ColorName, Dictionary<Color?, string> colorNamesDictionary = null)
         {
             Color? result = null;
 
@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
 
                 if (! ColorName.StartsWith("#"))
                 {
-                    result = ColorNames.FirstOrDefault(x => string.Equals(x.Value, ColorName, StringComparison.OrdinalIgnoreCase)).Key as Color?;
+                    result = ColorNamesDictionary.FirstOrDefault(x => string.Equals(x.Value, ColorName, StringComparison.OrdinalIgnoreCase)).Key as Color?;
                 }
                 if (!result.HasValue)
                 {
@@ -106,7 +106,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// A Dictionary with localized Color Names
         /// </summary>
-        public static Dictionary<Color, string> ColorNamesDictionary { get; set; }
+        public static Dictionary<Color?, string> ColorNamesDictionary { get; set; }
 
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color color, Dictionary<Color, string> colorNamesDictionary = null)
+        public static string GetColorName(Color color, Dictionary<Color?, string> colorNamesDictionary = null)
         {
             if (colorNamesDictionary is null)
             {
                 colorNamesDictionary = ColorNamesDictionary;
             }
 
-            return colorNamesDictionary.TryGetValue(color, out string name) ? name : color.ToString();
+            return colorNamesDictionary.TryGetValue(color, out string name) ? $"{name} ({color})" : $"{color}";
         }
 
     }
