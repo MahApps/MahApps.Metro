@@ -19,7 +19,9 @@ namespace MahApps.Metro.Controls
     public class CustomValidationPopup : Popup
     {
         private Window hostWindow;
+        private ScrollViewer scrollViewer;
 
+        /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
             = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown),
                                           typeof(bool),
@@ -35,6 +37,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(CloseOnMouseLeftButtonDownProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ShowValidationErrorOnMouseOver"/> dependency property.</summary>
         public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
             = DependencyProperty.RegisterAttached(nameof(ShowValidationErrorOnMouseOver),
                                                   typeof(bool),
@@ -48,6 +51,22 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty);
             set => this.SetValue(ShowValidationErrorOnMouseOverProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="AdornedElement"/> dependency property.</summary>
+        public static readonly DependencyProperty AdornedElementProperty
+            = DependencyProperty.Register(nameof(AdornedElement),
+                                          typeof(UIElement),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(default(UIElement)));
+
+        /// <summary>
+        /// Gets or sets the <see cref="T:System.Windows.UIElement" /> that this <see cref="T:System.Windows.Controls.Primitives.Popup" /> object is reserving space for.
+        /// </summary>
+        public UIElement AdornedElement
+        {
+            get => (UIElement)this.GetValue(AdornedElementProperty);
+            set => this.SetValue(AdornedElementProperty, value);
         }
 
         public CustomValidationPopup()
@@ -64,7 +83,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                var adornedElement = this.GetAdornedElement();
+                var adornedElement = this.AdornedElement;
                 if (adornedElement != null && ValidationHelper.GetCloseOnMouseLeftButtonDown(adornedElement))
                 {
                     this.SetCurrentValue(IsOpenProperty, false);
@@ -78,23 +97,33 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!(this.PlacementTarget is FrameworkElement target))
+            var adornedElement = this.AdornedElement;
+            if (adornedElement is null)
             {
                 return;
             }
 
-            this.hostWindow = Window.GetWindow(target);
+            this.hostWindow = Window.GetWindow(adornedElement);
             if (this.hostWindow == null)
             {
                 return;
+            }
+
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
+            }
+
+            this.scrollViewer = adornedElement.TryFindParent<ScrollViewer>();
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
             }
 
             this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.LocationChanged += this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.SizeChanged += this.hostWindow_SizeOrLocationChanged;
-            target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-            target.SizeChanged += this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
             this.hostWindow.StateChanged += this.hostWindow_StateChanged;
             this.hostWindow.Activated -= this.hostWindow_Activated;
@@ -102,8 +131,43 @@ namespace MahApps.Metro.Controls
             this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
             this.hostWindow.Deactivated += this.hostWindow_Deactivated;
 
+            if (this.PlacementTarget is FrameworkElement frameworkElement)
+            {
+                frameworkElement.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+                frameworkElement.SizeChanged += this.hostWindow_SizeOrLocationChanged;
+            }
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Unloaded += this.CustomValidationPopup_Unloaded;
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            this.Move();
+
+            if (this.IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
+            {
+                var adornedElement = this.AdornedElement;
+                var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+                this.SetCurrentValue(IsOpenProperty, isOpen);
+            }
+            else
+            {
+                this.SetCurrentValue(IsOpenProperty, false);
+            }
+        }
+
+        private bool IsElementVisible(FrameworkElement element, FrameworkElement container)
+        {
+            if (element is null || container is null || !element.IsVisible)
+            {
+                return false;
+            }
+
+            var bounds = element.TransformToAncestor(container)
+                                .TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
+            var rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
+            return rect.IntersectsWith(bounds);
         }
 
         private void CustomValidationPopup_Opened(object sender, EventArgs e)
@@ -123,9 +187,9 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (this.PlacementTarget is FrameworkElement target)
+            if (this.PlacementTarget is FrameworkElement frameworkElement)
             {
-                target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+                frameworkElement.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             }
 
             if (this.hostWindow != null)
@@ -137,26 +201,25 @@ namespace MahApps.Metro.Controls
                 this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
             }
 
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
+            }
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Opened -= this.CustomValidationPopup_Opened;
             this.hostWindow = null;
-        }
-
-        private UIElement GetAdornedElement()
-        {
-            var placeholder = this.PlacementTarget is FrameworkElement target ? target.DataContext as AdornedElementPlaceholder : null;
-            return placeholder?.AdornedElement;
         }
 
         private void hostWindow_StateChanged(object sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
-                var adornedElement = this.GetAdornedElement();
+                var adornedElement = this.AdornedElement;
                 if (adornedElement != null)
                 {
                     this.PopupAnimation = PopupAnimation.None;
-                    this.IsOpen = false;
+                    this.SetCurrentValue(IsOpenProperty, false);
                     var errorTemplate = adornedElement.GetValue(Validation.ErrorTemplateProperty);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, null);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
@@ -165,6 +228,11 @@ namespace MahApps.Metro.Controls
         }
 
         private void hostWindow_SizeOrLocationChanged(object sender, EventArgs e)
+        {
+            this.Move();
+        }
+
+        private void Move()
         {
             var offset = this.HorizontalOffset;
             // "bump" the offset to cause the popup to reposition itself on its own
