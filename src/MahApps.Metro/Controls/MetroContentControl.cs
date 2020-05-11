@@ -5,109 +5,156 @@ using System.Windows.Media.Animation;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Originally from http://xamlcoder.com/blog/2010/11/04/creating-a-metro-ui-style-control/
+    /// A ContentControl which use a transition to slide in the content.
     /// </summary>
     public class MetroContentControl : ContentControl
     {
-        public static readonly DependencyProperty ReverseTransitionProperty = DependencyProperty.Register("ReverseTransition", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
-
-        public bool ReverseTransition
-        {
-            get { return (bool)GetValue(ReverseTransitionProperty); }
-            set { SetValue(ReverseTransitionProperty, value); }
-        }
-
-        public static readonly DependencyProperty TransitionsEnabledProperty = DependencyProperty.Register("TransitionsEnabled", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(true));
-
-        public bool TransitionsEnabled
-        {
-            get { return (bool)GetValue(TransitionsEnabledProperty); }
-            set { SetValue(TransitionsEnabledProperty, value); }
-        }
-
-        public static readonly DependencyProperty OnlyLoadTransitionProperty = DependencyProperty.Register("OnlyLoadTransition", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
-
-        public bool OnlyLoadTransition
-        {
-            get { return (bool)GetValue(OnlyLoadTransitionProperty); }
-            set { SetValue(OnlyLoadTransitionProperty, value); }
-        }
-
-        public static readonly RoutedEvent TransitionStartedEvent = EventManager.RegisterRoutedEvent("TransitionStarted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroContentControl));
-
-        public event RoutedEventHandler TransitionStarted
-        {
-            add { this.AddHandler(TransitionStartedEvent, value); }
-            remove { this.RemoveHandler(TransitionStartedEvent, value); }
-        }
-
-        public static readonly RoutedEvent TransitionCompletedEvent = EventManager.RegisterRoutedEvent("TransitionCompleted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroContentControl));
-
-        public event RoutedEventHandler TransitionCompleted
-        {
-            add { this.AddHandler(TransitionCompletedEvent, value); }
-            remove { this.RemoveHandler(TransitionCompletedEvent, value); }
-        }
-
         private Storyboard afterLoadedStoryboard;
         private Storyboard afterLoadedReverseStoryboard;
         private bool transitionLoaded;
 
-        public MetroContentControl()
-        {
-            DefaultStyleKey = typeof(MetroContentControl);
+        /// <summary>Identifies the <see cref="ReverseTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty ReverseTransitionProperty
+            = DependencyProperty.Register(nameof(ReverseTransition),
+                                          typeof(bool),
+                                          typeof(MetroContentControl),
+                                          new FrameworkPropertyMetadata(false));
 
-            Loaded += MetroContentControlLoaded;
-            Unloaded += MetroContentControlUnloaded;
+        /// <summary>
+        /// Gets or sets whether the reverse version of the transition should be used.
+        /// </summary>
+        public bool ReverseTransition
+        {
+            get => (bool)this.GetValue(ReverseTransitionProperty);
+            set => this.SetValue(ReverseTransitionProperty, value);
         }
 
-        void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        /// <summary>Identifies the <see cref="TransitionsEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty TransitionsEnabledProperty
+            = DependencyProperty.Register(nameof(TransitionsEnabled),
+                                          typeof(bool),
+                                          typeof(MetroContentControl),
+                                          new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets the value if a transition should be used or not.
+        /// </summary>
+        public bool TransitionsEnabled
         {
-            if (TransitionsEnabled && !transitionLoaded)
+            get => (bool)this.GetValue(TransitionsEnabledProperty);
+            set => this.SetValue(TransitionsEnabledProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="OnlyLoadTransition"/> dependency property.</summary>
+        public static readonly DependencyProperty OnlyLoadTransitionProperty
+            = DependencyProperty.Register(nameof(OnlyLoadTransition),
+                                          typeof(bool),
+                                          typeof(MetroContentControl),
+                                          new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Gets or sets whether the transition should be used only at the loaded event of the control.
+        /// </summary>
+        public bool OnlyLoadTransition
+        {
+            get => (bool)this.GetValue(OnlyLoadTransitionProperty);
+            set => this.SetValue(OnlyLoadTransitionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TransitionStarted"/> routed event.</summary>
+        public static readonly RoutedEvent TransitionStartedEvent
+            = EventManager.RegisterRoutedEvent(nameof(TransitionStarted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(MetroContentControl));
+
+        /// <summary>
+        /// The event which will be fired when the transition starts.
+        /// </summary>
+        public event RoutedEventHandler TransitionStarted
+        {
+            add => this.AddHandler(TransitionStartedEvent, value);
+            remove => this.RemoveHandler(TransitionStartedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="TransitionCompleted"/> routed event.</summary>
+        public static readonly RoutedEvent TransitionCompletedEvent
+            = EventManager.RegisterRoutedEvent(nameof(TransitionCompleted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(MetroContentControl));
+
+        /// <summary>
+        /// The event which will be fired when the transition ends.
+        /// </summary>
+        public event RoutedEventHandler TransitionCompleted
+        {
+            add => this.AddHandler(TransitionCompletedEvent, value);
+            remove => this.RemoveHandler(TransitionCompletedEvent, value);
+        }
+
+        public MetroContentControl()
+        {
+            this.DefaultStyleKey = typeof(MetroContentControl);
+
+            this.Loaded += this.MetroContentControlLoaded;
+            this.Unloaded += this.MetroContentControlUnloaded;
+        }
+
+        private void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this.TransitionsEnabled && !this.transitionLoaded)
             {
-                if (!IsVisible)
-                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
+                if (!this.IsVisible)
+                {
+                    VisualStateManager.GoToState(this, this.ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
+                }
                 else
-                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
+                {
+                    VisualStateManager.GoToState(this, this.ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
+                }
             }
         }
 
         private void MetroContentControlUnloaded(object sender, RoutedEventArgs e)
         {
-            if (TransitionsEnabled)
+            if (this.TransitionsEnabled)
             {
                 this.UnsetStoryboardEvents();
-                if (transitionLoaded)
-                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
-                IsVisibleChanged -= MetroContentControlIsVisibleChanged;
+                if (this.transitionLoaded)
+                {
+                    VisualStateManager.GoToState(this, this.ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
+                }
+
+                this.IsVisibleChanged -= this.MetroContentControlIsVisibleChanged;
             }
         }
 
         private void MetroContentControlLoaded(object sender, RoutedEventArgs e)
         {
-            if (TransitionsEnabled)
+            if (this.TransitionsEnabled)
             {
-                if (!transitionLoaded)
+                if (!this.transitionLoaded)
                 {
                     this.SetStoryboardEvents();
-                    transitionLoaded = this.OnlyLoadTransition;
-                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
+                    this.transitionLoaded = this.OnlyLoadTransition;
+                    VisualStateManager.GoToState(this, this.ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
                 }
-                IsVisibleChanged -= MetroContentControlIsVisibleChanged;
-                IsVisibleChanged += MetroContentControlIsVisibleChanged;
+
+                this.IsVisibleChanged -= this.MetroContentControlIsVisibleChanged;
+                this.IsVisibleChanged += this.MetroContentControlIsVisibleChanged;
             }
             else
             {
-                var root = (Grid)GetTemplateChild("root");
-                if (root != null)
+                if (this.GetTemplateChild("RootGrid") is Grid rootGrid)
                 {
-                    root.Opacity = 1.0;
-                    var transform = ((System.Windows.Media.TranslateTransform)root.RenderTransform);
+                    rootGrid.Opacity = 1.0;
+                    var transform = ((System.Windows.Media.TranslateTransform)rootGrid.RenderTransform);
                     if (transform.IsFrozen)
                     {
                         var modifiedTransform = transform.Clone();
                         modifiedTransform.X = 0;
-                        root.RenderTransform = modifiedTransform;
+                        rootGrid.RenderTransform = modifiedTransform;
                     }
                     else
                     {
@@ -117,11 +164,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Execute the transition again.
+        /// </summary>
         public void Reload()
         {
-            if (!TransitionsEnabled || transitionLoaded) return;
+            if (!this.TransitionsEnabled || this.transitionLoaded)
+            {
+                return;
+            }
 
-            if (ReverseTransition)
+            if (this.ReverseTransition)
             {
                 VisualStateManager.GoToState(this, "BeforeLoaded", true);
                 VisualStateManager.GoToState(this, "AfterUnLoadedReverse", true);
@@ -131,15 +184,15 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "BeforeLoaded", true);
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
-
         }
 
+        /// <inheritdoc />
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            afterLoadedStoryboard = this.GetTemplateChild("AfterLoadedStoryboard") as Storyboard;
-            afterLoadedReverseStoryboard = this.GetTemplateChild("AfterLoadedReverseStoryboard") as Storyboard;
+            this.afterLoadedStoryboard = this.GetTemplateChild("AfterLoadedStoryboard") as Storyboard;
+            this.afterLoadedReverseStoryboard = this.GetTemplateChild("AfterLoadedReverseStoryboard") as Storyboard;
         }
 
         private void AfterLoadedStoryboardCurrentTimeInvalidated(object sender, System.EventArgs e)
@@ -155,10 +208,11 @@ namespace MahApps.Metro.Controls
 
         private void AfterLoadedStoryboardCompleted(object sender, System.EventArgs e)
         {
-            if (transitionLoaded)
+            if (this.transitionLoaded)
             {
                 this.UnsetStoryboardEvents();
             }
+
             this.InvalidateVisual();
             this.RaiseEvent(new RoutedEventArgs(TransitionCompletedEvent));
         }
@@ -170,6 +224,7 @@ namespace MahApps.Metro.Controls
                 this.afterLoadedStoryboard.CurrentTimeInvalidated += this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedStoryboard.Completed += this.AfterLoadedStoryboardCompleted;
             }
+
             if (this.afterLoadedReverseStoryboard != null)
             {
                 this.afterLoadedReverseStoryboard.CurrentTimeInvalidated += this.AfterLoadedStoryboardCurrentTimeInvalidated;
@@ -184,6 +239,7 @@ namespace MahApps.Metro.Controls
                 this.afterLoadedStoryboard.CurrentTimeInvalidated -= this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedStoryboard.Completed -= this.AfterLoadedStoryboardCompleted;
             }
+
             if (this.afterLoadedReverseStoryboard != null)
             {
                 this.afterLoadedReverseStoryboard.CurrentTimeInvalidated -= this.AfterLoadedStoryboardCurrentTimeInvalidated;
