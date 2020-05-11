@@ -104,7 +104,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.hostWindow = Window.GetWindow(adornedElement);
-            if (this.hostWindow == null)
+            if (this.hostWindow is null)
             {
                 return;
             }
@@ -120,21 +120,21 @@ namespace MahApps.Metro.Controls
                 this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
             }
 
-            this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.LocationChanged += this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.SizeChanged += this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
-            this.hostWindow.StateChanged += this.hostWindow_StateChanged;
-            this.hostWindow.Activated -= this.hostWindow_Activated;
-            this.hostWindow.Activated += this.hostWindow_Activated;
-            this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
-            this.hostWindow.Deactivated += this.hostWindow_Deactivated;
+            this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
+            this.hostWindow.LocationChanged += this.OnSizeOrLocationChanged;
+            this.hostWindow.SizeChanged -= this.OnSizeOrLocationChanged;
+            this.hostWindow.SizeChanged += this.OnSizeOrLocationChanged;
+            this.hostWindow.StateChanged -= this.OnHostWindowStateChanged;
+            this.hostWindow.StateChanged += this.OnHostWindowStateChanged;
+            this.hostWindow.Activated -= this.OnHostWindowActivated;
+            this.hostWindow.Activated += this.OnHostWindowActivated;
+            this.hostWindow.Deactivated -= this.OnHostWindowDeactivated;
+            this.hostWindow.Deactivated += this.OnHostWindowDeactivated;
 
             if (this.PlacementTarget is FrameworkElement frameworkElement)
             {
-                frameworkElement.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-                frameworkElement.SizeChanged += this.hostWindow_SizeOrLocationChanged;
+                frameworkElement.SizeChanged -= this.OnSizeOrLocationChanged;
+                frameworkElement.SizeChanged += this.OnSizeOrLocationChanged;
             }
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
@@ -143,9 +143,9 @@ namespace MahApps.Metro.Controls
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            this.Move();
+            this.RefreshPosition();
 
-            if (this.IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
+            if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
             {
                 var adornedElement = this.AdornedElement;
                 var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
@@ -157,7 +157,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private bool IsElementVisible(FrameworkElement element, FrameworkElement container)
+        private static bool IsElementVisible(FrameworkElement element, FrameworkElement container)
         {
             if (element is null || container is null || !element.IsVisible)
             {
@@ -175,12 +175,12 @@ namespace MahApps.Metro.Controls
             this.SetTopmostState(true);
         }
 
-        private void hostWindow_Activated(object sender, EventArgs e)
+        private void OnHostWindowActivated(object sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void hostWindow_Deactivated(object sender, EventArgs e)
+        private void OnHostWindowDeactivated(object sender, EventArgs e)
         {
             this.SetTopmostState(false);
         }
@@ -189,16 +189,16 @@ namespace MahApps.Metro.Controls
         {
             if (this.PlacementTarget is FrameworkElement frameworkElement)
             {
-                frameworkElement.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+                frameworkElement.SizeChanged -= this.OnSizeOrLocationChanged;
             }
 
             if (this.hostWindow != null)
             {
-                this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
-                this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-                this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
-                this.hostWindow.Activated -= this.hostWindow_Activated;
-                this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
+                this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
+                this.hostWindow.SizeChanged -= this.OnSizeOrLocationChanged;
+                this.hostWindow.StateChanged -= this.OnHostWindowStateChanged;
+                this.hostWindow.Activated -= this.OnHostWindowActivated;
+                this.hostWindow.Deactivated -= this.OnHostWindowDeactivated;
             }
 
             if (this.scrollViewer != null)
@@ -211,7 +211,7 @@ namespace MahApps.Metro.Controls
             this.hostWindow = null;
         }
 
-        private void hostWindow_StateChanged(object sender, EventArgs e)
+        private void OnHostWindowStateChanged(object sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
@@ -227,17 +227,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void hostWindow_SizeOrLocationChanged(object sender, EventArgs e)
+        private void OnSizeOrLocationChanged(object sender, EventArgs e)
         {
-            this.Move();
+            this.RefreshPosition();
         }
 
-        private void Move()
+        private void RefreshPosition()
         {
             var offset = this.HorizontalOffset;
             // "bump" the offset to cause the popup to reposition itself on its own
-            this.HorizontalOffset = offset + 1;
-            this.HorizontalOffset = offset;
+            this.SetCurrentValue(HorizontalOffsetProperty, offset + 1);
+            this.SetCurrentValue(HorizontalOffsetProperty, offset);
         }
 
         private bool? appliedTopMost;
@@ -250,22 +250,20 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (this.Child == null)
+            if (this.Child is null)
             {
                 return;
             }
 
-            var hwndSource = (PresentationSource.FromVisual(this.Child)) as HwndSource;
-            if (hwndSource == null)
+            if (!(PresentationSource.FromVisual(this.Child) is HwndSource hwndSource))
             {
                 return;
             }
 
-            var hwnd = hwndSource.Handle;
+            var handle = hwndSource.Handle;
 
 #pragma warning disable 618
-            RECT rect;
-            if (!UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+            if (!UnsafeNativeMethods.GetWindowRect(handle, out var rect))
             {
                 return;
             }
@@ -277,7 +275,7 @@ namespace MahApps.Metro.Controls
             var height = rect.Height;
             if (isTop)
             {
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_TOPMOST, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_TOPMOST, left, top, width, height, SWP.TOPMOST);
             }
             else
             {
@@ -285,9 +283,9 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_BOTTOM, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_TOP, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_NOTOPMOST, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_BOTTOM, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_TOP, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_NOTOPMOST, left, top, width, height, SWP.TOPMOST);
             }
 
             this.appliedTopMost = isTop;
