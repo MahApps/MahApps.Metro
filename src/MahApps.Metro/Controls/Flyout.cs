@@ -448,6 +448,8 @@ namespace MahApps.Metro.Controls
                             {
                                 if (flyout.hideStoryboard != null)
                                 {
+                                    flyout.Hide();
+
                                     // don't let the storyboard end it's completed event
                                     // otherwise it could be hidden on start
                                     flyout.hideStoryboard.Completed -= flyout.HideStoryboardCompleted;
