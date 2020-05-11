@@ -12,8 +12,6 @@ using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Linq;
-
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>
@@ -35,6 +33,19 @@ namespace MahApps.Metro.Controls
         {
             add { this.AddHandler(IsOpenChangedEvent, value); }
             remove { this.RemoveHandler(IsOpenChangedEvent, value); }
+        }
+
+        /// <summary>
+        /// An event that is raised when the opening animation has finished.
+        /// </summary>
+        public static readonly RoutedEvent OpeningFinishedEvent =
+            EventManager.RegisterRoutedEvent("OpeningFinished", RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler), typeof(Flyout));
+
+        public event RoutedEventHandler OpeningFinished
+        {
+            add { this.AddHandler(OpeningFinishedEvent, value); }
+            remove { this.RemoveHandler(OpeningFinishedEvent, value); }
         }
 
         /// <summary>
@@ -427,63 +438,82 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action openedChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action openedChangedAction = () =>
                 {
-                    if (flyout.AreAnimationsEnabled)
+                    if (e.NewValue != e.OldValue)
                     {
-                        if ((bool)e.NewValue)
+                        if (flyout.AreAnimationsEnabled)
                         {
-                            if (flyout.hideStoryboard != null)
+                            if ((bool)e.NewValue)
                             {
-                                // don't let the storyboard end it's completed event
-                                // otherwise it could be hidden on start
-                                flyout.hideStoryboard.Completed -= flyout.HideStoryboardCompleted;
-                            }
-                            flyout.Visibility = Visibility.Visible;
-                            flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
-                            flyout.TryFocusElement();
-                            if (flyout.IsAutoCloseEnabled)
-                            {
-                                flyout.StartAutoCloseTimer();
-                            }
-                        }
-                        else
-                        {
-                            flyout.StopAutoCloseTimer();
-                            if (flyout.hideStoryboard != null)
-                            {
-                                flyout.hideStoryboard.Completed += flyout.HideStoryboardCompleted;
+                                if (flyout.hideStoryboard != null)
+                                {
+                                    // don't let the storyboard end it's completed event
+                                    // otherwise it could be hidden on start
+                                    flyout.hideStoryboard.Completed -= flyout.HideStoryboardCompleted;
+                                }
+
+                                flyout.Visibility = Visibility.Visible;
+                                flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
+                                flyout.TryFocusElement();
+                                if (flyout.showStoryboard != null)
+                                {
+                                    flyout.showStoryboard.Completed += flyout.ShowStoryboardCompleted;
+                                }
+                                else
+                                {
+                                    flyout.Shown();
+                                }
+
+                                if (flyout.IsAutoCloseEnabled)
+                                {
+                                    flyout.StartAutoCloseTimer();
+                                }
                             }
                             else
                             {
-                                flyout.Hide();
+                                if (flyout.showStoryboard != null)
+                                {
+                                    flyout.showStoryboard.Completed -= flyout.ShowStoryboardCompleted;
+                                }
+
+                                flyout.StopAutoCloseTimer();
+                                if (flyout.hideStoryboard != null)
+                                {
+                                    flyout.hideStoryboard.Completed += flyout.HideStoryboardCompleted;
+                                }
+                                else
+                                {
+                                    flyout.Hide();
+                                }
                             }
-                        }
-                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
-                    }
-                    else
-                    {
-                        if ((bool)e.NewValue)
-                        {
-                            flyout.Visibility = Visibility.Visible;
-                            flyout.TryFocusElement();
-                            if (flyout.IsAutoCloseEnabled)
-                            {
-                                flyout.StartAutoCloseTimer();
-                            }
+
+                            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                         }
                         else
                         {
-                            flyout.StopAutoCloseTimer();
-                            flyout.Hide();
-                        }
-                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
-                    }
-                }
+                            if ((bool)e.NewValue)
+                            {
+                                flyout.Visibility = Visibility.Visible;
+                                flyout.TryFocusElement();
+                                flyout.Shown();
+                                if (flyout.IsAutoCloseEnabled)
+                                {
+                                    flyout.StartAutoCloseTimer();
+                                }
+                            }
+                            else
+                            {
+                                flyout.StopAutoCloseTimer();
+                                flyout.Hide();
+                            }
 
-                flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
-            };
+                            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
+                        }
+                    }
+
+                    flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
         }
@@ -572,6 +602,17 @@ namespace MahApps.Metro.Controls
             this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
+        private void ShowStoryboardCompleted(object sender, EventArgs e)
+        {
+            this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            this.Shown();
+        }
+
+        private void Shown()
+        {
+            this.RaiseEvent(new RoutedEventArgs(OpeningFinishedEvent));
+        }
+
         private void TryFocusElement()
         {
             if (this.AllowFocusElement)
@@ -625,6 +666,7 @@ namespace MahApps.Metro.Controls
 
         DispatcherTimer autoCloseTimer;
         FrameworkElement flyoutRoot;
+        Storyboard showStoryboard;
         Storyboard hideStoryboard;
         SplineDoubleKeyFrame hideFrame;
         SplineDoubleKeyFrame hideFrameY;
@@ -670,6 +712,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
+            this.showStoryboard = this.GetTemplateChild("ShowStoryboard") as Storyboard;
             this.hideStoryboard = this.GetTemplateChild("HideStoryboard") as Storyboard;
             this.hideFrame = this.GetTemplateChild("hideFrame") as SplineDoubleKeyFrame;
             this.hideFrameY = this.GetTemplateChild("hideFrameY") as SplineDoubleKeyFrame;
