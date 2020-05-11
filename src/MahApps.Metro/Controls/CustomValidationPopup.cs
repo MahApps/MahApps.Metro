@@ -20,6 +20,7 @@ namespace MahApps.Metro.Controls
     {
         private Window hostWindow;
         private ScrollViewer scrollViewer;
+        private MetroContentControl metroContentControl;
 
         /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
@@ -69,6 +70,25 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(AdornedElementProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey CanShowPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(CanShow),
+                                                  typeof(bool),
+                                                  typeof(CustomValidationPopup),
+                                                  new PropertyMetadata(false));
+
+        /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
+        public static readonly DependencyProperty CanShowProperty = CanShowPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether the popup can be shown (useful for transitions).
+        /// </summary>
+        public bool CanShow
+        {
+            get => (bool)this.GetValue(CanShowProperty);
+            protected set => this.SetValue(CanShowPropertyKey, value);
+        }
+
         public CustomValidationPopup()
         {
             this.Loaded += this.CustomValidationPopup_Loaded;
@@ -97,6 +117,8 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
         {
+            var canShow = true;
+
             var adornedElement = this.AdornedElement;
             if (adornedElement is null)
             {
@@ -120,6 +142,18 @@ namespace MahApps.Metro.Controls
                 this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
             }
 
+            if (this.metroContentControl != null)
+            {
+                this.metroContentControl.TransitionCompleted -= this.MetroContentControl_TransitionCompleted;
+            }
+
+            this.metroContentControl = adornedElement.TryFindParent<MetroContentControl>();
+            if (this.metroContentControl != null)
+            {
+                canShow = !this.metroContentControl.TransitionsEnabled;
+                this.metroContentControl.TransitionCompleted += this.MetroContentControl_TransitionCompleted;
+            }
+
             this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
             this.hostWindow.LocationChanged += this.OnSizeOrLocationChanged;
             this.hostWindow.SizeChanged -= this.OnSizeOrLocationChanged;
@@ -137,8 +171,23 @@ namespace MahApps.Metro.Controls
                 frameworkElement.SizeChanged += this.OnSizeOrLocationChanged;
             }
 
+            this.OnLoaded();
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Unloaded += this.CustomValidationPopup_Unloaded;
+
+            this.SetValue(CanShowPropertyKey, canShow);
+        }
+
+        private void MetroContentControl_TransitionCompleted(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+
+            var adornedElement = this.AdornedElement;
+            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            this.SetCurrentValue(IsOpenProperty, isOpen);
+
+            this.SetValue(CanShowPropertyKey, true);
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -187,6 +236,8 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
         {
+            this.OnUnLoaded();
+
             if (this.PlacementTarget is FrameworkElement frameworkElement)
             {
                 frameworkElement.SizeChanged -= this.OnSizeOrLocationChanged;
@@ -206,9 +257,22 @@ namespace MahApps.Metro.Controls
                 this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
             }
 
+            if (this.metroContentControl != null)
+            {
+                this.metroContentControl.TransitionCompleted -= this.MetroContentControl_TransitionCompleted;
+            }
+
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Opened -= this.CustomValidationPopup_Opened;
             this.hostWindow = null;
+        }
+
+        protected virtual void OnLoaded()
+        {
+        }
+
+        protected virtual void OnUnLoaded()
+        {
         }
 
         private void OnHostWindowStateChanged(object sender, EventArgs e)

@@ -130,6 +130,7 @@
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ValidationPopup, Path=CanShow, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
                 </MultiDataTrigger.Conditions>
