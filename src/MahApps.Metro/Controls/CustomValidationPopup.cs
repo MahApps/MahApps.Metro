@@ -19,7 +19,12 @@ namespace MahApps.Metro.Controls
     public class CustomValidationPopup : Popup
     {
         private Window hostWindow;
+        private ScrollViewer scrollViewer;
+        private MetroContentControl metroContentControl;
+        private TransitioningContentControl transitioningContentControl;
+        private Flyout flyout;
 
+        /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
             = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown),
                                           typeof(bool),
@@ -35,6 +40,7 @@ namespace MahApps.Metro.Controls
             set => this.SetValue(CloseOnMouseLeftButtonDownProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ShowValidationErrorOnMouseOver"/> dependency property.</summary>
         public static readonly DependencyProperty ShowValidationErrorOnMouseOverProperty
             = DependencyProperty.RegisterAttached(nameof(ShowValidationErrorOnMouseOver),
                                                   typeof(bool),
@@ -48,6 +54,41 @@ namespace MahApps.Metro.Controls
         {
             get => (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty);
             set => this.SetValue(ShowValidationErrorOnMouseOverProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="AdornedElement"/> dependency property.</summary>
+        public static readonly DependencyProperty AdornedElementProperty
+            = DependencyProperty.Register(nameof(AdornedElement),
+                                          typeof(UIElement),
+                                          typeof(CustomValidationPopup),
+                                          new PropertyMetadata(default(UIElement)));
+
+        /// <summary>
+        /// Gets or sets the <see cref="T:System.Windows.UIElement" /> that this <see cref="T:System.Windows.Controls.Primitives.Popup" /> object is reserving space for.
+        /// </summary>
+        public UIElement AdornedElement
+        {
+            get => (UIElement)this.GetValue(AdornedElementProperty);
+            set => this.SetValue(AdornedElementProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey CanShowPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(CanShow),
+                                                  typeof(bool),
+                                                  typeof(CustomValidationPopup),
+                                                  new PropertyMetadata(false));
+
+        /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
+        public static readonly DependencyProperty CanShowProperty = CanShowPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether the popup can be shown (useful for transitions).
+        /// </summary>
+        public bool CanShow
+        {
+            get => (bool)this.GetValue(CanShowProperty);
+            protected set => this.SetValue(CanShowPropertyKey, value);
         }
 
         public CustomValidationPopup()
@@ -64,7 +105,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                var adornedElement = this.GetAdornedElement();
+                var adornedElement = this.AdornedElement;
                 if (adornedElement != null && ValidationHelper.GetCloseOnMouseLeftButtonDown(adornedElement))
                 {
                     this.SetCurrentValue(IsOpenProperty, false);
@@ -78,32 +119,157 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!(this.PlacementTarget is FrameworkElement target))
+            var canShow = true;
+
+            var adornedElement = this.AdornedElement;
+            if (adornedElement is null)
             {
                 return;
             }
 
-            this.hostWindow = Window.GetWindow(target);
-            if (this.hostWindow == null)
+            this.hostWindow = Window.GetWindow(adornedElement);
+            if (this.hostWindow is null)
             {
                 return;
             }
 
-            this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.LocationChanged += this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.SizeChanged += this.hostWindow_SizeOrLocationChanged;
-            target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-            target.SizeChanged += this.hostWindow_SizeOrLocationChanged;
-            this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
-            this.hostWindow.StateChanged += this.hostWindow_StateChanged;
-            this.hostWindow.Activated -= this.hostWindow_Activated;
-            this.hostWindow.Activated += this.hostWindow_Activated;
-            this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
-            this.hostWindow.Deactivated += this.hostWindow_Deactivated;
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
+            }
+
+            this.scrollViewer = adornedElement.TryFindParent<ScrollViewer>();
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged += this.ScrollViewer_ScrollChanged;
+            }
+
+            if (this.metroContentControl != null)
+            {
+                this.metroContentControl.TransitionStarted -= this.OnTransitionStarted;
+                this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            this.metroContentControl = adornedElement.TryFindParent<MetroContentControl>();
+            if (this.metroContentControl != null)
+            {
+                canShow = !this.metroContentControl.TransitionsEnabled;
+                this.metroContentControl.TransitionStarted += this.OnTransitionStarted;
+                this.metroContentControl.TransitionCompleted += this.OnTransitionCompleted;
+            }
+
+            if (this.transitioningContentControl != null)
+            {
+                this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            this.transitioningContentControl = adornedElement.TryFindParent<TransitioningContentControl>();
+            if (this.transitioningContentControl != null)
+            {
+                canShow = canShow && !this.transitioningContentControl.IsTransitioning;
+                this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
+            }
+
+            if (this.flyout != null)
+            {
+                this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
+            }
+
+            this.flyout = adornedElement.TryFindParent<Flyout>();
+            if (this.flyout != null)
+            {
+                canShow = canShow && !this.flyout.AreAnimationsEnabled;
+                this.flyout.OpeningFinished += this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished += this.Flyout_ClosingFinished;
+            }
+
+            this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
+            this.hostWindow.LocationChanged += this.OnSizeOrLocationChanged;
+            this.hostWindow.SizeChanged -= this.OnSizeOrLocationChanged;
+            this.hostWindow.SizeChanged += this.OnSizeOrLocationChanged;
+            this.hostWindow.StateChanged -= this.OnHostWindowStateChanged;
+            this.hostWindow.StateChanged += this.OnHostWindowStateChanged;
+            this.hostWindow.Activated -= this.OnHostWindowActivated;
+            this.hostWindow.Activated += this.OnHostWindowActivated;
+            this.hostWindow.Deactivated -= this.OnHostWindowDeactivated;
+            this.hostWindow.Deactivated += this.OnHostWindowDeactivated;
+
+            if (this.PlacementTarget is FrameworkElement frameworkElement)
+            {
+                frameworkElement.SizeChanged -= this.OnSizeOrLocationChanged;
+                frameworkElement.SizeChanged += this.OnSizeOrLocationChanged;
+            }
+
+            this.OnLoaded();
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Unloaded += this.CustomValidationPopup_Unloaded;
+
+            this.SetValue(CanShowPropertyKey, canShow);
+        }
+
+        private void Flyout_OpeningFinished(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+
+            var adornedElement = this.AdornedElement;
+            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            this.SetCurrentValue(IsOpenProperty, isOpen);
+
+            this.SetValue(CanShowPropertyKey, true);
+        }
+
+        private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, false);
+        }
+
+        private void OnTransitionStarted(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, false);
+        }
+
+        private void OnTransitionCompleted(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+
+            var adornedElement = this.AdornedElement;
+            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            this.SetCurrentValue(IsOpenProperty, isOpen);
+
+            this.SetValue(CanShowPropertyKey, true);
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            this.RefreshPosition();
+
+            if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
+            {
+                var adornedElement = this.AdornedElement;
+                var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+                this.SetCurrentValue(IsOpenProperty, isOpen);
+            }
+            else
+            {
+                this.SetCurrentValue(IsOpenProperty, false);
+            }
+        }
+
+        private static bool IsElementVisible(FrameworkElement element, FrameworkElement container)
+        {
+            if (element is null || container is null || !element.IsVisible)
+            {
+                return false;
+            }
+
+            var bounds = element.TransformToAncestor(container)
+                                .TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
+            var rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
+            return rect.IntersectsWith(bounds);
         }
 
         private void CustomValidationPopup_Opened(object sender, EventArgs e)
@@ -111,30 +277,54 @@ namespace MahApps.Metro.Controls
             this.SetTopmostState(true);
         }
 
-        private void hostWindow_Activated(object sender, EventArgs e)
+        private void OnHostWindowActivated(object sender, EventArgs e)
         {
             this.SetTopmostState(true);
         }
 
-        private void hostWindow_Deactivated(object sender, EventArgs e)
+        private void OnHostWindowDeactivated(object sender, EventArgs e)
         {
             this.SetTopmostState(false);
         }
 
         private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (this.PlacementTarget is FrameworkElement target)
+            this.OnUnLoaded();
+
+            if (this.PlacementTarget is FrameworkElement frameworkElement)
             {
-                target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+                frameworkElement.SizeChanged -= this.OnSizeOrLocationChanged;
             }
 
             if (this.hostWindow != null)
             {
-                this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
-                this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
-                this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
-                this.hostWindow.Activated -= this.hostWindow_Activated;
-                this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
+                this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
+                this.hostWindow.SizeChanged -= this.OnSizeOrLocationChanged;
+                this.hostWindow.StateChanged -= this.OnHostWindowStateChanged;
+                this.hostWindow.Activated -= this.OnHostWindowActivated;
+                this.hostWindow.Deactivated -= this.OnHostWindowDeactivated;
+            }
+
+            if (this.scrollViewer != null)
+            {
+                this.scrollViewer.ScrollChanged -= this.ScrollViewer_ScrollChanged;
+            }
+
+            if (this.metroContentControl != null)
+            {
+                this.metroContentControl.TransitionStarted -= this.OnTransitionStarted;
+                this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            if (this.transitioningContentControl != null)
+            {
+                this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            if (this.flyout != null)
+            {
+                this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
             }
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
@@ -142,21 +332,23 @@ namespace MahApps.Metro.Controls
             this.hostWindow = null;
         }
 
-        private UIElement GetAdornedElement()
+        protected virtual void OnLoaded()
         {
-            var placeholder = this.PlacementTarget is FrameworkElement target ? target.DataContext as AdornedElementPlaceholder : null;
-            return placeholder?.AdornedElement;
         }
 
-        private void hostWindow_StateChanged(object sender, EventArgs e)
+        protected virtual void OnUnLoaded()
+        {
+        }
+
+        private void OnHostWindowStateChanged(object sender, EventArgs e)
         {
             if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
             {
-                var adornedElement = this.GetAdornedElement();
+                var adornedElement = this.AdornedElement;
                 if (adornedElement != null)
                 {
                     this.PopupAnimation = PopupAnimation.None;
-                    this.IsOpen = false;
+                    this.SetCurrentValue(IsOpenProperty, false);
                     var errorTemplate = adornedElement.GetValue(Validation.ErrorTemplateProperty);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, null);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
@@ -164,12 +356,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void hostWindow_SizeOrLocationChanged(object sender, EventArgs e)
+        private void OnSizeOrLocationChanged(object sender, EventArgs e)
+        {
+            this.RefreshPosition();
+        }
+
+        private void RefreshPosition()
         {
             var offset = this.HorizontalOffset;
             // "bump" the offset to cause the popup to reposition itself on its own
-            this.HorizontalOffset = offset + 1;
-            this.HorizontalOffset = offset;
+            this.SetCurrentValue(HorizontalOffsetProperty, offset + 1);
+            this.SetCurrentValue(HorizontalOffsetProperty, offset);
         }
 
         private bool? appliedTopMost;
@@ -182,22 +379,20 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            if (this.Child == null)
+            if (this.Child is null)
             {
                 return;
             }
 
-            var hwndSource = (PresentationSource.FromVisual(this.Child)) as HwndSource;
-            if (hwndSource == null)
+            if (!(PresentationSource.FromVisual(this.Child) is HwndSource hwndSource))
             {
                 return;
             }
 
-            var hwnd = hwndSource.Handle;
+            var handle = hwndSource.Handle;
 
 #pragma warning disable 618
-            RECT rect;
-            if (!UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+            if (!UnsafeNativeMethods.GetWindowRect(handle, out var rect))
             {
                 return;
             }
@@ -209,7 +404,7 @@ namespace MahApps.Metro.Controls
             var height = rect.Height;
             if (isTop)
             {
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_TOPMOST, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_TOPMOST, left, top, width, height, SWP.TOPMOST);
             }
             else
             {
@@ -217,9 +412,9 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_BOTTOM, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_TOP, left, top, width, height, SWP.TOPMOST);
-                NativeMethods.SetWindowPos(hwnd, Constants.HWND_NOTOPMOST, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_BOTTOM, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_TOP, left, top, width, height, SWP.TOPMOST);
+                NativeMethods.SetWindowPos(handle, Constants.HWND_NOTOPMOST, left, top, width, height, SWP.TOPMOST);
             }
 
             this.appliedTopMost = isTop;

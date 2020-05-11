@@ -42,23 +42,23 @@
 
     </UserControl.Resources>
 
-    <AdornerDecorator>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MinWidth="250" />
-                <ColumnDefinition Width="*" MinWidth="200" />
-                <ColumnDefinition Width="*" MinWidth="250" />
-                <ColumnDefinition Width="*" MinWidth="250" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="250" />
+            <ColumnDefinition Width="*" MinWidth="200" />
+            <ColumnDefinition Width="*" MinWidth="250" />
+            <ColumnDefinition Width="*" MinWidth="250" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0"
-                      Grid.Column="0"
-                      Margin="4 2"
-                      Header="TextBox">
+        <GroupBox Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="4 2"
+                  Header="TextBox">
+            <AdornerDecorator>
                 <StackPanel>
                     <Controls:MetroHeader Margin="{StaticResource ControlMargin}" Header="TextBox Header">
                         <Controls:MetroHeader.HeaderTemplate>
@@ -175,434 +175,434 @@
                              IsEnabled="False"
                              Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 </StackPanel>
-            </GroupBox>
+            </AdornerDecorator>
+        </GroupBox>
 
-            <GroupBox Grid.Row="0"
-                      Grid.Column="1"
-                      Margin="4 2"
-                      Header="RichTextBox">
-                <StackPanel>
-                    <RichTextBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ClearTextButton="True"
-                                 Controls:TextBoxHelper.Watermark="Type something in..."
-                                 IsDocumentEnabled="True"
-                                 SpellCheck.IsEnabled="True" />
-                    <RichTextBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ClearTextButton="True"
-                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                 Controls:TextBoxHelper.Watermark="Need some input..."
-                                 IsDocumentEnabled="True"
-                                 SpellCheck.IsEnabled="True" />
-                    <RichTextBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                 Controls:TextBoxHelper.ButtonContent="s"
-                                 Controls:TextBoxHelper.Watermark="Type in..."
-                                 IsDocumentEnabled="True"
-                                 SpellCheck.IsEnabled="True"
-                                 Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
-                    <RichTextBox Height="120"
-                                 Margin="{StaticResource ControlMargin}"
-                                 Padding="5"
-                                 Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                 IsDocumentEnabled="True"
-                                 SpellCheck.IsEnabled="True">
-                        <!--
-                            Workaround for: RichTextBox behaves oddly inside a ScrollViewer
-                            
-                            The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
-                        -->
-                        <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
-                            <Paragraph>
-                                <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                    <Run Text="Normal" />
-                                </Hyperlink>
-                                <LineBreak />
-                                <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <RichTextBox Height="120"
-                                 Margin="{StaticResource ControlMargin}"
-                                 Padding="5"
-                                 IsDocumentEnabled="True"
-                                 IsReadOnly="True">
-                        <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
-                            <Paragraph>
-                                <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                    <Run Text="ReadOnly" />
-                                </Hyperlink>
-                                <LineBreak />
-                                <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <RichTextBox Height="120"
-                                 Margin="{StaticResource ControlMargin}"
-                                 Padding="5"
-                                 IsDocumentEnabled="True"
-                                 IsEnabled="False">
-                        <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
-                            <Paragraph>
-                                <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                    <Run Text="Disabled" />
-                                </Hyperlink>
-                                <LineBreak />
-                                <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox Grid.Row="0"
-                      Grid.Column="2"
-                      Margin="4 2"
-                      Header="PasswordBox">
-                <StackPanel>
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.Watermark="Password"
-                                 Password="Password" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                 Controls:TextBoxHelper.Watermark="Win8"
-                                 Password="Win8"
-                                 Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
-                                 Controls:TextBoxHelper.IsWaitingForData="True"
-                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                 Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
-                                 Style="{StaticResource MahApps.Styles.PasswordBox.ButtonRevealed}" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                 Controls:TextBoxHelper.ClearTextButton="True"
-                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                 Controls:TextBoxHelper.Watermark="Password"
-                                 Password="Password" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:PasswordBoxHelper.CapsLockIcon="!"
-                                 Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                 Controls:TextBoxHelper.ButtonContent="4"
-                                 Controls:TextBoxHelper.UseFloatingWatermark="True"
-                                 Controls:TextBoxHelper.Watermark="Custom icon style"
-                                 Style="{DynamicResource MahApps.Styles.PasswordBox.Button}">
-                        <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
-                            <TextBlock>
-                                <Run Text="This is a custom Warning to show you that" />
-                                <Run Foreground="Red"
-                                     Text="CAPS LOCK"
-                                     TextDecorations="Underline" />
-                                <Run Text=" is on" />
-                            </TextBlock>
-                        </Controls:PasswordBoxHelper.CapsLockWarningToolTip>
-                    </PasswordBox>
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 IsEnabled="False"
-                                 Password="Password" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.ClearTextButton="True"
-                                 IsEnabled="False"
-                                 Password="Password" />
-
-                    <Label Content="Select all on focus" />
-                    <PasswordBox Margin="{StaticResource ControlMargin}"
-                                 Controls:TextBoxHelper.SelectAllOnFocus="True"
-                                 Password="Password"
-                                 ToolTip="Select all on focus" />
-                </StackPanel>
-            </GroupBox>
-
-
-            <GroupBox Grid.Row="0"
-                      Grid.Column="3"
-                      Margin="4 2"
-                      Header="NumericUpDown">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="21*" MinWidth="100" />
-                        <ColumnDefinition Width="4*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="IsReadOnly" />
-                    <CheckBox x:Name="NUD_IsReadOnly"
-                              Grid.Row="0"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="1"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="InterceptArrowKeys" />
-                    <CheckBox x:Name="NUD_InterceptArrowKeys"
-                              Grid.Row="1"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="2"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="InterceptMouseWheel" />
-                    <CheckBox x:Name="NUD_InterceptMouseWheel"
-                              Grid.Row="2"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="3"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="InterceptManualEnter" />
-                    <CheckBox x:Name="NUD_InterceptManualEnter"
-                              Grid.Row="3"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="4"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="HideUpDownButtons" />
-                    <CheckBox x:Name="NUD_HideUpDownButtons"
-                              Grid.Row="4"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="5"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="SwitchUpDownButtons" />
-                    <CheckBox x:Name="NUD_SwitchUpDownButtons"
-                              Grid.Row="5"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="6"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="Min" />
-                    <Controls:NumericUpDown x:Name="NUD_Min"
-                                            Grid.Row="6"
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Margin="{StaticResource ControlMargin}"
-                                            Controls:TextBoxHelper.ClearTextButton="True"
-                                            Maximum="{Binding ElementName=NUD_Max, Path=Value}"
-                                            Value="0" />
-                    <Label Grid.Row="7"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="Max" />
-                    <Controls:NumericUpDown x:Name="NUD_Max"
-                                            Grid.Row="7"
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Margin="{StaticResource ControlMargin}"
-                                            Controls:TextBoxHelper.ClearTextButton="True"
-                                            Minimum="{Binding ElementName=NUD_Min, Path=Value}"
-                                            Value="10" />
-
-                    <Label Grid.Row="8"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="Interval" />
-                    <Controls:NumericUpDown x:Name="NUD_Interval"
-                                            Grid.Row="8"
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Margin="{StaticResource ControlMargin}"
-                                            Controls:TextBoxHelper.ClearTextButton="True"
-                                            Value="0.05" />
-
-                    <Label Grid.Row="9"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="SnapToMultipleOfInterval" />
-                    <CheckBox x:Name="NUD_SnapToMultipleOfInterval"
-                              Grid.Row="9"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="10"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="SpeedUp" />
-                    <CheckBox x:Name="NUD_SpeedUp"
-                              Grid.Row="10"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-
-                    <Label Grid.Row="11"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="NumericInputMode" />
-                    <ComboBox x:Name="NUD_NumericInputMode"
-                              Grid.Row="11"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
-                              SelectedItem="{x:Static Controls:NumericInput.All}" />
-
-                    <Label Grid.Row="12"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="StringFormat" />
-                    <ComboBox x:Name="NUD_StringFormat"
-                              Grid.Row="12"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              IsEditable="True"
-                              ItemsSource="{x:Static local:TextExamples.NUD_StringFormats}" />
-
-                    <Label Grid.Row="13"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="CultureInfo" />
-                    <ComboBox Grid.Row="13"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              HorizontalAlignment="Stretch"
-                              Controls:TextBoxHelper.ClearTextButton="True"
-                              DisplayMemberPath="DisplayName"
-                              ItemsSource="{Binding CultureInfos, Mode=OneWay}"
-                              SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-
-                    <Label Grid.Row="14"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="TextAlignment" />
-                    <ComboBox x:Name="NUD_TextAlignment"
-                              Grid.Row="14"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
-                              SelectedItem="{x:Static TextAlignment.Left}" />
-
-                    <Label Grid.Row="15"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="ButtonsAlignment" />
-                    <ComboBox x:Name="NUD_ButtonsAlignment"
-                              Grid.Row="15"
-                              Grid.Column="1"
-                              Grid.ColumnSpan="2"
-                              Margin="{StaticResource ControlMargin}"
-                              ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
-                              SelectedItem="{x:Static Controls:ButtonsAlignment.Right}" />
-
-                    <Label Grid.Row="16"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="Watermark" />
-                    <TextBox x:Name="NUD_Watermark"
-                             Grid.Row="16"
-                             Grid.Column="1"
-                             Grid.ColumnSpan="2"
-                             Margin="{StaticResource ControlMargin}"
+        <GroupBox Grid.Row="0"
+                  Grid.Column="1"
+                  Margin="4 2"
+                  Header="RichTextBox">
+            <StackPanel>
+                <RichTextBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ClearTextButton="True"
-                             Text="Type a number" />
-
-                    <Label Grid.Row="17"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="NumericUpDown"
-                           FontWeight="Bold" />
-                    <Controls:NumericUpDown x:Name="NUD"
-                                            Grid.Row="17"
-                                            Grid.Column="1"
-                                            Grid.ColumnSpan="2"
-                                            Margin="{StaticResource ControlMargin}"
-                                            Controls:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text}"
-                                            ButtonsAlignment="{Binding ElementName=NUD_ButtonsAlignment, Path=SelectedItem}"
-                                            HideUpDownButtons="{Binding ElementName=NUD_HideUpDownButtons, Path=IsChecked, Mode=TwoWay}"
-                                            InterceptArrowKeys="{Binding ElementName=NUD_InterceptArrowKeys, Path=IsChecked, Mode=TwoWay}"
-                                            InterceptManualEnter="{Binding ElementName=NUD_InterceptManualEnter, Path=IsChecked, Mode=TwoWay}"
-                                            InterceptMouseWheel="{Binding ElementName=NUD_InterceptMouseWheel, Path=IsChecked, Mode=TwoWay}"
-                                            Interval="{Binding ElementName=NUD_Interval, Path=Value, TargetNullValue=1}"
-                                            IsReadOnly="{Binding ElementName=NUD_IsReadOnly, Path=IsChecked, Mode=TwoWay}"
-                                            Maximum="{Binding ElementName=NUD_Max, Path=Value, TargetNullValue={x:Static sys:Double.MaxValue}}"
-                                            Minimum="{Binding ElementName=NUD_Min, Path=Value, TargetNullValue={x:Static sys:Double.MinValue}}"
-                                            NumericInputMode="{Binding ElementName=NUD_NumericInputMode, Path=SelectedItem}"
-                                            SnapToMultipleOfInterval="{Binding ElementName=NUD_SnapToMultipleOfInterval, Path=IsChecked, Mode=TwoWay}"
-                                            Speedup="{Binding ElementName=NUD_SpeedUp, Path=IsChecked, Mode=TwoWay}"
-                                            StringFormat="{Binding ElementName=NUD_StringFormat, Path=Text}"
-                                            SwitchUpDownButtons="{Binding ElementName=NUD_SwitchUpDownButtons, Path=IsChecked, Mode=TwoWay}"
-                                            TextAlignment="{Binding ElementName=NUD_TextAlignment, Path=SelectedItem}" />
-
-                    <Label Grid.Row="18"
-                           Grid.Column="0"
-                           Margin="{StaticResource ControlMargin}"
-                           Content="Stored Value" />
-                    <TextBox x:Name="NUD_Result"
-                             Grid.Row="18"
-                             Grid.Column="1"
-                             Grid.ColumnSpan="2"
+                             Controls:TextBoxHelper.Watermark="Type something in..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True" />
+                <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Need some input..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True" />
+                <RichTextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.ButtonContent="s"
+                             Controls:TextBoxHelper.Watermark="Type in..."
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True"
+                             Style="{StaticResource MahApps.Styles.RichTextBox.Button}" />
+                <RichTextBox Height="120"
                              Margin="{StaticResource ControlMargin}"
-                             IsReadOnly="True"
-                             Text="{Binding ElementName=NUD, Path=Value}" />
-                </Grid>
-            </GroupBox>
+                             Padding="5"
+                             Controls:TextBoxHelper.SelectAllOnFocus="True"
+                             IsDocumentEnabled="True"
+                             SpellCheck.IsEnabled="True">
+                    <!--
+                        Workaround for: RichTextBox behaves oddly inside a ScrollViewer
+                        
+                        The workaround would be to bind the Documents PageWidth to the RichTextBox's ActualWidth
+                    -->
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="Normal" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Height="120"
+                             Margin="{StaticResource ControlMargin}"
+                             Padding="5"
+                             IsDocumentEnabled="True"
+                             IsReadOnly="True">
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="ReadOnly" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Height="120"
+                             Margin="{StaticResource ControlMargin}"
+                             Padding="5"
+                             IsDocumentEnabled="True"
+                             IsEnabled="False">
+                    <FlowDocument PageWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RichTextBox}}, Path=ActualWidth}">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="Disabled" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+        </GroupBox>
 
-            <GroupBox Grid.Row="1"
-                      Grid.Column="0"
-                      Margin="4 2"
-                      Header="HotKeyBox">
-                <StackPanel>
-                    <CheckBox x:Name="ModifierKeysRequired"
-                              Margin="{StaticResource ControlMargin}"
-                              Content="Require modifier keys" />
-                    <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
-                    <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+        <GroupBox Grid.Row="0"
+                  Grid.Column="2"
+                  Margin="4 2"
+                  Header="PasswordBox">
+            <StackPanel>
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.Watermark="Password"
+                             Password="Password" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Win8"
+                             Password="Win8"
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Win8}" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
+                             Controls:TextBoxHelper.IsWaitingForData="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
+                             Style="{StaticResource MahApps.Styles.PasswordBox.ButtonRevealed}" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Password"
+                             Password="Password" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:PasswordBoxHelper.CapsLockIcon="!"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.ButtonContent="4"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Custom icon style"
+                             Style="{DynamicResource MahApps.Styles.PasswordBox.Button}">
+                    <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
+                        <TextBlock>
+                            <Run Text="This is a custom Warning to show you that" />
+                            <Run Foreground="Red"
+                                 Text="CAPS LOCK"
+                                 TextDecorations="Underline" />
+                            <Run Text=" is on" />
+                        </TextBlock>
+                    </Controls:PasswordBoxHelper.CapsLockWarningToolTip>
+                </PasswordBox>
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             IsEnabled="False"
+                             Password="Password" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             IsEnabled="False"
+                             Password="Password" />
+
+                <Label Content="Select all on focus" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.SelectAllOnFocus="True"
+                             Password="Password"
+                             ToolTip="Select all on focus" />
+            </StackPanel>
+        </GroupBox>
+
+
+        <GroupBox Grid.Row="0"
+                  Grid.Column="3"
+                  Margin="4 2"
+                  Header="NumericUpDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="21*" MinWidth="100" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="IsReadOnly" />
+                <CheckBox x:Name="NUD_IsReadOnly"
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="InterceptArrowKeys" />
+                <CheckBox x:Name="NUD_InterceptArrowKeys"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="InterceptMouseWheel" />
+                <CheckBox x:Name="NUD_InterceptMouseWheel"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="InterceptManualEnter" />
+                <CheckBox x:Name="NUD_InterceptManualEnter"
+                          Grid.Row="3"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="HideUpDownButtons" />
+                <CheckBox x:Name="NUD_HideUpDownButtons"
+                          Grid.Row="4"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="SwitchUpDownButtons" />
+                <CheckBox x:Name="NUD_SwitchUpDownButtons"
+                          Grid.Row="5"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="Min" />
+                <Controls:NumericUpDown x:Name="NUD_Min"
+                                        Grid.Row="6"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
-                                        Controls:TextBoxHelper.Watermark="Enter hot key"
-                                        AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
-                                        HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-                </StackPanel>
-            </GroupBox>
-        </Grid>
-    </AdornerDecorator>
+                                        Maximum="{Binding ElementName=NUD_Max, Path=Value}"
+                                        Value="0" />
+                <Label Grid.Row="7"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="Max" />
+                <Controls:NumericUpDown x:Name="NUD_Max"
+                                        Grid.Row="7"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        Minimum="{Binding ElementName=NUD_Min, Path=Value}"
+                                        Value="10" />
+
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="Interval" />
+                <Controls:NumericUpDown x:Name="NUD_Interval"
+                                        Grid.Row="8"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        Value="0.05" />
+
+                <Label Grid.Row="9"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="SnapToMultipleOfInterval" />
+                <CheckBox x:Name="NUD_SnapToMultipleOfInterval"
+                          Grid.Row="9"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="10"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="SpeedUp" />
+                <CheckBox x:Name="NUD_SpeedUp"
+                          Grid.Row="10"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+
+                <Label Grid.Row="11"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="NumericInputMode" />
+                <ComboBox x:Name="NUD_NumericInputMode"
+                          Grid.Row="11"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
+                          SelectedItem="{x:Static Controls:NumericInput.All}" />
+
+                <Label Grid.Row="12"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="StringFormat" />
+                <ComboBox x:Name="NUD_StringFormat"
+                          Grid.Row="12"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          IsEditable="True"
+                          ItemsSource="{x:Static local:TextExamples.NUD_StringFormats}" />
+
+                <Label Grid.Row="13"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="CultureInfo" />
+                <ComboBox Grid.Row="13"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          HorizontalAlignment="Stretch"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          DisplayMemberPath="DisplayName"
+                          ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                          SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+                <Label Grid.Row="14"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="TextAlignment" />
+                <ComboBox x:Name="NUD_TextAlignment"
+                          Grid.Row="14"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
+                          SelectedItem="{x:Static TextAlignment.Left}" />
+
+                <Label Grid.Row="15"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="ButtonsAlignment" />
+                <ComboBox x:Name="NUD_ButtonsAlignment"
+                          Grid.Row="15"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
+                          SelectedItem="{x:Static Controls:ButtonsAlignment.Right}" />
+
+                <Label Grid.Row="16"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="Watermark" />
+                <TextBox x:Name="NUD_Watermark"
+                         Grid.Row="16"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                         Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.ClearTextButton="True"
+                         Text="Type a number" />
+
+                <Label Grid.Row="17"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="NumericUpDown"
+                       FontWeight="Bold" />
+                <Controls:NumericUpDown x:Name="NUD"
+                                        Grid.Row="17"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text}"
+                                        ButtonsAlignment="{Binding ElementName=NUD_ButtonsAlignment, Path=SelectedItem}"
+                                        HideUpDownButtons="{Binding ElementName=NUD_HideUpDownButtons, Path=IsChecked, Mode=TwoWay}"
+                                        InterceptArrowKeys="{Binding ElementName=NUD_InterceptArrowKeys, Path=IsChecked, Mode=TwoWay}"
+                                        InterceptManualEnter="{Binding ElementName=NUD_InterceptManualEnter, Path=IsChecked, Mode=TwoWay}"
+                                        InterceptMouseWheel="{Binding ElementName=NUD_InterceptMouseWheel, Path=IsChecked, Mode=TwoWay}"
+                                        Interval="{Binding ElementName=NUD_Interval, Path=Value, TargetNullValue=1}"
+                                        IsReadOnly="{Binding ElementName=NUD_IsReadOnly, Path=IsChecked, Mode=TwoWay}"
+                                        Maximum="{Binding ElementName=NUD_Max, Path=Value, TargetNullValue={x:Static sys:Double.MaxValue}}"
+                                        Minimum="{Binding ElementName=NUD_Min, Path=Value, TargetNullValue={x:Static sys:Double.MinValue}}"
+                                        NumericInputMode="{Binding ElementName=NUD_NumericInputMode, Path=SelectedItem}"
+                                        SnapToMultipleOfInterval="{Binding ElementName=NUD_SnapToMultipleOfInterval, Path=IsChecked, Mode=TwoWay}"
+                                        Speedup="{Binding ElementName=NUD_SpeedUp, Path=IsChecked, Mode=TwoWay}"
+                                        StringFormat="{Binding ElementName=NUD_StringFormat, Path=Text}"
+                                        SwitchUpDownButtons="{Binding ElementName=NUD_SwitchUpDownButtons, Path=IsChecked, Mode=TwoWay}"
+                                        TextAlignment="{Binding ElementName=NUD_TextAlignment, Path=SelectedItem}" />
+
+                <Label Grid.Row="18"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="Stored Value" />
+                <TextBox x:Name="NUD_Result"
+                         Grid.Row="18"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                         Margin="{StaticResource ControlMargin}"
+                         IsReadOnly="True"
+                         Text="{Binding ElementName=NUD, Path=Value}" />
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1"
+                  Grid.Column="0"
+                  Margin="4 2"
+                  Header="HotKeyBox">
+            <StackPanel>
+                <CheckBox x:Name="ModifierKeysRequired"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="Require modifier keys" />
+                <TextBlock Margin="{StaticResource ControlMargin}" Text="Try SHIFT+D to demonstrate validation" />
+                <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    Controls:TextBoxHelper.ClearTextButton="True"
+                                    Controls:TextBoxHelper.Watermark="Enter hot key"
+                                    AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"
+                                    HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            </StackPanel>
+        </GroupBox>
+    </Grid>
 
 </UserControl>

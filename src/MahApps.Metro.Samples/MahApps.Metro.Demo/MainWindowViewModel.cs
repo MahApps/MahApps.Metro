@@ -55,7 +55,7 @@ namespace MetroDemo
     public class MainWindowViewModel : ViewModelBase, IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
-        int? _integerGreater10Property;
+        int? _integerGreater10Property = 2;
         private bool _animateOnPositionChange = true;
 
         public MainWindowViewModel(IDialogCoordinator dialogCoordinator)

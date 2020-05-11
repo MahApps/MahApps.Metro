@@ -17,7 +17,7 @@
         <AdornedElementPlaceholder x:Name="placeholder">
             <Grid SnapsToDevicePixels="True">
                 <Rectangle x:Name="PopupTargetElement"
-                           Margin="-5 0 -5 0"
+                           Margin="-5 0"
                            DataContext="{Binding ElementName=placeholder}"
                            StrokeThickness="0" />
                 <Border x:Name="ValidationErrorElement"
@@ -44,6 +44,7 @@
                 </Border>
 
                 <mah:CustomValidationPopup x:Name="ValidationPopup"
+                                           AdornedElement="{Binding ElementName=placeholder, Path=AdornedElement, Mode=OneWay}"
                                            AllowsTransparency="True"
                                            IsOpen="False"
                                            PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}">
@@ -129,6 +130,7 @@
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ValidationPopup, Path=CanShow, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}" Value="True" />
                     <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}" Value="True" />
                 </MultiDataTrigger.Conditions>
