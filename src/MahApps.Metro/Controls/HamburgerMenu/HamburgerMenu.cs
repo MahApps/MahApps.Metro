@@ -12,9 +12,9 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "OptionsListView", Type = typeof(ListBox))]
     public partial class HamburgerMenu : ContentControl
     {
-        private Button _hamburgerButton;
-        private ListBox _buttonsListView;
-        private ListBox _optionsListView;
+        private Button hamburgerButton;
+        private ListBox buttonsListView;
+        private ListBox optionsListView;
         private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
 
         /// <summary>
@@ -22,10 +22,10 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public HamburgerMenu()
         {
-            DefaultStyleKey = typeof(HamburgerMenu);
+            this.DefaultStyleKey = typeof(HamburgerMenu);
 
-            actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
-            actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => CoerceValue(OpenPaneLengthProperty);
+            this.actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
+            this.actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => this.CoerceValue(OpenPaneLengthProperty);
         }
 
         /// <summary>
@@ -33,65 +33,65 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            if (_hamburgerButton != null)
+            if (this.hamburgerButton != null)
             {
-                _hamburgerButton.Click -= OnHamburgerButtonClick;
+                this.hamburgerButton.Click -= this.OnHamburgerButtonClick;
             }
 
-            if (_buttonsListView != null)
+            if (this.buttonsListView != null)
             {
-                _buttonsListView.SelectionChanged -= ButtonsListView_SelectionChanged;
+                this.buttonsListView.SelectionChanged -= this.ButtonsListView_SelectionChanged;
             }
 
-            if (_optionsListView != null)
+            if (this.optionsListView != null)
             {
-                _optionsListView.SelectionChanged -= OptionsListView_SelectionChanged;
+                this.optionsListView.SelectionChanged -= this.OptionsListView_SelectionChanged;
             }
 
-            _hamburgerButton = (Button)GetTemplateChild("HamburgerButton");
-            _buttonsListView = (ListBox)GetTemplateChild("ButtonsListView");
-            _optionsListView = (ListBox)GetTemplateChild("OptionsListView");
+            this.hamburgerButton = (Button)this.GetTemplateChild("HamburgerButton");
+            this.buttonsListView = (ListBox)this.GetTemplateChild("ButtonsListView");
+            this.optionsListView = (ListBox)this.GetTemplateChild("OptionsListView");
 
-            if (_hamburgerButton != null)
+            if (this.hamburgerButton != null)
             {
-                _hamburgerButton.Click += OnHamburgerButtonClick;
+                this.hamburgerButton.Click += this.OnHamburgerButtonClick;
             }
 
-            if (_buttonsListView != null)
+            if (this.buttonsListView != null)
             {
-                _buttonsListView.SelectionChanged += ButtonsListView_SelectionChanged;
+                this.buttonsListView.SelectionChanged += this.ButtonsListView_SelectionChanged;
             }
 
-            if (_optionsListView != null)
+            if (this.optionsListView != null)
             {
-                _optionsListView.SelectionChanged += OptionsListView_SelectionChanged;
+                this.optionsListView.SelectionChanged += this.OptionsListView_SelectionChanged;
             }
 
-            ChangeItemFocusVisualStyle();
+            this.ChangeItemFocusVisualStyle();
 
-            Loaded -= HamburgerMenu_Loaded;
-            Loaded += HamburgerMenu_Loaded;
+            this.Loaded -= this.HamburgerMenu_Loaded;
+            this.Loaded += this.HamburgerMenu_Loaded;
 
             base.OnApplyTemplate();
         }
 
         private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            if (GetValue(ContentProperty) != null)
+            if (this.GetValue(ContentProperty) != null)
             {
                 return;
             }
 
-            var item = _buttonsListView?.SelectedItem;
-            var canRaiseItemEvents = CanRaiseItemEvents(item);
-            if (canRaiseItemEvents && RaiseItemEvents(item))
+            var item = this.buttonsListView?.SelectedItem;
+            var canRaiseItemEvents = this.CanRaiseItemEvents(item);
+            if (canRaiseItemEvents && this.RaiseItemEvents(item))
             {
                 return;
             }
 
-            var optionItem = _optionsListView?.SelectedItem;
-            var canRaiseOptionsItemEvents = CanRaiseOptionsItemEvents(optionItem);
-            if (canRaiseOptionsItemEvents && RaiseOptionsItemEvents(optionItem))
+            var optionItem = this.optionsListView?.SelectedItem;
+            var canRaiseOptionsItemEvents = this.CanRaiseOptionsItemEvents(optionItem);
+            if (canRaiseOptionsItemEvents && this.RaiseOptionsItemEvents(optionItem))
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace MahApps.Metro.Controls
                 var selectedItem = item ?? optionItem;
                 if (selectedItem != null)
                 {
-                    SetCurrentValue(ContentProperty, selectedItem);
+                    this.SetCurrentValue(ContentProperty, selectedItem);
                 }
             }
         }
