@@ -35,12 +35,13 @@
         /// </summary>
         /// <returns>The identifier for the <see cref="CompactPaneLength" /> property.</returns>
         public static readonly DependencyProperty CompactPaneLengthProperty =
-            DependencyProperty.Register("CompactPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OnMetricsChanged));
+            DependencyProperty.Register("CompactPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OnCompactPaneLengthPropertyChangedCallback));
 
-        private static void OnMetricsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCompactPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SplitView splitView && splitView.ValidateOpenPaneLenth())
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
             {
+                splitView.CoerceValue(OpenPaneLengthProperty);
                 splitView.TemplateSettings?.Update();
                 splitView.ChangeVisualState(true, true);
             }
@@ -81,12 +82,15 @@
         /// </summary>
         /// <returns>The identifier for the <see cref="DisplayMode" /> dependency property.</returns>
         public static readonly DependencyProperty DisplayModeProperty =
-            DependencyProperty.Register("DisplayMode", typeof(SplitViewDisplayMode), typeof(SplitView), new PropertyMetadata(SplitViewDisplayMode.Overlay, OnStateChanged));
+            DependencyProperty.Register("DisplayMode", typeof(SplitViewDisplayMode), typeof(SplitView), new PropertyMetadata(SplitViewDisplayMode.Overlay, OnDisplayModePropertyChangedCallback));
 
-        private static void OnStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDisplayModePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var sender = d as SplitView;
-            sender?.ChangeVisualState();
+            if (e.OldValue != e.NewValue && e.NewValue is SplitViewDisplayMode && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.ChangeVisualState();
+            }
         }
 
         /// <summary>
@@ -157,7 +161,58 @@
         /// </summary>
         /// <returns>The identifier for the <see cref="OpenPaneLength" /> dependency property.</returns>
         public static readonly DependencyProperty OpenPaneLengthProperty =
-            DependencyProperty.Register("OpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OnMetricsChanged));
+            DependencyProperty.Register("OpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
+
+        private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
+        {
+            if (dependencyObject is SplitView splitView && splitView.ActualWidth > 0 && inputValue is double openPaneLength)
+            {
+                // Get the minimum needed width
+                var minWidth = splitView.DisplayMode == SplitViewDisplayMode.CompactInline || splitView.DisplayMode == SplitViewDisplayMode.CompactOverlay
+                    ? Math.Max(splitView.CompactPaneLength, splitView.MinimumOpenPaneLength)
+                    : Math.Max(0, splitView.MinimumOpenPaneLength);
+
+                if (minWidth < 0)
+                {
+                    minWidth = 0;
+                }
+
+                // Get the maximum allowed width
+                var maxWidth = Math.Min(splitView.ActualWidth, splitView.MaximumOpenPaneLength);
+
+                // Check if max < min
+                if (maxWidth < minWidth)
+                {
+                    minWidth = maxWidth;
+                }
+
+                // Check is OpenPaneLength is valid
+                if (openPaneLength < minWidth)
+                {
+                    return minWidth;
+                }
+
+                if (openPaneLength > maxWidth)
+                {
+                    return maxWidth;
+                }
+
+                return openPaneLength;
+            }
+            else
+            {
+                return inputValue;
+            }
+        }
+
+        private static void OpenPaneLengthPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is SplitView splitView)
+            {
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -175,7 +230,17 @@
 
 
         /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(100d, OnMetricsChanged));
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(100d, MinimumOpenPaneLengthPropertyChangedCallback));
+
+        private static void MinimumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -192,7 +257,17 @@
 
 
         /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
-        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMetricsChanged));
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMaximumOpenPaneLengthPropertyChangedCallback));
+
+        private static void OnMaximumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -209,7 +284,15 @@
 
 
         /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
-        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(false));
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnCanResizeOpenPanePropertyChangedCallback));
+
+        private static void OnCanResizeOpenPanePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is bool && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+            }
+        }
 
         /// <summary>
         /// Gets or Sets if the open pane can be resized by the user. The default value is false.
@@ -232,62 +315,6 @@
             get { return (Style)GetValue(ResizeThumbStyleProperty); }
             set { SetValue(ResizeThumbStyleProperty, value); }
         }
-
-
-
-        private bool ValidateOpenPaneLenth()
-        {
-            if (this.ActualWidth > 0)
-            {
-                double minWidth = 0;
-
-                // Get the minimum needed width
-                if (this.DisplayMode == SplitViewDisplayMode.CompactInline || this.DisplayMode == SplitViewDisplayMode.CompactOverlay)
-                {
-                    minWidth = Math.Max(this.CompactPaneLength, this.MinimumOpenPaneLength);
-                }
-                else
-                {
-                    minWidth = Math.Max(0, this.MinimumOpenPaneLength);
-                }
-
-                if (minWidth < 0)
-                {
-                    minWidth = 0;
-                }
-
-                // Get the maximum allowed width
-                double maxWidth = Math.Min(this.ActualWidth, this.MaximumOpenPaneLength);
-
-                // Check if max < min
-                if (maxWidth < minWidth)
-                {
-                    minWidth = maxWidth;
-                }
-
-                // Check is OpenPaneLength is valid
-                if (OpenPaneLength < minWidth)
-                {
-                    SetCurrentValue(OpenPaneLengthProperty, minWidth);
-                    return false;
-                }
-                else if (OpenPaneLength > maxWidth)
-                {
-                    SetCurrentValue(OpenPaneLengthProperty, maxWidth);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
 
         /// <summary>
         ///     Identifies the <see cref="Pane" /> dependency property.
@@ -345,7 +372,16 @@
         /// </summary>
         /// <returns>The identifier for the PanePlacement dependency property.</returns>
         public static readonly DependencyProperty PanePlacementProperty =
-            DependencyProperty.Register("PanePlacement", typeof(SplitViewPanePlacement), typeof(SplitView), new PropertyMetadata(SplitViewPanePlacement.Left, OnStateChanged));
+            DependencyProperty.Register("PanePlacement", typeof(SplitViewPanePlacement), typeof(SplitView), new PropertyMetadata(SplitViewPanePlacement.Left, OnPanePlacementPropertyChangedCallback));
+
+        private static void OnPanePlacementPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is SplitViewPanePlacement && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.ChangeVisualState();
+            }
+        }
 
         /// <summary>
         ///     Gets or sets a value that specifies whether the pane is shown on the right or left side of the
@@ -497,7 +533,7 @@
 
             if (IsPaneOpen)
             {
-                ValidateOpenPaneLenth();
+                this.CoerceValue(OpenPaneLengthProperty);
             }
 
             if (this.paneClipRectangle != null)
