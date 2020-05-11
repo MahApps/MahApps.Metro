@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ControlzEx;
 
 namespace MahApps.Metro.Controls
 {
@@ -14,6 +15,7 @@ namespace MahApps.Metro.Controls
         private Button _hamburgerButton;
         private ListBox _buttonsListView;
         private ListBox _optionsListView;
+        private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HamburgerMenu"/> class.
@@ -21,6 +23,9 @@ namespace MahApps.Metro.Controls
         public HamburgerMenu()
         {
             DefaultStyleKey = typeof(HamburgerMenu);
+
+            actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
+            actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => CoerceValue(OpenPaneLengthProperty);
         }
 
         /// <summary>
@@ -30,7 +35,7 @@ namespace MahApps.Metro.Controls
         {
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click -= this.OnHamburgerButtonClick;
+                _hamburgerButton.Click -= OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
@@ -49,7 +54,7 @@ namespace MahApps.Metro.Controls
 
             if (_hamburgerButton != null)
             {
-                _hamburgerButton.Click += this.OnHamburgerButtonClick;
+                _hamburgerButton.Click += OnHamburgerButtonClick;
             }
 
             if (_buttonsListView != null)
@@ -77,15 +82,15 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            var item = this._buttonsListView?.SelectedItem;
-            var canRaiseItemEvents = this.CanRaiseItemEvents(item);
+            var item = _buttonsListView?.SelectedItem;
+            var canRaiseItemEvents = CanRaiseItemEvents(item);
             if (canRaiseItemEvents && RaiseItemEvents(item))
             {
                 return;
             }
 
-            var optionItem = this._optionsListView?.SelectedItem;
-            var canRaiseOptionsItemEvents = this.CanRaiseOptionsItemEvents(optionItem);
+            var optionItem = _optionsListView?.SelectedItem;
+            var canRaiseOptionsItemEvents = CanRaiseOptionsItemEvents(optionItem);
             if (canRaiseOptionsItemEvents && RaiseOptionsItemEvents(optionItem))
             {
                 return;
