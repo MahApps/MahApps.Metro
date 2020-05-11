@@ -33,6 +33,14 @@ namespace MahApps.Metro.Controls
             set { SetValue(OnlyLoadTransitionProperty, value); }
         }
 
+        public static readonly RoutedEvent TransitionStartedEvent = EventManager.RegisterRoutedEvent("TransitionStarted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroContentControl));
+
+        public event RoutedEventHandler TransitionStarted
+        {
+            add { this.AddHandler(TransitionStartedEvent, value); }
+            remove { this.RemoveHandler(TransitionStartedEvent, value); }
+        }
+
         public static readonly RoutedEvent TransitionCompletedEvent = EventManager.RegisterRoutedEvent("TransitionCompleted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroContentControl));
 
         public event RoutedEventHandler TransitionCompleted
@@ -134,6 +142,17 @@ namespace MahApps.Metro.Controls
             afterLoadedReverseStoryboard = this.GetTemplateChild("AfterLoadedReverseStoryboard") as Storyboard;
         }
 
+        private void AfterLoadedStoryboardCurrentTimeInvalidated(object sender, System.EventArgs e)
+        {
+            if (sender is Clock clock)
+            {
+                if (clock.CurrentState == ClockState.Active)
+                {
+                    this.RaiseEvent(new RoutedEventArgs(TransitionStartedEvent));
+                }
+            }
+        }
+
         private void AfterLoadedStoryboardCompleted(object sender, System.EventArgs e)
         {
             if (transitionLoaded)
@@ -148,10 +167,12 @@ namespace MahApps.Metro.Controls
         {
             if (this.afterLoadedStoryboard != null)
             {
+                this.afterLoadedStoryboard.CurrentTimeInvalidated += this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedStoryboard.Completed += this.AfterLoadedStoryboardCompleted;
             }
             if (this.afterLoadedReverseStoryboard != null)
             {
+                this.afterLoadedReverseStoryboard.CurrentTimeInvalidated += this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedReverseStoryboard.Completed += this.AfterLoadedStoryboardCompleted;
             }
         }
@@ -160,10 +181,12 @@ namespace MahApps.Metro.Controls
         {
             if (this.afterLoadedStoryboard != null)
             {
+                this.afterLoadedStoryboard.CurrentTimeInvalidated -= this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedStoryboard.Completed -= this.AfterLoadedStoryboardCompleted;
             }
             if (this.afterLoadedReverseStoryboard != null)
             {
+                this.afterLoadedReverseStoryboard.CurrentTimeInvalidated -= this.AfterLoadedStoryboardCurrentTimeInvalidated;
                 this.afterLoadedReverseStoryboard.Completed -= this.AfterLoadedStoryboardCompleted;
             }
         }
