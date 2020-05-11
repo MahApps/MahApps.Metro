@@ -3,9 +3,9 @@
                     xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviors"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:controlzex="urn:controlzex"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:controlzex="urn:controlzex">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
@@ -263,15 +263,15 @@
                                     Style="{DynamicResource MahApps.Styles.Button.Chromeless}" />
 
                             <controlzex:PopupEx x:Name="PART_Popup"
-                                   Grid.Row="1"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   AllowsTransparency="True"
-                                   Focusable="False"
-                                   Placement="Bottom"
-                                   PlacementTarget="{Binding ElementName=PART_Root}"
-                                   PopupAnimation="Fade"
-                                   StaysOpen="False">
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                AllowsTransparency="True"
+                                                Focusable="False"
+                                                Placement="Bottom"
+                                                PlacementTarget="{Binding ElementName=PART_Root}"
+                                                PopupAnimation="Fade"
+                                                StaysOpen="False">
                                 <Border x:Name="PART_PopupContainer"
                                         BorderBrush="{DynamicResource MahApps.Brushes.Control.Border}"
                                         BorderThickness="1">
@@ -300,7 +300,8 @@
                                                 <Canvas HorizontalAlignment="Center">
                                                     <ItemsControl Focusable="False"
                                                                   IsTabStop="False"
-                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}" ItemsSource="{StaticResource FiveMinuteKeys}">
+                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.FiveMinuteIndicator}"
+                                                                  ItemsSource="{StaticResource FiveMinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />
@@ -309,7 +310,8 @@
                                                     </ItemsControl>
                                                     <ItemsControl Focusable="False"
                                                                   IsTabStop="False"
-                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}" ItemsSource="{StaticResource MinuteKeys}">
+                                                                  ItemTemplate="{StaticResource MahApps.Templates.DateTimePicker.MinuteIndicator}"
+                                                                  ItemsSource="{StaticResource MinuteKeys}">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <Canvas IsItemsHost="True" />
