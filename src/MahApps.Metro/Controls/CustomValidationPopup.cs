@@ -21,6 +21,7 @@ namespace MahApps.Metro.Controls
         private Window hostWindow;
         private ScrollViewer scrollViewer;
         private MetroContentControl metroContentControl;
+        private TransitioningContentControl transitioningContentControl;
 
         /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
@@ -144,14 +145,26 @@ namespace MahApps.Metro.Controls
 
             if (this.metroContentControl != null)
             {
-                this.metroContentControl.TransitionCompleted -= this.MetroContentControl_TransitionCompleted;
+                this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 
             this.metroContentControl = adornedElement.TryFindParent<MetroContentControl>();
             if (this.metroContentControl != null)
             {
                 canShow = !this.metroContentControl.TransitionsEnabled;
-                this.metroContentControl.TransitionCompleted += this.MetroContentControl_TransitionCompleted;
+                this.metroContentControl.TransitionCompleted += this.OnTransitionCompleted;
+            }
+
+            if (this.transitioningContentControl != null)
+            {
+                this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            this.transitioningContentControl = adornedElement.TryFindParent<TransitioningContentControl>();
+            if (this.transitioningContentControl != null)
+            {
+                canShow = false;
+                this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
 
             this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
@@ -179,7 +192,7 @@ namespace MahApps.Metro.Controls
             this.SetValue(CanShowPropertyKey, canShow);
         }
 
-        private void MetroContentControl_TransitionCompleted(object sender, RoutedEventArgs e)
+        private void OnTransitionCompleted(object sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
 
@@ -259,7 +272,12 @@ namespace MahApps.Metro.Controls
 
             if (this.metroContentControl != null)
             {
-                this.metroContentControl.TransitionCompleted -= this.MetroContentControl_TransitionCompleted;
+                this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            if (this.transitioningContentControl != null)
+            {
+                this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
