@@ -22,6 +22,7 @@ namespace MahApps.Metro.Controls
         private ScrollViewer scrollViewer;
         private MetroContentControl metroContentControl;
         private TransitioningContentControl transitioningContentControl;
+        private Flyout flyout;
 
         /// <summary>Identifies the <see cref="CloseOnMouseLeftButtonDown"/> dependency property.</summary>
         public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty
@@ -145,6 +146,7 @@ namespace MahApps.Metro.Controls
 
             if (this.metroContentControl != null)
             {
+                this.metroContentControl.TransitionStarted -= this.OnTransitionStarted;
                 this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 
@@ -152,6 +154,7 @@ namespace MahApps.Metro.Controls
             if (this.metroContentControl != null)
             {
                 canShow = !this.metroContentControl.TransitionsEnabled;
+                this.metroContentControl.TransitionStarted += this.OnTransitionStarted;
                 this.metroContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
 
@@ -163,8 +166,22 @@ namespace MahApps.Metro.Controls
             this.transitioningContentControl = adornedElement.TryFindParent<TransitioningContentControl>();
             if (this.transitioningContentControl != null)
             {
-                canShow = false;
+                canShow = canShow && !this.transitioningContentControl.IsTransitioning;
                 this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
+            }
+
+            if (this.flyout != null)
+            {
+                this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
+            }
+
+            this.flyout = adornedElement.TryFindParent<Flyout>();
+            if (this.flyout != null)
+            {
+                canShow = canShow && !this.flyout.AreAnimationsEnabled;
+                this.flyout.OpeningFinished += this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished += this.Flyout_ClosingFinished;
             }
 
             this.hostWindow.LocationChanged -= this.OnSizeOrLocationChanged;
@@ -190,6 +207,29 @@ namespace MahApps.Metro.Controls
             this.Unloaded += this.CustomValidationPopup_Unloaded;
 
             this.SetValue(CanShowPropertyKey, canShow);
+        }
+
+        private void Flyout_OpeningFinished(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+
+            var adornedElement = this.AdornedElement;
+            var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+            this.SetCurrentValue(IsOpenProperty, isOpen);
+
+            this.SetValue(CanShowPropertyKey, true);
+        }
+
+        private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, false);
+        }
+
+        private void OnTransitionStarted(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, false);
         }
 
         private void OnTransitionCompleted(object sender, RoutedEventArgs e)
@@ -272,12 +312,19 @@ namespace MahApps.Metro.Controls
 
             if (this.metroContentControl != null)
             {
+                this.metroContentControl.TransitionStarted -= this.OnTransitionStarted;
                 this.metroContentControl.TransitionCompleted -= this.OnTransitionCompleted;
             }
 
             if (this.transitioningContentControl != null)
             {
                 this.transitioningContentControl.TransitionCompleted -= this.OnTransitionCompleted;
+            }
+
+            if (this.flyout != null)
+            {
+                this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
             }
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
