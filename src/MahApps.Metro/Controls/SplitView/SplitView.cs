@@ -29,6 +29,10 @@
     [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     public class SplitView : Control
     {
+        private Rectangle lightDismissLayer;
+        private RectangleGeometry paneClipRectangle;
+        private MetroThumb resizingThumb;
+
         /// <summary>Identifies the <see cref="CompactPaneLength"/> dependency property.</summary>
         public static readonly DependencyProperty CompactPaneLengthProperty
             = DependencyProperty.Register(nameof(CompactPaneLength),
@@ -88,7 +92,7 @@
             if (e.OldValue != e.NewValue && e.NewValue is SplitViewDisplayMode && dependencyObject is SplitView splitView)
             {
                 splitView.CoerceValue(OpenPaneLengthProperty);
-                splitView.ChangeVisualState();
+                splitView.ChangeVisualState(true, false);
             }
         }
 
@@ -126,7 +130,7 @@
 
             if (newValue)
             {
-                sender.ChangeVisualState(); // Open pane
+                sender.ChangeVisualState(true, false); // Open pane
             }
             else
             {
@@ -166,7 +170,7 @@
             = DependencyProperty.Register(nameof(OpenPaneLength),
                                           typeof(double),
                                           typeof(SplitView),
-                                          new PropertyMetadata(0d, OpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
+                                          new PropertyMetadata(0d, OnOpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
 
         private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
         {
@@ -210,9 +214,9 @@
             }
         }
 
-        private static void OpenPaneLengthPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (d is SplitView splitView)
+            if (e.NewValue != e.OldValue && dependencyObject is SplitView splitView)
             {
                 splitView.TemplateSettings?.Update();
                 splitView.ChangeVisualState(true, true);
@@ -379,7 +383,7 @@
             if (e.OldValue != e.NewValue && e.NewValue is SplitViewPanePlacement && dependencyObject is SplitView splitView)
             {
                 splitView.CoerceValue(OpenPaneLengthProperty);
-                splitView.ChangeVisualState();
+                splitView.ChangeVisualState(true, false);
             }
         }
 
@@ -415,10 +419,6 @@
             private set => this.SetValue(TemplateSettingsProperty, value);
         }
 
-        private Rectangle lightDismissLayer;
-        private RectangleGeometry paneClipRectangle;
-        private MetroThumb resizingThumb;
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="SplitView" /> class.
         /// </summary>
@@ -449,8 +449,19 @@
         /// </summary>
         public event EventHandler<SplitViewPaneClosingEventArgs> PaneClosing;
 
+        /// <inheritdoc />
         public override void OnApplyTemplate()
         {
+            if (this.lightDismissLayer != null)
+            {
+                this.lightDismissLayer.MouseDown -= this.OnLightDismiss;
+            }
+
+            if (this.resizingThumb != null)
+            {
+                this.resizingThumb.DragDelta -= this.ResizingThumb_DragDelta;
+            }
+
             base.OnApplyTemplate();
 
             this.paneClipRectangle = this.GetTemplateChild("PaneClipRectangle") as RectangleGeometry;
@@ -470,23 +481,13 @@
             this.ExecuteWhenLoaded(() =>
                 {
                     this.TemplateSettings.Update();
-                    this.ChangeVisualState(false);
+                    this.ChangeVisualState(false, false);
                 });
         }
 
         private void ResizingThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            switch (this.PanePlacement)
-            {
-                case SplitViewPanePlacement.Left:
-                    this.SetCurrentValue(OpenPaneLengthProperty, this.OpenPaneLength + e.HorizontalChange);
-                    break;
-                case SplitViewPanePlacement.Right:
-                    this.SetCurrentValue(OpenPaneLengthProperty, this.OpenPaneLength - e.HorizontalChange);
-                    break;
-                default:
-                    break;
-            }
+            this.SetCurrentValue(OpenPaneLengthProperty, this.PanePlacement == SplitViewPanePlacement.Left ? this.OpenPaneLength + e.HorizontalChange : this.OpenPaneLength - e.HorizontalChange);
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -529,6 +530,7 @@
             }
         }
 
+        /// <inheritdoc />
         protected override void OnRenderSizeChanged(SizeChangedInfo info)
         {
             base.OnRenderSizeChanged(info);
@@ -540,15 +542,15 @@
 
             if (this.paneClipRectangle != null)
             {
-                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight);
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, this.ActualHeight);
             }
         }
 
-        protected virtual void ChangeVisualState(bool animated = true, bool reset = false)
+        protected virtual void ChangeVisualState(bool animated, bool reset)
         {
             if (this.paneClipRectangle != null)
             {
-                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight); // We could also use ActualHeight and subscribe to the SizeChanged property
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, this.ActualHeight); // We could also use ActualHeight and subscribe to the SizeChanged property
             }
 
             var state = string.Empty;
@@ -586,7 +588,7 @@
             VisualStateManager.GoToState(this, state, animated);
         }
 
-        protected virtual void OnIsPaneOpenChanged()
+        protected void OnIsPaneOpenChanged()
         {
             var cancel = false;
             if (this.PaneClosing != null)
@@ -611,7 +613,7 @@
 
             if (!cancel)
             {
-                this.ChangeVisualState();
+                this.ChangeVisualState(true, false);
                 this.PaneClosed?.Invoke(this, EventArgs.Empty);
             }
             else
