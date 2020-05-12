@@ -15,6 +15,7 @@
     /// </summary>
     [TemplatePart(Name = "PaneClipRectangle", Type = typeof(RectangleGeometry))]
     [TemplatePart(Name = "LightDismissLayer", Type = typeof(Rectangle))]
+    [TemplatePart(Name = "PART_ResizingThumb", Type = typeof(MetroThumb))]
     [TemplateVisualState(Name = "Closed                 ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "ClosedCompactLeft      ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "ClosedCompactRight     ", GroupName = "DisplayModeStates")]
@@ -24,21 +25,29 @@
     [TemplateVisualState(Name = "OpenInlineRight        ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "OpenCompactOverlayLeft ", GroupName = "DisplayModeStates")]
     [TemplateVisualState(Name = "OpenCompactOverlayRight", GroupName = "DisplayModeStates")]
-    [ContentProperty("Content")]
+    [ContentProperty(nameof(Content))]
+    [StyleTypedProperty(Property = nameof(ResizeThumbStyle), StyleTargetType = typeof(MetroThumb))]
     public class SplitView : Control
     {
-        /// <summary>
-        ///     Identifies the <see cref="CompactPaneLength" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="CompactPaneLength" /> property.</returns>
-        public static readonly DependencyProperty CompactPaneLengthProperty =
-            DependencyProperty.Register("CompactPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OnMetricsChanged));
+        private Rectangle lightDismissLayer;
+        private RectangleGeometry paneClipRectangle;
+        private MetroThumb resizingThumb;
 
-        private static void OnMetricsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>Identifies the <see cref="CompactPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty CompactPaneLengthProperty
+            = DependencyProperty.Register(nameof(CompactPaneLength),
+                                          typeof(double),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(0d, OnCompactPaneLengthPropertyChangedCallback));
+
+        private static void OnCompactPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var sender = d as SplitView;
-            sender?.TemplateSettings?.Update();
-            sender?.ChangeVisualState(true, true);
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
         }
 
         /// <summary>
@@ -50,16 +59,16 @@
         /// </returns>
         public double CompactPaneLength
         {
-            get { return (double)this.GetValue(CompactPaneLengthProperty); }
-            set { this.SetValue(CompactPaneLengthProperty, value); }
+            get => (double)this.GetValue(CompactPaneLengthProperty);
+            set => this.SetValue(CompactPaneLengthProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="Content" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="Content" /> dependency property.</returns>
-        public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(UIElement), typeof(SplitView), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="Content"/> dependency property.</summary>
+        public static readonly DependencyProperty ContentProperty
+            = DependencyProperty.Register(nameof(Content),
+                                          typeof(UIElement),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         ///     Gets or sets the contents of the main panel of a <see cref="SplitView" />.
@@ -67,21 +76,24 @@
         /// <returns>The contents of the main panel of a <see cref="SplitView" />. The default is null.</returns>
         public UIElement Content
         {
-            get { return (UIElement)this.GetValue(ContentProperty); }
-            set { this.SetValue(ContentProperty, value); }
+            get => (UIElement)this.GetValue(ContentProperty);
+            set => this.SetValue(ContentProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="DisplayMode" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="DisplayMode" /> dependency property.</returns>
-        public static readonly DependencyProperty DisplayModeProperty =
-            DependencyProperty.Register("DisplayMode", typeof(SplitViewDisplayMode), typeof(SplitView), new PropertyMetadata(SplitViewDisplayMode.Overlay, OnStateChanged));
+        /// <summary>Identifies the <see cref="DisplayMode"/> dependency property.</summary>
+        public static readonly DependencyProperty DisplayModeProperty
+            = DependencyProperty.Register(nameof(DisplayMode),
+                                          typeof(SplitViewDisplayMode),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(SplitViewDisplayMode.Overlay, OnDisplayModePropertyChangedCallback));
 
-        private static void OnStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDisplayModePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var sender = d as SplitView;
-            sender?.ChangeVisualState();
+            if (e.OldValue != e.NewValue && e.NewValue is SplitViewDisplayMode && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.ChangeVisualState(true, false);
+            }
         }
 
         /// <summary>
@@ -93,16 +105,16 @@
         /// </returns>
         public SplitViewDisplayMode DisplayMode
         {
-            get { return (SplitViewDisplayMode)this.GetValue(DisplayModeProperty); }
-            set { this.SetValue(DisplayModeProperty, value); }
+            get => (SplitViewDisplayMode)this.GetValue(DisplayModeProperty);
+            set => this.SetValue(DisplayModeProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="IsPaneOpen" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="IsPaneOpen" /> dependency property.</returns>
-        public static readonly DependencyProperty IsPaneOpenProperty =
-            DependencyProperty.Register("IsPaneOpen", typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnIsPaneOpenChanged));
+        /// <summary>Identifies the <see cref="IsPaneOpen"/> dependency property.</summary>
+        public static readonly DependencyProperty IsPaneOpenProperty
+            = DependencyProperty.Register(nameof(IsPaneOpen),
+                                          typeof(bool),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(false, OnIsPaneOpenChanged));
 
         private static void OnIsPaneOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -112,12 +124,18 @@
 
             if (sender == null
                 || newValue == oldValue)
+            {
                 return;
+            }
 
             if (newValue)
-                sender.ChangeVisualState(); // Open pane
+            {
+                sender.ChangeVisualState(true, false); // Open pane
+            }
             else
+            {
                 sender.OnIsPaneOpenChanged(); // Close pane
+            }
         }
 
         /// <summary>
@@ -126,16 +144,16 @@
         /// <returns>true if the pane is expanded to its full width; otherwise, false. The default is true.</returns>
         public bool IsPaneOpen
         {
-            get { return (bool)this.GetValue(IsPaneOpenProperty); }
-            set { this.SetValue(IsPaneOpenProperty, value); }
+            get => (bool)this.GetValue(IsPaneOpenProperty);
+            set => this.SetValue(IsPaneOpenProperty, value);
         }
 
-        /// <summary>
-        /// Identifies the <see cref="OverlayBrush"/> dependency property. 
-        /// </summary>
-        /// <returns>The identifier for the <see cref="OverlayBrush" /> dependency property.</returns>
-        public static readonly DependencyProperty OverlayBrushProperty =
-            DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(SplitView), new PropertyMetadata(Brushes.Transparent));
+        /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
+        public static readonly DependencyProperty OverlayBrushProperty
+            = DependencyProperty.Register(nameof(OverlayBrush),
+                                          typeof(Brush),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(Brushes.Transparent));
 
         /// <summary>
         /// Gets or sets a value that specifies the OverlayBrush 
@@ -143,16 +161,67 @@
         /// <returns>The current OverlayBrush</returns>
         public Brush OverlayBrush
         {
-            get { return (Brush)this.GetValue(OverlayBrushProperty); }
-            set { this.SetValue(OverlayBrushProperty, value); }
+            get => (Brush)this.GetValue(OverlayBrushProperty);
+            set => this.SetValue(OverlayBrushProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="OpenPaneLength" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="OpenPaneLength" /> dependency property.</returns>
-        public static readonly DependencyProperty OpenPaneLengthProperty =
-            DependencyProperty.Register("OpenPaneLength", typeof(double), typeof(SplitView), new PropertyMetadata(0d, OnMetricsChanged));
+        /// <summary>Identifies the <see cref="OpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty OpenPaneLengthProperty
+            = DependencyProperty.Register(nameof(OpenPaneLength),
+                                          typeof(double),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(0d, OnOpenPaneLengthPropertyChangedCallback, OnOpenPaneLengthCoerceValueCallback));
+
+        private static object OnOpenPaneLengthCoerceValueCallback(DependencyObject dependencyObject, object inputValue)
+        {
+            if (dependencyObject is SplitView splitView && splitView.ActualWidth > 0 && inputValue is double openPaneLength)
+            {
+                // Get the minimum needed width
+                var minWidth = splitView.DisplayMode == SplitViewDisplayMode.CompactInline || splitView.DisplayMode == SplitViewDisplayMode.CompactOverlay
+                    ? Math.Max(splitView.CompactPaneLength, splitView.MinimumOpenPaneLength)
+                    : Math.Max(0, splitView.MinimumOpenPaneLength);
+
+                if (minWidth < 0)
+                {
+                    minWidth = 0;
+                }
+
+                // Get the maximum allowed width
+                var maxWidth = Math.Min(splitView.ActualWidth, splitView.MaximumOpenPaneLength);
+
+                // Check if max < min
+                if (maxWidth < minWidth)
+                {
+                    minWidth = maxWidth;
+                }
+
+                // Check is OpenPaneLength is valid
+                if (openPaneLength < minWidth)
+                {
+                    return minWidth;
+                }
+
+                if (openPaneLength > maxWidth)
+                {
+                    return maxWidth;
+                }
+
+                return openPaneLength;
+            }
+            else
+            {
+                return inputValue;
+            }
+        }
+
+        private static void OnOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue && dependencyObject is SplitView splitView)
+            {
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the width of the <see cref="SplitView" /> pane when it's fully expanded.
@@ -163,16 +232,100 @@
         /// </returns>
         public double OpenPaneLength
         {
-            get { return (double)this.GetValue(OpenPaneLengthProperty); }
-            set { this.SetValue(OpenPaneLengthProperty, value); }
+            get => (double)this.GetValue(OpenPaneLengthProperty);
+            set => this.SetValue(OpenPaneLengthProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="MinimumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MinimumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MinimumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(100d, MinimumOpenPaneLengthPropertyChangedCallback));
+
+        private static void MinimumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
         }
 
         /// <summary>
-        ///     Identifies the <see cref="Pane" /> dependency property.
+        ///     Gets or sets the minimum width of the <see cref="SplitView" /> pane when it's fully expanded.
         /// </summary>
-        /// <returns>The identifier for the <see cref="Pane" /> dependency property.</returns>
-        public static readonly DependencyProperty PaneProperty =
-            DependencyProperty.Register("Pane", typeof(UIElement), typeof(SplitView), new PropertyMetadata(null, UpdateLogicalChild));
+        /// <returns>
+        ///     The minimum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MinimumOpenPaneLength
+        {
+            get => (double)this.GetValue(MinimumOpenPaneLengthProperty);
+            set => this.SetValue(MinimumOpenPaneLengthProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="MaximumOpenPaneLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MaximumOpenPaneLengthProperty = DependencyProperty.Register(nameof(MaximumOpenPaneLength), typeof(double), typeof(SplitView), new PropertyMetadata(500d, OnMaximumOpenPaneLengthPropertyChangedCallback));
+
+        private static void OnMaximumOpenPaneLengthPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is double && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.TemplateSettings?.Update();
+                splitView.ChangeVisualState(true, true);
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets the maximum width of the <see cref="SplitView" /> pane when it's fully expanded.
+        /// </summary>
+        /// <returns>
+        ///     The maximum width of the <see cref="SplitView" /> pane when it's fully expanded. The default is 320 device-independent
+        ///     pixel (DIP).
+        /// </returns>
+        public double MaximumOpenPaneLength
+        {
+            get => (double)this.GetValue(MaximumOpenPaneLengthProperty);
+            set => this.SetValue(MaximumOpenPaneLengthProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnCanResizeOpenPanePropertyChangedCallback));
+
+        private static void OnCanResizeOpenPanePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is bool && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets if the open pane can be resized by the user. The default value is false.
+        /// </summary>
+        public bool CanResizeOpenPane
+        {
+            get => (bool)this.GetValue(CanResizeOpenPaneProperty);
+            set => this.SetValue(CanResizeOpenPaneProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ResizeThumbStyleProperty = DependencyProperty.Register(nameof(ResizeThumbStyle), typeof(Style), typeof(SplitView), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or Sets the <see cref="Style"/> for the resizing Thumb (type of <see cref="MetroThumb"/>)
+        /// </summary>
+        public Style ResizeThumbStyle
+        {
+            get => (Style)this.GetValue(ResizeThumbStyleProperty);
+            set => this.SetValue(ResizeThumbStyleProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Pane"/> dependency property.</summary>
+        public static readonly DependencyProperty PaneProperty
+            = DependencyProperty.Register(nameof(Pane),
+                                          typeof(UIElement),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null, UpdateLogicalChild));
 
         /// <summary>
         ///     Gets or sets the contents of the pane of a <see cref="SplitView" />.
@@ -180,16 +333,16 @@
         /// <returns>The contents of the pane of a <see cref="SplitView" />. The default is null.</returns>
         public UIElement Pane
         {
-            get { return (UIElement)this.GetValue(PaneProperty); }
-            set { this.SetValue(PaneProperty, value); }
+            get => (UIElement)this.GetValue(PaneProperty);
+            set => this.SetValue(PaneProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="PaneBackground" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="PaneBackground" /> dependency property.</returns>
-        public static readonly DependencyProperty PaneBackgroundProperty =
-            DependencyProperty.Register("PaneBackground", typeof(Brush), typeof(SplitView), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="PaneBackground"/> dependency property.</summary>
+        public static readonly DependencyProperty PaneBackgroundProperty
+            = DependencyProperty.Register(nameof(PaneBackground),
+                                          typeof(Brush),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         ///     Gets or sets the Brush to apply to the background of the <see cref="Pane" /> area of the control.
@@ -197,16 +350,16 @@
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
         public Brush PaneBackground
         {
-            get { return (Brush)this.GetValue(PaneBackgroundProperty); }
-            set { this.SetValue(PaneBackgroundProperty, value); }
+            get => (Brush)this.GetValue(PaneBackgroundProperty);
+            set => this.SetValue(PaneBackgroundProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="PaneForeground" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="PaneForeground" /> dependency property.</returns>
-        public static readonly DependencyProperty PaneForegroundProperty =
-            DependencyProperty.Register("PaneForeground", typeof(Brush), typeof(SplitView), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="PaneForeground"/> dependency property.</summary>
+        public static readonly DependencyProperty PaneForegroundProperty
+            = DependencyProperty.Register(nameof(PaneForeground),
+                                          typeof(Brush),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         ///     Gets or sets the Brush to apply to the foreground of the <see cref="Pane" /> area of the control.
@@ -214,16 +367,25 @@
         /// <returns>The Brush to apply to the background of the <see cref="Pane" /> area of the control.</returns>
         public Brush PaneForeground
         {
-            get { return (Brush)this.GetValue(PaneForegroundProperty); }
-            set { this.SetValue(PaneForegroundProperty, value); }
+            get => (Brush)this.GetValue(PaneForegroundProperty);
+            set => this.SetValue(PaneForegroundProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the PanePlacement dependency property.
-        /// </summary>
-        /// <returns>The identifier for the PanePlacement dependency property.</returns>
-        public static readonly DependencyProperty PanePlacementProperty =
-            DependencyProperty.Register("PanePlacement", typeof(SplitViewPanePlacement), typeof(SplitView), new PropertyMetadata(SplitViewPanePlacement.Left, OnStateChanged));
+        /// <summary>Identifies the <see cref="PanePlacement"/> dependency property.</summary>
+        public static readonly DependencyProperty PanePlacementProperty
+            = DependencyProperty.Register(nameof(PanePlacement),
+                                          typeof(SplitViewPanePlacement),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(SplitViewPanePlacement.Left, OnPanePlacementPropertyChangedCallback));
+
+        private static void OnPanePlacementPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is SplitViewPanePlacement && dependencyObject is SplitView splitView)
+            {
+                splitView.CoerceValue(OpenPaneLengthProperty);
+                splitView.ChangeVisualState(true, false);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets a value that specifies whether the pane is shown on the right or left side of the
@@ -235,16 +397,16 @@
         /// </returns>
         public SplitViewPanePlacement PanePlacement
         {
-            get { return (SplitViewPanePlacement)this.GetValue(PanePlacementProperty); }
-            set { this.SetValue(PanePlacementProperty, value); }
+            get => (SplitViewPanePlacement)this.GetValue(PanePlacementProperty);
+            set => this.SetValue(PanePlacementProperty, value);
         }
 
-        /// <summary>
-        ///     Identifies the <see cref="TemplateSettings" /> dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="TemplateSettings" /> dependency property.</returns>
-        public static readonly DependencyProperty TemplateSettingsProperty =
-            DependencyProperty.Register("TemplateSettings", typeof(SplitViewTemplateSettings), typeof(SplitView), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="TemplateSettings"/> dependency property.</summary>
+        public static readonly DependencyProperty TemplateSettingsProperty
+            = DependencyProperty.Register(nameof(TemplateSettings),
+                                          typeof(SplitViewTemplateSettings),
+                                          typeof(SplitView),
+                                          new PropertyMetadata(null));
 
         /// <summary>
         ///     Gets an object that provides calculated values that can be referenced as TemplateBinding sources when defining
@@ -253,12 +415,9 @@
         /// <returns>An object that provides calculated values for templates.</returns>
         public SplitViewTemplateSettings TemplateSettings
         {
-            get { return (SplitViewTemplateSettings)this.GetValue(TemplateSettingsProperty); }
-            private set { this.SetValue(TemplateSettingsProperty, value); }
+            get => (SplitViewTemplateSettings)this.GetValue(TemplateSettingsProperty);
+            private set => this.SetValue(TemplateSettingsProperty, value);
         }
-
-        private Rectangle lightDismissLayer;
-        private RectangleGeometry paneClipRectangle;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SplitView" /> class.
@@ -274,7 +433,10 @@
         {
             // MahApps add this pane to the SplitView with AddLogicalChild method.
             // This has the side effect that the DataContext doesn't update, so do this now here.
-            if (this.Pane is FrameworkElement elementPane) elementPane.DataContext = this.DataContext;
+            if (this.Pane is FrameworkElement elementPane)
+            {
+                elementPane.DataContext = this.DataContext;
+            }
         }
 
         /// <summary>
@@ -287,8 +449,19 @@
         /// </summary>
         public event EventHandler<SplitViewPaneClosingEventArgs> PaneClosing;
 
+        /// <inheritdoc />
         public override void OnApplyTemplate()
         {
+            if (this.lightDismissLayer != null)
+            {
+                this.lightDismissLayer.MouseDown -= this.OnLightDismiss;
+            }
+
+            if (this.resizingThumb != null)
+            {
+                this.resizingThumb.DragDelta -= this.ResizingThumb_DragDelta;
+            }
+
             base.OnApplyTemplate();
 
             this.paneClipRectangle = this.GetTemplateChild("PaneClipRectangle") as RectangleGeometry;
@@ -299,11 +472,22 @@
                 this.lightDismissLayer.MouseDown += this.OnLightDismiss;
             }
 
+            this.resizingThumb = this.GetTemplateChild("PART_ResizingThumb") as MetroThumb;
+            if (this.resizingThumb != null)
+            {
+                this.resizingThumb.DragDelta += this.ResizingThumb_DragDelta;
+            }
+
             this.ExecuteWhenLoaded(() =>
                 {
                     this.TemplateSettings.Update();
-                    this.ChangeVisualState(false);
+                    this.ChangeVisualState(false, false);
                 });
+        }
+
+        private void ResizingThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            this.SetCurrentValue(OpenPaneLengthProperty, this.PanePlacement == SplitViewPanePlacement.Left ? this.OpenPaneLength + e.HorizontalChange : this.OpenPaneLength - e.HorizontalChange);
         }
 
         private static void UpdateLogicalChild(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -346,20 +530,27 @@
             }
         }
 
+        /// <inheritdoc />
         protected override void OnRenderSizeChanged(SizeChangedInfo info)
         {
             base.OnRenderSizeChanged(info);
+
+            if (this.IsPaneOpen)
+            {
+                this.CoerceValue(OpenPaneLengthProperty);
+            }
+
             if (this.paneClipRectangle != null)
             {
-                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight);
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, this.ActualHeight);
             }
         }
 
-        protected virtual void ChangeVisualState(bool animated = true, bool reset = false)
+        protected virtual void ChangeVisualState(bool animated, bool reset)
         {
             if (this.paneClipRectangle != null)
             {
-                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, (double)this.ActualHeight); // We could also use ActualHeight and subscribe to the SizeChanged property
+                this.paneClipRectangle.Rect = new Rect(0, 0, this.OpenPaneLength, this.ActualHeight); // We could also use ActualHeight and subscribe to the SizeChanged property
             }
 
             var state = string.Empty;
@@ -397,7 +588,7 @@
             VisualStateManager.GoToState(this, state, animated);
         }
 
-        protected virtual void OnIsPaneOpenChanged()
+        protected void OnIsPaneOpenChanged()
         {
             var cancel = false;
             if (this.PaneClosing != null)
@@ -407,7 +598,9 @@
                 {
                     var eventHandler = paneClosingDelegates as EventHandler<SplitViewPaneClosingEventArgs>;
                     if (eventHandler == null)
+                    {
                         continue;
+                    }
 
                     eventHandler(this, args);
                     if (args.Cancel)
@@ -417,16 +610,17 @@
                     }
                 }
             }
+
             if (!cancel)
             {
-                this.ChangeVisualState();
+                this.ChangeVisualState(true, false);
                 this.PaneClosed?.Invoke(this, EventArgs.Empty);
             }
             else
             {
                 this.SetCurrentValue(IsPaneOpenProperty, false);
             }
-        }        
+        }
 
         private void OnLightDismiss(object sender, MouseButtonEventArgs e)
         {

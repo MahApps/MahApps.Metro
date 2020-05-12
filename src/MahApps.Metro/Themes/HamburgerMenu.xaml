@@ -10,6 +10,10 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
+        <Setter Property="ResizeThumbStyle" Value="{DynamicResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
+        <Setter Property="MinimumOpenPaneLength" Value="100" />
+        <Setter Property="MaximumOpenPaneLength" Value="500" />
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>

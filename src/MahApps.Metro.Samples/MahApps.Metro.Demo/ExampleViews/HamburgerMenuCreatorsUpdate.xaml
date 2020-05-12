@@ -115,6 +115,11 @@
                                        Header="IsPaneOpen:"
                                        IsOn="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+                <Controls:ToggleSwitch Margin="0 10 0 5"
+                                       Header="CanResizeOpenPane:"
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=CanResizeOpenPane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
                 <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
                     <ComboBox MinWidth="150"
                               HorizontalAlignment="Left"

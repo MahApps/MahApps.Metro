@@ -11,6 +11,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeWidth">6</system:Double>
@@ -384,7 +385,11 @@
                                 DisplayMode="{TemplateBinding DisplayMode}"
                                 IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 IsTabStop="False"
-                                OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                                OpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=OpenPaneLength, Mode=TwoWay}"
+                                MinimumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinimumOpenPaneLength}"
+                                MaximumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaximumOpenPaneLength}"
+                                CanResizeOpenPane="{TemplateBinding CanResizeOpenPane}"
+                                ResizeThumbStyle="{TemplateBinding ResizeThumbStyle}"
                                 PaneBackground="{TemplateBinding PaneBackground}"
                                 PaneForeground="{TemplateBinding PaneForeground}"
                                 PanePlacement="{TemplateBinding PanePlacement}">
