@@ -7,106 +7,172 @@ namespace MahApps.Metro.Behaviors
 {
     public static class ReloadBehavior
     {
+        /// <summary>
+        /// The DependencyProperty for the <see cref="MetroContentControl"/>' OnDataContextChanged property.
+        ///
+        /// With the OnDataContextChanged property the Reload behavior of the MetroContentControl can be switched on or off.
+        /// If the property is set to true, the transition of the <see cref="MetroContentControl"/> is triggered again when the DataContext is changed.
+        /// </summary>
         public static readonly DependencyProperty OnDataContextChangedProperty
             = DependencyProperty.RegisterAttached("OnDataContextChanged",
                                                   typeof(bool),
                                                   typeof(ReloadBehavior),
-                                                  new PropertyMetadata(OnDataContextChanged));
+                                                  new PropertyMetadata(OnOnDataContextChanged));
 
+        /// <summary>
+        /// Helper for getting <see cref="OnDataContextChangedProperty"/> from <paramref name="element"/>.
+        ///
+        /// If the property is set to true, the transition of the <see cref="MetroContentControl"/> is triggered again when the DataContext is changed.
+        /// </summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="OnDataContextChangedProperty"/> from.</param>
+        /// <returns>OnDataContextChanged property value.</returns>
         [Category(AppName.MahApps)]
-        public static bool GetOnDataContextChanged(MetroContentControl element)
+        [AttachedPropertyBrowsableForType(typeof(MetroContentControl))]
+        public static bool GetOnDataContextChanged(UIElement element)
         {
             return (bool)element.GetValue(OnDataContextChangedProperty);
         }
 
+        /// <summary>
+        /// Helper for setting <see cref="OnDataContextChangedProperty"/> on <paramref name="element"/>.
+        ///
+        /// If the property is set to true, the transition of the <see cref="MetroContentControl"/> is triggered again when the DataContext is changed.
+        /// </summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="OnDataContextChangedProperty"/> on.</param>
+        /// <param name="value">OnDataContextChanged property value.</param>
         [Category(AppName.MahApps)]
-        public static void SetOnDataContextChanged(MetroContentControl element, bool value)
+        [AttachedPropertyBrowsableForType(typeof(MetroContentControl))]
+        public static void SetOnDataContextChanged(UIElement element, bool value)
         {
             element.SetValue(OnDataContextChangedProperty, value);
         }
 
-        private static void OnDataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnOnDataContextChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            ((MetroContentControl)d).DataContextChanged -= ReloadDataContextChanged;
-            ((MetroContentControl)d).DataContextChanged += ReloadDataContextChanged;
+            if (e.OldValue != e.NewValue && dependencyObject is MetroContentControl metroContentControl)
+            {
+                metroContentControl.DataContextChanged -= ReloadOnDataContextChanged;
+                metroContentControl.DataContextChanged += ReloadOnDataContextChanged;
+            }
         }
 
-        private static void ReloadDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private static void ReloadOnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ((MetroContentControl)sender).Reload();
+            (sender as MetroContentControl)?.Reload();
         }
 
+        /// <summary>
+        /// The DependencyProperty for the <see cref="MetroContentControl"/>' and <see cref="TransitioningContentControl"/>' OnSelectedTabChanged property.
+        ///
+        /// With the OnSelectedTabChanged property the Reload behavior of the control can be switched on or off.
+        /// If the property is set to true, the transition is triggered again when the SelectionChanged event of a TabControl was raised.
+        /// </summary>
         public static readonly DependencyProperty OnSelectedTabChangedProperty
             = DependencyProperty.RegisterAttached("OnSelectedTabChanged",
                                                   typeof(bool),
                                                   typeof(ReloadBehavior),
                                                   new PropertyMetadata(OnSelectedTabChanged));
 
+        /// <summary>
+        /// Helper for getting <see cref="OnSelectedTabChangedProperty"/> from <paramref name="element"/>.
+        ///
+        /// If the property is set to true, the transition is triggered again when the SelectionChanged event of a TabControl was raised.
+        /// </summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="OnSelectedTabChangedProperty"/> from.</param>
+        /// <returns>OnSelectedTabChanged property value.</returns>
         [Category(AppName.MahApps)]
-        public static bool GetOnSelectedTabChanged(ContentControl element)
+        [AttachedPropertyBrowsableForType(typeof(MetroContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(TransitioningContentControl))]
+        public static bool GetOnSelectedTabChanged(UIElement element)
         {
             return (bool)element.GetValue(OnSelectedTabChangedProperty);
         }
 
+        /// <summary>
+        /// Helper for setting <see cref="OnSelectedTabChangedProperty"/> on <paramref name="element"/>.
+        ///
+        /// If the property is set to true, the transition is triggered again when the SelectionChanged event of a TabControl was raised.
+        /// </summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="OnSelectedTabChangedProperty"/> on.</param>
+        /// <param name="value">OnSelectedTabChanged property value.</param>
         [Category(AppName.MahApps)]
-        public static void SetOnSelectedTabChanged(ContentControl element, bool value)
+        [AttachedPropertyBrowsableForType(typeof(MetroContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(TransitioningContentControl))]
+        public static void SetOnSelectedTabChanged(UIElement element, bool value)
         {
             element.SetValue(OnSelectedTabChangedProperty, value);
         }
 
-        private static void OnSelectedTabChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedTabChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            ((ContentControl)d).Loaded -= ReloadLoaded;
-            ((ContentControl)d).Loaded += ReloadLoaded;
-        }
-
-        private static void ReloadLoaded(object sender, RoutedEventArgs e)
-        {
-            var metroContentControl = (ContentControl)sender;
-            var tab = metroContentControl.TryFindParent<TabControl>();
-
-            if (tab == null)
+            if (e.OldValue != e.NewValue)
             {
-                return;
+                if (dependencyObject is MetroContentControl metroContentControl)
+                {
+                    metroContentControl.Loaded -= ReloadOnLoaded;
+                    metroContentControl.Loaded += ReloadOnLoaded;
+                }
+                else if (dependencyObject is TransitioningContentControl transitioningContentControl)
+                {
+                    transitioningContentControl.Loaded -= ReloadOnLoaded;
+                    transitioningContentControl.Loaded += ReloadOnLoaded;
+                }
             }
-
-            SetMetroContentControl(tab, metroContentControl);
-            tab.SelectionChanged -= ReloadSelectionChanged;
-            tab.SelectionChanged += ReloadSelectionChanged;
         }
 
-        private static void ReloadSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private static void ReloadOnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ContentControl contentControl)
+            {
+                var tabControl = contentControl.TryFindParent<TabControl>();
+
+                if (tabControl == null)
+                {
+                    return;
+                }
+
+                SetContentControl(tabControl, contentControl);
+                tabControl.SelectionChanged -= ReloadOnSelectionChanged;
+                tabControl.SelectionChanged += ReloadOnSelectionChanged;
+            }
+        }
+
+        private static void ReloadOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.OriginalSource != sender)
             {
                 return;
             }
 
-            var contentControl = GetMetroContentControl((TabControl)sender);
+            if (sender is TabControl tabControl)
+            {
+                var contentControl = GetContentControl(tabControl);
 
-            var metroContentControl = contentControl as MetroContentControl;
-            metroContentControl?.Reload();
-
-            var transitioningContentControl = contentControl as TransitioningContentControl;
-            transitioningContentControl?.ReloadTransition();
+                if (contentControl is MetroContentControl metroContentControl)
+                {
+                    metroContentControl.Reload();
+                }
+                else if (contentControl is TransitioningContentControl transitioningContentControl)
+                {
+                    transitioningContentControl.ReloadTransition();
+                }
+            }
         }
 
-        public static readonly DependencyProperty MetroContentControlProperty
-            = DependencyProperty.RegisterAttached("MetroContentControl",
+        internal static readonly DependencyProperty ContentControlProperty
+            = DependencyProperty.RegisterAttached("ContentControl",
                                                   typeof(ContentControl),
                                                   typeof(ReloadBehavior),
                                                   new PropertyMetadata(default(ContentControl)));
 
-        [Category(AppName.MahApps)]
-        public static void SetMetroContentControl(UIElement element, ContentControl value)
+        internal static ContentControl GetContentControl(UIElement element)
         {
-            element.SetValue(MetroContentControlProperty, value);
+            return (ContentControl)element.GetValue(ContentControlProperty);
         }
 
-        [Category(AppName.MahApps)]
-        public static ContentControl GetMetroContentControl(UIElement element)
+        internal static void SetContentControl(UIElement element, ContentControl value)
         {
-            return (ContentControl)element.GetValue(MetroContentControlProperty);
+            element.SetValue(ContentControlProperty, value);
         }
     }
 }
