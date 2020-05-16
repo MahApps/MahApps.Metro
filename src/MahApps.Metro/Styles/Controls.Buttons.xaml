@@ -963,7 +963,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroAccentSquare"
+    <Style x:Key="MahApps.Styles.Button.MetroSquare.Accent"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroSquare}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
