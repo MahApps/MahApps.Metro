@@ -304,7 +304,7 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MahApps.Storyboard.ExpanderExpand">
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Expand">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="1"
@@ -421,7 +421,7 @@
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderExpand}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Expander.Expand}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderCollapse}" />
