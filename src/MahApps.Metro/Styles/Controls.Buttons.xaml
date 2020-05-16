@@ -531,7 +531,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.AccentedSquare"
+    <Style x:Key="MahApps.Styles.Button.Square.Accent"
            BasedOn="{StaticResource MahApps.Styles.Button.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
