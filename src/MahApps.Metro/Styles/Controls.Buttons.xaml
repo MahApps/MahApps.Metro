@@ -1121,7 +1121,7 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.SplitArrow"
+    <Style x:Key="MahApps.Styles.Button.Split.Arrow"
            BasedOn="{StaticResource MahApps.Styles.Button.Split}"
            TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
