@@ -38,14 +38,10 @@
         <controls:MetroAnimatedTabControl x:Name="MetroTabControl2"
                                           ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                           ItemsSource="{Binding Data.TestViewModels}" />
-        <Grid>
-            <Grid.Resources>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
-            </Grid.Resources>
-            <TabControl x:Name="NormalTabControl2"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                        ItemsSource="{Binding Data.TestViewModels}" />
-        </Grid>
+        <TabControl x:Name="NormalTabControl2"
+                    Style="{DynamicResource MahApps.Styles.TabControl.Animated}"
+                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                    ItemsSource="{Binding Data.TestViewModels}" />
     </UniformGrid>
 
 </controls:MetroWindow>
