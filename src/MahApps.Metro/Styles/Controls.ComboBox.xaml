@@ -13,7 +13,7 @@
 
     <Geometry x:Key="ComboBoxDownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
 
-    <Style x:Key="MahApps.Styles.TextBox.Editable"
+    <Style x:Key="MahApps.Styles.TextBox.ComboBox.Editable"
            BasedOn="{StaticResource MahApps.Styles.TextBox}"
            TargetType="{x:Type TextBox}">
         <Setter Property="MinHeight" Value="0" />
@@ -351,7 +351,7 @@
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                     Style="{StaticResource MahApps.Styles.TextBox.Editable}"
+                                     Style="{StaticResource MahApps.Styles.TextBox.ComboBox.Editable}"
                                      Visibility="Collapsed" />
 
                             <TextBlock x:Name="PART_Message"
