@@ -169,10 +169,7 @@
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <ContentControl DataContext="{Binding ElementName=AnimatedSingleRowTabControl}" Template="{StaticResource TabControlConfigDataTemplate}" />
                 <Grid>
-                    <Grid.Resources>
-                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-                    </Grid.Resources>
-                    <TabControl x:Name="AnimatedSingleRowTabControl" Height="150">
+                    <TabControl x:Name="AnimatedSingleRowTabControl" Height="150" Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}">
                         <TabItem Header="these tabs">
                             <TextBlock FontSize="30" Text="first content" />
                         </TabItem>

@@ -30,14 +30,10 @@
         <controls:MetroAnimatedSingleRowTabControl x:Name="MetroTabControl"
                                                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                                    ItemsSource="{Binding Data.TestViewModels}" />
-        <Grid>
-            <Grid.Resources>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-            </Grid.Resources>
-            <TabControl x:Name="NormalTabControl"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                        ItemsSource="{Binding Data.TestViewModels}" />
-        </Grid>
+        <TabControl x:Name="NormalTabControl"
+                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}"
+                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                    ItemsSource="{Binding Data.TestViewModels}" />
 
         <controls:MetroAnimatedTabControl x:Name="MetroTabControl2"
                                           ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
