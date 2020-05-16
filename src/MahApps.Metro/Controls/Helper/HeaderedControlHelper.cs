@@ -75,7 +75,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontFamily GetHeaderFontFamily(UIElement element)
         {
             return (FontFamily)element.GetValue(HeaderFontFamilyProperty);
@@ -87,7 +86,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static void SetHeaderFontFamily(UIElement element, FontFamily value)
         {
             element.SetValue(HeaderFontFamilyProperty, value);
@@ -106,7 +104,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static double GetHeaderFontSize(UIElement element)
         {
             return (double)element.GetValue(HeaderFontSizeProperty);
@@ -118,7 +115,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static void SetHeaderFontSize(UIElement element, double value)
         {
             element.SetValue(HeaderFontSizeProperty, value);
@@ -137,7 +133,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontStretch GetHeaderFontStretch(UIElement element)
         {
             return (FontStretch)element.GetValue(HeaderFontStretchProperty);
@@ -149,7 +144,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static void SetHeaderFontStretch(UIElement element, FontStretch value)
         {
             element.SetValue(HeaderFontStretchProperty, value);
@@ -168,7 +162,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static FontWeight GetHeaderFontWeight(UIElement element)
         {
             return (FontWeight)element.GetValue(HeaderFontWeightProperty);
@@ -180,7 +173,6 @@ namespace MahApps.Metro.Controls
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static void SetHeaderFontWeight(UIElement element, FontWeight value)
         {
             element.SetValue(HeaderFontWeightProperty, value);
@@ -198,7 +190,6 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static Thickness GetHeaderMargin(UIElement element)
         {
             return (Thickness)element.GetValue(HeaderMarginProperty);
@@ -209,10 +200,63 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
-        [AttachedPropertyBrowsableForType(typeof(Flyout))]
         public static void SetHeaderMargin(UIElement element, Thickness value)
         {
             element.SetValue(HeaderMarginProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderHorizontalContentAlignmentProperty =
+            DependencyProperty.RegisterAttached(
+                "HeaderHorizontalContentAlignment",
+                typeof(HorizontalAlignment),
+                typeof(HeaderedControlHelper),
+                new FrameworkPropertyMetadata(HorizontalAlignment.Stretch));
+
+        /// <summary>
+        /// Gets the horizontal alignment of the header.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        public static HorizontalAlignment GetHeaderHorizontalContentAlignment(UIElement element)
+        {
+            return (HorizontalAlignment)element.GetValue(HeaderHorizontalContentAlignmentProperty);
+        }
+
+        /// <summary>
+        /// Sets the horizontal alignment of the header.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        public static void SetHeaderHorizontalContentAlignment(UIElement element, HorizontalAlignment value)
+        {
+            element.SetValue(HeaderHorizontalContentAlignmentProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderVerticalContentAlignmentProperty =
+            DependencyProperty.RegisterAttached(
+                "HeaderVerticalContentAlignment",
+                typeof(VerticalAlignment),
+                typeof(HeaderedControlHelper),
+                new FrameworkPropertyMetadata(VerticalAlignment.Stretch));
+
+        /// <summary>
+        /// Gets the vertical alignment of the header.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        public static VerticalAlignment GetHeaderVerticalContentAlignment(UIElement element)
+        {
+            return (VerticalAlignment)element.GetValue(HeaderVerticalContentAlignmentProperty);
+        }
+
+        /// <summary>
+        /// Sets the vertical alignment of the header.
+        /// </summary>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(HeaderedContentControl))]
+        public static void SetHeaderVerticalContentAlignment(UIElement element, VerticalAlignment value)
+        {
+            element.SetValue(HeaderVerticalContentAlignmentProperty, value);
         }
     }
 }

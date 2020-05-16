@@ -31,17 +31,17 @@
                                                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                                    ItemsSource="{Binding Data.TestViewModels}" />
         <TabControl x:Name="NormalTabControl"
-                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}"
                     ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                    ItemsSource="{Binding Data.TestViewModels}" />
+                    ItemsSource="{Binding Data.TestViewModels}"
+                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}" />
 
         <controls:MetroAnimatedTabControl x:Name="MetroTabControl2"
                                           ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                           ItemsSource="{Binding Data.TestViewModels}" />
         <TabControl x:Name="NormalTabControl2"
-                    Style="{DynamicResource MahApps.Styles.TabControl.Animated}"
                     ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                    ItemsSource="{Binding Data.TestViewModels}" />
+                    ItemsSource="{Binding Data.TestViewModels}"
+                    Style="{DynamicResource MahApps.Styles.TabControl.Animated}" />
     </UniformGrid>
 
 </controls:MetroWindow>

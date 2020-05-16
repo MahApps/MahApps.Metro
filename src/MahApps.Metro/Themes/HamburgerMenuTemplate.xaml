@@ -381,18 +381,18 @@
     <ControlTemplate x:Key="MahApps.Templates.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>
             <Controls:SplitView x:Name="MainSplitView"
+                                CanResizeOpenPane="{TemplateBinding CanResizeOpenPane}"
                                 CompactPaneLength="{TemplateBinding CompactPaneLength}"
                                 DisplayMode="{TemplateBinding DisplayMode}"
                                 IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 IsTabStop="False"
-                                OpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=OpenPaneLength, Mode=TwoWay}"
-                                MinimumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinimumOpenPaneLength}"
                                 MaximumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaximumOpenPaneLength}"
-                                CanResizeOpenPane="{TemplateBinding CanResizeOpenPane}"
-                                ResizeThumbStyle="{TemplateBinding ResizeThumbStyle}"
+                                MinimumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinimumOpenPaneLength}"
+                                OpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=OpenPaneLength, Mode=TwoWay}"
                                 PaneBackground="{TemplateBinding PaneBackground}"
                                 PaneForeground="{TemplateBinding PaneForeground}"
-                                PanePlacement="{TemplateBinding PanePlacement}">
+                                PanePlacement="{TemplateBinding PanePlacement}"
+                                ResizeThumbStyle="{TemplateBinding ResizeThumbStyle}">
                 <Controls:SplitView.Pane>
                     <Grid x:Name="PaneGrid" Margin="{TemplateBinding PaneMargin}">
                         <Grid.RowDefinitions>
