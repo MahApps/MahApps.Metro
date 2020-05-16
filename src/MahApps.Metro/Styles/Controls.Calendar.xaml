@@ -145,6 +145,150 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
+    <ControlTemplate x:Key="MahApps.Templates.Button.Calendar.Previous" TargetType="{x:Type Button}">
+        <Grid Cursor="Hand">
+            <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
+                       Opacity="0.1"
+                       Stretch="Fill" />
+            <Path x:Name="path"
+                  Width="6"
+                  Height="10"
+                  Margin="14 0 0 0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
+                  Fill="{TemplateBinding Foreground}"
+                  Opacity="0.7"
+                  Stretch="Fill" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="path"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="path"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To=".5"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.Button.Calendar.Next" TargetType="{x:Type Button}">
+        <Grid Cursor="Hand">
+            <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
+                       Opacity="0.1"
+                       Stretch="Fill" />
+            <Path x:Name="path"
+                  Width="6"
+                  Height="10"
+                  Margin="0 0 14 0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
+                  Fill="{TemplateBinding Foreground}"
+                  Opacity="0.7"
+                  Stretch="Fill" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="path"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="path"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To=".2"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MahApps.Templates.Button.Calendar.Header" TargetType="{x:Type Button}">
+        <Grid Cursor="Hand">
+            <ContentPresenter x:Name="buttonContent"
+                              Margin="1 4 1 5"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Opacity="0.7" />
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="buttonContent"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="1"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="buttonContent"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To=".5"
+                                             Duration="0" />
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="MahApps.Styles.Button.Calendar.Previous" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.Previous}" />
+        <Setter Property="Width" Value="28" />
+    </Style>
+    <Style x:Key="MahApps.Styles.Button.Calendar.Next" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+        <Setter Property="Height" Value="20" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.Next}" />
+        <Setter Property="Width" Value="28" />
+    </Style>
+    <Style x:Key="MahApps.Styles.Button.Calendar.Header" TargetType="{x:Type Button}">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Calendar.Header}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!--  Used for day names  -->
+    <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
+        <TextBlock Margin="0 6 0 6"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold"
+                   Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                   Opacity="0.8"
+                   Text="{Binding}" />
+    </DataTemplate>
+
     <Style x:Key="MahApps.Styles.CalendarItem" TargetType="{x:Type CalendarItem}">
         <Setter Property="Margin" Value="0 3" />
         <Setter Property="Padding" Value="2" />
@@ -152,145 +296,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
-                    <ControlTemplate.Resources>
-                        <!--  Used for day names  -->
-                        <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-                            <TextBlock Margin="0 6 0 6"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                       Opacity="0.8"
-                                       Text="{Binding}" />
-                        </DataTemplate>
-                    </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Margin="{TemplateBinding Padding}">
-                                <Grid.Resources>
-                                    <ControlTemplate x:Key="MahApps.Templates.Button.Previous" TargetType="{x:Type Button}">
-                                        <Grid Cursor="Hand">
-                                            <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
-                                                       Opacity="0.1"
-                                                       Stretch="Fill" />
-                                            <Path x:Name="path"
-                                                  Width="6"
-                                                  Height="10"
-                                                  Margin="14 -6 0 0"
-                                                  HorizontalAlignment="Left"
-                                                  VerticalAlignment="Center"
-                                                  Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
-                                                  Fill="white"
-                                                  Opacity="0.7"
-                                                  Stretch="Fill" />
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="MouseOver">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="path"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To="1"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="path"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To=".5"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </Grid>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="MahApps.Templates.Button.Next" TargetType="{x:Type Button}">
-                                        <Grid Cursor="Hand">
-                                            <Rectangle Fill="{DynamicResource MahApps.Brushes.Accent}"
-                                                       Opacity="0.1"
-                                                       Stretch="Fill" />
-                                            <Path x:Name="path"
-                                                  Width="6"
-                                                  Height="10"
-                                                  Margin="0 -6 14 0"
-                                                  HorizontalAlignment="Right"
-                                                  VerticalAlignment="Center"
-                                                  Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
-                                                  Fill="white"
-                                                  Opacity="0.7"
-                                                  Stretch="Fill" />
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="MouseOver">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="path"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To="1"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="path"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To=".2"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </Grid>
-                                    </ControlTemplate>
-                                    <ControlTemplate x:Key="MahApps.Templates.Button.Header" TargetType="{x:Type Button}">
-                                        <Grid Cursor="Hand">
-                                            <ContentPresenter x:Name="buttonContent"
-                                                              Margin="1 4 1 9"
-                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                              Content="{TemplateBinding Content}"
-                                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                              Opacity="0.7" />
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="MouseOver">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="buttonContent"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To="1"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="buttonContent"
-                                                                             Storyboard.TargetProperty="Opacity"
-                                                                             To=".5"
-                                                                             Duration="0" />
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                        </Grid>
-                                    </ControlTemplate>
-
-                                    <Style x:Key="PreviousCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Previous}" />
-                                    </Style>
-                                    <Style x:Key="NextCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Next}" />
-                                    </Style>
-                                    <Style x:Key="HeaderCalendarButtonStyle" TargetType="{x:Type Button}">
-                                        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Header}" />
-                                    </Style>
-                                </Grid.Resources>
-
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
@@ -304,25 +315,16 @@
                                       Background="{DynamicResource MahApps.Brushes.Accent}">
                                     <Button x:Name="PART_HeaderButton"
                                             Grid.Row="0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
                                             Focusable="False"
-                                            FontWeight="Bold"
-                                            Style="{StaticResource HeaderCalendarButtonStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.Button.Calendar.Header}" />
                                     <Button x:Name="PART_PreviousButton"
                                             Grid.Row="0"
-                                            Width="28"
-                                            Height="20"
-                                            HorizontalAlignment="Left"
                                             Focusable="False"
-                                            Style="{StaticResource PreviousCalendarButtonStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.Button.Calendar.Previous}" />
                                     <Button x:Name="PART_NextButton"
                                             Grid.Row="0"
-                                            Width="28"
-                                            Height="20"
-                                            HorizontalAlignment="Right"
                                             Focusable="False"
-                                            Style="{StaticResource NextCalendarButtonStyle}" />
+                                            Style="{DynamicResource MahApps.Styles.Button.Calendar.Next}" />
                                 </Grid>
                                 <Grid x:Name="PART_MonthView"
                                       Grid.Row="1"
