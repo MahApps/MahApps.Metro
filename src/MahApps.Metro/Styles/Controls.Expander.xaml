@@ -314,7 +314,7 @@
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
                          To="0"
@@ -424,7 +424,7 @@
                                 <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Expander.Expand}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderCollapse}" />
+                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.Expander.Collapse}" />
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ExpandDirection" Value="Right">
