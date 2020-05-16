@@ -26,7 +26,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.AccentHighlight"
-           BasedOn="{StaticResource MahApps.Styles.Button.HighlightedSquare}"
+           BasedOn="{StaticResource MahApps.Styles.Button.Square.Highlight}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="MinHeight" Value="35" />
         <Setter Property="MinWidth" Value="80" />

@@ -610,7 +610,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.HighlightedSquare"
+    <Style x:Key="MahApps.Styles.Button.Square.Highlight"
            BasedOn="{StaticResource MahApps.Styles.Button.Square}"
            TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
