@@ -86,5 +86,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.StatusBarItem}" TargetType="StatusBarItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.ScrollViewer}" TargetType="ScrollViewer" />
     <Style BasedOn="{StaticResource MahApps.Styles.GridSplitter}" TargetType="GridSplitter" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolBar}" TargetType="ToolBar" />
+    <Style BasedOn="{StaticResource MahApps.Styles.ToolBarTray}" TargetType="ToolBarTray" />
 
 </ResourceDictionary>

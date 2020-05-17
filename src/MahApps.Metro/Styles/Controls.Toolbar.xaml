@@ -260,7 +260,7 @@
     </Style>
 
     <!--  Style the toolbar  -->
-    <Style x:Key="{x:Type ToolBar}" TargetType="{x:Type ToolBar}">
+    <Style x:Key="MahApps.Styles.ToolBar" TargetType="{x:Type ToolBar}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
@@ -322,7 +322,7 @@
     </Style>
 
     <!--  Style the toolbar tray  -->
-    <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
+    <Style x:Key="MahApps.Styles.ToolBarTray" TargetType="{x:Type ToolBarTray}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
     </Style>
 
