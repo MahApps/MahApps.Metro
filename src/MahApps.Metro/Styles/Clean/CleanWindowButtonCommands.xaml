@@ -14,8 +14,8 @@
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Dark}" />
         <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Dark}" />
         <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Light}" />
-        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Light}" />
-        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.CleanWindow.Light}" />
+        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light.Clean}" />
+        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light.Clean}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean.Win10"

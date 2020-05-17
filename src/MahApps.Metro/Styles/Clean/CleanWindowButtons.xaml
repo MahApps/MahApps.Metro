@@ -6,7 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  light button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindow.Light"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Light.Clean"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
@@ -43,7 +43,7 @@
 
     <!--  light button style for close window button (clean style)  -->
     <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Light"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -72,7 +72,7 @@
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.CleanWindow.Close.Light.Win10"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
