@@ -4,6 +4,11 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.Height">14</System:Double>
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.Width">14</System:Double>
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.HorizontalRepeatButton.Width">14</System:Double>
+    <System:Double x:Key="MahApps.Sizes.ScrollBar.VerticalRepeatButton.Height">14</System:Double>
+
     <Storyboard x:Key="MahApps.Storyboard.ScrollBarThumbMouseOver" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
             <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.6" />
