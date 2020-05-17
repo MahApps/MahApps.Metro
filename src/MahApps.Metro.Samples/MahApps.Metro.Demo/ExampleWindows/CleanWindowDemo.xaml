@@ -16,7 +16,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"

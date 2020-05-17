@@ -4,7 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindowButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/WindowButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean"
