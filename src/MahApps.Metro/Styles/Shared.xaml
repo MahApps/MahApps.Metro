@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <ExponentialEase x:Key="MahApps.ExponentialEase.InOut"
+    <ExponentialEase x:Key="MahApps.ExponentialEase.EaseInOut"
                      EasingMode="EaseInOut"
                      Exponent="2" />
 
@@ -95,7 +95,7 @@
     </Storyboard>
 
     <Storyboard x:Key="MahApps.Storyboard.HideFloatingMessage" po:Freeze="True">
-        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.InOut}"
+        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.EaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="Opacity"
                          From="1"
@@ -110,7 +110,7 @@
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_FloatingMessageContainer" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.InOut}"
+        <DoubleAnimation EasingFunction="{StaticResource MahApps.ExponentialEase.EaseInOut}"
                          Storyboard.TargetName="PART_FloatingMessageContainer"
                          Storyboard.TargetProperty="Opacity"
                          From="0"
