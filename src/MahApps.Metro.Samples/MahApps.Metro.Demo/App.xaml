@@ -25,15 +25,20 @@
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
-            <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
+            <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse.Fast">
                 <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                  Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 From="1"
                                  To="0"
                                  Duration="0:0:0.1" />
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
                 </ObjectAnimationUsingKeyFrames>
             </Storyboard>
+
+            <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}">
+                <Setter Property="controls:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.Fast}" />
+            </Style>
 
             <Style x:Key="MahApps.Styles.MetroHeader.Horizontal" TargetType="controls:MetroHeader">
                 <Setter Property="Template">
