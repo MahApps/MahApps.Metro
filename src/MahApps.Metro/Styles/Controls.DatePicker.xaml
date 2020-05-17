@@ -6,7 +6,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.DatePicker" TargetType="{x:Type DatePicker}">

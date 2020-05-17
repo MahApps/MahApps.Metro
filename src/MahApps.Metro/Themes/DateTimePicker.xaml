@@ -8,7 +8,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Converters:ClockDegreeConverter x:Key="ClockDegreeConverter" TotalParts="60" />
