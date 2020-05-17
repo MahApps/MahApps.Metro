@@ -10,7 +10,7 @@
     <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean"
            BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Base}"
            TargetType="{x:Type Controls:WindowButtonCommands}">
-        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.CleanWindowClose.Dark}" />
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Dark.Clean}" />
         <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark.Clean}" />
         <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark.Clean}" />
         <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Light.Clean}" />

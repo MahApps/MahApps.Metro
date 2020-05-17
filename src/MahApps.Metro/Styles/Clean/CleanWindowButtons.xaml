@@ -57,7 +57,7 @@
     </Style>
 
     <!--  dark button style for close window button (clean style)  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Dark"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Dark.Clean"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
