@@ -44,6 +44,7 @@
 
     <!--  set up default styles for our custom controls  -->
 
+    <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type Controls:Flyout}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type Controls:ToggleSwitch}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx}" TargetType="{x:Type Controls:ContentControlEx}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl}" TargetType="{x:Type Controls:MetroThumbContentControl}" />
