@@ -258,7 +258,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.FocusVisualStyle.ButtonSplit">
+    <Style x:Key="MahApps.Styles.SplitButton.FocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
@@ -281,7 +281,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ButtonArrowStyle" Value="{DynamicResource MahApps.Styles.Button.Split.Arrow}" />
         <Setter Property="ButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Split}" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.FocusVisualStyle.ButtonSplit}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.SplitButton.FocusVisualStyle}" />
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
