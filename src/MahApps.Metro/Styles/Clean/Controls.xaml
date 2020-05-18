@@ -12,7 +12,7 @@
 
     <Style BasedOn="{StaticResource MahApps.Styles.GroupBox.Clean}" TargetType="{x:Type GroupBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroWindow.Clean}" TargetType="{x:Type Controls:MetroWindow}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Clean}" TargetType="{x:Type Controls:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Clean.Win10}" TargetType="{x:Type Controls:WindowButtonCommands}" />
     <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands.Clean}" TargetType="{x:Type Controls:WindowCommands}" />
     <Style BasedOn="{StaticResource MahApps.Styles.StatusBar.Clean}" TargetType="{x:Type StatusBar}" />
 
