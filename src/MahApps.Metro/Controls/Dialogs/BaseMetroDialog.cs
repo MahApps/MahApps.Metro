@@ -463,7 +463,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.DialogSettings.AnimateHide)
             {
-                Storyboard closingStoryboard = this.TryFindResource("MahApps.Storyboard.DialogClose") as Storyboard;
+                Storyboard closingStoryboard = this.TryFindResource("MahApps.Storyboard.Dialogs.Close") as Storyboard;
 
                 if (closingStoryboard == null)
                 {
