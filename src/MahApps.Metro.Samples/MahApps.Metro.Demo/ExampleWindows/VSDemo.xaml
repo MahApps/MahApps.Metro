@@ -174,7 +174,9 @@
                                   Margin="20"
                                   ExpandDirection="Down"
                                   Header="Hidden Stuff">
-                            <!--  some content here  -->
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Margin="5" Text="...42" />
+                            </StackPanel>
                         </Expander>
                     </Grid>
                 </TabItem>

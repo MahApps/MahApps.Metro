@@ -303,23 +303,25 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MahApps.Storyboard.ExpanderExpand">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         To="1"
-                         Duration="0:0:0.25" />
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Expand.VS">
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse.VS">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
                          To="0"
-                         Duration="0:0:0.25" />
+                         Duration="0:0:0.1" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
@@ -328,6 +330,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="Controls:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.VS}" />
+        <Setter Property="Controls:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Expand.VS}" />
         <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}" />
@@ -371,10 +375,8 @@
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="False"
-                                    Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True"
-                                    Visibility="Collapsed">
+                                    UseLayoutRounding="True">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -400,15 +402,22 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="True">
-                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderExpand}" />
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MahApps.Storyboard.ExpanderCollapse}" />
-                            </Trigger.ExitActions>
-                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:ExpanderHelper.ExpandStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ExpandSite" Property="Opacity" Value="1" />
+                            <!-- <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" /> -->
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding Path=(Controls:ExpanderHelper.CollapseStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ExpandSite" Property="Opacity" Value="0" />
+                            <!-- <Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" /> -->
+                        </MultiDataTrigger>
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
