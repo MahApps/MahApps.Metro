@@ -52,7 +52,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.TextBox.WindowQuickLaunch.VisualStudio"
+    <Style x:Key="MahApps.Styles.TextBox.Window.QuickLaunch.VisualStudio"
            BasedOn="{StaticResource MahApps.Styles.TextBox.Button}"
            TargetType="{x:Type TextBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.QuickLaunchTextBox.Border}" />

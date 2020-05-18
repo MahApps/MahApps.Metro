@@ -34,11 +34,9 @@
                                           Kind="Flag" />
             </Button>
             <TextBox Name="QuickLaunchBar"
-                     Controls:TextBoxHelper.ButtonContent="{iconPacks:Modern Magnify,
-                                                                             Width=12,
-                                                                             Height=12}"
+                     Controls:TextBoxHelper.ButtonContent="{iconPacks:Modern Magnify, Width=12, Height=12}"
                      Controls:TextBoxHelper.Watermark="Quick Launch (Ctrl+Q)"
-                     Style="{DynamicResource MahApps.Styles.TextBox.WindowQuickLaunch.VisualStudio}" />
+                     Style="{DynamicResource MahApps.Styles.TextBox.Window.QuickLaunch.VisualStudio}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
