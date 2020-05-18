@@ -56,7 +56,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="RichTextBox" />
-    <Style BasedOn="{StaticResource MahApps.Styles.Slider}" TargetType="Slider" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MahApps.Styles.Label}" TargetType="Label" />
     <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="TabItem" />
     <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="TabControl" />
