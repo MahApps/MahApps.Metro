@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--  This is the template for the menu items.  -->
@@ -57,7 +57,7 @@
 
             <materialDesignConverters:BrushRoundConverter x:Key="BrushRoundConverter" />
 
-            <Style x:Key="HamburgerMenuCreatorsItemStyle"
+            <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple"
                    BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
                    TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
@@ -148,11 +148,11 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="HamburgerMenuCreatorsStyle"
-                   BasedOn="{StaticResource {x:Type Controls:HamburgerMenu}}"
+            <Style x:Key="MahApps.Styles.HamburgerMenu.Ripple"
+                   BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}"
                    TargetType="{x:Type Controls:HamburgerMenu}">
-                <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple}" />
+                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple}" />
                 <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                 <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
                 <Setter Property="ShowSelectionIndicator" Value="True" />
@@ -246,7 +246,7 @@
                                     ItemTemplate="{StaticResource MenuItemTemplate}"
                                     OptionsItemTemplate="{StaticResource MenuItemTemplate}"
                                     SelectedIndex="0"
-                                    Style="{StaticResource HamburgerMenuCreatorsStyle}"
+                                    Style="{StaticResource MahApps.Styles.HamburgerMenu.Ripple}"
                                     VerticalScrollBarOnLeftSide="False">
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>

@@ -276,6 +276,20 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+        <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+    </Style>
+
     <Style x:Key="MahApps.Styles.TextBlock.HamburgerMenuHeader"
            BasedOn="{StaticResource MahApps.Styles.TextBlock}"
            TargetType="{x:Type TextBlock}">

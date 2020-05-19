@@ -40,4 +40,15 @@
         <Setter Property="Template" Value="{DynamicResource MahApps.Templates.HamburgerMenu}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
+
+    <Style x:Key="MahApps.Styles.HamburgerMenu.CreatorsUpdate"
+           BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}"
+           TargetType="{x:Type Controls:HamburgerMenu}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate}" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="ShowSelectionIndicator" Value="True" />
+    </Style>
+
 </ResourceDictionary>

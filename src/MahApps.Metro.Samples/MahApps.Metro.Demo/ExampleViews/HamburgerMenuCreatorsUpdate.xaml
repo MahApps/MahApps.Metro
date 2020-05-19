@@ -14,10 +14,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <!--  This is the template for all menu items. In this sample we use the glyph items.  -->
             <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
                 <Grid Height="48">
@@ -70,30 +66,6 @@
                     <x:Type TypeName="Visibility" />
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
-
-            <Style x:Key="HamburgerMenuCreatorsItemStyle"
-                   BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
-                   TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
-                <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-            </Style>
-
-            <Style x:Key="HamburgerMenuCreatorsStyle"
-                   BasedOn="{StaticResource {x:Type Controls:HamburgerMenu}}"
-                   TargetType="{x:Type Controls:HamburgerMenu}">
-                <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-                <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
-                <Setter Property="ShowSelectionIndicator" Value="True" />
-            </Style>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -185,7 +157,7 @@
                                     ItemTemplate="{StaticResource HamburgerMenuItem}"
                                     OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
                                     SelectedIndex="1"
-                                    Style="{StaticResource HamburgerMenuCreatorsStyle}"
+                                    Style="{StaticResource MahApps.Styles.HamburgerMenu.CreatorsUpdate}"
                                     VerticalScrollBarOnLeftSide="False">
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>
