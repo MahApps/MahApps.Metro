@@ -1,15 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviors"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-        <!--  MahApps.Styles.ScrollViewer  -->
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="RowDefinition0" Height="Auto" />
@@ -19,38 +17,37 @@
                           Grid.Row="0"
                           Margin="{TemplateBinding TabStripMargin}"
                           Panel.ZIndex="1"
-                          Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
+                          mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="{TemplateBinding mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled}"
                           HorizontalScrollBarVisibility="Auto"
-                          Style="{DynamicResource MahApps.Styles.ScrollViewer}"
                           VerticalScrollBarVisibility="Disabled">
                 <Grid x:Name="HeaderPanelGrid">
-                    <Controls:Underline x:Name="Underline"
-                                        Background="Transparent"
-                                        BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        LineThickness="1"
-                                        Placement="Bottom"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        Visibility="Collapsed" />
+                    <mah:Underline x:Name="Underline"
+                                   Background="Transparent"
+                                   BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
+                                   LineThickness="1"
+                                   Placement="Bottom"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
                               KeyboardNavigation.TabIndex="1" />
                 </Grid>
             </ScrollViewer>
-            <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  Grid.Row="1"
-                                                  Behaviors:ReloadBehavior.OnSelectedTabChanged="True"
-                                                  RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
-                                                  UseLayoutRounding="True">
+            <mah:TransitioningContentControl x:Name="ContentPanel"
+                                             Grid.Row="1"
+                                             behaviors:ReloadBehavior.OnSelectedTabChanged="True"
+                                             RestartTransitionOnContentChange="True"
+                                             Transition="{TemplateBinding mah:TabControlHelper.Transition}"
+                                             UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                   UseLayoutRounding="False" />
-            </Controls:TransitioningContentControl>
+            </mah:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+            <Trigger Property="mah:TabControlHelper.Underlined" Value="TabPanel">
                 <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Top">
@@ -70,7 +67,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
+    <ControlTemplate x:Key="MahApps.Templates.MetroAnimatedSingleRowTabControl.Vertical" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
         <Grid KeyboardNavigation.TabNavigation="Local">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="ColumnDefinition0" Width="*" />
@@ -81,36 +78,35 @@
                           Margin="{TemplateBinding TabStripMargin}"
                           Panel.ZIndex="1"
                           HorizontalScrollBarVisibility="Disabled"
-                          Style="{DynamicResource MahApps.Styles.ScrollViewer}"
                           VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="HeaderPanelGrid">
-                    <Controls:Underline x:Name="Underline"
-                                        Background="Transparent"
-                                        BorderBrush="{TemplateBinding Controls:TabControlHelper.UnderlineBrush}"
-                                        LineThickness="1"
-                                        Placement="Bottom"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        Visibility="Collapsed" />
+                    <mah:Underline x:Name="Underline"
+                                   Background="Transparent"
+                                   BorderBrush="{TemplateBinding mah:TabControlHelper.UnderlineBrush}"
+                                   LineThickness="1"
+                                   Placement="Bottom"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   Visibility="Collapsed" />
                     <TabPanel x:Name="HeaderPanel"
                               IsItemsHost="true"
                               KeyboardNavigation.TabIndex="1" />
                 </Grid>
             </ScrollViewer>
-            <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                  Grid.Column="0"
-                                                  Behaviors:ReloadBehavior.OnSelectedTabChanged="True"
-                                                  RestartTransitionOnContentChange="True"
-                                                  Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
-                                                  UseLayoutRounding="True">
+            <mah:TransitioningContentControl x:Name="ContentPanel"
+                                             Grid.Column="0"
+                                             behaviors:ReloadBehavior.OnSelectedTabChanged="True"
+                                             RestartTransitionOnContentChange="True"
+                                             Transition="{TemplateBinding mah:TabControlHelper.Transition}"
+                                             UseLayoutRounding="True">
                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                   Margin="{TemplateBinding Padding}"
                                   ContentSource="SelectedContent"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                   UseLayoutRounding="False" />
-            </Controls:TransitioningContentControl>
+            </mah:TransitioningContentControl>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:TabControlHelper.Underlined" Value="TabPanel">
+            <Trigger Property="mah:TabControlHelper.Underlined" Value="TabPanel">
                 <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="TabStripPlacement" Value="Left">
@@ -130,10 +126,10 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
-        <Setter Property="Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
-        <Setter Property="Controls:TabControlHelper.Transition" Value="Left" />
+    <Style BasedOn="{StaticResource MahApps.Styles.TabControl}" TargetType="{x:Type mah:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />
+        <Setter Property="mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled" Value="True" />
+        <Setter Property="mah:TabControlHelper.Transition" Value="Left" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Top">
                 <Setter Property="Template" Value="{StaticResource MahApps.Templates.MetroAnimatedSingleRowTabControl.Horizontal}" />

@@ -174,8 +174,8 @@
                                         ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
                                         Header="Row Selected" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
-                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         Header="Album Selected" />
                 <DataGridTextColumn Binding="{Binding Title}"
                                     EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"

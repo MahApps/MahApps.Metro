@@ -6,7 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  light button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindow.Light"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Light.Clean"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
@@ -24,7 +24,7 @@
     </Style>
 
     <!--  dark button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindow.Dark"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Dark.Clean"
            BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
@@ -42,8 +42,8 @@
     </Style>
 
     <!--  light button style for close window button (clean style)  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Light"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Light.Clean"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -57,8 +57,8 @@
     </Style>
 
     <!--  dark button style for close window button (clean style)  -->
-    <Style x:Key="MahApps.Styles.Button.CleanWindowClose.Dark"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Dark}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Dark.Clean"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -71,8 +71,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.CleanWindow.Close.Light.Win10"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Light}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Light.Clean.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -86,8 +86,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.CleanWindow.Close.Dark.Win10"
-           BasedOn="{StaticResource MahApps.Styles.Button.CleanWindow.Dark}"
+    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Dark.Clean.Win10"
+           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark.Clean}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

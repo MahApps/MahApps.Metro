@@ -4,7 +4,7 @@
                     xmlns:actions="clr-namespace:MahApps.Metro.Actions"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
 
-    <DataTemplate x:Key="MahApps.Templates.FlyoutHeader" x:Shared="False">
+    <DataTemplate x:Key="MahApps.Templates.Flyout.Header" x:Shared="False">
         <DockPanel x:Name="dpHeader"
                    VerticalAlignment="Center"
                    LastChildFill="True">
@@ -218,14 +218,14 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type Controls:Flyout}">
+    <Style x:Key="MahApps.Styles.Flyout" TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Flyout.Background}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource MahApps.Font.Size.Flyout.Header}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderMargin" Value="10" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Flyout.Foreground}" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.FlyoutHeader}" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource MahApps.Templates.Flyout.Header}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />

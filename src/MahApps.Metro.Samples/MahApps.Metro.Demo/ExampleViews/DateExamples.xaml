@@ -88,7 +88,12 @@
                           DisplayDateStart="{x:Static system:DateTime.Now}"
                           IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           SelectionMode="MultipleRange" />
-                <Calendar Margin="{StaticResource ControlMargin}" IsEnabled="False" />
+                <Calendar Margin="{StaticResource ControlMargin}"
+                          IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="MultipleRange" />
+                <Calendar Margin="{StaticResource ControlMargin}"
+                          IsEnabled="False"
+                          IsTodayHighlighted="{Binding ElementName=IsTodayHighlightedCheckBox, Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
             <StackPanel Grid.Column="2" Margin="{StaticResource ColumnMargin}">

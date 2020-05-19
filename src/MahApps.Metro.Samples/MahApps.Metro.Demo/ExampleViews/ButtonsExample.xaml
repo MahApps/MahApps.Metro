@@ -72,7 +72,7 @@
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Enabled"
-                    Style="{DynamicResource MahApps.Styles.Button.AccentedSquare}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
@@ -82,7 +82,7 @@
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
                     IsEnabled="False"
-                    Style="{DynamicResource MahApps.Styles.Button.AccentedSquare}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2">
@@ -159,21 +159,16 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="3">
-            <StackPanel.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-            </StackPanel.Resources>
             <Label Content="Flat button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
-                    Content="Enabled" />
+                    Content="Enabled"
+                    Style="{StaticResource MahApps.Styles.Button.Flat}" />
             <Button Width="100"
                     Margin="{StaticResource ControlMargin}"
                     Content="Disabled"
-                    IsEnabled="False" />
+                    IsEnabled="False"
+                    Style="{StaticResource MahApps.Styles.Button.Flat}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="4">

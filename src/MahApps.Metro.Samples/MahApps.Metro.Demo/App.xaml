@@ -25,9 +25,10 @@
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
-            <Storyboard x:Key="MahApps.Storyboard.ExpanderCollapse">
+            <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse.Fast">
                 <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                  Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 From="1"
                                  To="0"
                                  Duration="0:0:0.1" />
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
@@ -35,7 +36,11 @@
                 </ObjectAnimationUsingKeyFrames>
             </Storyboard>
 
-            <Style TargetType="controls:MetroHeader" x:Key="MahApps.Styles.MetroHeader.Horizontal">
+            <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}">
+                <Setter Property="controls:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.Fast}" />
+            </Style>
+
+            <Style x:Key="MahApps.Styles.MetroHeader.Horizontal" TargetType="controls:MetroHeader">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="controls:MetroHeader">
@@ -44,26 +49,41 @@
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="HeaderGroup" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-
-                                <ContentPresenter Content="{TemplateBinding Header}"
-                                                  ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                  Grid.Column="0"
-                                                  VerticalAlignment="Center" />
-                                <ContentPresenter Content="{TemplateBinding Content}"
-                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                  Grid.Column="1"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                <Grid Grid.Column="0" Background="{TemplateBinding controls:HeaderedControlHelper.HeaderBackground}">
+                                    <controls:ContentControlEx x:Name="PART_Header"
+                                                               Margin="{TemplateBinding controls:HeaderedControlHelper.HeaderMargin}"
+                                                               HorizontalAlignment="{TemplateBinding controls:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                               VerticalAlignment="{TemplateBinding controls:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                               Content="{TemplateBinding Header}"
+                                                               ContentCharacterCasing="{TemplateBinding controls:ControlsHelper.ContentCharacterCasing}"
+                                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                               FontFamily="{TemplateBinding controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                               FontSize="{TemplateBinding controls:HeaderedControlHelper.HeaderFontSize}"
+                                                               FontStretch="{TemplateBinding controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                               FontWeight="{TemplateBinding controls:HeaderedControlHelper.HeaderFontWeight}"
+                                                               Foreground="{TemplateBinding controls:HeaderedControlHelper.HeaderForeground}"
+                                                               IsTabStop="False"
+                                                               RecognizesAccessKey="{TemplateBinding controls:ControlsHelper.RecognizesAccessKey}"
+                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
+                                <Grid Grid.Column="1" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="PART_Content"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      ContentSource="Content"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="controls:HeaderedControlHelper.HeaderMargin" Value="0 0 4 0" />
+                <Setter Property="controls:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
             </Style>
-            
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

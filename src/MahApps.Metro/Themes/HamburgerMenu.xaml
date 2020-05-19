@@ -7,13 +7,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
-        <Setter Property="ResizeThumbStyle" Value="{DynamicResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
-        <Setter Property="MinimumOpenPaneLength" Value="100" />
-        <Setter Property="MaximumOpenPaneLength" Value="500" />
-        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -31,11 +28,14 @@
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+        <Setter Property="MaximumOpenPaneLength" Value="500" />
+        <Setter Property="MinimumOpenPaneLength" Value="100" />
         <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}" />
         <Setter Property="PaneBackground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Background}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Foreground}" />
         <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
         <Setter Property="PaneMargin" Value="0 0 0 8" />
+        <Setter Property="ResizeThumbStyle" Value="{DynamicResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
         <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuSeparator}" />
         <Setter Property="Template" Value="{DynamicResource MahApps.Templates.HamburgerMenu}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />

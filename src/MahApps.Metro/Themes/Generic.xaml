@@ -44,16 +44,18 @@
 
     <!--  set up default styles for our custom controls  -->
 
+    <Style BasedOn="{StaticResource MahApps.Styles.Flyout}" TargetType="{x:Type Controls:Flyout}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" TargetType="{x:Type Controls:ToggleSwitch}" />
     <Style BasedOn="{StaticResource MahApps.Styles.ContentControlEx}" TargetType="{x:Type Controls:ContentControlEx}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroThumbContentControl}" TargetType="{x:Type Controls:MetroThumbContentControl}" />
     <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem}" TargetType="{x:Type Controls:WindowCommandsItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands}" TargetType="{x:Type Controls:WindowCommands}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands}" TargetType="{x:Type Controls:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Win10}" TargetType="{x:Type Controls:WindowButtonCommands}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type Controls:HamburgerMenu}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}" />
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
-    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider}" TargetType="{x:Type Controls:RangeSlider}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.RangeSlider.Win10}" TargetType="{x:Type Controls:RangeSlider}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}" TargetType="{x:Type Controls:MetroProgressBar}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.FlipView}" TargetType="{x:Type Controls:FlipView}" />
 
 </ResourceDictionary>

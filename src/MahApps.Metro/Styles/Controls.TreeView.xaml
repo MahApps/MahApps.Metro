@@ -9,7 +9,7 @@
 
     <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpandCollapse" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.TreeViewItem.ExpandCollapse" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
@@ -78,7 +78,7 @@
         <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
         <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
-        <Setter Property="Controls:TreeViewItemHelper.ToggleButtonStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpandCollapse}" />
+        <Setter Property="Controls:TreeViewItemHelper.ToggleButtonStyle" Value="{StaticResource MahApps.Styles.ToggleButton.TreeViewItem.ExpandCollapse}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />

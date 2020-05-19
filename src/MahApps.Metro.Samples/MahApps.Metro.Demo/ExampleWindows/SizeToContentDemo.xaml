@@ -7,9 +7,6 @@
                       GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       SizeToContent="WidthAndHeight"
                       WindowStartupLocation="CenterOwner">
-    <controls:MetroWindow.WindowButtonCommands>
-        <controls:WindowButtonCommands Style="{DynamicResource MahApps.Styles.WindowButtonCommands.Win10}" />
-    </controls:MetroWindow.WindowButtonCommands>
     <Grid Width="50"
           Height="50"
           Background="Firebrick">

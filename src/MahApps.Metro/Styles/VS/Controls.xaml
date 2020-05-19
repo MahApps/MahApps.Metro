@@ -2,10 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Window.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/MetroWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ListBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/MenuItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />

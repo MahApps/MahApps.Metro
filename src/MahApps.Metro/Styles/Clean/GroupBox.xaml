@@ -18,6 +18,8 @@
 
                         <Grid Grid.Row="0" Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}">
                             <Controls:ContentControlEx Margin="{TemplateBinding Padding}"
+                                                       HorizontalAlignment="{TemplateBinding Controls:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                       VerticalAlignment="{TemplateBinding Controls:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"

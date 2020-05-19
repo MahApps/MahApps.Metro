@@ -40,6 +40,8 @@
                             <ContentPresenter x:Name="HeaderContentPresenter"
                                               Grid.Row="0"
                                               Margin="{TemplateBinding mah:HeaderedControlHelper.HeaderMargin}"
+                                              HorizontalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding mah:HeaderedControlHelper.HeaderVerticalContentAlignment}"
                                               Content="{TemplateBinding Header}"
                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"

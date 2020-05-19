@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/WindowButtons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Base}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="DarkCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Dark.Clean}" />
+        <Setter Property="DarkMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark.Clean}" />
+        <Setter Property="DarkMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Dark.Clean}" />
+        <Setter Property="LightCloseButtonStyle" Value="{StaticResource MahApps.Styles.Button.MetroWindow.Close.Light.Clean}" />
+        <Setter Property="LightMaxButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light.Clean}" />
+        <Setter Property="LightMinButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Light.Clean}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.WindowButtonCommands.Clean.Win10"
+           BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Clean}"
+           TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="DarkCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Dark.Clean.Win10}" />
+        <Setter Property="LightCloseButtonStyle" Value="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Light.Clean.Win10}" />
+        <Setter Property="Template" Value="{StaticResource MahApps.Templates.WindowButtonCommands.Win10}" />
+    </Style>
+
+</ResourceDictionary>

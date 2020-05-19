@@ -273,7 +273,7 @@
                              Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
-                             Style="{StaticResource MahApps.Styles.PasswordBox.ButtonRevealed}" />
+                             Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"

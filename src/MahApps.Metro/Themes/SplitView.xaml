@@ -4,12 +4,9 @@
                     xmlns:local="clr-namespace:MahApps.Metro.Controls">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    
-    <Style x:Key="MahApps.Styles.MetroThumb.SplitView.Resize"
-           TargetType="local:MetroThumb">
+
+    <Style x:Key="MahApps.Styles.MetroThumb.SplitView.Resize" TargetType="local:MetroThumb">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Width" Value="3" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="Template">
             <Setter.Value>
@@ -20,15 +17,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Width" Value="3" />
     </Style>
 
     <Style TargetType="{x:Type local:SplitView}">
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="CompactPaneLength" Value="48" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="OpenPaneLength" Value="320" />
-        <Setter Property="MinimumOpenPaneLength" Value="100" />
         <Setter Property="MaximumOpenPaneLength" Value="500" />
-        <Setter Property="CanResizeOpenPane" Value="False" />
+        <Setter Property="MinimumOpenPaneLength" Value="100" />
+        <Setter Property="OpenPaneLength" Value="320" />
         <Setter Property="PaneBackground" Value="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" />
         <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="ResizeThumbStyle" Value="{StaticResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
@@ -495,8 +494,8 @@
                                        Visibility="Collapsed" />
                             <local:MetroThumb x:Name="PART_ResizingThumb"
                                               HorizontalAlignment="Right"
-                                              Visibility="{TemplateBinding CanResizeOpenPane, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                              Style="{TemplateBinding ResizeThumbStyle}" />
+                                              Style="{TemplateBinding ResizeThumbStyle}"
+                                              Visibility="{TemplateBinding CanResizeOpenPane, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
 
                         <VisualStateManager.VisualStateGroups>
@@ -546,7 +545,7 @@
                             <Setter TargetName="PART_ResizingThumb" Property="HorizontalAlignment" Value="Left" />
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

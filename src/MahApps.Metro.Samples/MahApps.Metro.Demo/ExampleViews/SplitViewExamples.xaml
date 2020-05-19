@@ -28,18 +28,16 @@
             <!--  #Templates  -->
             <ControlTemplate x:Key="ConfigDataTemplate">
                 <ControlTemplate.Resources>
-                    <Style TargetType="controls:MetroHeader" BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" />
+                    <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="controls:MetroHeader" />
                 </ControlTemplate.Resources>
                 <StackPanel d:DataContext="{d:DesignInstance controls:SplitView}" Grid.IsSharedSizeScope="True">
 
-
                     <controls:MetroHeader Header="IsOpen">
-                        <controls:ToggleSwitch IsOn="{Binding IsPaneOpen}" Margin="2" />
+                        <controls:ToggleSwitch Margin="2" IsOn="{Binding IsPaneOpen}" />
                     </controls:MetroHeader>
-                    
+
                     <controls:MetroHeader Header="DisplayMode">
-                        <ComboBox Margin="2"
-                              SelectedValue="{Binding DisplayMode}">
+                        <ComboBox Margin="2" SelectedValue="{Binding DisplayMode}">
                             <controls:SplitViewDisplayMode>Inline</controls:SplitViewDisplayMode>
                             <controls:SplitViewDisplayMode>Overlay</controls:SplitViewDisplayMode>
                             <controls:SplitViewDisplayMode>CompactInline</controls:SplitViewDisplayMode>
@@ -48,23 +46,20 @@
                     </controls:MetroHeader>
 
                     <controls:MetroHeader Header="CanResizeOpenPane">
-                        <controls:ToggleSwitch IsOn="{Binding CanResizeOpenPane}" Margin="2" />
+                        <controls:ToggleSwitch Margin="2" IsOn="{Binding CanResizeOpenPane}" />
                     </controls:MetroHeader>
 
                     <controls:MetroHeader Header="PanePlacement">
-                        <ComboBox Margin="2"
-                              SelectedValue="{Binding PanePlacement}">
+                        <ComboBox Margin="2" SelectedValue="{Binding PanePlacement}">
                             <controls:SplitViewPanePlacement>Left</controls:SplitViewPanePlacement>
                             <controls:SplitViewPanePlacement>Right</controls:SplitViewPanePlacement>
                         </ComboBox>
                     </controls:MetroHeader>
-                    
+
                     <controls:MetroHeader Header="CancelClose">
-                        <controls:ToggleSwitch 
-                              Margin="2"
-                              IsOn="{Binding Tag, Mode=TwoWay}" />
+                        <controls:ToggleSwitch Margin="2" IsOn="{Binding Tag, Mode=TwoWay}" />
                     </controls:MetroHeader>
-                    
+
                 </StackPanel>
             </ControlTemplate>
         </ResourceDictionary>

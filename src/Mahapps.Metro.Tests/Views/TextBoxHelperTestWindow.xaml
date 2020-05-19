@@ -12,7 +12,7 @@
         <TextBox x:Name="TestButtonTextBox" Style="{DynamicResource MahApps.Styles.TextBox.Button}" />
         <PasswordBox x:Name="TestPasswordBox" />
         <PasswordBox x:Name="TestButtonPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Button}" />
-        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.ButtonRevealed}" />
+        <PasswordBox x:Name="TestButtonRevealedPasswordBox" Style="{DynamicResource MahApps.Styles.PasswordBox.Button.Revealed}" />
         <ComboBox x:Name="TestComboBox" />
         <ComboBox x:Name="TestEditableComboBox" IsEditable="True" />
         <controls:NumericUpDown x:Name="TestNumericUpDown" />
