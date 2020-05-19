@@ -13,8 +13,32 @@
     <Style x:Key="MahApps.Styles.CheckBox.DataGrid"
            BasedOn="{StaticResource MahApps.Styles.CheckBox}"
            TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="True">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsEditing, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="False">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsHitTestVisible" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.CheckBox.DataGrid.Win10"
+           BasedOn="{StaticResource MahApps.Styles.CheckBox.Win10}"
+           TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="12 0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}" Value="True">
