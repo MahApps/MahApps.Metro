@@ -169,7 +169,13 @@
                                   ExpandDirection="Down"
                                   Header="Hidden Stuff">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Margin="5" Text="...42" />
+                                <TextBlock Text="...42..." />
+                                <Expander ExpandDirection="Down"
+                                          Header="Second Hidden Stuff">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="...is the Answer to the Ultimate Question of Life, The Universe, and Everything" />
+                                    </StackPanel>
+                                </Expander>
                             </StackPanel>
                         </Expander>
                     </Grid>

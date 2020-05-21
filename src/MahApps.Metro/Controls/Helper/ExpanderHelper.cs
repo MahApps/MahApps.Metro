@@ -133,7 +133,7 @@ namespace MahApps.Metro.Controls
 
         private static void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            if (sender is Expander expander)
+            if (e.OriginalSource is Expander expander && Equals(sender, e.OriginalSource))
             {
                 var expandSite = GetExpandSite(expander);
                 if (expandSite is null)
@@ -226,7 +226,7 @@ namespace MahApps.Metro.Controls
 
         private static void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
-            if (sender is Expander expander)
+            if (e.OriginalSource is Expander expander && Equals(sender, e.OriginalSource))
             {
                 var expandSite = GetExpandSite(expander);
                 if (expandSite is null)
@@ -291,7 +291,7 @@ namespace MahApps.Metro.Controls
             if (expandSite is null)
             {
                 expander.ApplyTemplate();
-                expandSite = expander.FindChild<Border>("ExpandSite");
+                expandSite = expander.Template?.FindName("ExpandSite", expander) as FrameworkElement;
 
                 SetExpandSiteControl(expander, expandSite);
             }
