@@ -153,7 +153,6 @@ namespace MahApps.Metro.Controls
             this.metroContentControl = adornedElement.TryFindParent<MetroContentControl>();
             if (this.metroContentControl != null)
             {
-                canShow = !this.metroContentControl.TransitionsEnabled;
                 this.metroContentControl.TransitionStarted += this.OnTransitionStarted;
                 this.metroContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
@@ -373,7 +372,7 @@ namespace MahApps.Metro.Controls
 
         private void SetTopmostState(bool isTop)
         {
-            // Don’t apply state if it’s the same as incoming state
+            // DonÂ’t apply state if itÂ’s the same as incoming state
             if (this.appliedTopMost.HasValue && this.appliedTopMost == isTop)
             {
                 return;
