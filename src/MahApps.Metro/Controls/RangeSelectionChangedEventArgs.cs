@@ -47,7 +47,6 @@ namespace MahApps.Metro.Controls
         /// <param name="oldUpperValue">The old upper property value</param>
         /// <param name="newUpperValue">The new upper property value</param>
         public RangeSelectionChangedEventArgs(T oldLowerValue, T newLowerValue, T oldUpperValue, T newUpperValue)
-            : base()
         {
             this.OldLowerValue = oldLowerValue;
             this.NewLowerValue = newLowerValue;
