@@ -165,13 +165,14 @@ namespace MahApps.Metro.Controls
             this.transitioningContentControl = adornedElement.TryFindParent<TransitioningContentControl>();
             if (this.transitioningContentControl != null)
             {
-                canShow = canShow && !this.transitioningContentControl.IsTransitioning;
+                canShow = !this.transitioningContentControl.IsTransitioning;
                 this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
 
             if (this.flyout != null)
             {
                 this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.IsOpenChanged -= this.Flyout_IsOpenChanged;
                 this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
             }
 
@@ -180,6 +181,7 @@ namespace MahApps.Metro.Controls
             {
                 canShow = canShow && !this.flyout.AreAnimationsEnabled;
                 this.flyout.OpeningFinished += this.Flyout_OpeningFinished;
+                this.flyout.IsOpenChanged += this.Flyout_IsOpenChanged;
                 this.flyout.ClosingFinished += this.Flyout_ClosingFinished;
             }
 
@@ -217,6 +219,12 @@ namespace MahApps.Metro.Controls
             this.SetCurrentValue(IsOpenProperty, isOpen);
 
             this.SetValue(CanShowPropertyKey, true);
+        }
+
+        private void Flyout_IsOpenChanged(object sender, RoutedEventArgs e)
+        {
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, false);
         }
 
         private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
@@ -323,6 +331,7 @@ namespace MahApps.Metro.Controls
             if (this.flyout != null)
             {
                 this.flyout.OpeningFinished -= this.Flyout_OpeningFinished;
+                this.flyout.IsOpenChanged -= this.Flyout_IsOpenChanged;
                 this.flyout.ClosingFinished -= this.Flyout_ClosingFinished;
             }
 
