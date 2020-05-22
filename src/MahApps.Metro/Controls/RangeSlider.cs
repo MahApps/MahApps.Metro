@@ -1077,6 +1077,7 @@ namespace MahApps.Metro.Controls
             widthChange = isLeft ? -widthChange : widthChange;
             MoveThumb(this._leftButton, this._rightButton, widthChange, this.Orientation, out this._direction);
             this.ReCalculateRangeSelected(true, true, this._direction);
+            this.CoerceLowerUpperValues();
         }
 
         public void ResetSelection(bool isStart)
@@ -1086,6 +1087,7 @@ namespace MahApps.Metro.Controls
 
             MoveThumb(this._leftButton, this._rightButton, widthChange, this.Orientation, out this._direction);
             this.ReCalculateRangeSelected(true, true, this._direction);
+            this.CoerceLowerUpperValues();
         }
 
         private void OnRangeSelectionChanged(RangeSelectionChangedEventArgs e)
@@ -1229,11 +1231,13 @@ namespace MahApps.Metro.Controls
                     {
                         MoveThumb(this._leftButton, this._centerThumb, -change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, false, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                     else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                     {
                         MoveThumb(this._leftButton, this._rightButton, -change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                 }
                 else
@@ -1275,11 +1279,13 @@ namespace MahApps.Metro.Controls
                     {
                         MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(false, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                     else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                     {
                         MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                 }
                 else
@@ -1324,11 +1330,13 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, false, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                         else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                         {
                             MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                     }
                     else
@@ -1367,11 +1375,13 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, -change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(false, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                         else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                         {
                             MoveThumb(this._leftButton, this._rightButton, -change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                     }
                     else
@@ -1434,6 +1444,7 @@ namespace MahApps.Metro.Controls
             {
                 MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
                 this.ReCalculateRangeSelected(true, false, this._direction);
+                this.CoerceLowerUpperValues();
             }
             else
             {
@@ -1510,6 +1521,7 @@ namespace MahApps.Metro.Controls
             {
                 MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
                 this.ReCalculateRangeSelected(false, true, this._direction);
+                this.CoerceLowerUpperValues();
             }
             else
             {
@@ -1598,6 +1610,7 @@ namespace MahApps.Metro.Controls
                 {
                     MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                     this.ReCalculateRangeSelected(true, true, this._direction);
+                    this.CoerceLowerUpperValues();
                 }
                 else
                 {
@@ -1745,14 +1758,17 @@ namespace MahApps.Metro.Controls
                         case ButtonType.BottomLeft:
                             MoveThumb(this._leftButton, this._centerThumb, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, false, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                         case ButtonType.TopRight:
                             MoveThumb(this._centerThumb, this._rightButton, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(false, true, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                         case ButtonType.Both:
                             MoveThumb(this._leftButton, this._rightButton, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                     }
                 }
@@ -1773,14 +1789,17 @@ namespace MahApps.Metro.Controls
                             case ButtonType.BottomLeft:
                                 MoveThumb(this._leftButton, this._centerThumb, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(true, false, this.LowerValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.TopRight:
                                 MoveThumb(this._centerThumb, this._rightButton, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(false, true, this.UpperValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.Both:
                                 MoveThumb(this._leftButton, this._rightButton, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(this.LowerValue + value, this.UpperValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                         }
                     }
@@ -1794,14 +1813,17 @@ namespace MahApps.Metro.Controls
                             case ButtonType.BottomLeft:
                                 MoveThumb(this._leftButton, this._centerThumb, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(true, false, this.LowerValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.TopRight:
                                 MoveThumb(this._centerThumb, this._rightButton, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(false, true, this.UpperValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.Both:
                                 MoveThumb(this._leftButton, this._rightButton, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(this.LowerValue - value, this.UpperValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                         }
                     }
@@ -1826,6 +1848,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(false, true, this.UpperValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1834,6 +1857,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(true, false, this.LowerValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1842,6 +1866,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._rightButton, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(this.LowerValue + value, this.UpperValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1856,6 +1881,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(false, true, this.UpperValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1864,6 +1890,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(true, false, this.LowerValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1872,6 +1899,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._rightButton, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(this.LowerValue - value, this.UpperValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -2187,20 +2215,25 @@ namespace MahApps.Metro.Controls
         //Lower/Upper values property changed callback
         private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var slider = (RangeSlider)dependencyObject;
-            if (slider._internalUpdate)
+            if (dependencyObject is RangeSlider rangeSlider)
             {
-                return;
+                if (rangeSlider._internalUpdate)
+                {
+                    return;
+                }
+
+                rangeSlider.CoerceLowerUpperValues();
             }
+        }
 
-            dependencyObject.CoerceValue(UpperValueProperty);
-            dependencyObject.CoerceValue(LowerValueProperty);
-
-            RaiseValueChangedEvents(dependencyObject);
-
-            slider._oldLower = slider.LowerValue;
-            slider._oldUpper = slider.UpperValue;
-            slider.ReCalculateSize();
+        private void CoerceLowerUpperValues()
+        {
+            this.CoerceValue(LowerValueProperty);
+            this.CoerceValue(UpperValueProperty);
+            RaiseValueChangedEvents(this);
+            this._oldLower = this.LowerValue;
+            this._oldUpper = this.UpperValue;
+            this.ReCalculateSize();
         }
 
         private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
