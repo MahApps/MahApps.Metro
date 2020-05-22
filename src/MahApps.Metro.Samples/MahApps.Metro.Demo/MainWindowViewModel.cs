@@ -19,6 +19,7 @@ using MetroDemo.ExampleViews;
 using NHotkey;
 using NHotkey.Wpf;
 using System.Collections.ObjectModel;
+using System.Windows.Data;
 using ControlzEx.Theming;
 
 namespace MetroDemo
@@ -78,7 +79,10 @@ namespace MetroDemo
                                          .Select(a => new AppThemeMenuData() { Name = a.BaseColorScheme, BorderColorBrush = a.Resources["MahApps.Brushes.ThemeForeground"] as Brush, ColorBrush = a.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
                                          .ToList();
 
-            this.Albums = SampleData.Albums;
+            this.Albums = new ObservableCollection<Album>(SampleData.Albums);
+            var cvs = CollectionViewSource.GetDefaultView(this.Albums);
+            cvs.GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
+
             this.Artists = SampleData.Artists;
 
             this.FlipViewImages = new Uri[]
@@ -229,7 +233,7 @@ namespace MetroDemo
 
         public int SelectedIndex { get; set; }
 
-        public List<Album> Albums { get; set; }
+        public ICollection<Album> Albums { get; set; }
 
         public List<Artist> Artists { get; set; }
 

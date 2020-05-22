@@ -408,7 +408,7 @@
                                 <Condition Binding="{Binding Path=(Controls:ExpanderHelper.ExpandStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="ExpandSite" Property="Opacity" Value="1" />
-                            <!-- <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" /> -->
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -416,8 +416,9 @@
                                 <Condition Binding="{Binding Path=(Controls:ExpanderHelper.CollapseStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
                             </MultiDataTrigger.Conditions>
                             <Setter TargetName="ExpandSite" Property="Opacity" Value="0" />
-                            <!-- <Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" /> -->
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" />
                         </MultiDataTrigger>
+
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />

@@ -6,6 +6,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Expander.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -179,7 +180,7 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.ColumnHeaderPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.ColumnHeaderPadding), FallbackValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -317,9 +318,9 @@
     <Style x:Key="MahApps.Styles.DataGridCell" TargetType="{x:Type DataGridCell}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridHelper.SelectionUnit), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=(Controls:DataGridHelper.SelectionUnit), FallbackValue={x:Static DataGridSelectionUnit.FullRow}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+        <Setter Property="Padding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), FallbackValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -484,12 +485,55 @@
     <!--  ____________________ Metro RowStyle ____________________  -->
     <!--  Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style!  -->
     <Style x:Key="MahApps.Styles.DataGridRow" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Controls:DataGridHelper.CellPadding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
-        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <Setter Property="Controls:DataGridHelper.CellPadding" Value="{Binding Path=(Controls:DataGridHelper.CellPadding), FallbackValue=0, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+        <Setter Property="Controls:DataGridHelper.SelectionUnit" Value="{Binding Path=SelectionUnit, FallbackValue={x:Static DataGridSelectionUnit.FullRow}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridRow}">
+                    <Border x:Name="DGR_Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <SelectiveScrollingGrid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <DataGridCellsPresenter Grid.Column="1"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                            <DataGridDetailsPresenter Grid.Row="1"
+                                                      Grid.Column="1"
+                                                      SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=AreRowDetailsFrozen, FallbackValue={x:Static SelectiveScrollingOrientation.Both}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}}"
+                                                      Visibility="{TemplateBinding DetailsVisibility}" />
+
+                            <DataGridRowHeader Grid.Row="0"
+                                               Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                               Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, FallbackValue={x:Static Visibility.Visible}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Row}}" />
+                        </SelectiveScrollingGrid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
         <Setter Property="ValidationErrorTemplate" Value="{StaticResource MahApps.Templates.DataGridRow.ValidationError}" />
         <Style.Triggers>
+            <Trigger Property="IsNewItem" Value="True">
+                <Setter Property="Margin" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=NewItemMargin}" />
+            </Trigger>
+
             <!--  IsSelected  -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -604,19 +648,24 @@
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
+
                                         <Button Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                 Command="{x:Static DataGrid.SelectAllCommand}"
                                                 Focusable="False"
                                                 Style="{DynamicResource {ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}"
                                                 Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+
                                         <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
+                                                                        Grid.Row="0"
                                                                         Grid.Column="1"
                                                                         Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
-                                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                                                    Grid.ColumnSpan="2"
-                                                                    CanContentScroll="{TemplateBinding CanContentScroll}" />
-                                        </Grid>
+
+                                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                Grid.ColumnSpan="2"
+                                                                CanContentScroll="{TemplateBinding CanContentScroll}" />
+
                                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                                    Grid.Row="1"
                                                    Grid.Column="2"
@@ -625,6 +674,7 @@
                                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
                                                    Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
                                         <Grid Grid.Row="2" Grid.Column="1">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
@@ -641,6 +691,7 @@
                                     </Grid>
                                 </ControlTemplate>
                             </ScrollViewer.Template>
+
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
@@ -659,6 +710,88 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.GroupItem"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid x:Name="RowGroupHeaderRoot"
+                              Margin="{TemplateBinding Padding}"
+                              Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="22" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="Arrow"
+                                  Grid.Column="0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                  SnapsToDevicePixels="False"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="2" />
+                            <Controls:ContentControlEx Grid.Column="1"
+                                                       Margin="4 0 0 0"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.GroupItem.DataGrid" TargetType="{x:Type GroupItem}">
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupItem}">
+                    <Expander x:Name="PART_Header"
+                              Padding="0"
+                              Controls:ExpanderHelper.CollapseStoryboard="{x:Null}"
+                              Controls:ExpanderHelper.ExpandStoryboard="{x:Null}"
+                              Controls:ExpanderHelper.HeaderDownStyle="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.GroupItem}"
+                              Controls:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray8}"
+                              BorderThickness="0"
+                              Header="{TemplateBinding Content}"
+                              HeaderStringFormat="{TemplateBinding ContentStringFormat}"
+                              HeaderTemplate="{TemplateBinding ContentTemplate}"
+                              HeaderTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                              IsExpanded="True">
+                        <ItemsPresenter x:Name="ItemsPresenter" />
+                    </Expander>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ____________________ Azure CellStyle ____________________  -->
+
     <Style x:Key="MahApps.Styles.DataGridColumnHeader.Azure"
            BasedOn="{StaticResource MahApps.Styles.DataGridColumnHeader}"
            TargetType="{x:Type DataGridColumnHeader}">
@@ -671,7 +804,6 @@
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
-    <!--  ____________________ Azure CellStyle ____________________  -->
     <Style x:Key="MahApps.Styles.DataGridCell.Azure"
            BasedOn="{StaticResource MahApps.Styles.DataGridCell}"
            TargetType="{x:Type DataGridCell}">

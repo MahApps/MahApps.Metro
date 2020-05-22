@@ -112,14 +112,14 @@ namespace MahApps.Metro.Controls
                 expander.Expanded -= Expander_Expanded;
                 expander.ExecuteWhenLoaded(() =>
                     {
-                        var expandSite = GetExpandSite(expander);
-                        if (expandSite is null)
-                        {
-                            return;
-                        }
-
                         if (expander.IsExpanded)
                         {
+                            var expandSite = GetExpandSite(expander);
+                            if (expandSite is null)
+                            {
+                                return;
+                            }
+
                             expandSite.SetCurrentValue(UIElement.OpacityProperty, 1d);
                         }
                     });
@@ -205,14 +205,14 @@ namespace MahApps.Metro.Controls
                 expander.Collapsed -= Expander_Collapsed;
                 expander.ExecuteWhenLoaded(() =>
                     {
-                        var expandSite = GetExpandSite(expander);
-                        if (expandSite is null)
-                        {
-                            return;
-                        }
-
                         if (!expander.IsExpanded)
                         {
+                            var expandSite = GetExpandSite(expander);
+                            if (expandSite is null)
+                            {
+                                return;
+                            }
+
                             expandSite.SetCurrentValue(UIElement.OpacityProperty, 0d);
                         }
                     });
