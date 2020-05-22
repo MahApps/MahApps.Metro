@@ -13,10 +13,6 @@ using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
-    public delegate void RangeSelectionChangedEventHandler(object sender, RangeSelectionChangedEventArgs e);
-
-    public delegate void RangeParameterChangedEventHandler(object sender, RangeParameterChangedEventArgs e);
-
     /// <summary>
     /// A slider control with the ability to select a range between two values.
     /// </summary>
@@ -41,17 +37,44 @@ namespace MahApps.Metro.Controls
 
         #region Routed events
 
-        public static readonly RoutedEvent RangeSelectionChangedEvent =
-            EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
+        /// <summary>Identifies the <see cref="RangeSelectionChanged"/> routed event.</summary>
+        public static readonly RoutedEvent RangeSelectionChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(RangeSelectionChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RangeSelectionChangedEventHandler<double>),
+                                               typeof(RangeSlider));
 
-        public static readonly RoutedEvent LowerValueChangedEvent =
-            EventManager.RegisterRoutedEvent("LowerValueChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        public event RangeSelectionChangedEventHandler<double> RangeSelectionChanged
+        {
+            add { this.AddHandler(RangeSelectionChangedEvent, value); }
+            remove { this.RemoveHandler(RangeSelectionChangedEvent, value); }
+        }
 
-        public static readonly RoutedEvent UpperValueChangedEvent =
-            EventManager.RegisterRoutedEvent("UpperValueChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        /// <summary>Identifies the <see cref="LowerValueChanged"/> routed event.</summary>
+        public static readonly RoutedEvent LowerValueChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(LowerValueChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<double>),
+                                               typeof(RangeSlider));
+
+        public event RoutedPropertyChangedEventHandler<double> LowerValueChanged
+        {
+            add { this.AddHandler(LowerValueChangedEvent, value); }
+            remove { this.RemoveHandler(LowerValueChangedEvent, value); }
+        }
+
+        /// <summary>Identifies the <see cref="UpperValueChanged"/> routed event.</summary>
+        public static readonly RoutedEvent UpperValueChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(UpperValueChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<double>),
+                                               typeof(RangeSlider));
+
+        public event RoutedPropertyChangedEventHandler<double> UpperValueChanged
+        {
+            add { this.AddHandler(UpperValueChangedEvent, value); }
+            remove { this.RemoveHandler(UpperValueChangedEvent, value); }
+        }
 
         public static readonly RoutedEvent LowerThumbDragStartedEvent =
             EventManager.RegisterRoutedEvent("LowerThumbDragStarted", RoutingStrategy.Bubble,
@@ -92,24 +115,6 @@ namespace MahApps.Metro.Controls
         #endregion
 
         #region Event handlers
-
-        public event RangeSelectionChangedEventHandler RangeSelectionChanged
-        {
-            add { this.AddHandler(RangeSelectionChangedEvent, value); }
-            remove { this.RemoveHandler(RangeSelectionChangedEvent, value); }
-        }
-
-        public event RangeParameterChangedEventHandler LowerValueChanged
-        {
-            add { this.AddHandler(LowerValueChangedEvent, value); }
-            remove { this.RemoveHandler(LowerValueChangedEvent, value); }
-        }
-
-        public event RangeParameterChangedEventHandler UpperValueChanged
-        {
-            add { this.AddHandler(UpperValueChangedEvent, value); }
-            remove { this.RemoveHandler(UpperValueChangedEvent, value); }
-        }
 
         public event DragStartedEventHandler LowerThumbDragStarted
         {
@@ -1064,12 +1069,6 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this);
         }
 
-        private void OnRangeParameterChanged(RangeParameterChangedEventArgs e, RoutedEvent Event)
-        {
-            e.RoutedEvent = Event;
-            this.RaiseEvent(e);
-        }
-
         public void MoveSelection(bool isLeft)
         {
             var widthChange = this.SmallChange * (this.UpperValue - this.LowerValue) * this._movableWidth / this.MovableRange;
@@ -1088,12 +1087,6 @@ namespace MahApps.Metro.Controls
             MoveThumb(this._leftButton, this._rightButton, widthChange, this.Orientation, out this._direction);
             this.ReCalculateRangeSelected(true, true, this._direction);
             this.CoerceLowerUpperValues();
-        }
-
-        private void OnRangeSelectionChanged(RangeSelectionChangedEventArgs e)
-        {
-            e.RoutedEvent = RangeSelectionChangedEvent;
-            this.RaiseEvent(e);
         }
 
         public override void OnApplyTemplate()
@@ -2279,19 +2272,20 @@ namespace MahApps.Metro.Controls
             var slider = (RangeSlider)dependencyObject;
             var lowerValueEquals = Equals(slider._oldLower, slider.LowerValue);
             var upperValueEquals = Equals(slider._oldUpper, slider.UpperValue);
+
             if ((lowerValueReCalculated || upperValueReCalculated) && (!lowerValueEquals || !upperValueEquals))
             {
-                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
+                slider.RaiseEvent(new RangeSelectionChangedEventArgs<double>(slider._oldLower, slider.LowerValue, slider._oldUpper, slider.UpperValue, RangeSelectionChangedEvent));
             }
 
             if (lowerValueReCalculated && !lowerValueEquals)
             {
-                slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue), LowerValueChangedEvent);
+                slider.RaiseEvent(new RoutedPropertyChangedEventArgs<double>(slider._oldLower, slider.LowerValue, LowerValueChangedEvent));
             }
 
             if (upperValueReCalculated && !upperValueEquals)
             {
-                slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue), UpperValueChangedEvent);
+                slider.RaiseEvent(new RoutedPropertyChangedEventArgs<double>(slider._oldUpper, slider.UpperValue, UpperValueChangedEvent));
             }
         }
 
