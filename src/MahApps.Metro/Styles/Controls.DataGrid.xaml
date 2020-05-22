@@ -710,7 +710,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.Group.Container"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.GroupItem"
            BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="MinHeight" Value="25" />
@@ -766,7 +766,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.GroupItem.DataGrid.Group.Container" TargetType="{x:Type GroupItem}">
+    <Style x:Key="MahApps.Styles.GroupItem.DataGrid" TargetType="{x:Type GroupItem}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Template">
             <Setter.Value>
@@ -775,7 +775,7 @@
                               Padding="0"
                               Controls:ExpanderHelper.CollapseStoryboard="{x:Null}"
                               Controls:ExpanderHelper.ExpandStoryboard="{x:Null}"
-                              Controls:ExpanderHelper.HeaderDownStyle="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.Group.Container}"
+                              Controls:ExpanderHelper.HeaderDownStyle="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.DataGrid.GroupItem}"
                               Controls:HeaderedControlHelper.HeaderBackground="{DynamicResource MahApps.Brushes.Gray8}"
                               BorderThickness="0"
                               Header="{TemplateBinding Content}"

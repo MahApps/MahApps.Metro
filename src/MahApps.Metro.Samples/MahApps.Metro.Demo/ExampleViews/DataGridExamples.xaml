@@ -172,7 +172,7 @@
                   SelectionUnit="FullRow"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True">
             <DataGrid.GroupStyle>
-                <GroupStyle ContainerStyle="{StaticResource MahApps.Styles.GroupItem.DataGrid.Group.Container}">
+                <GroupStyle ContainerStyle="{StaticResource MahApps.Styles.GroupItem.DataGrid}">
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock VerticalAlignment="Center">
