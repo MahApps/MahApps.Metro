@@ -615,7 +615,7 @@ namespace MahApps.Metro.Controls
 
             this.OnValueChanged(this.Value, this.Value);
 
-            this.scrollViewer = this.TryFindScrollViewer();
+            this.scrollViewer = null;
         }
 
         private void ToggleReadOnlyMode(bool isReadOnly)
@@ -731,19 +731,21 @@ namespace MahApps.Metro.Controls
                 this.ChangeValueInternal(increment);
             }
 
-            if (this.scrollViewer != null && this.handlesMouseWheelScrolling.Value != null)
+            var sv = this.TryFindScrollViewer();
+
+            if (sv != null && this.handlesMouseWheelScrolling.Value != null)
             {
                 if (this.TrackMouseWheelWhenMouseOver)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, true, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, true, null);
                 }
                 else if (this.InterceptMouseWheel)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, this.valueTextBox.IsFocused, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox.IsFocused, null);
                 }
                 else
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, true, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, true, null);
                 }
             }
         }
@@ -1076,15 +1078,20 @@ namespace MahApps.Metro.Controls
 
         private ScrollViewer TryFindScrollViewer()
         {
+            if (this.scrollViewer != null)
+            {
+                return this.scrollViewer;
+            }
+
             this.valueTextBox.ApplyTemplate();
 
-            var scrollViewerFromTemplate = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
-            if (scrollViewerFromTemplate != null)
+            this.scrollViewer = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
+            if (this.scrollViewer != null)
             {
                 this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
 
-            return scrollViewerFromTemplate;
+            return this.scrollViewer;
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
