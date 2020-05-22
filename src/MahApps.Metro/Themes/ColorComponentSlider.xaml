@@ -4,10 +4,6 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <Style x:Key="MahApps.Styles.Slider.ColorComponent" TargetType="{x:Type Slider}">
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="VerticalAlignment" Value="Center" />

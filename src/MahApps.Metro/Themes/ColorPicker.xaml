@@ -1,11 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:mah="clr-namespace:MahApps.Metro.Controls" xmlns:controlzex="urn:controlzex">
+                    xmlns:mah="clr-namespace:MahApps.Metro.Controls" xmlns:controlzex="urn:controlzex" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <sys:Double x:Key="MahApps.Sizes.ColorListBox.ItemWidth">16</sys:Double>
+    <sys:Double x:Key="MahApps.Sizes.ColorListBox.ItemHeight">16</sys:Double>
+    
     <Converters:ColorToNameConverter x:Key="ColorToNameConverter" />
 
     <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorAndName">
