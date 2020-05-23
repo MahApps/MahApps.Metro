@@ -54,13 +54,6 @@
   <a href="https://github.com/MahApps/MahApps.Metro/issues">
     <img src="https://img.shields.io/github/issues-pr-closed-raw/MahApps/MahApps.Metro.svg?style=flat-square">
   </a>
-  <br />
-  <a href="https://opencollective.com/mahappsmetro#contributors">
-    <img src="https://opencollective.com/mahappsmetro/backer/badge.svg?style=flat-square">
-  </a>
-  <a href="https://opencollective.com/mahappsmetro#contributors">
-    <img src="https://opencollective.com/mahappsmetro/tiers/sponsor/badge.svg?style=flat-square">
-  </a>
 </div>
 
 ## Let's get started
