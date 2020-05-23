@@ -20,7 +20,7 @@
         <Reference Include="System.ComponentModel.Composition" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro.IconPacks" Version="3.*" />
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
         <PackageReference Include="Caliburn.Micro" Version="3.*" />
         <PackageReference Include="Fody" Version="6.*">
           <PrivateAssets>all</PrivateAssets>

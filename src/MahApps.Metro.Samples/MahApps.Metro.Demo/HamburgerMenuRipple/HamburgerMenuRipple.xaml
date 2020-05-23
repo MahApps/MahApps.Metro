@@ -280,7 +280,7 @@
                 <!--  Options  -->
                 <Controls:HamburgerMenu.OptionsItemsSource>
                     <Controls:HamburgerMenuItemCollection>
-                        <Controls:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Settings}" Label="Settings">
+                        <Controls:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Cog}" Label="Settings">
                             <Controls:HamburgerMenuIconItem.Tag>
                                 <metroDemo:SettingsView />
                             </Controls:HamburgerMenuIconItem.Tag>

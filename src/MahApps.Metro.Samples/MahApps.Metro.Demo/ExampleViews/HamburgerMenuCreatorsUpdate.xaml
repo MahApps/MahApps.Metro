@@ -180,7 +180,7 @@
                                                             Height="22"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            Kind="Settings" />
+                                                            Kind="Cog" />
                             </Controls:HamburgerMenuGlyphItem.Tag>
                         </Controls:HamburgerMenuGlyphItem>
                     </Controls:HamburgerMenuItemCollection>

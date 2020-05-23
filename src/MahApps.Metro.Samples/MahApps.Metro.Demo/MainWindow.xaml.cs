@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -110,7 +111,13 @@ namespace MetroDemo
 
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro.IconPacks");
+            Process.Start(new ProcessStartInfo
+                          {
+                              FileName = "https://github.com/MahApps/MahApps.Metro.IconPacks",
+                              // UseShellExecute is default to false on .NET Core while true on .NET Framework.
+                              // Only this value is set to true, the url link can be opened.
+                              UseShellExecute = true,
+                          });
         }
 
         private Window cleanWindowDemo;

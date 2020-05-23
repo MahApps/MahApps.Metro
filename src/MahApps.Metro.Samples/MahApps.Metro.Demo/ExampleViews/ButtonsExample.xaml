@@ -440,7 +440,7 @@
                                      DisplayMemberPath="Name"
                                      ItemsSource="{Binding Source={x:Static models:SampleData.Artists}}">
                 <Controls:DropDownButton.Icon>
-                    <iconPacks:PackIconMaterial Margin="6" Kind="Artist" />
+                    <iconPacks:PackIconMaterial Margin="6" Kind="AccountMusic" />
                 </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
 
@@ -455,7 +455,7 @@
                     </Style>
                 </Controls:DropDownButton.ItemContainerStyle>
                 <Controls:DropDownButton.Icon>
-                    <iconPacks:PackIconMaterial Margin="6" Kind="Audiobook" />
+                    <iconPacks:PackIconMaterial Margin="6" Kind="BookMusic" />
                 </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
 
@@ -497,7 +497,7 @@
                                   SelectedIndex="2"
                                   SelectionChanged="SplitButton_OnSelectionChanged">
                 <Controls:SplitButton.Icon>
-                    <iconPacks:PackIconMaterial Margin="6" Kind="Audiobook" />
+                    <iconPacks:PackIconMaterial Margin="6" Kind="BookMusic" />
                 </Controls:SplitButton.Icon>
             </Controls:SplitButton>
 
