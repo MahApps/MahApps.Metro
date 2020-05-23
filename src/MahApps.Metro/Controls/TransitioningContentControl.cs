@@ -134,7 +134,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Storyboard CurrentTransition
+        internal Storyboard CurrentTransition
         {
             get { return this.currentTransition; }
             set

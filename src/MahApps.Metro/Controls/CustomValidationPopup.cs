@@ -119,8 +119,6 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
         {
-            var canShow = true;
-
             var adornedElement = this.AdornedElement;
             if (adornedElement is null)
             {
@@ -132,6 +130,9 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
+            this.SetValue(CanShowPropertyKey, false);
+            var canShow = true;
 
             if (this.scrollViewer != null)
             {
@@ -153,6 +154,7 @@ namespace MahApps.Metro.Controls
             this.metroContentControl = adornedElement.TryFindParent<MetroContentControl>();
             if (this.metroContentControl != null)
             {
+                canShow = !this.metroContentControl.TransitionsEnabled || !this.metroContentControl.IsTransitioning;
                 this.metroContentControl.TransitionStarted += this.OnTransitionStarted;
                 this.metroContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
@@ -165,7 +167,7 @@ namespace MahApps.Metro.Controls
             this.transitioningContentControl = adornedElement.TryFindParent<TransitioningContentControl>();
             if (this.transitioningContentControl != null)
             {
-                canShow = !this.transitioningContentControl.IsTransitioning;
+                canShow = canShow && (this.transitioningContentControl.CurrentTransition == null || !this.transitioningContentControl.IsTransitioning);
                 this.transitioningContentControl.TransitionCompleted += this.OnTransitionCompleted;
             }
 
@@ -202,12 +204,13 @@ namespace MahApps.Metro.Controls
                 frameworkElement.SizeChanged += this.OnSizeOrLocationChanged;
             }
 
+            this.RefreshPosition();
+            this.SetValue(CanShowPropertyKey, canShow);
+
             this.OnLoaded();
 
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Unloaded += this.CustomValidationPopup_Unloaded;
-
-            this.SetValue(CanShowPropertyKey, canShow);
         }
 
         private void Flyout_OpeningFinished(object sender, RoutedEventArgs e)
@@ -254,15 +257,18 @@ namespace MahApps.Metro.Controls
         {
             this.RefreshPosition();
 
-            if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
+            if (e.VerticalChange > 0 || e.VerticalChange < 0 || e.HorizontalChange > 0 || e.HorizontalChange < 0)
             {
-                var adornedElement = this.AdornedElement;
-                var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-                this.SetCurrentValue(IsOpenProperty, isOpen);
-            }
-            else
-            {
-                this.SetCurrentValue(IsOpenProperty, false);
+                if (IsElementVisible(this.AdornedElement as FrameworkElement, this.scrollViewer))
+                {
+                    var adornedElement = this.AdornedElement;
+                    var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
+                    this.SetCurrentValue(IsOpenProperty, isOpen);
+                }
+                else
+                {
+                    this.SetCurrentValue(IsOpenProperty, false);
+                }
             }
         }
 

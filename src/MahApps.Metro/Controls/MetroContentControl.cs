@@ -93,6 +93,25 @@ namespace MahApps.Metro.Controls
             remove => this.RemoveHandler(TransitionCompletedEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="IsTransitioning"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey IsTransitioningPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(IsTransitioning),
+                                                  typeof(bool),
+                                                  typeof(MetroContentControl),
+                                                  new PropertyMetadata(default(bool)));
+
+        /// <summary>Identifies the <see cref="IsTransitioning"/> dependency property.</summary>
+        public static readonly DependencyProperty IsTransitioningProperty = IsTransitioningPropertyKey.DependencyProperty;
+
+        /// <summary>
+        /// Gets whether if the content is transitioning.
+        /// </summary>
+        public bool IsTransitioning
+        {
+            get => (bool)this.GetValue(IsTransitioningProperty);
+            protected set => this.SetValue(IsTransitioningPropertyKey, value);
+        }
+
         public MetroContentControl()
         {
             this.DefaultStyleKey = typeof(MetroContentControl);
@@ -201,6 +220,7 @@ namespace MahApps.Metro.Controls
             {
                 if (clock.CurrentState == ClockState.Active)
                 {
+                    this.SetValue(IsTransitioningPropertyKey, true);
                     this.RaiseEvent(new RoutedEventArgs(TransitionStartedEvent));
                 }
             }
@@ -214,6 +234,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.InvalidateVisual();
+            this.SetValue(IsTransitioningPropertyKey, false);
             this.RaiseEvent(new RoutedEventArgs(TransitionCompletedEvent));
         }
 
