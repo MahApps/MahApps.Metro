@@ -6,6 +6,8 @@
         <AssemblyName>MahApps.Metro.Caliburn.Demo</AssemblyName>
         <RootNamespace>Caliburn.Metro.Demo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
+        <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
+        <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

@@ -6,6 +6,8 @@
         <RootNamespace>MetroDemo</RootNamespace>
         <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
         <UseWindowsForms>true</UseWindowsForms>
+        <!-- Workaround for https://github.com/dotnet/sourcelink/issues/91 -->
+        <DeterministicSourcePaths Condition="'$(EnableSourceLink)' == ''">false</DeterministicSourcePaths>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>

@@ -20,6 +20,13 @@
         <GenerateLibraryLayout>true</GenerateLibraryLayout>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <TargetFrameworkMonikerAssemblyAttributesPath>$([System.IO.Path]::Combine('$(IntermediateOutputPath)','$(TargetFrameworkMoniker).AssemblyAttributes$(DefaultLanguageSourceExtension)'))</TargetFrameworkMonikerAssemblyAttributesPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <EmbeddedFiles Include="$(GeneratedAssemblyInfoFile)"/>
+    </ItemGroup>
+
     <!-- Sign assembly -->
     <PropertyGroup>
         <SignAssembly>True</SignAssembly>
