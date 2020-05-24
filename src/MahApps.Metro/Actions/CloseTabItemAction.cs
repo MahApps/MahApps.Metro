@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 
@@ -12,34 +11,6 @@ namespace MahApps.Metro.Actions
         private TabItem associatedTabItem;
 
         private TabItem AssociatedTabItem => this.associatedTabItem ?? (this.associatedTabItem = this.AssociatedObject.TryFindParent<TabItem>());
-
-        [Obsolete("This property will be deleted in the next release.")]
-        public static readonly DependencyProperty TabControlProperty =
-            DependencyProperty.Register(nameof(TabControl),
-                                        typeof(TabControl),
-                                        typeof(CloseTabItemAction),
-                                        new PropertyMetadata(default(TabControl)));
-
-        [Obsolete("This property will be deleted in the next release.")]
-        public TabControl TabControl
-        {
-            get { return (TabControl)this.GetValue(TabControlProperty); }
-            set { this.SetValue(TabControlProperty, value); }
-        }
-
-        [Obsolete("This property will be deleted in the next release.")]
-        public static readonly DependencyProperty TabItemProperty =
-            DependencyProperty.Register(nameof(TabItem),
-                                        typeof(TabItem),
-                                        typeof(CloseTabItemAction),
-                                        new PropertyMetadata(default(TabItem)));
-
-        [Obsolete("This property will be deleted in the next release.")]
-        public TabItem TabItem
-        {
-            get { return (TabItem)this.GetValue(TabItemProperty); }
-            set { this.SetValue(TabItemProperty, value); }
-        }
 
         protected override void Invoke(object parameter)
         {
@@ -65,11 +36,11 @@ namespace MahApps.Metro.Actions
                 }
             }
 
-            if (tabControl is MetroTabControl && tabItem is MetroTabItem)
+            if (tabControl is BaseMetroTabControl && tabItem is MetroTabItem)
             {
                 // run the command handler for the TabControl
                 // see #555
-                tabControl.BeginInvoke(() => ((MetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
+                tabControl.BeginInvoke(() => ((BaseMetroTabControl)tabControl).CloseThisTabItem((MetroTabItem)tabItem));
             }
             else
             {

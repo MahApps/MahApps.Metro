@@ -1,12 +1,12 @@
-﻿namespace MahApps.Metro.Tests
-{
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using MahApps.Metro.Controls;
-    using MahApps.Metro.Tests.TestHelpers;
-    using Xunit;
+﻿using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Tests.TestHelpers;
+using Xunit;
 
+namespace MahApps.Metro.Tests
+{
     public class DateTimePickerTests : AutomationTestBase
     {
         [Fact]
@@ -18,7 +18,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheDateTimePicker.SelectedDate);
+                                  Assert.NotNull(window.TheDateTimePicker.SelectedDateTime);
                                   Assert.NotNull(window.TheDateTimePicker.Culture);
                                   Assert.False(window.TheDateTimePicker.IsMilitaryTime);
                                   Assert.Equal("pt-BR", window.TheDateTimePicker.Culture.IetfLanguageTag);
@@ -34,7 +34,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheTimePickerDe.SelectedTime);
+                                  Assert.NotNull(window.TheTimePickerDe.SelectedDateTime);
                                   Assert.NotNull(window.TheTimePickerDe.Culture);
                                   Assert.False(window.TheTimePickerDe.IsMilitaryTime);
                                   Assert.Equal("de-DE", window.TheTimePickerDe.Culture.IetfLanguageTag);
@@ -50,7 +50,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheTimePickerUs.SelectedTime);
+                                  Assert.NotNull(window.TheTimePickerUs.SelectedDateTime);
                                   Assert.NotNull(window.TheTimePickerUs.Culture);
                                   Assert.True(window.TheTimePickerUs.IsMilitaryTime);
                                   Assert.Equal("en-US", window.TheTimePickerUs.Culture.IetfLanguageTag);
@@ -66,7 +66,7 @@
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DateAndTimePickerWindow>().ConfigureAwait(false);
             window.Invoke(() =>
                               {
-                                  Assert.NotNull(window.TheTimePickerCsCz.SelectedTime);
+                                  Assert.NotNull(window.TheTimePickerCsCz.SelectedDateTime);
                                   Assert.NotNull(window.TheTimePickerCsCz.Culture);
                                   Assert.False(window.TheTimePickerCsCz.IsMilitaryTime);
                                   Assert.Equal("cs-CZ", window.TheTimePickerCsCz.Culture.IetfLanguageTag);

@@ -6,10 +6,12 @@
       Title="Interesting Page"
       d:DesignHeight="300"
       d:DesignWidth="300"
-      Style="{DynamicResource MetroPage}"
+      Style="{DynamicResource MahApps.Styles.Page}"
       mc:Ignorable="d">
 
-    <Grid Margin="2">
+    <StackPanel Margin="10" Orientation="Vertical">
         <Label>Sorry, nothing is here.</Label>
-    </Grid>
+        <TextBlock>Only for testing purposes.</TextBlock>
+        <TextBlock>TestInput</TextBlock>
+    </StackPanel>
 </Page>

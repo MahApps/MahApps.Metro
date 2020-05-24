@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras/1.3.0">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro.Demo</AssemblyName>
         <RootNamespace>MetroDemo</RootNamespace>
-        <DefaultItemExcludes Condition=" '$(TargetFramework)' == 'net40' ">$(DefaultItemExcludes);$(MSBuildProjectDirectory)/HamburgerMenuRipple/**</DefaultItemExcludes>
+        <DisableFody Condition=" '$(Configuration)' == 'Debug' or $(TargetFramework.StartsWith('netcoreapp')) ">true</DisableFody>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <StartupObject />
         <NoWarn>SA1652</NoWarn>
         <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
         <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -17,24 +16,29 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.csproj" />
     </ItemGroup>
-    <ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="WindowsFormsIntegration" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro.IconPacks" Version="4.*" />
+        <PackageReference Include="MaterialDesignThemes" Version="2.*" />
+        <PackageReference Include="MaterialDesignColors" Version="1.*" />
+        <PackageReference Include="NHotkey.Wpf" Version="2.*" />
+        <PackageReference Include="Fody" Version="6.*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>
     <ItemGroup>
         <None Include="app.manifest" />
-        <None Include="paket.references" />
         <None Remove="App.config" />
         <AppConfigWithTargetPath Include="App.$(TargetFramework).config">
-            <TargetPath>$(AssemblyName).config</TargetPath>
+            <TargetPath>$(AssemblyName).exe.config</TargetPath>
         </AppConfigWithTargetPath>
     </ItemGroup>
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

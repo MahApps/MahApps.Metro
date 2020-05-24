@@ -10,7 +10,7 @@
     <sys:Double x:Key="ExpanderHeaderThemeFontSize">16</sys:Double>
     <sys:Double x:Key="ExpanderToggleButtonThemeSize">18</sys:Double>
 
-    <Style x:Key="ExpanderBaseHeaderStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -20,8 +20,8 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <Style x:Key="ExpanderRightHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 0 2 0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -61,7 +61,7 @@
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       IsHitTestVisible="False"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
@@ -73,7 +73,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
@@ -82,11 +82,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -95,8 +95,8 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ExpanderUpHeaderStyle"
-           BasedOn="{StaticResource ExpanderBaseHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Base.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 2 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -122,7 +122,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Grid x:Name="ArrowGrid"
                                   Grid.Column="1"
@@ -146,7 +146,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                         </Grid>
@@ -156,11 +156,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -169,8 +169,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="ExpanderLeftHeaderStyle"
-           BasedOn="{StaticResource ExpanderRightHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="2 0 0 0" />
         <Setter Property="Template">
@@ -207,7 +207,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                             <Controls:ContentControlEx Grid.Row="1"
@@ -219,7 +219,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
@@ -228,11 +228,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -240,8 +240,8 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderDownHeaderStyle"
-           BasedOn="{StaticResource ExpanderUpHeaderStyle}"
+    <Style x:Key="MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="0 0 0 2" />
         <Setter Property="Template">
@@ -266,7 +266,7 @@
                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Grid x:Name="ArrowGrid"
                                   Grid.Column="1"
@@ -281,7 +281,7 @@
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="False"
-                                      Stroke="{DynamicResource BorderBrushNormal}"
+                                      Stroke="{DynamicResource MahApps.Brushes.Border.Normal}"
                                       StrokeThickness="2" />
                             </Grid>
                         </Grid>
@@ -291,11 +291,11 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource Foreground}" />
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
+                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                            <Setter TargetName="ArrowGrid" Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -303,75 +303,80 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MetroExpanderExpandStoryboard">
-        <DoubleAnimation Storyboard.TargetName="ExpandSite"
-                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                         To="1"
-                         Duration="0:0:0.25" />
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Expand.VS">
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
         </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MetroExpanderCollapseStoryboard">
         <DoubleAnimation Storyboard.TargetName="ExpandSite"
                          Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="0"
+                         To="1"
+                         Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse.VS">
+        <DoubleAnimation Storyboard.TargetName="ExpandSite"
+                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                         From="1"
                          To="0"
-                         Duration="0:0:0.25" />
+                         Duration="0:0:0.1" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}" />
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
 
-    <Style x:Key="StandardExpander" TargetType="{x:Type Expander}">
+    <Style x:Key="MahApps.Styles.Expander.VisualStudio" TargetType="{x:Type Expander}">
         <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource ExpanderDownHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource ExpanderLeftHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource ExpanderRightHeaderStyle}" />
-        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource ExpanderUpHeaderStyle}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Controls:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.VS}" />
+        <Setter Property="Controls:ExpanderHelper.ExpandStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Expand.VS}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderBackground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderFontSize" Value="{DynamicResource ExpanderHeaderThemeFontSize}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Fill="{DynamicResource MahApps.Brushes.Control.Disabled}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
                         <DockPanel x:Name="ExpanderRoot">
                             <ToggleButton x:Name="ToggleSite"
                                           Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                          Background="{TemplateBinding Controls:HeaderedControlHelper.HeaderBackground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           Content="{TemplateBinding Header}"
                                           ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}"
                                           ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                           DockPanel.Dock="Top"
-                                          FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                          FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                          FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                          Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
+                                          FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                          FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                          FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
+                                          FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
+                                          Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                           IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}" />
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Background="Transparent"
+                                    Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="False"
-                                    Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True"
-                                    Visibility="Collapsed">
+                                    UseLayoutRounding="True">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -397,15 +402,23 @@
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:ExpanderHelper.ExpandStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ExpandSite" Property="Opacity" Value="1" />
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderExpandStoryboard}" />
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource MetroExpanderCollapseStoryboard}" />
-                            </Trigger.ExitActions>
-                        </Trigger>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding Path=(Controls:ExpanderHelper.CollapseStoryboard), RelativeSource={RelativeSource Self}}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="ExpandSite" Property="Opacity" Value="0" />
+                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Collapsed" />
+                        </MultiDataTrigger>
+
                         <Trigger Property="ExpandDirection" Value="Right">
                             <Setter TargetName="ExpandSite" Property="BorderThickness" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Left}}" />
                             <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />

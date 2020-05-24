@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 using JetBrains.Annotations;
 
@@ -12,17 +13,19 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (func == null)
             {
                 throw new ArgumentNullException(nameof(func));
             }
+
             if (dispatcherObject.Dispatcher.CheckAccess())
             {
                 return func();
             }
             else
             {
-                return (T)dispatcherObject.Dispatcher.Invoke(new Func<T>(func));
+                return dispatcherObject.Dispatcher.Invoke(func);
             }
         }
 
@@ -32,10 +35,12 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (invokeAction == null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
+
             if (dispatcherObject.Dispatcher.CheckAccess())
             {
                 invokeAction();
@@ -58,11 +63,52 @@ namespace MahApps.Metro.Controls
             {
                 throw new ArgumentNullException(nameof(dispatcherObject));
             }
+
             if (invokeAction == null)
             {
                 throw new ArgumentNullException(nameof(invokeAction));
             }
+
             dispatcherObject.Dispatcher.BeginInvoke(priority, invokeAction);
+        }
+
+        public static void BeginInvoke<T>([NotNull] this T dispatcherObject, [NotNull] Action<T> invokeAction, DispatcherPriority priority = DispatcherPriority.Background)
+            where T : DispatcherObject
+        {
+            if (dispatcherObject == null)
+            {
+                throw new ArgumentNullException(nameof(dispatcherObject));
+            }
+
+            if (invokeAction == null)
+            {
+                throw new ArgumentNullException(nameof(invokeAction));
+            }
+
+            dispatcherObject.Dispatcher?.BeginInvoke(priority, new Action(() => invokeAction(dispatcherObject)));
+        }
+
+        /// <summary> 
+        ///   Executes the specified action if the element is loaded or at the loaded event if it's not loaded.
+        /// </summary>
+        /// <param name="element">The element where the action should be run.</param>
+        /// <param name="invokeAction">An action that takes no parameters.</param>
+        public static void ExecuteWhenLoaded([NotNull] this FrameworkElement element, [NotNull] Action invokeAction)
+        {
+            if (element.IsLoaded)
+            {
+                element.Invoke(invokeAction);
+            }
+            else
+            {
+                void ElementLoaded(object o, RoutedEventArgs a)
+                {
+                    element.Loaded -= ElementLoaded;
+                    element.Invoke(invokeAction);
+                }
+
+                element.Loaded += ElementLoaded;
+            }
         }
     }
 }

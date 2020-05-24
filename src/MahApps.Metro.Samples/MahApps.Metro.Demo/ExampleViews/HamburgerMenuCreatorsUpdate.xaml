@@ -14,10 +14,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <!--  This is the template for all menu items. In this sample we use the glyph items.  -->
             <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type Controls:HamburgerMenuGlyphItem}">
                 <Grid Height="48">
@@ -71,30 +67,6 @@
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
 
-            <Style x:Key="HamburgerMenuCreatorsItemStyle"
-                   BasedOn="{StaticResource HamburgerMenuItemStyle}"
-                   TargetType="{x:Type ListBoxItem}">
-                <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
-                <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
-                <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
-                <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-            </Style>
-
-            <Style x:Key="HamburgerMenuCreatorsStyle"
-                   BasedOn="{StaticResource {x:Type Controls:HamburgerMenu}}"
-                   TargetType="{x:Type Controls:HamburgerMenu}">
-                <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="PaneBackground" Value="{DynamicResource WhiteBrush}" />
-                <Setter Property="PaneForeground" Value="{DynamicResource TextBrush}" />
-                <Setter Property="ShowSelectionIndicator" Value="True" />
-            </Style>
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -113,7 +85,12 @@
             <StackPanel Margin="0 0 0 10" Orientation="Vertical">
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="IsPaneOpen:"
-                                       IsChecked="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Controls:ToggleSwitch Margin="0 10 0 5"
+                                       Header="CanResizeOpenPane:"
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=CanResizeOpenPane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
 
                 <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
                     <ComboBox MinWidth="150"
@@ -169,7 +146,7 @@
 
         <Border Grid.Column="0"
                 Margin="10 10 0 10"
-                BorderBrush="{DynamicResource GrayBrush7}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
                 BorderThickness="1">
 
             <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
@@ -179,14 +156,16 @@
                                     ItemInvoked="HamburgerMenuControl_OnItemInvoked"
                                     ItemTemplate="{StaticResource HamburgerMenuItem}"
                                     OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
-                                    SelectedIndex="0"
-                                    Style="{StaticResource HamburgerMenuCreatorsStyle}"
+                                    SelectedIndex="1"
+                                    Style="{StaticResource MahApps.Styles.HamburgerMenu.CreatorsUpdate}"
                                     VerticalScrollBarOnLeftSide="False">
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
+                        <Controls:HamburgerMenuHeaderItem Label="Pictures" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
+                        <Controls:HamburgerMenuSeparatorItem />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
                     </Controls:HamburgerMenuItemCollection>
@@ -201,7 +180,7 @@
                                                             Height="22"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            Kind="Settings" />
+                                                            Kind="Cog" />
                             </Controls:HamburgerMenuGlyphItem.Tag>
                         </Controls:HamburgerMenuGlyphItem>
                     </Controls:HamburgerMenuItemCollection>

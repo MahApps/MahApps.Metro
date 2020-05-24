@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:MetroContentControl">
-                    <Grid x:Name="root"
+                    <Grid x:Name="RootGrid"
                           Opacity="0"
                           RenderTransformOrigin="0.5,0.5">
                         <Grid.RenderTransform>
@@ -30,13 +30,13 @@
                                 <VisualState x:Name="AfterLoaded">
                                     <Storyboard x:Name="AfterLoadedStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.400" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="30" />
                                             <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="0">
@@ -50,13 +50,13 @@
                                 <VisualState x:Name="AfterLoadedReverse">
                                     <Storyboard x:Name="AfterLoadedReverseStoryboard">
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.400" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="-30" />
                                             <EasingDoubleKeyFrame KeyTime="00:00:00.700" Value="0">
@@ -70,13 +70,13 @@
                                 <VisualState x:Name="AfterUnLoaded">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="30" />
@@ -86,13 +86,13 @@
                                 <VisualState x:Name="AfterUnLoadedReverse">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                       Storyboard.TargetName="root"
+                                                                       Storyboard.TargetName="RootGrid"
                                                                        Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="-30" />

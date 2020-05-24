@@ -10,235 +10,326 @@
              d:DesignWidth="800"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+    </UserControl.Resources>
+
     <TabControl Margin="10" TabStripPlacement="Left">
-        <TabItem Header="List/GridView">
-            <UniformGrid Columns="2" Rows="2">
-                <ListView Margin="1"
-                          BorderThickness="0"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListViewItem>Test 1</ListViewItem>
-                    <ListViewItem>Test 2</ListViewItem>
-                    <ListViewItem>Test 3</ListViewItem>
-                    <ListViewItem>Test 4</ListViewItem>
-                </ListView>
-                <ListView Margin="1"
-                          BorderThickness="0"
-                          IsEnabled="False"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListViewItem>Test 1</ListViewItem>
-                    <ListViewItem>Test 2</ListViewItem>
-                    <ListViewItem>Test 3</ListViewItem>
-                    <ListViewItem>Test 4</ListViewItem>
-                </ListView>
-                <ListView Margin="1"
-                          BorderThickness="1"
-                          ItemsSource="{Binding Artists}"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <ListView Margin="1"
-                          BorderThickness="1"
-                          IsEnabled="False"
-                          ItemsSource="{Binding Artists}"
-                          SelectedIndex="0"
-                          Style="{StaticResource VirtualisedMetroListView}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </UniformGrid>
-        </TabItem>
-        <TabItem Header="TreeView">
-            <UniformGrid Rows="2">
-                <TreeView ItemsSource="{Binding Artists}" Style="{StaticResource VirtualisedMetroTreeView}">
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
-                            <TextBlock Text="{Binding Name}" />
-                            <HierarchicalDataTemplate.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Title}" />
-                                </DataTemplate>
-                            </HierarchicalDataTemplate.ItemTemplate>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
-                <TreeView IsEnabled="False">
-                    <TreeViewItem Header="Item 1">
-                        <TreeViewItem Header="Item 1.1">
-                            <TreeViewItem Header="Item 1.1.1" />
-                            <TreeViewItem Header="Item 1.1.2" />
-                        </TreeViewItem>
-                        <TreeViewItem Header="Item 1.2" />
-                        <TreeViewItem Header="Item 1.3" />
-                    </TreeViewItem>
-                    <TreeViewItem Header="Item 22" />
-                    <TreeViewItem Header="Item 3"
-                                  IsExpanded="True"
-                                  IsSelected="True">
-                        <TreeViewItem Header="Item 3.1" IsExpanded="True">
-                            <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
-                            <TreeViewItem Header="Item 3.1.2" />
-                        </TreeViewItem>
-                        <TreeViewItem Header="Item 3.2" />
-                        <TreeViewItem Header="Item 3.3" />
-                    </TreeViewItem>
-                </TreeView>
-            </UniformGrid>
-        </TabItem>
         <TabItem Header="ListBox">
-            <UniformGrid Columns="2" Rows="2">
-                <ListBox Margin="1"
-                         DisplayMemberPath="Name"
-                         ItemsSource="{Binding Artists}"
-                         SelectedIndex="0"
-                         Style="{StaticResource VirtualisedMetroListBox}" />
-                <ListBox Margin="1"
-                         DisplayMemberPath="Title"
-                         IsEnabled="False"
-                         ItemsSource="{Binding Albums}"
-                         SelectedIndex="0"
-                         Style="{StaticResource VirtualisedMetroListBox}" />
-                <ListBox Margin="1"
-                         BorderThickness="1"
-                         SelectedIndex="0">
-                    <ListBoxItem Content="Item 1" />
-                    <ListBoxItem Content="Item 2" />
-                    <ListBoxItem Content="Item 3" />
-                </ListBox>
-                <ListBox Margin="1"
-                         BorderThickness="1"
-                         IsEnabled="False"
-                         SelectedIndex="0">
-                    <ListBoxItem Content="Item 1" />
-                    <ListBoxItem Content="Item 2" />
-                    <ListBoxItem Content="Item 3" />
-                </ListBox>
-            </UniformGrid>
+            <ScrollViewer Margin="2"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                <UniformGrid Columns="2" Rows="2">
+                    <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                             Controls:ScrollViewerHelper.EndOfVerticalScrollReachedCommand="{Binding EndOfScrollReachedCmdWithParameter, Mode=OneWay}"
+                             BorderThickness="1"
+                             DisplayMemberPath="Name"
+                             ItemsSource="{Binding Artists}"
+                             SelectedIndex="0"
+                             SelectionMode="Extended"
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
+                    <ListBox Margin="2"
+                             Controls:MultiSelectorHelper.SelectedItems="{Binding SelectedArtists}"
+                             BorderThickness="1"
+                             DisplayMemberPath="Name"
+                             IsEnabled="False"
+                             ItemsSource="{Binding Artists}"
+                             SelectedIndex="0"
+                             SelectionMode="Extended"
+                             Style="{StaticResource MahApps.Styles.ListBox.Virtualized}" />
+
+                    <ListBox Margin="2" SelectedIndex="0">
+                        <ListBoxItem Content="Item 1" />
+                        <ListBoxItem Content="Item 2" />
+                        <ListBoxItem Content="Item 3" />
+                    </ListBox>
+                    <ListBox Margin="2"
+                             IsEnabled="False"
+                             SelectedIndex="0">
+                        <ListBoxItem Content="Item 1" />
+                        <ListBoxItem Content="Item 2" />
+                        <ListBoxItem Content="Item 3" />
+                    </ListBox>
+                </UniformGrid>
+            </ScrollViewer>
         </TabItem>
+
+        <TabItem Header="List/GridView">
+            <ScrollViewer Margin="2"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                <UniformGrid Columns="2" Rows="2">
+                    <ListView Margin="2"
+                              BorderThickness="1"
+                              ItemsSource="{Binding Artists}"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Margin="2"
+                              BorderThickness="1"
+                              IsEnabled="False"
+                              ItemsSource="{Binding Artists}"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <ListView Margin="2"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListViewItem>Test 1</ListViewItem>
+                        <ListViewItem>Test 2</ListViewItem>
+                        <ListViewItem>Test 3</ListViewItem>
+                        <ListViewItem>Test 4</ListViewItem>
+                    </ListView>
+                    <ListView Margin="2"
+                              IsEnabled="False"
+                              SelectedIndex="0"
+                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListViewItem>Test 1</ListViewItem>
+                        <ListViewItem>Test 2</ListViewItem>
+                        <ListViewItem>Test 3</ListViewItem>
+                        <ListViewItem>Test 4</ListViewItem>
+                    </ListView>
+                </UniformGrid>
+            </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="TreeView">
+            <ScrollViewer Margin="2"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled">
+                <UniformGrid Columns="2" Rows="2">
+                    <TreeView Margin="2"
+                              BorderThickness="1"
+                              ItemsSource="{Binding Artists}"
+                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                                <TextBlock Text="{Binding Name}" />
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title}" />
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                    <TreeView Margin="2"
+                              BorderThickness="1"
+                              IsEnabled="False"
+                              ItemsSource="{Binding Artists}"
+                              Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                                <TextBlock Text="{Binding Name}" />
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Title}" />
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                    <TreeView Margin="2">
+                        <TreeViewItem Header="Item 1">
+                            <TreeViewItem Header="Item 1.1">
+                                <TreeViewItem Header="Item 1.1.1" />
+                                <TreeViewItem Header="Item 1.1.2" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="Item 1.2" />
+                            <TreeViewItem Header="Item 1.3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 22" />
+                        <TreeViewItem Header="Item 3"
+                                      IsExpanded="True"
+                                      IsSelected="True">
+                            <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                                <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
+                                <TreeViewItem Header="Item 3.1.2" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="Item 3.2" />
+                            <TreeViewItem Header="Item 3.3" />
+                        </TreeViewItem>
+                    </TreeView>
+                    <TreeView Margin="2" IsEnabled="False">
+                        <TreeViewItem Header="Item 1">
+                            <TreeViewItem Header="Item 1.1">
+                                <TreeViewItem Header="Item 1.1.1" />
+                                <TreeViewItem Header="Item 1.1.2" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="Item 1.2" />
+                            <TreeViewItem Header="Item 1.3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 22" />
+                        <TreeViewItem Header="Item 3"
+                                      IsExpanded="True"
+                                      IsSelected="True">
+                            <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                                <TreeViewItem Header="Item 3.1.1" IsExpanded="True" />
+                                <TreeViewItem Header="Item 3.1.2" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="Item 3.2" />
+                            <TreeViewItem Header="Item 3.3" />
+                        </TreeViewItem>
+                    </TreeView>
+                </UniformGrid>
+            </ScrollViewer>
+        </TabItem>
+
         <TabItem Header="ComboBox">
-            <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.ClearTextButton="True"
-                          Controls:TextBoxHelper.Watermark="Please select an item..."
-                          BorderThickness="4"
-                          SelectedIndex="0">
-                    <ComboBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Test" />
-                        </ContextMenu>
-                    </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="Item 1" />
-                    <ComboBoxItem Content="Item 2" />
-                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                    <ComboBoxItem Content="Item 4" />
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.ClearTextButton="True"
-                          Controls:TextBoxHelper.Watermark="Please select an item..."
-                          SelectedIndex="0">
-                    <ComboBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Test" />
-                        </ContextMenu>
-                    </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="Item 1" />
-                    <ComboBoxItem Content="Item 2" />
-                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                    <ComboBoxItem Content="Item 4" />
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.ClearTextButton="True"
-                          Controls:TextBoxHelper.UseFloatingWatermark="True"
-                          Controls:TextBoxHelper.Watermark="Please select an item..."
-                          SelectedIndex="0">
-                    <ComboBox.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Test" />
-                        </ContextMenu>
-                    </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="Item 1" />
-                    <ComboBoxItem Content="Item 2" />
-                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                    <ComboBoxItem Content="Item 4" />
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.ClearTextButton="True"
-                          Controls:TextBoxHelper.UseFloatingWatermark="True"
-                          Controls:TextBoxHelper.Watermark="Editable..."
-                          IsEditable="True"
-                          SelectedIndex="0">
-                    <ComboBox.ContextMenu>
-                        <ContextMenu IsEnabled="False" Visibility="Collapsed" />
-                    </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="Item 1" />
-                    <ComboBoxItem Content="Item 2" />
-                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                    <ComboBoxItem Content="Item 4" />
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.UseFloatingWatermark="True"
-                          Controls:TextBoxHelper.Watermark="Autocompletion"
-                          DisplayMemberPath="Title"
-                          IsEditable="True"
-                          ItemsSource="{Binding Albums}"
-                          MaxDropDownHeight="125"
-                          Style="{DynamicResource VirtualisedMetroComboBox}"
-                          Text="{Binding Path=Title}" />
-                <ComboBox x:Name="groupingComboBox"
-                          Width="200"
-                          Margin="0 10 0 0"
-                          Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True"
-                          Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
-                          DisplayMemberPath="Title"
-                          IsEditable="True"
-                          IsEnabled="True"
-                          ItemsSource="{Binding Albums}"
-                          Text="{Binding Path=Title}"
-                          ToolTip="grouping/virtualization works only with .NET 4.5">
-                    <ComboBox.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Name.Name}" />
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ComboBox.GroupStyle>
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          IsEnabled="False"
-                          SelectedIndex="0">
-                    <ComboBoxItem Content="Item 1" />
-                    <ComboBoxItem Content="Item 2" />
-                    <ComboBoxItem Content="Item 3" />
-                    <ComboBoxItem Content="Item 4" />
-                </ComboBox>
-                <ComboBox Width="200"
-                          Margin="0 10 0 0"
-                          Controls:TextBoxHelper.Watermark="Autocompletion"
-                          DisplayMemberPath="Title"
-                          IsEditable="True"
-                          IsEnabled="False"
-                          ItemsSource="{Binding Albums}"
-                          Text="{Binding Path=Title, Mode=TwoWay}" />
-            </StackPanel>
+            <ScrollViewer Margin="2"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <StackPanel HorizontalAlignment="Left" Orientation="Vertical">
+                    <ComboBox Width="200"
+                              Controls:TextBoxHelper.ClearTextButton="True"
+                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              BorderThickness="4"
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.ClearTextButton="True"
+                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.ClearTextButton="True"
+                              Controls:TextBoxHelper.UseFloatingWatermark="True"
+                              Controls:TextBoxHelper.Watermark="Please select an item..."
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Test" />
+                            </ContextMenu>
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.ClearTextButton="True"
+                              Controls:TextBoxHelper.UseFloatingWatermark="True"
+                              Controls:TextBoxHelper.Watermark="Editable..."
+                              IsEditable="True"
+                              SelectedIndex="0">
+                        <ComboBox.ContextMenu>
+                            <ContextMenu IsEnabled="False" Visibility="Collapsed" />
+                        </ComboBox.ContextMenu>
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+
+                    <TextBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.Watermark="Editable TextBox..." />
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.UseFloatingWatermark="True"
+                              Controls:TextBoxHelper.Watermark="Autocompletion"
+                              DisplayMemberPath="Title"
+                              IsEditable="True"
+                              ItemsSource="{Binding Albums}"
+                              MaxDropDownHeight="125"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.Virtualized}"
+                              Text="{Binding Path=Title}" />
+
+                    <ComboBox x:Name="groupingComboBox"
+                              Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              Controls:TextBoxHelper.Watermark="Autocompletion with grouping"
+                              DisplayMemberPath="Title"
+                              IsEditable="True"
+                              IsEnabled="True"
+                              ItemsSource="{Binding Albums}"
+                              Style="{DynamicResource MahApps.Styles.ComboBox.Virtualized}"
+                              Text="{Binding Path=Title}">
+                        <ComboBox.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=Name.Name}" />
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ComboBox.GroupStyle>
+                    </ComboBox>
+
+                    <ComboBox Width="200"
+                              Margin="{StaticResource ControlMargin}"
+                              IsEnabled="False"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="Item 1" />
+                        <ComboBoxItem Content="Item 2" />
+                        <ComboBoxItem Content="Item 3" />
+                        <ComboBoxItem Content="Item 4" />
+                    </ComboBox>
+                    <ComboBox Width="200"
+                              Margin="0 10 0 0"
+                              Controls:TextBoxHelper.Watermark="Autocompletion"
+                              DisplayMemberPath="Title"
+                              IsEditable="True"
+                              IsEnabled="False"
+                              ItemsSource="{Binding Albums}"
+                              Text="{Binding Path=Title, Mode=TwoWay}" />
+                </StackPanel>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 

@@ -8,6 +8,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:theming="urn:controlzex"
                       Title="MahApps.Metro - Demo Application"
                       Width="900"
                       Height="600"
@@ -16,7 +17,7 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       Closing="MetroWindow_Closing"
-                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Icon="mahapps.metro.logo2.ico"
                       NonActiveGlowBrush="#CDFF0000"
                       ShowIconOnTitleBar="True"
@@ -33,6 +34,14 @@
 
     <Window.Resources>
         <ResourceDictionary>
+            <ObjectDataProvider x:Key="SyncModePreferenceEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type theming:ThemeSyncMode}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="theming:ThemeSyncMode" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
             <Ellipse x:Key="AppThemeMenuIcon"
                      Width="16"
                      Height="16"
@@ -47,7 +56,7 @@
                      Fill="{Binding ColorBrush, Mode=OneWay}" />
 
             <Style x:Key="AppThemeMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
@@ -55,42 +64,45 @@
             </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
-                   BasedOn="{StaticResource MetroMenuItem}"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
                 <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
             </Style>
 
-            <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 x:Name="CustomTestDialog"
-                                 Title="This dialog allows arbitrary content.">
-                <TextBlock x:Name="MessageTextBlock"
-                           Height="200"
-                           Foreground="{DynamicResource AccentColorBrush}"
-                           Text="{Binding Artists[0].Name}" />
-            </Dialog:CustomDialog>
+            <Style x:Key="SyncModeMenuItemStyle"
+                   BasedOn="{StaticResource MahApps.Styles.MenuItem}"
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Command" Value="{Binding DataContext.ChangeSyncModeCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Setter Property="CommandParameter" Value="{Binding Mode=OneTime}" />
+                <Setter Property="Header" Value="{Binding Mode=OneTime}" />
+            </Style>
 
-            <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
-                                 x:Name="CustomCloseDialogTest"
-                                 Title="Custom Dialog which is awaitable">
+            <UserControl x:Key="CustomDialogTest"
+                         x:Name="CustomDialogTest"
+                         MinHeight="200">
+
+                <TextBlock x:Name="MessageTextBlock" Text="Message shown by this custom Dialog." />
+
+            </UserControl>
+
+            <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
                     <TextBlock Height="30"
-                               Foreground="{DynamicResource AccentColorBrush}"
+                               Margin="0 4"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog" Content="Close Me!" />
+                    <Button Click="CloseCustomDialog"
+                            Content="Close Me!"
+                            Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
-            </Dialog:CustomDialog>
+            </UserControl>
 
         </ResourceDictionary>
     </Window.Resources>
-
-    <Controls:MetroWindow.WindowButtonCommands>
-        <Controls:WindowButtonCommands Style="{DynamicResource MahApps.Metro.Styles.WindowButtonCommands.Win10}" />
-    </Controls:MetroWindow.WindowButtonCommands>
 
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
@@ -145,6 +157,16 @@
             <MenuItem Header="Accent"
                       ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
                       ItemsSource="{Binding AccentColors, Mode=OneWay}" />
+            <MenuItem Header="ThemeManager">
+                <MenuItem Header="SyncMode"
+                          ItemContainerStyle="{StaticResource SyncModeMenuItemStyle}"
+                          ItemsSource="{Binding Source={StaticResource SyncModePreferenceEnumValues}}" />
+                <MenuItem Header="Use HSL colors?"
+                          IsCheckable="True"
+                          IsChecked="{Binding Options.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
+
+                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
+            </MenuItem>
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
                           IsCheckable="True"
@@ -154,6 +176,7 @@
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
                 <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
+                <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
                 <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
                 <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
                 <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
@@ -225,54 +248,100 @@
                           Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
+                <Separator />
+                <MenuItem Header="ShowSystemMenu"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenu}" />
+                <MenuItem Header="ShowSystemMenuOnRightClick"
+                          IsCheckable="True"
+                          IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowSystemMenuOnRightClick}" />
             </MenuItem>
         </Menu>
 
         <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">
             <TabItem Header="buttons">
-                <exampleViews:ButtonsExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ButtonsExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="text">
-                <exampleViews:TextExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:TextExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="dates">
-                <exampleViews:DateExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:DateExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="selection">
                 <exampleViews:SelectionExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="sliders">
-                <exampleViews:Sliders DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:Sliders DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="progress">
-                <exampleViews:ProgressBars DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ProgressBars DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="splitview">
-                <exampleViews:SplitViewExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2" VerticalScrollBarVisibility="Auto">
+                    <exampleViews:SplitViewExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="hamburger">
                 <exampleViews:HamburgerMenuSample DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="tabcontrol">
-                <exampleViews:TabControlExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:TabControlExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="datagrid">
                 <exampleViews:DataGridExamples DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="tiles">
-                <exampleViews:TilesExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              Controls:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True"
+                              HorizontalScrollBarVisibility="Visible"
+                              VerticalScrollBarVisibility="Disabled">
+                    <exampleViews:TilesExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="colors">
-                <exampleViews:ColorExample DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:ColorExample DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="others">
-                <exampleViews:OtherExamples DataContext="{Binding}" />
+                <ScrollViewer Margin="2"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto">
+                    <exampleViews:OtherExamples DataContext="{Binding}" />
+                </ScrollViewer>
             </TabItem>
         </Controls:MetroAnimatedSingleRowTabControl>
 
         <StatusBar Grid.Row="2">
             <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
-            <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+            <Separator Style="{StaticResource MahApps.Styles.Separator.StatusBar}" />
             <StatusBarItem>Selected Tab:</StatusBarItem>
             <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
         </StatusBar>

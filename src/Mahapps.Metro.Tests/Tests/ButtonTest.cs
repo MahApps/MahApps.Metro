@@ -22,21 +22,6 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task DefaultButtonRespectsButtonHelperPreserveTextCase()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
-
-            Button defaultButton = window.DefaultButton;
-            ButtonHelper.SetPreserveTextCase(defaultButton, true);
-            var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
-
-            Assert.Equal("SomeText", presenter.Content); 
-        }
-
-        [Fact]
-        [DisplayTestMethodName]
         public async Task DefaultButtonRespectsControlsHelperContentCharacterCasing()
         {
             await TestHost.SwitchToAppThread();

@@ -6,29 +6,49 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MahApps.Metro.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
+    <Style x:Key="MahApps.Styles.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
+        <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="HamburgerMenuTemplate">
+        <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
+        <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <!--  PackIconMaterial - Menu  -->
                     <ContentControl Width="22"
                                     Height="22"
                                     Content="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"
-                                    Style="{DynamicResource PathIconContentControlStyle}" />
+                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="HeaderItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuHeader}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuItemStyle}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Local" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
-        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuItemStyle}" />
-        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneBackgroundBrush}" />
-        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Metro.HamburgerMenu.PaneForegroundBrush}" />
-        <Setter Property="Template" Value="{StaticResource HamburgerMenuTemplate}" />
+        <Setter Property="MaximumOpenPaneLength" Value="500" />
+        <Setter Property="MinimumOpenPaneLength" Value="100" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Background}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.HamburgerMenu.Pane.Foreground}" />
+        <Setter Property="PaneHeaderMargin" Value="0 0 0 8" />
+        <Setter Property="PaneMargin" Value="0 0 0 8" />
+        <Setter Property="ResizeThumbStyle" Value="{DynamicResource MahApps.Styles.MetroThumb.SplitView.Resize}" />
+        <Setter Property="SeparatorItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuSeparator}" />
+        <Setter Property="Template" Value="{DynamicResource MahApps.Templates.HamburgerMenu}" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
+
+    <Style x:Key="MahApps.Styles.HamburgerMenu.CreatorsUpdate"
+           BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}"
+           TargetType="{x:Type Controls:HamburgerMenu}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate}" />
+        <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate}" />
+        <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="ShowSelectionIndicator" Value="True" />
+    </Style>
+
 </ResourceDictionary>

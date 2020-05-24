@@ -1,0 +1,410 @@
+{
+  "TemplateFile": "Theme.Template.xaml",
+  "DefaultValues": {
+    "MahApps.Colors.IdealForeground": "White"
+  },
+  "BaseColorSchemes": [
+    {
+      "Name": "Dark",
+      "Values": {
+        "MahApps.Colors.ThemeForeground": "#FFFFFFFF",
+        "MahApps.Colors.ThemeForeground20": "#51FFFFFF",
+        "MahApps.Colors.ThemeBackground": "#FF252525",
+        "MahApps.Colors.ThemeBackground20": "#51252525",
+        "MahApps.Colors.Gray1": "#FFF9F9F9",
+        "MahApps.Colors.Gray2": "#FF7F7F7F",
+        "MahApps.Colors.Gray3": "#FF9D9D9D",
+        "MahApps.Colors.Gray4": "#FFA59F93",
+        "MahApps.Colors.Gray5": "#FFB9B9B9",
+        "MahApps.Colors.Gray6": "#FFCCCCCC",
+        "MahApps.Colors.Gray7": "#FF7E7E7E",
+        "MahApps.Colors.Gray8": "#FF454545",
+        "MahApps.Colors.Gray9": "#5EC9C9C9",
+        "MahApps.Colors.Gray10": "#FF2F2F2F",
+        "MahApps.Colors.Gray": "#FF7D7D7D",
+        "MahApps.Colors.Gray.MouseOver": "#FFAAAAAA",
+        "MahApps.Colors.Gray.SemiTransparent": "#40808080",
+        "MahApps.Colors.SemiTransparent": "#55FFFFFF",
+        "MahApps.Colors.Flyout": "#FF2B2B2B",
+        "MahApps.Colors.MenuShadow": "#FFFFFFFF",
+        "MahApps.Colors.MenuItem.DisabledForeground": "#FF7E7E7E",
+        "MahApps.Colors.SliderValue.Disabled": "#FF535353",
+        "MahApps.Colors.SliderTrack.Disabled": "#FF383838",
+        "MahApps.Colors.SliderThumb.Disabled": "#FF7E7E7E",
+        "MahApps.Colors.SliderTrack.Hover": "#FF737373",
+        "MahApps.Colors.SliderTrack.Normal": "#FF6C6C6C",
+        "MahApps.Colors.Button.Flat.Background.Pressed": "#444444",
+        "MahApps.Colors.Button.Flat.Foreground.Pressed": "#FFFFFF",
+        "MahApps.Colors.MenuItem.SelectionFill": "#313131",
+        "MahApps.Colors.MenuItem.SelectionStroke": "#313131",
+        "MahApps.Colors.TopMenuItem.PressedFill": "#313131",
+        "MahApps.Colors.TopMenuItem.PressedStroke": "#E0717070",
+        "MahApps.Colors.TopMenuItem.SelectionStroke": "#90717070",
+        "MahApps.Colors.Badged.Background.Disabled": "#FF666666",
+        "MahApps.Colors.Badged.Foreground.Disabled": "#99000000",
+        "MahApps.Colors.SystemAltHigh": "#FF000000",
+        "MahApps.Colors.SystemAltLow": "#33000000",
+        "MahApps.Colors.SystemAltMedium": "#99000000",
+        "MahApps.Colors.SystemAltMediumHigh": "#CC000000",
+        "MahApps.Colors.SystemAltMediumLow": "#66000000",
+        "MahApps.Colors.SystemBaseHigh": "#FFFFFFFF",
+        "MahApps.Colors.SystemBaseLow": "#33FFFFFF",
+        "MahApps.Colors.SystemBaseMedium": "#99FFFFFF",
+        "MahApps.Colors.SystemBaseMediumHigh": "#CCFFFFFF",
+        "MahApps.Colors.SystemBaseMediumLow": "#66FFFFFF",
+        "MahApps.Colors.SystemChromeAltLow": "#FFF2F2F2",
+        "MahApps.Colors.SystemChromeBlackHigh": "#FF000000",
+        "MahApps.Colors.SystemChromeBlackLow": "#33000000",
+        "MahApps.Colors.SystemChromeBlackMediumLow": "#66000000",
+        "MahApps.Colors.SystemChromeBlackMedium": "#CC000000",
+        "MahApps.Colors.SystemChromeDisabledHigh": "#FF333333",
+        "MahApps.Colors.SystemChromeDisabledLow": "#FF858585",
+        "MahApps.Colors.SystemChromeHigh": "#FF767676",
+        "MahApps.Colors.SystemChromeLow": "#FF171717",
+        "MahApps.Colors.SystemChromeMedium": "#FF1F1F1F",
+        "MahApps.Colors.SystemChromeMediumLow": "#FF2B2B2B",
+        "MahApps.Colors.SystemChromeWhite": "#FFFFFFFF",
+        "MahApps.Colors.SystemChromeGray": "#FF767676",
+        "MahApps.Colors.SystemListLow": "#19FFFFFF",
+        "MahApps.Colors.SystemListMedium": "#33FFFFFF",
+        "MahApps.Colors.SystemErrorText": "#FFF000",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.9",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.8",
+        "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.9",
+        "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.8",
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.36"
+      }
+    },
+    {
+      "Name": "Light",
+      "Values": {
+        "MahApps.Colors.ThemeForeground": "#FF000000",
+        "MahApps.Colors.ThemeForeground20": "#51000000",
+        "MahApps.Colors.ThemeBackground": "#FFFFFFFF",
+        "MahApps.Colors.ThemeBackground20": "#51FFFFFF",
+        "MahApps.Colors.Gray1": "#FF333333",
+        "MahApps.Colors.Gray2": "#FF7F7F7F",
+        "MahApps.Colors.Gray3": "#FF9D9D9D",
+        "MahApps.Colors.Gray4": "#FFA59F93",
+        "MahApps.Colors.Gray5": "#FFB9B9B9",
+        "MahApps.Colors.Gray6": "#FFCCCCCC",
+        "MahApps.Colors.Gray7": "#FFD8D8D9",
+        "MahApps.Colors.Gray8": "#FFE0E0E0",
+        "MahApps.Colors.Gray9": "#5EC9C9C9",
+        "MahApps.Colors.Gray10": "#FFF7F7F7",
+        "MahApps.Colors.Gray": "#FFBEBEBE",
+        "MahApps.Colors.Gray.MouseOver": "#FF333333",
+        "MahApps.Colors.Gray.SemiTransparent": "#40808080",
+        "MahApps.Colors.SemiTransparent": "#55000000",
+        "MahApps.Colors.Flyout": "#FFFFFFFF",
+        "MahApps.Colors.MenuShadow": "#FF000000",
+        "MahApps.Colors.MenuItem.DisabledForeground": "#FF7F7F7F",
+        "MahApps.Colors.SliderValue.Disabled": "#FFBABABA",
+        "MahApps.Colors.SliderTrack.Disabled": "#FFDBDBDB",
+        "MahApps.Colors.SliderThumb.Disabled": "#FFA0A0A0",
+        "MahApps.Colors.SliderTrack.Hover": "#FFD0D0D0",
+        "MahApps.Colors.SliderTrack.Normal": "#FFC6C6C6",
+        "MahApps.Colors.Button.Flat.Background.Pressed": "#333333",
+        "MahApps.Colors.Button.Flat.Foreground.Pressed": "#FFFFFF",
+        "MahApps.Colors.MenuItem.SelectionFill": "#DEDEDE",
+        "MahApps.Colors.MenuItem.SelectionStroke": "#DEDEDE",
+        "MahApps.Colors.TopMenuItem.PressedFill": "#DEDEDE",
+        "MahApps.Colors.TopMenuItem.PressedStroke": "#E0717070",
+        "MahApps.Colors.TopMenuItem.SelectionStroke": "#90717070",
+        "MahApps.Colors.Badged.Background.Disabled": "#FF999999",
+        "MahApps.Colors.Badged.Foreground.Disabled": "#99000000",
+        "MahApps.Colors.SystemAltHigh": "#FFFFFFFF",
+        "MahApps.Colors.SystemAltLow": "#33FFFFFF",
+        "MahApps.Colors.SystemAltMedium": "#99FFFFFF",
+        "MahApps.Colors.SystemAltMediumHigh": "#CCFFFFFF",
+        "MahApps.Colors.SystemAltMediumLow": "#66FFFFFF",
+        "MahApps.Colors.SystemBaseHigh": "#FF000000",
+        "MahApps.Colors.SystemBaseLow": "#33000000",
+        "MahApps.Colors.SystemBaseMedium": "#99000000",
+        "MahApps.Colors.SystemBaseMediumHigh": "#CC000000",
+        "MahApps.Colors.SystemBaseMediumLow": "#66000000",
+        "MahApps.Colors.SystemChromeAltLow": "#FF171717",
+        "MahApps.Colors.SystemChromeBlackHigh": "#FF000000",
+        "MahApps.Colors.SystemChromeBlackLow": "#33000000",
+        "MahApps.Colors.SystemChromeBlackMediumLow": "#66000000",
+        "MahApps.Colors.SystemChromeBlackMedium": "#CC000000",
+        "MahApps.Colors.SystemChromeDisabledHigh": "#FFCCCCCC",
+        "MahApps.Colors.SystemChromeDisabledLow": "#FF7A7A7A",
+        "MahApps.Colors.SystemChromeHigh": "#FFCCCCCC",
+        "MahApps.Colors.SystemChromeLow": "#FFF2F2F2",
+        "MahApps.Colors.SystemChromeMedium": "#FFE6E6E6",
+        "MahApps.Colors.SystemChromeMediumLow": "#FFF2F2F2",
+        "MahApps.Colors.SystemChromeWhite": "#FFFFFFFF",
+        "MahApps.Colors.SystemChromeGray": "#FF767676",
+        "MahApps.Colors.SystemListLow": "#19000000",
+        "MahApps.Colors.SystemListMedium": "#33000000",
+        "MahApps.Colors.SystemErrorText": "#C50500",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentHigh.Opacity": "0.7",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentLow.Opacity": "0.4",
+        "MahApps.Brushes.SystemControlHighlightAltListAccentMedium.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlHighlightListAccentHigh.Opacity": "0.7",
+        "MahApps.Brushes.SystemControlHighlightListAccentLow.Opacity": "0.4",
+        "MahApps.Brushes.SystemControlHighlightListAccentMedium.Opacity": "0.6",
+        "MahApps.Brushes.SystemControlTransientBorder.Opacity": "0.14"
+      }
+    }
+  ],
+  "ColorSchemes": [
+    {
+      "Name": "Amber",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFF0A30A",
+        "MahApps.Colors.Accent": "#CCF0A30A",
+        "MahApps.Colors.Accent2": "#99F0A30A",
+        "MahApps.Colors.Accent3": "#66F0A30A",
+        "MahApps.Colors.Accent4": "#33F0A30A",
+        "MahApps.Colors.Highlight": "#FFB17807"
+      }
+    },
+    {
+      "Name": "Blue",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF0078D7",
+        "MahApps.Colors.Accent": "#CC0078D7",
+        "MahApps.Colors.Accent2": "#990078D7",
+        "MahApps.Colors.Accent3": "#660078D7",
+        "MahApps.Colors.Accent4": "#330078D7",
+        "MahApps.Colors.Highlight": "#FF086F9E"
+      }
+    },
+    {
+      "Name": "Brown",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF825A2C",
+        "MahApps.Colors.Accent": "#CC825A2C",
+        "MahApps.Colors.Accent2": "#99825A2C",
+        "MahApps.Colors.Accent3": "#66825A2C",
+        "MahApps.Colors.Accent4": "#33825A2C",
+        "MahApps.Colors.Highlight": "#FF604220"
+      }
+    },
+    {
+      "Name": "Cobalt",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF0050EF",
+        "MahApps.Colors.Accent": "#CC0050EF",
+        "MahApps.Colors.Accent2": "#990050EF",
+        "MahApps.Colors.Accent3": "#660050EF",
+        "MahApps.Colors.Accent4": "#330050EF",
+        "MahApps.Colors.Highlight": "#FF003BB0"
+      }
+    },
+    {
+      "Name": "Crimson",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFA20025",
+        "MahApps.Colors.Accent": "#CCA20025",
+        "MahApps.Colors.Accent2": "#99A20025",
+        "MahApps.Colors.Accent3": "#66A20025",
+        "MahApps.Colors.Accent4": "#33A20025",
+        "MahApps.Colors.Highlight": "#FF77001B"
+      }
+    },
+    {
+      "Name": "Cyan",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF1BA1E2",
+        "MahApps.Colors.Accent": "#CC1BA1E2",
+        "MahApps.Colors.Accent2": "#991BA1E2",
+        "MahApps.Colors.Accent3": "#661BA1E2",
+        "MahApps.Colors.Accent4": "#331BA1E2",
+        "MahApps.Colors.Highlight": "#FF1377A7"
+      }
+    },
+    {
+      "Name": "Emerald",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF008A00",
+        "MahApps.Colors.Accent": "#CC008A00",
+        "MahApps.Colors.Accent2": "#99008A00",
+        "MahApps.Colors.Accent3": "#66008A00",
+        "MahApps.Colors.Accent4": "#33008A00",
+        "MahApps.Colors.Highlight": "#FF006600"
+      }
+    },
+    {
+      "Name": "Green",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF60A917",
+        "MahApps.Colors.Accent": "#CC60A917",
+        "MahApps.Colors.Accent2": "#9960A917",
+        "MahApps.Colors.Accent3": "#6660A917",
+        "MahApps.Colors.Accent4": "#3360A917",
+        "MahApps.Colors.Highlight": "#FF477D11"
+      }
+    },
+    {
+      "Name": "Indigo",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF6A00FF",
+        "MahApps.Colors.Accent": "#CC6A00FF",
+        "MahApps.Colors.Accent2": "#996A00FF",
+        "MahApps.Colors.Accent3": "#666A00FF",
+        "MahApps.Colors.Accent4": "#336A00FF",
+        "MahApps.Colors.Highlight": "#FF4E00BC"
+      }
+    },
+    {
+      "Name": "Lime",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFA4C400",
+        "MahApps.Colors.Accent": "#CCA4C400",
+        "MahApps.Colors.Accent2": "#99A4C400",
+        "MahApps.Colors.Accent3": "#66A4C400",
+        "MahApps.Colors.Accent4": "#33A4C400",
+        "MahApps.Colors.Highlight": "#FF799100"
+      }
+    },
+    {
+      "Name": "Magenta",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFD80073",
+        "MahApps.Colors.Accent": "#CCD80073",
+        "MahApps.Colors.Accent2": "#99D80073",
+        "MahApps.Colors.Accent3": "#66D80073",
+        "MahApps.Colors.Accent4": "#33D80073",
+        "MahApps.Colors.Highlight": "#FF9F0055"
+      }
+    },
+    {
+      "Name": "Mauve",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF76608A",
+        "MahApps.Colors.Accent": "#CC76608A",
+        "MahApps.Colors.Accent2": "#9976608A",
+        "MahApps.Colors.Accent3": "#6676608A",
+        "MahApps.Colors.Accent4": "#3376608A",
+        "MahApps.Colors.Highlight": "#FF574766"
+      }
+    },
+    {
+      "Name": "Olive",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF6D8764",
+        "MahApps.Colors.Accent": "#CC6D8764",
+        "MahApps.Colors.Accent2": "#996D8764",
+        "MahApps.Colors.Accent3": "#666D8764",
+        "MahApps.Colors.Accent4": "#336D8764",
+        "MahApps.Colors.Highlight": "#FF50634A"
+      }
+    },
+    {
+      "Name": "Orange",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFFA6800",
+        "MahApps.Colors.Accent": "#CCFA6800",
+        "MahApps.Colors.Accent2": "#99FA6800",
+        "MahApps.Colors.Accent3": "#66FA6800",
+        "MahApps.Colors.Accent4": "#33FA6800",
+        "MahApps.Colors.Highlight": "#FFB94C00"
+      }
+    },
+    {
+      "Name": "Pink",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFF472D0",
+        "MahApps.Colors.Accent": "#CCF472D0",
+        "MahApps.Colors.Accent2": "#99F472D0",
+        "MahApps.Colors.Accent3": "#66F472D0",
+        "MahApps.Colors.Accent4": "#33F472D0",
+        "MahApps.Colors.Highlight": "#FFB45499"
+      }
+    },
+    {
+      "Name": "Purple",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF6459DF",
+        "MahApps.Colors.Accent": "#CC6459DF",
+        "MahApps.Colors.Accent2": "#996459DF",
+        "MahApps.Colors.Accent3": "#666459DF",
+        "MahApps.Colors.Accent4": "#336459DF",
+        "MahApps.Colors.Highlight": "#FF5133AB"
+      }
+    },
+    {
+      "Name": "Red",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFE51400",
+        "MahApps.Colors.Accent": "#CCE51400",
+        "MahApps.Colors.Accent2": "#99E51400",
+        "MahApps.Colors.Accent3": "#66E51400",
+        "MahApps.Colors.Accent4": "#33E51400",
+        "MahApps.Colors.Highlight": "#FFA90E00"
+      }
+    },
+    {
+      "Name": "Sienna",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFA0522D",
+        "MahApps.Colors.Accent": "#CCA0522D",
+        "MahApps.Colors.Accent2": "#99A0522D",
+        "MahApps.Colors.Accent3": "#66A0522D",
+        "MahApps.Colors.Accent4": "#33A0522D",
+        "MahApps.Colors.Highlight": "#FF763C21"
+      }
+    },
+    {
+      "Name": "Steel",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF647687",
+        "MahApps.Colors.Accent": "#CC647687",
+        "MahApps.Colors.Accent2": "#99647687",
+        "MahApps.Colors.Accent3": "#66647687",
+        "MahApps.Colors.Accent4": "#33647687",
+        "MahApps.Colors.Highlight": "#FF4A5763"
+      }
+    },
+    {
+      "Name": "Taupe",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF87794E",
+        "MahApps.Colors.Accent": "#CC87794E",
+        "MahApps.Colors.Accent2": "#9987794E",
+        "MahApps.Colors.Accent3": "#6687794E",
+        "MahApps.Colors.Accent4": "#3387794E",
+        "MahApps.Colors.Highlight": "#FF635939"
+      }
+    },
+    {
+      "Name": "Teal",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FF00ABA9",
+        "MahApps.Colors.Accent": "#CC00ABA9",
+        "MahApps.Colors.Accent2": "#9900ABA9",
+        "MahApps.Colors.Accent3": "#6600ABA9",
+        "MahApps.Colors.Accent4": "#3300ABA9",
+        "MahApps.Colors.Highlight": "#FF007E7D"
+      }
+    },
+    {
+      "Name": "Violet",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFAA00FF",
+        "MahApps.Colors.Accent": "#CCAA00FF",
+        "MahApps.Colors.Accent2": "#99AA00FF",
+        "MahApps.Colors.Accent3": "#66AA00FF",
+        "MahApps.Colors.Accent4": "#33AA00FF",
+        "MahApps.Colors.Highlight": "#FF7D00BC"
+      }
+    },
+    {
+      "Name": "Yellow",
+      "Values": {
+        "MahApps.Colors.AccentBase": "#FFFEDE06",
+        "MahApps.Colors.Accent": "#CCFEDE06",
+        "MahApps.Colors.Accent2": "#99FEDE06",
+        "MahApps.Colors.Accent3": "#66FEDE06",
+        "MahApps.Colors.Accent4": "#33FEDE06",
+        "MahApps.Colors.Highlight": "#FFBBA404",
+        "MahApps.Colors.IdealForeground": "Black"
+      }
+    }
+  ]
+}

@@ -1,125 +1,248 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    /// <summary>
-    /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
-    /// </summary>
     public partial class HamburgerMenu
     {
+        /// <summary>Identifies the <see cref="ItemClick"/> routed event.</summary>
+        public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
+
         /// <summary>
         /// Event raised when an item is clicked
         /// </summary>
-        public event ItemClickEventHandler ItemClick;
+        public event ItemClickRoutedEventHandler ItemClick
+        {
+            add => this.AddHandler(ItemClickEvent, value);
+            remove => this.RemoveHandler(ItemClickEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="OptionsItemClick"/> routed event.</summary>
+        public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an options' item is clicked
         /// </summary>
-        public event ItemClickEventHandler OptionsItemClick;
+        public event ItemClickRoutedEventHandler OptionsItemClick
+        {
+            add => this.AddHandler(OptionsItemClickEvent, value);
+            remove => this.RemoveHandler(OptionsItemClickEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="ItemInvoked"/> routed event.</summary>
+        public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Direct, typeof(HamburgerMenuItemInvokedRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is invoked
         /// </summary>
-        public event EventHandler<HamburgerMenuItemInvokedEventArgs> ItemInvoked;
-
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        public event HamburgerMenuItemInvokedRoutedEventHandler ItemInvoked
         {
-            IsPaneOpen = !IsPaneOpen;
+            add => this.AddHandler(ItemInvokedEvent, value);
+            remove => this.RemoveHandler(ItemInvokedEvent, value);
         }
 
-        private void OnItemClick()
-        {
-            if (_optionsListView != null)
-            {
-                _optionsListView.SelectedIndex = -1;
-            }
+        /// <summary>Identifies the <see cref="HamburgerButtonClick"/> routed event.</summary>
+        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(HamburgerMenu));
 
-            var selectedItem = _buttonsListView.SelectedItem;
+        /// <summary>
+        /// Event raised when the hamburger button is clicked
+        /// </summary>
+        public event RoutedEventHandler HamburgerButtonClick
+        {
+            add => this.AddHandler(HamburgerButtonClickEvent, value);
+            remove => this.RemoveHandler(HamburgerButtonClickEvent, value);
+        }
+
+        private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
+        {
+            var args = new RoutedEventArgs(HamburgerButtonClickEvent, sender);
+            this.RaiseEvent(args);
+
+            if (!args.Handled)
+            {
+                this.IsPaneOpen = !this.IsPaneOpen;
+            }
+        }
+
+        private bool OnItemClick()
+        {
+            var selectedItem = this.buttonsListView.SelectedItem;
+
+            if (!this.CanRaiseItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
-            RaiseItemCommand();
+            this.RaiseItemCommand();
 
-            ItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
-            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = false });
-        }
-
-        private void OnOptionsItemClick()
-        {
-            if (_buttonsListView != null)
+            var raiseItemEvents = this.RaiseItemEvents(selectedItem);
+            if (raiseItemEvents && this.optionsListView != null)
             {
-                _buttonsListView.SelectedIndex = -1;
+                this.optionsListView.SelectedIndex = -1;
             }
 
-            var selectedItem = _optionsListView.SelectedItem;
+            return raiseItemEvents;
+        }
+
+        private bool CanRaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this.buttonsListView != null)
+                {
+                    this.buttonsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool RaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            var itemClickEventArgs = new ItemClickEventArgs(ItemClickEvent, this) { ClickedItem = selectedItem };
+            this.RaiseEvent(itemClickEventArgs);
+
+            var hamburgerMenuItemInvokedEventArgs = new HamburgerMenuItemInvokedEventArgs(ItemInvokedEvent, this) { InvokedItem = selectedItem, IsItemOptions = false };
+            this.RaiseEvent(hamburgerMenuItemInvokedEventArgs);
+
+            return !itemClickEventArgs.Handled && !hamburgerMenuItemInvokedEventArgs.Handled;
+        }
+
+        private bool OnOptionsItemClick()
+        {
+            var selectedItem = this.optionsListView.SelectedItem;
+
+            if (!this.CanRaiseOptionsItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
-            RaiseOptionsItemCommand();
+            this.RaiseOptionsItemCommand();
 
-            OptionsItemClick?.Invoke(this, new ItemClickEventArgs(selectedItem));
-            ItemInvoked?.Invoke(this, new HamburgerMenuItemInvokedEventArgs() { InvokedItem = selectedItem, IsItemOptions = true });
+            var raiseOptionsItemEvents = this.RaiseOptionsItemEvents(selectedItem);
+            if (raiseOptionsItemEvents && this.buttonsListView != null)
+            {
+                this.buttonsListView.SelectedIndex = -1;
+            }
+
+            return raiseOptionsItemEvents;
         }
 
-        private ListBoxItem GetClickedListBoxItem(ItemsControl itemsControl, DependencyObject dependencyObject)
+        private bool CanRaiseOptionsItemEvents(object selectedItem)
         {
-            if (itemsControl == null || dependencyObject == null)
+            if (selectedItem is null)
             {
-                return null;
+                return false;
             }
-            var item = ItemsControl.ContainerFromElement(itemsControl, dependencyObject) as ListBoxItem;
-            return item;
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this.optionsListView != null)
+                {
+                    this.optionsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
-        private void ButtonsListView_ItemClick(object sender, MouseButtonEventArgs e)
+        private bool RaiseOptionsItemEvents(object selectedItem)
         {
-            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
-            if (item != null)
+            if (selectedItem is null)
             {
-                // ListBox item clicked - do some cool things here
-                OnItemClick();
+                return false;
             }
-        }
 
-        private void OptionsListView_ItemClick(object sender, MouseButtonEventArgs e)
-        {
-            var item = GetClickedListBoxItem(sender as ItemsControl, e.OriginalSource as DependencyObject);
-            if (item != null)
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
             {
-                // ListBox item clicked - do some cool things here
-                OnOptionsItemClick();
+                return false;
             }
+
+            var itemClickEventArgs = new ItemClickEventArgs(OptionsItemClickEvent, this) { ClickedItem = selectedItem };
+            this.RaiseEvent(itemClickEventArgs);
+
+            var hamburgerMenuItemInvokedEventArgs = new HamburgerMenuItemInvokedEventArgs(ItemInvokedEvent, this) { InvokedItem = selectedItem, IsItemOptions = true };
+            this.RaiseEvent(hamburgerMenuItemInvokedEventArgs);
+
+            return !itemClickEventArgs.Handled && !hamburgerMenuItemInvokedEventArgs.Handled;
         }
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listBox = sender as ListBox;
+            if (listBox == null)
+            {
+                return;
+            }
+
+            listBox.SelectionChanged -= this.ButtonsListView_SelectionChanged;
+
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                if (Keyboard.IsKeyToggled(Key.Space) ||
-                    Keyboard.IsKeyToggled(Key.Up) ||
-                    Keyboard.IsKeyToggled(Key.PageUp) ||
-                    Keyboard.IsKeyToggled(Key.Down) ||
-                    Keyboard.IsKeyToggled(Key.PageDown))
+                var canItemClick = this.OnItemClick();
+
+                if (!canItemClick)
                 {
-                    OnItemClick();
+                    // The following lines will fire another SelectionChanged event.
+                    if (e.RemovedItems.Count > 0)
+                    {
+                        listBox.SelectedItem = e.RemovedItems[0];
+                    }
+                    else
+                    {
+                        listBox.SelectedIndex = -1;
+                    }
                 }
             }
+
+            listBox.SelectionChanged += this.ButtonsListView_SelectionChanged;
         }
 
         private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var listBox = sender as ListBox;
+            if (listBox == null)
+            {
+                return;
+            }
+
+            listBox.SelectionChanged -= this.OptionsListView_SelectionChanged;
+
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                if (Keyboard.IsKeyToggled(Key.Space) ||
-                    Keyboard.IsKeyToggled(Key.Up) ||
-                    Keyboard.IsKeyToggled(Key.PageUp) ||
-                    Keyboard.IsKeyToggled(Key.Down) ||
-                    Keyboard.IsKeyToggled(Key.PageDown))
+                var canItemClick = this.OnOptionsItemClick();
+
+                if (!canItemClick)
                 {
-                    OnOptionsItemClick();
+                    // The following lines will fire another SelectionChanged event.
+                    if (e.RemovedItems.Count > 0)
+                    {
+                        listBox.SelectedItem = e.RemovedItems[0];
+                    }
+                    else
+                    {
+                        listBox.SelectedIndex = -1;
+                    }
                 }
             }
+
+            listBox.SelectionChanged += this.OptionsListView_SelectionChanged;
         }
     }
 }

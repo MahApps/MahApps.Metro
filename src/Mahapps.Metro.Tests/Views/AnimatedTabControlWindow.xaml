@@ -30,26 +30,18 @@
         <controls:MetroAnimatedSingleRowTabControl x:Name="MetroTabControl"
                                                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                                    ItemsSource="{Binding Data.TestViewModels}" />
-        <Grid>
-            <Grid.Resources>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-            </Grid.Resources>
-            <TabControl x:Name="NormalTabControl"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                        ItemsSource="{Binding Data.TestViewModels}" />
-        </Grid>
+        <TabControl x:Name="NormalTabControl"
+                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                    ItemsSource="{Binding Data.TestViewModels}"
+                    Style="{DynamicResource MahApps.Styles.TabControl.AnimatedSingleRow}" />
 
         <controls:MetroAnimatedTabControl x:Name="MetroTabControl2"
                                           ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
                                           ItemsSource="{Binding Data.TestViewModels}" />
-        <Grid>
-            <Grid.Resources>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
-            </Grid.Resources>
-            <TabControl x:Name="NormalTabControl2"
-                        ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
-                        ItemsSource="{Binding Data.TestViewModels}" />
-        </Grid>
+        <TabControl x:Name="NormalTabControl2"
+                    ContentTemplateSelector="{StaticResource TabControlContentTemplateSelector}"
+                    ItemsSource="{Binding Data.TestViewModels}"
+                    Style="{DynamicResource MahApps.Styles.TabControl.Animated}" />
     </UniformGrid>
 
 </controls:MetroWindow>

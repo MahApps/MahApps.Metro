@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
@@ -13,9 +14,15 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>().ConfigureAwait(false);
 
-            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseLight").Resources["BlackBrush"]).Color;
+            var theme = ThemeManager.Current.DetectTheme();
+            Assert.NotNull(theme);
+
+            var brush = theme.Resources["MahApps.Brushes.ThemeForeground"] as SolidColorBrush;
+            Assert.NotNull(brush);
+
+            var blackBrushColor = brush.Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
         }

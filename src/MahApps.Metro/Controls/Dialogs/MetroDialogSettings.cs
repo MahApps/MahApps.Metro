@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls.Dialogs
             this.CancellationToken = CancellationToken.None;
             this.DialogTitleFontSize = Double.NaN;
             this.DialogMessageFontSize = Double.NaN;
+            this.DialogButtonFontSize = Double.NaN;
             this.DialogResultOnCancel = null;
         }
 
@@ -87,6 +88,14 @@ namespace MahApps.Metro.Controls.Dialogs
         public double DialogMessageFontSize { get; set; }
 
         /// <summary>
+        /// Gets or sets the size of the dialog button font.
+        /// </summary>
+        /// <value>
+        /// The size of the dialog button font.
+        /// </value>
+        public double DialogButtonFontSize { get; set; }
+
+        /// <summary>
         /// Gets or sets the dialog result when the user cancelled the dialog with 'ESC' key
         /// </summary>
         /// <remarks>If the value is <see langword="null"/> the default behavior is determined 
@@ -130,11 +139,5 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets or sets the text used for the second auxiliary button.
         /// </summary>
         public string SecondAuxiliaryButtonText { get; set; }
-
-        /// <summary>
-        /// If set, stops standard resource dictionaries being applied to the dialog.
-        /// </summary>
-        [Obsolete("This property will be deleted in the next release.")]
-        public bool SuppressDefaultResources { get; set; }
     }
 }

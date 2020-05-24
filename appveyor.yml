@@ -1,28 +1,44 @@
-# configuration for develop and master branch
+# http://www.appveyor.com/docs/appveyor-yml
 
--
-  branches:
-    only:
-      - develop
-      - master
+# configuration for develop/CI and master/Release branch
 
-  skip_tags: true
-  image: Visual Studio 2017
-  configuration: Release
-  platform: Any CPU
-  test: off
+branches:
+  only:
+    - develop
+    - master
 
-  pull_requests:
-    do_not_increment_build_number: false
+environment:
+  azure-key-vault-url:
+    secure: 1mKS/HfCVq+iYNRVSrrN8NEowOkKt3knrpMzw+SOy3g=
+  azure-key-vault-client-id:
+    secure: JfSqzmsJdXB6uIxttCRoQw1NygwxqXHDj9uIqQnWOb9VCnQYlRPlAnxgW0yTSX4b
+  azure-key-vault-client-secret:
+    secure: CUpRJxMLeUZwNPMcqI0wECaWfy5AMnWn1UZhBd9WnQ3Z16lJP1Vzrkf24mccbhUD
+  azure-key-vault-certificate:
+    secure: BSPdW2TgnQtoQXXbeDECug==
 
-  build_script:
-    - ps: cd src
-    - ps: .\build.ps1 -Target appveyor
-    - ps: cd..
+skip_tags: true
+image: Visual Studio 2019
+test: off
 
-  cache:
-    - src\packages -> **\packages.config
-    # - '%USERPROFILE%\.nuget\packages -> **\project.json'
+install:
+  #- cinst dotnetcore-sdk --version=3.1.100
 
-  artifacts:
-    - path: \src\Publish\*.*
+pull_requests:
+  do_not_increment_build_number: false
+
+build_script:
+  - ps: .\build.ps1 -target appveyor
+
+after_build:
+  - ps: gci -Filter *.trx -Path .\TestResults\ | % { (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/mstest/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $_.FullName)) }
+
+artifacts:
+  - path: \Publish\*.*
+
+nuget:
+  disable_publish_on_pr: true
+
+skip_commits:
+  files:
+    - '**/*.md'

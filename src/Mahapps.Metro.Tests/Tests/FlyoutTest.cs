@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using ControlzEx.Theming;
 using ExposedObject;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
@@ -27,7 +28,7 @@ namespace MahApps.Metro.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseDark").Resources["BlackBrush"]).Color;
+            Color expectedColor = ((SolidColorBrush)ThemeManager.Current.GetTheme("Dark.Blue").Resources["MahApps.Brushes.ThemeForeground"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }
@@ -73,14 +74,14 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
+            window.IconOverlayBehavior = OverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
             var exposedWindow = Exposed.From(window);
-            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.icon);
+            int iconZIndex = Panel.GetZIndex(exposedWindow.icon);
             int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
 
-            Assert.True(flyoutindex < windowCommandsZIndex);
+            Assert.True(flyoutindex < iconZIndex);
         }
 
         [Fact]
@@ -209,6 +210,44 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task WindowButtonCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
+            window.RightFlyout.IsOpen = true;
+
+            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
+            window.RightFlyout.IsOpen = false;
+
+            Assert.Equal(Brushes.Red, window.WindowButtonCommands.Foreground);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task WindowCommandsForegroundBrushShouldBeAlwaysOverrideDefaultWindowCommandsBrush()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.OverrideDefaultWindowCommandsBrush = Brushes.Red;
+
+            window.RightFlyout.IsOpen = true;
+            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+
+            window.RightFlyout.IsOpen = false;
+            Assert.Equal(Brushes.Red, window.RightWindowCommands.Foreground);
+
+            window.LeftFlyout.IsOpen = true;
+            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
+
+            window.LeftFlyout.IsOpen = false;
+            Assert.Equal(Brushes.Red, window.LeftWindowCommands.Foreground);
         }
     }
 }

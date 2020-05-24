@@ -7,7 +7,7 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// The HamburgerMenuItem provides an implementation for HamburgerMenu entries.
     /// </summary>
-    public class HamburgerMenuItem : Freezable, ICommandSource
+    public class HamburgerMenuItem : HamburgerMenuItemBase, IHamburgerMenuItem, ICommandSource
     {
         /// <summary>
         /// Identifies the <see cref="Label"/> dependency property.
@@ -18,11 +18,6 @@ namespace MahApps.Metro.Controls
         /// Identifies the <see cref="TargetPageType"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty TargetPageTypeProperty = DependencyProperty.Register(nameof(TargetPageType), typeof(Type), typeof(HamburgerMenuItem), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="Tag"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TagProperty = DependencyProperty.Register(nameof(Tag), typeof(object), typeof(HamburgerMenuItem), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="Command"/> dependency property.
@@ -78,22 +73,6 @@ namespace MahApps.Metro.Controls
             set
             {
                 SetValue(TargetPageTypeProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value that specifies an user specific value.
-        /// </summary>
-        public object Tag
-        {
-            get
-            {
-                return GetValue(TagProperty);
-            }
-
-            set
-            {
-                SetValue(TagProperty, value);
             }
         }
 
@@ -210,28 +189,13 @@ namespace MahApps.Metro.Controls
 
         private void UnhookCommand(ICommand command)
         {
-#if NET4
-            var handler = CommandHelpers.GetCanExecuteChangedHandler(this);
-            if (handler != null)
-            {
-                command.CanExecuteChanged -= handler;
-                CommandHelpers.SetCanExecuteChangedHandler(this, null);
-            }
-#else
             CanExecuteChangedEventManager.RemoveHandler(command, new EventHandler<EventArgs>(this.OnCanExecuteChanged));
-#endif
             this.UpdateCanExecute();
         }
 
         private void HookCommand(ICommand command)
         {
-#if NET4
-            EventHandler handler = new EventHandler(OnCanExecuteChanged);
-            CommandHelpers.SetCanExecuteChangedHandler(this, handler);
-            command.CanExecuteChanged += handler;
-#else            
             CanExecuteChangedEventManager.AddHandler(command, new EventHandler<EventArgs>(this.OnCanExecuteChanged));
-#endif
             this.UpdateCanExecute();
         }
 
@@ -261,7 +225,7 @@ namespace MahApps.Metro.Controls
             return ((HamburgerMenuItem)d).CanExecute;
         }
 
-        private bool canExecute;
+        private bool canExecute = true;
 
         private bool CanExecute
         {

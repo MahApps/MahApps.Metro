@@ -5,16 +5,15 @@ root = true
 end_of_line = CRLF
 
 ; 4-column tab indentation
+[*.{cs,csproj,xaml,xml,props,targets}]
+indent_style = space
+indent_size = 4
+
+[*.{md,yml}]
+indent_style = space
+indent_size = 2
+
+
 [*.cs]
-indent_style = space
-indent_size = 4
-
-; 4-column tab indentation
-[*.xaml]
-indent_style = space
-indent_size = 4
-
-; 4-column tab indentation
-[*.xml]
-indent_style = space
-indent_size = 4
+# WPF0011: Containing type should be used as registered owner.
+dotnet_diagnostic.WPF0011.severity = error

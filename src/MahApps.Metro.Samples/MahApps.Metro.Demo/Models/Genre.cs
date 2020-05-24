@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
+using MetroDemo.Core;
 
 namespace MetroDemo.Models
 {
-    public class Genre : INotifyPropertyChanged
+    public class Genre : ViewModelBase
     {
         private int _genreId;
         private string _name;
@@ -14,55 +12,26 @@ namespace MetroDemo.Models
 
         public int GenreId
         {
-            get { return _genreId; }
-            set
-            {
-                if (value == _genreId) return;
-                _genreId = value;
-                OnPropertyChanged();
-            }
+            get => this._genreId;
+            set => this.Set(ref this._genreId, value);
         }
 
         public string Name
         {
-            get { return _name; }
-            set
-            {
-                if (value == _name) return;
-                _name = value;
-                OnPropertyChanged();
-            }
+            get => this._name;
+            set => this.Set(ref this._name, value);
         }
 
         public string Description
         {
-            get { return _description; }
-            set
-            {
-                if (value == _description) return;
-                _description = value;
-                OnPropertyChanged();
-            }
+            get => this._description;
+            set => this.Set(ref this._description, value);
         }
 
         public List<Album> Albums
         {
-            get { return _albums; }
-            set
-            {
-                if (Equals(value, _albums)) return;
-                _albums = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            get => this._albums;
+            set => this.Set(ref this._albums, value);
         }
     }
 }

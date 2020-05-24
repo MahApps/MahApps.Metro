@@ -10,17 +10,21 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/SplitView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeWidth">6</system:Double>
     <system:Double x:Key="HamburgerMenuSelectionIndicatorThemeHeight">24</system:Double>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <Controls:HamburgerMenuItemStyleSelector x:Key="HamburgerMenuItemStyleSelector" />
+    <Controls:HamburgerMenuItemStyleSelector x:Key="HamburgerMenuItemOptionsStyleSelector" IsItemOptions="True" />
 
-    <Style x:Key="HamburgerButtonStyle"
-           BasedOn="{StaticResource ChromelessButtonStyle}"
+    <Style x:Key="MahApps.Styles.Button.Hamburger"
+           BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
            TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
@@ -36,7 +40,7 @@
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Opacity="0.75"
-                                          RecognizesAccessKey="True"
+                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -62,8 +66,8 @@
                  EasingMode="EaseInOut"
                  options:Freeze="true" />
 
-    <Style x:Key="HamburgerScrollViewerStyle"
-           BasedOn="{StaticResource MetroScrollViewer}"
+    <Style x:Key="MahApps.Styles.ScrollViewer.Hamburger"
+           BasedOn="{StaticResource MahApps.Styles.ScrollViewer}"
            TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
             <Setter.Value>
@@ -170,27 +174,34 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="HamburgerMenuItemFocusVisualTemplate">
+    <ControlTemplate x:Key="MahApps.Templates.HamburgerMenuItem.FocusVisual">
         <Rectangle SnapsToDevicePixels="True"
                    Stroke="Black"
                    StrokeThickness="2"
                    UseLayoutRounding="True" />
     </ControlTemplate>
 
-    <Style x:Key="HamburgerMenuItemStyle"
-           BasedOn="{StaticResource MetroListBoxItem}"
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerBase"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
-        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Visibility" Value="{Binding IsVisible, Mode=OneWay, FallbackValue=True, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerBase}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
+        <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -263,16 +274,84 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="HamburgerListBoxItemStyle"
-           BasedOn="{StaticResource HamburgerMenuItemStyle}"
-           TargetType="{x:Type ListBoxItem}" />
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.CreatorsUpdate"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+        <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+    </Style>
 
-    <Style x:Key="HamburgerMenuListStyle"
-           BasedOn="{StaticResource MetroListBox}"
+    <Style x:Key="MahApps.Styles.TextBlock.HamburgerMenuHeader"
+           BasedOn="{StaticResource MahApps.Styles.TextBlock}"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuHeader"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerBase}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="8 8 0 8" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <TextBlock x:Name="PART_HeaderText"
+                                   Margin="{TemplateBinding Padding}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}"
+                                   Text="{Binding Label}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsPaneOpen, RelativeSource={RelativeSource AncestorType=Controls:HamburgerMenu}}" Value="False">
+                            <Setter TargetName="PART_HeaderText" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuSeparator"
+           BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerBase}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Padding" Value="0 5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                        <Separator Margin="{TemplateBinding Padding}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.ListBox.HamburgerMenu"
+           BasedOn="{StaticResource MahApps.Styles.ListBox}"
            TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -293,15 +372,19 @@
                                       Focusable="False"
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      Style="{StaticResource HamburgerScrollViewerStyle}"
+                                      Style="{StaticResource MahApps.Styles.ScrollViewer.Hamburger}"
                                       VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsGrouping" Value="False">
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
-                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true" />
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -309,24 +392,23 @@
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
     </Style>
 
-    <!--  obsolete  -->
-    <Style x:Key="HamburgerListBoxStyle"
-           BasedOn="{StaticResource HamburgerMenuListStyle}"
-           TargetType="{x:Type ListBox}" />
-
-    <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="{x:Type Controls:HamburgerMenu}">
+    <ControlTemplate x:Key="MahApps.Templates.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>
             <Controls:SplitView x:Name="MainSplitView"
+                                CanResizeOpenPane="{TemplateBinding CanResizeOpenPane}"
                                 CompactPaneLength="{TemplateBinding CompactPaneLength}"
                                 DisplayMode="{TemplateBinding DisplayMode}"
                                 IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 IsTabStop="False"
-                                OpenPaneLength="{TemplateBinding OpenPaneLength}"
+                                MaximumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MaximumOpenPaneLength}"
+                                MinimumOpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=MinimumOpenPaneLength}"
+                                OpenPaneLength="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=OpenPaneLength, Mode=TwoWay}"
                                 PaneBackground="{TemplateBinding PaneBackground}"
                                 PaneForeground="{TemplateBinding PaneForeground}"
-                                PanePlacement="{TemplateBinding PanePlacement}">
+                                PanePlacement="{TemplateBinding PanePlacement}"
+                                ResizeThumbStyle="{TemplateBinding ResizeThumbStyle}">
                 <Controls:SplitView.Pane>
-                    <Grid x:Name="PaneGrid">
+                    <Grid x:Name="PaneGrid" Margin="{TemplateBinding PaneMargin}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
@@ -334,12 +416,20 @@
                         </Grid.RowDefinitions>
                         <DockPanel x:Name="PaneHeader"
                                    Grid.Row="0"
-                                   Height="{TemplateBinding HamburgerHeight}"
-                                   Margin="0 0 0 8"
+                                   Margin="{TemplateBinding PaneHeaderMargin}"
                                    LastChildFill="True">
-                            <Grid x:Name="PaneHeaderGap"
-                                  Width="{TemplateBinding HamburgerWidth}"
-                                  DockPanel.Dock="Left" />
+                            <Button x:Name="HamburgerButton"
+                                    Width="{TemplateBinding HamburgerWidth}"
+                                    Height="{TemplateBinding HamburgerHeight}"
+                                    Padding="{TemplateBinding HamburgerMargin}"
+                                    AutomationProperties.Name="Main button"
+                                    ContentTemplate="{TemplateBinding HamburgerButtonTemplate}"
+                                    DockPanel.Dock="Left"
+                                    Foreground="{TemplateBinding PaneForeground}"
+                                    IsTabStop="{TemplateBinding IsTabStop}"
+                                    Style="{TemplateBinding HamburgerButtonStyle}"
+                                    TabIndex="0"
+                                    Visibility="{TemplateBinding HamburgerVisibility}" />
                             <ContentControl x:Name="PaneHeaderContent"
                                             ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
                                             IsTabStop="False" />
@@ -350,7 +440,8 @@
                                  Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
                                  AutomationProperties.Name="Menu items"
                                  Foreground="{TemplateBinding PaneForeground}"
-                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                 IsTextSearchEnabled="False"
+                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemStyleSelector}"
                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding ItemsSource}"
@@ -358,16 +449,17 @@
                                  SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
                                  SelectionMode="Single"
-                                 Style="{StaticResource HamburgerMenuListStyle}"
+                                 Style="{StaticResource MahApps.Styles.ListBox.HamburgerMenu}"
                                  TabIndex="1" />
                         <ListBox Name="OptionsListView"
                                  Grid.Row="2"
                                  Width="{TemplateBinding OpenPaneLength}"
-                                 Margin="0 20 0 8"
+                                 Margin="0 20 0 0"
                                  VerticalAlignment="Bottom"
                                  AutomationProperties.Name="Option items"
                                  Foreground="{TemplateBinding PaneForeground}"
-                                 ItemContainerStyle="{TemplateBinding OptionsItemContainerStyle}"
+                                 IsTextSearchEnabled="False"
+                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemOptionsStyleSelector}"
                                  ItemTemplate="{TemplateBinding OptionsItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding OptionsItemsSource}"
@@ -375,7 +467,7 @@
                                  SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
                                  SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
                                  SelectionMode="Single"
-                                 Style="{StaticResource HamburgerMenuListStyle}"
+                                 Style="{StaticResource MahApps.Styles.ListBox.HamburgerMenu}"
                                  TabIndex="2" />
                     </Grid>
                 </Controls:SplitView.Pane>
@@ -392,25 +484,10 @@
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                       Transition="{TemplateBinding ContentTransition}" />
             </Controls:SplitView>
-            <Button x:Name="HamburgerButton"
-                    Width="{TemplateBinding HamburgerWidth}"
-                    Height="{TemplateBinding HamburgerHeight}"
-                    Margin="0 0 0 8"
-                    Padding="{TemplateBinding HamburgerMargin}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    AutomationProperties.Name="Main button"
-                    ContentTemplate="{TemplateBinding HamburgerMenuTemplate}"
-                    Foreground="{TemplateBinding PaneForeground}"
-                    IsTabStop="{TemplateBinding IsTabStop}"
-                    Style="{StaticResource HamburgerButtonStyle}"
-                    TabIndex="0"
-                    Visibility="{TemplateBinding HamburgerVisibility}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="PanePlacement" Value="Right">
-                <Setter TargetName="HamburgerButton" Property="HorizontalAlignment" Value="Right" />
-                <Setter TargetName="PaneHeaderGap" Property="DockPanel.Dock" Value="Right" />
+                <Setter TargetName="HamburgerButton" Property="DockPanel.Dock" Value="Right" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

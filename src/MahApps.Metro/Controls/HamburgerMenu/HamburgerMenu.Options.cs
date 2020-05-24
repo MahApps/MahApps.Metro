@@ -5,54 +5,33 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    /// <summary>
-    /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
-    /// </summary>
     public partial class HamburgerMenu
     {
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemsSource"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemsSource"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemsSourceProperty = DependencyProperty.Register(nameof(OptionsItemsSource), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemContainerStyle"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemContainerStyle"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemContainerStyleProperty = DependencyProperty.Register(nameof(OptionsItemContainerStyle), typeof(Style), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemTemplate"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemTemplateProperty = DependencyProperty.Register(nameof(OptionsItemTemplate), typeof(DataTemplate), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemTemplateSelector"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemTemplateSelector"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemTemplateSelectorProperty = DependencyProperty.Register(nameof(OptionsItemTemplateSelector), typeof(DataTemplateSelector), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsVisibility"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsVisibility"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsVisibilityProperty = DependencyProperty.Register(nameof(OptionsVisibility), typeof(Visibility), typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
-        /// <summary>
-        /// Identifies the <see cref="SelectedOptionsItem"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="SelectedOptionsItem"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedOptionsItemProperty = DependencyProperty.Register(nameof(SelectedOptionsItem), typeof(object), typeof(HamburgerMenu), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        /// <summary>
-        /// Identifies the <see cref="SelectedOptionsIndex"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="SelectedOptionsIndex"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedOptionsIndexProperty = DependencyProperty.Register(nameof(SelectedOptionsIndex), typeof(int), typeof(HamburgerMenu), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemCommand"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemCommandProperty = DependencyProperty.Register(nameof(OptionsItemCommand), typeof(ICommand), typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="OptionsItemCommandParameter"/> dependency property.</summary>
         public static readonly DependencyProperty OptionsItemCommandParameterProperty = DependencyProperty.Register(nameof(OptionsItemCommandParameter), typeof(object), typeof(HamburgerMenu), new PropertyMetadata(null));
 
         /// <summary>
@@ -60,8 +39,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object OptionsItemsSource
         {
-            get { return GetValue(OptionsItemsSourceProperty); }
-            set { SetValue(OptionsItemsSourceProperty, value); }
+            get => this.GetValue(OptionsItemsSourceProperty);
+            set => this.SetValue(OptionsItemsSourceProperty, value);
         }
 
         /// <summary>
@@ -69,8 +48,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style OptionsItemContainerStyle
         {
-            get { return (Style)GetValue(OptionsItemContainerStyleProperty); }
-            set { SetValue(OptionsItemContainerStyleProperty, value); }
+            get => (Style)this.GetValue(OptionsItemContainerStyleProperty);
+            set => this.SetValue(OptionsItemContainerStyleProperty, value);
         }
 
         /// <summary>
@@ -78,8 +57,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplate OptionsItemTemplate
         {
-            get { return (DataTemplate)GetValue(OptionsItemTemplateProperty); }
-            set { SetValue(OptionsItemTemplateProperty, value); }
+            get => (DataTemplate)this.GetValue(OptionsItemTemplateProperty);
+            set => this.SetValue(OptionsItemTemplateProperty, value);
         }
 
         /// <summary>
@@ -87,8 +66,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public DataTemplateSelector OptionsItemTemplateSelector
         {
-            get { return (DataTemplateSelector)GetValue(OptionsItemTemplateSelectorProperty); }
-            set { SetValue(OptionsItemTemplateSelectorProperty, value); }
+            get => (DataTemplateSelector)this.GetValue(OptionsItemTemplateSelectorProperty);
+            set => this.SetValue(OptionsItemTemplateSelectorProperty, value);
         }
 
         /// <summary>
@@ -101,12 +80,12 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (_optionsListView == null)
+                if (this.optionsListView == null)
                 {
                     throw new Exception("OptionsListView is not defined yet. Please use OptionsItemsSource instead.");
                 }
 
-                return _optionsListView?.Items;
+                return this.optionsListView?.Items;
             }
         }
 
@@ -115,8 +94,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Visibility OptionsVisibility
         {
-            get { return (Visibility)GetValue(OptionsVisibilityProperty); }
-            set { SetValue(OptionsVisibilityProperty, value); }
+            get => (Visibility)this.GetValue(OptionsVisibilityProperty);
+            set => this.SetValue(OptionsVisibilityProperty, value);
         }
 
         /// <summary>
@@ -124,8 +103,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object SelectedOptionsItem
         {
-            get { return GetValue(SelectedOptionsItemProperty); }
-            set { SetValue(SelectedOptionsItemProperty, value); }
+            get => this.GetValue(SelectedOptionsItemProperty);
+            set => this.SetValue(SelectedOptionsItemProperty, value);
         }
 
         /// <summary>
@@ -133,8 +112,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public int SelectedOptionsIndex
         {
-            get { return (int)GetValue(SelectedOptionsIndexProperty); }
-            set { SetValue(SelectedOptionsIndexProperty, value); }
+            get => (int)this.GetValue(SelectedOptionsIndexProperty);
+            set => this.SetValue(SelectedOptionsIndexProperty, value);
         }
 
         /// <summary>
@@ -142,8 +121,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ICommand OptionsItemCommand
         {
-            get { return (ICommand)GetValue(OptionsItemCommandProperty); }
-            set { SetValue(OptionsItemCommandProperty, value); }
+            get => (ICommand)this.GetValue(OptionsItemCommandProperty);
+            set => this.SetValue(OptionsItemCommandProperty, value);
         }
 
         /// <summary>
@@ -151,8 +130,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public object OptionsItemCommandParameter
         {
-            get { return (object)GetValue(OptionsItemCommandParameterProperty); }
-            set { SetValue(OptionsItemCommandParameterProperty, value); }
+            get => (object)this.GetValue(OptionsItemCommandParameterProperty);
+            set => this.SetValue(OptionsItemCommandParameterProperty, value);
         }
 
         /// <summary>
@@ -160,8 +139,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void RaiseOptionsItemCommand()
         {
-            var command = OptionsItemCommand;
-            var commandParameter = OptionsItemCommandParameter ?? this;
+            var command = this.OptionsItemCommand;
+            var commandParameter = this.OptionsItemCommandParameter ?? this;
             if (command != null && command.CanExecute(commandParameter))
             {
                 command.Execute(commandParameter);

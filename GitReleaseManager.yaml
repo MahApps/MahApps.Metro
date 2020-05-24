@@ -11,10 +11,11 @@ export:
   regex-text: '### Where to get it(\r\n)*You can .*\)'
   multiline-regex: true
 issue-labels-include:
-- Breaking change
+- Breaking Change
 - Bug
 - Feature
 - Feature Request
+- Improvement
 issue-labels-exclude:
 - Internal Refactoring
 - Build

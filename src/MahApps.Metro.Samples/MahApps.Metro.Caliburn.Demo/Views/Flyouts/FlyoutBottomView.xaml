@@ -16,7 +16,7 @@
                 Height="36"
                 FontFamily="Segoe UI Symbol"
                 FontSize="16"
-                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
+                Style="{DynamicResource MahApps.Styles.Button.Circle}">
             <iconPacks:PackIconModern Kind="Add" />
         </Button>
     </StackPanel>

@@ -1,9 +1,7 @@
 ﻿<controls:MetroWindow x:Class="MetroDemo.ExampleWindows.InteropDemo"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
                       Title="Interop Demo"
                       Width="800"
@@ -13,7 +11,7 @@
 
     <Grid>
         <Border Margin="10"
-                BorderBrush="{DynamicResource AccentColorBrush}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                 BorderThickness="2">
             <Grid>
                 <Grid.RowDefinitions>
@@ -23,7 +21,7 @@
                 <TextBlock Grid.Row="0"
                            HorizontalAlignment="Center"
                            FontSize="24"
-                           Foreground="{DynamicResource BlackBrush}"
+                           Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
                            Text="you should see google below" />
                 <WindowsFormsHost Grid.Row="1">
                     <winForms:WebBrowser Url="http://www.google.com" />

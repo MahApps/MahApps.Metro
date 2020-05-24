@@ -1,22 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras/1.3.0">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
-        <TargetFrameworks>net47;net46;net45;net40</TargetFrameworks>
         <AssemblyName>MahApps.Metro</AssemblyName>
+        <Title>MahApps.Metro</Title>
         <RootNamespace>MahApps.Metro</RootNamespace>
+        <DefaultItemExcludes>$(DefaultItemExcludes);**\*.Template.xaml</DefaultItemExcludes>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-    <ItemGroup>
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('net4')) ">
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ControlzEx" version="4.3.*" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.*" PrivateAssets="All" />
+        <PackageReference Include="XamlColorSchemeGenerator" version="4-*" privateAssets="all" includeAssets="build" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.*">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
     <!-- Items include -->
     <ItemGroup>
-        <None Include="paket.references" />
+        <EmbeddedResource Include="**\*.Template.xaml" />
+        <EmbeddedResource Include="**\GeneratorParameters.json" />
     </ItemGroup>
+
+    <Target Name="GenerateXamlFiles" BeforeTargets="DispatchToInnerBuilds">
+        <PropertyGroup>
+            <XamlCombinePath>$(MSBuildProjectDirectory)/Themes/XamlCombine.exe</XamlCombinePath>
+            <!-- <XamlCombinePath>C:/DEV/OSS_Own/FluentRibbon/XamlCombine/bin/Debug/netcoreapp3.0/XamlCombine.exe</XamlCombinePath> -->
+        </PropertyGroup>       
+        <!-- Generate theme files -->
+        <Message Text="$(XamlColorSchemeGeneratorExecutable)" />
+        <Exec Command="&quot;$(XamlColorSchemeGeneratorExecutable)&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Styles/Themes" />
+        <!-- Combine xaml files -->
+        <!-- <Exec Command="&quot;$(XamlCombinePath)&quot; &quot;Styles.txt&quot; &quot;Styles.xaml&quot;" WorkingDirectory="$(MSBuildProjectDirectory)/Themes" /> -->
+    </Target>
+
     <ItemGroup>
-        <Compile DependentUpon="%(Filename)" SubType="Code" Update="$(MSBuildProjectDirectory)\obj\**\*.g$(_SdkLanguageExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Code" Update="**\obj\**\*.g$(DefaultLanguageSourceExtension)" />
+        <Compile DependentUpon="%(Filename)" SubType="Designer" Update="**\*.xaml$(DefaultLanguageSourceExtension)" />
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

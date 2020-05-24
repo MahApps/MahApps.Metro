@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -22,7 +21,7 @@ namespace MahApps.Metro.Controls
     public static class TabControlHelper
     {
         /// Sets the Style and Template property to null.
-        /// 
+        ///
         /// Removing a TabItem in code behind can produce such nasty output
         /// System.Windows.Data Warning: 4 : Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.TabControl', AncestorLevel='1''. BindingExpression:Path=Background; DataItem=null; target element is 'TabItem' (Name=''); target property is 'Background' (type 'Brush')
         /// or
@@ -127,38 +126,6 @@ namespace MahApps.Metro.Controls
         public static void SetCloseTabCommandParameter(UIElement element, object value)
         {
             element.SetValue(CloseTabCommandParameterProperty, value);
-        }
-
-        /// <summary>
-        /// Defines whether the underline below the <see cref="TabItem"/> is shown or not.
-        /// </summary>
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static readonly DependencyProperty IsUnderlinedProperty =
-            DependencyProperty.RegisterAttached("IsUnderlined",
-                                                typeof(bool),
-                                                typeof(TabControlHelper),
-                                                new PropertyMetadata(false,
-                                                                     (o, e) =>
-                                                                         {
-                                                                             var element = o as UIElement;
-                                                                             if (element != null && e.OldValue != e.NewValue && e.NewValue is bool)
-                                                                             {
-                                                                                 TabControlHelper.SetUnderlined(element, (bool)e.NewValue ? UnderlinedType.TabItems : UnderlinedType.None);
-                                                                             }
-                                                                         }));
-
-        [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static bool GetIsUnderlined(UIElement element)
-        {
-            return (bool)element.GetValue(IsUnderlinedProperty);
-        }
-
-        [Obsolete(@"This property will be deleted in the next release. You should now use the Underlined attached property.")]
-        public static void SetIsUnderlined(UIElement element, bool value)
-        {
-            element.SetValue(IsUnderlinedProperty, value);
         }
 
         /// <summary>
@@ -302,6 +269,30 @@ namespace MahApps.Metro.Controls
         public static void SetTransition(DependencyObject obj, TransitionType value)
         {
             obj.SetValue(TransitionProperty, value);
+        }
+
+
+
+        /// <summary>
+        /// Defines the position of the <see cref="TabItem"/> Underline
+        /// </summary>
+
+        public static readonly DependencyProperty UnderlinePlacementProperty =
+            DependencyProperty.RegisterAttached("UnderlinePlacement",
+                                                typeof(Dock?),
+                                                typeof(TabControlHelper),
+                                                new PropertyMetadata(null));
+
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        public static Dock? GetUnderlinePlacement(UIElement element)
+        {
+            return (Dock?)element.GetValue(UnderlinePlacementProperty);
+        }
+
+        public static void SetUnderlinePlacement(UIElement element, Dock? value)
+        {
+            element.SetValue(UnderlinePlacementProperty, value);
         }
     }
 }

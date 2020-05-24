@@ -1,16 +1,14 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Xunit;
-
-#if !NET40
-using System.Windows.Threading;
 using Xunit.Sdk;
-#endif
 
 namespace MahApps.Metro.Tests.TestHelpers
 {
@@ -19,38 +17,28 @@ namespace MahApps.Metro.Tests.TestHelpers
         public ApplicationFixture()
         {
             // ... initialize
-
             TestHost.Initialize();
         }
 
         public void Dispose()
         {
             // ... clean up
-
-#if !NET40
+            GC.Collect();
+            Dispatcher.ExitAllFrames();
             Application.Current.Dispatcher.Invoke(Application.Current.Shutdown);
-#endif
         }
     }
 
-#if !NET40
     [CollectionDefinition("ApplicationFixtureCollection")]
     public class ApplicationFixtureCollectionClass : ICollectionFixture<ApplicationFixture>
     {
     }
 
-#endif
-
     /// <summary>
     /// This is the base class for all of our UI tests.
     /// </summary>
-#if !NET40
     [Collection("ApplicationFixtureCollection")]
-#endif
     public class AutomationTestBase : IDisposable
-#if NET40
-        , IUseFixture<ApplicationFixture>
-#endif
     {
         public AutomationTestBase()
         {
@@ -70,22 +58,12 @@ namespace MahApps.Metro.Tests.TestHelpers
 
             Application.Current.Invoke(() =>
                 {
-                    var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
-                    var theme = ThemeManager.GetAppTheme("BaseLight");
-                    ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+                    ThemeManager.Current.ChangeTheme(Application.Current, "Light.Blue");
                 });
         }
 
-#if NET40
-        private ApplicationFixture fixture;
-        public void SetFixture(ApplicationFixture data)
-        {
-            this.fixture = data;
-        }
-#endif
-
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             var message = $"Dispose test class '{this.GetType().Name}' with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                           $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
