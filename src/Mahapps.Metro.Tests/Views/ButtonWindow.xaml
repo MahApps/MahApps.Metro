@@ -7,10 +7,25 @@
                       d:DesignHeight="300"
                       d:DesignWidth="300"
                       mc:Ignorable="d">
-    <StackPanel>
+    <StackPanel x:Name="TheStackPanel">
+        <StackPanel.Resources>
+            <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type HorizontalAlignment}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="HorizontalAlignment" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </StackPanel.Resources>
         <Button Name="DefaultButton" Content="SomeText" />
         <Button Name="SquareButton"
                 Content="SomeText"
                 Style="{DynamicResource MahApps.Styles.Button.Square}" />
+        <controls:DropDownButton x:Name="TheDropDownButton"
+                                 Content="DropDownButton"
+                                 ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}" />
+        <controls:SplitButton x:Name="TheSplitButton"
+                              ItemsSource="{Binding Source={StaticResource HorizontalAlignmentEnumValues}}"
+                              SelectedIndex="0" />
     </StackPanel>
 </controls:MetroWindow>
