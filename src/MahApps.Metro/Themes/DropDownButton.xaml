@@ -34,6 +34,7 @@
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type FrameworkElement}}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:DropDownButton}">
