@@ -321,6 +321,7 @@
                          To="0"
                          Duration="0:0:0.1" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
             <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
@@ -375,8 +376,10 @@
                                     BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="False"
+                                    Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True">
+                                    UseLayoutRounding="True"
+                                    Visibility="Collapsed">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"

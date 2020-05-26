@@ -322,6 +322,7 @@
                          To="0"
                          Duration="0:0:0.25" />
         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
             <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}" />
         </ObjectAnimationUsingKeyFrames>
     </Storyboard>
@@ -393,8 +394,10 @@
                                     CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
+                                    Opacity="0"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    UseLayoutRounding="True">
+                                    UseLayoutRounding="True"
+                                    Visibility="Collapsed">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"

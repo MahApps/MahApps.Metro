@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -121,6 +121,7 @@ namespace MahApps.Metro.Controls
                             }
 
                             expandSite.SetCurrentValue(UIElement.OpacityProperty, 1d);
+                            expandSite.SetCurrentValue(UIElement.VisibilityProperty, Visibility.Visible);
                         }
                     });
 
@@ -214,6 +215,7 @@ namespace MahApps.Metro.Controls
                             }
 
                             expandSite.SetCurrentValue(UIElement.OpacityProperty, 0d);
+                            expandSite.SetCurrentValue(UIElement.VisibilityProperty, Visibility.Collapsed);
                         }
                     });
 
