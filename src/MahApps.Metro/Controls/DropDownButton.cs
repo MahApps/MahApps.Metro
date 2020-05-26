@@ -358,6 +358,7 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));
         }
+
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DropDownButton)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);

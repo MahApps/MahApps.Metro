@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -14,7 +15,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_Expander", Type = typeof(Button))]
-    public class SplitButton : ComboBox
+    public class SplitButton : ComboBox, ICommandSource
     {
         public static readonly RoutedEvent ClickEvent
             = EventManager.RegisterRoutedEvent(nameof(Click),
@@ -100,7 +101,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(Command),
                 typeof(ICommand),
-                typeof(SplitButton));
+                typeof(SplitButton),
+                new PropertyMetadata(null, OnCommandChanged));
 
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
@@ -116,7 +118,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(CommandTarget),
                 typeof(IInputElement),
-                typeof(SplitButton));
+                typeof(SplitButton),
+                new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
@@ -132,7 +135,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(CommandParameter),
                 typeof(object),
-                typeof(SplitButton));
+                typeof(SplitButton),
+                new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
@@ -232,10 +236,70 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
 
-            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceIsEnabledProperty)));
+            IsEditableProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceIsEditableProperty)));
         }
 
-        private static object CoerceIsEnabledProperty(DependencyObject dependencyObject, object value)
+        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((SplitButton)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+        }
+
+        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        {
+            if (oldCommand != null)
+            {
+                this.UnhookCommand(oldCommand);
+            }
+
+            if (newCommand != null)
+            {
+                this.HookCommand(newCommand);
+            }
+        }
+
+        private void UnhookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.RemoveHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void HookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.AddHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void OnCanExecuteChanged(object sender, EventArgs e)
+        {
+            this.UpdateCanExecute();
+        }
+
+        private void UpdateCanExecute()
+        {
+            this.CanExecute = this.Command == null || CommandHelpers.CanExecuteCommandSource(this);
+        }
+
+        /// <inheritdoc />
+        protected override bool IsEnabledCore => base.IsEnabledCore && this.CanExecute;
+
+        private bool canExecute = true;
+
+        private bool CanExecute
+        {
+            get => this.canExecute;
+            set
+            {
+                if (value == this.canExecute)
+                {
+                    return;
+                }
+
+                this.canExecute = value;
+                this.CoerceValue(IsEnabledProperty);
+            }
+        }
+
+        private static object CoerceIsEditableProperty(DependencyObject dependencyObject, object value)
         {
             // For now SplitButton is not editable
             return false;
@@ -243,8 +307,11 @@ namespace MahApps.Metro.Controls
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
+            CommandHelpers.ExecuteCommandSource(this);
+
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
+            
             this.SetCurrentValue(IsDropDownOpenProperty, false);
         }
 
@@ -261,14 +328,12 @@ namespace MahApps.Metro.Controls
             if (this._clickButton != null)
             {
                 this._clickButton.Click -= this.ButtonClick;
-                this._clickButton.IsEnabledChanged -= this.ButtonIsEnabledChanged;
             }
 
             this._clickButton = this.GetTemplateChild("PART_Button") as Button;
             if (this._clickButton != null)
             {
                 this._clickButton.Click += this.ButtonClick;
-                this._clickButton.IsEnabledChanged += this.ButtonIsEnabledChanged;
             }
 
             if (this._expander != null)
@@ -281,11 +346,6 @@ namespace MahApps.Metro.Controls
             {
                 this._expander.PreviewMouseLeftButtonDown += this.ExpanderMouseLeftButtonDown;
             }
-        }
-
-        private void ButtonIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.SetCurrentValue(IsEnabledProperty, e.NewValue);
         }
 
         private Button _clickButton;
