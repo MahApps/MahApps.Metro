@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
     [TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl))]
     [TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu))]
-    public class DropDownButton : ItemsControl
+    public class DropDownButton : ItemsControl, ICommandSource
     {
         public static readonly RoutedEvent ClickEvent
             = EventManager.RegisterRoutedEvent(nameof(Click),
@@ -130,7 +130,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(Command),
                 typeof(ICommand),
-                typeof(DropDownButton));
+                typeof(DropDownButton),
+                new PropertyMetadata(null, OnCommandChanged));
 
         /// <summary>
         /// Gets or sets the command to invoke when the content button is pressed.
@@ -146,7 +147,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(CommandTarget),
                 typeof(IInputElement),
-                typeof(DropDownButton));
+                typeof(DropDownButton),
+                new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the element on which to raise the specified command.
@@ -162,7 +164,8 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(
                 nameof(CommandParameter),
                 typeof(object),
-                typeof(DropDownButton));
+                typeof(DropDownButton),
+                new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the parameter to pass to the command property.
@@ -355,9 +358,70 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));
         }
+        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((DropDownButton)d).OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+        }
+
+        private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
+        {
+            if (oldCommand != null)
+            {
+                this.UnhookCommand(oldCommand);
+            }
+
+            if (newCommand != null)
+            {
+                this.HookCommand(newCommand);
+            }
+        }
+
+        private void UnhookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.RemoveHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void HookCommand(ICommand command)
+        {
+            CanExecuteChangedEventManager.AddHandler(command, this.OnCanExecuteChanged);
+            this.UpdateCanExecute();
+        }
+
+        private void OnCanExecuteChanged(object sender, EventArgs e)
+        {
+            this.UpdateCanExecute();
+        }
+
+        private void UpdateCanExecute()
+        {
+            this.CanExecute = this.Command == null || CommandHelpers.CanExecuteCommandSource(this);
+        }
+
+        /// <inheritdoc />
+        protected override bool IsEnabledCore => base.IsEnabledCore && this.CanExecute;
+
+        private bool canExecute = true;
+
+        private bool CanExecute
+        {
+            get => this.canExecute;
+            set
+            {
+                if (value == this.canExecute)
+                {
+                    return;
+                }
+
+                this.canExecute = value;
+                this.CoerceValue(IsEnabledProperty);
+            }
+        }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
+            CommandHelpers.ExecuteCommandSource(this);
+
             if (this._contextMenu?.HasItems == true)
             {
                 this.SetCurrentValue(IsExpandedProperty, true);
@@ -374,14 +438,12 @@ namespace MahApps.Metro.Controls
             if (this._clickButton != null)
             {
                 this._clickButton.Click -= this.ButtonClick;
-                this._clickButton.IsEnabledChanged -= this.ButtonIsEnabledChanged;
             }
 
             this._clickButton = this.GetTemplateChild("PART_Button") as Button;
             if (this._clickButton != null)
             {
                 this._clickButton.Click += this.ButtonClick;
-                this._clickButton.IsEnabledChanged += this.ButtonIsEnabledChanged;
             }
 
             this._contextMenu = this.GetTemplateChild("PART_Menu") as ContextMenu;
@@ -401,11 +463,6 @@ namespace MahApps.Metro.Controls
         {
             base.OnMouseRightButtonUp(e);
             e.Handled = true;
-        }
-
-        private void ButtonIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.SetCurrentValue(IsEnabledProperty, e.NewValue);
         }
 
         private void TryRemoveVisualFromOldTree(object item)

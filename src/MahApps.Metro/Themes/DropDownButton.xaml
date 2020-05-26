@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
@@ -54,9 +54,6 @@
                                     VerticalContentAlignment="Stretch"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    Command="{TemplateBinding Command}"
-                                    CommandParameter="{TemplateBinding CommandParameter}"
-                                    CommandTarget="{TemplateBinding CommandTarget}"
                                     FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                     Foreground="{TemplateBinding Foreground}"
                                     RenderOptions.ClearTypeHint="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(RenderOptions.ClearTypeHint), Mode=OneWay}"
