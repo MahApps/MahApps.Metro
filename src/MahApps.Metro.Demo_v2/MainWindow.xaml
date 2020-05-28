@@ -44,9 +44,18 @@
 
             <mah:HamburgerMenu.ItemsSource>
                 <mah:HamburgerMenuItemCollection>
+                    
+                    <mah:HamburgerMenuHeaderItem Label="Controls" />
+                    
                     <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Counter, Width=20, Height=20}" Label="NumericUpDown">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:NumericUpDownExample />
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+    
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PoliceBadge, Width=20, Height=20}" Label="Badged">
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:BadgedExample />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
 
