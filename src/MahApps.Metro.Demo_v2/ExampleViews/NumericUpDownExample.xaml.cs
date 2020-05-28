@@ -39,6 +39,7 @@ namespace MahApps.Demo.ExampleViews
             demoView.DemoProperties.Add(new DemoViewProperty(NumericUpDown.InterceptMouseWheelProperty, numericUpDown, "NumericUpDown"));
 
             demoView.DemoProperties.Add(new DemoViewProperty(TextBoxHelper.ClearTextButtonProperty, numericUpDown, "Attached"));
+
         }
     }
 }

@@ -8,17 +8,26 @@
         <mah:NumericUpDown Speedup="True" Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Boolean">
+    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Boolean" DataType="{x:Type ctrls:DemoViewProperty}">
         <mah:ToggleSwitch OnContent="True" OffContent="False" IsOn="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.String">
+    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.String" DataType="{x:Type ctrls:DemoViewProperty}">
         <TextBox Text="{Binding Value, Mode=TwoWay}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Enum">
+    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Enum" DataType="{x:Type ctrls:DemoViewProperty}">
         <ComboBox IsEditable="False"
                   ItemsSource="{Binding Value, Converter={conv:EnumToItemSourceConverter}}"
                   SelectedItem="{Binding Value, Mode=TwoWay}" />
     </DataTemplate>
+
+    <DataTemplate x:Key="MahDemo.DataTemplates.PropertyPresenter.Styles" DataType="{x:Type ctrls:DemoViewProperty}">
+        <ComboBox IsEditable="False"
+                  ItemsSource="{Binding ItemSource}"
+                  SelectedValue="{Binding Value, Mode=TwoWay}" 
+                  SelectedValuePath="Value"
+                  DisplayMemberPath="Key" />
+    </DataTemplate>
+    
 </ResourceDictionary>

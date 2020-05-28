@@ -46,6 +46,8 @@
                                         Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=NavigateToOnlineDocs}"
                                         CommandParameter="{TemplateBinding HyperlinkOnlineDocs}"
                                         DockPanel.Dock="Right"
+                                        Foreground="White"
+                                        ToolTip="{TemplateBinding HyperlinkOnlineDocs}"
                                         Style="{StaticResource MahApps.Styles.Button.WindowCommands}" />
                                 <ContentControl Content="{TemplateBinding Header}"
                                                 Margin="5,0"
