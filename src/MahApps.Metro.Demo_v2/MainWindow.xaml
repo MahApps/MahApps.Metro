@@ -49,6 +49,16 @@
                             <views:NumericUpDownExample />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
+
+                    <mah:HamburgerMenuSeparatorItem />
+                    <mah:HamburgerMenuHeaderItem Label="Styles" />
+
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Modern Kind=InterfaceButton, Width=20, Height=20}" Label="Button">
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:ButtonExample />
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+                    
                 </mah:HamburgerMenuItemCollection>
             </mah:HamburgerMenu.ItemsSource>
         </mah:HamburgerMenu>

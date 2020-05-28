@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Demo_v2;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace MahApps.Demo.Controls
         public static readonly DependencyProperty DataTemplateProperty = DependencyProperty.Register(nameof(DataTemplate), typeof(DataTemplate), typeof(DemoViewProperty), new PropertyMetadata(null));
         
         /// <summary>Identifies the <see cref="ItemSource"/> dependency property.</summary>
-        public static readonly DependencyProperty ItemSourceProperty = DependencyProperty.Register(nameof(ItemSource), typeof(IEnumerable<object>), typeof(DemoViewProperty), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemSourceProperty = DependencyProperty.Register(nameof(ItemSource), typeof(IEnumerable), typeof(DemoViewProperty), new PropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="GroupName"/> dependency property.</summary>
         public static readonly DependencyProperty GroupNameProperty = DependencyProperty.Register(nameof(GroupName), typeof(string), typeof(DemoViewProperty), new PropertyMetadata(null));
@@ -145,6 +146,9 @@ namespace MahApps.Demo.Controls
 
         private DataTemplate GetDefaultDataTemplate(DependencyProperty dependencyProperty)
         {
+            // Any Object 
+            if (dependencyProperty.PropertyType == typeof(object)) return null;
+
             // Numeric 
             if (dependencyProperty.PropertyType.IsAssignableFrom(typeof(sbyte)) ||
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(byte)) ||
@@ -156,7 +160,7 @@ namespace MahApps.Demo.Controls
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(ulong)) ||
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(float)) ||
                 dependencyProperty.PropertyType.IsAssignableFrom(typeof(double)) ||
-                dependencyProperty.PropertyType. IsAssignableFrom(typeof(decimal)))
+                dependencyProperty.PropertyType.IsAssignableFrom(typeof(decimal)))
             {
                 return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Numeric"] as DataTemplate;
             }
@@ -176,15 +180,20 @@ namespace MahApps.Demo.Controls
                 return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Enum"] as DataTemplate;
             }
 
+            if (dependencyProperty.PropertyType.IsAssignableFrom(typeof(Style)))
+            {
+                return App.Current.Resources["MahDemo.DataTemplates.PropertyPresenter.Styles"] as DataTemplate;
+            }
+
             return null;
         }
 
         /// <summary>
         /// Gets or Sets the ItemSource used for selectable <see cref="Value"/>
         /// </summary>
-        public IEnumerable<object> ItemSource
+        public IEnumerable ItemSource
         {
-            get { return (IEnumerable<object>)GetValue(ItemSourceProperty); }
+            get { return (IEnumerable)GetValue(ItemSourceProperty); }
             set { SetValue(ItemSourceProperty, value); }
         }
 
