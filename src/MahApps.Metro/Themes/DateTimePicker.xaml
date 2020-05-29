@@ -183,7 +183,8 @@
                                                FontSize="{TemplateBinding FontSize}"
                                                Foreground="{TemplateBinding Foreground}"
                                                IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
-                                               SelectionBrush="{DynamicResource MahApps.Brushes.Highlight}">
+                                               SelectionBrush="{DynamicResource MahApps.Brushes.Highlight}"
+                                               Style="{DynamicResource MahApps.Styles.DatePickerTextBox.TimePickerBase}">
                                 <i:Interaction.Behaviors>
                                     <Behaviors:DatePickerTextBoxBehavior />
                                 </i:Interaction.Behaviors>
