@@ -36,10 +36,10 @@ namespace MahApps.Demo.Controls
 
         public DemoViewProperty()
         {
-
+            GetExampleXamlContent = GetExampleXamlContent_Default;
         }
 
-        public DemoViewProperty(DependencyProperty dependencyProperty, DependencyObject bindingTarget, string groupName = null, DataTemplate dataTemplate = null)
+        public DemoViewProperty(DependencyProperty dependencyProperty, DependencyObject bindingTarget, string groupName = null, DataTemplate dataTemplate = null) : this()
         {
             SetCurrentValue(PropertyNameProperty, GetDefaultPropertyName(dependencyProperty));
 
@@ -68,7 +68,7 @@ namespace MahApps.Demo.Controls
 
         /// <summary>Identifies the <see cref="DataTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty DataTemplateProperty = DependencyProperty.Register(nameof(DataTemplate), typeof(DataTemplate), typeof(DemoViewProperty), new PropertyMetadata(null));
-        
+
         /// <summary>Identifies the <see cref="ItemSource"/> dependency property.</summary>
         public static readonly DependencyProperty ItemSourceProperty = DependencyProperty.Register(nameof(ItemSource), typeof(IEnumerable), typeof(DemoViewProperty), new PropertyMetadata(null));
 
@@ -196,6 +196,16 @@ namespace MahApps.Demo.Controls
             get { return (IEnumerable)GetValue(ItemSourceProperty); }
             set { SetValue(ItemSourceProperty, value); }
         }
+
+
+        #region XAML Replace Value
+        public Func<string> GetExampleXamlContent { get; set; }
+
+        private string GetExampleXamlContent_Default()
+        {
+            return Value?.ToString();
+        }
+        #endregion
 
     }
 }

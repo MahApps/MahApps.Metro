@@ -12,12 +12,12 @@
     <ctrls:DemoView x:Name="demoView"
                     xml:space="preserve"
                     HyperlinkOnlineDocs="https://mahapps.com/docs/controls/badgedcontrol">
-        <ctrls:DemoView.ExampleXaml><![CDATA[<mah:Badged x:Name="badge" Badge="1">
+        <ctrls:DemoView.ExampleXaml><![CDATA[<mah:Badged Badge="[Badge]">
     <Button Margin="5"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center"
+            HorizontalAlignment="[HorizontalAlignment]"
+            VerticalAlignment="[VerticalAlignment]"
             Click="Button_Click"
-            Content="Click Me"
+            Content="[Content]"
             IsEnabled="True" />
 </mah:Badged> ]]> 
         </ctrls:DemoView.ExampleXaml>

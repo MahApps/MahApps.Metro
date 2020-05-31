@@ -18,8 +18,8 @@ namespace MahApps.Demo.Controls
         private TextEditor PART_AvalonEdit;
 
         /// <summary>Identifies the <see cref="ExampleXaml"/> dependency property.</summary>
-        public static readonly DependencyProperty ExampleXamlProperty = DependencyProperty.Register(nameof(ExampleXaml), typeof(string), typeof(DemoView), new PropertyMetadata(null));
-        
+        public static readonly DependencyProperty ExampleXamlProperty = DependencyProperty.Register(nameof(ExampleXaml), typeof(string), typeof(DemoView), new PropertyMetadata(null, OnExampleXamlChanged));
+
         /// <summary>Identifies the <see cref="HyperlinkOnlineDocs"/> dependency property.</summary>
         public static readonly DependencyProperty HyperlinkOnlineDocsProperty = DependencyProperty.Register(nameof(HyperlinkOnlineDocs), typeof(string), typeof(DemoView), new PropertyMetadata(null));
         
@@ -67,7 +67,22 @@ namespace MahApps.Demo.Controls
         {
             if (PART_AvalonEdit != null)
             {
-                PART_AvalonEdit.Text = ExampleXaml;
+                var exampleText = ExampleXaml;
+
+                foreach (var item in DemoProperties)
+                {
+                    exampleText = exampleText.Replace($"[{item.PropertyName}]", item.GetExampleXamlContent());
+                }
+
+                PART_AvalonEdit.Text = exampleText;
+            }
+        }
+
+        private static void OnExampleXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is DemoView demoView)
+            {
+                demoView.SetExampleXaml();
             }
         }
 
@@ -86,6 +101,7 @@ namespace MahApps.Demo.Controls
             base.OnApplyTemplate();
 
             PART_AvalonEdit = GetTemplateChild(nameof(PART_AvalonEdit)) as TextEditor;
+            SetExampleXaml();
         }
 
     }
