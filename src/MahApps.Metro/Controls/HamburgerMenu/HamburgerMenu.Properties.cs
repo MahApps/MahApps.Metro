@@ -52,7 +52,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                return OpenPaneLengthProperty.DefaultMetadata.DefaultValue;
+                return inputValue;
             }
         }
 
