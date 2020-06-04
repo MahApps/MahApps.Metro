@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Tests.TestHelpers;
@@ -55,7 +56,7 @@ namespace MahApps.Metro.Tests
 
         [Fact]
         [DisplayTestMethodName]
-        public async Task SquareButtonBespectsButtonHelperContentCharacterCasing()
+        public async Task SquareButtonRespectsButtonHelperContentCharacterCasing()
         {
             await TestHost.SwitchToAppThread();
 
@@ -66,6 +67,36 @@ namespace MahApps.Metro.Tests
             var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             Assert.Equal("SomeText", presenter.Content);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task DropDownButtonShouldRespectParentIsEnabledProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
+
+            window.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, false);
+            Assert.False(window.TheDropDownButton.IsEnabled);
+
+            window.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, true);
+            Assert.True(window.TheDropDownButton.IsEnabled);
+        }
+
+        [Fact]
+        [DisplayTestMethodName]
+        public async Task SplitButtonShouldRespectParentIsEnabledProperty()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
+
+            window.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, false);
+            Assert.False(window.TheSplitButton.IsEnabled);
+
+            window.TheStackPanel.SetCurrentValue(UIElement.IsEnabledProperty, true);
+            Assert.True(window.TheSplitButton.IsEnabled);
         }
     }
 }

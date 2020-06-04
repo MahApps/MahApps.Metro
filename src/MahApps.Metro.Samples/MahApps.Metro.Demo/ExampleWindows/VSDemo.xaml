@@ -91,6 +91,8 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <GroupBox Grid.Row="0"
@@ -170,13 +172,18 @@
                                   Header="Hidden Stuff">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Text="...42..." />
-                                <Expander ExpandDirection="Down" Header="Second Hidden Stuff">
+                                <Expander ExpandDirection="Down"
+                                          Header="Second Hidden Stuff"
+                                          IsExpanded="True">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="...is the Answer to the Ultimate Question of Life, The Universe, and Everything" />
                                     </StackPanel>
                                 </Expander>
                             </StackPanel>
                         </Expander>
+                        <Button Grid.Row="2"
+                                Margin="20"
+                                Content="Beam me up..." />
                     </Grid>
                 </TabItem>
                 <TabItem Header="Demo">

@@ -34,19 +34,20 @@
                             <Grid x:Name="Radio"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
+                                <!--  Todo We need to use a different brush or an attached property to set the Fill and Stroke properties  -->
                                 <Ellipse x:Name="OuterEllipse"
                                          Width="18"
                                          Height="18"
-                                         Fill="{TemplateBinding Background}"
-                                         Stroke="{TemplateBinding BorderBrush}"
+                                         Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                         Stroke="{DynamicResource MahApps.Brushes.CheckBox}"
                                          StrokeThickness="{TemplateBinding Controls:RadioButtonHelper.RadioStrokeThickness}"
                                          UseLayoutRounding="False" />
                                 <Ellipse x:Name="CheckOuterEllipse"
                                          Width="18"
                                          Height="18"
-                                         Fill="{TemplateBinding Background}"
+                                         Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
                                          Opacity="0"
-                                         Stroke="{TemplateBinding BorderBrush}"
+                                         Stroke="{DynamicResource MahApps.Brushes.CheckBox}"
                                          StrokeThickness="{TemplateBinding Controls:RadioButtonHelper.RadioStrokeThickness}"
                                          UseLayoutRounding="False" />
                                 <Ellipse x:Name="CheckGlyph"
