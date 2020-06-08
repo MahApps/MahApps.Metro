@@ -87,7 +87,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="22" />
-        <Setter Property="Padding" Value="3 0" />
+        <Setter Property="Padding" Value="3 4" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="0" />
         <Style.Triggers>
