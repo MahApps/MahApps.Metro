@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenuTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--  This is the template for the menu items.  -->
@@ -57,18 +57,18 @@
 
             <materialDesignConverters:BrushRoundConverter x:Key="BrushRoundConverter" />
 
-            <Style x:Key="HamburgerMenuCreatorsItemStyle"
-                   BasedOn="{StaticResource HamburgerMenuItemStyle}"
+            <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple"
+                   BasedOn="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem}"
                    TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
-                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
+                <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
+                <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
                 <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
-                <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
-                <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+                <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
                 <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentBaseColorBrush}" />
+                <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -148,13 +148,13 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="HamburgerMenuCreatorsStyle"
-                   BasedOn="{StaticResource {x:Type Controls:HamburgerMenu}}"
+            <Style x:Key="MahApps.Styles.HamburgerMenu.Ripple"
+                   BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}"
                    TargetType="{x:Type Controls:HamburgerMenu}">
-                <Setter Property="ItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource HamburgerMenuCreatorsItemStyle}" />
-                <Setter Property="PaneBackground" Value="{DynamicResource WhiteBrush}" />
-                <Setter Property="PaneForeground" Value="{DynamicResource TextBrush}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple}" />
+                <Setter Property="OptionsItemContainerStyle" Value="{StaticResource MahApps.Styles.ListBoxItem.HamburgerMenuItem.Ripple}" />
+                <Setter Property="PaneBackground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                <Setter Property="PaneForeground" Value="{DynamicResource MahApps.Brushes.Text}" />
                 <Setter Property="ShowSelectionIndicator" Value="True" />
             </Style>
 
@@ -176,7 +176,11 @@
             <StackPanel Margin="0 0 0 10" Orientation="Vertical">
                 <Controls:ToggleSwitch Margin="0 10 0 5"
                                        Header="IsPaneOpen:"
-                                       IsChecked="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=IsPaneOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Controls:ToggleSwitch Margin="0 10 0 5"
+                                       Header="CanResizeOpenPane:"
+                                       IsOn="{Binding ElementName=HamburgerMenuControl, Path=CanResizeOpenPane, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Controls:MetroHeader Margin="0 10 0 5" Header="DisplayMode:">
                     <ComboBox MinWidth="150"
@@ -232,7 +236,7 @@
 
         <Border Grid.Column="0"
                 Margin="10 10 0 10"
-                BorderBrush="{DynamicResource GrayBrush7}"
+                BorderBrush="{DynamicResource MahApps.Brushes.Gray7}"
                 BorderThickness="1">
 
             <Controls:HamburgerMenu x:Name="HamburgerMenuControl"
@@ -242,7 +246,7 @@
                                     ItemTemplate="{StaticResource MenuItemTemplate}"
                                     OptionsItemTemplate="{StaticResource MenuItemTemplate}"
                                     SelectedIndex="0"
-                                    Style="{StaticResource HamburgerMenuCreatorsStyle}"
+                                    Style="{StaticResource MahApps.Styles.HamburgerMenu.Ripple}"
                                     VerticalScrollBarOnLeftSide="False">
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>
@@ -264,7 +268,7 @@
                                         <Controls:ToggleSwitch Margin="0 0 0 5" Header="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
                                         <Controls:ToggleSwitch Margin="0 0 0 5"
                                                                Header="Ut dictum arcu egestas aliquet elementum"
-                                                               IsChecked="True" />
+                                                               IsOn="True" />
                                         <Controls:ToggleSwitch Margin="0 0 0 5" Header="Pellentesque ultricies metus quis dui luctus, vel faucibus risus rhoncus" />
                                     </StackPanel>
                                 </UserControl>
@@ -276,7 +280,7 @@
                 <!--  Options  -->
                 <Controls:HamburgerMenu.OptionsItemsSource>
                     <Controls:HamburgerMenuItemCollection>
-                        <Controls:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Settings}" Label="Settings">
+                        <Controls:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Cog}" Label="Settings">
                             <Controls:HamburgerMenuIconItem.Tag>
                                 <metroDemo:SettingsView />
                             </Controls:HamburgerMenuIconItem.Tag>
@@ -294,8 +298,8 @@
                             <TextBlock Grid.Row="0"
                                        Margin="0 15 0 5"
                                        Padding="0"
-                                       FontFamily="{DynamicResource HeaderFontFamily}"
-                                       FontSize="{DynamicResource HeaderFontSize}"
+                                       FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
+                                       FontSize="{DynamicResource MahApps.Font.Size.Header}"
                                        Text="{Binding Label}" />
                             <ScrollViewer Grid.Row="1"
                                           Focusable="False"

@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="MahApps.Styles.GridSplitter.Preview">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Fill="{DynamicResource MahApps.Brushes.ThemeForeground}" Opacity="0.5" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Styles.GridSplitter" TargetType="{x:Type GridSplitter}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="PreviewStyle" Value="{StaticResource MahApps.Styles.GridSplitter.Preview}" />
+        <Setter Property="ShowsPreview" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+    </Style>
+
+</ResourceDictionary>

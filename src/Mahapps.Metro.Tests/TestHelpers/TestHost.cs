@@ -45,6 +45,7 @@ namespace MahApps.Metro.Tests.TestHelpers
         private void StartDispatcher()
         {
             app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+            app.InitializeComponent();
             app.Exit += (sender, args) =>
                 {
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
@@ -52,7 +53,7 @@ namespace MahApps.Metro.Tests.TestHelpers
                     Debug.WriteLine(message);
                     
                 };
-            app.Startup += (sender, args) =>
+            app.Startup += async (sender, args) =>
                 {
                     var message = $"Start TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";

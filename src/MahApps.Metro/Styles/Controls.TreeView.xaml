@@ -9,12 +9,13 @@
 
     <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
 
-    <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="MahApps.Styles.ToggleButton.TreeViewItem.ExpandCollapse" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Height" Value="16" />
         <Setter Property="Margin" Value="1" />
+        <Setter Property="MinWidth" Value="19" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -35,7 +36,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource GrayBrush1}" />
+                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray1}" />
                             <Setter TargetName="ExpandPath" Property="RenderTransform">
                                 <Setter.Value>
                                     <RotateTransform Angle="180" CenterX="3" CenterY="3" />
@@ -43,19 +44,19 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="IsChecked" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Accent}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -66,19 +67,20 @@
 
     <Converters:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
 
-    <Style x:Key="MetroTreeViewItem" TargetType="{x:Type TreeViewItem}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
-        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource GrayNormalBrush}" />
-        <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource GrayBrush7}" />
-        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
-        <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource AccentColorBrush3}" />
-        <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource AccentColorBrush2}" />
-        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
+    <Style x:Key="MahApps.Styles.TreeViewItem" TargetType="{x:Type TreeViewItem}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Controls:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Gray}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+        <Setter Property="Controls:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Controls:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+        <Setter Property="Controls:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+        <Setter Property="Controls:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Controls:TreeViewItemHelper.ToggleButtonStyle" Value="{StaticResource MahApps.Styles.ToggleButton.TreeViewItem.ExpandCollapse}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -97,13 +99,14 @@
                                   VerticalAlignment="Stretch"
                                   Background="Transparent">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="19" />
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton x:Name="Expander"
+                                              Grid.Column="0"
                                               ClickMode="Press"
                                               IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
-                                              Style="{StaticResource ExpandCollapseToggleStyle}" />
+                                              Style="{TemplateBinding Controls:TreeViewItemHelper.ToggleButtonStyle}" />
                                 <ContentPresenter x:Name="PART_Header"
                                                   Grid.Column="1"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -182,13 +185,13 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MetroTreeView" TargetType="{x:Type TreeView}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
+    <Style x:Key="MahApps.Styles.TreeView" TargetType="{x:Type TreeView}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <!--  default to 0  -->
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="1" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -197,6 +200,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ScrollViewer x:Name="TreeViewScrollViewer"
                                       Padding="{TemplateBinding Padding}"
@@ -224,13 +228,13 @@
                 <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush9}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray9}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="VirtualisedMetroTreeView"
-           BasedOn="{StaticResource MetroTreeView}"
+    <Style x:Key="MahApps.Styles.TreeView.Virtualized"
+           BasedOn="{StaticResource MahApps.Styles.TreeView}"
            TargetType="{x:Type TreeView}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />

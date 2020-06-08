@@ -11,190 +11,253 @@ namespace MahApps.Metro.Controls
     [TemplateVisualState(Name = "Active", GroupName = "ActiveStates")]
     public class ProgressRing : Control
     {
-        public static readonly DependencyProperty BindableWidthProperty = DependencyProperty.Register("BindableWidth", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double), BindableWidthCallback));
+        /// <summary>Identifies the <see cref="BindableWidth"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey BindableWidthPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(BindableWidth),
+                                                  typeof(double),
+                                                  typeof(ProgressRing),
+                                                  new PropertyMetadata(default(double), OnBindableWidthPropertyChanged));
 
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsActiveChanged));
+        /// <summary>Identifies the <see cref="BindableWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty BindableWidthProperty = BindableWidthPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty IsLargeProperty = DependencyProperty.Register("IsLarge", typeof(bool), typeof(ProgressRing), new PropertyMetadata(true, IsLargeChangedCallback));
+        public double BindableWidth
+        {
+            get => (double)this.GetValue(BindableWidthProperty);
+            protected set => this.SetValue(BindableWidthPropertyKey, value);
+        }
 
-        public static readonly DependencyProperty MaxSideLengthProperty = DependencyProperty.Register("MaxSideLength", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
+        /// <summary>Identifies the <see cref="IsActive"/> dependency property.</summary>
+        public static readonly DependencyProperty IsActiveProperty
+            = DependencyProperty.Register(nameof(IsActive),
+                                          typeof(bool),
+                                          typeof(ProgressRing),
+                                          new PropertyMetadata(true, OnIsActivePropertyChanged));
 
-        public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
+        public bool IsActive
+        {
+            get => (bool)this.GetValue(IsActiveProperty);
+            set => this.SetValue(IsActiveProperty, value);
+        }
 
-        public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
+        /// <summary>Identifies the <see cref="IsLarge"/> dependency property.</summary>
+        public static readonly DependencyProperty IsLargeProperty
+            = DependencyProperty.Register(nameof(IsLarge),
+                                          typeof(bool),
+                                          typeof(ProgressRing),
+                                          new PropertyMetadata(true, OnIsLargePropertyChanged));
 
-        public static readonly DependencyProperty EllipseDiameterScaleProperty = DependencyProperty.Register("EllipseDiameterScale", typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
+        public bool IsLarge
+        {
+            get => (bool)this.GetValue(IsLargeProperty);
+            set => this.SetValue(IsLargeProperty, value);
+        }
 
-        private List<Action> _deferredActions = new List<Action>();
+        /// <summary>Identifies the <see cref="MaxSideLength"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey MaxSideLengthPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(MaxSideLength),
+                                                  typeof(double),
+                                                  typeof(ProgressRing),
+                                                  new PropertyMetadata(default(double)));
+
+        /// <summary>Identifies the <see cref="MaxSideLength"/> dependency property.</summary>
+        public static readonly DependencyProperty MaxSideLengthProperty = MaxSideLengthPropertyKey.DependencyProperty;
+
+        public double MaxSideLength
+        {
+            get => (double)this.GetValue(MaxSideLengthProperty);
+            protected set => this.SetValue(MaxSideLengthPropertyKey, value);
+        }
+
+        /// <summary>Identifies the <see cref="EllipseDiameter"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey EllipseDiameterPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(EllipseDiameter),
+                                                  typeof(double),
+                                                  typeof(ProgressRing),
+                                                  new PropertyMetadata(default(double)));
+
+        /// <summary>Identifies the <see cref="EllipseDiameter"/> dependency property.</summary>
+        public static readonly DependencyProperty EllipseDiameterProperty = EllipseDiameterPropertyKey.DependencyProperty;
+
+        public double EllipseDiameter
+        {
+            get => (double)this.GetValue(EllipseDiameterProperty);
+            protected set => this.SetValue(EllipseDiameterPropertyKey, value);
+        }
+
+        /// <summary>Identifies the <see cref="EllipseOffset"/> dependency property.</summary>
+        public static readonly DependencyPropertyKey EllipseOffsetPropertyKey
+            = DependencyProperty.RegisterReadOnly(nameof(EllipseOffset),
+                                                  typeof(Thickness),
+                                                  typeof(ProgressRing),
+                                                  new PropertyMetadata(default(Thickness)));
+
+        /// <summary>Identifies the <see cref="EllipseOffset"/> dependency property.</summary>
+        public static readonly DependencyProperty EllipseOffsetProperty = EllipseOffsetPropertyKey.DependencyProperty;
+
+        public Thickness EllipseOffset
+        {
+            get => (Thickness)this.GetValue(EllipseOffsetProperty);
+            protected set => this.SetValue(EllipseOffsetPropertyKey, value);
+        }
+
+        /// <summary>Identifies the <see cref="EllipseDiameterScale"/> dependency property.</summary>
+        public static readonly DependencyProperty EllipseDiameterScaleProperty
+            = DependencyProperty.Register(nameof(EllipseDiameterScale),
+                                          typeof(double),
+                                          typeof(ProgressRing),
+                                          new PropertyMetadata(1D));
+
+        public double EllipseDiameterScale
+        {
+            get => (double)this.GetValue(EllipseDiameterScaleProperty);
+            set => this.SetValue(EllipseDiameterScaleProperty, value);
+        }
+
+        private List<Action> deferredActions = new List<Action>();
 
         static ProgressRing()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
-            VisibilityProperty.OverrideMetadata(typeof(ProgressRing),
-                                                new FrameworkPropertyMetadata(
-                                                    new PropertyChangedCallback(
-                                                        (ringObject, e) => {
-                                                            if (e.NewValue != e.OldValue) {
-                                                                var ring = (ProgressRing)ringObject;
-                                                                //auto set IsActive to false if we're hiding it.
-                                                                if ((Visibility)e.NewValue != Visibility.Visible) {
-                                                                    //sets the value without overriding it's binding (if any).
-                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, false);
-                                                                } else {
-                                                                    // #1105 don't forget to re-activate
-                                                                    ring.SetCurrentValue(ProgressRing.IsActiveProperty, true);
-                                                                }
-                                                            }
-                                                        })));
+            VisibilityProperty.OverrideMetadata(
+                typeof(ProgressRing),
+                new FrameworkPropertyMetadata(
+                    (ringObject, e) =>
+                        {
+                            if (e.NewValue != e.OldValue)
+                            {
+                                var ring = ringObject as ProgressRing;
+
+                                ring?.SetCurrentValue(IsActiveProperty, (Visibility)e.NewValue == Visibility.Visible);
+                            }
+                        }));
         }
 
         public ProgressRing()
         {
-            SizeChanged += OnSizeChanged;
+            this.SizeChanged += this.OnSizeChanged;
         }
 
-        public double MaxSideLength
+        private static void OnBindableWidthPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            get { return (double)GetValue(MaxSideLengthProperty); }
-            private set { SetValue(MaxSideLengthProperty, value); }
-        }
-
-        public double EllipseDiameter
-        {
-            get { return (double)GetValue(EllipseDiameterProperty); }
-            private set { SetValue(EllipseDiameterProperty, value); }
-        }
-
-        public double EllipseDiameterScale
-        {
-            get { return (double)GetValue(EllipseDiameterScaleProperty); }
-            set { SetValue(EllipseDiameterScaleProperty, value); }
-        }
-
-        public Thickness EllipseOffset
-        {
-            get { return (Thickness)GetValue(EllipseOffsetProperty); }
-            private set { SetValue(EllipseOffsetProperty, value); }
-        }
-
-        public double BindableWidth
-        {
-            get { return (double)GetValue(BindableWidthProperty); }
-            private set { SetValue(BindableWidthProperty, value); }
-        }
-
-        public bool IsActive
-        {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set { SetValue(IsActiveProperty, value); }
-        }
-
-        public bool IsLarge
-        {
-            get { return (bool)GetValue(IsLargeProperty); }
-            set { SetValue(IsLargeProperty, value); }
-        }
-
-        private static void BindableWidthCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            var ring = dependencyObject as ProgressRing;
-            if (ring == null)
-                return;
-
-            var action = new Action(() =>
+            if (!(dependencyObject is ProgressRing ring))
             {
+                return;
+            }
 
-                ring.SetEllipseDiameter((double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetEllipseOffset((double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetMaxSideLength((double) dependencyPropertyChangedEventArgs.NewValue);
-            });
+            var action = new Action(
+                () =>
+                    {
+                        ring.SetEllipseDiameter((double)dependencyPropertyChangedEventArgs.NewValue);
+                        ring.SetEllipseOffset((double)dependencyPropertyChangedEventArgs.NewValue);
+                        ring.SetMaxSideLength((double)dependencyPropertyChangedEventArgs.NewValue);
+                    });
 
-            if (ring._deferredActions != null)
-                ring._deferredActions.Add(action);
+            if (ring.deferredActions != null)
+            {
+                ring.deferredActions.Add(action);
+            }
             else
+            {
                 action();
+            }
         }
 
         private void SetMaxSideLength(double width)
         {
-            SetCurrentValue(MaxSideLengthProperty, width <= 20 ? 20 : width);
+            this.SetValue(MaxSideLengthPropertyKey, width <= 20d ? 20d : width);
         }
 
         private void SetEllipseDiameter(double width)
         {
-            SetCurrentValue(EllipseDiameterProperty, (width / 8)*EllipseDiameterScale);
+            this.SetValue(EllipseDiameterPropertyKey, (width / 8) * this.EllipseDiameterScale);
         }
 
         private void SetEllipseOffset(double width)
         {
-            SetCurrentValue(EllipseOffsetProperty, new Thickness(0, width / 2, 0, 0));
+            this.SetValue(EllipseOffsetPropertyKey, new Thickness(0, width / 2, 0, 0));
         }
 
-        private static void IsLargeChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnIsLargePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var ring = dependencyObject as ProgressRing;
-            if (ring == null)
-                return;
 
-            ring.UpdateLargeState();
+            ring?.UpdateLargeState();
         }
 
         private void UpdateLargeState()
         {
             Action action;
 
-            if (IsLarge)
+            if (this.IsLarge)
+            {
                 action = () => VisualStateManager.GoToState(this, "Large", true);
+            }
             else
+            {
                 action = () => VisualStateManager.GoToState(this, "Small", true);
+            }
 
-            if (_deferredActions != null)
-                _deferredActions.Add(action);
-
+            if (this.deferredActions != null)
+            {
+                this.deferredActions.Add(action);
+            }
             else
+            {
                 action();
+            }
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            SetCurrentValue(BindableWidthProperty, ActualWidth);
+            this.SetValue(BindableWidthPropertyKey, this.ActualWidth);
         }
 
-        private static void IsActiveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnIsActivePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var ring = dependencyObject as ProgressRing;
-            if (ring == null)
-                return;
 
-            ring.UpdateActiveState();
+            ring?.UpdateActiveState();
         }
 
         private void UpdateActiveState()
         {
             Action action;
 
-            if (IsActive)
+            if (this.IsActive)
+            {
                 action = () => VisualStateManager.GoToState(this, "Active", true);
+            }
             else
+            {
                 action = () => VisualStateManager.GoToState(this, "Inactive", true);
+            }
 
-            if (_deferredActions != null)
-                _deferredActions.Add(action);
-
+            if (this.deferredActions != null)
+            {
+                this.deferredActions.Add(action);
+            }
             else
+            {
                 action();
+            }
         }
 
         public override void OnApplyTemplate()
         {
-            //make sure the states get updated
-            UpdateLargeState();
-            UpdateActiveState();
+            // make sure the states get updated
+            this.UpdateLargeState();
+            this.UpdateActiveState();
             base.OnApplyTemplate();
-            if (_deferredActions != null)
-                foreach (var action in _deferredActions)
+            if (this.deferredActions != null)
+            {
+                foreach (var action in this.deferredActions)
+                {
                     action();
-            _deferredActions = null;
+                }
+            }
+
+            this.deferredActions = null;
         }
     }
 }

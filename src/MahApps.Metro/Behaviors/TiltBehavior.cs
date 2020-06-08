@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using Microsoft.Xaml.Behaviors;
 
@@ -11,159 +12,170 @@ namespace MahApps.Metro.Behaviors
 {
     public class TiltBehavior : Behavior<FrameworkElement>
     {
-        public static readonly DependencyProperty KeepDraggingProperty =
-            DependencyProperty.Register("KeepDragging", typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
+        /// <summary>Identifies the <see cref="KeepDragging"/> dependency property.</summary>
+        public static readonly DependencyProperty KeepDraggingProperty
+            = DependencyProperty.Register(nameof(KeepDragging),
+                                          typeof(bool),
+                                          typeof(TiltBehavior),
+                                          new PropertyMetadata(true));
 
-        public static readonly DependencyProperty TiltFactorProperty =
-            DependencyProperty.Register("TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
+        public bool KeepDragging
+        {
+            get => (bool)this.GetValue(KeepDraggingProperty);
+            set => this.SetValue(KeepDraggingProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TiltFactor"/> dependency property.</summary>
+        public static readonly DependencyProperty TiltFactorProperty
+            = DependencyProperty.Register(nameof(TiltFactor),
+                                          typeof(int),
+                                          typeof(TiltBehavior),
+                                          new PropertyMetadata(20));
+
+        public int TiltFactor
+        {
+            get => (int)this.GetValue(TiltFactorProperty);
+            set => this.SetValue(TiltFactorProperty, value);
+        }
 
         private bool isPressed;
         private Thickness originalMargin;
         private Panel originalPanel;
         private Size originalSize;
         private FrameworkElement attachedElement;
-
         private Point current = new Point(-99, -99);
-        private Int32 times = -1;
+        private int times = -1;
 
-        public bool KeepDragging
-        {
-            get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, value); }
-        }
-
-        public Int32 TiltFactor
-        {
-            get { return (Int32)GetValue(TiltFactorProperty); }
-            set { SetValue(TiltFactorProperty, value); }
-        }
-
-        public Planerator RotatorParent { get; set; }
+        public Planerator RotatorParent { get; private set; }
 
         protected override void OnAttached()
         {
-            attachedElement = AssociatedObject;
-            if (attachedElement is ListBox)
+            this.attachedElement = this.AssociatedObject;
+            if (this.attachedElement is ListBox)
             {
                 return;
             }
 
-            var attachedElementPanel = attachedElement as Panel;
-            if (attachedElementPanel != null)
+            if (this.attachedElement is Panel panel)
             {
-                attachedElementPanel.Loaded += (sl, el) =>
-                {
-                    var elements = attachedElementPanel.Children.Cast<UIElement>().ToList();
+                panel.Loaded += (sl, el) =>
+                    {
+                        var elements = panel.Children.Cast<UIElement>().ToList();
 
-                    elements.ForEach(element =>
-                        Interaction.GetBehaviors(element).Add(
-                            new TiltBehavior
-                            {
-                                KeepDragging = KeepDragging,
-                                TiltFactor = TiltFactor
-                            }));
-                };
+                        elements.ForEach(element =>
+                                             Interaction.GetBehaviors(element).Add(
+                                                 new TiltBehavior
+                                                 {
+                                                     KeepDragging = this.KeepDragging,
+                                                     TiltFactor = this.TiltFactor
+                                                 }));
+                    };
 
                 return;
             }
 
-            originalPanel = attachedElement.Parent as Panel ?? GetParentPanel(attachedElement);
+            this.originalPanel = this.attachedElement.Parent as Panel ?? GetParentPanel(this.attachedElement);
 
-            originalMargin = attachedElement.Margin;
-            originalSize = new Size(attachedElement.Width, attachedElement.Height);
-            double left = Canvas.GetLeft(attachedElement);
-            double right = Canvas.GetRight(attachedElement);
-            double top = Canvas.GetTop(attachedElement);
-            double bottom = Canvas.GetBottom(attachedElement);
-            int z = Panel.GetZIndex(attachedElement);
-            VerticalAlignment va = attachedElement.VerticalAlignment;
-            HorizontalAlignment ha = attachedElement.HorizontalAlignment;
+            this.originalMargin = this.attachedElement.Margin;
+            this.originalSize = new Size(this.attachedElement.Width, this.attachedElement.Height);
+            double left = Canvas.GetLeft(this.attachedElement);
+            double right = Canvas.GetRight(this.attachedElement);
+            double top = Canvas.GetTop(this.attachedElement);
+            double bottom = Canvas.GetBottom(this.attachedElement);
+            int z = Panel.GetZIndex(this.attachedElement);
+            VerticalAlignment va = this.attachedElement.VerticalAlignment;
+            HorizontalAlignment ha = this.attachedElement.HorizontalAlignment;
 
-            RotatorParent = new Planerator
-            {
-                Margin = originalMargin,
-                Width = originalSize.Width,
-                Height = originalSize.Height,
-                VerticalAlignment = va,
-                HorizontalAlignment = ha
-            };
+            this.RotatorParent = new Planerator
+                                 {
+                                     Margin = this.originalMargin,
+                                     Width = this.originalSize.Width,
+                                     Height = this.originalSize.Height,
+                                     VerticalAlignment = va,
+                                     HorizontalAlignment = ha
+                                 };
 
-            RotatorParent.SetValue(Canvas.LeftProperty, left);
-            RotatorParent.SetValue(Canvas.RightProperty, right);
-            RotatorParent.SetValue(Canvas.TopProperty, top);
-            RotatorParent.SetValue(Canvas.BottomProperty, bottom);
-            RotatorParent.SetValue(Panel.ZIndexProperty, z);
+            this.RotatorParent.SetValue(Canvas.LeftProperty, left);
+            this.RotatorParent.SetValue(Canvas.RightProperty, right);
+            this.RotatorParent.SetValue(Canvas.TopProperty, top);
+            this.RotatorParent.SetValue(Canvas.BottomProperty, bottom);
+            this.RotatorParent.SetValue(Panel.ZIndexProperty, z);
 
-            originalPanel.Children.Remove(attachedElement);
-            attachedElement.Margin = new Thickness();
-            attachedElement.Width = double.NaN;
-            attachedElement.Height = double.NaN;
+            this.originalPanel.Children.Remove(this.attachedElement);
+            this.attachedElement.Margin = new Thickness();
+            this.attachedElement.Width = double.NaN;
+            this.attachedElement.Height = double.NaN;
 
-            originalPanel.Children.Add(RotatorParent);
-            RotatorParent.Child = attachedElement;
+            this.originalPanel.Children.Add(this.RotatorParent);
+            this.RotatorParent.Child = this.attachedElement;
 
-            CompositionTarget.Rendering += CompositionTargetRendering;
+            CompositionTarget.Rendering += this.CompositionTargetRendering;
+            ThemeManager.Current.ThemeChanged += this.ThemeManagerIsThemeChanged;
+        }
+
+        private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
+        {
+            this.RotatorParent?.Refresh();
         }
 
         protected override void OnDetaching()
         {
+            CompositionTarget.Rendering -= this.CompositionTargetRendering;
+            ThemeManager.Current.ThemeChanged -= this.ThemeManagerIsThemeChanged;
             base.OnDetaching();
-            CompositionTarget.Rendering -= CompositionTargetRendering;
         }
 
         private void CompositionTargetRendering(object sender, EventArgs e)
         {
-            if (KeepDragging)
+            if (this.KeepDragging)
             {
-                current = Mouse.GetPosition(RotatorParent.Child);
+                this.current = Mouse.GetPosition(this.RotatorParent.Child);
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
-                        current.Y < (attachedElement).ActualHeight)
+                    if (this.current.X > 0 && this.current.X < (this.attachedElement).ActualWidth && this.current.Y > 0 && this.current.Y < (this.attachedElement).ActualHeight)
                     {
-                        RotatorParent.RotationY = -1 * TiltFactor + current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
-                        RotatorParent.RotationX = -1 * TiltFactor + current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
+                        this.RotatorParent.RotationY = -1 * this.TiltFactor + this.current.X * 2 * this.TiltFactor / (this.attachedElement).ActualWidth;
+                        this.RotatorParent.RotationX = -1 * this.TiltFactor + this.current.Y * 2 * this.TiltFactor / (this.attachedElement).ActualHeight;
                     }
                 }
                 else
                 {
-                    RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                    RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                    this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0 ? 0 : this.RotatorParent.RotationY - 5;
+                    this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0 ? 0 : this.RotatorParent.RotationX - 5;
                 }
             }
             else
             {
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (!isPressed)
+                    if (!this.isPressed)
                     {
-                        current = Mouse.GetPosition(RotatorParent.Child);
-                        if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
-                            current.Y < (attachedElement).ActualHeight)
+                        this.current = Mouse.GetPosition(this.RotatorParent.Child);
+                        if (this.current.X > 0 && this.current.X < (this.attachedElement).ActualWidth && this.current.Y > 0 && this.current.Y < (this.attachedElement).ActualHeight)
                         {
-                            RotatorParent.RotationY = -1 * TiltFactor + current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
-                            RotatorParent.RotationX = -1 * TiltFactor + current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
+                            this.RotatorParent.RotationY = -1 * this.TiltFactor + this.current.X * 2 * this.TiltFactor / (this.attachedElement).ActualWidth;
+                            this.RotatorParent.RotationX = -1 * this.TiltFactor + this.current.Y * 2 * this.TiltFactor / (this.attachedElement).ActualHeight;
                         }
-                        isPressed = true;
+
+                        this.isPressed = true;
                     }
 
-
-                    if (isPressed && times == 7)
+                    if (this.times == 7)
                     {
-                        RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                        RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                        this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0 ? 0 : this.RotatorParent.RotationY - 5;
+                        this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0 ? 0 : this.RotatorParent.RotationX - 5;
                     }
-                    else if (isPressed && times < 7)
+                    else if (this.times < 7)
                     {
-                        times++;
+                        this.times++;
                     }
                 }
                 else
                 {
-                    isPressed = false;
-                    times = -1;
-                    RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                    RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                    this.isPressed = false;
+                    this.times = -1;
+                    this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0 ? 0 : this.RotatorParent.RotationY - 5;
+                    this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0 ? 0 : this.RotatorParent.RotationX - 5;
                 }
             }
         }

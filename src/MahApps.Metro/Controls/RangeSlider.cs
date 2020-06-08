@@ -13,349 +13,489 @@ using JetBrains.Annotations;
 
 namespace MahApps.Metro.Controls
 {
-    public delegate void RangeSelectionChangedEventHandler(object sender, RangeSelectionChangedEventArgs e);
-
-    public delegate void RangeParameterChangedEventHandler(object sender, RangeParameterChangedEventArgs e);
-
     /// <summary>
     /// A slider control with the ability to select a range between two values.
     /// </summary>
-    [DefaultEvent("RangeSelectionChanged"),
-     TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement)),
-     TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel)),
-     TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton)),
-     TemplatePart(Name = "PART_LeftThumb", Type = typeof(Thumb)),
-     TemplatePart(Name = "PART_MiddleThumb", Type = typeof(Thumb)),
-     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb)),
-     TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton))]
+    [DefaultEvent("RangeSelectionChanged")]
+    [TemplatePart(Name = "PART_Container", Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel))]
+    [TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton))]
+    [TemplatePart(Name = "PART_LeftThumb", Type = typeof(Thumb))]
+    [TemplatePart(Name = "PART_MiddleThumb", Type = typeof(Thumb))]
+    [TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb))]
+    [TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton))]
     public class RangeSlider : RangeBase
     {
         #region Routed UI commands
 
-        public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
-        public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
-        public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
-        public static RoutedUICommand MoveAllBack = new RoutedUICommand("MoveAllBack", "MoveAllBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
+        public static readonly RoutedUICommand MoveBack
+            = new RoutedUICommand(nameof(MoveBack),
+                                  nameof(MoveBack),
+                                  typeof(RangeSlider),
+                                  new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
+
+        public static readonly RoutedUICommand MoveForward
+            = new RoutedUICommand(nameof(MoveForward),
+                                  nameof(MoveForward),
+                                  typeof(RangeSlider),
+                                  new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
+
+        public static readonly RoutedUICommand MoveAllForward
+            = new RoutedUICommand(nameof(MoveAllForward),
+                                  nameof(MoveAllForward),
+                                  typeof(RangeSlider),
+                                  new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
+
+        public static readonly RoutedUICommand MoveAllBack
+            = new RoutedUICommand(nameof(MoveAllBack),
+                                  nameof(MoveAllBack),
+                                  typeof(RangeSlider),
+                                  new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
 
         #endregion
 
         #region Routed events
 
-        public static readonly RoutedEvent RangeSelectionChangedEvent =
-            EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
+        /// <summary>Identifies the <see cref="RangeSelectionChanged"/> routed event.</summary>
+        public static readonly RoutedEvent RangeSelectionChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(RangeSelectionChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RangeSelectionChangedEventHandler<double>),
+                                               typeof(RangeSlider));
 
-        public static readonly RoutedEvent LowerValueChangedEvent =
-            EventManager.RegisterRoutedEvent("LowerValueChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent UpperValueChangedEvent =
-            EventManager.RegisterRoutedEvent("UpperValueChanged", RoutingStrategy.Bubble,
-                                             typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent LowerThumbDragStartedEvent =
-            EventManager.RegisterRoutedEvent("LowerThumbDragStarted", RoutingStrategy.Bubble,
-                                             typeof(DragStartedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent LowerThumbDragCompletedEvent =
-            EventManager.RegisterRoutedEvent("LowerThumbDragCompleted", RoutingStrategy.Bubble,
-                                             typeof(DragCompletedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent UpperThumbDragStartedEvent =
-            EventManager.RegisterRoutedEvent("UpperThumbDragStarted", RoutingStrategy.Bubble,
-                                             typeof(DragStartedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent UpperThumbDragCompletedEvent =
-            EventManager.RegisterRoutedEvent("UpperThumbDragCompleted", RoutingStrategy.Bubble,
-                                             typeof(DragCompletedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent CentralThumbDragStartedEvent =
-            EventManager.RegisterRoutedEvent("CentralThumbDragStarted", RoutingStrategy.Bubble,
-                                             typeof(DragStartedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent CentralThumbDragCompletedEvent =
-            EventManager.RegisterRoutedEvent("CentralThumbDragCompleted", RoutingStrategy.Bubble,
-                                             typeof(DragCompletedEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent LowerThumbDragDeltaEvent =
-            EventManager.RegisterRoutedEvent("LowerThumbDragDelta", RoutingStrategy.Bubble,
-                                             typeof(DragDeltaEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent UpperThumbDragDeltaEvent =
-            EventManager.RegisterRoutedEvent("UpperThumbDragDelta", RoutingStrategy.Bubble,
-                                             typeof(DragDeltaEventHandler), typeof(RangeSlider));
-
-        public static readonly RoutedEvent CentralThumbDragDeltaEvent =
-            EventManager.RegisterRoutedEvent("CentralThumbDragDelta", RoutingStrategy.Bubble,
-                                             typeof(DragDeltaEventHandler), typeof(RangeSlider));
-
-        #endregion
-
-        #region Event handlers
-
-        public event RangeSelectionChangedEventHandler RangeSelectionChanged
+        public event RangeSelectionChangedEventHandler<double> RangeSelectionChanged
         {
-            add { this.AddHandler(RangeSelectionChangedEvent, value); }
-            remove { this.RemoveHandler(RangeSelectionChangedEvent, value); }
+            add => this.AddHandler(RangeSelectionChangedEvent, value);
+            remove => this.RemoveHandler(RangeSelectionChangedEvent, value);
         }
 
-        public event RangeParameterChangedEventHandler LowerValueChanged
+        /// <summary>Identifies the <see cref="LowerValueChanged"/> routed event.</summary>
+        public static readonly RoutedEvent LowerValueChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(LowerValueChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<double>),
+                                               typeof(RangeSlider));
+
+        public event RoutedPropertyChangedEventHandler<double> LowerValueChanged
         {
-            add { this.AddHandler(LowerValueChangedEvent, value); }
-            remove { this.RemoveHandler(LowerValueChangedEvent, value); }
+            add => this.AddHandler(LowerValueChangedEvent, value);
+            remove => this.RemoveHandler(LowerValueChangedEvent, value);
         }
 
-        public event RangeParameterChangedEventHandler UpperValueChanged
+        /// <summary>Identifies the <see cref="UpperValueChanged"/> routed event.</summary>
+        public static readonly RoutedEvent UpperValueChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(UpperValueChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<double>),
+                                               typeof(RangeSlider));
+
+        public event RoutedPropertyChangedEventHandler<double> UpperValueChanged
         {
-            add { this.AddHandler(UpperValueChangedEvent, value); }
-            remove { this.RemoveHandler(UpperValueChangedEvent, value); }
+            add => this.AddHandler(UpperValueChangedEvent, value);
+            remove => this.RemoveHandler(UpperValueChangedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="LowerThumbDragStarted"/> routed event.</summary>
+        public static readonly RoutedEvent LowerThumbDragStartedEvent
+            = EventManager.RegisterRoutedEvent(nameof(LowerThumbDragStarted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragStartedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragStartedEventHandler LowerThumbDragStarted
         {
-            add { this.AddHandler(LowerThumbDragStartedEvent, value); }
-            remove { this.RemoveHandler(LowerThumbDragStartedEvent, value); }
+            add => this.AddHandler(LowerThumbDragStartedEvent, value);
+            remove => this.RemoveHandler(LowerThumbDragStartedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="LowerThumbDragCompleted"/> routed event.</summary>
+        public static readonly RoutedEvent LowerThumbDragCompletedEvent
+            = EventManager.RegisterRoutedEvent(nameof(LowerThumbDragCompleted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragCompletedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragCompletedEventHandler LowerThumbDragCompleted
         {
-            add { this.AddHandler(LowerThumbDragCompletedEvent, value); }
-            remove { this.RemoveHandler(LowerThumbDragCompletedEvent, value); }
+            add => this.AddHandler(LowerThumbDragCompletedEvent, value);
+            remove => this.RemoveHandler(LowerThumbDragCompletedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="UpperThumbDragStarted"/> routed event.</summary>
+        public static readonly RoutedEvent UpperThumbDragStartedEvent
+            = EventManager.RegisterRoutedEvent(nameof(UpperThumbDragStarted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragStartedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragStartedEventHandler UpperThumbDragStarted
         {
-            add { this.AddHandler(UpperThumbDragStartedEvent, value); }
-            remove { this.RemoveHandler(UpperThumbDragStartedEvent, value); }
+            add => this.AddHandler(UpperThumbDragStartedEvent, value);
+            remove => this.RemoveHandler(UpperThumbDragStartedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="UpperThumbDragCompleted"/> routed event.</summary>
+        public static readonly RoutedEvent UpperThumbDragCompletedEvent
+            = EventManager.RegisterRoutedEvent(nameof(UpperThumbDragCompleted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragCompletedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragCompletedEventHandler UpperThumbDragCompleted
         {
-            add { this.AddHandler(UpperThumbDragCompletedEvent, value); }
-            remove { this.RemoveHandler(UpperThumbDragCompletedEvent, value); }
+            add => this.AddHandler(UpperThumbDragCompletedEvent, value);
+            remove => this.RemoveHandler(UpperThumbDragCompletedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="CentralThumbDragStarted"/> routed event.</summary>
+        public static readonly RoutedEvent CentralThumbDragStartedEvent
+            = EventManager.RegisterRoutedEvent(nameof(CentralThumbDragStarted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragStartedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragStartedEventHandler CentralThumbDragStarted
         {
-            add { this.AddHandler(CentralThumbDragStartedEvent, value); }
-            remove { this.RemoveHandler(CentralThumbDragStartedEvent, value); }
+            add => this.AddHandler(CentralThumbDragStartedEvent, value);
+            remove => this.RemoveHandler(CentralThumbDragStartedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="CentralThumbDragCompleted"/> routed event.</summary>
+        public static readonly RoutedEvent CentralThumbDragCompletedEvent
+            = EventManager.RegisterRoutedEvent(nameof(CentralThumbDragCompleted),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragCompletedEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragCompletedEventHandler CentralThumbDragCompleted
         {
-            add { this.AddHandler(CentralThumbDragCompletedEvent, value); }
-            remove { this.RemoveHandler(CentralThumbDragCompletedEvent, value); }
+            add => this.AddHandler(CentralThumbDragCompletedEvent, value);
+            remove => this.RemoveHandler(CentralThumbDragCompletedEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="LowerThumbDragDelta"/> routed event.</summary>
+        public static readonly RoutedEvent LowerThumbDragDeltaEvent
+            = EventManager.RegisterRoutedEvent(nameof(LowerThumbDragDelta),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragDeltaEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragDeltaEventHandler LowerThumbDragDelta
         {
-            add { this.AddHandler(LowerThumbDragDeltaEvent, value); }
-            remove { this.RemoveHandler(LowerThumbDragDeltaEvent, value); }
+            add => this.AddHandler(LowerThumbDragDeltaEvent, value);
+            remove => this.RemoveHandler(LowerThumbDragDeltaEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="UpperThumbDragDelta"/> routed event.</summary>
+        public static readonly RoutedEvent UpperThumbDragDeltaEvent
+            = EventManager.RegisterRoutedEvent(nameof(UpperThumbDragDelta),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragDeltaEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragDeltaEventHandler UpperThumbDragDelta
         {
-            add { this.AddHandler(UpperThumbDragDeltaEvent, value); }
-            remove { this.RemoveHandler(UpperThumbDragDeltaEvent, value); }
+            add => this.AddHandler(UpperThumbDragDeltaEvent, value);
+            remove => this.RemoveHandler(UpperThumbDragDeltaEvent, value);
         }
+
+        /// <summary>Identifies the <see cref="CentralThumbDragDelta"/> routed event.</summary>
+        public static readonly RoutedEvent CentralThumbDragDeltaEvent
+            = EventManager.RegisterRoutedEvent(nameof(CentralThumbDragDelta),
+                                               RoutingStrategy.Bubble,
+                                               typeof(DragDeltaEventHandler),
+                                               typeof(RangeSlider));
 
         public event DragDeltaEventHandler CentralThumbDragDelta
         {
-            add { this.AddHandler(CentralThumbDragDeltaEvent, value); }
-            remove { this.RemoveHandler(CentralThumbDragDeltaEvent, value); }
+            add => this.AddHandler(CentralThumbDragDeltaEvent, value);
+            remove => this.RemoveHandler(CentralThumbDragDeltaEvent, value);
         }
 
         #endregion
 
         #region Dependency properties
 
-        public static readonly DependencyProperty UpperValueProperty =
-            DependencyProperty.Register("UpperValue", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceUpperValue));
-
-        public static readonly DependencyProperty LowerValueProperty =
-            DependencyProperty.Register("LowerValue", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceLowerValue));
-
-        public static readonly DependencyProperty MinRangeProperty =
-            DependencyProperty.Register("MinRange", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata((Double)0, MinRangeChanged, CoerceMinRange), IsValidMinRange);
-
-        public static readonly DependencyProperty MinRangeWidthProperty =
-            DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(30.0, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
-
-        public static readonly DependencyProperty MoveWholeRangeProperty =
-            DependencyProperty.Register("MoveWholeRange", typeof(Boolean), typeof(RangeSlider),
-                                        new PropertyMetadata(false));
-
-        public static readonly DependencyProperty ExtendedModeProperty =
-            DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
-                                        new PropertyMetadata(false));
-
-        public static readonly DependencyProperty IsSnapToTickEnabledProperty =
-            DependencyProperty.Register("IsSnapToTickEnabled", typeof(Boolean), typeof(RangeSlider),
-                                        new PropertyMetadata(false));
-
-        public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(Orientation.Horizontal));
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.TickPlacement" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TickPlacementProperty =
-            DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(TickPlacement.None));
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.TickFrequency" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TickFrequencyProperty =
-            DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(1.0), IsValidDoubleValue);
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.Ticks" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TicksProperty
-            = DependencyProperty.Register("Ticks",
-                                          typeof(DoubleCollection),
+        /// <summary>Identifies the <see cref="UpperValue"/> dependency property.</summary>
+        public static readonly DependencyProperty UpperValueProperty
+            = DependencyProperty.Register(nameof(UpperValue),
+                                          typeof(double),
                                           typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(default(DoubleCollection)));
-
-        public static readonly DependencyProperty IsMoveToPointEnabledProperty =
-            DependencyProperty.Register("IsMoveToPointEnabled", typeof(Boolean), typeof(RangeSlider),
-                                        new PropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceUpperValue));
 
         /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.AutoToolTipPlacement" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoToolTipPlacementProperty = DependencyProperty.Register(nameof(AutoToolTipPlacement), typeof(AutoToolTipPlacement), typeof(RangeSlider), new FrameworkPropertyMetadata(AutoToolTipPlacement.None));
-
-        /// <summary>
-        /// Gets or sets whether a tooltip that contains the current value of the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> displays when the <see cref="P:System.Windows.Controls.Primitives.Track.Thumb" /> is pressed. If a tooltip is displayed, this property also specifies the placement of the tooltip.
-        /// </summary>
-        /// <returns>
-        /// One of the <see cref="T:System.Windows.Controls.Primitives.AutoToolTipPlacement" /> values that determines where to display the tooltip with respect to the <see cref="P:System.Windows.Controls.Primitives.Track.Thumb" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />, or that specifies to not show a tooltip. The default is <see cref="F:System.Windows.Controls.Primitives.AutoToolTipPlacement.None" />, which specifies that a tooltip is not displayed.
-        /// </returns>
-        [Bindable(true)]
-        [Category("Behavior")]
-        public AutoToolTipPlacement AutoToolTipPlacement
-        {
-            get { return (AutoToolTipPlacement)this.GetValue(AutoToolTipPlacementProperty); }
-            set { this.SetValue(AutoToolTipPlacementProperty, (object)value); }
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.AutoToolTipPrecision" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoToolTipPrecisionProperty = DependencyProperty.Register(nameof(AutoToolTipPrecision), typeof(int), typeof(RangeSlider), new FrameworkPropertyMetadata(0), IsValidPrecision);
-
-        /// <summary>
-        /// Gets or sets the number of digits that are displayed to the right side of the decimal point for the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> in a tooltip.
-        /// </summary>
-        /// <returns>
-        /// The precision of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> that displays in the tooltip, specified as the number of digits that appear to the right of the decimal point. The default is zero (0).
-        /// </returns>
-        [Bindable(true)]
-        [Category("Appearance")]
-        public int AutoToolTipPrecision
-        {
-            get { return (int)this.GetValue(AutoToolTipPrecisionProperty); }
-            set { this.SetValue(AutoToolTipPrecisionProperty, (object)value); }
-        }
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.AutoToolTipLowerValueTemplate" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoToolTipLowerValueTemplateProperty = DependencyProperty.Register(nameof(AutoToolTipLowerValueTemplate), typeof(DataTemplate), typeof(RangeSlider), new FrameworkPropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets a template for the auto tooltip to show the lower value.
+        /// Get/sets the end of the range selection.
         /// </summary>
         [Bindable(true)]
-        [Category("Behavior")]
-        public DataTemplate AutoToolTipLowerValueTemplate
+        [Category("Common")]
+        public double UpperValue
         {
-            get { return (DataTemplate)this.GetValue(AutoToolTipLowerValueTemplateProperty); }
-            set { this.SetValue(AutoToolTipLowerValueTemplateProperty, value); }
+            get => (double)this.GetValue(UpperValueProperty);
+            set => this.SetValue(UpperValueProperty, value);
         }
 
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.AutoToolTipUpperValueTemplate" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoToolTipUpperValueTemplateProperty = DependencyProperty.Register(nameof(AutoToolTipUpperValueTemplate), typeof(DataTemplate), typeof(RangeSlider), new FrameworkPropertyMetadata(null));
+        internal static object CoerceUpperValue(DependencyObject d, object basevalue)
+        {
+            if (d is RangeSlider rangeSlider && basevalue is double value)
+            {
+                if (value > rangeSlider.Maximum || rangeSlider.LowerValue + rangeSlider.MinRange > rangeSlider.Maximum)
+                {
+                    return rangeSlider.Maximum;
+                }
+
+                if (value < rangeSlider.LowerValue + rangeSlider.MinRange)
+                {
+                    return rangeSlider.LowerValue + rangeSlider.MinRange;
+                }
+            }
+
+            return basevalue;
+        }
+
+        /// <summary>Identifies the <see cref="LowerValue"/> dependency property.</summary>
+        public static readonly DependencyProperty LowerValueProperty
+            = DependencyProperty.Register(nameof(LowerValue),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsRender, RangesChanged, CoerceLowerValue));
 
         /// <summary>
-        /// Gets or sets a template for the auto tooltip to show the upper value.
+        /// Get/sets the beginning of the range selection.
         /// </summary>
         [Bindable(true)]
-        [Category("Behavior")]
-        public DataTemplate AutoToolTipUpperValueTemplate
+        [Category("Common")]
+        public double LowerValue
         {
-            get { return (DataTemplate)this.GetValue(AutoToolTipUpperValueTemplateProperty); }
-            set { this.SetValue(AutoToolTipUpperValueTemplateProperty, value); }
+            get => (double)this.GetValue(LowerValueProperty);
+            set => this.SetValue(LowerValueProperty, value);
         }
 
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.AutoToolTipRangeValuesTemplate" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty AutoToolTipRangeValuesTemplateProperty = DependencyProperty.Register(nameof(AutoToolTipRangeValuesTemplate), typeof(DataTemplate), typeof(RangeSlider), new FrameworkPropertyMetadata(null));
+        //Lower/Upper values property changed callback
+        private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (dependencyObject is RangeSlider rangeSlider)
+            {
+                if (rangeSlider._internalUpdate)
+                {
+                    return;
+                }
+
+                rangeSlider.CoerceLowerUpperValues();
+            }
+        }
+
+        private void CoerceLowerUpperValues()
+        {
+            this.CoerceValue(LowerValueProperty);
+            this.CoerceValue(UpperValueProperty);
+            RaiseValueChangedEvents(this);
+            this._oldLower = this.LowerValue;
+            this._oldUpper = this.UpperValue;
+            this.ReCalculateSize();
+        }
+
+        internal static object CoerceLowerValue(DependencyObject d, object basevalue)
+        {
+            if (d is RangeSlider rangeSlider && basevalue is double value)
+            {
+                if (value < rangeSlider.Minimum || rangeSlider.UpperValue - rangeSlider.MinRange < rangeSlider.Minimum)
+                {
+                    return rangeSlider.Minimum;
+                }
+
+                if (value > rangeSlider.UpperValue - rangeSlider.MinRange)
+                {
+                    return rangeSlider.UpperValue - rangeSlider.MinRange;
+                }
+            }
+
+            return basevalue;
+        }
+
+        /// <summary>Identifies the <see cref="MinRange"/> dependency property.</summary>
+        public static readonly DependencyProperty MinRangeProperty
+            = DependencyProperty.Register(nameof(MinRange),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0d, MinRangeChanged, CoerceMinRange), IsValidMinRange);
 
         /// <summary>
-        /// Gets or sets a template for the auto tooltip to show the center value.
+        /// Get/sets the minimum range that can be selected.
         /// </summary>
         [Bindable(true)]
-        [Category("Behavior")]
-        public DataTemplate AutoToolTipRangeValuesTemplate
+        [Category("Common")]
+        public double MinRange
         {
-            get { return (DataTemplate)this.GetValue(AutoToolTipRangeValuesTemplateProperty); }
-            set { this.SetValue(AutoToolTipRangeValuesTemplateProperty, value); }
+            get => (double)this.GetValue(MinRangeProperty);
+            set => this.SetValue(MinRangeProperty, value);
         }
 
-        public static readonly DependencyProperty IntervalProperty =
-            DependencyProperty.Register("Interval", typeof(Int32), typeof(RangeSlider),
-                                        new FrameworkPropertyMetadata(100, IntervalChangedCallback), IsValidPrecision);
+        private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var value = (double)e.NewValue;
+            if (value < 0)
+            {
+                value = 0;
+            }
+
+            var slider = (RangeSlider)dependencyObject;
+            dependencyObject.CoerceValue(MinRangeProperty);
+            slider._internalUpdate = true;
+            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
+            slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
+            slider._internalUpdate = false;
+
+            slider.CoerceValue(UpperValueProperty);
+
+            RaiseValueChangedEvents(dependencyObject);
+
+            slider._oldLower = slider.LowerValue;
+            slider._oldUpper = slider.UpperValue;
+
+            slider.ReCalculateSize();
+        }
+
+        private static object CoerceMinRange(DependencyObject d, object basevalue)
+        {
+            var rangeSlider = (RangeSlider)d;
+            var value = (double)basevalue;
+
+            if (rangeSlider.LowerValue + value > rangeSlider.Maximum)
+            {
+                return rangeSlider.Maximum - rangeSlider.LowerValue;
+            }
+
+            return basevalue;
+        }
+
+        /// <summary>Identifies the <see cref="MinRangeWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty MinRangeWidthProperty
+            = DependencyProperty.Register(nameof(MinRangeWidth),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(30d, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
 
         /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.IsSelectionRangeEnabled" /> dependency property.
+        /// Get/sets the minimal distance between two thumbs.
         /// </summary>
-        public static readonly DependencyProperty IsSelectionRangeEnabledProperty
-            = DependencyProperty.Register("IsSelectionRangeEnabled",
+        [Bindable(true)]
+        [Category("Common")]
+        public double MinRangeWidth
+        {
+            get => (double)this.GetValue(MinRangeWidthProperty);
+            set => this.SetValue(MinRangeWidthProperty, value);
+        }
+
+        private static void MinRangeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as RangeSlider)?.ReCalculateSize();
+        }
+
+        private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
+        {
+            var rangeSlider = (RangeSlider)d;
+
+            if (rangeSlider._leftThumb != null && rangeSlider._rightThumb != null)
+            {
+                double width;
+                if (rangeSlider.Orientation == Orientation.Horizontal)
+                {
+                    width = rangeSlider.ActualWidth - rangeSlider._leftThumb.ActualWidth - rangeSlider._rightThumb.ActualWidth;
+                }
+                else
+                {
+                    width = rangeSlider.ActualHeight - rangeSlider._leftThumb.ActualHeight - rangeSlider._rightThumb.ActualHeight;
+                }
+
+                return (double)basevalue > width / 2 ? width / 2 : (double)basevalue;
+            }
+
+            return basevalue;
+        }
+
+        private static bool IsValidMinRange(object value)
+        {
+            return value is double doubleValue && IsValidDouble(doubleValue) && doubleValue >= 0d;
+        }
+
+        /// <summary>Identifies the <see cref="MoveWholeRange"/> dependency property.</summary>
+        public static readonly DependencyProperty MoveWholeRangeProperty
+            = DependencyProperty.Register(nameof(MoveWholeRange),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(false));
+                                          new PropertyMetadata(false));
 
         /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.SelectionStart" /> dependency property.
+        /// Get/sets whether whole range will be moved when press on right/left/central part of control
         /// </summary>
-        public static readonly DependencyProperty SelectionStartProperty
-            = DependencyProperty.Register("SelectionStart",
-                                          typeof(double),
-                                          typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionStartChanged, CoerceSelectionStart),
-                                          IsValidDoubleValue);
-
-        /// <summary>
-        /// Identifies the <see cref="P:MahApps.Metro.Controls.RangeSlider.SelectionEnd" /> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SelectionEndProperty
-            = DependencyProperty.Register("SelectionEnd",
-                                          typeof(double),
-                                          typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionEndChanged, CoerceSelectionEnd),
-                                          IsValidDoubleValue);
-
-        /// <summary>
-        /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
-        /// </summary>
-        [Bindable(true), Category("Behavior")]
-        public Int32 Interval
+        [Bindable(true)]
+        [Category("Behavior")]
+        public bool MoveWholeRange
         {
-            get { return (Int32)this.GetValue(IntervalProperty); }
-            set { this.SetValue(IntervalProperty, value); }
+            get => (bool)this.GetValue(MoveWholeRangeProperty);
+            set => this.SetValue(MoveWholeRangeProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="ExtendedMode"/> dependency property.</summary>
+        public static readonly DependencyProperty ExtendedModeProperty
+            = DependencyProperty.Register(nameof(ExtendedMode),
+                                          typeof(bool),
+                                          typeof(RangeSlider),
+                                          new PropertyMetadata(false));
+
+        /// <summary>
+        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// </summary>
+        [Bindable(true)]
+        [Category("Behavior")]
+        public bool ExtendedMode
+        {
+            get => (bool)this.GetValue(ExtendedModeProperty);
+            set => this.SetValue(ExtendedModeProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IsSnapToTickEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsSnapToTickEnabledProperty
+            = DependencyProperty.Register(nameof(IsSnapToTickEnabled),
+                                          typeof(bool),
+                                          typeof(RangeSlider),
+                                          new PropertyMetadata(false));
+
+        /// <summary>
+        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public bool IsSnapToTickEnabled
+        {
+            get => (bool)this.GetValue(IsSnapToTickEnabledProperty);
+            set => this.SetValue(IsSnapToTickEnabledProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
+        public static readonly DependencyProperty OrientationProperty
+            = DependencyProperty.Register(nameof(Orientation),
+                                          typeof(Orientation),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(Orientation.Horizontal));
+
+        /// <summary>
+        /// Gets or sets the orientation of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        public Orientation Orientation
+        {
+            get => (Orientation)this.GetValue(OrientationProperty);
+            set => this.SetValue(OrientationProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TickPlacement"/> dependency property.</summary>
+        public static readonly DependencyProperty TickPlacementProperty
+            = DependencyProperty.Register(nameof(TickPlacement),
+                                          typeof(TickPlacement),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(TickPlacement.None));
 
         /// <summary>
         /// Gets or sets the position of tick marks with respect to the <see cref="T:System.Windows.Controls.Primitives.Track" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
@@ -367,9 +507,16 @@ namespace MahApps.Metro.Controls
         [Category("Appearance")]
         public TickPlacement TickPlacement
         {
-            get { return (TickPlacement)this.GetValue(TickPlacementProperty); }
-            set { this.SetValue(TickPlacementProperty, value); }
+            get => (TickPlacement)this.GetValue(TickPlacementProperty);
+            set => this.SetValue(TickPlacementProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="TickFrequency"/> dependency property.</summary>
+        public static readonly DependencyProperty TickFrequencyProperty
+            = DependencyProperty.Register(nameof(TickFrequency),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(1d), IsValidDoubleValue);
 
         /// <summary>
         /// Gets or sets the interval between tick marks.
@@ -379,11 +526,18 @@ namespace MahApps.Metro.Controls
         /// </returns>
         [Bindable(true)]
         [Category("Appearance")]
-        public Double TickFrequency
+        public double TickFrequency
         {
-            get { return (Double)this.GetValue(TickFrequencyProperty); }
-            set { this.SetValue(TickFrequencyProperty, value); }
+            get => (double)this.GetValue(TickFrequencyProperty);
+            set => this.SetValue(TickFrequencyProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="Ticks"/> dependency property.</summary>
+        public static readonly DependencyProperty TicksProperty
+            = DependencyProperty.Register(nameof(Ticks),
+                                          typeof(DoubleCollection),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(default(DoubleCollection)));
 
         /// <summary>
         /// Gets or sets the positions of the tick marks to display for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />. </summary>
@@ -394,9 +548,16 @@ namespace MahApps.Metro.Controls
         [Category("Appearance")]
         public DoubleCollection Ticks
         {
-            get { return (DoubleCollection)this.GetValue(TicksProperty); }
-            set { this.SetValue(TicksProperty, value); }
+            get => (DoubleCollection)this.GetValue(TicksProperty);
+            set => this.SetValue(TicksProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="IsMoveToPointEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsMoveToPointEnabledProperty
+            = DependencyProperty.Register(nameof(IsMoveToPointEnabled),
+                                          typeof(bool),
+                                          typeof(RangeSlider),
+                                          new PropertyMetadata(false));
 
         /// <summary>
         /// Get or sets IsMoveToPoint feature which will enable/disable moving to exact point inside control when user clicked on it
@@ -404,92 +565,132 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
-        public Boolean IsMoveToPointEnabled
+        public bool IsMoveToPointEnabled
         {
-            get { return (Boolean)this.GetValue(IsMoveToPointEnabledProperty); }
-            set { this.SetValue(IsMoveToPointEnabledProperty, value); }
+            get => (bool)this.GetValue(IsMoveToPointEnabledProperty);
+            set => this.SetValue(IsMoveToPointEnabledProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="AutoToolTipPlacement"/> dependency property.</summary>
+        public static readonly DependencyProperty AutoToolTipPlacementProperty
+            = DependencyProperty.Register(nameof(AutoToolTipPlacement),
+                                          typeof(AutoToolTipPlacement),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(AutoToolTipPlacement.None));
+
         /// <summary>
-        /// Gets or sets the orientation of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
+        /// Gets or sets whether a tooltip that contains the current value of the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> displays when the <see cref="P:System.Windows.Controls.Primitives.Track.Thumb" /> is pressed. If a tooltip is displayed, this property also specifies the placement of the tooltip.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="T:System.Windows.Controls.Primitives.AutoToolTipPlacement" /> values that determines where to display the tooltip with respect to the <see cref="P:System.Windows.Controls.Primitives.Track.Thumb" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" />, or that specifies to not show a tooltip. The default is <see cref="F:System.Windows.Controls.Primitives.AutoToolTipPlacement.None" />, which specifies that a tooltip is not displayed.
+        /// </returns>
+        [Bindable(true)]
+        [Category("Behavior")]
+        public AutoToolTipPlacement AutoToolTipPlacement
+        {
+            get => (AutoToolTipPlacement)this.GetValue(AutoToolTipPlacementProperty);
+            set => this.SetValue(AutoToolTipPlacementProperty, (object)value);
+        }
+
+        /// <summary>Identifies the <see cref="AutoToolTipPrecision"/> dependency property.</summary>
+        public static readonly DependencyProperty AutoToolTipPrecisionProperty
+            = DependencyProperty.Register(nameof(AutoToolTipPrecision),
+                                          typeof(int),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0), IsValidPrecision);
+
+        /// <summary>
+        /// Gets or sets the number of digits that are displayed to the right side of the decimal point for the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> of the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> in a tooltip.
+        /// </summary>
+        /// <returns>
+        /// The precision of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> that displays in the tooltip, specified as the number of digits that appear to the right of the decimal point. The default is zero (0).
+        /// </returns>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public int AutoToolTipPrecision
+        {
+            get => (int)this.GetValue(AutoToolTipPrecisionProperty);
+            set => this.SetValue(AutoToolTipPrecisionProperty, (object)value);
+        }
+
+        /// <summary>Identifies the <see cref="AutoToolTipLowerValueTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty AutoToolTipLowerValueTemplateProperty
+            = DependencyProperty.Register(nameof(AutoToolTipLowerValueTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets a template for the auto tooltip to show the lower value.
         /// </summary>
         [Bindable(true)]
-        [Category("Common")]
-        public Orientation Orientation
+        [Category("Behavior")]
+        public DataTemplate AutoToolTipLowerValueTemplate
         {
-            get { return (Orientation)this.GetValue(OrientationProperty); }
-            set { this.SetValue(OrientationProperty, value); }
+            get => (DataTemplate)this.GetValue(AutoToolTipLowerValueTemplateProperty);
+            set => this.SetValue(AutoToolTipLowerValueTemplateProperty, value);
         }
 
-        /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
-        /// </summary>
-        [Bindable(true), Category("Appearance")]
-        public Boolean IsSnapToTickEnabled
-        {
-            get { return (Boolean)this.GetValue(IsSnapToTickEnabledProperty); }
-            set { this.SetValue(IsSnapToTickEnabledProperty, value); }
-        }
+        /// <summary>Identifies the <see cref="AutoToolTipUpperValueTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty AutoToolTipUpperValueTemplateProperty
+            = DependencyProperty.Register(nameof(AutoToolTipUpperValueTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
-        /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
+        /// Gets or sets a template for the auto tooltip to show the upper value.
         /// </summary>
-        [Bindable(true), Category("Behavior")]
-        public Boolean ExtendedMode
+        [Bindable(true)]
+        [Category("Behavior")]
+        public DataTemplate AutoToolTipUpperValueTemplate
         {
-            get { return (Boolean)this.GetValue(ExtendedModeProperty); }
-            set { this.SetValue(ExtendedModeProperty, value); }
+            get => (DataTemplate)this.GetValue(AutoToolTipUpperValueTemplateProperty);
+            set => this.SetValue(AutoToolTipUpperValueTemplateProperty, value);
         }
 
-        /// <summary>
-        /// Get/sets whether whole range will be moved when press on right/left/central part of control
-        /// </summary>
-        [Bindable(true), Category("Behavior")]
-        public Boolean MoveWholeRange
-        {
-            get { return (Boolean)this.GetValue(MoveWholeRangeProperty); }
-            set { this.SetValue(MoveWholeRangeProperty, value); }
-        }
+        /// <summary>Identifies the <see cref="AutoToolTipRangeValuesTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty AutoToolTipRangeValuesTemplateProperty
+            = DependencyProperty.Register(nameof(AutoToolTipRangeValuesTemplate),
+                                          typeof(DataTemplate),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(null));
 
         /// <summary>
-        /// Get/sets the minimal distance between two thumbs.
+        /// Gets or sets a template for the auto tooltip to show the center value.
         /// </summary>
-        [Bindable(true), Category("Common")]
-        public Double MinRangeWidth
+        [Bindable(true)]
+        [Category("Behavior")]
+        public DataTemplate AutoToolTipRangeValuesTemplate
         {
-            get { return (Double)this.GetValue(MinRangeWidthProperty); }
-            set { this.SetValue(MinRangeWidthProperty, value); }
+            get => (DataTemplate)this.GetValue(AutoToolTipRangeValuesTemplateProperty);
+            set => this.SetValue(AutoToolTipRangeValuesTemplateProperty, value);
         }
 
-        /// <summary>
-        /// Get/sets the beginning of the range selection.
-        /// </summary>
-        [Bindable(true), Category("Common")]
-        public Double LowerValue
-        {
-            get { return (Double)this.GetValue(LowerValueProperty); }
-            set { this.SetValue(LowerValueProperty, value); }
-        }
+        /// <summary>Identifies the <see cref="Interval"/> dependency property.</summary>
+        public static readonly DependencyProperty IntervalProperty
+            = DependencyProperty.Register(nameof(Interval),
+                                          typeof(int),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(100, IntervalChangedCallback), IsValidPrecision);
 
         /// <summary>
-        /// Get/sets the end of the range selection.
+        /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
         /// </summary>
-        [Bindable(true), Category("Common")]
-        public Double UpperValue
+        [Bindable(true)]
+        [Category("Behavior")]
+        public int Interval
         {
-            get { return (Double)this.GetValue(UpperValueProperty); }
-            set { this.SetValue(UpperValueProperty, value); }
+            get => (int)this.GetValue(IntervalProperty);
+            set => this.SetValue(IntervalProperty, value);
         }
 
-        /// <summary>
-        /// Get/sets the minimum range that can be selected.
-        /// </summary>
-        [Bindable(true), Category("Common")]
-        public Double MinRange
-        {
-            get { return (Double)this.GetValue(MinRangeProperty); }
-            set { this.SetValue(MinRangeProperty, value); }
-        }
+        /// <summary>Identifies the <see cref="IsSelectionRangeEnabled"/> dependency property.</summary>
+        public static readonly DependencyProperty IsSelectionRangeEnabledProperty
+            = DependencyProperty.Register(nameof(IsSelectionRangeEnabled),
+                                          typeof(bool),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(false));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> displays a selection range along the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
@@ -501,9 +702,17 @@ namespace MahApps.Metro.Controls
         [Category("Appearance")]
         public bool IsSelectionRangeEnabled
         {
-            get { return (bool)this.GetValue(IsSelectionRangeEnabledProperty); }
-            set { this.SetValue(IsSelectionRangeEnabledProperty, value); }
+            get => (bool)this.GetValue(IsSelectionRangeEnabledProperty);
+            set => this.SetValue(IsSelectionRangeEnabledProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="SelectionStart"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectionStartProperty
+            = DependencyProperty.Register(nameof(SelectionStart),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionStartChanged, CoerceSelectionStart),
+                                          IsValidDoubleValue);
 
         /// <summary>
         /// Gets or sets the smallest value of a specified selection for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
@@ -515,14 +724,13 @@ namespace MahApps.Metro.Controls
         [Category("Appearance")]
         public double SelectionStart
         {
-            get { return (double)this.GetValue(SelectionStartProperty); }
-            set { this.SetValue(SelectionStartProperty, (object)value); }
+            get => (double)this.GetValue(SelectionStartProperty);
+            set => this.SetValue(SelectionStartProperty, (object)value);
         }
 
         private static void OnSelectionStartChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RangeSlider rangeSlider = (RangeSlider)d;
-            rangeSlider.CoerceValue(SelectionEndProperty);
+            (d as RangeSlider)?.CoerceValue(SelectionEndProperty);
         }
 
         private static object CoerceSelectionStart(DependencyObject d, object value)
@@ -531,6 +739,7 @@ namespace MahApps.Metro.Controls
             double num = (double)value;
             double minimum = rangeSlider.Minimum;
             double maximum = rangeSlider.Maximum;
+
             if (num < minimum)
             {
                 return minimum;
@@ -544,6 +753,14 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
+        /// <summary>Identifies the <see cref="SelectionEnd"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectionEndProperty
+            = DependencyProperty.Register(nameof(SelectionEnd),
+                                          typeof(double),
+                                          typeof(RangeSlider),
+                                          new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectionEndChanged, CoerceSelectionEnd),
+                                          IsValidDoubleValue);
+
         /// <summary>
         /// Gets or sets the largest value of a specified selection for a <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
         /// </summary>
@@ -554,12 +771,13 @@ namespace MahApps.Metro.Controls
         [Category("Appearance")]
         public double SelectionEnd
         {
-            get { return (double)this.GetValue(SelectionEndProperty); }
-            set { this.SetValue(SelectionEndProperty, (object)value); }
+            get => (double)this.GetValue(SelectionEndProperty);
+            set => this.SetValue(SelectionEndProperty, (object)value);
         }
 
         private static void OnSelectionEndChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            (d as RangeSlider)?.CoerceValue(SelectionStartProperty);
         }
 
         private static object CoerceSelectionEnd(DependencyObject d, object value)
@@ -568,6 +786,7 @@ namespace MahApps.Metro.Controls
             double num = (double)value;
             double selectionStart = rangeSlider.SelectionStart;
             double maximum = rangeSlider.Maximum;
+
             if (num < selectionStart)
             {
                 return selectionStart;
@@ -581,13 +800,15 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
+        protected double MovableRange => this.Maximum - this.Minimum - this.MinRange;
+
         #endregion
 
         #region Variables
 
         private const double Epsilon = 0.00000153;
 
-        private Boolean _internalUpdate;
+        private bool _internalUpdate;
         private Thumb _centerThumb;
         private Thumb _leftThumb;
         private Thumb _rightThumb;
@@ -595,41 +816,35 @@ namespace MahApps.Metro.Controls
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
         private FrameworkElement _container;
-        private Double _movableWidth;
+        private double _movableWidth;
         private readonly DispatcherTimer _timer;
-
         private uint _tickCount;
-        private Double _currentpoint;
-        private Boolean _isInsideRange;
-        private Boolean _centerThumbBlocked;
+        private double _currentpoint;
+        private bool _isInsideRange;
+        private bool _centerThumbBlocked;
         private Direction _direction;
         private ButtonType _bType;
         private Point _position;
         private Point _basePoint;
-        private Double _currenValue;
-        private Double _density;
+        private double _currenValue;
+        private double _density;
         private ToolTip _autoToolTip;
-        private Double _oldLower;
-        private Double _oldUpper;
-        private Boolean _isMoved;
-        private Boolean _roundToPrecision;
-        private Int32 _precision;
+        private double _oldLower;
+        private double _oldUpper;
+        private bool _isMoved;
+        private bool _roundToPrecision;
+        private int _precision;
         private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
         private readonly PropertyChangeNotifier actualHeightPropertyChangeNotifier;
 
         #endregion
 
-        public double MovableRange
-        {
-            get { return this.Maximum - this.Minimum - this.MinRange; }
-        }
-
         public RangeSlider()
         {
-            this.CommandBindings.Add(new CommandBinding(MoveBack, this.MoveBackHandler));
-            this.CommandBindings.Add(new CommandBinding(MoveForward, this.MoveForwardHandler));
-            this.CommandBindings.Add(new CommandBinding(MoveAllForward, this.MoveAllForwardHandler));
-            this.CommandBindings.Add(new CommandBinding(MoveAllBack, this.MoveAllBackHandler));
+            this.CommandBindings.Add(new CommandBinding(MoveBack, (sender, e) => this.MoveSelection(true)));
+            this.CommandBindings.Add(new CommandBinding(MoveForward, (sender, e) => this.MoveSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllForward, (sender, e) => this.ResetSelection(false)));
+            this.CommandBindings.Add(new CommandBinding(MoveAllBack, (sender, e) => this.ResetSelection(true)));
 
             this.actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, ActualWidthProperty);
             this.actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => this.ReCalculateSize();
@@ -644,8 +859,8 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(100d, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
         }
 
         /// <summary>
@@ -669,30 +884,16 @@ namespace MahApps.Metro.Controls
             this.ReCalculateSize();
         }
 
-        private void MoveAllBackHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.ResetSelection(true);
-        }
-
-        private void MoveAllForwardHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.ResetSelection(false);
-        }
-
-        private void MoveBackHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.MoveSelection(true);
-        }
-
-        private void MoveForwardHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            this.MoveSelection(false);
-        }
-
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double change, Orientation orientation)
         {
-            var direction = Direction.Increase;
-            MoveThumb(x, y, change, orientation, out direction);
+            if (orientation == Orientation.Horizontal)
+            {
+                MoveThumbHorizontal(x, y, change);
+            }
+            else if (orientation == Orientation.Vertical)
+            {
+                MoveThumbVertical(x, y, change);
+            }
         }
 
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double change, Orientation orientation, out Direction direction)
@@ -712,7 +913,7 @@ namespace MahApps.Metro.Controls
 
         private static void MoveThumbHorizontal(FrameworkElement x, FrameworkElement y, double horizonalChange)
         {
-            if (!Double.IsNaN(x.Width) && !Double.IsNaN(y.Width))
+            if (!double.IsNaN(x.Width) && !double.IsNaN(y.Width))
             {
                 if (horizonalChange < 0) //slider went left
                 {
@@ -771,7 +972,7 @@ namespace MahApps.Metro.Controls
 
         private static void MoveThumbVertical(FrameworkElement x, FrameworkElement y, double verticalChange)
         {
-            if (!Double.IsNaN(x.Height) && !Double.IsNaN(y.Height))
+            if (!double.IsNaN(x.Height) && !double.IsNaN(y.Height))
             {
                 if (verticalChange < 0) //slider went up
                 {
@@ -838,8 +1039,8 @@ namespace MahApps.Metro.Controls
                     this._movableWidth = Math.Max(this.ActualWidth - this._rightThumb.ActualWidth - this._leftThumb.ActualWidth - this.MinRangeWidth, 1);
                     if (this.MovableRange <= 0)
                     {
-                        this._leftButton.Width = Double.NaN;
-                        this._rightButton.Width = Double.NaN;
+                        this._leftButton.Width = double.NaN;
+                        this._rightButton.Width = double.NaN;
                     }
                     else
                     {
@@ -861,8 +1062,8 @@ namespace MahApps.Metro.Controls
                     this._movableWidth = Math.Max(this.ActualHeight - this._rightThumb.ActualHeight - this._leftThumb.ActualHeight - this.MinRangeWidth, 1);
                     if (this.MovableRange <= 0)
                     {
-                        this._leftButton.Height = Double.NaN;
-                        this._rightButton.Height = Double.NaN;
+                        this._leftButton.Height = double.NaN;
+                        this._rightButton.Height = double.NaN;
                     }
                     else
                     {
@@ -1064,12 +1265,6 @@ namespace MahApps.Metro.Controls
             RaiseValueChangedEvents(this);
         }
 
-        private void OnRangeParameterChanged(RangeParameterChangedEventArgs e, RoutedEvent Event)
-        {
-            e.RoutedEvent = Event;
-            this.RaiseEvent(e);
-        }
-
         public void MoveSelection(bool isLeft)
         {
             var widthChange = this.SmallChange * (this.UpperValue - this.LowerValue) * this._movableWidth / this.MovableRange;
@@ -1077,6 +1272,7 @@ namespace MahApps.Metro.Controls
             widthChange = isLeft ? -widthChange : widthChange;
             MoveThumb(this._leftButton, this._rightButton, widthChange, this.Orientation, out this._direction);
             this.ReCalculateRangeSelected(true, true, this._direction);
+            this.CoerceLowerUpperValues();
         }
 
         public void ResetSelection(bool isStart)
@@ -1086,12 +1282,7 @@ namespace MahApps.Metro.Controls
 
             MoveThumb(this._leftButton, this._rightButton, widthChange, this.Orientation, out this._direction);
             this.ReCalculateRangeSelected(true, true, this._direction);
-        }
-
-        private void OnRangeSelectionChanged(RangeSelectionChangedEventArgs e)
-        {
-            e.RoutedEvent = RangeSelectionChangedEvent;
-            this.RaiseEvent(e);
+            this.CoerceLowerUpperValues();
         }
 
         public override void OnApplyTemplate()
@@ -1229,11 +1420,13 @@ namespace MahApps.Metro.Controls
                     {
                         MoveThumb(this._leftButton, this._centerThumb, -change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, false, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                     else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                     {
                         MoveThumb(this._leftButton, this._rightButton, -change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                 }
                 else
@@ -1275,11 +1468,13 @@ namespace MahApps.Metro.Controls
                     {
                         MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(false, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                     else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                     {
                         MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                         this.ReCalculateRangeSelected(true, true, this._direction);
+                        this.CoerceLowerUpperValues();
                     }
                 }
                 else
@@ -1324,11 +1519,13 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, false, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                         else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                         {
                             MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                     }
                     else
@@ -1367,11 +1564,13 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, -change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(false, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                         else if (this.IsMoveToPointEnabled && this.MoveWholeRange)
                         {
                             MoveThumb(this._leftButton, this._rightButton, -change, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                         }
                     }
                     else
@@ -1434,6 +1633,7 @@ namespace MahApps.Metro.Controls
             {
                 MoveThumb(this._leftButton, this._centerThumb, change, this.Orientation, out this._direction);
                 this.ReCalculateRangeSelected(true, false, this._direction);
+                this.CoerceLowerUpperValues();
             }
             else
             {
@@ -1510,6 +1710,7 @@ namespace MahApps.Metro.Controls
             {
                 MoveThumb(this._centerThumb, this._rightButton, change, this.Orientation, out this._direction);
                 this.ReCalculateRangeSelected(false, true, this._direction);
+                this.CoerceLowerUpperValues();
             }
             else
             {
@@ -1598,6 +1799,7 @@ namespace MahApps.Metro.Controls
                 {
                     MoveThumb(this._leftButton, this._rightButton, change, this.Orientation, out this._direction);
                     this.ReCalculateRangeSelected(true, true, this._direction);
+                    this.CoerceLowerUpperValues();
                 }
                 else
                 {
@@ -1694,7 +1896,7 @@ namespace MahApps.Metro.Controls
             return d;
         }
 
-        private Boolean GetResult(Double currentPoint, Double endPoint, Direction direction)
+        private bool GetResult(double currentPoint, double endPoint, Direction direction)
         {
             if (direction == Direction.Increase)
             {
@@ -1745,14 +1947,17 @@ namespace MahApps.Metro.Controls
                         case ButtonType.BottomLeft:
                             MoveThumb(this._leftButton, this._centerThumb, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, false, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                         case ButtonType.TopRight:
                             MoveThumb(this._centerThumb, this._rightButton, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(false, true, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                         case ButtonType.Both:
                             MoveThumb(this._leftButton, this._rightButton, widthChange * this._density, this.Orientation, out this._direction);
                             this.ReCalculateRangeSelected(true, true, this._direction);
+                            this.CoerceLowerUpperValues();
                             break;
                     }
                 }
@@ -1773,14 +1978,17 @@ namespace MahApps.Metro.Controls
                             case ButtonType.BottomLeft:
                                 MoveThumb(this._leftButton, this._centerThumb, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(true, false, this.LowerValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.TopRight:
                                 MoveThumb(this._centerThumb, this._rightButton, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(false, true, this.UpperValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.Both:
                                 MoveThumb(this._leftButton, this._rightButton, widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(this.LowerValue + value, this.UpperValue + value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                         }
                     }
@@ -1794,14 +2002,17 @@ namespace MahApps.Metro.Controls
                             case ButtonType.BottomLeft:
                                 MoveThumb(this._leftButton, this._centerThumb, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(true, false, this.LowerValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.TopRight:
                                 MoveThumb(this._centerThumb, this._rightButton, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(false, true, this.UpperValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                             case ButtonType.Both:
                                 MoveThumb(this._leftButton, this._rightButton, -widthChange * this._density, this.Orientation);
                                 this.ReCalculateRangeSelected(this.LowerValue - value, this.UpperValue - value, this._direction);
+                                this.CoerceLowerUpperValues();
                                 break;
                         }
                     }
@@ -1826,6 +2037,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(false, true, this.UpperValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1834,6 +2046,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(true, false, this.LowerValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1842,6 +2055,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._rightButton, difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(this.LowerValue + value, this.UpperValue + value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1856,6 +2070,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._centerThumb, this._rightButton, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(false, true, this.UpperValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1864,6 +2079,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._centerThumb, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(true, false, this.LowerValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -1872,6 +2088,7 @@ namespace MahApps.Metro.Controls
                         {
                             MoveThumb(this._leftButton, this._rightButton, -difference * this._density, this.Orientation);
                             this.ReCalculateRangeSelected(this.LowerValue - value, this.UpperValue - value, direction);
+                            this.CoerceLowerUpperValues();
                         }
 
                         break;
@@ -2005,7 +2222,7 @@ namespace MahApps.Metro.Controls
             return Math.Abs(value1 - value2) <= Epsilon;
         }
 
-        private Boolean IsDoubleCloseToInt(double val)
+        private bool IsDoubleCloseToInt(double val)
         {
             return this.ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
         }
@@ -2053,7 +2270,7 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValidDoubleValue(object value)
         {
-            return value is double && IsValidDouble((double)value);
+            return value is double doubleValue && IsValidDouble(doubleValue);
         }
 
         private static bool IsValidDouble(double d)
@@ -2063,12 +2280,7 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValidPrecision(object value)
         {
-            return (int)value >= 0;
-        }
-
-        private static bool IsValidMinRange(object value)
-        {
-            return value is double && IsValidDouble((double)value) && (double)value >= 0d;
+            return value is int intValue && intValue >= 0;
         }
 
         #endregion
@@ -2077,11 +2289,12 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceMinimum(DependencyObject d, object basevalue)
         {
-            var rs = (RangeSlider)d;
+            var rangeSlider = (RangeSlider)d;
             var value = (double)basevalue;
-            if (value > rs.Maximum)
+
+            if (value > rangeSlider.Maximum)
             {
-                return rs.Maximum;
+                return rangeSlider.Maximum;
             }
 
             return basevalue;
@@ -2089,78 +2302,12 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
         {
-            var rs = (RangeSlider)d;
+            var rangeSlider = (RangeSlider)d;
             var value = (double)basevalue;
-            if (value < rs.Minimum)
+
+            if (value < rangeSlider.Minimum)
             {
-                return rs.Minimum;
-            }
-
-            return basevalue;
-        }
-
-        internal static object CoerceLowerValue(DependencyObject d, object basevalue)
-        {
-            var rs = (RangeSlider)d;
-            var value = (double)basevalue;
-            if (value < rs.Minimum || rs.UpperValue - rs.MinRange < rs.Minimum)
-            {
-                return rs.Minimum;
-            }
-
-            if (value > rs.UpperValue - rs.MinRange)
-            {
-                return rs.UpperValue - rs.MinRange;
-            }
-
-            return basevalue;
-        }
-
-        internal static object CoerceUpperValue(DependencyObject d, object basevalue)
-        {
-            var rs = (RangeSlider)d;
-            var value = (double)basevalue;
-            if (value > rs.Maximum || rs.LowerValue + rs.MinRange > rs.Maximum)
-            {
-                return rs.Maximum;
-            }
-
-            if (value < rs.LowerValue + rs.MinRange)
-            {
-                return rs.LowerValue + rs.MinRange;
-            }
-
-            return basevalue;
-        }
-
-        private static object CoerceMinRange(DependencyObject d, object basevalue)
-        {
-            var rs = (RangeSlider)d;
-            var value = (double)basevalue;
-            if (rs.LowerValue + value > rs.Maximum)
-            {
-                return rs.Maximum - rs.LowerValue;
-            }
-
-            return basevalue;
-        }
-
-        private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
-        {
-            var rs = (RangeSlider)d;
-            if (rs._leftThumb != null && rs._rightThumb != null)
-            {
-                double width;
-                if (rs.Orientation == Orientation.Horizontal)
-                {
-                    width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
-                }
-                else
-                {
-                    width = rs.ActualHeight - rs._leftThumb.ActualHeight - rs._rightThumb.ActualHeight;
-                }
-
-                return (Double)basevalue > width / 2 ? width / 2 : (Double)basevalue;
+                return rangeSlider.Minimum;
             }
 
             return basevalue;
@@ -2184,60 +2331,10 @@ namespace MahApps.Metro.Controls
             dependencyObject.CoerceValue(LowerValueProperty);
         }
 
-        //Lower/Upper values property changed callback
-        private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var slider = (RangeSlider)dependencyObject;
-            if (slider._internalUpdate)
-            {
-                return;
-            }
-
-            dependencyObject.CoerceValue(UpperValueProperty);
-            dependencyObject.CoerceValue(LowerValueProperty);
-
-            RaiseValueChangedEvents(dependencyObject);
-
-            slider._oldLower = slider.LowerValue;
-            slider._oldUpper = slider.UpperValue;
-            slider.ReCalculateSize();
-        }
-
-        private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var value = (Double)e.NewValue;
-            if (value < 0)
-            {
-                value = 0;
-            }
-
-            var slider = (RangeSlider)dependencyObject;
-            dependencyObject.CoerceValue(MinRangeProperty);
-            slider._internalUpdate = true;
-            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
-            slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
-            slider._internalUpdate = false;
-
-            slider.CoerceValue(UpperValueProperty);
-
-            RaiseValueChangedEvents(dependencyObject);
-
-            slider._oldLower = slider.LowerValue;
-            slider._oldUpper = slider.UpperValue;
-
-            slider.ReCalculateSize();
-        }
-
-        private static void MinRangeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            var slider = (RangeSlider)sender;
-            slider.ReCalculateSize();
-        }
-
         private static void IntervalChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var rs = (RangeSlider)dependencyObject;
-            rs._timer.Interval = TimeSpan.FromMilliseconds((Int32)e.NewValue);
+            rs._timer.Interval = TimeSpan.FromMilliseconds((int)e.NewValue);
         }
 
         //Raises all value changes events
@@ -2246,19 +2343,20 @@ namespace MahApps.Metro.Controls
             var slider = (RangeSlider)dependencyObject;
             var lowerValueEquals = Equals(slider._oldLower, slider.LowerValue);
             var upperValueEquals = Equals(slider._oldUpper, slider.UpperValue);
+
             if ((lowerValueReCalculated || upperValueReCalculated) && (!lowerValueEquals || !upperValueEquals))
             {
-                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
+                slider.RaiseEvent(new RangeSelectionChangedEventArgs<double>(slider._oldLower, slider.LowerValue, slider._oldUpper, slider.UpperValue, RangeSelectionChangedEvent));
             }
 
             if (lowerValueReCalculated && !lowerValueEquals)
             {
-                slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue), LowerValueChangedEvent);
+                slider.RaiseEvent(new RoutedPropertyChangedEventArgs<double>(slider._oldLower, slider.LowerValue, LowerValueChangedEvent));
             }
 
             if (upperValueReCalculated && !upperValueEquals)
             {
-                slider.OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue), UpperValueChangedEvent);
+                slider.RaiseEvent(new RoutedPropertyChangedEventArgs<double>(slider._oldUpper, slider.UpperValue, UpperValueChangedEvent));
             }
         }
 

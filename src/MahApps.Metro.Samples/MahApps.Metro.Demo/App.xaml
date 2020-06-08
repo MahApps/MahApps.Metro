@@ -12,26 +12,77 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
+            <Style x:Key="DescriptionHeaderStyle"
+                   BasedOn="{StaticResource {x:Type Label}}"
+                   TargetType="{x:Type Label}">
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
 
-            <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
+            <Style BasedOn="{StaticResource MahApps.Styles.CustomValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
                 <Setter Property="CloseOnMouseLeftButtonDown" Value="False" />
                 <Setter Property="ShowValidationErrorOnMouseOver" Value="False" />
             </Style>
 
             <!--  quick change of the collapse storyboard duration  -->
-            <Storyboard x:Key="MetroExpanderCollapseStoryboard">
+            <Storyboard x:Key="MahApps.Storyboard.Expander.Collapse.Fast">
                 <DoubleAnimation Storyboard.TargetName="ExpandSite"
                                  Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 From="1"
                                  To="0"
                                  Duration="0:0:0.1" />
                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Visibility)">
                     <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Collapsed}" />
                 </ObjectAnimationUsingKeyFrames>
             </Storyboard>
+
+            <Style BasedOn="{StaticResource MahApps.Styles.Expander}" TargetType="{x:Type Expander}">
+                <Setter Property="controls:ExpanderHelper.CollapseStoryboard" Value="{StaticResource MahApps.Storyboard.Expander.Collapse.Fast}" />
+            </Style>
+
+            <Style x:Key="MahApps.Styles.MetroHeader.Horizontal" TargetType="controls:MetroHeader">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:MetroHeader">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="HeaderGroup" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Background="{TemplateBinding controls:HeaderedControlHelper.HeaderBackground}">
+                                    <controls:ContentControlEx x:Name="PART_Header"
+                                                               Margin="{TemplateBinding controls:HeaderedControlHelper.HeaderMargin}"
+                                                               HorizontalAlignment="{TemplateBinding controls:HeaderedControlHelper.HeaderHorizontalContentAlignment}"
+                                                               VerticalAlignment="{TemplateBinding controls:HeaderedControlHelper.HeaderVerticalContentAlignment}"
+                                                               Content="{TemplateBinding Header}"
+                                                               ContentCharacterCasing="{TemplateBinding controls:ControlsHelper.ContentCharacterCasing}"
+                                                               ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                               FontFamily="{TemplateBinding controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                               FontSize="{TemplateBinding controls:HeaderedControlHelper.HeaderFontSize}"
+                                                               FontStretch="{TemplateBinding controls:HeaderedControlHelper.HeaderFontStretch}"
+                                                               FontWeight="{TemplateBinding controls:HeaderedControlHelper.HeaderFontWeight}"
+                                                               Foreground="{TemplateBinding controls:HeaderedControlHelper.HeaderForeground}"
+                                                               IsTabStop="False"
+                                                               RecognizesAccessKey="{TemplateBinding controls:ControlsHelper.RecognizesAccessKey}"
+                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
+                                <Grid Grid.Column="1" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="PART_Content"
+                                                      Margin="{TemplateBinding Padding}"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      ContentSource="Content"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="controls:HeaderedControlHelper.HeaderMargin" Value="0 0 4 0" />
+                <Setter Property="controls:HeaderedControlHelper.HeaderVerticalContentAlignment" Value="Center" />
+            </Style>
 
         </ResourceDictionary>
     </Application.Resources>

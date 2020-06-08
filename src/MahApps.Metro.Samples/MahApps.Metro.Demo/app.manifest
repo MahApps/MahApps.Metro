@@ -33,11 +33,11 @@
 
     <application xmlns="urn:schemas-microsoft-com:asm.v3">
         <windowsSettings>
-            <!-- The combination of below two tags have the following effect : 
-            1) Per-Monitor for >= RS1 (Windows 10 Anniversary Update)
-            2) System < RS1 -->
-            <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitor</dpiAwareness>
-            <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
+            <!-- Per Monitor V1 [OS >= Windows 8.1] Values: False, True, Per-monitor, True/PM -->
+            <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true/PM</dpiAware>
+            <!-- Per Monitor V1 [OS >= Windows 10 Anniversary Update (1607, 10.0.14393, Redstone 1)] Values: Unaware, System, PerMonitor -->
+            <!-- Per Monitor V2 [OS >= Windows 10 Creators Update (1703, 10.0.15063, Redstone 2)] Value: PerMonitorV2 -->
+            <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, PerMonitor</dpiAwareness>
         </windowsSettings>
     </application>
 

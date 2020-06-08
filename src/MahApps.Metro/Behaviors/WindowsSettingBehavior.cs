@@ -42,10 +42,8 @@ namespace MahApps.Metro.Behaviors
             window.Closing += this.AssociatedObject_Closing;
             window.Closed += this.AssociatedObject_Closed;
 
-            if (Application.Current != null) // In case the Window is hosted in a WinForm app
-            {
-                Application.Current.SessionEnding += this.CurrentApplicationSessionEnding;
-            }
+            // This operation must be thread safe
+            Application.Current?.Invoke(() => Application.Current.SessionEnding += this.CurrentApplicationSessionEnding);
         }
 
         private void AssociatedObject_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -90,10 +88,8 @@ namespace MahApps.Metro.Behaviors
             window.Closed -= this.AssociatedObject_Closed;
             window.SourceInitialized -= this.AssociatedObject_SourceInitialized;
 
-            if (Application.Current != null) // In case the Window is hosted in a WinForm app
-            {
-                Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding;
-            }
+            // This operation must be thread safe
+            Application.Current?.Invoke(() => Application.Current.SessionEnding -= this.CurrentApplicationSessionEnding);
         }
 
 #pragma warning disable 618

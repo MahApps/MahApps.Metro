@@ -9,15 +9,15 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <System:Double x:Key="TabItemFontSize">12</System:Double>
+    <System:Double x:Key="MahApps.Font.Size.TabItem">12</System:Double>
 
-    <Style x:Key="StandardTabControl"
-           BasedOn="{StaticResource MetroTabControl}"
+    <Style x:Key="MahApps.Styles.TabControl.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.TabControl}"
            TargetType="{x:Type TabControl}">
-        <Setter Property="Background" Value="{DynamicResource Background}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BackgroundSelected}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -99,7 +99,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="StandardTabItemCloseButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.TabItemClose.VisualStudio" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Focusable" Value="False" />
@@ -115,7 +115,7 @@
                               VerticalAlignment="Center"
                               Data="M0,0 L1,1 M0,1 L1,0"
                               Stretch="Uniform"
-                              Stroke="{DynamicResource CloseButtonStroke}"
+                              Stroke="{DynamicResource MahApps.Brushes.CloseButton.Stroke}"
                               StrokeEndLineCap="Flat"
                               StrokeStartLineCap="Flat"
                               StrokeThickness="2" />
@@ -125,12 +125,12 @@
                             <Setter Property="Visibility" Value="Hidden" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundHighlighted}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource CloseButtonStrokeHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CloseButton.BackgroundHighlighted}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CloseButton.StrokeHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource CloseButtonBackgroundPressed}" />
-                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource CloseButtonStroke}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CloseButton.BackgroundPressed}" />
+                            <Setter TargetName="ButtonPath" Property="Stroke" Value="{DynamicResource MahApps.Brushes.CloseButton.Stroke}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -139,10 +139,10 @@
         <Setter Property="Width" Value="15" />
     </Style>
 
-    <Style x:Key="StandardTabItem"
-           BasedOn="{StaticResource MetroTabItem}"
+    <Style x:Key="MahApps.Styles.TabItem.VisualStudio"
+           BasedOn="{StaticResource MahApps.Styles.TabItem}"
            TargetType="{x:Type TabItem}">
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushNormal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="Controls:TabControlHelper.CloseButtonEnabled" Value="True" />
         <Setter Property="Padding" Value="12 5 12 5" />
         <Setter Property="Template">
@@ -165,18 +165,18 @@
                                                        ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                       FontFamily="{TemplateBinding Controls:ControlsHelper.HeaderFontFamily}"
-                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontFamily="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontFamily}"
+                                                       FontSize="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontStretch}"
                                                        FontStyle="{TemplateBinding FontStyle}"
-                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       FontWeight="{TemplateBinding Controls:HeaderedControlHelper.HeaderFontWeight}"
                                                        Foreground="{TemplateBinding Foreground}"
-                                                       RecognizesAccessKey="True"
+                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <Button x:Name="PART_CloseButton"
                                     VerticalAlignment="Center"
                                     IsTabStop="False"
-                                    Style="{DynamicResource StandardTabItemCloseButtonStyle}"
+                                    Style="{DynamicResource MahApps.Styles.Button.TabItemClose.VisualStudio}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabControlHelper.CloseButtonEnabled), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
@@ -212,12 +212,12 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource BackgroundHighlighted}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushHighlighted}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundHighlighted}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Highlighted}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -232,8 +232,8 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSelected}" />
+                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.BackgroundSelected}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Selected}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -241,13 +241,13 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="ClosableTabItemTemplate">
+    <DataTemplate x:Key="MahApps.Templates.TabItem.Closable.VisualStudio">
         <DockPanel>
             <ContentPresenter VerticalAlignment="Center" Content="{Binding DisplayName}">
                 <ContentPresenter.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="FontSize" Value="20" />
-                        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
                     </Style>
                 </ContentPresenter.Resources>
             </ContentPresenter>
@@ -255,12 +255,12 @@
     </DataTemplate>
 
     <!--  This template explains how to render the 'Workspace' content area in the main window.  -->
-    <DataTemplate x:Key="WorkspacesTemplate">
+    <DataTemplate x:Key="MahApps.Templates.TabControl.Workspaces.VisualStudio">
         <TabControl Margin="0"
                     IsSynchronizedWithCurrentItem="True"
-                    ItemTemplate="{StaticResource ClosableTabItemTemplate}"
+                    ItemTemplate="{StaticResource MahApps.Templates.TabItem.Closable.VisualStudio}"
                     ItemsSource="{Binding}"
-                    Style="{DynamicResource StandardTabControl}" />
+                    Style="{DynamicResource MahApps.Styles.TabControl.VisualStudio}" />
     </DataTemplate>
 
 </ResourceDictionary>

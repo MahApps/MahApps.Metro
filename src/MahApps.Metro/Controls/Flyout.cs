@@ -8,11 +8,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ControlzEx;
+using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Linq;
-
     /// <summary>
     /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
     /// <see cref="MetroWindow"/>
@@ -34,6 +33,19 @@ namespace MahApps.Metro.Controls
         {
             add { this.AddHandler(IsOpenChangedEvent, value); }
             remove { this.RemoveHandler(IsOpenChangedEvent, value); }
+        }
+
+        /// <summary>
+        /// An event that is raised when the opening animation has finished.
+        /// </summary>
+        public static readonly RoutedEvent OpeningFinishedEvent =
+            EventManager.RegisterRoutedEvent("OpeningFinished", RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler), typeof(Flyout));
+
+        public event RoutedEventHandler OpeningFinished
+        {
+            add { this.AddHandler(OpeningFinishedEvent, value); }
+            remove { this.RemoveHandler(OpeningFinishedEvent, value); }
         }
 
         /// <summary>
@@ -289,39 +301,39 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal void ChangeFlyoutTheme(MahApps.Metro.Theme windowTheme)
+        internal void ChangeFlyoutTheme(ControlzEx.Theming.Theme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources, true);
                     break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Inverse:
-                    var inverseTheme = ThemeManager.GetInverseTheme(windowTheme);
+                    var inverseTheme = ThemeManager.Current.GetInverseTheme(windowTheme);
 
                     if (inverseTheme == null)
                         throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, inverseTheme);
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Dark:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorDark && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorDark ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
 
                 case FlyoutTheme.Light:
-                    ThemeManager.ApplyThemeResourcesFromTheme(this.Resources, ThemeManager.Themes.First(x => x.BaseColorScheme == ThemeManager.BaseColorLight && x.ColorScheme == windowTheme.ColorScheme));
+                    ThemeManager.Current.ApplyThemeResourcesFromTheme(this.Resources, windowTheme.BaseColorScheme == ThemeManager.BaseColorLight ? windowTheme : ThemeManager.Current.GetInverseTheme(windowTheme));
                     this.OverrideFlyoutResources(this.Resources);
                     break;
             }
@@ -329,59 +341,56 @@ namespace MahApps.Metro.Controls
 
         private void OverrideFlyoutResources(ResourceDictionary resources, bool accent = false)
         {
-            var fromColorKey = accent ? "HighlightColor" : "FlyoutColor";
+            var fromColorKey = accent ? "MahApps.Colors.Highlight" : "MahApps.Colors.Flyout";
 
             resources.BeginInit();
 
             var fromColor = (Color)resources[fromColorKey];
-            resources["WhiteColor"] = fromColor;
-            resources["FlyoutColor"] = fromColor;
+            resources["MahApps.Colors.ThemeBackground"] = fromColor;
+            resources["MahApps.Colors.Flyout"] = fromColor;
 
             var newBrush = new SolidColorBrush(fromColor);
             newBrush.Freeze();
-            resources["FlyoutBackgroundBrush"] = newBrush;
-            resources["ControlBackgroundBrush"] = newBrush;
-            resources["WhiteBrush"] = newBrush;
-            resources["WhiteColorBrush"] = newBrush;
-            resources["DisabledWhiteBrush"] = newBrush;
-            resources["WindowBackgroundBrush"] = newBrush;
+            resources["MahApps.Brushes.Flyout.Background"] = newBrush;
+            resources["MahApps.Brushes.Control.Background"] = newBrush;
+            resources["MahApps.Brushes.ThemeBackground"] = newBrush;
+            resources["MahApps.Brushes.Window.Background"] = newBrush;
             resources[SystemColors.WindowBrushKey] = newBrush;
 
             if (accent)
             {
-                fromColor = (Color)resources["IdealForegroundColor"];
+                fromColor = (Color)resources["MahApps.Colors.IdealForeground"];
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
-                resources["FlyoutForegroundBrush"] = newBrush;
-                resources["TextBrush"] = newBrush;
-                resources["LabelTextBrush"] = newBrush;
+                resources["MahApps.Brushes.Flyout.Foreground"] = newBrush;
+                resources["MahApps.Brushes.Text"] = newBrush;
 
-                if (resources.Contains("AccentBaseColor"))
+                if (resources.Contains("MahApps.Colors.AccentBase"))
                 {
-                    fromColor = (Color)resources["AccentBaseColor"];
+                    fromColor = (Color)resources["MahApps.Colors.AccentBase"];
                 }
                 else
                 {
-                    var accentColor = (Color)resources["AccentColor"];
+                    var accentColor = (Color)resources["MahApps.Colors.Accent"];
                     fromColor = Color.FromArgb(255, accentColor.R, accentColor.G, accentColor.B);
                 }
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
-                resources["HighlightColor"] = fromColor;
-                resources["HighlightBrush"] = newBrush;
+                resources["MahApps.Colors.Highlight"] = fromColor;
+                resources["MahApps.Brushes.Highlight"] = newBrush; resources["MahApps.Brushes.Highlight"] = newBrush;
             }
 
             resources.EndInit();
         }
 
-        private static MahApps.Metro.Theme DetectTheme(Flyout flyout)
+        private static ControlzEx.Theming.Theme DetectTheme(Flyout flyout)
         {
             if (flyout == null)
                 return null;
 
             // first look for owner
             var window = flyout.ParentWindow;
-            var theme = window != null ? ThemeManager.DetectTheme(window) : null;
+            var theme = window != null ? ThemeManager.Current.DetectTheme(window) : null;
             if (theme != null)
             {
                 return theme;
@@ -391,14 +400,14 @@ namespace MahApps.Metro.Controls
             if (Application.Current != null)
             {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.Current.DetectTheme(mainWindow) : null;
                 if (theme != null)
                 {
                     return theme;
                 }
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectTheme(Application.Current);
+                theme = ThemeManager.Current.DetectTheme(Application.Current);
                 if (theme != null)
                 {
                     return theme;
@@ -429,63 +438,82 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action openedChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action openedChangedAction = () =>
                 {
-                    if (flyout.AreAnimationsEnabled)
+                    if (e.NewValue != e.OldValue)
                     {
-                        if ((bool)e.NewValue)
+                        if (flyout.AreAnimationsEnabled)
                         {
-                            if (flyout.hideStoryboard != null)
+                            if ((bool)e.NewValue)
                             {
-                                // don't let the storyboard end it's completed event
-                                // otherwise it could be hidden on start
-                                flyout.hideStoryboard.Completed -= flyout.HideStoryboardCompleted;
-                            }
-                            flyout.Visibility = Visibility.Visible;
-                            flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
-                            flyout.TryFocusElement();
-                            if (flyout.IsAutoCloseEnabled)
-                            {
-                                flyout.StartAutoCloseTimer();
-                            }
-                        }
-                        else
-                        {                            
-                            flyout.StopAutoCloseTimer();
-                            if (flyout.hideStoryboard != null)
-                            {
-                                flyout.hideStoryboard.Completed += flyout.HideStoryboardCompleted;
+                                if (flyout.hideStoryboard != null)
+                                {
+                                    // don't let the storyboard end it's completed event
+                                    // otherwise it could be hidden on start
+                                    flyout.hideStoryboard.Completed -= flyout.HideStoryboardCompleted;
+                                }
+
+                                flyout.Visibility = Visibility.Visible;
+                                flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
+                                flyout.TryFocusElement();
+                                if (flyout.showStoryboard != null)
+                                {
+                                    flyout.showStoryboard.Completed += flyout.ShowStoryboardCompleted;
+                                }
+                                else
+                                {
+                                    flyout.Shown();
+                                }
+
+                                if (flyout.IsAutoCloseEnabled)
+                                {
+                                    flyout.StartAutoCloseTimer();
+                                }
                             }
                             else
                             {
-                                flyout.Hide();
+                                if (flyout.showStoryboard != null)
+                                {
+                                    flyout.showStoryboard.Completed -= flyout.ShowStoryboardCompleted;
+                                }
+
+                                flyout.StopAutoCloseTimer();
+                                if (flyout.hideStoryboard != null)
+                                {
+                                    flyout.hideStoryboard.Completed += flyout.HideStoryboardCompleted;
+                                }
+                                else
+                                {
+                                    flyout.Hide();
+                                }
                             }
-                        }
-                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
-                    }
-                    else
-                    {
-                        if ((bool)e.NewValue)
-                        {
-                            flyout.Visibility = Visibility.Visible;
-                            flyout.TryFocusElement();
-                            if (flyout.IsAutoCloseEnabled)
-                            {
-                                flyout.StartAutoCloseTimer();
-                            }
+
+                            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                         }
                         else
                         {
-                            flyout.StopAutoCloseTimer();
-                            flyout.Hide();
-                        }
-                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
-                    }
-                }
+                            if ((bool)e.NewValue)
+                            {
+                                flyout.Visibility = Visibility.Visible;
+                                flyout.TryFocusElement();
+                                flyout.Shown();
+                                if (flyout.IsAutoCloseEnabled)
+                                {
+                                    flyout.StartAutoCloseTimer();
+                                }
+                            }
+                            else
+                            {
+                                flyout.StopAutoCloseTimer();
+                                flyout.Hide();
+                            }
 
-                flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
-            };
+                            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
+                        }
+                    }
+
+                    flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
         }
@@ -518,7 +546,7 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseIntervalChangedAction = () => { 
+            Action autoCloseIntervalChangedAction = () => {
                 if (e.NewValue != e.OldValue)
                 {
                     flyout.InitializeAutoCloseTimer();
@@ -574,13 +602,24 @@ namespace MahApps.Metro.Controls
             this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
+        private void ShowStoryboardCompleted(object sender, EventArgs e)
+        {
+            this.showStoryboard.Completed -= this.ShowStoryboardCompleted;
+            this.Shown();
+        }
+
+        private void Shown()
+        {
+            this.RaiseEvent(new RoutedEventArgs(OpeningFinishedEvent));
+        }
+
         private void TryFocusElement()
         {
             if (this.AllowFocusElement)
             {
                 // first focus itself
                 this.Focus();
-                
+
                 if (this.FocusedElement != null)
                 {
                     this.FocusedElement.Focus();
@@ -627,6 +666,7 @@ namespace MahApps.Metro.Controls
 
         DispatcherTimer autoCloseTimer;
         FrameworkElement flyoutRoot;
+        Storyboard showStoryboard;
         Storyboard hideStoryboard;
         SplineDoubleKeyFrame hideFrame;
         SplineDoubleKeyFrame hideFrameY;
@@ -672,6 +712,7 @@ namespace MahApps.Metro.Controls
                 }
             }
 
+            this.showStoryboard = this.GetTemplateChild("ShowStoryboard") as Storyboard;
             this.hideStoryboard = this.GetTemplateChild("HideStoryboard") as Storyboard;
             this.hideFrame = this.GetTemplateChild("hideFrame") as SplineDoubleKeyFrame;
             this.hideFrameY = this.GetTemplateChild("hideFrameY") as SplineDoubleKeyFrame;

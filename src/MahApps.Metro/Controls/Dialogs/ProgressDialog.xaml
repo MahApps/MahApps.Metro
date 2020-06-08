@@ -18,16 +18,15 @@
                        TextWrapping="Wrap" />
 
             <StackPanel Grid.Row="1"
-                        Height="85"
+                        MinHeight="85"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
                 <Button x:Name="PART_NegativeButton"
-                        Height="35"
-                        MinWidth="80"
                         Margin="5 0 0 0"
                         Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Cursor="Arrow"
-                        Style="{DynamicResource MahApps.Metro.Styles.Dialogs.AccentButton}"
+                        FontSize="{Binding DialogButtonFontSize, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>

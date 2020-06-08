@@ -13,16 +13,24 @@ export:
 issue-labels-include:
 - Breaking Change
 - Bug
+- Bug Fix
 - Feature
 - Feature Request
 - Improvement
+- Hacktoberfest
 issue-labels-exclude:
 - Internal Refactoring
 - Build
 - Question
 - WontFix
 - Duplicate
+- Housekeeping
+- Documentation
+- CleanUp / Typos
 issue-labels-alias:
     - name:    Documentation
       header:  Documentation
       plural:  Documentation
+    - name:    Hacktoberfest
+      header:  Hacktoberfest
+      plural:  Hacktoberfest

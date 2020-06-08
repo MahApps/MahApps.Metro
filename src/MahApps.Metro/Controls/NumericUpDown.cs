@@ -138,6 +138,7 @@ namespace MahApps.Metro.Controls
                     if (e.NewValue != e.OldValue)
                     {
                         var numUpDown = (NumericUpDown)o;
+                        numUpDown.regexNumber = null;
                         numUpDown.OnValueChanged(numUpDown.Value, numUpDown.Value);
                     }
                 }));
@@ -186,10 +187,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
-        //private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])\b[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?\b(?!\.[0-9])", RegexOptions.Compiled);
-        private static readonly Regex RegexNumber = new Regex(@"[-+]?(?<![0-9][.,])[.,]?[0-9]+(?:[.,\s][0-9]+)*[.,]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
+        private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
+        private Regex regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -585,7 +587,7 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
-            this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
+            this.ToggleReadOnlyMode(this.IsReadOnly || !this.InterceptManualEnter);
 
             this.repeatUp.Click += (o, e) =>
                 {
@@ -613,7 +615,7 @@ namespace MahApps.Metro.Controls
 
             this.OnValueChanged(this.Value, this.Value);
 
-            this.scrollViewer = this.TryFindScrollViewer();
+            this.scrollViewer = null;
         }
 
         private void ToggleReadOnlyMode(bool isReadOnly)
@@ -682,23 +684,22 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            switch (e.Key)
+            if (e.Key == Key.Enter)
             {
-                case Key.Enter:
-                    if (!this.ChangeValueOnTextChanged)
-                    {
-                        this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
-                    }
-
-                    break;
-                case Key.Up:
-                    this.ChangeValueWithSpeedUp(true);
-                    e.Handled = true;
-                    break;
-                case Key.Down:
-                    this.ChangeValueWithSpeedUp(false);
-                    e.Handled = true;
-                    break;
+                if (!this.ChangeValueOnTextChanged)
+                {
+                    this.ChangeValueFromTextInput(e.OriginalSource as TextBox);
+                }
+            }
+            else if (e.Key == Key.Up)
+            {
+                this.ChangeValueWithSpeedUp(true);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                this.ChangeValueWithSpeedUp(false);
+                e.Handled = true;
             }
 
             if (e.Handled)
@@ -730,19 +731,21 @@ namespace MahApps.Metro.Controls
                 this.ChangeValueInternal(increment);
             }
 
-            if (this.scrollViewer != null && this.handlesMouseWheelScrolling.Value != null)
+            var sv = this.TryFindScrollViewer();
+
+            if (sv != null && this.handlesMouseWheelScrolling.Value != null)
             {
                 if (this.TrackMouseWheelWhenMouseOver)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, true, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, true, null);
                 }
                 else if (this.InterceptMouseWheel)
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, this.valueTextBox.IsFocused, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, this.valueTextBox.IsFocused, null);
                 }
                 else
                 {
-                    this.handlesMouseWheelScrolling.Value.SetValue(this.scrollViewer, true, null);
+                    this.handlesMouseWheelScrolling.Value.SetValue(sv, true, null);
                 }
             }
         }
@@ -929,10 +932,11 @@ namespace MahApps.Metro.Controls
                 nud.InternalSetText(nud.Value);
             }
 
-            var value = (string)e.NewValue;
+            var format = (string)e.NewValue;
 
-            if (!nud.NumericInputMode.HasFlag(NumericInput.Decimal) && !string.IsNullOrEmpty(value) && RegexStringFormatHexadecimal.IsMatch(value))
+            if (!string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
             {
+                nud.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
                 nud.SetCurrentValue(NumericInputModeProperty, nud.NumericInputMode | NumericInput.Decimal);
             }
         }
@@ -942,27 +946,6 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
-        }
-
-        private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-            if (e.NewValue != e.OldValue && e.NewValue is bool && numericUpDown.Value != null)
-            {
-                var hasDecimals = (bool)e.NewValue;
-                var numericInput = numericUpDown.NumericInputMode;
-                if (!hasDecimals)
-                {
-                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
-                    numericInput &= ~NumericInput.Decimal;
-                }
-                else
-                {
-                    numericInput |= NumericInput.Decimal;
-                }
-
-                numericUpDown.SetCurrentValue(NumericInputModeProperty, numericInput);
-            }
         }
 
         private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1003,7 +986,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.valueTextBox.Text = this.FormattedValue(newValue, this.StringFormat, this.SpecificCultureInfo);
+            this.valueTextBox.Text = FormattedValueString(newValue.Value, this.StringFormat, this.SpecificCultureInfo);
 
             if ((bool)this.GetValue(TextBoxHelper.IsMonitoringProperty))
             {
@@ -1011,62 +994,104 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private string FormattedValue(double? newValue, string format, CultureInfo culture)
+        private static string FormattedValueString(double newValue, string format, CultureInfo culture)
         {
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                var match = RegexStringFormatHexadecimal.Match(format);
-                if (match.Success)
+                if(TryFormatHexadecimal(newValue, format, culture, out string hexValue))
                 {
-                    if (match.Groups["simpleHEX"].Success)
-                    {
-                        // HEX DOES SUPPORT INT ONLY.
-                        return ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
-                    }
-
-                    if (match.Groups["complexHEX"].Success)
-                    {
-                        return string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
-                    }
+                    return hexValue;
                 }
                 else
                 {
-                    var value = newValue.Value;
-
-                    if (format.ToUpper().Contains("P") || format.Contains("%"))
+                    var match = RegexStringFormat.Match(format);
+                    if (match.Success)
                     {
-                        value = value / 100d;
+                        // we have a format template such as "{0:N0}"
+                        return string.Format(culture, format, newValue);
                     }
-                    else if (format.Contains("‰"))
-                    {
-                        value = value / 1000d;
-                    }
-
-                    if (!format.Contains("{"))
-                    {
-                        // then we may have a StringFormat of e.g. "N0"
-                        return value.ToString(format, culture);
-                    }
-
-                    return string.Format(culture, format, value);
+                    // we have a format such as "N0"
+                    return newValue.ToString(format, culture);
                 }
             }
 
-            return newValue.Value.ToString(culture);
+            return newValue.ToString(culture);
+        }        
+
+        private static double FormattedValue(double newValue, string format, CultureInfo culture)
+        {
+            format = format.Replace("{}", string.Empty);
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                if (!TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                {
+                    var match = RegexStringFormat.Match(format);
+                    if (match.Success)
+                    {
+                        // we have a format template such as "{0:N0}"
+                        return ConvertStringFormatValue(newValue, match.Groups["format"].Value);
+                    }
+
+                    // we have a format such as "N0"
+                    return ConvertStringFormatValue(newValue, format);
+                }
+            }
+
+            return newValue;
+        }        
+
+        private static double ConvertStringFormatValue(double value, string format)
+        {
+            if (format.ToUpperInvariant().Contains("P") || format.Contains("%"))
+            {
+                value /= 100d;
+            }
+            else if (format.Contains("‰"))
+            {
+                value /= 1000d;
+            }
+            return value;
+        }        
+
+        private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, out string output)
+        {
+            var match = RegexStringFormatHexadecimal.Match(format);
+            if (match.Success)
+            {
+                if (match.Groups["simpleHEX"].Success)
+                {
+                    // HEX DOES SUPPORT INT ONLY.
+                    output = ((int)newValue).ToString(match.Groups["simpleHEX"].Value, culture);
+                    return true;
+                }
+
+                if (match.Groups["complexHEX"].Success)
+                {
+                    output = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue);
+                    return true;
+                }
+            }
+            output = null;
+            return false;
         }
 
         private ScrollViewer TryFindScrollViewer()
         {
+            if (this.scrollViewer != null)
+            {
+                return this.scrollViewer;
+            }
+
             this.valueTextBox.ApplyTemplate();
 
-            var scrollViewerFromTemplate = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
-            if (scrollViewerFromTemplate != null)
+            this.scrollViewer = this.valueTextBox.Template.FindName(PART_ContentHost, this.valueTextBox) as ScrollViewer;
+            if (this.scrollViewer != null)
             {
                 this.handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => this.scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
 
-            return scrollViewerFromTemplate;
+            return this.scrollViewer;
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
@@ -1190,6 +1215,7 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(textBox.Text, out convertedValue))
                 {
+                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
                 }
             }
@@ -1213,7 +1239,8 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (this.ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    this.SetCurrentValue(ValueProperty, convertedValue);
+                    convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
+                    this.SetValueTo(convertedValue);
                 }
             }
         }
@@ -1271,8 +1298,8 @@ namespace MahApps.Metro.Controls
                 return true;
             }
 
-            if (text.Count(c => c == this.SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 1
-                || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 1
+            if (text.Count(c => c == this.SpecificCultureInfo.NumberFormat.PositiveSign[0]) > 2
+                || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NegativeSign[0]) > 2
                 || text.Count(c => c == this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator[0]) > 1)
             {
                 return false;
@@ -1339,7 +1366,14 @@ namespace MahApps.Metro.Controls
                 return hexMatches.Count > 0 ? hexMatches[0].Value : text;
             }
 
-            var matches = RegexNumber.Matches(text);
+            if (this.regexNumber == null)
+            {
+                this.regexNumber = new Regex(RawRegexNumberString.Replace("<DecimalSeparator>", this.SpecificCultureInfo.NumberFormat.NumberDecimalSeparator)
+                                                                 .Replace("<GroupSeparator>", this.SpecificCultureInfo.NumberFormat.NumberGroupSeparator),
+                                             RegexOptions.Compiled);
+            }
+
+            var matches = this.regexNumber.Matches(text);
             return matches.Count > 0 ? matches[0].Value : text;
         }
     }

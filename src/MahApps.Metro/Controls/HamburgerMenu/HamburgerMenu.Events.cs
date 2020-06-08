@@ -1,14 +1,11 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
-    /// <summary>
-    /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
-    /// </summary>
     public partial class HamburgerMenu
     {
+        /// <summary>Identifies the <see cref="ItemClick"/> routed event.</summary>
         public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
@@ -16,10 +13,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event ItemClickRoutedEventHandler ItemClick
         {
-            add { this.AddHandler(HamburgerMenu.ItemClickEvent, value); }
-            remove { this.RemoveHandler(HamburgerMenu.ItemClickEvent, value); }
+            add => this.AddHandler(ItemClickEvent, value);
+            remove => this.RemoveHandler(ItemClickEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="OptionsItemClick"/> routed event.</summary>
         public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
@@ -27,10 +25,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event ItemClickRoutedEventHandler OptionsItemClick
         {
-            add { this.AddHandler(HamburgerMenu.OptionsItemClickEvent, value); }
-            remove { this.RemoveHandler(HamburgerMenu.OptionsItemClickEvent, value); }
+            add => this.AddHandler(OptionsItemClickEvent, value);
+            remove => this.RemoveHandler(OptionsItemClickEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="ItemInvoked"/> routed event.</summary>
         public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Direct, typeof(HamburgerMenuItemInvokedRoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
@@ -38,10 +37,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event HamburgerMenuItemInvokedRoutedEventHandler ItemInvoked
         {
-            add { this.AddHandler(HamburgerMenu.ItemInvokedEvent, value); }
-            remove { this.RemoveHandler(HamburgerMenu.ItemInvokedEvent, value); }
+            add => this.AddHandler(ItemInvokedEvent, value);
+            remove => this.RemoveHandler(ItemInvokedEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="HamburgerButtonClick"/> routed event.</summary>
         public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(HamburgerMenu));
 
         /// <summary>
@@ -49,35 +49,60 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public event RoutedEventHandler HamburgerButtonClick
         {
-            add { this.AddHandler(HamburgerMenu.HamburgerButtonClickEvent, value); }
-            remove { this.RemoveHandler(HamburgerMenu.HamburgerButtonClickEvent, value); }
+            add => this.AddHandler(HamburgerButtonClickEvent, value);
+            remove => this.RemoveHandler(HamburgerButtonClickEvent, value);
         }
 
         private void OnHamburgerButtonClick(object sender, RoutedEventArgs e)
         {
-            var args = new RoutedEventArgs(HamburgerMenu.HamburgerButtonClickEvent, sender);
+            var args = new RoutedEventArgs(HamburgerButtonClickEvent, sender);
             this.RaiseEvent(args);
 
             if (!args.Handled)
             {
-                IsPaneOpen = !IsPaneOpen;
+                this.IsPaneOpen = !this.IsPaneOpen;
             }
         }
 
         private bool OnItemClick()
         {
-            var selectedItem = _buttonsListView.SelectedItem;
+            var selectedItem = this.buttonsListView.SelectedItem;
+
+            if (!this.CanRaiseItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
-            RaiseItemCommand();
+            this.RaiseItemCommand();
 
             var raiseItemEvents = this.RaiseItemEvents(selectedItem);
-            if (raiseItemEvents && _optionsListView != null)
+            if (raiseItemEvents && this.optionsListView != null)
             {
-                _optionsListView.SelectedIndex = -1;
+                this.optionsListView.SelectedIndex = -1;
             }
 
             return raiseItemEvents;
+        }
+
+        private bool CanRaiseItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this.buttonsListView != null)
+                {
+                    this.buttonsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private bool RaiseItemEvents(object selectedItem)
@@ -98,23 +123,53 @@ namespace MahApps.Metro.Controls
 
         private bool OnOptionsItemClick()
         {
-            var selectedItem = _optionsListView.SelectedItem;
+            var selectedItem = this.optionsListView.SelectedItem;
+
+            if (!this.CanRaiseOptionsItemEvents(selectedItem))
+            {
+                return false;
+            }
 
             (selectedItem as HamburgerMenuItem)?.RaiseCommand();
-            RaiseOptionsItemCommand();
+            this.RaiseOptionsItemCommand();
 
             var raiseOptionsItemEvents = this.RaiseOptionsItemEvents(selectedItem);
-            if (raiseOptionsItemEvents && _buttonsListView != null)
+            if (raiseOptionsItemEvents && this.buttonsListView != null)
             {
-                _buttonsListView.SelectedIndex = -1;
+                this.buttonsListView.SelectedIndex = -1;
             }
 
             return raiseOptionsItemEvents;
         }
 
+        private bool CanRaiseOptionsItemEvents(object selectedItem)
+        {
+            if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
+            {
+                if (this.optionsListView != null)
+                {
+                    this.optionsListView.SelectedIndex = -1;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
         private bool RaiseOptionsItemEvents(object selectedItem)
         {
             if (selectedItem is null)
+            {
+                return false;
+            }
+
+            if (selectedItem is IHamburgerMenuHeaderItem || selectedItem is IHamburgerMenuSeparatorItem)
             {
                 return false;
             }
@@ -140,7 +195,7 @@ namespace MahApps.Metro.Controls
 
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                var canItemClick = OnItemClick();
+                var canItemClick = this.OnItemClick();
 
                 if (!canItemClick)
                 {
@@ -171,7 +226,7 @@ namespace MahApps.Metro.Controls
 
             if (e.AddedItems != null && e.AddedItems.Count > 0)
             {
-                var canItemClick = OnOptionsItemClick();
+                var canItemClick = this.OnOptionsItemClick();
 
                 if (!canItemClick)
                 {

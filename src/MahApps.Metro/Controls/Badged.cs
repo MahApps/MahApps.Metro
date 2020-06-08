@@ -8,13 +8,17 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = BadgeContainerPartName, Type = typeof(UIElement))]
     public class Badged : BadgedEx
     {
-        public static readonly DependencyProperty BadgeChangedStoryboardProperty = DependencyProperty.Register(
-            "BadgeChangedStoryboard", typeof(Storyboard), typeof(Badged), new PropertyMetadata(default(Storyboard)));
+        /// <summary>Identifies the <see cref="BadgeChangedStoryboard"/> dependency property.</summary>
+        public static readonly DependencyProperty BadgeChangedStoryboardProperty
+            = DependencyProperty.Register(nameof(BadgeChangedStoryboard),
+                                          typeof(Storyboard),
+                                          typeof(Badged),
+                                          new PropertyMetadata(default(Storyboard)));
 
         public Storyboard BadgeChangedStoryboard
         {
-            get { return (Storyboard)this.GetValue(BadgeChangedStoryboardProperty); }
-            set { this.SetValue(BadgeChangedStoryboardProperty, value); }
+            get => (Storyboard)this.GetValue(BadgeChangedStoryboardProperty);
+            set => this.SetValue(BadgeChangedStoryboardProperty, value);
         }
 
         static Badged()

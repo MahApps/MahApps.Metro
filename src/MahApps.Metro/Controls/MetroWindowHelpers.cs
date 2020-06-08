@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ControlzEx.Theming;
 using ControlzEx.Windows.Shell;
 using JetBrains.Annotations;
 
@@ -63,22 +64,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="window">The MetroWindow</param>
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
-        /// <param name="resetBrush">An optional brush to reset the window commands brush to.</param>
-        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts, Brush resetBrush = null)
+        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts)
         {
             var allOpenFlyouts = flyouts.Where(x => x.IsOpen);
 
             var anyFlyoutOpen = allOpenFlyouts.Any(x => x.Position != Position.Bottom);
             if (!anyFlyoutOpen)
             {
-                if (resetBrush == null)
-                {
-                    window.ResetAllWindowCommandsBrush();
-                }
-                else
-                {
-                    window.ChangeAllWindowCommandsBrush(resetBrush);
-                }
+                window.ResetAllWindowCommandsBrush();
             }
 
             var topFlyout = allOpenFlyouts
@@ -113,83 +106,83 @@ namespace MahApps.Metro.Controls
 
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
-            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
+
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
         }
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            window.ChangeAllWindowButtonCommandsBrush(flyout.Foreground, flyout.Position);
+            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
+                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
+                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
+
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentAppTheme, flyout.Theme, flyout.Position);
         }
 
-        private static bool NeedLightTheme(this Brush brush)
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme)
         {
-            if (brush == null)
+            if (foregroundBrush == null)
             {
-                return true;
+                window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
+                window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
             }
 
-            // calculate brush color lightness
-            var color = ((SolidColorBrush)brush).Color;
-
-            var r = color.R / 255.0f;
-            var g = color.G / 255.0f;
-            var b = color.B / 255.0f;
-
-            var max = r;
-            var min = r;
-
-            if (g > max) max = g;
-            if (b > max) max = b;
-
-            if (g < min) min = g;
-            if (b < min) min = b;
-
-            var lightness = (max + min) / 2;
-
-            return lightness > 0.1;
-        }
-
-        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush brush)
-        {
-            // set the theme based on color lightness
-            var theme = brush.NeedLightTheme() ? Theme.Light : Theme.Dark;
+            // set the theme based on current application or window theme
+            var theme = currentAppTheme != null && currentAppTheme.BaseColorScheme == ThemeManager.BaseColorDark
+                ? ThemeManager.BaseColorDark
+                : ThemeManager.BaseColorLight;
 
             // set the theme to light by default
             window.LeftWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
             window.RightWindowCommands?.SetValue(WindowCommands.ThemeProperty, theme);
 
             // clear or set the foreground property
-            if (brush != null)
+            if (foregroundBrush != null)
             {
-                window.LeftWindowCommands?.SetValue(Control.ForegroundProperty, brush);
-                window.RightWindowCommands?.SetValue(Control.ForegroundProperty, brush);
-            }
-            else
-            {
-                window.LeftWindowCommands?.ClearValue(Control.ForegroundProperty);
-                window.RightWindowCommands?.ClearValue(Control.ForegroundProperty);
+                window.LeftWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
+                window.RightWindowCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
             }
         }
 
-        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush brush, Position position = Position.Top)
+        private static void ChangeAllWindowButtonCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme, FlyoutTheme flyoutTheme = FlyoutTheme.Adapt, Position position = Position.Top)
         {
-            // set the theme to light by default
             if (position == Position.Right || position == Position.Top)
             {
+                if (foregroundBrush == null)
+                {
+                    window.WindowButtonCommands?.ClearValue(Control.ForegroundProperty);
+                }
+
                 // set the theme based on color lightness
-                var theme = brush.NeedLightTheme() ? Theme.Light : Theme.Dark;
+                // otherwise set the theme based on current application or window theme
+                var theme = currentAppTheme != null && currentAppTheme.BaseColorScheme == ThemeManager.BaseColorDark
+                    ? ThemeManager.BaseColorDark
+                    : ThemeManager.BaseColorLight;
+
+                if (flyoutTheme == FlyoutTheme.Light)
+                {
+                    theme = ThemeManager.BaseColorLight;
+                }
+                else if (flyoutTheme == FlyoutTheme.Dark)
+                {
+                    theme = ThemeManager.BaseColorDark;
+                }
+                else if (flyoutTheme == FlyoutTheme.Inverse)
+                {
+                    theme = theme == ThemeManager.BaseColorLight ? ThemeManager.BaseColorDark : ThemeManager.BaseColorLight;
+                }
 
                 window.WindowButtonCommands?.SetValue(WindowButtonCommands.ThemeProperty, theme);
 
                 // clear or set the foreground property
-                if (brush != null)
+                if (foregroundBrush != null)
                 {
-                    window.WindowButtonCommands?.SetValue(Control.ForegroundProperty, brush);
-                }
-                else
-                {
-                    window.WindowButtonCommands?.ClearValue(Control.ForegroundProperty);
+                    window.WindowButtonCommands?.SetValue(Control.ForegroundProperty, foregroundBrush);
                 }
             }
         }

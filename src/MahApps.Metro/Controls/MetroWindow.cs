@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -16,6 +15,7 @@ using System.Windows.Data;
 using ControlzEx.Behaviors;
 using ControlzEx.Native;
 using ControlzEx.Standard;
+using ControlzEx.Theming;
 using JetBrains.Annotations;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
@@ -31,9 +31,9 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_FlyoutModalDragMoveThumb, Type = typeof(Thumb))]
-    [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
-    [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
-    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
+    [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroActiveDialogContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroInactiveDialogsContainer, Type = typeof(Grid))]
@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
 
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(Brush), typeof(MetroWindow));
 
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
@@ -173,9 +173,9 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
-        public SolidColorBrush OverrideDefaultWindowCommandsBrush
+        public Brush OverrideDefaultWindowCommandsBrush
         {
-            get { return (SolidColorBrush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
+            get { return (Brush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
@@ -946,8 +946,8 @@ namespace MahApps.Metro.Controls
 
             this.ResetAllWindowCommandsBrush();
 
-            ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
-            this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
+            ThemeManager.Current.ThemeChanged += ThemeManagerOnIsThemeChanged;
+            this.Unloaded += (o, args) => ThemeManager.Current.ThemeChanged -= ThemeManagerOnIsThemeChanged;
         }
 
         private void InitializeWindowChromeBehavior()
@@ -1061,9 +1061,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        private void ThemeManagerOnIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            if (e.Theme != null)
+            if (e.NewTheme != null)
             {
                 var flyouts = this.Flyouts.GetFlyouts().ToList();
                 // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
@@ -1083,8 +1083,9 @@ namespace MahApps.Metro.Controls
 
                 foreach (var flyout in flyouts)
                 {
-                    flyout.ChangeFlyoutTheme(e.Theme);
+                    flyout.ChangeFlyoutTheme(e.NewTheme);
                 }
+                
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
         }
@@ -1201,15 +1202,23 @@ namespace MahApps.Metro.Controls
             WindowButtonCommandsPresenter = GetTemplateChild(PART_WindowButtonCommands) as ContentPresenter;
 
             if (LeftWindowCommands == null)
+            {
                 LeftWindowCommands = new WindowCommands();
-            if (RightWindowCommands == null)
-                RightWindowCommands = new WindowCommands();
-            if (WindowButtonCommands == null)
-                WindowButtonCommands = new WindowButtonCommands();
+            }
 
-            LeftWindowCommands.ParentWindow = this;
-            RightWindowCommands.ParentWindow = this;
-            WindowButtonCommands.ParentWindow = this;
+            if (RightWindowCommands == null)
+            {
+                RightWindowCommands = new WindowCommands();
+            }
+
+            if (WindowButtonCommands == null)
+            {
+                WindowButtonCommands = new WindowButtonCommands();
+            }
+
+            LeftWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            RightWindowCommands.SetValue(WindowCommands.ParentWindowPropertyKey, this);
+            WindowButtonCommands.SetValue(WindowButtonCommands.ParentWindowPropertyKey, this);
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
@@ -1328,7 +1337,9 @@ namespace MahApps.Metro.Controls
                 }
                 else if (this.ShowSystemMenu)
                 {
-                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitleBarHeight)));
+#pragma warning disable 618
+                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(BorderThickness.Left, TitleBarHeight + BorderThickness.Top)));
+#pragma warning restore 618
                 }
             }
         }
@@ -1463,7 +1474,9 @@ namespace MahApps.Metro.Controls
                 var mousePos = e.GetPosition(window);
                 if ((mousePos.Y <= window.TitleBarHeight && window.TitleBarHeight > 0) || (window.UseNoneWindowStyle && window.TitleBarHeight <= 0))
                 {
-                    ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+#pragma warning disable 618
+                    ControlzEx.Windows.Shell.SystemCommands.ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
+#pragma warning restore 618
                 }
             }
         }
@@ -1486,24 +1499,6 @@ namespace MahApps.Metro.Controls
         {
             return GetTemplateChild(name);
         }
-
-#pragma warning disable 618
-        private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
-        {
-            if (window == null) return;
-
-            var hwnd = new WindowInteropHelper(window).Handle;
-            if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
-                return;
-
-            var hmenu = NativeMethods.GetSystemMenu(hwnd, false);
-
-            var cmd = NativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
-                (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
-            if (0 != cmd)
-                NativeMethods.PostMessage(hwnd, WM.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
-        }
-#pragma warning restore 618
 
         internal void HandleFlyoutStatusChange(Flyout flyout, IList<Flyout> visibleFlyouts)
         {

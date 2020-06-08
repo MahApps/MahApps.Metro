@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.DataGridExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
-             xmlns:ValueConverter="clr-namespace:MetroDemo.ValueConverter"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MetroDemo"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+             xmlns:models="clr-namespace:MetroDemo.Models"
+             xmlns:vc="clr-namespace:MetroDemo.ValueConverter"
+             d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="800"
              TextOptions.TextFormattingMode="Display"
@@ -131,7 +132,7 @@
                 </Grid>
             </ControlTemplate>
 
-            <ValueConverter:AlbumPriceIsTooMuchConverter x:Key="AlbumPriceIsTooMuchConverter" />
+            <vc:AlbumPriceIsTooMuchConverter x:Key="AlbumPriceIsTooMuchConverter" />
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -164,34 +165,61 @@
                   Grid.Column="1"
                   Margin="5"
                   AutoGenerateColumns="False"
+                  EnableRowVirtualization="True"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
                   RowHeaderWidth="20"
-                  SelectionUnit="FullRow">
+                  SelectionUnit="FullRow"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True">
+            <DataGrid.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource MahApps.Styles.GroupItem.DataGrid}">
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1} {2}">
+                                        <Binding Mode="OneWay" Path="Name.ArtistId" />
+                                        <Binding Mode="OneWay" Path="Name.Name" />
+                                        <Binding Converter="{vc:ItemCountConverter}"
+                                                 Mode="OneWay"
+                                                 Path="ItemCount" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
-                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
                                         Header="Row Selected" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
+                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         Header="Album Selected" />
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Genre" />
                 <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
                                                       Header="Price"
                                                       Minimum="0"
                                                       StringFormat="{}{0:C}" />
             </DataGrid.Columns>
             <DataGrid.Style>
-                <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
-                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
+                <Style BasedOn="{StaticResource MahApps.Styles.DataGrid}" TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource MahApps.Brushes.Gray10}" />
                 </Style>
             </DataGrid.Style>
             <DataGrid.RowStyle>
-                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                <Style BasedOn="{StaticResource MahApps.Styles.DataGridRow}" TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True">
                             <Setter Property="Background" Value="#FF8B8B" />
@@ -209,8 +237,8 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.RowValidationRules>
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="CommittedValue" />
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
+                <vc:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="CommittedValue" />
+                <vc:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
             </DataGrid.RowValidationRules>
         </DataGrid>
         <Label Grid.Row="2"
@@ -232,11 +260,17 @@
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
                   RowHeaderWidth="0"
-                  Style="{DynamicResource AzureDataGrid}">
+                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}"
+                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
+                                    Header="Genre" />
                 <DataGridTemplateColumn Header="Price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -245,7 +279,7 @@
                                                        Margin="5 2"
                                                        VerticalAlignment="Center"
                                                        Background="Transparent"
-                                                       Foreground="{DynamicResource AccentColorBrush}"
+                                                       Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                        Maximum="20"
                                                        Minimum="0"
                                                        Value="{Binding Price}" />

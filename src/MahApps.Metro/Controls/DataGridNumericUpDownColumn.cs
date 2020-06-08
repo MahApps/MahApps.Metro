@@ -28,7 +28,7 @@ namespace MahApps.Metro.Controls
                 {
                     var numericUpDown = new NumericUpDown();
 
-                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnEditingStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumnEditing") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -50,7 +50,7 @@ namespace MahApps.Metro.Controls
                 {
                     var numericUpDown = new NumericUpDown();
 
-                    var style = numericUpDown.TryFindResource("MahApps.Metro.Styles.DataGrid.NumericUpDownColumnStyle") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumn") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -111,6 +111,7 @@ namespace MahApps.Metro.Controls
             SyncColumnProperty(this, numericUpDown, FontStyleProperty, TextElement.FontStyleProperty);
             SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
 
+            SyncColumnProperty(this, numericUpDown, TextAlignmentProperty, NumericUpDown.TextAlignmentProperty);
             SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
             SyncColumnProperty(this, numericUpDown, CultureProperty, NumericUpDown.CultureProperty);
             SyncColumnProperty(this, numericUpDown, MinimumProperty, NumericUpDown.MinimumProperty);
@@ -152,10 +153,10 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Called when a cell has just switched to edit mode. 
+        ///     Called when a cell has just switched to edit mode.
         /// </summary>
-        /// <param name="editingElement">A reference to element returned by GenerateEditingElement.</param> 
-        /// <param name="editingEventArgs">The event args of the input event that caused the cell to go into edit mode. May be null.</param> 
+        /// <param name="editingElement">A reference to element returned by GenerateEditingElement.</param>
+        /// <param name="editingEventArgs">The event args of the input event that caused the cell to go into edit mode. May be null.</param>
         /// <returns>The unedited value of the cell.</returns>
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
@@ -234,6 +235,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (CultureInfo)this.GetValue(CultureProperty); }
             set { this.SetValue(CultureProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty TextAlignmentProperty =
+            NumericUpDown.TextAlignmentProperty.AddOwner(
+                typeof(DataGridNumericUpDownColumn),
+                new FrameworkPropertyMetadata((TextAlignment)NumericUpDown.TextAlignmentProperty.DefaultMetadata.DefaultValue, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
+
+        public TextAlignment TextAlignment
+        {
+            get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
+            set { this.SetValue(TextAlignmentProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
@@ -422,8 +435,8 @@ namespace MahApps.Metro.Controls
                 typeof(DataGridNumericUpDownColumn),
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
-        /// <summary> 
-        /// The font family of the desired font. 
+        /// <summary>
+        /// The font family of the desired font.
         /// </summary>
         public FontFamily FontFamily
         {
@@ -437,9 +450,9 @@ namespace MahApps.Metro.Controls
                 typeof(DataGridNumericUpDownColumn),
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
-        /// <summary> 
+        /// <summary>
         /// The size of the desired font.
-        /// </summary> 
+        /// </summary>
         [TypeConverter(typeof(FontSizeConverter))]
         [Localizability(LocalizationCategory.None)]
         public double FontSize
@@ -455,8 +468,8 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
         /// <summary>
-        /// The style of the desired font. 
-        /// </summary> 
+        /// The style of the desired font.
+        /// </summary>
         public FontStyle FontStyle
         {
             get { return (FontStyle)this.GetValue(FontStyleProperty); }
@@ -470,7 +483,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, NotifyPropertyChangeForRefreshContent));
 
         /// <summary>
-        /// The weight or thickness of the desired font. 
+        /// The weight or thickness of the desired font.
         /// </summary>
         public FontWeight FontWeight
         {
@@ -486,7 +499,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// An brush that describes the foreground color. This overrides the cell foreground inherited color.
-        /// </summary> 
+        /// </summary>
         public Brush Foreground
         {
             get { return (Brush)this.GetValue(ForegroundProperty); }
@@ -526,6 +539,9 @@ namespace MahApps.Metro.Controls
                         break;
                     case nameof(this.FontWeight):
                         SyncColumnProperty(this, numericUpDown, FontWeightProperty, TextElement.FontWeightProperty);
+                        break;
+                    case nameof(this.TextAlignment):
+                        SyncColumnProperty(this, numericUpDown, TextAlignmentProperty, NumericUpDown.TextAlignmentProperty);
                         break;
                     case nameof(this.StringFormat):
                         SyncColumnProperty(this, numericUpDown, StringFormatProperty, NumericUpDown.StringFormatProperty);
