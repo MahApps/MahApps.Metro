@@ -19,7 +19,10 @@ namespace MahApps.Metro.Controls
         #endregion
 
         #region Dependcy Properties
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPickerBase), new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
+        /// <summary>Identifies the <see cref="SelectedColor"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color?), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorChanged));
+        
+        public static readonly DependencyProperty DefaultColorProperty = DependencyProperty.Register(nameof(DefaultColor), typeof(Color?), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, ColorChanged));
 
         /// <summary>
         /// Identifies the <see cref="SelectedHSVColor"/> dependency property.
@@ -89,10 +92,19 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or Sets the selected <see cref="Color"/>
         /// </summary>
-        public Color SelectedColor
+        public Color? SelectedColor
         {
-            get { return (Color)this.GetValue(SelectedColorProperty); }
+            get { return (Color?)this.GetValue(SelectedColorProperty); }
             set { this.SetValue(SelectedColorProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets or Sets the selected <see cref="Color"/>
+        /// </summary>
+        public Color? DefaultColor
+        {
+            get { return (Color?)this.GetValue(DefaultColorProperty); }
+            set { this.SetValue(DefaultColorProperty, value); }
         }
 
 
@@ -140,26 +152,35 @@ namespace MahApps.Metro.Controls
 
                 colorPicker.ColorIsUpdating = true;
 
-                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorPicker.SelectedColor, colorPicker.ColorNamesDictionary));
-
-                if (colorPicker.UpdateHsvValues)
+                if (colorPicker.SelectedColor == null && colorPicker.DefaultColor != null)
                 {
-                    var hsv = new HSVColor(colorPicker.SelectedColor);
-                    colorPicker.SetCurrentValue(HueProperty, hsv.Hue);
-                    colorPicker.SetCurrentValue(SaturationProperty, hsv.Saturation);
-                    colorPicker.SetCurrentValue(ValueProperty, hsv.Value);
+                    colorPicker.SetCurrentValue(SelectedColorProperty, colorPicker.DefaultColor);
                 }
 
-                colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
+                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorPicker.SelectedColor, colorPicker.ColorNamesDictionary));
 
-                colorPicker.SetCurrentValue(AProperty, colorPicker.SelectedColor.A);
-                colorPicker.SetCurrentValue(RProperty, colorPicker.SelectedColor.R);
-                colorPicker.SetCurrentValue(GProperty, colorPicker.SelectedColor.G);
-                colorPicker.SetCurrentValue(BProperty, colorPicker.SelectedColor.B);
+                // We just update the following lines if we have a Color.
+                if (colorPicker.SelectedColor != null)
+                {
+                    if (colorPicker.UpdateHsvValues)
+                    {
+                        var hsv = new HSVColor((Color)colorPicker.SelectedColor);
+                        colorPicker.SetCurrentValue(HueProperty, hsv.Hue);
+                        colorPicker.SetCurrentValue(SaturationProperty, hsv.Saturation);
+                        colorPicker.SetCurrentValue(ValueProperty, hsv.Value);
+                    }
+
+                    colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
+
+                    colorPicker.SetCurrentValue(AProperty, (byte)colorPicker.SelectedColor?.A);
+                    colorPicker.SetCurrentValue(RProperty, (byte)colorPicker.SelectedColor?.R);
+                    colorPicker.SetCurrentValue(GProperty, (byte)colorPicker.SelectedColor?.G);
+                    colorPicker.SetCurrentValue(BProperty, (byte)colorPicker.SelectedColor?.B);
+                }
 
                 colorPicker.ColorIsUpdating = false;
 
-                colorPicker.RaiseEvent(new RoutedPropertyChangedEventArgs<Color>((Color)e.OldValue, (Color)e.NewValue, SelectedColorChangedEvent));
+                colorPicker.RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>((Color?)e.OldValue, (Color?)e.NewValue, SelectedColorChangedEvent));
             }
         }
 
@@ -170,7 +191,11 @@ namespace MahApps.Metro.Controls
             {
                 if (!colorPicker.ColorIsUpdating)
                 {
-                    if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is Color color)
+                    if (string.IsNullOrEmpty(e.NewValue?.ToString()))
+                    {
+                        colorPicker.SetCurrentValue(SelectedColorProperty, null);
+                    }
+                    else if (ColorHelper.ColorFromString(e.NewValue?.ToString(), colorPicker.ColorNamesDictionary) is Color color)
                     {
                         colorPicker.SetCurrentValue(SelectedColorProperty, color);
                     }

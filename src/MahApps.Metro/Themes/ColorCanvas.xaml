@@ -63,6 +63,23 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
+
+    <Path x:Key="MahApps.Pathes.ColorPicker.NoColor"
+          Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+          SnapsToDevicePixels="True"
+          Stretch="Fill"
+          RenderOptions.EdgeMode="Unspecified"
+          Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+          StrokeThickness="1">
+        <Path.Data>
+            <GeometryGroup>
+                <RectangleGeometry Rect="0,0 1,1" />
+                <LineGeometry StartPoint="0,0" EndPoint="1,1" />
+                <LineGeometry StartPoint="0,1" EndPoint="1,0" />
+            </GeometryGroup>
+        </Path.Data>
+    </Path>
+
     <Style TargetType="{x:Type Controls:ColorCanvas}">
 
         <Setter Property="Template">
@@ -163,8 +180,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <ContentPresenter Content="{TemplateBinding LabelColorPreview}"
-                                               Margin="2,0,0,5"
-                                               VerticalAlignment="Center" />
+                                                      Margin="2,0,0,5"
+                                                      VerticalAlignment="Center" />
 
 
                                     <Border Grid.Row="0"
@@ -179,6 +196,13 @@
                                             </Rectangle.Fill>
                                         </Rectangle>
                                     </Border>
+
+                                    <ContentControl x:Name="PART_NoColorPreview" 
+                                                      Visibility="Collapsed"
+                                                      Content="{DynamicResource MahApps.Pathes.ColorPicker.NoColor}"
+                                                      Grid.Row="0"
+                                                      Grid.Column="1"
+                                                      Margin="5,0,0,0" />
 
                                 </Grid>
 
@@ -206,9 +230,9 @@
 
                                             <!--  R  -->
                                             <ContentPresenter Content="{TemplateBinding LabelRedChannel}"
-                                                       Grid.Row="0"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="0"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -229,9 +253,9 @@
 
                                             <!--  G  -->
                                             <ContentPresenter Content="{TemplateBinding LabelGreenChannel}"
-                                                       Grid.Row="1"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="1"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="1"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -252,9 +276,9 @@
 
                                             <!--  B  -->
                                             <ContentPresenter Content="{TemplateBinding LabelBlueChannel}"
-                                                       Grid.Row="2"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="2"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="2"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -291,9 +315,9 @@
 
                                             <!--  H  -->
                                             <ContentPresenter Content="{TemplateBinding LabelHueChannel}"
-                                                       Grid.Row="0"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="0"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.Hue}"
@@ -308,9 +332,9 @@
 
                                             <!--  S  -->
                                             <ContentPresenter Content="{TemplateBinding LabelSaturationChannel}"
-                                                       Grid.Row="1"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="1"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="1"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
@@ -333,9 +357,9 @@
 
                                             <!--  Value  -->
                                             <ContentPresenter Content="{TemplateBinding LabelValueChannel}"
-                                                       Grid.Row="2"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="2"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="2"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.SV}"
@@ -369,9 +393,9 @@
 
                                             <!--  A  -->
                                             <ContentPresenter Content="{TemplateBinding LabelAlphaChannel}"
-                                                       Grid.Row="0"
-                                                       Grid.Column="0"
-                                                       VerticalAlignment="Center" />
+                                                              Grid.Row="0"
+                                                              Grid.Column="0"
+                                                              VerticalAlignment="Center" />
                                             <Slider Grid.Row="0"
                                                     Grid.Column="1"
                                                     Style="{StaticResource MahApps.Styles.Slider.ColorComponent.ARGB}"
@@ -397,9 +421,9 @@
                                 <!--  HTML String und Name  -->
 
                                 <Grid Grid.Row="2"
-                                      VerticalAlignment="Top"
                                       Grid.Column="2"
-                                      Margin="0,0,5,5">
+                                      Margin="0,0,5,5"
+                                      VerticalAlignment="Top">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
                                         <ColumnDefinition Width="*" />
@@ -407,13 +431,13 @@
                                     </Grid.ColumnDefinitions>
 
 
-                                    <ContentPresenter Content="{TemplateBinding LabelColorName}" 
+                                    <ContentPresenter Content="{TemplateBinding LabelColorName}"
                                                       Grid.Column="0"
                                                       VerticalAlignment="Center" />
-                                    
+
                                     <TextBox Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ColorName, ValidatesOnExceptions=True}"
-                                             Margin="2,0,0,0"
-                                             Grid.Column="1" />
+                                             Grid.Column="1"
+                                             Margin="2,0,0,0" />
 
                                     <Controls:ColorEyeDropper x:Name="PART_PickColorFromScreen"
                                                               Grid.Column="2"
@@ -424,6 +448,11 @@
                             </Grid>
                         </Border>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SelectedColor" Value="{x:Null}">
+                            <Setter TargetName="PART_NoColorPreview" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

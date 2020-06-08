@@ -114,8 +114,10 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <param name="color">color</param>
         /// <returns>the local color name or null if the given color doesn't have a name</returns>
-        public static string GetColorName(Color color, Dictionary<Color?, string> colorNamesDictionary = null)
+        public static string GetColorName(Color? color, Dictionary<Color?, string> colorNamesDictionary = null)
         {
+            if (color is null) return null;
+
             if (colorNamesDictionary is null)
             {
                 colorNamesDictionary = ColorNamesDictionary;

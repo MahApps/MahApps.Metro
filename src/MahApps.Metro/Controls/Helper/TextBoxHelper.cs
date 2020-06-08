@@ -923,6 +923,10 @@ namespace MahApps.Metro.Controls
                     comboBox.SelectedItem = null;
                     comboBox.GetBindingExpression(ComboBox.SelectedItemProperty)?.UpdateSource();
                 }
+                else if (parent is ColorPickerBase colorPicker)
+                {
+                    colorPicker.SelectedColor = null;
+                }
             }
         }
 

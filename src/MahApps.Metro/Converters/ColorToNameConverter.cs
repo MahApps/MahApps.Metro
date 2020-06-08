@@ -27,14 +27,8 @@ namespace MahApps.Metro.Converters
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Color color)
-            {
-                return ColorHelper.GetColorName(color, parameter as Dictionary<Color?, string>);
-            }
-            else
-            {
-                throw new InvalidCastException("Unable to convert the provided value to System.Windows.Media.Color");
-            }
+            return ColorHelper.GetColorName(value as Color?, parameter as Dictionary<Color?, string>);
+
         }
 
         /// <summary>
@@ -47,7 +41,7 @@ namespace MahApps.Metro.Converters
         /// <returns>The name of the color or the Hex-Code if no name is available</returns>
         public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            Color color = values.FirstOrDefault(x => x.GetType() == typeof(Color)) as Color? ?? throw new ArgumentException("No valid Color found");
+            Color? color = values.FirstOrDefault(x => x.GetType() == typeof(Color)) as Color?;
             Dictionary<Color?, string> colorNamesDictionary = values.FirstOrDefault(x => x?.GetType() == typeof(Dictionary<Color?, string>)) as Dictionary<Color?, string>;
 
             return ColorHelper.GetColorName(color, colorNamesDictionary);

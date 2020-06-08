@@ -73,9 +73,9 @@ namespace MahApps.Metro.Controls
                 .ThenByDescending(c => new HSVColor(c).Value));
 
 
-        public static ObservableCollection<Color> RecentColors { get; } = new ObservableCollection<Color>();
+        public static ObservableCollection<Color?> RecentColors { get; } = new ObservableCollection<Color?>();
 
-        public static void AddColorToRecentColors(Color color)
+        public static void AddColorToRecentColors(Color? color)
         {
             var oldIndex = RecentColors.IndexOf(color);
             if (oldIndex > -1)

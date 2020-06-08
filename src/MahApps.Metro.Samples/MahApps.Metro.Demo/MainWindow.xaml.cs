@@ -532,8 +532,8 @@ namespace MetroDemo
                                                            "Custom",
                                                            ThemeManager.Current.DetectTheme().BaseColorScheme,
                                                            "custom",
-                                                           colorPicker.SelectedColor,
-                                                           new SolidColorBrush(colorPicker.SelectedColor),
+                                                           colorPicker.SelectedColor ?? Colors.Blue,
+                                                           new SolidColorBrush(colorPicker.SelectedColor ?? Colors.Blue),
                                                            true,
                                                            false));
                 ColorPalette.AddColorToRecentColors(colorPicker.SelectedColor);
