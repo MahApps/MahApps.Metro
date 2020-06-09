@@ -377,7 +377,7 @@ namespace MahApps.Metro.Controls
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["MahApps.Brushes.Highlight"] = newBrush; resources["MahApps.Brushes.Highlight"] = newBrush;
+                resources["MahApps.Brushes.Highlight"] = newBrush;
             }
 
             resources.EndInit();
