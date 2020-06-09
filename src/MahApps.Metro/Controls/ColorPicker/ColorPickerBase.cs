@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectedHSVColorProperty = DependencyProperty.Register(nameof(SelectedHSVColor), typeof(HSVColor), typeof(ColorPickerBase), new PropertyMetadata(new HSVColor(Colors.Black)));
 
         /// <summary>Identifies the <see cref="ColorName"/> dependency property.</summary>
-        public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(ColorHelper.GetColorName(Colors.Black), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged));
+        public static readonly DependencyProperty ColorNameProperty = DependencyProperty.Register(nameof(ColorName), typeof(string), typeof(ColorPickerBase), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorNameChanged));
         
         /// <summary>Identifies the <see cref="ColorNamesDictionary"/> dependency property.</summary>
         public static readonly DependencyProperty ColorNamesDictionaryProperty = DependencyProperty.Register(nameof(ColorNamesDictionary), typeof(Dictionary<Color?, string>), typeof(ColorPickerBase), new PropertyMetadata(null));

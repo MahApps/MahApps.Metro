@@ -344,6 +344,10 @@
                     <StackPanel>
                         <Controls:ColorPicker SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" 
                                               Margin="10,10,10,0"
+                                              Controls:TextBoxHelper.ClearTextButton="True"
+                                              Controls:TextBoxHelper.UseFloatingWatermark="True"
+                                              Controls:TextBoxHelper.Watermark="Select a color"
+                                              DefaultColor="{x:Null}"
                                               DropDownClosed="ColorPicker_DropDownClosed"
                                               SelectedColorTemplate="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}">
                             <Controls:ColorPicker.ColorPalettes>
@@ -360,6 +364,9 @@
                                 <Controls:ColorPalette Header="Recent" ItemsSource="{x:Static Controls:ColorPalette.RecentColors}" />
                             </Controls:ColorPicker.ColorPalettes>
                         </Controls:ColorPicker>
+
+                        <Controls:ColorCanvas x:Name="ColorCanvasExample"
+                                              SelectedColor="Blue" />
 
                     </StackPanel>
                 </ScrollViewer>
