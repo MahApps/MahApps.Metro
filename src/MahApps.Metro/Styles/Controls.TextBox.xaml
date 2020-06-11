@@ -513,7 +513,7 @@
     <Style x:Key="MahApps.Styles.RichTextBox" TargetType="{x:Type RichTextBox}">
         <Style.Resources>
             <Style BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
                 <Setter Property="TextDecorations" Value="Underline" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
