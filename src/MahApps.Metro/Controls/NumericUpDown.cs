@@ -677,7 +677,34 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
+            switch (e.Key)
+            {
+                case Key.Decimal:
+                    if (InterceptManualEnter)
+                    {
+                        var args = new TextCompositionEventArgs(e.Device,
+                            new TextComposition(InputManager.Current, this.valueTextBox, SpecificCultureInfo.NumberFormat.NumberDecimalSeparator));
+                        args.RoutedEvent = TextBox.PreviewTextInputEvent;
+
+                        this.valueTextBox.RaiseEvent(args);
+
+                        if (!args.Handled)
+                        {
+                            args.RoutedEvent = TextBox.TextInputEvent;
+                            this.valueTextBox.RaiseEvent(args);
+                        }
+
+                        e.Handled = true;
+                        return;
+                    }
+                    break;
+
+                default:
+                    base.OnPreviewKeyDown(e);
+                    break;
+            }
+
+            
 
             if (!this.InterceptArrowKeys)
             {
