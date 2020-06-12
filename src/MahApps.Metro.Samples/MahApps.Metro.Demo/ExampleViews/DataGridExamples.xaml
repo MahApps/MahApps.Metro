@@ -165,6 +165,7 @@
                   Grid.Column="1"
                   Margin="5"
                   AutoGenerateColumns="False"
+                  EnableColumnVirtualization="True"
                   EnableRowVirtualization="True"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
@@ -191,23 +192,18 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
-                                        EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
-                                        ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid}"
-                                        Header="Row Selected" />
+                <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" Header="Row Selected" />
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
                                         Header="Album Selected" />
-                <DataGridTextColumn Binding="{Binding Title}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
+                <DataGridComboBoxColumn DisplayMemberPath="Name"
+                                        Header="Artist"
+                                        ItemsSource="{x:Static models:SampleData.Artists}"
+                                        SelectedItemBinding="{Binding Artist}" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
                 <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
                                                       Header="Price"
                                                       Minimum="0"
@@ -262,15 +258,9 @@
                   RowHeaderWidth="0"
                   Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Title}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Title" />
-                <DataGridTextColumn Binding="{Binding Artist.Name}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Artist" />
-                <DataGridTextColumn Binding="{Binding Genre.Name}"
-                                    EditingElementStyle="{StaticResource MahApps.Styles.TextBox.DataGrid.Editing}"
-                                    Header="Genre" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
                 <DataGridTemplateColumn Header="Price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
