@@ -4,6 +4,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:MetroDemo.ExampleViews"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -21,6 +22,14 @@
                             ObjectType="{x:Type Controls:NumericInput}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="Controls:NumericInput" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="DecimalPointCorrectionValues"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type Controls:DecimalPointCorrectionMode}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Controls:DecimalPointCorrectionMode" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -344,6 +353,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -500,59 +512,105 @@
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="CultureInfo" />
-                <ComboBox Grid.Row="13"
+                <ComboBox x:Name="NUD_CultureInfo"
+                          Grid.Row="13"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           HorizontalAlignment="Stretch"
                           Controls:TextBoxHelper.ClearTextButton="True"
-                          DisplayMemberPath="DisplayName"
                           ItemsSource="{Binding CultureInfos, Mode=OneWay}"
-                          SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                          SelectedItem="{Binding ElementName=NUD, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type globalization:CultureInfo}">
+                            <TextBlock VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} ({1})">
+                                        <Binding Mode="OneWay" Path="DisplayName" />
+                                        <Binding Mode="OneWay" Path="IetfLanguageTag" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <Label Grid.Row="14"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
+                       Content="NumberDecimalSeparator" />
+                <TextBox Grid.Row="14"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                         Margin="{StaticResource ControlMargin}"
+                         IsReadOnly="True"
+                         Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberDecimalSeparator}" />
+
+                <Label Grid.Row="15"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="NumberGroupSeparator" />
+                <TextBox Grid.Row="15"
+                         Grid.Column="1"
+                         Grid.ColumnSpan="2"
+                         Margin="{StaticResource ControlMargin}"
+                         IsReadOnly="True"
+                         Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberGroupSeparator}" />
+
+                <Label Grid.Row="16"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
+                       Content="DecimalPointCorrection" />
+                <ComboBox Grid.Row="16"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
+                          SelectedItem="{Binding ElementName=NUD, Path=DecimalPointCorrection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="17"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
                        Content="TextAlignment" />
                 <ComboBox x:Name="NUD_TextAlignment"
-                          Grid.Row="14"
+                          Grid.Row="17"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
                           SelectedItem="{x:Static TextAlignment.Left}" />
 
-                <Label Grid.Row="15"
+                <Label Grid.Row="18"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="ButtonsAlignment" />
                 <ComboBox x:Name="NUD_ButtonsAlignment"
-                          Grid.Row="15"
+                          Grid.Row="18"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
                           SelectedItem="{x:Static Controls:ButtonsAlignment.Right}" />
 
-                <Label Grid.Row="16"
+                <Label Grid.Row="19"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="Watermark" />
                 <TextBox x:Name="NUD_Watermark"
-                         Grid.Row="16"
+                         Grid.Row="19"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Text="Type a number" />
 
-                <Label Grid.Row="17"
+                <Label Grid.Row="20"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="NumericUpDown"
                        FontWeight="Bold" />
                 <Controls:NumericUpDown x:Name="NUD"
-                                        Grid.Row="17"
+                                        Grid.Row="20"
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
                                         Margin="{StaticResource ControlMargin}"
@@ -573,12 +631,12 @@
                                         SwitchUpDownButtons="{Binding ElementName=NUD_SwitchUpDownButtons, Path=IsChecked, Mode=TwoWay}"
                                         TextAlignment="{Binding ElementName=NUD_TextAlignment, Path=SelectedItem}" />
 
-                <Label Grid.Row="18"
+                <Label Grid.Row="21"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="Stored Value" />
                 <TextBox x:Name="NUD_Result"
-                         Grid.Row="18"
+                         Grid.Row="21"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"

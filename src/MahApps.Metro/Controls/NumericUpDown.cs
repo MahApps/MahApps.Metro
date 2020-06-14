@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace MahApps.Metro.Controls
 {
     using System;
@@ -148,6 +150,21 @@ namespace MahApps.Metro.Controls
             typeof(NumericInput),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(NumericInput.All, OnNumericInputModeChanged));
+
+        public static readonly DependencyProperty DecimalPointCorrectionProperty
+            = DependencyProperty.Register(nameof(DecimalPointCorrection),
+                                          typeof(DecimalPointCorrectionMode),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(default(DecimalPointCorrectionMode)));
+
+        /// <summary>
+        /// Gets or sets the decimal-point correction mode.
+        /// </summary>
+        public DecimalPointCorrectionMode DecimalPointCorrection
+        {
+            get { return (DecimalPointCorrectionMode)GetValue(DecimalPointCorrectionProperty); }
+            set { SetValue(DecimalPointCorrectionProperty, value); }
+        }
 
         public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
             "SnapToMultipleOfInterval",
@@ -677,34 +694,7 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Key.Decimal:
-                    if (InterceptManualEnter)
-                    {
-                        var args = new TextCompositionEventArgs(e.Device,
-                            new TextComposition(InputManager.Current, this.valueTextBox, SpecificCultureInfo.NumberFormat.NumberDecimalSeparator));
-                        args.RoutedEvent = TextBox.PreviewTextInputEvent;
-
-                        this.valueTextBox.RaiseEvent(args);
-
-                        if (!args.Handled)
-                        {
-                            args.RoutedEvent = TextBox.TextInputEvent;
-                            this.valueTextBox.RaiseEvent(args);
-                        }
-
-                        e.Handled = true;
-                        return;
-                    }
-                    break;
-
-                default:
-                    base.OnPreviewKeyDown(e);
-                    break;
-            }
-
-            
+            base.OnPreviewKeyDown(e);
 
             if (!this.InterceptArrowKeys)
             {
@@ -1220,7 +1210,74 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            this.manualChange = this.manualChange || e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Decimal || e.Key == Key.OemComma || e.Key == Key.OemPeriod;
+            this.manualChange = this.manualChange
+                                || e.Key == Key.Back
+                                || e.Key == Key.Delete
+                                || e.Key == Key.Decimal
+                                || e.Key == Key.OemComma
+                                || e.Key == Key.OemPeriod;
+
+            // Filter the Numpad's decimal-point key only
+            if (e.Key == Key.Decimal && this.DecimalPointCorrection != DecimalPointCorrectionMode.Inherits)
+            {
+                // Mark the event as handled, so no further action will take place
+                e.Handled = true;
+
+                // Grab the originating TextBox control...
+                var textBox = (TextBoxBase)sender;
+
+                // The current correction mode...
+                var correctionMode = this.DecimalPointCorrection;
+
+                // And the culture of the NUD
+                var culture = this.SpecificCultureInfo;
+
+                // Surrogate the blocked key pressed
+                SimulateDecimalPointKeyPress(textBox, correctionMode, culture);
+            }
+        }
+
+        /// <summary>
+        /// Insertion of the proper decimal-point as part of the TextBox content
+        /// </summary>
+        /// <param name="textBox">The TextBox which will be used for the correction</param>
+        /// <param name="mode">The decimal correction mode.</param>
+        /// <param name="culture">The culture with the decimal-point information.</param>
+        /// <remarks>
+        /// Typical "async-void" pattern as "fire-and-forget" behavior.
+        /// </remarks>
+        private static async void SimulateDecimalPointKeyPress(TextBoxBase textBox, DecimalPointCorrectionMode mode, CultureInfo culture)
+        {
+            // Select the proper decimal-point string upon the context
+            string replace;
+            switch (mode)
+            {
+                case DecimalPointCorrectionMode.Number:
+                    replace = culture.NumberFormat.NumberDecimalSeparator;
+                    break;
+
+                case DecimalPointCorrectionMode.Currency:
+                    replace = culture.NumberFormat.CurrencyDecimalSeparator;
+                    break;
+
+                case DecimalPointCorrectionMode.Percent:
+                    replace = culture.NumberFormat.PercentDecimalSeparator;
+                    break;
+
+                default:
+                    replace = null;
+                    break;
+            }
+
+            if (string.IsNullOrEmpty(replace) == false)
+            {
+                // Insert the desired string
+                var tc = new TextComposition(InputManager.Current, textBox, replace);
+
+                TextCompositionManager.StartComposition(tc);
+            }
+
+            await Task.FromResult(true);
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
