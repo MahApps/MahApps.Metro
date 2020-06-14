@@ -10,10 +10,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
     [TemplatePart (Name = "PART_ColorPalettes", Type = typeof(ItemsControl))]
+    [TemplatePart (Name = "PART_Popup", Type = typeof(Popup))]
     public class ColorPicker : ColorPickerBase
     {
         public ColorPicker()
@@ -27,6 +29,7 @@ namespace MahApps.Metro.Controls
         }
 
         ItemsControl PART_ColorPalettes;
+        Popup PART_Popup;
 
         // Using a DependencyProperty as the backing store for SelectedColorTemplate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedColorTemplateProperty = DependencyProperty.Register(nameof(SelectedColorTemplate), typeof(DataTemplate), typeof(ColorPicker), new PropertyMetadata(null));
@@ -160,9 +163,10 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             PART_ColorPalettes = (ItemsControl)this.GetTemplateChild(nameof(PART_ColorPalettes));
+            PART_Popup = (Popup)this.GetTemplateChild(nameof(PART_Popup));
+
             base.OnApplyTemplate();
         }
-
 
         public ObservableCollection<ColorPalette> ColorPalettes { get; } = new ObservableCollection<ColorPalette>();
 
