@@ -356,164 +356,176 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="IsReadOnly" />
-                <CheckBox x:Name="NUD_IsReadOnly"
-                          Grid.Row="0"
+                <CheckBox Grid.Row="0"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=IsReadOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="1"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="InterceptArrowKeys" />
-                <CheckBox x:Name="NUD_InterceptArrowKeys"
-                          Grid.Row="1"
+                <CheckBox Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=InterceptArrowKeys, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="2"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="InterceptMouseWheel" />
-                <CheckBox x:Name="NUD_InterceptMouseWheel"
-                          Grid.Row="2"
+                <CheckBox Grid.Row="2"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=InterceptMouseWheel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="3"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="InterceptManualEnter" />
-                <CheckBox x:Name="NUD_InterceptManualEnter"
-                          Grid.Row="3"
+                <CheckBox Grid.Row="3"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=InterceptManualEnter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="4"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="HideUpDownButtons" />
-                <CheckBox x:Name="NUD_HideUpDownButtons"
-                          Grid.Row="4"
+                <CheckBox Grid.Row="4"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=HideUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="5"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="SwitchUpDownButtons" />
-                <CheckBox x:Name="NUD_SwitchUpDownButtons"
-                          Grid.Row="5"
+                <CheckBox Grid.Row="5"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=SwitchUpDownButtons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="6"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="Min" />
-                <Controls:NumericUpDown x:Name="NUD_Min"
-                                        Grid.Row="6"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
-                                        Margin="{StaticResource ControlMargin}"
-                                        Controls:TextBoxHelper.ClearTextButton="True"
-                                        Maximum="{Binding ElementName=NUD_Max, Path=Value}"
-                                        Value="0" />
+                       Content="ClearTextButton" />
+                <CheckBox Grid.Row="6"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                 <Label Grid.Row="7"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="Max" />
-                <Controls:NumericUpDown x:Name="NUD_Max"
+                       Content="Min" />
+                <Controls:NumericUpDown x:Name="NUD_Min"
                                         Grid.Row="7"
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
                                         Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
-                                        Minimum="{Binding ElementName=NUD_Min, Path=Value}"
-                                        Value="10" />
-
+                                        Maximum="{Binding ElementName=NUD_Max, Path=Value}"
+                                        Minimum="{Binding ElementName=NUD, Path=Minimum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Value="0" />
                 <Label Grid.Row="8"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="Interval" />
-                <Controls:NumericUpDown x:Name="NUD_Interval"
+                       Content="Max" />
+                <Controls:NumericUpDown x:Name="NUD_Max"
                                         Grid.Row="8"
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
                                         Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
-                                        Value="0.05" />
+                                        Maximum="{Binding ElementName=NUD, Path=Maximum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Minimum="{Binding ElementName=NUD_Min, Path=Value}"
+                                        Value="10" />
 
                 <Label Grid.Row="9"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="SnapToMultipleOfInterval" />
-                <CheckBox x:Name="NUD_SnapToMultipleOfInterval"
-                          Grid.Row="9"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                       Content="Interval" />
+                <Controls:NumericUpDown Grid.Row="9"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        Value="{Binding ElementName=NUD, Path=Interval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="10"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="SpeedUp" />
-                <CheckBox x:Name="NUD_SpeedUp"
-                          Grid.Row="10"
+                       Content="SnapToMultipleOfInterval" />
+                <CheckBox Grid.Row="10"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=SnapToMultipleOfInterval, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="11"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
-                       Content="NumericInputMode" />
-                <ComboBox x:Name="NUD_NumericInputMode"
-                          Grid.Row="11"
+                       Content="SpeedUp" />
+                <CheckBox Grid.Row="11"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
-                          SelectedItem="{x:Static Controls:NumericInput.All}" />
+                          Content="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                          IsChecked="{Binding ElementName=NUD, Path=Speedup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="12"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
+                       Content="NumericInputMode" />
+                <ComboBox Grid.Row="12"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource NumericInputValues}}"
+                          SelectedItem="{Binding ElementName=NUD, Path=NumericInputMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="13"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
                        Content="StringFormat" />
-                <ComboBox x:Name="NUD_StringFormat"
-                          Grid.Row="12"
+                <ComboBox Grid.Row="13"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           Controls:TextBoxHelper.ClearTextButton="True"
                           IsEditable="True"
-                          ItemsSource="{x:Static local:TextExamples.NUD_StringFormats}" />
+                          ItemsSource="{x:Static local:TextExamples.NUD_StringFormats}"
+                          SelectedItem="{Binding ElementName=NUD, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="13"
+                <Label Grid.Row="14"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="CultureInfo" />
                 <ComboBox x:Name="NUD_CultureInfo"
-                          Grid.Row="13"
+                          Grid.Row="14"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
@@ -535,113 +547,95 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="14"
+                <Label Grid.Row="15"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="NumberDecimalSeparator" />
-                <TextBox Grid.Row="14"
+                <TextBox Grid.Row="15"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"
                          IsReadOnly="True"
                          Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberDecimalSeparator}" />
 
-                <Label Grid.Row="15"
+                <Label Grid.Row="16"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="NumberGroupSeparator" />
-                <TextBox Grid.Row="15"
+                <TextBox Grid.Row="16"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"
                          IsReadOnly="True"
                          Text="{Binding ElementName=NUD_CultureInfo, Path=SelectedItem.NumberFormat.NumberGroupSeparator}" />
 
-                <Label Grid.Row="16"
+                <Label Grid.Row="17"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="DecimalPointCorrection" />
-                <ComboBox Grid.Row="16"
+                <ComboBox Grid.Row="17"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           ItemsSource="{Binding Source={StaticResource DecimalPointCorrectionValues}}"
                           SelectedItem="{Binding ElementName=NUD, Path=DecimalPointCorrection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <Label Grid.Row="17"
+                <Label Grid.Row="18"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="TextAlignment" />
-                <ComboBox x:Name="NUD_TextAlignment"
-                          Grid.Row="17"
+                <ComboBox Grid.Row="18"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="{StaticResource ControlMargin}"
                           ItemsSource="{Binding Source={StaticResource TextAlignmentValues}}"
-                          SelectedItem="{x:Static TextAlignment.Left}" />
-
-                <Label Grid.Row="18"
-                       Grid.Column="0"
-                       Margin="{StaticResource ControlMargin}"
-                       Content="ButtonsAlignment" />
-                <ComboBox x:Name="NUD_ButtonsAlignment"
-                          Grid.Row="18"
-                          Grid.Column="1"
-                          Grid.ColumnSpan="2"
-                          Margin="{StaticResource ControlMargin}"
-                          ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
-                          SelectedItem="{x:Static Controls:ButtonsAlignment.Right}" />
+                          SelectedItem="{Binding ElementName=NUD, Path=TextAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="19"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
+                       Content="ButtonsAlignment" />
+                <ComboBox Grid.Row="19"
+                          Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          Margin="{StaticResource ControlMargin}"
+                          ItemsSource="{Binding Source={StaticResource ButtonsAlignmentValues}}"
+                          SelectedItem="{Binding ElementName=NUD, Path=ButtonsAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="20"
+                       Grid.Column="0"
+                       Margin="{StaticResource ControlMargin}"
                        Content="Watermark" />
                 <TextBox x:Name="NUD_Watermark"
-                         Grid.Row="19"
+                         Grid.Row="20"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Text="Type a number" />
 
-                <Label Grid.Row="20"
+                <Label Grid.Row="21"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="NumericUpDown"
                        FontWeight="Bold" />
                 <Controls:NumericUpDown x:Name="NUD"
-                                        Grid.Row="20"
+                                        Grid.Row="21"
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
                                         Margin="{StaticResource ControlMargin}"
-                                        Controls:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text}"
-                                        ButtonsAlignment="{Binding ElementName=NUD_ButtonsAlignment, Path=SelectedItem}"
-                                        HideUpDownButtons="{Binding ElementName=NUD_HideUpDownButtons, Path=IsChecked, Mode=TwoWay}"
-                                        InterceptArrowKeys="{Binding ElementName=NUD_InterceptArrowKeys, Path=IsChecked, Mode=TwoWay}"
-                                        InterceptManualEnter="{Binding ElementName=NUD_InterceptManualEnter, Path=IsChecked, Mode=TwoWay}"
-                                        InterceptMouseWheel="{Binding ElementName=NUD_InterceptMouseWheel, Path=IsChecked, Mode=TwoWay}"
-                                        Interval="{Binding ElementName=NUD_Interval, Path=Value, TargetNullValue=1}"
-                                        IsReadOnly="{Binding ElementName=NUD_IsReadOnly, Path=IsChecked, Mode=TwoWay}"
-                                        Maximum="{Binding ElementName=NUD_Max, Path=Value, TargetNullValue={x:Static sys:Double.MaxValue}}"
-                                        Minimum="{Binding ElementName=NUD_Min, Path=Value, TargetNullValue={x:Static sys:Double.MinValue}}"
-                                        NumericInputMode="{Binding ElementName=NUD_NumericInputMode, Path=SelectedItem}"
-                                        SnapToMultipleOfInterval="{Binding ElementName=NUD_SnapToMultipleOfInterval, Path=IsChecked, Mode=TwoWay}"
-                                        Speedup="{Binding ElementName=NUD_SpeedUp, Path=IsChecked, Mode=TwoWay}"
-                                        StringFormat="{Binding ElementName=NUD_StringFormat, Path=Text}"
-                                        SwitchUpDownButtons="{Binding ElementName=NUD_SwitchUpDownButtons, Path=IsChecked, Mode=TwoWay}"
-                                        TextAlignment="{Binding ElementName=NUD_TextAlignment, Path=SelectedItem}" />
+                                        Controls:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}" />
 
-                <Label Grid.Row="21"
+                <Label Grid.Row="22"
                        Grid.Column="0"
                        Margin="{StaticResource ControlMargin}"
                        Content="Stored Value" />
-                <TextBox x:Name="NUD_Result"
-                         Grid.Row="21"
+                <TextBox Grid.Row="22"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
                          Margin="{StaticResource ControlMargin}"
                          IsReadOnly="True"
-                         Text="{Binding ElementName=NUD, Path=Value}" />
+                         Text="{Binding ElementName=NUD, Path=Value, Mode=OneWay}" />
             </Grid>
         </GroupBox>
 
