@@ -1,221 +1,37 @@
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text.RegularExpressions;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-
     /// <summary>
-    ///     Represents a Windows spin box (also known as an up-down control) that displays numeric values.
+    /// Represents a Windows spin box (also known as an up-down control) that displays numeric values.
     /// </summary>
     [TemplatePart(Name = PART_NumericUp, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_NumericDown, Type = typeof(RepeatButton))]
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
     public class NumericUpDown : Control
     {
-        public static readonly RoutedEvent ValueIncrementedEvent = EventManager.RegisterRoutedEvent("ValueIncremented", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent ValueDecrementedEvent = EventManager.RegisterRoutedEvent("ValueDecremented", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<double?>), typeof(NumericUpDown));
-
-        public static readonly DependencyProperty DelayProperty = DependencyProperty.Register(
-            "Delay",
-            typeof(int),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(DefaultDelay, OnDelayChanged),
-            ValidateDelay);
-
-        public static readonly DependencyProperty TextAlignmentProperty = TextBox.TextAlignmentProperty.AddOwner(typeof(NumericUpDown));
-
-        public static readonly DependencyProperty SpeedupProperty = DependencyProperty.Register(
-            "Speedup",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(true, OnSpeedupChanged));
-
-        public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, IsReadOnlyPropertyChangedCallback));
-
-        public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register(
-            "StringFormat",
-            typeof(string),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(string.Empty, OnStringFormatChanged, CoerceStringFormat));
-
-        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register(
-            "InterceptArrowKeys",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(true));
-
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
-            typeof(double?),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
-
-        public static readonly DependencyProperty ButtonsAlignmentProperty = DependencyProperty.Register(
-            "ButtonsAlignment",
-            typeof(ButtonsAlignment),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-            "Minimum",
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(double.MinValue, OnMinimumChanged));
-
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-            "Maximum",
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
-
-        public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register(
-            "Interval",
-            typeof(double),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
-
-        public static readonly DependencyProperty InterceptMouseWheelProperty = DependencyProperty.Register(
-            "InterceptMouseWheel",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(true));
-
-        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty = DependencyProperty.Register(
-            "TrackMouseWheelWhenMouseOver",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(default(bool)));
-
-        public static readonly DependencyProperty HideUpDownButtonsProperty = DependencyProperty.Register(
-            "HideUpDownButtons",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(default(bool)));
-
-        public static readonly DependencyProperty UpDownButtonsWidthProperty = DependencyProperty.Register(
-            "UpDownButtonsWidth",
-            typeof(double),
-            typeof(NumericUpDown),
-            new PropertyMetadata(20d));
-
-        public static readonly DependencyProperty UpDownButtonsFocusableProperty = DependencyProperty.Register(
-            "UpDownButtonsFocusable",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(true));
-
-        public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
-            "InterceptManualEnter",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(true, InterceptManualEnterChangedCallback));
-
-        public static readonly DependencyProperty ChangeValueOnTextChangedProperty = DependencyProperty.Register(
-            "ChangeValueOnTextChanged",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(true));
-
-        public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
-            "Culture",
-            typeof(CultureInfo),
-            typeof(NumericUpDown),
-            new PropertyMetadata(null, (o, e) =>
-                {
-                    if (e.NewValue != e.OldValue)
-                    {
-                        var numUpDown = (NumericUpDown)o;
-                        numUpDown.regexNumber = null;
-                        numUpDown.OnValueChanged(numUpDown.Value, numUpDown.Value);
-                    }
-                }));
-
-        public static readonly DependencyProperty NumericInputModeProperty = DependencyProperty.Register(
-            "NumericInputMode",
-            typeof(NumericInput),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(NumericInput.All, OnNumericInputModeChanged));
-
-        public static readonly DependencyProperty DecimalPointCorrectionProperty
-            = DependencyProperty.Register(nameof(DecimalPointCorrection),
-                                          typeof(DecimalPointCorrectionMode),
-                                          typeof(NumericUpDown),
-                                          new PropertyMetadata(default(DecimalPointCorrectionMode)));
-
-        /// <summary>
-        /// Gets or sets the decimal-point correction mode.
-        /// </summary>
-        public DecimalPointCorrectionMode DecimalPointCorrection
-        {
-            get { return (DecimalPointCorrectionMode)GetValue(DecimalPointCorrectionProperty); }
-            set { SetValue(DecimalPointCorrectionProperty, value); }
-        }
-
-        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty = DependencyProperty.Register(
-            "SnapToMultipleOfInterval",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalChanged));
-
-        public static readonly DependencyProperty ParsingNumberStyleProperty = DependencyProperty.Register(
-            "ParsingNumberStyle",
-            typeof(NumberStyles),
-            typeof(NumericUpDown),
-            new PropertyMetadata(NumberStyles.Any));
-
-        public static readonly DependencyProperty SwitchUpDownButtonsProperty = DependencyProperty.Register(
-            "SwitchUpDownButtons",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new PropertyMetadata(false));
-
-        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                var isReadOnly = (bool)e.NewValue;
-                numUpDown.ToggleReadOnlyMode(isReadOnly || !numUpDown.InterceptManualEnter);
-            }
-        }
-
-        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.OldValue != e.NewValue && e.NewValue != null)
-            {
-                var numUpDown = (NumericUpDown)dependencyObject;
-                var interceptManualEnter = (bool)e.NewValue;
-                numUpDown.ToggleReadOnlyMode(!interceptManualEnter || numUpDown.IsReadOnly);
-            }
-        }
+        private const string PART_NumericDown = "PART_NumericDown";
+        private const string PART_NumericUp = "PART_NumericUp";
+        private const string PART_TextBox = "PART_TextBox";
+        private const string PART_ContentHost = "PART_ContentHost";
+        private const double DefaultInterval = 1d;
+        private const int DefaultDelay = 500;
 
         private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d\s*:[Xx]\d*}.*)?(?<simpleHEX>[Xx]\d*)?$", RegexOptions.Compiled);
         private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
         private Regex regexNumber = null;
         private static readonly Regex RegexHexadecimal = new Regex(@"^([a-fA-F0-9]{1,2}\s?)+$", RegexOptions.Compiled);
         private static readonly Regex RegexStringFormat = new Regex(@"\{0\s*(:(?<format>.*))?\}", RegexOptions.Compiled);
-
-        private const double DefaultInterval = 1d;
-        private const int DefaultDelay = 500;
-        private const string PART_NumericDown = "PART_NumericDown";
-        private const string PART_NumericUp = "PART_NumericUp";
-        private const string PART_TextBox = "PART_TextBox";
-        private const string PART_ContentHost = "PART_ContentHost";
 
         private Lazy<PropertyInfo> handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
         private double internalIntervalMultiplierForCalculation = DefaultInterval;
@@ -227,176 +43,560 @@ namespace MahApps.Metro.Controls
         private TextBox valueTextBox;
         private ScrollViewer scrollViewer;
 
-        static NumericUpDown()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
-
-            VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(VerticalAlignment.Center));
-            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-
-            EventManager.RegisterClassHandler(typeof(NumericUpDown), GotFocusEvent, new RoutedEventHandler(OnGotFocus));
-        }
-
-        public event RoutedPropertyChangedEventHandler<double?> ValueChanged
-        {
-            add { this.AddHandler(ValueChangedEvent, value); }
-            remove { this.RemoveHandler(ValueChangedEvent, value); }
-        }
+        /// <summary>Identifies the <see cref="ValueIncremented"/> routed event.</summary>
+        public static readonly RoutedEvent ValueIncrementedEvent
+            = EventManager.RegisterRoutedEvent(nameof(ValueIncremented),
+                                               RoutingStrategy.Bubble,
+                                               typeof(NumericUpDownChangedRoutedEventHandler),
+                                               typeof(NumericUpDown));
 
         /// <summary>
-        ///     Event fired from this NumericUpDown when its value has reached the maximum value
+        /// Add / Remove ValueIncrementedEvent handler
+        /// Event which will be fired from this NumericUpDown when its value was incremented.
+        /// </summary>
+        public event NumericUpDownChangedRoutedEventHandler ValueIncremented
+        {
+            add => this.AddHandler(ValueIncrementedEvent, value);
+            remove => this.RemoveHandler(ValueIncrementedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="ValueDecremented"/> routed event.</summary>
+        public static readonly RoutedEvent ValueDecrementedEvent
+            = EventManager.RegisterRoutedEvent(nameof(ValueDecremented),
+                                               RoutingStrategy.Bubble,
+                                               typeof(NumericUpDownChangedRoutedEventHandler),
+                                               typeof(NumericUpDown));
+
+        /// <summary>
+        /// Add / Remove ValueDecrementedEvent handler
+        /// Event which will be fired from this NumericUpDown when its value was decremented.
+        /// </summary>
+        public event NumericUpDownChangedRoutedEventHandler ValueDecremented
+        {
+            add => this.AddHandler(ValueDecrementedEvent, value);
+            remove => this.RemoveHandler(ValueDecrementedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="DelayChanged"/> routed event.</summary>
+        public static readonly RoutedEvent DelayChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(DelayChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(NumericUpDown));
+
+        /// <summary>
+        /// Add / Remove DelayChangedEvent handler
+        /// Event which will be fired from this NumericUpDown when its delay value has been changed.
+        /// </summary>
+        public event RoutedEventHandler DelayChanged
+        {
+            add => this.AddHandler(DelayChangedEvent, value);
+            remove => this.RemoveHandler(DelayChangedEvent, value);
+        }
+
+        /// <summary>Identifies the <see cref="MaximumReached"/> routed event.</summary>
+        public static readonly RoutedEvent MaximumReachedEvent
+            = EventManager.RegisterRoutedEvent(nameof(MaximumReached),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(NumericUpDown));
+
+        /// <summary>
+        /// Add / Remove MaximumReachedEvent handler
+        /// Event fired from this NumericUpDown when its value has reached the maximum value.
         /// </summary>
         public event RoutedEventHandler MaximumReached
         {
-            add { this.AddHandler(MaximumReachedEvent, value); }
-            remove { this.RemoveHandler(MaximumReachedEvent, value); }
+            add => this.AddHandler(MaximumReachedEvent, value);
+            remove => this.RemoveHandler(MaximumReachedEvent, value);
         }
 
+        /// <summary>Identifies the <see cref="MinimumReached"/> routed event.</summary>
+        public static readonly RoutedEvent MinimumReachedEvent
+            = EventManager.RegisterRoutedEvent(nameof(MinimumReached),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedEventHandler),
+                                               typeof(NumericUpDown));
+
         /// <summary>
-        ///     Event fired from this NumericUpDown when its value has reached the minimum value
+        /// Add / Remove MinimumReachedEvent handler
+        /// Event fired from this NumericUpDown when its value has reached the minimum value.
         /// </summary>
         public event RoutedEventHandler MinimumReached
         {
-            add { this.AddHandler(MinimumReachedEvent, value); }
-            remove { this.RemoveHandler(MinimumReachedEvent, value); }
+            add => this.AddHandler(MinimumReachedEvent, value);
+            remove => this.RemoveHandler(MinimumReachedEvent, value);
         }
 
-        public event NumericUpDownChangedRoutedEventHandler ValueIncremented
+        /// <summary>Identifies the <see cref="ValueChanged"/> routed event.</summary>
+        public static readonly RoutedEvent ValueChangedEvent
+            = EventManager.RegisterRoutedEvent(nameof(ValueChanged),
+                                               RoutingStrategy.Bubble,
+                                               typeof(RoutedPropertyChangedEventHandler<double?>),
+                                               typeof(NumericUpDown));
+
+        /// <summary>
+        /// Add / Remove ValueChangedEvent handler
+        /// Event which will be fired from this NumericUpDown when its value has been changed.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<double?> ValueChanged
         {
-            add { this.AddHandler(ValueIncrementedEvent, value); }
-            remove { this.RemoveHandler(ValueIncrementedEvent, value); }
+            add => this.AddHandler(ValueChangedEvent, value);
+            remove => this.RemoveHandler(ValueChangedEvent, value);
         }
 
-        public event NumericUpDownChangedRoutedEventHandler ValueDecremented
-        {
-            add { this.AddHandler(ValueDecrementedEvent, value); }
-            remove { this.RemoveHandler(ValueDecrementedEvent, value); }
-        }
+        /// <summary>Identifies the <see cref="Delay"/> dependency property.</summary>
+        public static readonly DependencyProperty DelayProperty
+            = DependencyProperty.Register(nameof(Delay),
+                                          typeof(int),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(DefaultDelay, OnDelayPropertyChanged),
+                                          value => Convert.ToInt32(value) >= 0);
 
-        public event RoutedEventHandler DelayChanged
+        private static void OnDelayPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            add { this.AddHandler(DelayChangedEvent, value); }
-            remove { this.RemoveHandler(DelayChangedEvent, value); }
+            if (e.OldValue != e.NewValue && e.OldValue is int oldDelay && e.NewValue is int newDelay && d is NumericUpDown numericUpDown)
+            {
+                numericUpDown.RaiseChangeDelay();
+                numericUpDown.OnDelayChanged(oldDelay, newDelay);
+            }
         }
 
         /// <summary>
-        ///     Gets or sets the amount of time, in milliseconds, the NumericUpDown waits while the up/down button is pressed
-        ///     before it starts increasing/decreasing the
-        ///     <see cref="Value" /> for the specified <see cref="Interval" /> . The value must be
-        ///     non-negative.
+        /// Gets or sets the amount of time, in milliseconds, the NumericUpDown waits while the up/down button is pressed
+        /// before it starts increasing/decreasing the <see cref="Value" /> for the specified <see cref="Interval" /> .
+        /// The value must be non-negative.
         /// </summary>
         [Bindable(true)]
         [DefaultValue(DefaultDelay)]
         [Category("Behavior")]
         public int Delay
         {
-            get { return (int)this.GetValue(DelayProperty); }
-            set { this.SetValue(DelayProperty, value); }
+            get => (int)this.GetValue(DelayProperty);
+            set => this.SetValue(DelayProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TextAlignment"/> dependency property.</summary>
+        public static readonly DependencyProperty TextAlignmentProperty = TextBox.TextAlignmentProperty.AddOwner(typeof(NumericUpDown));
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the contents inside the text box.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(TextAlignment.Right)]
+        public TextAlignment TextAlignment
+        {
+            get => (TextAlignment)this.GetValue(TextAlignmentProperty);
+            set => this.SetValue(TextAlignmentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Speedup"/> dependency property.</summary>
+        public static readonly DependencyProperty SpeedupProperty
+            = DependencyProperty.Register(nameof(Speedup),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(true, OnSpeedupPropertyChanged));
+
+        private static void OnSpeedupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue)
+            {
+                (d as NumericUpDown)?.OnSpeedupChanged((bool)e.OldValue, (bool)e.NewValue);
+            }
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change values. 
+        /// Gets or sets a value indicating whether the value to be added to or subtracted from <see cref="Value" /> remains
+        /// always <see cref="Interval" /> or if it will increase faster after pressing the up/down button/arrow some time.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool Speedup
+        {
+            get => (bool)this.GetValue(SpeedupProperty);
+            set => this.SetValue(SpeedupProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
+        public static readonly DependencyProperty IsReadOnlyProperty
+            = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericUpDown),
+                                                      new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, OnIsReadOnlyPropertyChanged));
+
+        private static void OnIsReadOnlyPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue is bool isReadOnly)
+            {
+                if (dependencyObject is NumericUpDown numericUpDown)
+                {
+                    numericUpDown.ToggleReadOnlyMode(isReadOnly || !numericUpDown.InterceptManualEnter);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(false)]
+        public bool IsReadOnly
+        {
+            get => (bool)this.GetValue(IsReadOnlyProperty);
+            set => this.SetValue(IsReadOnlyProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="StringFormat"/> dependency property.</summary>
+        public static readonly DependencyProperty StringFormatProperty
+            = DependencyProperty.Register(nameof(StringFormat),
+                                          typeof(string),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(string.Empty, OnStringFormatPropertyChanged, CoerceStringFormat));
+
+        private static void OnStringFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && d is NumericUpDown numericUpDown)
+            {
+                if (numericUpDown.valueTextBox != null && numericUpDown.Value.HasValue)
+                {
+                    numericUpDown.InternalSetText(numericUpDown.Value);
+                }
+
+                if (e.NewValue is string format && !string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
+                {
+                    numericUpDown.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
+                    numericUpDown.SetCurrentValue(NumericInputModeProperty, numericUpDown.NumericInputMode | NumericInput.Decimal);
+                }
+            }
+        }
+
+        private static object CoerceStringFormat(DependencyObject d, object baseValue)
+        {
+            return baseValue ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets or sets the formatting for the displaying <see cref="Value" />
+        /// </summary>
+        /// <remarks>
+        /// <see href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings"></see>
+        /// </remarks>
+        [Category("Common")]
+        public string StringFormat
+        {
+            get => (string)this.GetValue(StringFormatProperty);
+            set => this.SetValue(StringFormatProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="InterceptArrowKeys"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptArrowKeysProperty
+            = DependencyProperty.Register(nameof(InterceptArrowKeys),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change the value. 
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
         [DefaultValue(true)]
         public bool InterceptArrowKeys
         {
-            get { return (bool)this.GetValue(InterceptArrowKeysProperty); }
-            set { this.SetValue(InterceptArrowKeysProperty, value); }
+            get => (bool)this.GetValue(InterceptArrowKeysProperty);
+            set => this.SetValue(InterceptArrowKeysProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="InterceptMouseWheel"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptMouseWheelProperty
+            = DependencyProperty.Register(nameof(InterceptMouseWheel),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(true));
+
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can use the mouse wheel to change values.
+        /// Gets or sets a value indicating whether the user can use the mouse wheel to change the value.
         /// </summary>
         [Category("Behavior")]
         [DefaultValue(true)]
         public bool InterceptMouseWheel
         {
-            get { return (bool)this.GetValue(InterceptMouseWheelProperty); }
-            set { this.SetValue(InterceptMouseWheelProperty, value); }
+            get => (bool)this.GetValue(InterceptMouseWheelProperty);
+            set => this.SetValue(InterceptMouseWheelProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
-        /// <remarks>
-        ///     If the value is true then the value changes when the mouse wheel is over the control. If the value is false then the value changes only if the control has the focus. If <see cref="InterceptMouseWheel"/> is set to "false" then this property has no effect.
-        /// </remarks>
-        /// </summary>
-        [Category("Behavior")]
-        [DefaultValue(false)]
-        public bool TrackMouseWheelWhenMouseOver
+        /// <summary>Identifies the <see cref="InterceptManualEnter"/> dependency property.</summary>
+        public static readonly DependencyProperty InterceptManualEnterProperty
+            = DependencyProperty.Register(nameof(InterceptManualEnter),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(true, OnInterceptManualEnterPropertyChanged));
+
+        private static void OnInterceptManualEnterPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            get { return (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty); }
-            set { this.SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
+            if (e.OldValue != e.NewValue && e.NewValue is bool interceptManualEnter)
+            {
+                if (dependencyObject is NumericUpDown numericUpDown)
+                {
+                    numericUpDown.ToggleReadOnlyMode(!interceptManualEnter || numericUpDown.IsReadOnly);
+                }
+            }
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can enter text in the control.
+        /// Gets or sets a value indicating whether the user can enter text in the control.
         /// </summary>
         [Category("Behavior")]
         [DefaultValue(true)]
         public bool InterceptManualEnter
         {
-            get { return (bool)this.GetValue(InterceptManualEnterProperty); }
-            set { this.SetValue(InterceptManualEnterProperty, value); }
+            get => (bool)this.GetValue(InterceptManualEnterProperty);
+            set => this.SetValue(InterceptManualEnterProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed event or when using the Enter key.
-        /// </summary>
-        [Category("Behavior")]
-        public bool ChangeValueOnTextChanged
+        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
+        public static readonly DependencyProperty ValueProperty
+            = DependencyProperty.Register(nameof(Value),
+                                          typeof(double?),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValuePropertyChanged, CoerceValue));
+
+        private static void OnValuePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            get { return (bool)this.GetValue(ChangeValueOnTextChangedProperty); }
-            set { this.SetValue(ChangeValueOnTextChangedProperty, value); }
+            if (e.OldValue != e.NewValue)
+            {
+                (dependencyObject as NumericUpDown)?.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
+            }
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            var numericUpDown = (NumericUpDown)d;
+            double val = ((double?)value).Value;
+
+            if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
+            {
+                val = Math.Truncate(val);
+            }
+
+            if (val < numericUpDown.Minimum)
+            {
+                return numericUpDown.Minimum;
+            }
+
+            if (val > numericUpDown.Maximum)
+            {
+                return numericUpDown.Maximum;
+            }
+
+            return val;
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating the culture to be used in string formatting operations.
+        /// Gets or sets the value of the NumericUpDown.
         /// </summary>
-        [Category("Behavior")]
+        [Bindable(true)]
+        [Category("Common")]
         [DefaultValue(null)]
-        public CultureInfo Culture
+        public double? Value
         {
-            get { return (CultureInfo)this.GetValue(CultureProperty); }
-            set { this.SetValue(CultureProperty, value); }
+            get => (double?)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
+        public static readonly DependencyProperty MinimumProperty
+            = DependencyProperty.Register(nameof(Minimum),
+                                          typeof(double),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(double.MinValue, OnMinimumPropertyChanged));
+
+        private static void OnMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            numericUpDown.CoerceValue(MaximumProperty);
+            numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
+            numericUpDown.EnableDisableUpDown();
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the +/- button of the control is visible.
+        /// Minimum restricts the minimum value of the Value property.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(double.MinValue)]
+        public double Minimum
+        {
+            get => (double)this.GetValue(MinimumProperty);
+            set => this.SetValue(MinimumProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
+        public static readonly DependencyProperty MaximumProperty
+            = DependencyProperty.Register(nameof(Maximum),
+                                          typeof(double),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(double.MaxValue, OnMaximumPropertyChanged, CoerceMaximum));
+
+        private static void OnMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
+            numericUpDown.EnableDisableUpDown();
+        }
+
+        private static object CoerceMaximum(DependencyObject d, object value)
+        {
+            double minimum = ((NumericUpDown)d).Minimum;
+            double val = (double)value;
+            return val < minimum ? minimum : val;
+        }
+
+        /// <summary>
+        /// Maximum restricts the maximum value of the Value property.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(double.MaxValue)]
+        public double Maximum
+        {
+            get => (double)this.GetValue(MaximumProperty);
+            set => this.SetValue(MaximumProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="Interval"/> dependency property.</summary>
+        public static readonly DependencyProperty IntervalProperty
+            = DependencyProperty.Register(nameof(Interval),
+                                          typeof(double),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(DefaultInterval, OnIntervalPropertyChanged));
+
+        private static void OnIntervalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as NumericUpDown)?.ResetInternal();
+        }
+
+        /// <summary>
+        /// Gets or sets the interval value for increasing/decreasing the <see cref="Value" /> .
+        /// </summary>
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(DefaultInterval)]
+        public double Interval
+        {
+            get => (double)this.GetValue(IntervalProperty);
+            set => this.SetValue(IntervalProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="TrackMouseWheelWhenMouseOver"/> dependency property.</summary>
+        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty
+            = DependencyProperty.Register(nameof(TrackMouseWheelWhenMouseOver),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
         /// </summary>
         /// <remarks>
-        ///     If the value is false then the <see cref="Value" /> of the control can be changed only if one of the following cases is satisfied:
-        ///     <list type="bullet">
-        ///         <item>
-        ///             <description><see cref="InterceptArrowKeys" /> is true.</description>
-        ///         </item>
-        ///         <item>
-        ///             <description><see cref="InterceptMouseWheel" /> is true.</description>
-        ///         </item>
-        ///         <item>
-        ///             <description><see cref="InterceptManualEnter" /> is true.</description>
-        ///         </item>
-        ///     </list>
+        /// If the value is true then the value changes when the mouse wheel is over the control. <br/>
+        /// If the value is false then the value changes only if the control has the focus. <br/>
+        /// If <see cref="InterceptMouseWheel"/> is set to "false" then this property has no effect.
+        /// </remarks>
+        [Category("Behavior")]
+        [DefaultValue(false)]
+        public bool TrackMouseWheelWhenMouseOver
+        {
+            get => (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty);
+            set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
+        public static readonly DependencyProperty ButtonsAlignmentProperty
+            = DependencyProperty.Register(nameof(ButtonsAlignment),
+                                          typeof(ButtonsAlignment),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// The ButtonsAlignment property specifies horizontal alignment of the up/down buttons.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(ButtonsAlignment.Right)]
+        public ButtonsAlignment ButtonsAlignment
+        {
+            get => (ButtonsAlignment)this.GetValue(ButtonsAlignmentProperty);
+            set => this.SetValue(ButtonsAlignmentProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="HideUpDownButtons"/> dependency property.</summary>
+        public static readonly DependencyProperty HideUpDownButtonsProperty
+            = DependencyProperty.Register(nameof(HideUpDownButtons),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(default(bool)));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the up/down button of the control are visible.
+        /// </summary>
+        /// <remarks>
+        /// If the value is false then the <see cref="Value" /> of the control can be changed only if one of the following cases is satisfied:
+        /// <list type="bullet">
+        ///     <item>
+        ///         <description><see cref="InterceptArrowKeys" /> is true.</description>
+        ///     </item>
+        ///     <item>
+        ///         <description><see cref="InterceptMouseWheel" /> is true.</description>
+        ///     </item>
+        ///     <item>
+        ///         <description><see cref="InterceptManualEnter" /> is true.</description>
+        ///     </item>
+        /// </list>
         /// </remarks>
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue(false)]
         public bool HideUpDownButtons
         {
-            get { return (bool)this.GetValue(HideUpDownButtonsProperty); }
-            set { this.SetValue(HideUpDownButtonsProperty, value); }
+            get => (bool)this.GetValue(HideUpDownButtonsProperty);
+            set => this.SetValue(HideUpDownButtonsProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="UpDownButtonsWidth"/> dependency property.</summary>
+        public static readonly DependencyProperty UpDownButtonsWidthProperty
+            = DependencyProperty.Register(nameof(UpDownButtonsWidth),
+                                          typeof(double),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(20d));
+
+        /// <summary>
+        /// Gets or sets the width of the up/down buttons.
+        /// </summary>
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue(20d)]
         public double UpDownButtonsWidth
         {
-            get { return (double)this.GetValue(UpDownButtonsWidthProperty); }
-            set { this.SetValue(UpDownButtonsWidthProperty, value); }
+            get => (double)this.GetValue(UpDownButtonsWidthProperty);
+            set => this.SetValue(UpDownButtonsWidthProperty, value);
         }
+
+        /// <summary>Identifies the <see cref="UpDownButtonsFocusable"/> dependency property.</summary>
+        public static readonly DependencyProperty UpDownButtonsFocusableProperty
+            = DependencyProperty.Register(nameof(UpDownButtonsFocusable),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(true));
 
         /// <summary>
         /// Gets or sets whether the up and down buttons will got the focus when using them.
@@ -406,153 +606,177 @@ namespace MahApps.Metro.Controls
         [DefaultValue(true)]
         public bool UpDownButtonsFocusable
         {
-            get { return (bool)this.GetValue(UpDownButtonsFocusableProperty); }
-            set { this.SetValue(UpDownButtonsFocusableProperty, value); }
+            get => (bool)this.GetValue(UpDownButtonsFocusableProperty);
+            set => this.SetValue(UpDownButtonsFocusableProperty, value);
         }
 
-        [Bindable(true)]
-        [Category("Appearance")]
-        [DefaultValue(ButtonsAlignment.Right)]
-        public ButtonsAlignment ButtonsAlignment
-        {
-            get { return (ButtonsAlignment)this.GetValue(ButtonsAlignmentProperty); }
-            set { this.SetValue(ButtonsAlignmentProperty, value); }
-        }
-
-        [Bindable(true)]
-        [Category("Behavior")]
-        [DefaultValue(DefaultInterval)]
-        public double Interval
-        {
-            get { return (double)this.GetValue(IntervalProperty); }
-            set { this.SetValue(IntervalProperty, value); }
-        }
+        /// <summary>Identifies the <see cref="SwitchUpDownButtons"/> dependency property.</summary>
+        public static readonly DependencyProperty SwitchUpDownButtonsProperty
+            = DependencyProperty.Register(nameof(SwitchUpDownButtons),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(false));
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
+        /// Gets or sets a value indicating whether the up/down buttons will be switched.
         /// </summary>
-        [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue(false)]
-        public bool IsReadOnly
+        public bool SwitchUpDownButtons
         {
-            get { return (bool)this.GetValue(IsReadOnlyProperty); }
-            set { this.SetValue(IsReadOnlyProperty, value); }
+            get => (bool)this.GetValue(SwitchUpDownButtonsProperty);
+            set => this.SetValue(SwitchUpDownButtonsProperty, value);
         }
 
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(double.MaxValue)]
-        public double Maximum
+        /// <summary>Identifies the <see cref="ChangeValueOnTextChanged"/> dependency property.</summary>
+        public static readonly DependencyProperty ChangeValueOnTextChangedProperty
+            = DependencyProperty.Register(nameof(ChangeValueOnTextChanged),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(true));
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed input event or when using the Enter key.
+        /// </summary>
+        [Category("Behavior")]
+        public bool ChangeValueOnTextChanged
         {
-            get { return (double)this.GetValue(MaximumProperty); }
-            set { this.SetValue(MaximumProperty, value); }
+            get => (bool)this.GetValue(ChangeValueOnTextChangedProperty);
+            set => this.SetValue(ChangeValueOnTextChangedProperty, value);
         }
 
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(double.MinValue)]
-        public double Minimum
+        /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
+        public static readonly DependencyProperty CultureProperty
+            = DependencyProperty.Register(nameof(Culture),
+                                          typeof(CultureInfo),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(null, OnCulturePropertyChanged));
+
+        private static void OnCulturePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get { return (double)this.GetValue(MinimumProperty); }
-            set { this.SetValue(MinimumProperty, value); }
+            if (e.NewValue != e.OldValue && d is NumericUpDown numericUpDown)
+            {
+                numericUpDown.regexNumber = null;
+                numericUpDown.OnValueChanged(numericUpDown.Value, numericUpDown.Value);
+            }
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the value to be added to or subtracted from <see cref="Value" /> remains
-        ///     always
-        ///     <see cref="Interval" /> or if it will increase faster after pressing the up/down button/arrow some time.
+        /// Gets or sets a value indicating the culture to be used in string formatting and converting operations.
         /// </summary>
-        [Category("Common")]
-        [DefaultValue(true)]
-        public bool Speedup
-        {
-            get { return (bool)this.GetValue(SpeedupProperty); }
-            set { this.SetValue(SpeedupProperty, value); }
-        }
-
-        /// <summary>
-        ///     Gets or sets the formatting for the displaying <see cref="Value" />
-        /// </summary>
-        /// <remarks>
-        ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
-        /// </remarks>
-        [Category("Common")]
-        public string StringFormat
-        {
-            get { return (string)this.GetValue(StringFormatProperty); }
-            set { this.SetValue(StringFormatProperty, value); }
-        }
-
-        /// <summary>
-        ///     Gets or sets the horizontal alignment of the contents of the text box.
-        /// </summary>
-        [Bindable(true)]
-        [Category("Common")]
-        [DefaultValue(TextAlignment.Right)]
-        public TextAlignment TextAlignment
-        {
-            get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
-            set { this.SetValue(TextAlignmentProperty, value); }
-        }
-
-        [Bindable(true)]
-        [Category("Common")]
+        [Category("Behavior")]
         [DefaultValue(null)]
-        public double? Value
+        public CultureInfo Culture
         {
-            get { return (double?)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (CultureInfo)this.GetValue(CultureProperty);
+            set => this.SetValue(CultureProperty, value);
         }
 
-        private CultureInfo SpecificCultureInfo
+        /// <summary>Identifies the <see cref="NumericInputMode"/> dependency property.</summary>
+        public static readonly DependencyProperty NumericInputModeProperty
+            = DependencyProperty.Register(nameof(NumericInputMode),
+                                          typeof(NumericInput),
+                                          typeof(NumericUpDown),
+                                          new FrameworkPropertyMetadata(NumericInput.All, OnNumericInputModePropertyChanged));
+
+        private static void OnNumericInputModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get { return this.Culture ?? this.Language.GetSpecificCulture(); }
+            if (e.OldValue != e.NewValue && e.NewValue is NumericInput numericInput && d is NumericUpDown numericUpDown && numericUpDown.Value != null)
+            {
+                if (!numericInput.HasFlag(NumericInput.Decimal))
+                {
+                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+                }
+            }
         }
 
         /// <summary>
-        /// Gets or sets which numeric input for the NumericUpDown is allowed.
+        /// Gets or sets which numeric input for this NumericUpDown is allowed.
         /// </summary>
         [Category("Common")]
         [DefaultValue(NumericInput.All)]
         public NumericInput NumericInputMode
         {
-            get { return (NumericInput)this.GetValue(NumericInputModeProperty); }
-            set { this.SetValue(NumericInputModeProperty, value); }
+            get => (NumericInput)this.GetValue(NumericInputModeProperty);
+            set => this.SetValue(NumericInputModeProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="DecimalPointCorrection"/> dependency property.</summary>
+        public static readonly DependencyProperty DecimalPointCorrectionProperty
+            = DependencyProperty.Register(nameof(DecimalPointCorrection),
+                                          typeof(DecimalPointCorrectionMode),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(default(DecimalPointCorrectionMode)));
+
+        /// <summary>
+        /// Gets or sets the decimal-point correction mode. The default is <see cref="DecimalPointCorrectionMode.Inherits"/>
+        /// </summary>
+        public DecimalPointCorrectionMode DecimalPointCorrection
+        {
+            get => (DecimalPointCorrectionMode)this.GetValue(DecimalPointCorrectionProperty);
+            set => this.SetValue(DecimalPointCorrectionProperty, value);
+        }
+
+        /// <summary>Identifies the <see cref="SnapToMultipleOfInterval"/> dependency property.</summary>
+        public static readonly DependencyProperty SnapToMultipleOfIntervalProperty
+            = DependencyProperty.Register(nameof(SnapToMultipleOfInterval),
+                                          typeof(bool),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalPropertyChanged));
+
+        private static void OnSnapToMultipleOfIntervalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && d is NumericUpDown numericUpDown)
+            {
+                var value = numericUpDown.Value.GetValueOrDefault();
+
+                if (e.NewValue is bool snap && snap && Math.Abs(numericUpDown.Interval) > 0)
+                {
+                    numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
+                }
+            }
         }
 
         /// <summary>
-        ///     Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
+        /// Indicates if the NumericUpDown should round the value to the nearest possible interval when the focus moves to another element.
         /// </summary>
         [Bindable(true)]
         [Category("Common")]
         [DefaultValue(false)]
         public bool SnapToMultipleOfInterval
         {
-            get { return (bool)this.GetValue(SnapToMultipleOfIntervalProperty); }
-            set { this.SetValue(SnapToMultipleOfIntervalProperty, value); }
+            get => (bool)this.GetValue(SnapToMultipleOfIntervalProperty);
+            set => this.SetValue(SnapToMultipleOfIntervalProperty, value);
         }
 
+        /// <summary>Identifies the <see cref="ParsingNumberStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty ParsingNumberStyleProperty
+            = DependencyProperty.Register(nameof(ParsingNumberStyle),
+                                          typeof(NumberStyles),
+                                          typeof(NumericUpDown),
+                                          new PropertyMetadata(NumberStyles.Any));
+
         /// <summary>
-        /// Gets or sets the parsing number style for the value from text to numeric.
+        /// Gets or sets the parsing number style for the value from text to numeric value.
         /// </summary>
         [Category("Common")]
         [DefaultValue(NumberStyles.Any)]
         public NumberStyles ParsingNumberStyle
         {
-            get { return (NumberStyles)this.GetValue(ParsingNumberStyleProperty); }
-            set { this.SetValue(ParsingNumberStyleProperty, value); }
+            get => (NumberStyles)this.GetValue(ParsingNumberStyleProperty);
+            set => this.SetValue(ParsingNumberStyleProperty, value);
         }
 
-        /// <summary>
-        ///     Gets or sets a value indicating whether the up down buttons are switched.
-        /// </summary>
-        [Category("Appearance")]
-        [DefaultValue(false)]
-        public bool SwitchUpDownButtons
+        private CultureInfo SpecificCultureInfo => this.Culture ?? this.Language.GetSpecificCulture();
+
+        static NumericUpDown()
         {
-            get { return (bool)this.GetValue(SwitchUpDownButtonsProperty); }
-            set { this.SetValue(SwitchUpDownButtonsProperty, value); }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
+
+            VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(VerticalAlignment.Center));
+            HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+
+            EventManager.RegisterClassHandler(typeof(NumericUpDown), GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
         /// <summary> 
@@ -570,9 +794,8 @@ namespace MahApps.Metro.Controls
                     // MoveFocus takes a TraversalRequest as its argument.
                     var request = new TraversalRequest((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift ? FocusNavigationDirection.Previous : FocusNavigationDirection.Next);
                     // Gets the element with keyboard focus.
-                    var elementWithFocus = Keyboard.FocusedElement as UIElement;
-                    // Change keyboard focus.
-                    if (elementWithFocus != null)
+                    // And change the keyboard focus.
+                    if (Keyboard.FocusedElement is UIElement elementWithFocus)
                     {
                         elementWithFocus.MoveFocus(request);
                     }
@@ -662,34 +885,52 @@ namespace MahApps.Metro.Controls
 
         public void SelectAll()
         {
-            if (this.valueTextBox != null)
-            {
-                this.valueTextBox.SelectAll();
-            }
+            this.valueTextBox?.SelectAll();
         }
 
+        private void RaiseChangeDelay()
+        {
+            this.RaiseEvent(new RoutedEventArgs(DelayChangedEvent));
+        }
+
+        /// <summary>
+        /// This method is invoked when the Delay property changes.
+        /// </summary>
+        /// <param name="oldDelay">The old value of the Delay property.</param>
+        /// <param name="newDelay">The new value of the Delay property.</param>
         protected virtual void OnDelayChanged(int oldDelay, int newDelay)
         {
-            if (oldDelay != newDelay)
-            {
-                if (this.repeatDown != null)
-                {
-                    this.repeatDown.Delay = newDelay;
-                }
-
-                if (this.repeatUp != null)
-                {
-                    this.repeatUp.Delay = newDelay;
-                }
-            }
+            // nothing here
         }
 
+        /// <summary>
+        /// This method is invoked when the Speedup property changes.
+        /// </summary>
+        /// <param name="oldSpeedup">The old value of the Speedup property.</param>
+        /// <param name="newSpeedup">The new value of the Speedup property.</param>
+        protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
+        {
+            // nothing here
+        }
+
+        /// <summary>
+        /// This method is invoked when the Maximum property changes.
+        /// </summary>
+        /// <param name="oldMaximum">The old value of the Maximum property.</param>
+        /// <param name="newMaximum">The new value of the Maximum property.</param>
         protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
+            // nothing here
         }
 
+        /// <summary>
+        /// This method is invoked when the Minimum property changes.
+        /// </summary>
+        /// <param name="oldMinimum">The old value of the Minimum property.</param>
+        /// <param name="newMinimum">The new value of the Minimum property.</param>
         protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
+            // nothing here
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -769,15 +1010,10 @@ namespace MahApps.Metro.Controls
 
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            var textBox = ((TextBox)sender);
+            var textBox = (TextBox)sender;
             var fullText = textBox.Text.Remove(textBox.SelectionStart, textBox.SelectionLength).Insert(textBox.CaretIndex, e.Text);
-            double convertedValue;
-            e.Handled = !this.ValidateText(fullText, out convertedValue);
+            e.Handled = !this.ValidateText(fullText, out _);
             this.manualChange = true;
-        }
-
-        protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
-        {
         }
 
         /// <summary>
@@ -859,142 +1095,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static object CoerceMaximum(DependencyObject d, object value)
-        {
-            double minimum = ((NumericUpDown)d).Minimum;
-            double val = (double)value;
-            return val < minimum ? minimum : val;
-        }
-
-        private static object CoerceStringFormat(DependencyObject d, object basevalue)
-        {
-            return basevalue ?? string.Empty;
-        }
-
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            var numericUpDown = (NumericUpDown)d;
-            double val = ((double?)value).Value;
-
-            if (!numericUpDown.NumericInputMode.HasFlag(NumericInput.Decimal))
-            {
-                val = Math.Truncate(val);
-            }
-
-            if (val < numericUpDown.Minimum)
-            {
-                return numericUpDown.Minimum;
-            }
-
-            if (val > numericUpDown.Maximum)
-            {
-                return numericUpDown.Maximum;
-            }
-
-            return val;
-        }
-
-        private static void IntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-
-            numericUpDown.ResetInternal();
-        }
-
-        private static void OnDelayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown ctrl = (NumericUpDown)d;
-
-            ctrl.RaiseChangeDelay();
-            ctrl.OnDelayChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-
-            numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
-            numericUpDown.EnableDisableUpDown();
-        }
-
-        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-
-            numericUpDown.CoerceValue(MaximumProperty);
-            numericUpDown.CoerceValue(ValueProperty);
-            numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
-            numericUpDown.EnableDisableUpDown();
-        }
-
-        private static void OnSpeedupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown ctrl = (NumericUpDown)d;
-
-            ctrl.OnSpeedupChanged((bool)e.OldValue, (bool)e.NewValue);
-        }
-
-        private static void OnStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            NumericUpDown nud = (NumericUpDown)d;
-
-            if (nud.valueTextBox != null && nud.Value.HasValue)
-            {
-                nud.InternalSetText(nud.Value);
-            }
-
-            var format = (string)e.NewValue;
-
-            if (!string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
-            {
-                nud.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
-                nud.SetCurrentValue(NumericInputModeProperty, nud.NumericInputMode | NumericInput.Decimal);
-            }
-        }
-
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-
-            numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
-        }
-
-        private static void OnNumericInputModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-            if (e.NewValue != e.OldValue && e.NewValue is NumericInput && numericUpDown.Value != null)
-            {
-                var numericInput = (NumericInput)e.NewValue;
-
-                if (!numericInput.HasFlag(NumericInput.Decimal))
-                {
-                    numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
-                }
-            }
-        }
-
-        private static void OnSnapToMultipleOfIntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var numericUpDown = (NumericUpDown)d;
-            var value = numericUpDown.Value.GetValueOrDefault();
-
-            if ((bool)e.NewValue && Math.Abs(numericUpDown.Interval) > 0)
-            {
-                numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
-            }
-        }
-
-        private static bool ValidateDelay(object value)
-        {
-            return Convert.ToInt32(value) >= 0;
-        }
-
         private void InternalSetText(double? newValue)
         {
             if (!newValue.HasValue)
@@ -1016,7 +1116,7 @@ namespace MahApps.Metro.Controls
             format = format.Replace("{}", string.Empty);
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if(TryFormatHexadecimal(newValue, format, culture, out string hexValue))
+                if (TryFormatHexadecimal(newValue, format, culture, out string hexValue))
                 {
                     return hexValue;
                 }
@@ -1028,13 +1128,14 @@ namespace MahApps.Metro.Controls
                         // we have a format template such as "{0:N0}"
                         return string.Format(culture, format, newValue);
                     }
+
                     // we have a format such as "N0"
                     return newValue.ToString(format, culture);
                 }
             }
 
             return newValue.ToString(culture);
-        }        
+        }
 
         private static double FormattedValue(double newValue, string format, CultureInfo culture)
         {
@@ -1056,7 +1157,7 @@ namespace MahApps.Metro.Controls
             }
 
             return newValue;
-        }        
+        }
 
         private static double ConvertStringFormatValue(double value, string format)
         {
@@ -1068,8 +1169,9 @@ namespace MahApps.Metro.Controls
             {
                 value /= 1000d;
             }
+
             return value;
-        }        
+        }
 
         private static bool TryFormatHexadecimal(double newValue, string format, CultureInfo culture, out string output)
         {
@@ -1089,6 +1191,7 @@ namespace MahApps.Metro.Controls
                     return true;
                 }
             }
+
             output = null;
             return false;
         }
@@ -1190,7 +1293,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.repeatDown != null)
             {
-                this.repeatDown.IsEnabled = this.Value > this.Minimum;
+                this.repeatDown.IsEnabled = this.Value == null || this.Value > this.Minimum;
             }
         }
 
@@ -1198,7 +1301,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.repeatUp != null)
             {
-                this.repeatUp.IsEnabled = this.Value < this.Maximum;
+                this.repeatUp.IsEnabled = this.Value == null || this.Value < this.Maximum;
             }
         }
 
@@ -1296,8 +1399,7 @@ namespace MahApps.Metro.Controls
             {
                 this.manualChange = false;
 
-                double convertedValue;
-                if (this.ValidateText(textBox.Text, out convertedValue))
+                if (this.ValidateText(textBox.Text, out var convertedValue))
                 {
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
@@ -1320,8 +1422,7 @@ namespace MahApps.Metro.Controls
             }
             else if (this.manualChange || e.UndoAction == UndoAction.Undo || e.UndoAction == UndoAction.Redo)
             {
-                double convertedValue;
-                if (this.ValidateText(((TextBox)sender).Text, out convertedValue))
+                if (this.ValidateText(((TextBox)sender).Text, out var convertedValue))
                 {
                     convertedValue = FormattedValue(convertedValue, this.StringFormat, this.SpecificCultureInfo);
                     this.SetValueTo(convertedValue);
@@ -1344,8 +1445,7 @@ namespace MahApps.Metro.Controls
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
             string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
-            double convertedValue;
-            if (!this.ValidateText(newText, out convertedValue))
+            if (!this.ValidateText(newText, out _))
             {
                 e.CancelCommand();
             }
@@ -1353,11 +1453,6 @@ namespace MahApps.Metro.Controls
             {
                 this.manualChange = true;
             }
-        }
-
-        private void RaiseChangeDelay()
-        {
-            this.RaiseEvent(new RoutedEventArgs(DelayChangedEvent));
         }
 
         private void ResetInternal()
