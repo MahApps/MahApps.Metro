@@ -229,7 +229,7 @@ namespace MahApps.Metro.Controls
             {
                 if (dependencyObject is NumericUpDown numericUpDown)
                 {
-                    numericUpDown.ToggleReadOnlyMode(isReadOnly || !numericUpDown.InterceptManualEnter);
+                    numericUpDown.ToggleReadOnlyMode(isReadOnly);
                 }
             }
         }
@@ -334,11 +334,11 @@ namespace MahApps.Metro.Controls
 
         private static void OnInterceptManualEnterPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue != e.NewValue && e.NewValue is bool interceptManualEnter)
+            if (e.OldValue != e.NewValue)
             {
                 if (dependencyObject is NumericUpDown numericUpDown)
                 {
-                    numericUpDown.ToggleReadOnlyMode(!interceptManualEnter || numericUpDown.IsReadOnly);
+                    numericUpDown.ToggleReadOnlyMode(numericUpDown.IsReadOnly);
                 }
             }
         }
@@ -726,12 +726,16 @@ namespace MahApps.Metro.Controls
 
         private static void OnSnapToMultipleOfIntervalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue != e.NewValue && d is NumericUpDown numericUpDown)
+            if (e.OldValue != e.NewValue && e.NewValue is bool snap && d is NumericUpDown numericUpDown)
             {
-                var value = numericUpDown.Value.GetValueOrDefault();
-
-                if (e.NewValue is bool snap && snap && Math.Abs(numericUpDown.Interval) > 0)
+                if (!snap)
                 {
+                    return;
+                }
+
+                if (Math.Abs(numericUpDown.Interval) > 0)
+                {
+                    var value = numericUpDown.Value.GetValueOrDefault();
                     numericUpDown.Value = Math.Round(value / numericUpDown.Interval) * numericUpDown.Interval;
                 }
             }
@@ -827,7 +831,7 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException($"You have missed to specify {PART_NumericUp}, {PART_NumericDown} or {PART_TextBox} in your template!");
             }
 
-            this.ToggleReadOnlyMode(this.IsReadOnly || !this.InterceptManualEnter);
+            this.ToggleReadOnlyMode(this.IsReadOnly);
 
             this.repeatUp.Click += (o, e) =>
                 {
