@@ -258,6 +258,14 @@ namespace MetroDemo
             set => this.Set(ref this.currentCulture, value);
         }
 
+        private double? numericUpDownValue = null;
+
+        public double? NumericUpDownValue
+        {
+            get => this.numericUpDownValue;
+            set => this.Set(ref this.numericUpDownValue, value);
+        }
+
         public ICommand EndOfScrollReachedCmdWithParameter { get; }
 
         public int? IntegerGreater10Property
