@@ -205,7 +205,10 @@
                 <!--  Items  -->
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
-                        <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BigFourSummerHeat.png" Label="Big four summer heat" />
+                        <Controls:HamburgerMenuGlyphItem AutomationProperties.HelpText="First Item shows BigFourSummerHeat"
+                                                         AutomationProperties.Name="First Item"
+                                                         Glyph="/Assets/Photos/BigFourSummerHeat.png"
+                                                         Label="Big four summer heat" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/BisonBadlandsChillin.png" Label="Bison badlands Chillin" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/GiantSlabInOregon.png" Label="Giant slab in Oregon" />
                         <Controls:HamburgerMenuGlyphItem Glyph="/Assets/Photos/LakeAnnMushroom.png" Label="Lake Ann Mushroom" />
