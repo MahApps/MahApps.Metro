@@ -9,7 +9,7 @@ end_of_line = CRLF
 indent_style = space
 indent_size = 4
 
-[*.{md,yml}]
+[*.{md,yml,json}]
 indent_style = space
 indent_size = 2
 
