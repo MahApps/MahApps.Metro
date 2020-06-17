@@ -192,7 +192,6 @@
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="Visibility" Value="{Binding IsVisible, Mode=OneWay, FallbackValue=True, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Style>
 
     <Style x:Key="MahApps.Styles.ListBoxItem.HamburgerMenuItem"
@@ -200,7 +199,6 @@
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Controls:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
         <Setter Property="FocusVisualStyle" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=ItemFocusVisualStyle, Mode=OneWay, FallbackValue={x:Null}}" />
-        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=OneWay, FallbackValue=true}" />
         <Setter Property="IsTabStop" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:HamburgerMenu}}, Path=IsTabStop, Mode=OneWay, FallbackValue=True}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -392,6 +390,10 @@
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
     </Style>
 
+    <Style x:Key="MahApps.Styles.HamburgerMenuListBox"
+           BasedOn="{StaticResource MahApps.Styles.ListBox.HamburgerMenu}"
+           TargetType="{x:Type Controls:HamburgerMenuListBox}" />
+
     <ControlTemplate x:Key="MahApps.Templates.HamburgerMenu" TargetType="{x:Type Controls:HamburgerMenu}">
         <Grid>
             <Controls:SplitView x:Name="MainSplitView"
@@ -434,41 +436,39 @@
                                             ContentTemplate="{TemplateBinding HamburgerMenuHeaderTemplate}"
                                             IsTabStop="False" />
                         </DockPanel>
-                        <ListBox Name="ButtonsListView"
-                                 Grid.Row="1"
-                                 Width="{TemplateBinding OpenPaneLength}"
-                                 Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
-                                 AutomationProperties.Name="Menu items"
-                                 Foreground="{TemplateBinding PaneForeground}"
-                                 IsTextSearchEnabled="False"
-                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemStyleSelector}"
-                                 ItemTemplate="{TemplateBinding ItemTemplate}"
-                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                 ItemsSource="{TemplateBinding ItemsSource}"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
-                                 SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
-                                 SelectionMode="Single"
-                                 Style="{StaticResource MahApps.Styles.ListBox.HamburgerMenu}"
-                                 TabIndex="1" />
-                        <ListBox Name="OptionsListView"
-                                 Grid.Row="2"
-                                 Width="{TemplateBinding OpenPaneLength}"
-                                 Margin="0 20 0 0"
-                                 VerticalAlignment="Bottom"
-                                 AutomationProperties.Name="Option items"
-                                 Foreground="{TemplateBinding PaneForeground}"
-                                 IsTextSearchEnabled="False"
-                                 ItemContainerStyleSelector="{StaticResource HamburgerMenuItemOptionsStyleSelector}"
-                                 ItemTemplate="{TemplateBinding OptionsItemTemplate}"
-                                 ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
-                                 ItemsSource="{TemplateBinding OptionsItemsSource}"
-                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                 SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
-                                 SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
-                                 SelectionMode="Single"
-                                 Style="{StaticResource MahApps.Styles.ListBox.HamburgerMenu}"
-                                 TabIndex="2" />
+                        <Controls:HamburgerMenuListBox x:Name="ButtonsListView"
+                                                       Grid.Row="1"
+                                                       Width="{TemplateBinding OpenPaneLength}"
+                                                       Controls:ScrollViewerHelper.VerticalScrollBarOnLeftSide="{TemplateBinding VerticalScrollBarOnLeftSide}"
+                                                       AutomationProperties.Name="Menu items"
+                                                       Foreground="{TemplateBinding PaneForeground}"
+                                                       IsTextSearchEnabled="False"
+                                                       ItemContainerStyleSelector="{StaticResource HamburgerMenuItemStyleSelector}"
+                                                       ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                       ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                       ItemsSource="{TemplateBinding ItemsSource}"
+                                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                       SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedIndex, Mode=TwoWay}"
+                                                       SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem, Mode=TwoWay}"
+                                                       SelectionMode="Single"
+                                                       TabIndex="1" />
+                        <Controls:HamburgerMenuListBox x:Name="OptionsListView"
+                                                       Grid.Row="2"
+                                                       Width="{TemplateBinding OpenPaneLength}"
+                                                       Margin="0 20 0 0"
+                                                       VerticalAlignment="Bottom"
+                                                       AutomationProperties.Name="Option items"
+                                                       Foreground="{TemplateBinding PaneForeground}"
+                                                       IsTextSearchEnabled="False"
+                                                       ItemContainerStyleSelector="{StaticResource HamburgerMenuItemOptionsStyleSelector}"
+                                                       ItemTemplate="{TemplateBinding OptionsItemTemplate}"
+                                                       ItemTemplateSelector="{TemplateBinding OptionsItemTemplateSelector}"
+                                                       ItemsSource="{TemplateBinding OptionsItemsSource}"
+                                                       ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                       SelectedIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsIndex, Mode=TwoWay}"
+                                                       SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedOptionsItem, Mode=TwoWay}"
+                                                       SelectionMode="Single"
+                                                       TabIndex="2" />
                     </Grid>
                 </Controls:SplitView.Pane>
                 <Controls:TransitioningContentControl x:Name="ContentPart"
