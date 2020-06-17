@@ -623,7 +623,7 @@
                                         Controls:TextBoxHelper.Watermark="{Binding ElementName=NUD_Watermark, Path=Text, Mode=OneWay}"
                                         Maximum="10"
                                         Minimum="0"
-                                        Value="{Binding NumericUpDownValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                        Value="{Binding NumericUpDownValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Row="22"
                        Grid.Column="0"
