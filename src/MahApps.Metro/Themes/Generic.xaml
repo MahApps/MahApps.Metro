@@ -51,6 +51,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.WindowCommandsItem}" TargetType="{x:Type Controls:WindowCommandsItem}" />
     <Style BasedOn="{StaticResource MahApps.Styles.WindowCommands}" TargetType="{x:Type Controls:WindowCommands}" />
     <Style BasedOn="{StaticResource MahApps.Styles.WindowButtonCommands.Win10}" TargetType="{x:Type Controls:WindowButtonCommands}" />
+    <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenuListBox}" TargetType="{x:Type Controls:HamburgerMenuListBox}" />
     <Style BasedOn="{StaticResource MahApps.Styles.HamburgerMenu}" TargetType="{x:Type Controls:HamburgerMenu}" />
     <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}" />
     <Style BasedOn="{StaticResource MahApps.Styles.BaseMetroDialog}" TargetType="{x:Type Dialogs:BaseMetroDialog}" />
