@@ -8,9 +8,9 @@ namespace MahApps.Metro.Converters
 {
     [ValueConversion(typeof(object), typeof(object))]
     [MarkupExtensionReturnType(typeof(HamburgerMenuItemAccessibleConverter))]
-    public class HamburgerMenuItemAccessibleConverter : MarkupMultiConverter
+    public class HamburgerMenuItemAccessibleConverter : IValueConverter, IMultiValueConverter
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is null)
             {
@@ -20,12 +20,12 @@ namespace MahApps.Metro.Converters
             return value;
         }
 
-        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Binding.DoNothing;
         }
 
-        public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values is null)
             {
@@ -41,7 +41,7 @@ namespace MahApps.Metro.Converters
             return this.Convert(values.ElementAtOrDefault(0), targetType, parameter, culture);
         }
 
-        public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             return targetTypes.Select(t => Binding.DoNothing).ToArray();
         }
