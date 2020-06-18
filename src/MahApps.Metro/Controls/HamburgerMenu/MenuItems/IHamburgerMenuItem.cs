@@ -3,6 +3,16 @@
     public interface IHamburgerMenuItem
     {
         /// <summary>
+        /// Gets or sets a value that specifies label to display.
+        /// </summary>
+        string Label { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that specifies ToolTip to display.
+        /// </summary>
+        object ToolTip { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this item is enabled in the user interface (UI).
         /// </summary>
         /// <returns>
