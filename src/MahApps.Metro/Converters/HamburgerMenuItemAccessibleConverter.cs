@@ -2,28 +2,14 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Markup;
 
 namespace MahApps.Metro.Converters
 {
     [ValueConversion(typeof(object), typeof(object))]
-    [MarkupExtensionReturnType(typeof(HamburgerMenuItemAccessibleConverter))]
-    public class HamburgerMenuItemAccessibleConverter : IValueConverter, IMultiValueConverter
+    internal sealed class HamburgerMenuItemAccessibleConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is null)
-            {
-                return Binding.DoNothing;
-            }
-
-            return value;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return Binding.DoNothing;
-        }
+        /// <summary> Gets the default instance </summary>
+        internal static HamburgerMenuItemAccessibleConverter Default { get; } = new HamburgerMenuItemAccessibleConverter();
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
@@ -38,7 +24,13 @@ namespace MahApps.Metro.Converters
                 return automationPropertiesValue;
             }
 
-            return this.Convert(values.ElementAtOrDefault(0), targetType, parameter, culture);
+            var menuItemValue = values.ElementAtOrDefault(0) as string;
+            if (!string.IsNullOrEmpty(menuItemValue))
+            {
+                return menuItemValue;
+            }
+
+            return Binding.DoNothing;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

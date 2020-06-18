@@ -9,7 +9,6 @@ namespace MahApps.Metro.Controls
     public class HamburgerMenuListBox : ListBox
     {
         private readonly BooleanToVisibilityConverter booleanToVisibilityConverter = new BooleanToVisibilityConverter();
-        private readonly HamburgerMenuItemAccessibleConverter hamburgerMenuItemAccessibleConverter = new HamburgerMenuItemAccessibleConverter();
 
         static HamburgerMenuListBox()
         {
@@ -48,7 +47,9 @@ namespace MahApps.Metro.Controls
                     {
                         var helpTextPropertyMultiBinding = new MultiBinding
                                                            {
-                                                               Converter = this.hamburgerMenuItemAccessibleConverter,
+                                                               Converter = HamburgerMenuItemAccessibleConverter.Default,
+                                                               Mode = BindingMode.OneWay,
+                                                               FallbackValue = string.Empty,
                                                                Bindings =
                                                                {
                                                                    new Binding
@@ -56,14 +57,14 @@ namespace MahApps.Metro.Controls
                                                                        Source = hamburgerMenuItem,
                                                                        Path = new PropertyPath(nameof(IHamburgerMenuItem.ToolTip)),
                                                                        Mode = BindingMode.OneWay,
-                                                                       FallbackValue = null
+                                                                       FallbackValue = string.Empty
                                                                    },
                                                                    new Binding
                                                                    {
                                                                        Source = hamburgerMenuItem,
                                                                        Path = new PropertyPath(AutomationProperties.HelpTextProperty),
                                                                        Mode = BindingMode.OneWay,
-                                                                       FallbackValue = null
+                                                                       FallbackValue = string.Empty
                                                                    }
                                                                }
                                                            };
@@ -80,7 +81,9 @@ namespace MahApps.Metro.Controls
 
                         var namePropertyMultiBinding = new MultiBinding
                                                        {
-                                                           Converter = this.hamburgerMenuItemAccessibleConverter,
+                                                           Converter = HamburgerMenuItemAccessibleConverter.Default,
+                                                           Mode = BindingMode.OneWay,
+                                                           FallbackValue = string.Empty,
                                                            Bindings =
                                                            {
                                                                new Binding
@@ -88,14 +91,14 @@ namespace MahApps.Metro.Controls
                                                                    Source = hamburgerMenuItem,
                                                                    Path = new PropertyPath(nameof(IHamburgerMenuItem.Label)),
                                                                    Mode = BindingMode.OneWay,
-                                                                   FallbackValue = null
+                                                                   FallbackValue = string.Empty
                                                                },
                                                                new Binding
                                                                {
                                                                    Source = hamburgerMenuItem,
                                                                    Path = new PropertyPath(AutomationProperties.NameProperty),
                                                                    Mode = BindingMode.OneWay,
-                                                                   FallbackValue = null
+                                                                   FallbackValue = string.Empty
                                                                }
                                                            }
                                                        };
@@ -109,7 +112,7 @@ namespace MahApps.Metro.Controls
                                                    Source = hamburgerMenuItem,
                                                    Path = new PropertyPath(nameof(IHamburgerMenuItem.ToolTip)),
                                                    Mode = BindingMode.OneWay,
-                                                   FallbackValue = null
+                                                   FallbackValue = string.Empty
                                                });
 
                         listBoxItem.SetBinding(AutomationProperties.NameProperty,
@@ -118,7 +121,7 @@ namespace MahApps.Metro.Controls
                                                    Source = hamburgerMenuItem,
                                                    Path = new PropertyPath(nameof(IHamburgerMenuItem.Label)),
                                                    Mode = BindingMode.OneWay,
-                                                   FallbackValue = null
+                                                   FallbackValue = string.Empty
                                                });
                     }
                 }
@@ -133,7 +136,7 @@ namespace MahApps.Metro.Controls
                                                    Source = hamburgerMenuHeaderItem,
                                                    Path = new PropertyPath(AutomationProperties.HelpTextProperty),
                                                    Mode = BindingMode.OneWay,
-                                                   FallbackValue = null
+                                                   FallbackValue = string.Empty
                                                });
 
                         listBoxItem.SetBinding(AutomationProperties.LabeledByProperty,
@@ -147,7 +150,9 @@ namespace MahApps.Metro.Controls
 
                         var namePropertyMultiBinding = new MultiBinding
                                                        {
-                                                           Converter = this.hamburgerMenuItemAccessibleConverter,
+                                                           Converter = HamburgerMenuItemAccessibleConverter.Default,
+                                                           Mode = BindingMode.OneWay,
+                                                           FallbackValue = string.Empty,
                                                            Bindings =
                                                            {
                                                                new Binding
@@ -155,14 +160,14 @@ namespace MahApps.Metro.Controls
                                                                    Source = hamburgerMenuHeaderItem,
                                                                    Path = new PropertyPath(nameof(IHamburgerMenuHeaderItem.Label)),
                                                                    Mode = BindingMode.OneWay,
-                                                                   FallbackValue = null
+                                                                   FallbackValue = string.Empty
                                                                },
                                                                new Binding
                                                                {
                                                                    Source = hamburgerMenuHeaderItem,
                                                                    Path = new PropertyPath(AutomationProperties.NameProperty),
                                                                    Mode = BindingMode.OneWay,
-                                                                   FallbackValue = null
+                                                                   FallbackValue = string.Empty
                                                                }
                                                            }
                                                        };
@@ -176,7 +181,7 @@ namespace MahApps.Metro.Controls
                                                    Source = hamburgerMenuHeaderItem,
                                                    Path = new PropertyPath(nameof(IHamburgerMenuHeaderItem.Label)),
                                                    Mode = BindingMode.OneWay,
-                                                   FallbackValue = null
+                                                   FallbackValue = string.Empty
                                                });
                     }
                 }
