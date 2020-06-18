@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
@@ -40,6 +41,36 @@ namespace MahApps.Metro.Controls
         {
             get => (DataTemplate)this.GetValue(HamburgerButtonTemplateProperty);
             set => this.SetValue(HamburgerButtonTemplateProperty, value);
+        }
+
+        public static readonly DependencyProperty HamburgerButtonNameProperty
+            = DependencyProperty.Register(nameof(HamburgerButtonName),
+                                          typeof(string),
+                                          typeof(HamburgerMenu),
+                                          new UIPropertyMetadata(string.Empty),
+                                          new ValidateValueCallback(IsNotNull));
+
+        /// Gets or sets the <see cref="AutomationProperties.NameProperty"/> for the HamburgerMenu button.
+        public string HamburgerButtonName
+        {
+            get => (string)this.GetValue(HamburgerButtonNameProperty);
+            set => this.SetValue(HamburgerButtonNameProperty, value);
+        }
+
+        public static readonly DependencyProperty HamburgerButtonHelpTextProperty
+            = DependencyProperty.Register(nameof(HamburgerButtonHelpText),
+                                          typeof(string),
+                                          typeof(HamburgerMenu),
+                                          new UIPropertyMetadata(string.Empty),
+                                          new ValidateValueCallback(IsNotNull));
+
+        /// <summary>
+        /// Gets or sets the <see cref="AutomationProperties.HelpTextProperty"/> for the HamburgerMenu button.
+        /// </summary>
+        public string HamburgerButtonHelpText
+        {
+            get => (string)this.GetValue(HamburgerButtonHelpTextProperty);
+            set => this.SetValue(HamburgerButtonHelpTextProperty, value);
         }
 
         /// <summary>Identifies the <see cref="HamburgerMenuHeaderTemplate"/> dependency property.</summary>
@@ -88,6 +119,11 @@ namespace MahApps.Metro.Controls
         {
             get => (Visibility)this.GetValue(HamburgerVisibilityProperty);
             set => this.SetValue(HamburgerVisibilityProperty, value);
+        }
+
+        private static bool IsNotNull(object value)
+        {
+            return value != null;
         }
     }
 }

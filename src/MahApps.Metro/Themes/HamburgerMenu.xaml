@@ -10,6 +10,7 @@
         <Setter Property="CanResizeOpenPane" Value="False" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="HamburgerButtonName" Value="HamburgerButton" />
         <Setter Property="HamburgerButtonStyle" Value="{DynamicResource MahApps.Styles.Button.Hamburger}" />
         <Setter Property="HamburgerButtonTemplate">
             <Setter.Value>
