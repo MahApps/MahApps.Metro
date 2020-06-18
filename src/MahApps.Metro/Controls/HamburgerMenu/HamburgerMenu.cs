@@ -5,7 +5,7 @@ using ControlzEx;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// The HamburgerMenu is based on a SplitView control. By default it contains a HamburgerButton and a ListView to display menu items.
+    /// The HamburgerMenu is based on a <see cref="SplitView"/> control. By default it contains a HamburgerButton and a ListView to display menu items.
     /// </summary>
     [TemplatePart(Name = "HamburgerButton", Type = typeof(Button))]
     [TemplatePart(Name = "ButtonsListView", Type = typeof(ListBox))]
@@ -48,9 +48,9 @@ namespace MahApps.Metro.Controls
                 this.optionsListView.SelectionChanged -= this.OptionsListView_SelectionChanged;
             }
 
-            this.hamburgerButton = (Button)this.GetTemplateChild("HamburgerButton");
-            this.buttonsListView = (ListBox)this.GetTemplateChild("ButtonsListView");
-            this.optionsListView = (ListBox)this.GetTemplateChild("OptionsListView");
+            this.hamburgerButton = this.GetTemplateChild("HamburgerButton") as Button;
+            this.buttonsListView = this.GetTemplateChild("ButtonsListView") as ListBox;
+            this.optionsListView = this.GetTemplateChild("OptionsListView") as ListBox;
 
             if (this.hamburgerButton != null)
             {

@@ -6,7 +6,11 @@ namespace MahApps.Metro.Controls
     public partial class HamburgerMenu
     {
         /// <summary>Identifies the <see cref="ItemClick"/> routed event.</summary>
-        public static readonly RoutedEvent ItemClickEvent = EventManager.RegisterRoutedEvent("ItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
+        public static readonly RoutedEvent ItemClickEvent
+            = EventManager.RegisterRoutedEvent(nameof(ItemClick),
+                                               RoutingStrategy.Direct,
+                                               typeof(ItemClickRoutedEventHandler),
+                                               typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is clicked
@@ -18,7 +22,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="OptionsItemClick"/> routed event.</summary>
-        public static readonly RoutedEvent OptionsItemClickEvent = EventManager.RegisterRoutedEvent("OptionsItemClick", RoutingStrategy.Direct, typeof(ItemClickRoutedEventHandler), typeof(HamburgerMenu));
+        public static readonly RoutedEvent OptionsItemClickEvent
+            = EventManager.RegisterRoutedEvent(nameof(OptionsItemClick),
+                                               RoutingStrategy.Direct,
+                                               typeof(ItemClickRoutedEventHandler),
+                                               typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an options' item is clicked
@@ -30,7 +38,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="ItemInvoked"/> routed event.</summary>
-        public static readonly RoutedEvent ItemInvokedEvent = EventManager.RegisterRoutedEvent("ItemInvoked", RoutingStrategy.Direct, typeof(HamburgerMenuItemInvokedRoutedEventHandler), typeof(HamburgerMenu));
+        public static readonly RoutedEvent ItemInvokedEvent
+            = EventManager.RegisterRoutedEvent(nameof(ItemInvoked),
+                                               RoutingStrategy.Direct,
+                                               typeof(HamburgerMenuItemInvokedRoutedEventHandler),
+                                               typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when an item is invoked
@@ -42,7 +54,11 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>Identifies the <see cref="HamburgerButtonClick"/> routed event.</summary>
-        public static readonly RoutedEvent HamburgerButtonClickEvent = EventManager.RegisterRoutedEvent("HamburgerButtonClick", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(HamburgerMenu));
+        public static readonly RoutedEvent HamburgerButtonClickEvent
+            = EventManager.RegisterRoutedEvent(nameof(HamburgerButtonClick),
+                                               RoutingStrategy.Direct,
+                                               typeof(RoutedEventHandler),
+                                               typeof(HamburgerMenu));
 
         /// <summary>
         /// Event raised when the hamburger button is clicked
@@ -185,8 +201,7 @@ namespace MahApps.Metro.Controls
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox == null)
+            if (!(sender is ListBox listBox))
             {
                 return;
             }
@@ -216,8 +231,7 @@ namespace MahApps.Metro.Controls
 
         private void OptionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listBox = sender as ListBox;
-            if (listBox == null)
+            if (!(sender is ListBox listBox))
             {
                 return;
             }
