@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Threading;
-using ControlzEx.Standard;
+using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -546,7 +544,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>The given dialog.</returns>
         public static TDialog ShowDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
-            Window win = SetupExternalDialogWindow(dialog, windowOwner);
+            var win = SetupExternalDialogWindow(dialog, windowOwner);
 
             handleExternalDialogWindow?.Invoke(win);
 
@@ -565,7 +563,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>The given dialog.</returns>
         public static TDialog ShowModalDialogExternally<TDialog>(this TDialog dialog, [CanBeNull] Window windowOwner = null, [CanBeNull] Action<Window> handleExternalDialogWindow = null) where TDialog : BaseMetroDialog
         {
-            Window win = SetupExternalDialogWindow(dialog, windowOwner);
+            var win = SetupExternalDialogWindow(dialog, windowOwner);
 
             handleExternalDialogWindow?.Invoke(win);
 
@@ -575,26 +573,48 @@ namespace MahApps.Metro.Controls.Dialogs
             return dialog;
         }
 
-        private static Window CreateExternalWindow()
+        private static MetroWindow CreateExternalWindow([CanBeNull] Window windowOwner = null)
         {
-            return new MetroWindow
+            var window = new MetroWindow
+                         {
+                             ShowInTaskbar = false,
+                             ShowActivated = true,
+                             Topmost = true,
+                             ResizeMode = ResizeMode.NoResize,
+                             WindowStyle = WindowStyle.None,
+                             WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                             ShowTitleBar = false,
+                             ShowCloseButton = false,
+                             WindowTransitionsEnabled = false,
+                             Owner = windowOwner
+                         };
+
+            // If there is no Application then we need to add our default resources
+            if (Application.Current is null)
             {
-                ShowInTaskbar = false,
-                ShowActivated = true,
-                Topmost = true,
-                ResizeMode = ResizeMode.NoResize,
-                WindowStyle = WindowStyle.None,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                ShowTitleBar = false,
-                ShowCloseButton = false,
-                WindowTransitionsEnabled = false
-            };
+                window.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute) });
+                window.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute) });
+
+                if (windowOwner is null)
+                {
+                    // should really not happen
+                }
+                else
+                {
+                    var theme = ThemeManager.Current.DetectTheme(windowOwner);
+                    if (theme != null)
+                    {
+                        ThemeManager.Current.ChangeTheme(window, theme);
+                    }
+                }
+            }
+
+            return window;
         }
 
-        private static Window SetupExternalDialogWindow(BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
+        private static MetroWindow SetupExternalDialogWindow(BaseMetroDialog dialog, [CanBeNull] Window windowOwner = null)
         {
-            var win = CreateExternalWindow();
-            win.Owner = windowOwner ?? Application.Current?.MainWindow;
+            var win = CreateExternalWindow(windowOwner ?? Application.Current?.MainWindow);
 
             // Remove the border on left and right side
             win.BeginInvoke(x =>
@@ -642,18 +662,17 @@ namespace MahApps.Metro.Controls.Dialogs
             return win;
         }
 
-        private static Window CreateModalExternalWindow(MetroWindow window)
+        private static MetroWindow CreateModalExternalWindow(MetroWindow windowOwner)
         {
-            var win = CreateExternalWindow();
-            win.Owner = window;
+            var win = CreateExternalWindow(windowOwner);
             win.Topmost = false; // It is not necessary here because the owner is setted
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner; // WindowStartupLocation should be CenterOwner
 
             // Set Width and Height maximum according Owner
-            if (window.WindowState != WindowState.Maximized)
+            if (windowOwner.WindowState != WindowState.Maximized)
             {
-                win.Width = window.ActualWidth;
-                win.MaxHeight = window.ActualHeight;
+                win.Width = windowOwner.ActualWidth;
+                win.MaxHeight = windowOwner.ActualHeight;
             }
             else
             {
@@ -669,7 +688,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                 DispatcherPriority.Loaded);
 
                 // Get the monitor working area
-                var monitorWorkingArea = window.GetMonitorWorkSize();
+                var monitorWorkingArea = windowOwner.GetMonitorWorkSize();
                 if (monitorWorkingArea != default)
                 {
                     win.Width = monitorWorkingArea.Width;
@@ -677,8 +696,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
                 else
                 {
-                    win.Width = window.ActualWidth;
-                    win.MaxHeight = window.ActualHeight;
+                    win.Width = windowOwner.ActualWidth;
+                    win.MaxHeight = windowOwner.ActualHeight;
                 }
             }
 
@@ -702,7 +721,7 @@ namespace MahApps.Metro.Controls.Dialogs
             settings = settings ?? new LoginDialogSettings();
 
             //create the dialog control
-            LoginDialog dialog = new LoginDialog(window, settings)
+            LoginDialog dialog = new LoginDialog(win, settings)
             {
                 Title = title,
                 Message = message
@@ -740,7 +759,7 @@ namespace MahApps.Metro.Controls.Dialogs
             settings = settings ?? window.MetroDialogOptions;
 
             //create the dialog control
-            var dialog = new InputDialog(window, settings)
+            var dialog = new InputDialog(win, settings)
             {
                 Message = message,
                 Title = title,
@@ -780,7 +799,7 @@ namespace MahApps.Metro.Controls.Dialogs
             settings = settings ?? window.MetroDialogOptions;
 
             //create the dialog control
-            var dialog = new MessageDialog(window, settings)
+            var dialog = new MessageDialog(win, settings)
             {
                 Message = message,
                 Title = title,
