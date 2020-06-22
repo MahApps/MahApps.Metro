@@ -7,6 +7,58 @@ namespace MahApps.Metro.Controls
 {
     public static class RadioButtonHelper
     {
+        public static readonly DependencyProperty RadioSizeProperty
+            = DependencyProperty.RegisterAttached("RadioSize",
+                                                  typeof(double),
+                                                  typeof(RadioButtonHelper),
+                                                  new FrameworkPropertyMetadata(18.0));
+
+        /// <summary>Helper for getting <see cref="RadioSizeProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioSizeProperty"/> from.</param>
+        /// <returns>RadioSize property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static double GetRadioSize(UIElement element)
+        {
+            return (double)element.GetValue(RadioSizeProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="RadioSizeProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="RadioSizeProperty"/> on.</param>
+        /// <param name="value">RadioSize property value.</param>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static void SetRadioSize(UIElement element, double value)
+        {
+            element.SetValue(RadioSizeProperty, value);
+        }
+
+        public static readonly DependencyProperty RadioCheckSizeProperty
+            = DependencyProperty.RegisterAttached("RadioCheckSize",
+                                                  typeof(double),
+                                                  typeof(RadioButtonHelper),
+                                                  new FrameworkPropertyMetadata(10.0));
+
+        /// <summary>Helper for getting <see cref="RadioCheckSizeProperty"/> from <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to read <see cref="RadioCheckSizeProperty"/> from.</param>
+        /// <returns>RadioCheckSize property value.</returns>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static double GetRadioCheckSize(UIElement element)
+        {
+            return (double)element.GetValue(RadioCheckSizeProperty);
+        }
+
+        /// <summary>Helper for setting <see cref="RadioCheckSizeProperty"/> on <paramref name="element"/>.</summary>
+        /// <param name="element"><see cref="UIElement"/> to set <see cref="RadioCheckSizeProperty"/> on.</param>
+        /// <param name="value">RadioCheckSize property value.</param>
+        [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static void SetRadioCheckSize(UIElement element, double value)
+        {
+            element.SetValue(RadioCheckSizeProperty, value);
+        }
+
         public static readonly DependencyProperty RadioStrokeThicknessProperty
             = DependencyProperty.RegisterAttached("RadioStrokeThickness",
                                                   typeof(double),
