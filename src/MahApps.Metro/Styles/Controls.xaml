@@ -29,6 +29,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Hyperlink.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Label.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToolBar.xaml" />
@@ -57,6 +58,7 @@
     <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="RepeatButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.ToggleButton}" TargetType="ToggleButton" />
     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource MahApps.Styles.Hyperlink}" TargetType="{x:Type Hyperlink}" />
     <Style BasedOn="{StaticResource MahApps.Styles.RichTextBox}" TargetType="RichTextBox" />
     <Style BasedOn="{StaticResource MahApps.Styles.Slider.Win10}" TargetType="Slider" />
     <Style BasedOn="{StaticResource MahApps.Styles.Label}" TargetType="Label" />

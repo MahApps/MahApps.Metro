@@ -377,7 +377,7 @@ namespace MahApps.Metro.Controls
                 newBrush = new SolidColorBrush(fromColor);
                 newBrush.Freeze();
                 resources["MahApps.Colors.Highlight"] = fromColor;
-                resources["MahApps.Brushes.Highlight"] = newBrush; resources["MahApps.Brushes.Highlight"] = newBrush;
+                resources["MahApps.Brushes.Highlight"] = newBrush;
             }
 
             resources.EndInit();
@@ -396,23 +396,18 @@ namespace MahApps.Metro.Controls
                 return theme;
             }
 
-            // second try, look for main window
+            // second try, look for main window and then for current application
             if (Application.Current != null)
             {
-                var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.Current.DetectTheme(mainWindow) : null;
-                if (theme != null)
-                {
-                    return theme;
-                }
-
-                // oh no, now look at application resource
-                theme = ThemeManager.Current.DetectTheme(Application.Current);
+                theme = Application.Current.MainWindow is null
+                    ? ThemeManager.Current.DetectTheme(Application.Current)
+                    : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
                 if (theme != null)
                 {
                     return theme;
                 }
             }
+
             return null;
         }
 

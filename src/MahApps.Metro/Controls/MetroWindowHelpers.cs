@@ -104,24 +104,42 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [CanBeNull]
+        private static Theme GetCurrentTheme([NotNull] MetroWindow window)
+        {
+            if (window is null)
+            {
+                throw new ArgumentNullException(nameof(window));
+            }
+
+            var currentTheme = ThemeManager.Current.DetectTheme(window);
+            if (currentTheme is null)
+            {
+                if (!(Application.Current is null))
+                {
+                    currentTheme = Application.Current.MainWindow is null
+                        ? ThemeManager.Current.DetectTheme(Application.Current)
+                        : ThemeManager.Current.DetectTheme(Application.Current.MainWindow);
+                }
+            }
+
+            return currentTheme;
+        }
+
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
+            var currentTheme = GetCurrentTheme(window);
 
-            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
-            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentTheme);
         }
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            var currentAppTheme = ThemeManager.Current.DetectTheme(window)
-                                  ?? (Application.Current.MainWindow is MetroWindow metroWindow ? ThemeManager.Current.DetectTheme(metroWindow) : null)
-                                  ?? ThemeManager.Current.DetectTheme(Application.Current);
+            var currentTheme = GetCurrentTheme(window);
 
-            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentAppTheme);
-            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentAppTheme, flyout.Theme, flyout.Position);
+            window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush, currentTheme);
+            window.ChangeAllWindowButtonCommandsBrush(window.OverrideDefaultWindowCommandsBrush ?? flyout.Foreground, currentTheme, flyout.Theme, flyout.Position);
         }
 
         private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush foregroundBrush, ControlzEx.Theming.Theme currentAppTheme)

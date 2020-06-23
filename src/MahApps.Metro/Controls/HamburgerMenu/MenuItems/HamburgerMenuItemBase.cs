@@ -2,7 +2,7 @@
 
 namespace MahApps.Metro.Controls
 {
-    public class HamburgerMenuItemBase : Freezable
+    public class HamburgerMenuItemBase : Freezable, IHamburgerMenuItemBase
     {
         /// <summary>
         /// Identifies the <see cref="Tag"/> dependency property.

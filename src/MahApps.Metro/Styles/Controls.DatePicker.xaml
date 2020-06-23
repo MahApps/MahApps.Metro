@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:accessibility="clr-namespace:MahApps.Metro.Accessibility"
                     xmlns:behaviors="clr-namespace:MahApps.Metro.Behaviors"
-                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:accessibility="clr-namespace:MahApps.Metro.Accessibility">
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Shared.xaml" />
@@ -360,12 +360,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.DatePickerTextBox.TimePickerBase" BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox}" TargetType="{x:Type DatePickerTextBox}">
+    <Style x:Key="MahApps.Styles.DatePickerTextBox.TimePickerBase"
+           BasedOn="{StaticResource MahApps.Styles.DatePickerTextBox}"
+           TargetType="{x:Type DatePickerTextBox}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=(accessibility:AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures)}" Value="false">
-                <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}"/>
-                <Setter Property="AutomationProperties.LabeledBy" Value="{Binding Path=(AutomationProperties.LabeledBy), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}"/>
-                <Setter Property="AutomationProperties.HelpText" Value="{Binding Path=(AutomationProperties.HelpText), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}"/>
+                <Setter Property="AutomationProperties.HelpText" Value="{Binding Path=(AutomationProperties.HelpText), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}" />
+                <Setter Property="AutomationProperties.LabeledBy" Value="{Binding Path=(AutomationProperties.LabeledBy), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}" />
+                <Setter Property="AutomationProperties.Name" Value="{Binding Path=(AutomationProperties.Name), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:TimePickerBase}}}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

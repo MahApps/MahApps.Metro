@@ -26,13 +26,18 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultEditingElementStyle == null)
                 {
-                    var numericUpDown = new NumericUpDown();
-
-                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumnEditing") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
+
+                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
+                    style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, false));
+                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
+                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+                    style.Setters.Add(new Setter(ControlsHelper.CornerRadiusProperty, new CornerRadius(0)));
 
                     style.Seal();
                     _defaultEditingElementStyle = style;
@@ -48,9 +53,7 @@ namespace MahApps.Metro.Controls
             {
                 if (_defaultElementStyle == null)
                 {
-                    var numericUpDown = new NumericUpDown();
-
-                    var style = numericUpDown.TryFindResource("MahApps.Styles.NumericUpDown.DataGridColumn") is Style baseStyle ? new Style(typeof(NumericUpDown), baseStyle) : new Style(typeof(NumericUpDown));
+                    var style = new Style(typeof(NumericUpDown));
 
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -58,6 +61,14 @@ namespace MahApps.Metro.Controls
 
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
                     style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
+
+                    style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
+                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0)));
+                    style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
+                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
+                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+                    style.Setters.Add(new Setter(ControlsHelper.CornerRadiusProperty, new CornerRadius(0)));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -100,11 +111,7 @@ namespace MahApps.Metro.Controls
 
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
         {
-            NumericUpDown numericUpDown = (cell != null) ? (cell.Content as NumericUpDown) : null;
-            if (numericUpDown == null)
-            {
-                numericUpDown = new NumericUpDown();
-            }
+            var numericUpDown = cell?.Content as NumericUpDown ?? new NumericUpDown();
 
             SyncColumnProperty(this, numericUpDown, FontFamilyProperty, TextElement.FontFamilyProperty);
             SyncColumnProperty(this, numericUpDown, FontSizeProperty, TextElement.FontSizeProperty);
@@ -145,9 +152,8 @@ namespace MahApps.Metro.Controls
             this.ApplyStyle(isEditing, true, numericUpDown);
             ApplyBinding(this.Binding, numericUpDown, NumericUpDown.ValueProperty);
 
-            numericUpDown.InterceptArrowKeys = true;
-            numericUpDown.InterceptMouseWheel = true;
-            numericUpDown.Speedup = true;
+            numericUpDown.Focusable = isEditing;
+            numericUpDown.IsHitTestVisible = isEditing;
 
             return numericUpDown;
         }
@@ -160,8 +166,7 @@ namespace MahApps.Metro.Controls
         /// <returns>The unedited value of the cell.</returns>
         protected override object PrepareCellForEdit(FrameworkElement editingElement, RoutedEventArgs editingEventArgs)
         {
-            NumericUpDown numericUpDown = editingElement as NumericUpDown;
-            if (numericUpDown != null)
+            if (editingElement is NumericUpDown numericUpDown)
             {
                 numericUpDown.Focus();
                 numericUpDown.SelectAll();
@@ -236,7 +241,6 @@ namespace MahApps.Metro.Controls
             get { return (CultureInfo)this.GetValue(CultureProperty); }
             set { this.SetValue(CultureProperty, value); }
         }
-
 
         public static readonly DependencyProperty TextAlignmentProperty =
             NumericUpDown.TextAlignmentProperty.AddOwner(
