@@ -501,7 +501,7 @@ namespace MahApps.Metro.Controls.Dialogs
             window.StoreFocus();
 
             // if there's already an active dialog, move to the background
-            var activeDialog = window.metroActiveDialogContainer.Children.Cast<UIElement>().SingleOrDefault();
+            var activeDialog = window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().SingleOrDefault();
             if (activeDialog != null)
             {
                 window.metroActiveDialogContainer.Children.Remove(activeDialog);
@@ -520,7 +520,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 window.metroActiveDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
                 // if there's an inactive dialog, bring it to the front
-                var dlg = window.metroInactiveDialogContainer.Children.Cast<UIElement>().LastOrDefault();
+                var dlg = window.metroInactiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault();
                 if (dlg != null)
                 {
                     window.metroInactiveDialogContainer.Children.Remove(dlg);
