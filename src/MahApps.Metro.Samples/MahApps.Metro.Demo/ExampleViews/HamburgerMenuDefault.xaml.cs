@@ -55,7 +55,7 @@ namespace MetroDemo.ExampleViews
     public class BindingProxy : Freezable
     {
         // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(nameof(Data), typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
 
         public object Data
         {
@@ -71,7 +71,7 @@ namespace MetroDemo.ExampleViews
 
     public static class ShowAboutCommand
     {
-        public static readonly RoutedCommand Command = new RoutedCommand("Command", typeof(ShowAboutCommand));
+        public static readonly RoutedCommand Command = new RoutedCommand(nameof(Command), typeof(ShowAboutCommand));
 
         static ShowAboutCommand()
         {

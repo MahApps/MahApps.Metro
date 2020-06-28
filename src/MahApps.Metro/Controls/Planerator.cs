@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
     ///   Based on Greg Schechter's Planerator
     ///   http://blogs.msdn.com/b/greg_schechter/archive/2007/10/26/enter-the-planerator-dead-simple-3d-in-wpf-with-a-stupid-name.aspx
     /// </summary>
-    [ContentProperty("Child")]
+    [ContentProperty(nameof(Child))]
     public class Planerator : FrameworkElement
     {
         /// <summary>Identifies the <see cref="RotationX"/> dependency property.</summary>

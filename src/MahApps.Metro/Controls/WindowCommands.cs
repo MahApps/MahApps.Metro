@@ -11,7 +11,7 @@ using ControlzEx.Theming;
 
 namespace MahApps.Metro.Controls
 {
-    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(WindowCommands))]
+    [StyleTypedProperty(Property = nameof(ItemContainerStyle), StyleTargetType = typeof(WindowCommands))]
     public class WindowCommands : ToolBar
     {
         /// <summary>Identifies the <see cref="Theme"/> dependency property.</summary>

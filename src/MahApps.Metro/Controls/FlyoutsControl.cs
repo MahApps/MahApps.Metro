@@ -13,11 +13,11 @@ namespace MahApps.Metro.Controls
     /// A FlyoutsControl is for displaying flyouts in a MetroWindow.
     /// <see cref="MetroWindow"/>
     /// </summary>
-    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
+    [StyleTypedProperty(Property = nameof(ItemContainerStyle), StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
-        public static readonly DependencyProperty OverrideExternalCloseButtonProperty = DependencyProperty.Register("OverrideExternalCloseButton", typeof(MouseButton?), typeof(FlyoutsControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register("OverrideIsPinned", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty OverrideExternalCloseButtonProperty = DependencyProperty.Register(nameof(OverrideExternalCloseButton), typeof(MouseButton?), typeof(FlyoutsControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register(nameof(OverrideIsPinned), typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
 
         /// <summary>
         /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.ExternalCloseButton"/> is ignored and all flyouts behave as if it was set to the value of this property.

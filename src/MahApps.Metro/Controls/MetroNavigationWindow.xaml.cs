@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
     /// A reimplementation of NavigationWindow based on MetroWindow.
     /// </summary>
     /// <see cref="System.Windows.Navigation.NavigationWindow"/>
-    [ContentProperty("OverlayContent")]
+    [ContentProperty(nameof(OverlayContent))]
     public partial class MetroNavigationWindow : MetroWindow, IUriContext
     {
         public MetroNavigationWindow()
@@ -119,7 +119,7 @@ namespace MahApps.Metro.Controls
                 Navigated(this, e);
         }
 
-        public static readonly DependencyProperty OverlayContentProperty = DependencyProperty.Register("OverlayContent", typeof(object), typeof(MetroNavigationWindow));
+        public static readonly DependencyProperty OverlayContentProperty = DependencyProperty.Register(nameof(OverlayContent), typeof(object), typeof(MetroNavigationWindow));
 
         public object OverlayContent
         {
@@ -127,7 +127,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(OverlayContentProperty, value); }
         }
 
-        public static readonly DependencyProperty PageContentProperty = DependencyProperty.Register("PageContent", typeof(object), typeof(MetroNavigationWindow));
+        public static readonly DependencyProperty PageContentProperty = DependencyProperty.Register(nameof(PageContent), typeof(object), typeof(MetroNavigationWindow));
 
         public object PageContent
         {

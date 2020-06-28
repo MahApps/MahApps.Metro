@@ -25,19 +25,19 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly RoutedEvent DragStartedEvent
-            = EventManager.RegisterRoutedEvent("DragStarted",
+            = EventManager.RegisterRoutedEvent(nameof(DragStarted),
                                                RoutingStrategy.Bubble,
                                                typeof(DragStartedEventHandler),
                                                typeof(MetroThumbContentControl));
 
         public static readonly RoutedEvent DragDeltaEvent
-            = EventManager.RegisterRoutedEvent("DragDelta",
+            = EventManager.RegisterRoutedEvent(nameof(DragDelta),
                                                RoutingStrategy.Bubble,
                                                typeof(DragDeltaEventHandler),
                                                typeof(MetroThumbContentControl));
 
         public static readonly RoutedEvent DragCompletedEvent
-            = EventManager.RegisterRoutedEvent("DragCompleted",
+            = EventManager.RegisterRoutedEvent(nameof(DragCompleted),
                                                RoutingStrategy.Bubble,
                                                typeof(DragCompletedEventHandler),
                                                typeof(MetroThumbContentControl));
@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyPropertyKey IsDraggingPropertyKey
-            = DependencyProperty.RegisterReadOnly("IsDragging",
+            = DependencyProperty.RegisterReadOnly(nameof(IsDragging),
                                                   typeof(bool),
                                                   typeof(MetroThumbContentControl),
                                                   new FrameworkPropertyMetadata(default(bool)));
