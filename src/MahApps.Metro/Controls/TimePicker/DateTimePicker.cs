@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -206,7 +207,7 @@ namespace MahApps.Metro.Controls
 
             if (keyEventArgs.Key == Key.Escape || ((keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space) && this.calendar.DisplayMode == CalendarMode.Month))
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
                 if (keyEventArgs.Key == Key.Escape)
                 {
                     this.SetCurrentValue(SelectedDateTimeProperty, this.originalSelectedDateTime);

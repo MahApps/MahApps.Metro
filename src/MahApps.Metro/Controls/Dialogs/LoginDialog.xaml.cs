@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -90,12 +91,12 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>Identifies the <see cref="ShouldHideUsername"/> dependency property.</summary>
-        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register(nameof(ShouldHideUsername), typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
+        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register(nameof(ShouldHideUsername), typeof(bool), typeof(LoginDialog), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool ShouldHideUsername
         {
             get { return (bool)this.GetValue(ShouldHideUsernameProperty); }
-            set { this.SetValue(ShouldHideUsernameProperty, value); }
+            set { this.SetValue(ShouldHideUsernameProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>Identifies the <see cref="RememberCheckBoxVisibility"/> dependency property.</summary>
@@ -117,12 +118,12 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>Identifies the <see cref="RememberCheckBoxChecked"/> dependency property.</summary>
-        public static readonly DependencyProperty RememberCheckBoxCheckedProperty = DependencyProperty.Register(nameof(RememberCheckBoxChecked), typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
+        public static readonly DependencyProperty RememberCheckBoxCheckedProperty = DependencyProperty.Register(nameof(RememberCheckBoxChecked), typeof(bool), typeof(LoginDialog), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool RememberCheckBoxChecked
         {
             get { return (bool)this.GetValue(RememberCheckBoxCheckedProperty); }
-            set { this.SetValue(RememberCheckBoxCheckedProperty, value); }
+            set { this.SetValue(RememberCheckBoxCheckedProperty, BooleanBoxes.Box(value)); }
         }
 
         internal LoginDialog()

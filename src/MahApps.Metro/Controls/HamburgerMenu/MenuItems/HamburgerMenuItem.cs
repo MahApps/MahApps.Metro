@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -37,7 +38,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="IsEnabled"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(nameof(IsEnabled), typeof(bool), typeof(HamburgerMenuItem), new PropertyMetadata(true, null, IsEnabledCoerceValueCallback));
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(nameof(IsEnabled), typeof(bool), typeof(HamburgerMenuItem), new PropertyMetadata(BooleanBoxes.TrueBox, null, IsEnabledCoerceValueCallback));
 
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property. 
@@ -142,7 +143,7 @@ namespace MahApps.Metro.Controls
 
             set
             {
-                this.SetValue(IsEnabledProperty, value);
+                this.SetValue(IsEnabledProperty, BooleanBoxes.Box(value));
             }
         }
 
@@ -220,7 +221,7 @@ namespace MahApps.Metro.Controls
         {
             if (!(bool)value)
             {
-                return false;
+                return BooleanBoxes.FalseBox;
             }
             return ((HamburgerMenuItem)d).CanExecute;
         }

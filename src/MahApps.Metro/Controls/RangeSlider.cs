@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ControlzEx;
 using JetBrains.Annotations;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -423,7 +424,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(MoveWholeRange),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Get/sets whether whole range will be moved when press on right/left/central part of control
@@ -433,7 +434,7 @@ namespace MahApps.Metro.Controls
         public bool MoveWholeRange
         {
             get => (bool)this.GetValue(MoveWholeRangeProperty);
-            set => this.SetValue(MoveWholeRangeProperty, value);
+            set => this.SetValue(MoveWholeRangeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ExtendedMode"/> dependency property.</summary>
@@ -441,7 +442,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ExtendedMode),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
@@ -451,7 +452,7 @@ namespace MahApps.Metro.Controls
         public bool ExtendedMode
         {
             get => (bool)this.GetValue(ExtendedModeProperty);
-            set => this.SetValue(ExtendedModeProperty, value);
+            set => this.SetValue(ExtendedModeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="IsSnapToTickEnabled"/> dependency property.</summary>
@@ -459,7 +460,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsSnapToTickEnabled),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
@@ -469,7 +470,7 @@ namespace MahApps.Metro.Controls
         public bool IsSnapToTickEnabled
         {
             get => (bool)this.GetValue(IsSnapToTickEnabledProperty);
-            set => this.SetValue(IsSnapToTickEnabledProperty, value);
+            set => this.SetValue(IsSnapToTickEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="Orientation"/> dependency property.</summary>
@@ -557,7 +558,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsMoveToPointEnabled),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Get or sets IsMoveToPoint feature which will enable/disable moving to exact point inside control when user clicked on it
@@ -568,7 +569,7 @@ namespace MahApps.Metro.Controls
         public bool IsMoveToPointEnabled
         {
             get => (bool)this.GetValue(IsMoveToPointEnabledProperty);
-            set => this.SetValue(IsMoveToPointEnabledProperty, value);
+            set => this.SetValue(IsMoveToPointEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="AutoToolTipPlacement"/> dependency property.</summary>
@@ -690,7 +691,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsSelectionRangeEnabled),
                                           typeof(bool),
                                           typeof(RangeSlider),
-                                          new FrameworkPropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets a value that indicates whether the <see cref="T:MahApps.Metro.Controls.RangeSlider" /> displays a selection range along the <see cref="T:MahApps.Metro.Controls.RangeSlider" />.
@@ -703,7 +704,7 @@ namespace MahApps.Metro.Controls
         public bool IsSelectionRangeEnabled
         {
             get => (bool)this.GetValue(IsSelectionRangeEnabledProperty);
-            set => this.SetValue(IsSelectionRangeEnabledProperty, value);
+            set => this.SetValue(IsSelectionRangeEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="SelectionStart"/> dependency property.</summary>

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using MahApps.Metro.Controls;
+using MahApps.Metro.ValueBoxes;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
@@ -159,16 +160,16 @@ namespace MahApps.Metro.Behaviors
             = DependencyProperty.RegisterAttached("IsChanging",
                                                   typeof(bool),
                                                   typeof(PasswordBoxBindingBehavior),
-                                                  new UIPropertyMetadata(false));
+                                                  new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
-        private static bool GetIsChanging(DependencyObject obj)
+        private static bool GetIsChanging(UIElement element)
         {
-            return (bool)obj.GetValue(IsChangingProperty);
+            return (bool)element.GetValue(IsChangingProperty);
         }
 
-        private static void SetIsChanging(DependencyObject obj, bool value)
+        private static void SetIsChanging(UIElement element, bool value)
         {
-            obj.SetValue(IsChangingProperty, value);
+            element.SetValue(IsChangingProperty, BooleanBoxes.Box(value));
         }
 
         private static readonly DependencyProperty SelectionProperty

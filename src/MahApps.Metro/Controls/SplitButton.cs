@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -303,12 +304,12 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = ClickEvent;
             this.RaiseEvent(e);
 
-            this.SetCurrentValue(IsDropDownOpenProperty, false);
+            this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
         }
 
         private void ExpanderMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.SetCurrentValue(IsDropDownOpenProperty, !this.IsDropDownOpen);
+            this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.Box(!this.IsDropDownOpen));
             e.Handled = true;
         }
 

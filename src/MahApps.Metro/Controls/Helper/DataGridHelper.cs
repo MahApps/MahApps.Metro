@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -461,7 +462,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached("EnableCellEditAssist",
                                                   typeof(bool),
                                                   typeof(DataGridHelper),
-                                                  new PropertyMetadata(default(bool), EnableCellEditAssistPropertyChangedCallback));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox, EnableCellEditAssistPropertyChangedCallback));
 
         /// <summary>
         /// Gets a value which indicates the preview cell editing is enabled or not.
@@ -480,7 +481,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(DataGrid))]
         public static void SetEnableCellEditAssist(DependencyObject element, bool value)
         {
-            element.SetValue(EnableCellEditAssistProperty, value);
+            element.SetValue(EnableCellEditAssistProperty, BooleanBoxes.Box(value));
         }
 
         private static void EnableCellEditAssistPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -517,7 +518,7 @@ namespace MahApps.Metro.Controls
                     {
                         dataGrid.CurrentCell = new DataGridCellInfo(dataGridCell);
                         dataGrid.BeginEdit();
-                        toggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, !toggleButton.IsChecked);
+                        toggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, BooleanBoxes.Box(!toggleButton.IsChecked.GetValueOrDefault()));
                         dataGrid.CommitEdit();
                         e.Handled = true;
                     }

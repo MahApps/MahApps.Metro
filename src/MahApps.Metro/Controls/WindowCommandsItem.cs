@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using ControlzEx;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -18,7 +19,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register(nameof(IsSeparatorVisible),
                                         typeof(bool),
                                         typeof(WindowCommandsItem),
-                                        new FrameworkPropertyMetadata(true,
+                                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox,
                                                                       FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace MahApps.Metro.Controls
         public bool IsSeparatorVisible
         {
             get => (bool)this.GetValue(IsSeparatorVisibleProperty);
-            set => this.SetValue(IsSeparatorVisibleProperty, value);
+            set => this.SetValue(IsSeparatorVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ParentWindowCommands"/> dependency property.</summary>

@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -221,7 +222,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsClockVisible),
                                           typeof(bool),
                                           typeof(TimePickerBase),
-                                          new PropertyMetadata(true));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         ///     Gets or sets a value indicating whether the clock of this control is visible in the user interface (UI). This is a
@@ -238,7 +239,7 @@ namespace MahApps.Metro.Controls
         public bool IsClockVisible
         {
             get => (bool)this.GetValue(IsClockVisibleProperty);
-            set => this.SetValue(IsClockVisibleProperty, value);
+            set => this.SetValue(IsClockVisibleProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
@@ -246,7 +247,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsReadOnly),
                                           typeof(bool),
                                           typeof(TimePickerBase),
-                                          new PropertyMetadata(default(bool)));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Gets or sets a value indicating whether the contents of the <see cref="TimePickerBase" /> are not editable.
@@ -257,7 +258,7 @@ namespace MahApps.Metro.Controls
         public bool IsReadOnly
         {
             get => (bool)this.GetValue(IsReadOnlyProperty);
-            set => this.SetValue(IsReadOnlyProperty, value);
+            set => this.SetValue(IsReadOnlyProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="HandVisibility"/> dependency property.</summary>
@@ -429,7 +430,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(IsDatePickerVisible),
                                                   typeof(bool),
                                                   typeof(TimePickerBase),
-                                                  new PropertyMetadata(true));
+                                                  new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>Identifies the <see cref="IsDatePickerVisible"/> dependency property.</summary>
         [SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202:ElementsMustBeOrderedByAccess", Justification = "Otherwise we have \"Static member initializer refers to static member below or in other type part\" and thus resulting in having \"null\" as value")]
@@ -441,7 +442,7 @@ namespace MahApps.Metro.Controls
         public bool IsDatePickerVisible
         {
             get => (bool)this.GetValue(IsDatePickerVisibleProperty);
-            protected set => this.SetValue(IsDatePickerVisiblePropertyKey, value);
+            protected set => this.SetValue(IsDatePickerVisiblePropertyKey, BooleanBoxes.Box(value));
         }
 
         #endregion
@@ -657,7 +658,7 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
             }
         }
 
@@ -679,7 +680,7 @@ namespace MahApps.Metro.Controls
         {
             if (!this.IsDropDownOpen)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, true);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.TrueBox);
             }
 
             this.OnPopUpOpened();
@@ -694,7 +695,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.IsDropDownOpen)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
             }
 
             this.OnPopUpClosed();
@@ -765,7 +766,7 @@ namespace MahApps.Metro.Controls
 
             if (keyEventArgs.Key == Key.Escape || keyEventArgs.Key == Key.Enter || keyEventArgs.Key == Key.Space)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
                 if (keyEventArgs.Key == Key.Escape)
                 {
                     this.SetCurrentValue(SelectedDateTimeProperty, this.originalSelectedDateTime);
@@ -978,7 +979,7 @@ namespace MahApps.Metro.Controls
         {
             if (this.IsDropDownOpen)
             {
-                this.SetCurrentValue(IsDropDownOpenProperty, false);
+                this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.FalseBox);
             }
             else
             {
@@ -989,7 +990,7 @@ namespace MahApps.Metro.Controls
                 else
                 {
                     this.SetSelectedDateTime();
-                    this.SetCurrentValue(IsDropDownOpenProperty, true);
+                    this.SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.TrueBox);
                 }
             }
         }
