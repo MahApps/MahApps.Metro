@@ -120,7 +120,7 @@ namespace MahApps.Metro.Controls
                     // now capture the mouse for the drag action
                     this.CaptureMouse();
                     // so now we are in dragging mode
-                    this.SetValue(IsDraggingPropertyKey, true);
+                    this.SetValue(IsDraggingPropertyKey, BooleanBoxes.TrueBox);
                     // get the mouse points
                     this.startDragPoint = e.GetPosition(this);
                     this.oldDragScreenPoint = this.startDragScreenPoint = this.PointToScreen(this.startDragPoint);

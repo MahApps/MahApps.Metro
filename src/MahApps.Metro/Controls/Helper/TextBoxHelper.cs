@@ -643,7 +643,7 @@ namespace MahApps.Metro.Controls
             {
                 var value = funcTextLength(sender);
                 sender.SetValue(TextLengthProperty, value);
-                sender.SetValue(HasTextProperty, value >= 1);
+                sender.SetValue(HasTextProperty, BooleanBoxes.Box(value >= 1));
             }
         }
 
@@ -993,7 +993,7 @@ namespace MahApps.Metro.Controls
         {
             if (sender is ComboBox comboBox)
             {
-                comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
+                comboBox.SetValue(HasTextProperty, BooleanBoxes.Box(!string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null));
             }
         }
     }

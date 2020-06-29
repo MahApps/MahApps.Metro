@@ -161,7 +161,7 @@ namespace MahApps.Metro.Controls
         /// <summary>Identifies the <see cref="IsDropDownOpen"/> dependency property.</summary>
         public static readonly DependencyProperty IsDropDownOpenProperty
             = DatePicker.IsDropDownOpenProperty.AddOwner(typeof(TimePickerBase),
-                                                         new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged, OnCoerceIsDropDownOpen));
+                                                         new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsDropDownOpenChanged, OnCoerceIsDropDownOpen));
 
         /// <summary>
         ///     Gets or sets a value indicating whether the drop-down for a <see cref="TimePickerBase"/> box is currently
@@ -171,7 +171,7 @@ namespace MahApps.Metro.Controls
         public bool IsDropDownOpen
         {
             get => (bool)this.GetValue(IsDropDownOpenProperty);
-            set => this.SetValue(IsDropDownOpenProperty, value);
+            set => this.SetValue(IsDropDownOpenProperty, BooleanBoxes.Box(value));
         }
 
         private static object OnCoerceIsDropDownOpen(DependencyObject d, object baseValue)

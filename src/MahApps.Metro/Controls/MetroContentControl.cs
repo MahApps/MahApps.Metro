@@ -221,7 +221,7 @@ namespace MahApps.Metro.Controls
             {
                 if (clock.CurrentState == ClockState.Active)
                 {
-                    this.SetValue(IsTransitioningPropertyKey, true);
+                    this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.TrueBox);
                     this.RaiseEvent(new RoutedEventArgs(TransitionStartedEvent));
                 }
             }
@@ -235,7 +235,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.InvalidateVisual();
-            this.SetValue(IsTransitioningPropertyKey, false);
+            this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.FalseBox);
             this.RaiseEvent(new RoutedEventArgs(TransitionCompletedEvent));
         }
 

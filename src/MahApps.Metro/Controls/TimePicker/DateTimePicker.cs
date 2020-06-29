@@ -87,7 +87,7 @@ namespace MahApps.Metro.Controls
         public bool IsTodayHighlighted
         {
             get => (bool)this.GetValue(IsTodayHighlightedProperty);
-            set => this.SetValue(IsTodayHighlightedProperty, value);
+            set => this.SetValue(IsTodayHighlightedProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="SelectedDateFormat"/> dependency property.</summary>

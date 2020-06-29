@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using ControlzEx.Theming;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -292,13 +293,14 @@ namespace MahApps.Metro.Controls.Dialogs
                         {
                             if (window.metroActiveDialogContainer.Children.Count == 0)
                             {
-                                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, true);
+                                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.TrueBox);
                                 window.RestoreFocus();
                             }
                             else
                             {
                                 var onTopShownDialogSettings = window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().LastOrDefault()?.DialogSettings;
-                                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || onTopShownDialogSettings == null || onTopShownDialogSettings.OwnerCanCloseWithDialog);
+                                var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || onTopShownDialogSettings == null || onTopShownDialogSettings.OwnerCanCloseWithDialog;
+                                window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(isCloseButtonEnabled));
                             }
                         });
                 });
@@ -308,7 +310,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
-            return Task.Factory.StartNew(() => { window.Invoke(() => window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, window.ShowDialogsOverTitleBar || settings == null || settings.OwnerCanCloseWithDialog)); })
+            return Task.Factory.StartNew(() =>
+                           {
+                               window.Invoke(() =>
+                                   {
+                                       var isCloseButtonEnabled = window.ShowDialogsOverTitleBar || settings == null || settings.OwnerCanCloseWithDialog;
+                                       window.SetValue(MetroWindow.IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(isCloseButtonEnabled));
+                                   });
+                           })
                        .ContinueWith(task =>
                            {
                                return window.Invoke(() =>
@@ -510,7 +519,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             window.metroActiveDialogContainer.Children.Add(dialog); //add the dialog to the container}
 
-            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, true);
+            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.TrueBox);
         }
 
         private static void RemoveDialog(this MetroWindow window, BaseMetroDialog dialog)
@@ -532,7 +541,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
             }
 
-            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, window.metroActiveDialogContainer.Children.Count > 0);
+            window.SetValue(MetroWindow.IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(window.metroActiveDialogContainer.Children.Count > 0));
         }
 
         /// <summary>

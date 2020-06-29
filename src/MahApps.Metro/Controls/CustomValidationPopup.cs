@@ -132,7 +132,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
-            this.SetValue(CanShowPropertyKey, false);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
             var canShow = true;
 
             if (this.scrollViewer != null)
@@ -206,7 +206,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.RefreshPosition();
-            this.SetValue(CanShowPropertyKey, canShow);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(canShow));
 
             this.OnLoaded();
 
@@ -222,25 +222,25 @@ namespace MahApps.Metro.Controls
             var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
             this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
-            this.SetValue(CanShowPropertyKey, true);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
         private void Flyout_IsOpenChanged(object sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
-            this.SetValue(CanShowPropertyKey, false);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
         private void Flyout_ClosingFinished(object sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
-            this.SetValue(CanShowPropertyKey, false);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
         private void OnTransitionStarted(object sender, RoutedEventArgs e)
         {
             this.RefreshPosition();
-            this.SetValue(CanShowPropertyKey, false);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.FalseBox);
         }
 
         private void OnTransitionCompleted(object sender, RoutedEventArgs e)
@@ -251,7 +251,7 @@ namespace MahApps.Metro.Controls
             var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
             this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
-            this.SetValue(CanShowPropertyKey, true);
+            this.SetValue(CanShowPropertyKey, BooleanBoxes.TrueBox);
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
