@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -160,7 +161,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(CanResizeOpenPane),
                                           typeof(bool),
                                           typeof(HamburgerMenu),
-                                          new PropertyMetadata(false, OnCanResizeOpenPanePropertyChangedCallback));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnCanResizeOpenPanePropertyChangedCallback));
 
         private static void OnCanResizeOpenPanePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -176,7 +177,7 @@ namespace MahApps.Metro.Controls
         public bool CanResizeOpenPane
         {
             get => (bool)this.GetValue(CanResizeOpenPaneProperty);
-            set => this.SetValue(CanResizeOpenPaneProperty, value);
+            set => this.SetValue(CanResizeOpenPaneProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
@@ -304,7 +305,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsPaneOpen),
                                           typeof(bool),
                                           typeof(HamburgerMenu),
-                                          new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsPaneOpenPropertyChangedCallback));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsPaneOpenPropertyChangedCallback));
 
         private static void IsPaneOpenPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
@@ -320,7 +321,7 @@ namespace MahApps.Metro.Controls
         public bool IsPaneOpen
         {
             get => (bool)this.GetValue(IsPaneOpenProperty);
-            set => this.SetValue(IsPaneOpenProperty, value);
+            set => this.SetValue(IsPaneOpenProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ItemsSource"/> dependency property.</summary>
@@ -504,7 +505,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(VerticalScrollBarOnLeftSide),
                                           typeof(bool),
                                           typeof(HamburgerMenu),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets whether the ScrollBar of the HamburgerMenu is on the left side or on the right side of the menu items.
@@ -512,7 +513,7 @@ namespace MahApps.Metro.Controls
         public bool VerticalScrollBarOnLeftSide
         {
             get => (bool)this.GetValue(VerticalScrollBarOnLeftSideProperty);
-            set => this.SetValue(VerticalScrollBarOnLeftSideProperty, value);
+            set => this.SetValue(VerticalScrollBarOnLeftSideProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ShowSelectionIndicator"/> dependency property.</summary>
@@ -520,7 +521,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ShowSelectionIndicator),
                                           typeof(bool),
                                           typeof(HamburgerMenu),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets whether a selection indicator will be shown on the HamburgerMenuItem.
@@ -528,7 +529,7 @@ namespace MahApps.Metro.Controls
         public bool ShowSelectionIndicator
         {
             get => (bool)this.GetValue(ShowSelectionIndicatorProperty);
-            set => this.SetValue(ShowSelectionIndicatorProperty, value);
+            set => this.SetValue(ShowSelectionIndicatorProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ItemFocusVisualStyle"/> dependency property.</summary>

@@ -4,6 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -73,7 +74,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(IsDragging),
                                                   typeof(bool),
                                                   typeof(MetroThumbContentControl),
-                                                  new FrameworkPropertyMetadata(default(bool)));
+                                                  new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// DependencyProperty for the IsDragging property.
@@ -86,7 +87,7 @@ namespace MahApps.Metro.Controls
         public bool IsDragging
         {
             get { return (bool)this.GetValue(IsDraggingProperty); }
-            protected set { this.SetValue(IsDraggingPropertyKey, value); }
+            protected set { this.SetValue(IsDraggingPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         public void CancelDragAction()

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -70,12 +71,12 @@ namespace MahApps.Metro.Controls
             set { SetValue(CountProperty, value); }
         }
 
-        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(Tile), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(Tile), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool KeepDragging
         {
             get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, value); }
+            set { SetValue(KeepDraggingProperty, BooleanBoxes.Box(value)); }
         }
 
         public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register(nameof(TiltFactor), typeof(int), typeof(Tile), new PropertyMetadata(5));

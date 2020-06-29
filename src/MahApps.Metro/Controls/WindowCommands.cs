@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using ControlzEx;
 using ControlzEx.Theming;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -97,7 +98,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ShowSeparators),
                                           typeof(bool),
                                           typeof(WindowCommands),
-                                          new FrameworkPropertyMetadata(true,
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox,
                                                                         FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                                                         OnShowSeparatorsPropertyChanged));
 
@@ -115,7 +116,7 @@ namespace MahApps.Metro.Controls
         public bool ShowSeparators
         {
             get => (bool)this.GetValue(ShowSeparatorsProperty);
-            set => this.SetValue(ShowSeparatorsProperty, value);
+            set => this.SetValue(ShowSeparatorsProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ShowLastSeparator"/> dependency property.</summary>
@@ -123,7 +124,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ShowLastSeparator),
                                           typeof(bool),
                                           typeof(WindowCommands),
-                                          new FrameworkPropertyMetadata(true,
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox,
                                                                         FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                                                         OnShowLastSeparatorPropertyChanged));
 
@@ -141,7 +142,7 @@ namespace MahApps.Metro.Controls
         public bool ShowLastSeparator
         {
             get => (bool)this.GetValue(ShowLastSeparatorProperty);
-            set => this.SetValue(ShowLastSeparatorProperty, value);
+            set => this.SetValue(ShowLastSeparatorProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="SeparatorHeight"/> dependency property.</summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -32,12 +33,12 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsActive),
                                           typeof(bool),
                                           typeof(ProgressRing),
-                                          new PropertyMetadata(true, OnIsActivePropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnIsActivePropertyChanged));
 
         public bool IsActive
         {
             get => (bool)this.GetValue(IsActiveProperty);
-            set => this.SetValue(IsActiveProperty, value);
+            set => this.SetValue(IsActiveProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="IsLarge"/> dependency property.</summary>
@@ -45,12 +46,12 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsLarge),
                                           typeof(bool),
                                           typeof(ProgressRing),
-                                          new PropertyMetadata(true, OnIsLargePropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnIsLargePropertyChanged));
 
         public bool IsLarge
         {
             get => (bool)this.GetValue(IsLargeProperty);
-            set => this.SetValue(IsLargeProperty, value);
+            set => this.SetValue(IsLargeProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="MaxSideLength"/> dependency property.</summary>
@@ -128,7 +129,7 @@ namespace MahApps.Metro.Controls
                             {
                                 var ring = ringObject as ProgressRing;
 
-                                ring?.SetCurrentValue(IsActiveProperty, (Visibility)e.NewValue == Visibility.Visible);
+                                ring?.SetCurrentValue(IsActiveProperty, BooleanBoxes.Box((Visibility)e.NewValue == Visibility.Visible));
                             }
                         }));
         }

@@ -6,6 +6,7 @@ using System.Windows.Interop;
 using System.Windows.Controls;
 using ControlzEx.Native;
 using ControlzEx.Standard;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls {
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
@@ -30,12 +31,12 @@ namespace MahApps.Metro.Controls {
         }
 
         public static readonly DependencyProperty AreModifierKeysRequiredProperty = DependencyProperty.Register(
-            nameof(AreModifierKeysRequired), typeof(bool), typeof(HotKeyBox), new PropertyMetadata(default(bool)));
+            nameof(AreModifierKeysRequired), typeof(bool), typeof(HotKeyBox), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool AreModifierKeysRequired
         {
             get { return (bool) GetValue(AreModifierKeysRequiredProperty); }
-            set { SetValue(AreModifierKeysRequiredProperty, value); }
+            set { SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value)); }
         }
 
         private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(

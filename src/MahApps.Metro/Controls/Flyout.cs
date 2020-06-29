@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using ControlzEx;
 using ControlzEx.Theming;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -62,11 +63,11 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
-        public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(true));
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
-        public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(true));
-        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
-        public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout));
+        public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, AnimateOpacityChanged));
+        public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached(nameof(CloseCommand), typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register(nameof(CloseCommandParameter), typeof(object), typeof(Flyout), new PropertyMetadata(null));
@@ -74,12 +75,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register(nameof(ExternalCloseButton), typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
-        public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register(nameof(CloseButtonIsCancel), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register(nameof(CloseButtonIsCancel), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register(nameof(TitleVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
-        public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register(nameof(AreAnimationsEnabled), typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register(nameof(AreAnimationsEnabled), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register(nameof(FocusedElement), typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty AllowFocusElementProperty = DependencyProperty.Register(nameof(AllowFocusElement), typeof(bool), typeof(Flyout), new PropertyMetadata(true));
-        public static readonly DependencyProperty IsAutoCloseEnabledProperty = DependencyProperty.Register(nameof(IsAutoCloseEnabled), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, IsAutoCloseEnabledChanged));
+        public static readonly DependencyProperty AllowFocusElementProperty = DependencyProperty.Register(nameof(AllowFocusElement), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty IsAutoCloseEnabledProperty = DependencyProperty.Register(nameof(IsAutoCloseEnabled), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, IsAutoCloseEnabledChanged));
         public static readonly DependencyProperty AutoCloseIntervalProperty = DependencyProperty.Register(nameof(AutoCloseInterval), typeof(long), typeof(Flyout), new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
@@ -88,7 +89,7 @@ namespace MahApps.Metro.Controls
         public bool AreAnimationsEnabled
         {
             get { return (bool)this.GetValue(AreAnimationsEnabledProperty); }
-            set { this.SetValue(AreAnimationsEnabledProperty, value); }
+            set { this.SetValue(AreAnimationsEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace MahApps.Metro.Controls
         public bool CloseButtonIsCancel
         {
             get { return (bool)this.GetValue(CloseButtonIsCancelProperty); }
-            set { this.SetValue(CloseButtonIsCancelProperty, value); }
+            set { this.SetValue(CloseButtonIsCancelProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace MahApps.Metro.Controls
         public bool IsOpen
         {
             get { return (bool)this.GetValue(IsOpenProperty); }
-            set { this.SetValue(IsOpenProperty, value); }
+            set { this.SetValue(IsOpenProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace MahApps.Metro.Controls
         public bool AnimateOnPositionChange
         {
             get { return (bool)this.GetValue(AnimateOnPositionChangeProperty); }
-            set { this.SetValue(AnimateOnPositionChangeProperty, value); }
+            set { this.SetValue(AnimateOnPositionChangeProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace MahApps.Metro.Controls
         public bool AnimateOpacity
         {
             get { return (bool)this.GetValue(AnimateOpacityProperty); }
-            set { this.SetValue(AnimateOpacityProperty, value); }
+            set { this.SetValue(AnimateOpacityProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -170,7 +171,7 @@ namespace MahApps.Metro.Controls
         public bool IsPinned
         {
             get { return (bool)this.GetValue(IsPinnedProperty); }
-            set { this.SetValue(IsPinnedProperty, value); }
+            set { this.SetValue(IsPinnedProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -188,7 +189,7 @@ namespace MahApps.Metro.Controls
         public bool IsModal
         {
             get { return (bool)this.GetValue(IsModalProperty); }
-            set { this.SetValue(IsModalProperty, value); }
+            set { this.SetValue(IsModalProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -224,7 +225,7 @@ namespace MahApps.Metro.Controls
         public bool IsAutoCloseEnabled
         {
             get { return (bool)this.GetValue(IsAutoCloseEnabledProperty); }
-            set { this.SetValue(IsAutoCloseEnabledProperty, value); }
+            set { this.SetValue(IsAutoCloseEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -242,7 +243,7 @@ namespace MahApps.Metro.Controls
         public bool AllowFocusElement
         {
             get { return (bool)this.GetValue(AllowFocusElementProperty); }
-            set { this.SetValue(AllowFocusElementProperty, value); }
+            set { this.SetValue(AllowFocusElementProperty, BooleanBoxes.Box(value)); }
         }
 
         static Flyout()

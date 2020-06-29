@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -12,7 +13,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached("CloseOnMouseLeftButtonDown",
                                                   typeof(bool),
                                                   typeof(ValidationHelper),
-                                                  new PropertyMetadata(false));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets whether if the popup can be closed by left mouse button down.
@@ -31,7 +32,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(UIElement))]
         public static void SetCloseOnMouseLeftButtonDown(UIElement element, bool value)
         {
-            element.SetValue(CloseOnMouseLeftButtonDownProperty, value);
+            element.SetValue(CloseOnMouseLeftButtonDownProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached("ShowValidationErrorOnMouseOver",
                                                   typeof(bool),
                                                   typeof(ValidationHelper),
-                                                  new PropertyMetadata(false));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets whether the validation error text will be shown when hovering the validation triangle.
@@ -60,7 +61,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(UIElement))]
         public static void SetShowValidationErrorOnMouseOver(UIElement element, bool value)
         {
-            element.SetValue(ShowValidationErrorOnMouseOverProperty, value);
+            element.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
     }
 }

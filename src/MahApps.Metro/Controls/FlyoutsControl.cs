@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ControlzEx;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -17,7 +18,7 @@ namespace MahApps.Metro.Controls
     public class FlyoutsControl : ItemsControl
     {
         public static readonly DependencyProperty OverrideExternalCloseButtonProperty = DependencyProperty.Register(nameof(OverrideExternalCloseButton), typeof(MouseButton?), typeof(FlyoutsControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register(nameof(OverrideIsPinned), typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register(nameof(OverrideIsPinned), typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.ExternalCloseButton"/> is ignored and all flyouts behave as if it was set to the value of this property.
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls
         public bool OverrideIsPinned
         {
             get { return (bool)GetValue(OverrideIsPinnedProperty); }
-            set { SetValue(OverrideIsPinnedProperty, value); }
+            set { SetValue(OverrideIsPinnedProperty, BooleanBoxes.Box(value)); }
         }
 
         static FlyoutsControl()

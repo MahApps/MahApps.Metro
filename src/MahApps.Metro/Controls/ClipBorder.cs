@@ -30,6 +30,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -220,7 +221,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty OptimizeClipRenderingProperty =
             DependencyProperty.Register(nameof(OptimizeClipRendering), typeof(bool), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets or sets the OptimizeClipRendering property. This dependency property 
@@ -235,7 +236,7 @@ namespace MahApps.Metro.Controls
         public bool OptimizeClipRendering
         {
             get { return (bool)GetValue(OptimizeClipRenderingProperty); }
-            set { SetValue(OptimizeClipRenderingProperty, value); }
+            set { SetValue(OptimizeClipRenderingProperty, BooleanBoxes.Box(value)); }
         }
 
         #endregion

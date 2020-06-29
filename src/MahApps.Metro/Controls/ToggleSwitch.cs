@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -107,7 +108,7 @@ namespace MahApps.Metro.Controls
                                           typeof(bool),
                                           typeof(ToggleSwitch),
                                           new FrameworkPropertyMetadata(
-                                              false,
+                                              BooleanBoxes.FalseBox,
                                               FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal,
                                               OnIsOnChanged));
 
@@ -134,7 +135,7 @@ namespace MahApps.Metro.Controls
         public bool IsOn
         {
             get => (bool)this.GetValue(IsOnProperty);
-            set => this.SetValue(IsOnProperty, value);
+            set => this.SetValue(IsOnProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="OnContent"/> dependency property.</summary>
@@ -308,7 +309,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(IsPressed),
                                                   typeof(bool),
                                                   typeof(ToggleSwitch),
-                                                  null);
+                                                  new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>Identifies the <see cref="IsPressed"/> dependency property.</summary>
         public static readonly DependencyProperty IsPressedProperty = IsPressedPropertyKey.DependencyProperty;
@@ -319,7 +320,7 @@ namespace MahApps.Metro.Controls
         public bool IsPressed
         {
             get => (bool)this.GetValue(IsPressedProperty);
-            protected set => this.SetValue(IsPressedPropertyKey, value);
+            protected set => this.SetValue(IsPressedPropertyKey, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="Command"/> dependency property.</summary>
@@ -633,7 +634,7 @@ namespace MahApps.Metro.Controls
         private void Toggle()
         {
             var newValue = !this.IsOn;
-            this.SetCurrentValue(IsOnProperty, newValue);
+            this.SetCurrentValue(IsOnProperty, BooleanBoxes.Box(newValue));
 
             CommandHelpers.ExecuteCommandSource(this);
             CommandHelpers.ExecuteCommandSource(this, newValue ? this.OnCommand : this.OffCommand);

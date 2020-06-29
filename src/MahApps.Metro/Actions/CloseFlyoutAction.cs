@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Actions
 {
@@ -26,7 +27,7 @@ namespace MahApps.Metro.Actions
             }
             else
             {
-                this.AssociatedFlyout?.SetCurrentValue(Flyout.IsOpenProperty, false);
+                this.AssociatedFlyout?.SetCurrentValue(Flyout.IsOpenProperty, BooleanBoxes.FalseBox);
             }
         }
 

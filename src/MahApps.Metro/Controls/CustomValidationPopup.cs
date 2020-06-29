@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -29,7 +30,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(CloseOnMouseLeftButtonDown),
                                           typeof(bool),
                                           typeof(CustomValidationPopup),
-                                          new PropertyMetadata(true));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets whether if the popup can be closed by left mouse button down.
@@ -37,7 +38,7 @@ namespace MahApps.Metro.Controls
         public bool CloseOnMouseLeftButtonDown
         {
             get => (bool)this.GetValue(CloseOnMouseLeftButtonDownProperty);
-            set => this.SetValue(CloseOnMouseLeftButtonDownProperty, value);
+            set => this.SetValue(CloseOnMouseLeftButtonDownProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ShowValidationErrorOnMouseOver"/> dependency property.</summary>
@@ -45,7 +46,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached(nameof(ShowValidationErrorOnMouseOver),
                                                   typeof(bool),
                                                   typeof(CustomValidationPopup),
-                                                  new PropertyMetadata(false));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets whether the validation error text will be shown when hovering the validation triangle.
@@ -53,7 +54,7 @@ namespace MahApps.Metro.Controls
         public bool ShowValidationErrorOnMouseOver
         {
             get => (bool)this.GetValue(ShowValidationErrorOnMouseOverProperty);
-            set => this.SetValue(ShowValidationErrorOnMouseOverProperty, value);
+            set => this.SetValue(ShowValidationErrorOnMouseOverProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="AdornedElement"/> dependency property.</summary>
@@ -77,7 +78,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(CanShow),
                                                   typeof(bool),
                                                   typeof(CustomValidationPopup),
-                                                  new PropertyMetadata(false));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>Identifies the <see cref="CanShow"/> dependency property.</summary>
         public static readonly DependencyProperty CanShowProperty = CanShowPropertyKey.DependencyProperty;
@@ -88,7 +89,7 @@ namespace MahApps.Metro.Controls
         public bool CanShow
         {
             get => (bool)this.GetValue(CanShowProperty);
-            protected set => this.SetValue(CanShowPropertyKey, value);
+            protected set => this.SetValue(CanShowPropertyKey, BooleanBoxes.Box(value));
         }
 
         public CustomValidationPopup()
@@ -101,14 +102,14 @@ namespace MahApps.Metro.Controls
         {
             if (this.CloseOnMouseLeftButtonDown)
             {
-                this.SetCurrentValue(IsOpenProperty, false);
+                this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
             }
             else
             {
                 var adornedElement = this.AdornedElement;
                 if (adornedElement != null && ValidationHelper.GetCloseOnMouseLeftButtonDown(adornedElement))
                 {
-                    this.SetCurrentValue(IsOpenProperty, false);
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
                 }
                 else
                 {
@@ -219,7 +220,7 @@ namespace MahApps.Metro.Controls
 
             var adornedElement = this.AdornedElement;
             var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, isOpen);
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
             this.SetValue(CanShowPropertyKey, true);
         }
@@ -248,7 +249,7 @@ namespace MahApps.Metro.Controls
 
             var adornedElement = this.AdornedElement;
             var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-            this.SetCurrentValue(IsOpenProperty, isOpen);
+            this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
 
             this.SetValue(CanShowPropertyKey, true);
         }
@@ -263,11 +264,11 @@ namespace MahApps.Metro.Controls
                 {
                     var adornedElement = this.AdornedElement;
                     var isOpen = Validation.GetHasError(adornedElement) && adornedElement.IsKeyboardFocusWithin;
-                    this.SetCurrentValue(IsOpenProperty, isOpen);
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.Box(isOpen));
                 }
                 else
                 {
-                    this.SetCurrentValue(IsOpenProperty, false);
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
                 }
             }
         }
@@ -362,7 +363,7 @@ namespace MahApps.Metro.Controls
                 if (adornedElement != null)
                 {
                     this.PopupAnimation = PopupAnimation.None;
-                    this.SetCurrentValue(IsOpenProperty, false);
+                    this.SetCurrentValue(IsOpenProperty, BooleanBoxes.FalseBox);
                     var errorTemplate = adornedElement.GetValue(Validation.ErrorTemplateProperty);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, null);
                     adornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
