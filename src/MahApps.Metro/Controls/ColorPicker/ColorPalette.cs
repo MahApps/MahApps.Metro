@@ -91,5 +91,25 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
+        internal bool FocusSelectedItem()
+        {
+            ListBoxItem listBoxItem = null;
+            if (SelectedItem != null)
+            {
+                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(SelectedItem);
+            }
+            else if (Items.Count > 0)
+            {
+                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(Items[0]);
+            }
+
+            if (listBoxItem != null)
+            {
+                listBoxItem?.Focus();
+                return true;
+            }
+            return false;
+        }
+
     }
 }

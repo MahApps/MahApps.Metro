@@ -90,12 +90,12 @@
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
-                    <TextBlock Height="30"
-                               Margin="0 4"
-                               Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                    <TextBlock Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                               Height="30"
+                               Margin="0,4"
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog"
-                            Content="Close Me!"
+                    <Button Content="Close Me!"
+                            Click="CloseCustomDialog"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
@@ -116,23 +116,23 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowLastSeparator="False">
-            <Button Click="LaunchFlyoutDemo"
-                    Content="Flyouts"
+            <Button Content="Flyouts"
+                    Click="LaunchFlyoutDemo"
                     ToolTip="Flyouts demo window" />
-            <Button Click="LaunchIcons"
-                    Content="IconPacks"
+            <Button Content="IconPacks"
+                    Click="LaunchIcons"
                     ToolTip="All MahApp icons" />
-            <Button Click="LaunchVisualStudioDemo"
-                    Content="VS"
+            <Button Content="VS"
+                    Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo" />
-            <Button Click="LauchCleanDemo"
-                    Content="Clean"
+            <Button Content="Clean"
+                    Click="LauchCleanDemo"
                     ToolTip="Clean window style demo" />
-            <Button Click="InteropDemo"
-                    Content="Interop"
+            <Button Content="Interop"
+                    Click="InteropDemo"
                     ToolTip="The interop demo" />
-            <Button Click="LaunchNavigationDemo"
-                    Content="Navigation"
+            <Button Content="Navigation"
+                    Click="LaunchNavigationDemo"
                     ToolTip="Window navigation demo" />
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
@@ -165,7 +165,7 @@
                           IsCheckable="True"
                           IsChecked="{Binding Options.UseHSL, Source={x:Static theming:RuntimeThemeGenerator.Current}, Mode=TwoWay}" />
 
-                <MenuItem Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" Header="Sync now" />
+                <MenuItem Header="Sync now" Command="{Binding DataContext.SyncThemeNowCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
             </MenuItem>
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
@@ -175,36 +175,36 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowDialogsOverTitleBar}" />
                 <Separator />
-                <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
-                <MenuItem Click="ShowInputDialogCustomButtonSizes" Header="Show InputDialog (with custom button font sizes)" />
-                <MenuItem Click="ShowLoginDialog" Header="Show LoginDialog" />
-                <MenuItem Click="ShowLoginDialogPasswordPreview" Header="Show Password Preview LoginDialog" />
-                <MenuItem Click="ShowLoginDialogOnlyPassword" Header="Show LoginDialog (Only Password)" />
-                <MenuItem Click="ShowLoginDialogWithRememberCheckBox" Header="Show LoginDialog (With Remember CheckBox)" />
-                <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
-                <MenuItem Click="ShowLimitedMessageDialog" Header="Show MessageDialog (Limited Size)" />
-                <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
-                <MenuItem Click="ShowCustomDialog" Header="Show CustomDialog" />
-                <MenuItem Click="ShowAwaitCustomDialog" Header="Await CustomDialog" />
+                <MenuItem Header="Show InputDialog" Click="ShowInputDialog" />
+                <MenuItem Header="Show InputDialog (with custom button font sizes)" Click="ShowInputDialogCustomButtonSizes" />
+                <MenuItem Header="Show LoginDialog" Click="ShowLoginDialog" />
+                <MenuItem Header="Show Password Preview LoginDialog" Click="ShowLoginDialogPasswordPreview" />
+                <MenuItem Header="Show LoginDialog (Only Password)" Click="ShowLoginDialogOnlyPassword" />
+                <MenuItem Header="Show LoginDialog (With Remember CheckBox)" Click="ShowLoginDialogWithRememberCheckBox" />
+                <MenuItem Header="Show MessageDialog" Click="ShowMessageDialog" />
+                <MenuItem Header="Show MessageDialog (Limited Size)" Click="ShowLimitedMessageDialog" />
+                <MenuItem Header="Show ProgressDialog" Click="ShowProgressDialog" />
+                <MenuItem Header="Show CustomDialog" Click="ShowCustomDialog" />
+                <MenuItem Header="Await CustomDialog" Click="ShowAwaitCustomDialog" />
                 <Separator />
-                <MenuItem Click="ShowInputDialogOutside" Header="Show ShowInputDialog Externally" />
-                <MenuItem Click="ShowLoginDialogOutside" Header="Show ShowLoginDialog Externally" />
-                <MenuItem Click="ShowMessageDialogOutside" Header="Show ShowMessageDialog Externally" />
-                <MenuItem Click="ShowDialogOutside" Header="Show CustomDialog Externally" />
+                <MenuItem Header="Show ShowInputDialog Externally" Click="ShowInputDialogOutside" />
+                <MenuItem Header="Show ShowLoginDialog Externally" Click="ShowLoginDialogOutside" />
+                <MenuItem Header="Show ShowMessageDialog Externally" Click="ShowMessageDialogOutside" />
+                <MenuItem Header="Show CustomDialog Externally" Click="ShowDialogOutside" />
                 <Separator />
-                <MenuItem Command="{Binding ShowInputDialogCommand}" Header="Show InputDialog via VM" />
-                <MenuItem Command="{Binding ShowLoginDialogCommand}" Header="Show LoginDialog via VM ..." />
+                <MenuItem Header="Show InputDialog via VM" Command="{Binding ShowInputDialogCommand}" />
+                <MenuItem Header="Show LoginDialog via VM ..." Command="{Binding ShowLoginDialogCommand}" />
                 <MenuItem Header="Show MessageDialog via VM">
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
-                              CommandParameter="DISPATCHER_THREAD"
-                              Header="... from Main Thread" />
-                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
-                              CommandParameter="BACKGROUND_THREAD"
-                              Header="... from Background Thread" />
+                    <MenuItem Header="... from Main Thread"
+                              Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="DISPATCHER_THREAD" />
+                    <MenuItem Header="... from Background Thread"
+                              Command="{Binding ShowMessageDialogCommand}"
+                              CommandParameter="BACKGROUND_THREAD" />
                 </MenuItem>
 
-                <MenuItem Command="{Binding ShowProgressDialogCommand}" Header="Show ProgressDialog via VM" />
-                <MenuItem Command="{Binding ShowCustomDialogCommand}" Header="Show CustomDialog via VM" />
+                <MenuItem Header="Show ProgressDialog via VM" Command="{Binding ShowProgressDialogCommand}" />
+                <MenuItem Header="Show CustomDialog via VM" Command="{Binding ShowCustomDialogCommand}" />
             </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="ShowTitleBar"
@@ -223,11 +223,11 @@
                           IsCheckable="True"
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
                 <Separator />
-                <MenuItem Click="MenuWindowWithoutBorderOnClick" Header="Window without Border" />
-                <MenuItem Click="MenuWindowWithBorderOnClick" Header="Window with Border" />
-                <MenuItem Click="MenuWindowWithGlowOnClick" Header="Window with Glow" />
-                <MenuItem Click="MenuWindowWithShadowOnClick" Header="Window with drop shadow" />
-                <MenuItem Click="LaunchSizeToContentDemo" Header="Window with SizeToContent" />
+                <MenuItem Header="Window without Border" Click="MenuWindowWithoutBorderOnClick" />
+                <MenuItem Header="Window with Border" Click="MenuWindowWithBorderOnClick" />
+                <MenuItem Header="Window with Glow" Click="MenuWindowWithGlowOnClick" />
+                <MenuItem Header="Window with drop shadow" Click="MenuWindowWithShadowOnClick" />
+                <MenuItem Header="Window with SizeToContent" Click="LaunchSizeToContentDemo" />
                 <Separator />
                 <MenuItem x:Name="ShowSeparatorsMI"
                           Header="ShowSeparators (RightWindowCommands)"
@@ -238,14 +238,14 @@
                           IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}"
                           IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}" />
                 <Separator />
-                <MenuItem Command="{Binding ToggleIconScalingCommand}"
+                <MenuItem Header="Window icon: scale down larger frame"
+                          Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static Controls:MultiFrameImageMode.ScaleDownLargerFrame}"
-                          Header="Window icon: scale down larger frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsScaleDownLargerFrame, Mode=OneWay}" />
-                <MenuItem Command="{Binding ToggleIconScalingCommand}"
+                <MenuItem Header="Window icon: no scale, smaller frame"
+                          Command="{Binding ToggleIconScalingCommand}"
                           CommandParameter="{x:Static Controls:MultiFrameImageMode.NoScaleSmallerFrame}"
-                          Header="Window icon: no scale, smaller frame"
                           IsCheckable="True"
                           IsChecked="{Binding IsNoScaleSmallerFrame, Mode=OneWay}" />
                 <Separator />
@@ -338,39 +338,48 @@
                 </ScrollViewer>
             </TabItem>
 
-            
+
             <TabItem Header="ColorPicker (Preview)">
                 <ScrollViewer>
                     <StackPanel>
-                        <Controls:ColorPicker SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}" 
-                                              Margin="10,10,10,0"
+                        <Controls:ColorPicker Margin="10,10,10,0"
                                               Controls:TextBoxHelper.ClearTextButton="True"
                                               Controls:TextBoxHelper.UseFloatingWatermark="True"
                                               Controls:TextBoxHelper.Watermark="Select a color"
+                                              CustomColorPalette01Header="Accent Colors"
+                                              CustomColorPalette01ItemsSource="{Binding AccentColorsPalette}"
+                                              CustomColorPalette02Header="Tinted Colors"
+                                              CustomColorPalette02ItemsSource="{Binding TintedColors}"
                                               DefaultColor="{x:Null}"
                                               DropDownClosed="ColorPicker_DropDownClosed"
+                                              IsCustomColorPalette01Visible="True"
+                                              IsCustomColorPalette02Visible="True"
+                                              IsRecentColorPaletteVisible="True"
+                                              SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}"
                                               SelectedColorTemplate="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}">
-                            <Controls:ColorPicker.ColorPalettes>
-                                <Controls:ColorPalette Header="Primary Colors" ItemsSource="{x:Static Controls:ColorPalette.PrimaryColorPalette}" />
-                                <Controls:ColorPalette Header="Accent Colors" ItemsSource="{Binding AccentColorsPalette}" ColorNamesDictionary="{Binding AccentColorNamesDictionary}"/>
-                                <Controls:ColorPalette Header="WPF Colors" ItemsSource="{x:Static Controls:ColorPalette.WpfColorPalette}" />
-                                <Controls:ColorPalette Header="Tinted Colors" ItemsSource="{Binding TintedColors}" >
-                                    <Controls:ColorPalette.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <UniformGrid Columns="24" IsItemsHost="True" />
-                                        </ItemsPanelTemplate>
-                                    </Controls:ColorPalette.ItemsPanel>
-                                </Controls:ColorPalette>
-                                <Controls:ColorPalette Header="Recent" ItemsSource="{x:Static Controls:ColorPalette.RecentColors}" />
-                            </Controls:ColorPicker.ColorPalettes>
+                            <Controls:ColorPicker.CustomColorPalette01Style>
+                                <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" TargetType="Controls:ColorPalette">
+                                    <Setter Property="ColorNamesDictionary" Value="{Binding AccentColorNamesDictionary}" />
+                                </Style>
+                            </Controls:ColorPicker.CustomColorPalette01Style>
+                            <Controls:ColorPicker.CustomColorPalette02Style>
+                                <Style BasedOn="{StaticResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" TargetType="Controls:ColorPalette">
+                                    <Setter Property="ItemsPanel">
+                                        <Setter.Value>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="24" IsItemsHost="True" />
+                                            </ItemsPanelTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Controls:ColorPicker.CustomColorPalette02Style>
                         </Controls:ColorPicker>
 
-                        <Controls:ColorCanvas x:Name="ColorCanvasExample"
-                                              SelectedColor="Blue" />
+                        <Controls:ColorCanvas x:Name="ColorCanvasExample" SelectedColor="Blue" />
 
                     </StackPanel>
                 </ScrollViewer>
-                
+
             </TabItem>
 
         </Controls:MetroAnimatedSingleRowTabControl>
