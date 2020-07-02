@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty MultiFrameImageModeProperty = DependencyProperty.Register(
-            "MultiFrameImageMode", typeof(MultiFrameImageMode), typeof(MultiFrameImage), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
+            nameof(MultiFrameImageMode), typeof(MultiFrameImageMode), typeof(MultiFrameImage), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public MultiFrameImageMode MultiFrameImageMode {
             get { return (MultiFrameImageMode)GetValue(MultiFrameImageModeProperty); }

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ControlzEx.Theming;
 using MahApps.Metro.Controls;
+using MahApps.Metro.ValueBoxes;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
@@ -17,12 +18,12 @@ namespace MahApps.Metro.Behaviors
             = DependencyProperty.Register(nameof(KeepDragging),
                                           typeof(bool),
                                           typeof(TiltBehavior),
-                                          new PropertyMetadata(true));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool KeepDragging
         {
             get => (bool)this.GetValue(KeepDraggingProperty);
-            set => this.SetValue(KeepDraggingProperty, value);
+            set => this.SetValue(KeepDraggingProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="TiltFactor"/> dependency property.</summary>

@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -48,7 +49,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("CloseButtonEnabled",
                                                 typeof(bool),
                                                 typeof(TabControlHelper),
-                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets whether a close button should be visible or not.
@@ -67,7 +68,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
         public static void SetCloseButtonEnabled(UIElement element, bool value)
         {
-            element.SetValue(CloseButtonEnabledProperty, value);
+            element.SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>

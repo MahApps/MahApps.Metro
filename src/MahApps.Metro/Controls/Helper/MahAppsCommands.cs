@@ -8,7 +8,7 @@ namespace MahApps.Metro.Controls
 {
     public static class MahAppsCommands
     {
-        public static ICommand ClearControlCommand { get; } = new RoutedUICommand("Clear", "ClearControlCommand", typeof(MahAppsCommands));
+        public static ICommand ClearControlCommand { get; } = new RoutedUICommand("Clear", nameof(ClearControlCommand), typeof(MahAppsCommands));
 
         static MahAppsCommands()
         {

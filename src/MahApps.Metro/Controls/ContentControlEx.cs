@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -27,7 +28,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(RecognizesAccessKey),
                                           typeof(bool),
                                           typeof(ContentControlEx),
-                                          new FrameworkPropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary> 
         /// Determine if the inner ContentPresenter should use AccessText in its style
@@ -35,7 +36,7 @@ namespace MahApps.Metro.Controls
         public bool RecognizesAccessKey
         {
             get => (bool)this.GetValue(RecognizesAccessKeyProperty);
-            set => this.SetValue(RecognizesAccessKeyProperty, value);
+            set => this.SetValue(RecognizesAccessKeyProperty, BooleanBoxes.Box(value));
         }
 
         static ContentControlEx()

@@ -6,8 +6,8 @@ namespace MahApps.Metro.Behaviors
 {
     public class BindableResourceBehavior : Behavior<Shape>
     {
-        public static readonly DependencyProperty ResourceNameProperty = DependencyProperty.Register("ResourceName", typeof (string), typeof (BindableResourceBehavior), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register("Property", typeof (DependencyProperty), typeof (BindableResourceBehavior), new PropertyMetadata(default(DependencyProperty)));
+        public static readonly DependencyProperty ResourceNameProperty = DependencyProperty.Register(nameof(ResourceName), typeof (string), typeof (BindableResourceBehavior), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty PropertyProperty = DependencyProperty.Register(nameof(Property), typeof (DependencyProperty), typeof (BindableResourceBehavior), new PropertyMetadata(default(DependencyProperty)));
 
         protected override void OnAttached()
         {

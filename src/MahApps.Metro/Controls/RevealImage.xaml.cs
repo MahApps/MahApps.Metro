@@ -9,8 +9,8 @@ namespace MahApps.Metro.Controls
 {
     public partial class RevealImage : UserControl
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(RevealImage), new UIPropertyMetadata(""));
-        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(RevealImage), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(RevealImage), new UIPropertyMetadata(""));
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(nameof(Image), typeof(ImageSource), typeof(RevealImage), new UIPropertyMetadata(null));
 
         public string Text
         {

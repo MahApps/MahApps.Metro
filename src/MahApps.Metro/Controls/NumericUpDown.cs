@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -196,7 +197,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(Speedup),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(true, OnSpeedupPropertyChanged));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, OnSpeedupPropertyChanged));
 
         private static void OnSpeedupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -215,7 +216,7 @@ namespace MahApps.Metro.Controls
         public bool Speedup
         {
             get => (bool)this.GetValue(SpeedupProperty);
-            set => this.SetValue(SpeedupProperty, value);
+            set => this.SetValue(SpeedupProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="IsReadOnly"/> dependency property.</summary>
@@ -293,7 +294,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(InterceptArrowKeys),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(true));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change the value. 
@@ -304,7 +305,7 @@ namespace MahApps.Metro.Controls
         public bool InterceptArrowKeys
         {
             get => (bool)this.GetValue(InterceptArrowKeysProperty);
-            set => this.SetValue(InterceptArrowKeysProperty, value);
+            set => this.SetValue(InterceptArrowKeysProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="InterceptMouseWheel"/> dependency property.</summary>
@@ -312,7 +313,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(InterceptMouseWheel),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(true));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can use the mouse wheel to change the value.
@@ -322,7 +323,7 @@ namespace MahApps.Metro.Controls
         public bool InterceptMouseWheel
         {
             get => (bool)this.GetValue(InterceptMouseWheelProperty);
-            set => this.SetValue(InterceptMouseWheelProperty, value);
+            set => this.SetValue(InterceptMouseWheelProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="InterceptManualEnter"/> dependency property.</summary>
@@ -330,7 +331,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(InterceptManualEnter),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(true, OnInterceptManualEnterPropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox, OnInterceptManualEnterPropertyChanged));
 
         private static void OnInterceptManualEnterPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -351,7 +352,7 @@ namespace MahApps.Metro.Controls
         public bool InterceptManualEnter
         {
             get => (bool)this.GetValue(InterceptManualEnterProperty);
-            set => this.SetValue(InterceptManualEnterProperty, value);
+            set => this.SetValue(InterceptManualEnterProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
@@ -502,7 +503,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(TrackMouseWheelWhenMouseOver),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new FrameworkPropertyMetadata(default(bool)));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
@@ -517,7 +518,7 @@ namespace MahApps.Metro.Controls
         public bool TrackMouseWheelWhenMouseOver
         {
             get => (bool)this.GetValue(TrackMouseWheelWhenMouseOverProperty);
-            set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, value);
+            set => this.SetValue(TrackMouseWheelWhenMouseOverProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ButtonsAlignment"/> dependency property.</summary>
@@ -544,7 +545,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(HideUpDownButtons),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(default(bool)));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the up/down button of the control are visible.
@@ -569,7 +570,7 @@ namespace MahApps.Metro.Controls
         public bool HideUpDownButtons
         {
             get => (bool)this.GetValue(HideUpDownButtonsProperty);
-            set => this.SetValue(HideUpDownButtonsProperty, value);
+            set => this.SetValue(HideUpDownButtonsProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="UpDownButtonsWidth"/> dependency property.</summary>
@@ -596,7 +597,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(UpDownButtonsFocusable),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(true));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets whether the up and down buttons will got the focus when using them.
@@ -607,7 +608,7 @@ namespace MahApps.Metro.Controls
         public bool UpDownButtonsFocusable
         {
             get => (bool)this.GetValue(UpDownButtonsFocusableProperty);
-            set => this.SetValue(UpDownButtonsFocusableProperty, value);
+            set => this.SetValue(UpDownButtonsFocusableProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="SwitchUpDownButtons"/> dependency property.</summary>
@@ -615,7 +616,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(SwitchUpDownButtons),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(false));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the up/down buttons will be switched.
@@ -625,7 +626,7 @@ namespace MahApps.Metro.Controls
         public bool SwitchUpDownButtons
         {
             get => (bool)this.GetValue(SwitchUpDownButtonsProperty);
-            set => this.SetValue(SwitchUpDownButtonsProperty, value);
+            set => this.SetValue(SwitchUpDownButtonsProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ChangeValueOnTextChanged"/> dependency property.</summary>
@@ -633,7 +634,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ChangeValueOnTextChanged),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(true));
+                                          new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets a value indicating whether the value will be changed directly on every TextBox text changed input event or when using the Enter key.
@@ -642,7 +643,7 @@ namespace MahApps.Metro.Controls
         public bool ChangeValueOnTextChanged
         {
             get => (bool)this.GetValue(ChangeValueOnTextChangedProperty);
-            set => this.SetValue(ChangeValueOnTextChangedProperty, value);
+            set => this.SetValue(ChangeValueOnTextChangedProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="Culture"/> dependency property.</summary>
@@ -722,7 +723,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(SnapToMultipleOfInterval),
                                           typeof(bool),
                                           typeof(NumericUpDown),
-                                          new PropertyMetadata(default(bool), OnSnapToMultipleOfIntervalPropertyChanged));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnSnapToMultipleOfIntervalPropertyChanged));
 
         private static void OnSnapToMultipleOfIntervalPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -750,7 +751,7 @@ namespace MahApps.Metro.Controls
         public bool SnapToMultipleOfInterval
         {
             get => (bool)this.GetValue(SnapToMultipleOfIntervalProperty);
-            set => this.SetValue(SnapToMultipleOfIntervalProperty, value);
+            set => this.SetValue(SnapToMultipleOfIntervalProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ParsingNumberStyle"/> dependency property.</summary>

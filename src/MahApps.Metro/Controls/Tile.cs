@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -12,7 +13,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Tile), new FrameworkPropertyMetadata(typeof(Tile)));
         }
 
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
         public string Title
         {
@@ -26,7 +27,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty HorizontalTitleAlignmentProperty =
             DependencyProperty.Register(
-                "HorizontalTitleAlignment",
+                nameof(HorizontalTitleAlignment),
                 typeof(HorizontalAlignment),
                 typeof(Tile),
                 new FrameworkPropertyMetadata(HorizontalAlignment.Left));
@@ -47,7 +48,7 @@ namespace MahApps.Metro.Controls
         /// </summary> 
         public static readonly DependencyProperty VerticalTitleAlignmentProperty =
             DependencyProperty.Register(
-                "VerticalTitleAlignment",
+                nameof(VerticalTitleAlignment),
                 typeof(VerticalAlignment),
                 typeof(Tile),
                 new FrameworkPropertyMetadata(VerticalAlignment.Bottom));
@@ -62,7 +63,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(VerticalTitleAlignmentProperty, value); }
         }
 
-        public static readonly DependencyProperty CountProperty = DependencyProperty.Register("Count", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty CountProperty = DependencyProperty.Register(nameof(Count), typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
         public string Count
         {
@@ -70,15 +71,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(CountProperty, value); }
         }
 
-        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register("KeepDragging", typeof(bool), typeof(Tile), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(nameof(KeepDragging), typeof(bool), typeof(Tile), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool KeepDragging
         {
             get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, value); }
+            set { SetValue(KeepDraggingProperty, BooleanBoxes.Box(value)); }
         }
 
-        public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register("TiltFactor", typeof(int), typeof(Tile), new PropertyMetadata(5));
+        public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register(nameof(TiltFactor), typeof(int), typeof(Tile), new PropertyMetadata(5));
 
         public int TiltFactor
         {
@@ -86,7 +87,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(TiltFactorProperty, value); }
         }
 
-        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register("TitleFontSize", typeof(double), typeof(Tile), new PropertyMetadata(16d));
+        public static readonly DependencyProperty TitleFontSizeProperty = DependencyProperty.Register(nameof(TitleFontSize), typeof(double), typeof(Tile), new PropertyMetadata(16d));
 
         public double TitleFontSize
         {
@@ -94,7 +95,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(TitleFontSizeProperty, value); }
         }
 
-        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register("CountFontSize", typeof(double), typeof(Tile), new PropertyMetadata(28d));
+        public static readonly DependencyProperty CountFontSizeProperty = DependencyProperty.Register(nameof(CountFontSize), typeof(double), typeof(Tile), new PropertyMetadata(28d));
 
         public double CountFontSize
         {

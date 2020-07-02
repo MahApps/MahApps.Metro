@@ -29,7 +29,7 @@ namespace MetroDemo
         }
 
         public static readonly DependencyProperty ToggleFullScreenProperty =
-            DependencyProperty.Register("ToggleFullScreen",
+            DependencyProperty.Register(nameof(ToggleFullScreen),
                                         typeof(bool),
                                         typeof(MainWindow),
                                         new PropertyMetadata(default(bool), OnToggleFullScreenChanged));
@@ -63,7 +63,7 @@ namespace MetroDemo
         }
 
         public static readonly DependencyProperty UseAccentForDialogsProperty =
-            DependencyProperty.Register("UseAccentForDialogs",
+            DependencyProperty.Register(nameof(UseAccentForDialogs),
                                         typeof(bool),
                                         typeof(MainWindow),
                                         new PropertyMetadata(default(bool), OnUseAccentForDialogsChanged));

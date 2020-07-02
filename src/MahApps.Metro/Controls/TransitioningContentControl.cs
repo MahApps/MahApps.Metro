@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -76,11 +77,11 @@ namespace MahApps.Metro.Controls
 
         public const TransitionType DefaultTransitionState = TransitionType.Default;
 
-        public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
-        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
-        public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
-        public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
-        public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register("CustomVisualStatesName", typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
+        public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register(nameof(IsTransitioning), typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(BooleanBoxes.FalseBox, OnIsTransitioningPropertyChanged));
+        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register(nameof(Transition), typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
+        public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register(nameof(RestartTransitionOnContentChange), typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(BooleanBoxes.FalseBox, OnRestartTransitionOnContentChangePropertyChanged));
+        public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register(nameof(CustomVisualStates), typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register(nameof(CustomVisualStatesName), typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
 
         public ObservableCollection<VisualState> CustomVisualStates
         {
@@ -106,7 +107,7 @@ namespace MahApps.Metro.Controls
             private set
             {
                 this.allowIsTransitioningPropertyWrite = true;
-                this.SetValue(IsTransitioningProperty, value);
+                this.SetValue(IsTransitioningProperty, BooleanBoxes.Box(value));
                 this.allowIsTransitioningPropertyWrite = false;
             }
         }
@@ -120,7 +121,7 @@ namespace MahApps.Metro.Controls
         public bool RestartTransitionOnContentChange
         {
             get { return (bool)this.GetValue(RestartTransitionOnContentChangeProperty); }
-            set { this.SetValue(RestartTransitionOnContentChangeProperty, value); }
+            set { this.SetValue(RestartTransitionOnContentChangeProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnIsTransitioningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

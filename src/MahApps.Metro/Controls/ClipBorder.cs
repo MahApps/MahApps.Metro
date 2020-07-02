@@ -30,6 +30,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -54,7 +55,7 @@ namespace MahApps.Metro.Controls
         /// BorderThickness Dependency Property
         /// </summary>
         public static readonly DependencyProperty BorderThicknessProperty =
-            DependencyProperty.Register("BorderThickness", typeof(Thickness), typeof(ClipBorder),
+            DependencyProperty.Register(nameof(BorderThickness), typeof(Thickness), typeof(ClipBorder),
                 new FrameworkPropertyMetadata(new Thickness(),
                                               FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                                               OnValidateThickness);
@@ -98,7 +99,7 @@ namespace MahApps.Metro.Controls
         /// Padding Dependency Property
         /// </summary>
         public static readonly DependencyProperty PaddingProperty =
-            DependencyProperty.Register("Padding", typeof(Thickness), typeof(ClipBorder),
+            DependencyProperty.Register(nameof(Padding), typeof(Thickness), typeof(ClipBorder),
                                         new FrameworkPropertyMetadata(new Thickness(),
                                               FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
                                         OnValidateThickness);
@@ -131,7 +132,7 @@ namespace MahApps.Metro.Controls
         /// CornerRadius Dependency Property
         /// </summary>
         public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(ClipBorder),
+            DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(ClipBorder),
                 new FrameworkPropertyMetadata(new CornerRadius(),
                     FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender), 
                 OnValidateCornerRadius);
@@ -175,7 +176,7 @@ namespace MahApps.Metro.Controls
         /// BorderBrush Dependency Property
         /// </summary>
         public static readonly DependencyProperty BorderBrushProperty =
-            DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(ClipBorder),
+            DependencyProperty.Register(nameof(BorderBrush), typeof(Brush), typeof(ClipBorder),
                 new FrameworkPropertyMetadata(null,
                     FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
@@ -197,7 +198,7 @@ namespace MahApps.Metro.Controls
         /// Background Dependency Property
         /// </summary>
         public static readonly DependencyProperty BackgroundProperty =
-            DependencyProperty.Register("Background", typeof(Brush), typeof(ClipBorder),
+            DependencyProperty.Register(nameof(Background), typeof(Brush), typeof(ClipBorder),
                 new FrameworkPropertyMetadata(null,
                     FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender));
 
@@ -219,8 +220,8 @@ namespace MahApps.Metro.Controls
         /// OptimizeClipRendering Dependency Property
         /// </summary>
         public static readonly DependencyProperty OptimizeClipRenderingProperty =
-            DependencyProperty.Register("OptimizeClipRendering", typeof(bool), typeof(ClipBorder),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register(nameof(OptimizeClipRendering), typeof(bool), typeof(ClipBorder),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         /// Gets or sets the OptimizeClipRendering property. This dependency property 
@@ -235,7 +236,7 @@ namespace MahApps.Metro.Controls
         public bool OptimizeClipRendering
         {
             get { return (bool)GetValue(OptimizeClipRenderingProperty); }
-            set { SetValue(OptimizeClipRenderingProperty, value); }
+            set { SetValue(OptimizeClipRenderingProperty, BooleanBoxes.Box(value)); }
         }
 
         #endregion

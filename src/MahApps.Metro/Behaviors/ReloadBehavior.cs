@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Behaviors
 {
@@ -17,7 +18,7 @@ namespace MahApps.Metro.Behaviors
             = DependencyProperty.RegisterAttached("OnDataContextChanged",
                                                   typeof(bool),
                                                   typeof(ReloadBehavior),
-                                                  new PropertyMetadata(OnOnDataContextChanged));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox, OnOnDataContextChanged));
 
         /// <summary>
         /// Helper for getting <see cref="OnDataContextChangedProperty"/> from <paramref name="element"/>.
@@ -44,7 +45,7 @@ namespace MahApps.Metro.Behaviors
         [AttachedPropertyBrowsableForType(typeof(MetroContentControl))]
         public static void SetOnDataContextChanged(UIElement element, bool value)
         {
-            element.SetValue(OnDataContextChangedProperty, value);
+            element.SetValue(OnDataContextChangedProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnOnDataContextChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -71,7 +72,7 @@ namespace MahApps.Metro.Behaviors
             = DependencyProperty.RegisterAttached("OnSelectedTabChanged",
                                                   typeof(bool),
                                                   typeof(ReloadBehavior),
-                                                  new PropertyMetadata(OnSelectedTabChanged));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox, OnSelectedTabChanged));
 
         /// <summary>
         /// Helper for getting <see cref="OnSelectedTabChangedProperty"/> from <paramref name="element"/>.
@@ -100,7 +101,7 @@ namespace MahApps.Metro.Behaviors
         [AttachedPropertyBrowsableForType(typeof(TransitioningContentControl))]
         public static void SetOnSelectedTabChanged(UIElement element, bool value)
         {
-            element.SetValue(OnSelectedTabChangedProperty, value);
+            element.SetValue(OnSelectedTabChangedProperty, BooleanBoxes.Box(value));
         }
 
         private static void OnSelectedTabChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)

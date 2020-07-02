@@ -19,6 +19,7 @@ using ControlzEx.Theming;
 using JetBrains.Annotations;
 using MahApps.Metro.Behaviors;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.ValueBoxes;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Controls
@@ -54,87 +55,87 @@ namespace MahApps.Metro.Controls
         private const string PART_FlyoutModal = "PART_FlyoutModal";
         private const string PART_Content = "PART_Content";
 
-        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowIconOnTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
-        public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
-        public static readonly DependencyProperty IconScalingModeProperty = DependencyProperty.Register("IconScalingMode", typeof(MultiFrameImageMode), typeof(MetroWindow), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
+        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register(nameof(ShowIconOnTitleBar), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox, OnShowIconOnTitleBarPropertyChangedCallback));
+        public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register(nameof(IconEdgeMode), typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
+        public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register(nameof(IconBitmapScalingMode), typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
+        public static readonly DependencyProperty IconScalingModeProperty = DependencyProperty.Register(nameof(IconScalingMode), typeof(MultiFrameImageMode), typeof(MetroWindow), new FrameworkPropertyMetadata(MultiFrameImageMode.ScaleDownLargerFrame, FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register(nameof(ShowTitleBar), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
 
-        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register("ShowDialogsOverTitleBar", typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ShowDialogsOverTitleBarProperty = DependencyProperty.Register(nameof(ShowDialogsOverTitleBar), typeof(bool), typeof(MetroWindow), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
 
-        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyPropertyKey IsAnyDialogOpenPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsAnyDialogOpen), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Identifies the <see cref="IsAnyDialogOpen"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsAnyDialogOpenProperty = IsAnyDialogOpenPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register(nameof(ShowMinButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register(nameof(ShowMaxRestoreButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register(nameof(ShowCloseButton), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register("IsMinButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register(nameof(IsMinButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register(nameof(IsMaxRestoreButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register(nameof(IsCloseButtonEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyPropertyKey IsCloseButtonEnabledWithDialogPropertyKey = DependencyProperty.RegisterReadOnly(nameof(IsCloseButtonEnabledWithDialog), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Identifies the <see cref="IsCloseButtonEnabledWithDialog"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty IsCloseButtonEnabledWithDialogProperty = IsCloseButtonEnabledWithDialogPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty ShowSystemMenuProperty = DependencyProperty.Register("ShowSystemMenu", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowSystemMenuProperty = DependencyProperty.Register(nameof(ShowSystemMenu), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register(nameof(ShowSystemMenuOnRightClick), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
-        public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register("TitleBarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
-        public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register("TitleCharacterCasing", typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
-        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
+        public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register(nameof(TitleBarHeight), typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitleBarHeightPropertyChangedCallback));
+        public static readonly DependencyProperty TitleCharacterCasingProperty = DependencyProperty.Register(nameof(TitleCharacterCasing), typeof(CharacterCasing), typeof(MetroWindow), new FrameworkPropertyMetadata(CharacterCasing.Upper, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure), value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper);
+        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register(nameof(TitleAlignment), typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch, OnTitleAlignmentChanged));
 
-        public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
-        public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-        public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(default(MetroDialogSettings)));
+        public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register(nameof(SaveWindowPosition), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
+        public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register(nameof(WindowPlacementSettings), typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register(nameof(TitleForeground), typeof(Brush), typeof(MetroWindow));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register(nameof(Flyouts), typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register(nameof(WindowTransitionsEnabled), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
+        public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register(nameof(MetroDialogOptions), typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(default(MetroDialogSettings)));
 
-        public static readonly DependencyProperty WindowTitleBrushProperty = DependencyProperty.Register("WindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register("NonActiveWindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
-        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty WindowTitleBrushProperty = DependencyProperty.Register(nameof(WindowTitleBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register(nameof(NonActiveWindowTitleBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
+        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register(nameof(NonActiveBorderBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
 
-        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register(nameof(GlowBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register(nameof(NonActiveGlowBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register("OverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register("OverlayOpacity", typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
+        public static readonly DependencyProperty OverlayBrushProperty = DependencyProperty.Register(nameof(OverlayBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty OverlayOpacityProperty = DependencyProperty.Register(nameof(OverlayOpacity), typeof(double), typeof(MetroWindow), new PropertyMetadata(0.7d));
 
-        public static readonly DependencyProperty FlyoutOverlayBrushProperty = DependencyProperty.Register("FlyoutOverlayBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty FlyoutOverlayBrushProperty = DependencyProperty.Register(nameof(FlyoutOverlayBrush), typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="OverlayFadeIn"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OverlayFadeInProperty = DependencyProperty.Register("OverlayFadeIn", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
+        public static readonly DependencyProperty OverlayFadeInProperty = DependencyProperty.Register(nameof(OverlayFadeIn), typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
         /// <summary>
         /// Identifies the <see cref="OverlayFadeOut"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty OverlayFadeOutProperty = DependencyProperty.Register("OverlayFadeOut", typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
+        public static readonly DependencyProperty OverlayFadeOutProperty = DependencyProperty.Register(nameof(OverlayFadeOut), typeof(Storyboard), typeof(MetroWindow), new PropertyMetadata(default(Storyboard)));
 
-        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register(nameof(IconTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register(nameof(TitleTemplate), typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
-        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register("WindowButtonCommands", typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register(nameof(LeftWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register(nameof(RightWindowCommands), typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
+        public static readonly DependencyProperty WindowButtonCommandsProperty = DependencyProperty.Register(nameof(WindowButtonCommands), typeof(WindowButtonCommands), typeof(MetroWindow), new PropertyMetadata(null, UpdateLogicalChilds));
 
-        public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("RightWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsOverlayBehavior", typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Always, OnShowTitleBarPropertyChangedCallback));
-        public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+        public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(LeftWindowCommandsOverlayBehavior), typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+        public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(RightWindowCommandsOverlayBehavior), typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
+        public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register(nameof(WindowButtonCommandsOverlayBehavior), typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Always, OnShowTitleBarPropertyChangedCallback));
+        public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register(nameof(IconOverlayBehavior), typeof(OverlayBehavior), typeof(MetroWindow), new PropertyMetadata(OverlayBehavior.Never, OnShowTitleBarPropertyChangedCallback));
 
-        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(Brush), typeof(MetroWindow));
+        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register(nameof(UseNoneWindowStyle), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox, OnUseNoneWindowStylePropertyChangedCallback));
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register(nameof(OverrideDefaultWindowCommandsBrush), typeof(Brush), typeof(MetroWindow));
 
-        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register(nameof(IsWindowDraggable), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         FrameworkElement icon;
         UIElement titleBar;
@@ -153,7 +154,7 @@ namespace MahApps.Metro.Controls
         Rectangle flyoutModal;
 
         public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
-            "FlyoutsStatusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
+            nameof(FlyoutsStatusChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
 
         // Provide CLR accessors for the event
         public event RoutedEventHandler FlyoutsStatusChanged
@@ -162,7 +163,7 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(FlyoutsStatusChangedEvent, value); }
         }
 
-        public static readonly RoutedEvent WindowTransitionCompletedEvent = EventManager.RegisterRoutedEvent("WindowTransitionCompleted", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
+        public static readonly RoutedEvent WindowTransitionCompletedEvent = EventManager.RegisterRoutedEvent(nameof(WindowTransitionCompleted), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
 
         public event RoutedEventHandler WindowTransitionCompleted
         {
@@ -188,7 +189,7 @@ namespace MahApps.Metro.Controls
         public bool IsWindowDraggable
         {
             get { return (bool)GetValue(IsWindowDraggableProperty); }
-            set { SetValue(IsWindowDraggableProperty, value); }
+            set { SetValue(IsWindowDraggableProperty, BooleanBoxes.Box(value)); }
         }
 
         public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
@@ -221,7 +222,7 @@ namespace MahApps.Metro.Controls
         public bool WindowTransitionsEnabled
         {
             get { return (bool)this.GetValue(WindowTransitionsEnabledProperty); }
-            set { SetValue(WindowTransitionsEnabledProperty, value); }
+            set { SetValue(WindowTransitionsEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -285,13 +286,13 @@ namespace MahApps.Metro.Controls
         public bool IgnoreTaskbarOnMaximize
         {
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
-            set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
+            set { SetValue(IgnoreTaskbarOnMaximizeProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
         /// Identifies the <see cref="IgnoreTaskbarOnMaximize"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register(nameof(IgnoreTaskbarOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets resize border thickness. This enables animation, styling, binding, etc...
@@ -314,13 +315,13 @@ namespace MahApps.Metro.Controls
         public bool KeepBorderOnMaximize
         {
             get { return (bool)this.GetValue(KeepBorderOnMaximizeProperty); }
-            set { this.SetValue(KeepBorderOnMaximizeProperty, value); }
+            set { this.SetValue(KeepBorderOnMaximizeProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
         /// <see cref="DependencyProperty"/> for <see cref="KeepBorderOnMaximize"/>.
         /// </summary>
-        public static readonly DependencyProperty KeepBorderOnMaximizeProperty = DependencyProperty.Register(nameof(KeepBorderOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepBorderOnMaximizeProperty = DependencyProperty.Register(nameof(KeepBorderOnMaximize), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets wether the resizing of the window should be tried in a way that does not cause flicker/jitter, especially when resizing from the left side.
@@ -331,13 +332,13 @@ namespace MahApps.Metro.Controls
         public bool TryToBeFlickerFree
         {
             get { return (bool)this.GetValue(TryToBeFlickerFreeProperty); }
-            set { this.SetValue(TryToBeFlickerFreeProperty, value); }
+            set { this.SetValue(TryToBeFlickerFreeProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
         /// <see cref="DependencyProperty"/> for <see cref="TryToBeFlickerFree"/>.
         /// </summary>
-        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty TryToBeFlickerFreeProperty = DependencyProperty.Register(nameof(TryToBeFlickerFree), typeof(bool), typeof(MetroWindow), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets/sets the brush used for the titlebar's foreground.
@@ -354,7 +355,7 @@ namespace MahApps.Metro.Controls
         public bool SaveWindowPosition
         {
             get { return (bool)GetValue(SaveWindowPositionProperty); }
-            set { SetValue(SaveWindowPositionProperty, value); }
+            set { SetValue(SaveWindowPositionProperty, BooleanBoxes.Box(value)); }
         }
 
         public IWindowPlacementSettings WindowPlacementSettings
@@ -377,7 +378,7 @@ namespace MahApps.Metro.Controls
         public bool ShowIconOnTitleBar
         {
             get { return (bool)GetValue(ShowIconOnTitleBarProperty); }
-            set { SetValue(ShowIconOnTitleBarProperty, value); }
+            set { SetValue(ShowIconOnTitleBarProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnShowIconOnTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -395,7 +396,7 @@ namespace MahApps.Metro.Controls
         public bool ShowDialogsOverTitleBar
         {
             get { return (bool)GetValue(ShowDialogsOverTitleBarProperty); }
-            set { SetValue(ShowDialogsOverTitleBarProperty, value); }
+            set { SetValue(ShowDialogsOverTitleBarProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -404,7 +405,7 @@ namespace MahApps.Metro.Controls
         public bool IsAnyDialogOpen
         {
             get { return (bool)GetValue(IsAnyDialogOpenProperty); }
-            private set { SetValue(IsAnyDialogOpenPropertyKey, value); }
+            private set { SetValue(IsAnyDialogOpenPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -440,7 +441,7 @@ namespace MahApps.Metro.Controls
         public bool ShowTitleBar
         {
             get { return (bool)GetValue(ShowTitleBarProperty); }
-            set { SetValue(ShowTitleBarProperty, value); }
+            set { SetValue(ShowTitleBarProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -468,7 +469,7 @@ namespace MahApps.Metro.Controls
         public bool UseNoneWindowStyle
         {
             get { return (bool)GetValue(UseNoneWindowStyleProperty); }
-            set { SetValue(UseNoneWindowStyleProperty, value); }
+            set { SetValue(UseNoneWindowStyleProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -481,7 +482,7 @@ namespace MahApps.Metro.Controls
                 // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
                 if (useNoneWindowStyle)
                 {
-                    ((MetroWindow)d).SetCurrentValue(ShowTitleBarProperty, false);
+                    ((MetroWindow)d).SetCurrentValue(ShowTitleBarProperty, BooleanBoxes.FalseBox);
                 }
             }
         }
@@ -492,7 +493,7 @@ namespace MahApps.Metro.Controls
         public bool ShowMinButton
         {
             get { return (bool)GetValue(ShowMinButtonProperty); }
-            set { SetValue(ShowMinButtonProperty, value); }
+            set { SetValue(ShowMinButtonProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -501,7 +502,7 @@ namespace MahApps.Metro.Controls
         public bool ShowMaxRestoreButton
         {
             get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
-            set { SetValue(ShowMaxRestoreButtonProperty, value); }
+            set { SetValue(ShowMaxRestoreButtonProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -510,7 +511,7 @@ namespace MahApps.Metro.Controls
         public bool ShowCloseButton
         {
             get { return (bool)GetValue(ShowCloseButtonProperty); }
-            set { SetValue(ShowCloseButtonProperty, value); }
+            set { SetValue(ShowCloseButtonProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -519,7 +520,7 @@ namespace MahApps.Metro.Controls
         public bool IsMinButtonEnabled
         {
             get { return (bool)GetValue(IsMinButtonEnabledProperty); }
-            set { SetValue(IsMinButtonEnabledProperty, value); }
+            set { SetValue(IsMinButtonEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -528,7 +529,7 @@ namespace MahApps.Metro.Controls
         public bool IsMaxRestoreButtonEnabled
         {
             get { return (bool)GetValue(IsMaxRestoreButtonEnabledProperty); }
-            set { SetValue(IsMaxRestoreButtonEnabledProperty, value); }
+            set { SetValue(IsMaxRestoreButtonEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -537,7 +538,7 @@ namespace MahApps.Metro.Controls
         public bool IsCloseButtonEnabled
         {
             get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
-            set { SetValue(IsCloseButtonEnabledProperty, value); }
+            set { SetValue(IsCloseButtonEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -546,7 +547,7 @@ namespace MahApps.Metro.Controls
         public bool IsCloseButtonEnabledWithDialog
         {
             get { return (bool)GetValue(IsCloseButtonEnabledWithDialogProperty); }
-            private set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, value); }
+            private set { SetValue(IsCloseButtonEnabledWithDialogPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -555,7 +556,7 @@ namespace MahApps.Metro.Controls
         public bool ShowSystemMenu
         {
             get { return (bool)GetValue(ShowSystemMenuProperty); }
-            set { SetValue(ShowSystemMenuProperty, value); }
+            set { SetValue(ShowSystemMenuProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>
@@ -564,7 +565,7 @@ namespace MahApps.Metro.Controls
         public bool ShowSystemMenuOnRightClick
         {
             get { return (bool)GetValue(ShowSystemMenuOnRightClickProperty); }
-            set { SetValue(ShowSystemMenuOnRightClickProperty, value); }
+            set { SetValue(ShowSystemMenuOnRightClickProperty, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>

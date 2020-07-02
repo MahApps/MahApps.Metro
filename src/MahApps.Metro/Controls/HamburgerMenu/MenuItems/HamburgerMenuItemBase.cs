@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -12,7 +13,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the <see cref="IsVisible" /> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.Register(nameof(IsVisible), typeof(bool), typeof(HamburgerMenuItemBase), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.Register(nameof(IsVisible), typeof(bool), typeof(HamburgerMenuItemBase), new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets a value that specifies an user specific value.
@@ -45,7 +46,7 @@ namespace MahApps.Metro.Controls
 
             set
             {
-                this.SetValue(IsVisibleProperty, value);
+                this.SetValue(IsVisibleProperty, BooleanBoxes.Box(value));
             }
         }
 

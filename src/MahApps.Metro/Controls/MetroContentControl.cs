@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -18,7 +19,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(ReverseTransition),
                                           typeof(bool),
                                           typeof(MetroContentControl),
-                                          new FrameworkPropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets whether the reverse version of the transition should be used.
@@ -26,7 +27,7 @@ namespace MahApps.Metro.Controls
         public bool ReverseTransition
         {
             get => (bool)this.GetValue(ReverseTransitionProperty);
-            set => this.SetValue(ReverseTransitionProperty, value);
+            set => this.SetValue(ReverseTransitionProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="TransitionsEnabled"/> dependency property.</summary>
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(TransitionsEnabled),
                                           typeof(bool),
                                           typeof(MetroContentControl),
-                                          new FrameworkPropertyMetadata(true));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the value if a transition should be used or not.
@@ -42,7 +43,7 @@ namespace MahApps.Metro.Controls
         public bool TransitionsEnabled
         {
             get => (bool)this.GetValue(TransitionsEnabledProperty);
-            set => this.SetValue(TransitionsEnabledProperty, value);
+            set => this.SetValue(TransitionsEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="OnlyLoadTransition"/> dependency property.</summary>
@@ -50,7 +51,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(OnlyLoadTransition),
                                           typeof(bool),
                                           typeof(MetroContentControl),
-                                          new FrameworkPropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets whether the transition should be used only at the loaded event of the control.
@@ -58,7 +59,7 @@ namespace MahApps.Metro.Controls
         public bool OnlyLoadTransition
         {
             get => (bool)this.GetValue(OnlyLoadTransitionProperty);
-            set => this.SetValue(OnlyLoadTransitionProperty, value);
+            set => this.SetValue(OnlyLoadTransitionProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="TransitionStarted"/> routed event.</summary>
@@ -98,7 +99,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterReadOnly(nameof(IsTransitioning),
                                                   typeof(bool),
                                                   typeof(MetroContentControl),
-                                                  new PropertyMetadata(default(bool)));
+                                                  new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>Identifies the <see cref="IsTransitioning"/> dependency property.</summary>
         public static readonly DependencyProperty IsTransitioningProperty = IsTransitioningPropertyKey.DependencyProperty;
@@ -109,7 +110,7 @@ namespace MahApps.Metro.Controls
         public bool IsTransitioning
         {
             get => (bool)this.GetValue(IsTransitioningProperty);
-            protected set => this.SetValue(IsTransitioningPropertyKey, value);
+            protected set => this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.Box(value));
         }
 
         public MetroContentControl()
@@ -220,7 +221,7 @@ namespace MahApps.Metro.Controls
             {
                 if (clock.CurrentState == ClockState.Active)
                 {
-                    this.SetValue(IsTransitioningPropertyKey, true);
+                    this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.TrueBox);
                     this.RaiseEvent(new RoutedEventArgs(TransitionStartedEvent));
                 }
             }
@@ -234,7 +235,7 @@ namespace MahApps.Metro.Controls
             }
 
             this.InvalidateVisual();
-            this.SetValue(IsTransitioningPropertyKey, false);
+            this.SetValue(IsTransitioningPropertyKey, BooleanBoxes.FalseBox);
             this.RaiseEvent(new RoutedEventArgs(TransitionCompletedEvent));
         }
 

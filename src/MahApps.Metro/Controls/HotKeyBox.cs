@@ -6,6 +6,7 @@ using System.Windows.Interop;
 using System.Windows.Controls;
 using ControlzEx.Native;
 using ControlzEx.Standard;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls {
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
@@ -14,7 +15,7 @@ namespace MahApps.Metro.Controls {
         private const string PART_TextBox = "PART_TextBox";
 
         public static readonly DependencyProperty HotKeyProperty = DependencyProperty.Register(
-            "HotKey", typeof(HotKey), typeof(HotKeyBox),
+            nameof(HotKey), typeof(HotKey), typeof(HotKeyBox),
             new FrameworkPropertyMetadata(default(HotKey), OnHotKeyChanged) { BindsTwoWayByDefault = true });
 
         public HotKey HotKey
@@ -30,16 +31,16 @@ namespace MahApps.Metro.Controls {
         }
 
         public static readonly DependencyProperty AreModifierKeysRequiredProperty = DependencyProperty.Register(
-            "AreModifierKeysRequired", typeof(bool), typeof(HotKeyBox), new PropertyMetadata(default(bool)));
+            nameof(AreModifierKeysRequired), typeof(bool), typeof(HotKeyBox), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public bool AreModifierKeysRequired
         {
             get { return (bool) GetValue(AreModifierKeysRequiredProperty); }
-            set { SetValue(AreModifierKeysRequiredProperty, value); }
+            set { SetValue(AreModifierKeysRequiredProperty, BooleanBoxes.Box(value)); }
         }
 
         private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(
-            "Text", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
+            nameof(Text), typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
 
         public static readonly DependencyProperty TextProperty = TextPropertyKey.DependencyProperty;
 

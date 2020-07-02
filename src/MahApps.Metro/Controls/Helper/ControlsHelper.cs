@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -71,7 +72,7 @@ namespace MahApps.Metro.Controls
                 "RecognizesAccessKey",
                 typeof(bool),
                 typeof(ControlsHelper),
-                new FrameworkPropertyMetadata(true));
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary> 
         /// Gets the value if the inner ContentPresenter use AccessText in its style.
@@ -94,7 +95,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(SplitButton))]
         public static void SetRecognizesAccessKey(UIElement element, bool value)
         {
-            element.SetValue(RecognizesAccessKeyProperty, value);
+            element.SetValue(RecognizesAccessKeyProperty, BooleanBoxes.Box(value));
         }
 
         public static readonly DependencyProperty FocusBorderBrushProperty
@@ -230,7 +231,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.RegisterAttached("IsReadOnly",
                                                   typeof(bool),
                                                   typeof(ControlsHelper),
-                                                  new FrameworkPropertyMetadata(false));
+                                                  new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets a value indicating whether the child contents of the control are not editable.
@@ -245,7 +246,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static void SetIsReadOnly(UIElement element, bool value)
         {
-            element.SetValue(IsReadOnlyProperty, value);
+            element.SetValue(IsReadOnlyProperty, BooleanBoxes.Box(value));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MahApps.Metro.Controls
+﻿using MahApps.Metro.ValueBoxes;
+
+namespace MahApps.Metro.Controls
 {
     using System;
     using System.Collections;
@@ -114,7 +116,7 @@
             = DependencyProperty.Register(nameof(IsPaneOpen),
                                           typeof(bool),
                                           typeof(SplitView),
-                                          new PropertyMetadata(false, OnIsPaneOpenChanged));
+                                          new PropertyMetadata(BooleanBoxes.FalseBox, OnIsPaneOpenChanged));
 
         private static void OnIsPaneOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -145,7 +147,7 @@
         public bool IsPaneOpen
         {
             get => (bool)this.GetValue(IsPaneOpenProperty);
-            set => this.SetValue(IsPaneOpenProperty, value);
+            set => this.SetValue(IsPaneOpenProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="OverlayBrush"/> dependency property.</summary>
@@ -289,7 +291,7 @@
         }
 
         /// <summary>Identifies the <see cref="CanResizeOpenPane"/> dependency property.</summary>
-        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(false, OnCanResizeOpenPanePropertyChangedCallback));
+        public static readonly DependencyProperty CanResizeOpenPaneProperty = DependencyProperty.Register(nameof(CanResizeOpenPane), typeof(bool), typeof(SplitView), new PropertyMetadata(BooleanBoxes.FalseBox, OnCanResizeOpenPanePropertyChangedCallback));
 
         private static void OnCanResizeOpenPanePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
@@ -305,7 +307,7 @@
         public bool CanResizeOpenPane
         {
             get => (bool)this.GetValue(CanResizeOpenPaneProperty);
-            set => this.SetValue(CanResizeOpenPaneProperty, value);
+            set => this.SetValue(CanResizeOpenPaneProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ResizeThumbStyle"/> dependency property.</summary>
@@ -618,13 +620,13 @@
             }
             else
             {
-                this.SetCurrentValue(IsPaneOpenProperty, false);
+                this.SetCurrentValue(IsPaneOpenProperty, BooleanBoxes.FalseBox);
             }
         }
 
         private void OnLightDismiss(object sender, MouseButtonEventArgs e)
         {
-            this.SetCurrentValue(IsPaneOpenProperty, false);
+            this.SetCurrentValue(IsPaneOpenProperty, BooleanBoxes.FalseBox);
         }
     }
 }

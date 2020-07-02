@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -15,10 +16,10 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =
-            DependencyProperty.Register("CloseButtonEnabled",
+            DependencyProperty.Register(nameof(CloseButtonEnabled),
                                         typeof(bool),
                                         typeof(MetroTabItem),
-                                        new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
+                                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         /// Gets/sets whether the Close Button is visible.
@@ -26,11 +27,11 @@ namespace MahApps.Metro.Controls
         public bool CloseButtonEnabled
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
-            set { SetValue(CloseButtonEnabledProperty, value); }
+            set { SetValue(CloseButtonEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand",
+            DependencyProperty.Register(nameof(CloseTabCommand),
                                         typeof(ICommand),
                                         typeof(MetroTabItem));
 
@@ -44,7 +45,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
-            DependencyProperty.Register("CloseTabCommandParameter",
+            DependencyProperty.Register(nameof(CloseTabCommandParameter),
                                         typeof(object),
                                         typeof(MetroTabItem),
                                         new PropertyMetadata(null));
@@ -59,7 +60,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseButtonMarginProperty =
-            DependencyProperty.Register("CloseButtonMargin",
+            DependencyProperty.Register(nameof(CloseButtonMargin),
                                         typeof(Thickness),
                                         typeof(MetroTabItem),
                                         new FrameworkPropertyMetadata(new Thickness(), FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.Inherits));

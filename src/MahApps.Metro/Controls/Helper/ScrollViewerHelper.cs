@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -15,7 +16,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("VerticalScrollBarOnLeftSide",
                                                 typeof(bool),
                                                 typeof(ScrollViewerHelper),
-                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+                                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>Helper for getting <see cref="VerticalScrollBarOnLeftSideProperty"/> from <paramref name="element"/>.</summary>
         /// <param name="element"><see cref="UIElement"/> to read <see cref="VerticalScrollBarOnLeftSideProperty"/> from.</param>
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(ScrollViewer))]
         public static void SetVerticalScrollBarOnLeftSide(UIElement element, bool value)
         {
-            element.SetValue(VerticalScrollBarOnLeftSideProperty, value);
+            element.SetValue(VerticalScrollBarOnLeftSideProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("IsHorizontalScrollWheelEnabled",
                                                 typeof(bool),
                                                 typeof(ScrollViewerHelper),
-                                                new PropertyMetadata(false, OnIsHorizontalScrollWheelEnabledPropertyChangedCallback));
+                                                new PropertyMetadata(BooleanBoxes.FalseBox, OnIsHorizontalScrollWheelEnabledPropertyChangedCallback));
 
         private static void OnIsHorizontalScrollWheelEnabledPropertyChangedCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -94,7 +95,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(UIElement))]
         public static void SetIsHorizontalScrollWheelEnabled(UIElement element, bool value)
         {
-            element.SetValue(IsHorizontalScrollWheelEnabledProperty, value);
+            element.SetValue(IsHorizontalScrollWheelEnabledProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>

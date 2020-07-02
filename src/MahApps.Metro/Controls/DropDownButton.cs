@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls
             = DependencyProperty.Register(nameof(IsExpanded),
                                           typeof(bool),
                                           typeof(DropDownButton),
-                                          new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsExpandedPropertyChangedCallback));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsExpandedPropertyChangedCallback));
 
         private static void OnIsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -58,7 +59,7 @@ namespace MahApps.Metro.Controls
         public bool IsExpanded
         {
             get => (bool)this.GetValue(IsExpandedProperty);
-            set => this.SetValue(IsExpandedProperty, value);
+            set => this.SetValue(IsExpandedProperty, BooleanBoxes.Box(value));
         }
 
         /// <summary>Identifies the <see cref="ExtraTag"/> dependency property.</summary>
@@ -411,7 +412,7 @@ namespace MahApps.Metro.Controls
 
             if (this.contextMenu?.HasItems == true)
             {
-                this.SetCurrentValue(IsExpandedProperty, true);
+                this.SetCurrentValue(IsExpandedProperty, BooleanBoxes.TrueBox);
             }
 
             e.RoutedEvent = ClickEvent;

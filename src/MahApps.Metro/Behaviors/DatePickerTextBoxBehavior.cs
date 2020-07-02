@@ -2,6 +2,7 @@
 using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using MahApps.Metro.ValueBoxes;
 using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
@@ -29,7 +30,7 @@ namespace MahApps.Metro.Behaviors
 
         private void SetHasTextProperty()
         {
-            this.AssociatedObject.TemplatedParent?.SetValue(TextBoxHelper.HasTextProperty, this.AssociatedObject.Text.Length > 0);
+            this.AssociatedObject.TemplatedParent?.SetCurrentValue(TextBoxHelper.HasTextProperty, BooleanBoxes.Box(this.AssociatedObject.Text.Length > 0));
         }
     }
 }

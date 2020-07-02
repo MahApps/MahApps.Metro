@@ -4,6 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
+using MahApps.Metro.ValueBoxes;
 
 namespace MahApps.Metro.Controls
 {
@@ -25,19 +26,19 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly RoutedEvent DragStartedEvent
-            = EventManager.RegisterRoutedEvent("DragStarted",
+            = EventManager.RegisterRoutedEvent(nameof(DragStarted),
                                                RoutingStrategy.Bubble,
                                                typeof(DragStartedEventHandler),
                                                typeof(MetroThumbContentControl));
 
         public static readonly RoutedEvent DragDeltaEvent
-            = EventManager.RegisterRoutedEvent("DragDelta",
+            = EventManager.RegisterRoutedEvent(nameof(DragDelta),
                                                RoutingStrategy.Bubble,
                                                typeof(DragDeltaEventHandler),
                                                typeof(MetroThumbContentControl));
 
         public static readonly RoutedEvent DragCompletedEvent
-            = EventManager.RegisterRoutedEvent("DragCompleted",
+            = EventManager.RegisterRoutedEvent(nameof(DragCompleted),
                                                RoutingStrategy.Bubble,
                                                typeof(DragCompletedEventHandler),
                                                typeof(MetroThumbContentControl));
@@ -70,10 +71,10 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyPropertyKey IsDraggingPropertyKey
-            = DependencyProperty.RegisterReadOnly("IsDragging",
+            = DependencyProperty.RegisterReadOnly(nameof(IsDragging),
                                                   typeof(bool),
                                                   typeof(MetroThumbContentControl),
-                                                  new FrameworkPropertyMetadata(default(bool)));
+                                                  new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// DependencyProperty for the IsDragging property.
@@ -86,7 +87,7 @@ namespace MahApps.Metro.Controls
         public bool IsDragging
         {
             get { return (bool)this.GetValue(IsDraggingProperty); }
-            protected set { this.SetValue(IsDraggingPropertyKey, value); }
+            protected set { this.SetValue(IsDraggingPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         public void CancelDragAction()
@@ -119,7 +120,7 @@ namespace MahApps.Metro.Controls
                     // now capture the mouse for the drag action
                     this.CaptureMouse();
                     // so now we are in dragging mode
-                    this.SetValue(IsDraggingPropertyKey, true);
+                    this.SetValue(IsDraggingPropertyKey, BooleanBoxes.TrueBox);
                     // get the mouse points
                     this.startDragPoint = e.GetPosition(this);
                     this.oldDragScreenPoint = this.startDragScreenPoint = this.PointToScreen(this.startDragPoint);
