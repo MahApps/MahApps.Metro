@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
@@ -53,6 +55,9 @@ namespace MahApps.Metro.Controls
 
         /// <summary>Identifies the <see cref="SelectedColorTemplate"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedColorTemplateProperty = DependencyProperty.Register(nameof(SelectedColorTemplate), typeof(DataTemplate), typeof(ColorPicker), new PropertyMetadata(null));
+
+        /// <summary>Identifies the <see cref="AddToRecentColorsTrigger"/> dependency property.</summary>
+        public static readonly DependencyProperty AddToRecentColorsTriggerProperty = DependencyProperty.Register(nameof(AddToRecentColorsTrigger), typeof(AddToRecentColorsTrigger), typeof(ColorPicker), new PropertyMetadata(AddToRecentColorsTrigger.ColorPickerClosed));
 
         private Popup PART_Popup;
         private ColorPalette PART_ColorPaletteStandard;
@@ -141,6 +146,15 @@ namespace MahApps.Metro.Controls
             get { return (DataTemplate)GetValue(SelectedColorTemplateProperty); }
             set { SetValue(SelectedColorTemplateProperty, value); }
         }
+        
+        /// <summary>
+        /// Gets or sets when to add the <see cref="ColorPickerBase.SelectedColor"/> to the <see cref="RecentColorPaletteItemsSource"/>
+        /// </summary>
+        public AddToRecentColorsTrigger AddToRecentColorsTrigger
+        {
+            get { return (AddToRecentColorsTrigger)GetValue(AddToRecentColorsTriggerProperty); }
+            set { SetValue(AddToRecentColorsTriggerProperty, value); }
+        }
 
         public override void OnApplyTemplate()
         {
@@ -153,6 +167,18 @@ namespace MahApps.Metro.Controls
             PART_ColorPaletteRecent = this.GetTemplateChild(nameof(PART_ColorPaletteCustom02)) as ColorPalette;
 
             base.OnApplyTemplate();
+        }
+
+
+        internal override void OnSelectedColorChanged(Color? OldValue, Color? NewValue)
+        {
+            base.OnSelectedColorChanged(NewValue, OldValue);
+
+            if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged)
+            {
+                BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(this), RecentColorPaletteItemsSource as ObservableCollection<Color?>);
+                BuildInColorPalettes.AddColorToRecentColors(NewValue, RecentColorPaletteItemsSource);
+            }
         }
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -203,6 +229,12 @@ namespace MahApps.Metro.Controls
                     if (Mouse.Captured == colorPicker)
                     {
                         Mouse.Capture(null);
+                    }
+
+                    if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed)
+                    {
+                        BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker), colorPicker.RecentColorPaletteItemsSource);
+                        BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource);
                     }
                 }
             }

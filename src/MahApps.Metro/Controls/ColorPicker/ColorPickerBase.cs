@@ -139,49 +139,54 @@ namespace MahApps.Metro.Controls
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent(
                                                                         nameof(SelectedColorChanged),
                                                                         RoutingStrategy.Bubble,
-                                                                        typeof(RoutedPropertyChangedEventHandler<Color>),
+                                                                        typeof(RoutedPropertyChangedEventHandler<Color?>),
                                                                         typeof(ColorPickerBase));
 
         private static void ColorChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             if (dependencyObject is ColorPickerBase colorPicker)
             {
-                // don't do a second update
-                if (colorPicker.ColorIsUpdating)
-                    return;
-
-                colorPicker.ColorIsUpdating = true;
-
-                if (colorPicker.SelectedColor == null && colorPicker.DefaultColor != null)
-                {
-                    colorPicker.SetCurrentValue(SelectedColorProperty, colorPicker.DefaultColor);
-                }
-
-                colorPicker.SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(colorPicker.SelectedColor, colorPicker.ColorNamesDictionary));
-
-                // We just update the following lines if we have a Color.
-                if (colorPicker.SelectedColor != null)
-                {
-                    if (colorPicker.UpdateHsvValues)
-                    {
-                        var hsv = new HSVColor((Color)colorPicker.SelectedColor);
-                        colorPicker.SetCurrentValue(HueProperty, hsv.Hue);
-                        colorPicker.SetCurrentValue(SaturationProperty, hsv.Saturation);
-                        colorPicker.SetCurrentValue(ValueProperty, hsv.Value);
-                    }
-
-                    colorPicker.SetCurrentValue(SelectedHSVColorProperty, new HSVColor(colorPicker.A / 255d, colorPicker.Hue, colorPicker.Saturation, colorPicker.Value));
-
-                    colorPicker.SetCurrentValue(AProperty, (byte)colorPicker.SelectedColor?.A);
-                    colorPicker.SetCurrentValue(RProperty, (byte)colorPicker.SelectedColor?.R);
-                    colorPicker.SetCurrentValue(GProperty, (byte)colorPicker.SelectedColor?.G);
-                    colorPicker.SetCurrentValue(BProperty, (byte)colorPicker.SelectedColor?.B);
-                }
-
-                colorPicker.ColorIsUpdating = false;
-
-                colorPicker.RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>((Color?)e.OldValue, (Color?)e.NewValue, SelectedColorChangedEvent));
+                colorPicker.OnSelectedColorChanged(e.OldValue as Color?, e.NewValue as Color?);
             }
+        }
+
+        internal virtual void OnSelectedColorChanged(Color? OldValue, Color? NewValue)
+        {
+            // don't do a second update
+            if (ColorIsUpdating)
+                return;
+
+            ColorIsUpdating = true;
+
+            if (SelectedColor == null && DefaultColor != null)
+            {
+                SetCurrentValue(SelectedColorProperty, DefaultColor);
+            }
+
+            SetCurrentValue(ColorNameProperty, ColorHelper.GetColorName(SelectedColor, ColorNamesDictionary));
+
+            // We just update the following lines if we have a Color.
+            if (SelectedColor != null)
+            {
+                if (UpdateHsvValues)
+                {
+                    var hsv = new HSVColor((Color)SelectedColor);
+                    SetCurrentValue(HueProperty, hsv.Hue);
+                    SetCurrentValue(SaturationProperty, hsv.Saturation);
+                    SetCurrentValue(ValueProperty, hsv.Value);
+                }
+
+                SetCurrentValue(SelectedHSVColorProperty, new HSVColor(A / 255d, Hue, Saturation, Value));
+
+                SetCurrentValue(AProperty, (byte)SelectedColor?.A);
+                SetCurrentValue(RProperty, (byte)SelectedColor?.R);
+                SetCurrentValue(GProperty, (byte)SelectedColor?.G);
+                SetCurrentValue(BProperty, (byte)SelectedColor?.B);
+            }
+
+            ColorIsUpdating = false;
+
+            RaiseEvent(new RoutedPropertyChangedEventArgs<Color?>(OldValue, NewValue, SelectedColorChangedEvent));
         }
 
 
@@ -210,7 +215,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Occurs when the <see cref="SelectedColor" /> property is changed.
         /// </summary>
-        public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
+        public event RoutedPropertyChangedEventHandler<Color?> SelectedColorChanged
         {
             add { AddHandler(SelectedColorChangedEvent, value); }
             remove { RemoveHandler(SelectedColorChangedEvent, value); }

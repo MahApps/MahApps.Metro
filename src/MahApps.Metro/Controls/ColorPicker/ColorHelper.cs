@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls
         /// This function tries to convert a given string into a Color in the following order:
         ///    1. If the string starts with '#' the function tries to get the color from the hex-code
         ///    2. else the function tries to find the color in the color names Dictionary
-        ///    3. If 1. & 2. were not successfull the function adds a '#' sign and tries 1. & 2. again
+        ///    3. If 1. + 2. were not successfull the function adds a '#' sign and tries 1. + 2. again
         /// </summary>
         /// <param name="ColorName">The localized name of the color, the hex-code of the color or the internal colorname</param>
         /// <returns>the Color if successfull, else null</returns>

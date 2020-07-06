@@ -153,11 +153,11 @@
         <Setter Property="DropDownHeight" Value="400" />
         <Setter Property="AvailableColorPaletteHeader" Value="Available Colors" />
         <Setter Property="IsAvailableColorPaletteVisible" Value="True" />
-        <Setter Property="AvailableColorPaletteItemsSource" Value="{x:Static mah:ColorPalette.WpfColorPalette}" />
+        <Setter Property="AvailableColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.WpfColorsPalette}" />
         <Setter Property="AvailableColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <Setter Property="StandardColorPaletteHeader" Value="Standard Colors" />
         <Setter Property="IsStandardColorPaletteVisible" Value="True" />
-        <Setter Property="StandardColorPaletteItemsSource" Value="{x:Static mah:ColorPalette.PrimaryColorPalette}" />
+        <Setter Property="StandardColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.StandardColorsPalette}" />
         <Setter Property="StandardColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <Setter Property="CustomColorPalette01Header" Value="Custom Colors" />
         <Setter Property="IsCustomColorPalette01Visible" Value="False" />
@@ -167,7 +167,7 @@
         <Setter Property="CustomColorPalette02Style" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <Setter Property="RecentColorPaletteHeader" Value="Recent Colors" />
         <Setter Property="IsRecentColorPaletteVisible" Value="True" />
-        <Setter Property="RecentColorPaletteItemsSource" Value="{x:Static mah:ColorPalette.RecentColors}" />
+        <Setter Property="RecentColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.RecentColors}" />
         <Setter Property="RecentColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />

@@ -354,6 +354,7 @@
                                               DropDownClosed="ColorPicker_DropDownClosed"
                                               IsCustomColorPalette01Visible="True"
                                               IsCustomColorPalette02Visible="True"
+                                              AddToRecentColorsTrigger="SelectedColorChanged"
                                               IsRecentColorPaletteVisible="True"
                                               SelectedColor="{Binding ElementName=ColorCanvasExample, Path=SelectedColor}"
                                               SelectedColorTemplate="{DynamicResource MahApps.Templates.ColorPickerContent.ColorAndName}">
