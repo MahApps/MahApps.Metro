@@ -5,13 +5,13 @@
 
     <converters:ThicknessToDoubleConverter x:Key="BorderThicknessToStrokeThicknessConverter" TakeThicknessSide="Left" />
 
-    <Style x:Key="MahApps.Styles.Button.FocusVisualStyle.Flat">
+    <Style x:Key="MahApps.Metro.Styles.FlatButtonFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle Margin="2"
                                SnapsToDevicePixels="True"
-                               Stroke="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}"
+                               Stroke="{DynamicResource FlatButtonForegroundBrush}"
                                StrokeDashArray="1 2"
                                StrokeThickness="1"
                                UseLayoutRounding="True" />
@@ -20,23 +20,22 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Flat" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}" />
+    <Style x:Key="MetroFlatButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
+        <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="Border"
                             Margin="0"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
@@ -47,7 +46,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
@@ -55,25 +54,25 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.MouseOver}" />
+                <Setter Property="Background" Value="DarkGray" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
+                <Setter Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <!--  style for flat toggle button like MahApps.Styles.ToggleButton.Flat  -->
-    <Style x:Key="MahApps.Styles.ToggleButton.Flat" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background}" />
+    <!--  style for flat toggle button like MetroFlatButton  -->
+    <Style x:Key="MetroFlatToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource FlatButtonBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Styles.Button.FocusVisualStyle.Flat}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button.Flat}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource MahApps.Metro.Styles.FlatButtonFocusVisualStyle}" />
+        <Setter Property="FontSize" Value="{DynamicResource FlatButtonFontSize}" />
+        <Setter Property="Foreground" Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="Padding" Value="10 5 10 5" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -84,7 +83,6 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
@@ -95,7 +93,7 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                 </ControlTemplate>
@@ -103,8 +101,8 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </Trigger>
 
             <MultiTrigger>
@@ -112,15 +110,15 @@
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsChecked" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.MouseOver}" />
+                <Setter Property="Background" Value="DarkGray" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsChecked" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </MultiTrigger>
 
             <MultiTrigger>
@@ -128,31 +126,31 @@
                     <Condition Property="IsPressed" Value="True" />
                     <Condition Property="IsChecked" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Flat.Background.Pressed}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Flat.Foreground.Pressed}" />
+                <Setter Property="Background" Value="{DynamicResource FlatButtonPressedBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsPressed" Value="True" />
                     <Condition Property="IsChecked" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                <Setter Property="Foreground" Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
             </MultiTrigger>
 
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray2}" />
+                <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.FocusVisualStyle.Circle">
+    <Style x:Key="MahApps.Metro.Styles.CircleButtonFocusVisualStyle">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
                     <Ellipse Margin="3"
                              SnapsToDevicePixels="True"
-                             Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                             Stroke="{DynamicResource BlackBrush}"
                              StrokeDashArray="2 2"
                              StrokeThickness="1"
                              UseLayoutRounding="True" />
@@ -162,11 +160,11 @@
     </Style>
 
     <!--  style for WP7/Circle button  -->
-    <Style x:Key="MahApps.Styles.Button.Circle" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.Button.FocusVisualStyle.Circle}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -175,7 +173,7 @@
                     <Grid>
                         <Ellipse Fill="{TemplateBinding Background}" StrokeThickness="0" />
                         <Ellipse x:Name="ellipsebg"
-                                 Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                 Fill="{DynamicResource BlackBrush}"
                                  Opacity="0"
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
@@ -185,7 +183,7 @@
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                          RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -220,7 +218,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -228,22 +226,17 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!--  "Chromeless" style for buttons  -->
-    <ControlTemplate x:Key="MahApps.Templates.Button.Chromeless" TargetType="{x:Type ButtonBase}">
+    <ControlTemplate x:Key="ChromelessButtonTemplate" TargetType="{x:Type ButtonBase}">
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="PART_ContentPresenter"
                               Margin="{TemplateBinding Padding}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                               Opacity="0.75"
-                              RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                              RecognizesAccessKey="True"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -259,21 +252,20 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style x:Key="MahApps.Styles.Button.Chromeless" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+    <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Template" Value="{StaticResource MahApps.Templates.Button.Chromeless}" />
+        <Setter Property="Template" Value="{StaticResource ChromelessButtonTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <!--  base button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.MetroWindow.Base" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Transparent}" />
+    <Style x:Key="BaseMetroWindowButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Opacity" Value="0.8" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
@@ -288,31 +280,36 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   Opacity="0.6"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.SemiTransparent}" />
-                <Setter Property="Opacity" Value="1" />
+                <Setter Property="Background" Value="{DynamicResource SemiTransparentWhiteBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  light button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.MetroWindow.Light"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Base}"
+    <Style x:Key="LightMetroWindowButtonStyle"
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}"
            TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Focusable" Value="False" />
@@ -322,80 +319,83 @@
         <Setter Property="Width" Value="34" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
+                <Setter Property="Background" Value="{DynamicResource SemiTransparentWhiteBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  dark button style for min, max and close window buttons  -->
-    <Style x:Key="MahApps.Styles.Button.MetroWindow.Dark"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
+    <Style x:Key="DarkMetroWindowButtonStyle"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.WindowButtonCommands.Background.MouseOver}" />
+                <Setter Property="Background" Value="{DynamicResource SemiTransparentGreyBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForegroundDisabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Light.Win10"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Light}"
+    <Style x:Key="MahApps.Metro.Styles.WindowButton.Close.Light.Win10"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#E81123" />
-                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="#F1707A" />
                 <Setter Property="Foreground" Value="Black" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundDisabledBrush}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroWindow.Close.Dark.Win10"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroWindow.Dark}"
+    <Style x:Key="MahApps.Metro.Styles.WindowButton.Close.Dark.Win10"
+           BasedOn="{StaticResource DarkMetroWindowButtonStyle}"
            TargetType="{x:Type Button}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#E81123" />
-                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="#F1707A" />
                 <Setter Property="Foreground" Value="Black" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!--  style for default button  -->
-    <Style x:Key="MahApps.Styles.Button" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border}" />
+    <Style x:Key="MahApps.Metro.Styles.MetroButton" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource ButtonMouseOverBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderThickness" Value="2" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize" Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -407,14 +407,15 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Margin="{TemplateBinding BorderThickness}"
                                                    Padding="{TemplateBinding Padding}"
@@ -425,16 +426,15 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
@@ -450,187 +450,31 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Square" TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Lower" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Padding" Value="3 4" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+<<<<<<< HEAD:src/MahApps.Metro/MahApps.Metro/Styles/Controls.Buttons.xaml
+    <!--  obsolete  -->
+    <Style x:Key="MetroButton"
+           BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}"
+           TargetType="{x:Type ButtonBase}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
                         <Border x:Name="Background"
                                 Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused" />
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="ValidationStates">
-                                <VisualState x:Name="Valid" />
-                                <VisualState x:Name="InvalidFocused" />
-                                <VisualState x:Name="InvalidUnfocused" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Button.Square.Background.MouseOver}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.Square.Foreground.MouseOver}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="MahApps.Styles.Button.Square.Accent"
-           BasedOn="{StaticResource MahApps.Styles.Button.Square}"
-           TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Grid>
-                        <Border x:Name="Background"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Margin="{TemplateBinding BorderThickness}">
-                            <Rectangle x:Name="MouseOverRectangle"
-                                       Fill="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Background.MouseOver}"
-                                       Opacity="0" />
-                            <Controls:ContentControlEx x:Name="PART_ContentPresenter"
-                                                       Padding="{TemplateBinding Padding}"
-                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                       Content="{TemplateBinding Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                       RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
-                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused" />
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="ValidationStates">
-                                <VisualState x:Name="Valid" />
-                                <VisualState x:Name="InvalidFocused" />
-                                <VisualState x:Name="InvalidUnfocused" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Foreground.MouseOver}" />
-                            <Setter TargetName="MouseOverRectangle" Property="Opacity" Value="1" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-                            <Setter TargetName="MouseOverRectangle" Property="Opacity" Value="0" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="MahApps.Styles.Button.Square.Highlight"
-           BasedOn="{StaticResource MahApps.Styles.Button.Square}"
-           TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Highlight}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="Background"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
+                        <Border x:Name="Border"
                                 Background="{x:Null}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -640,7 +484,66 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   RecognizesAccessKey="True"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ButtonMouseOverBorderBrush}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="2" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="0.7" />
+                            <Setter TargetName="PART_ContentPresenter" Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+=======
+>>>>>>> upstream/develop:src/MahApps.Metro/Styles/Controls.Buttons.xaml
+    <Style x:Key="SquareButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Lower" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="Padding" Value="5 6" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="Background"
+                                Background="{x:Null}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="False"
+                                   Opacity="0" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -670,12 +573,12 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+                            <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                            <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -683,12 +586,89 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton.Circle" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="AccentedSquareButtonStyle"
+           BasedOn="{StaticResource SquareButtonStyle}"
+           TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+    </Style>
+
+    <Style x:Key="HighlightedSquareButtonStyle"
+           BasedOn="{StaticResource SquareButtonStyle}"
+           TargetType="{x:Type ButtonBase}">
+        <Setter Property="Background" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="Background"
+                                Background="{x:Null}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="False"
+                                   Opacity="0" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   RecognizesAccessKey="True"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.7" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ValidationStates">
+                                <VisualState x:Name="Valid" />
+                                <VisualState x:Name="InvalidFocused" />
+                                <VisualState x:Name="InvalidUnfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource BlackBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MahApps.Metro.Styles.MetroCircleToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush3}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Styles.Button.FocusVisualStyle.Circle}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MahApps.Metro.Styles.CircleButtonFocusVisualStyle}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -697,7 +677,7 @@
                     <Grid>
                         <Ellipse Fill="{TemplateBinding Background}" StrokeThickness="0" />
                         <Ellipse x:Name="ellipsebg"
-                                 Fill="{DynamicResource MahApps.Brushes.Accent}"
+                                 Fill="{DynamicResource AccentColorBrush}"
                                  Opacity="0"
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
@@ -707,7 +687,7 @@
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                          RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -734,8 +714,8 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-                            <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+                            <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ellipse" Property="Opacity" Value="1" />
@@ -744,7 +724,7 @@
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                            <Setter TargetName="PART_ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse" Property="Opacity" Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -752,27 +732,18 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Style.Triggers>
-            <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.IdealForeground}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray7}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.ToggleButton" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border}" />
+    <Style x:Key="MahApps.Metro.Styles.MetroToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.CornerRadius" Value="3" />
-        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.Focus}" />
-        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.Button.Border.MouseOver}" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
-        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Button}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource ButtonMouseOverBorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="FontSize" Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Padding" Value="5 6" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -784,11 +755,11 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -802,18 +773,14 @@
                                                    ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                   RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                   RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Border" Property="BorderThickness" Value="2" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush), Mode=OneWay}" />
-                        </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
                             <Setter TargetName="Border" Property="BorderThickness" Value="2" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -826,36 +793,39 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray2}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                <Setter Property="Background" Value="{DynamicResource GrayBrush2}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsChecked" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsMouseOver" Value="True" />
                     <Condition Property="IsChecked" Value="True" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                <Setter Property="Background" Value="{DynamicResource GrayBrush3}" />
             </MultiTrigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray7}" />
+                <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush), Mode=OneWay}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroSquare" TargetType="{x:Type ButtonBase}">
+    <Style x:Key="SquareMetroButton" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Button}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
         <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Padding" Value="12 4 12 4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -867,15 +837,14 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
-                                           Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                           Fill="{DynamicResource WhiteBrush}"
                                            Opacity="0" />
                                 <Rectangle x:Name="PressedRectangle"
-                                           Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                           Fill="{DynamicResource BlackBrush}"
                                            Opacity="0" />
                                 <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                            Padding="{TemplateBinding Padding}"
@@ -886,7 +855,7 @@
                                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                           RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>
@@ -954,7 +923,7 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                            <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -963,12 +932,12 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.MetroSquare.Accent"
-           BasedOn="{StaticResource MahApps.Styles.Button.MetroSquare}"
+    <Style x:Key="MetroAccentButton"
+           BasedOn="{StaticResource SquareMetroButton}"
            TargetType="{x:Type ButtonBase}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Selected.Foreground}" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -977,12 +946,11 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
-                                           Fill="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                           Fill="{DynamicResource BlackBrush}"
                                            Opacity="0" />
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="White"
@@ -996,7 +964,7 @@
                                                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                                            ContentTemplate="{TemplateBinding ContentTemplate}"
                                                            ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
+                                                           RecognizesAccessKey="True"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Border>
@@ -1072,12 +1040,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.DropDown"
+    <Style x:Key="ButtonDropDownStyle"
            BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
            TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -1087,26 +1055,26 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                            CornerRadius="0"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}" />
+                                          RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1114,15 +1082,14 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Split"
-           BasedOn="{StaticResource MahApps.Styles.Button.DropDown}"
+    <Style x:Key="ButtonSplitStyle"
+           BasedOn="{StaticResource ButtonDropDownStyle}"
            TargetType="{x:Type Button}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
-
-    <Style x:Key="MahApps.Styles.Button.Split.Arrow"
-           BasedOn="{StaticResource MahApps.Styles.Button.Split}"
+    <Style x:Key="ButtonSplitArrowStyle"
+           BasedOn="{StaticResource ButtonSplitStyle}"
            TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
