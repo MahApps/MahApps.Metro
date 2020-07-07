@@ -66,13 +66,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register(nameof(IsPinned), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register(nameof(AnimateOnPositionChange), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.TrueBox));
-        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, AnimateOpacityChanged));
+        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register(nameof(AnimateOpacity), typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnAnimateOpacityPropertyChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached(nameof(CloseCommand), typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty CloseCommandParameterProperty = DependencyProperty.Register(nameof(CloseCommandParameter), typeof(object), typeof(Flyout), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(nameof(Theme), typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, OnThemePropertyChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register(nameof(ExternalCloseButton), typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register(nameof(CloseButtonVisibility), typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register(nameof(CloseButtonIsCancel), typeof(bool), typeof(Flyout), new PropertyMetadata(BooleanBoxes.FalseBox));
@@ -518,22 +518,23 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseEnabledChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action autoCloseEnabledChangedAction = () =>
                 {
-                    if ((bool)e.NewValue)
+                    if (e.NewValue != e.OldValue)
                     {
-                        if (flyout.IsOpen)
+                        if ((bool)e.NewValue)
                         {
-                            flyout.StartAutoCloseTimer();
+                            if (flyout.IsOpen)
+                            {
+                                flyout.StartAutoCloseTimer();
+                            }
+                        }
+                        else
+                        {
+                            flyout.StopAutoCloseTimer();
                         }
                     }
-                    else
-                    {
-                        flyout.StopAutoCloseTimer();
-                    }
-                }
-            };
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
         }
@@ -542,16 +543,17 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action autoCloseIntervalChangedAction = () => {
-                if (e.NewValue != e.OldValue)
+            Action autoCloseIntervalChangedAction = () =>
                 {
-                    flyout.InitializeAutoCloseTimer();
-                    if (flyout.IsAutoCloseEnabled && flyout.IsOpen)
+                    if (e.NewValue != e.OldValue)
                     {
-                        flyout.StartAutoCloseTimer();
+                        flyout.InitializeAutoCloseTimer();
+                        if (flyout.IsAutoCloseEnabled && flyout.IsOpen)
+                        {
+                            flyout.StartAutoCloseTimer();
+                        }
                     }
-                }
-            };
+                };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
         }
@@ -627,16 +629,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
-            flyout.UpdateFlyoutTheme();
+            (dependencyObject as Flyout)?.UpdateFlyoutTheme();
         }
 
-        private static void AnimateOpacityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        private static void OnAnimateOpacityPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
-            flyout.UpdateOpacityChange();
+            (dependencyObject as Flyout)?.UpdateOpacityChange();
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)

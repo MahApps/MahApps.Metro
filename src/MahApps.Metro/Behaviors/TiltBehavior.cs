@@ -116,7 +116,7 @@ namespace MahApps.Metro.Behaviors
 
         private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            this.RotatorParent?.Refresh();
+            this.Invoke(() => { this.RotatorParent?.Refresh(); });
         }
 
         protected override void OnDetaching()
