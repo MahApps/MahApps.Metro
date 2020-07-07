@@ -1064,31 +1064,31 @@ namespace MahApps.Metro.Controls
 
         private void ThemeManagerOnIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            if (e.NewTheme != null)
-            {
-                var flyouts = this.Flyouts.GetFlyouts().ToList();
-                // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
-                // e.g if the FlyoutsControl is hosted in a UserControl
-                var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
-                if (allChildFlyouts.Any())
+            this.Invoke(() =>
                 {
-                    flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
-                }
+                    var flyouts = this.Flyouts.GetFlyouts().ToList();
+                    // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
+                    // e.g if the FlyoutsControl is hosted in a UserControl
+                    var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
+                    if (allChildFlyouts.Any())
+                    {
+                        flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
+                    }
 
-                if (!flyouts.Any())
-                {
-                    // we must update the window command brushes!!!
-                    this.ResetAllWindowCommandsBrush();
-                    return;
-                }
+                    if (!flyouts.Any())
+                    {
+                        // we must update the window command brushes!!!
+                        this.ResetAllWindowCommandsBrush();
+                        return;
+                    }
 
-                foreach (var flyout in flyouts)
-                {
-                    flyout.ChangeFlyoutTheme(e.NewTheme);
-                }
-                
-                this.HandleWindowCommandsForFlyouts(flyouts);
-            }
+                    foreach (var flyout in flyouts)
+                    {
+                        flyout.ChangeFlyoutTheme(e.NewTheme);
+                    }
+
+                    this.HandleWindowCommandsForFlyouts(flyouts);
+                });
         }
 
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)

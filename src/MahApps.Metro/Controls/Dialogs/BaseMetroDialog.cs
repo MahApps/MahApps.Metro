@@ -243,7 +243,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void ThemeManagerIsThemeChanged(object sender, ThemeChangedEventArgs e)
         {
-            this.HandleThemeChange();
+            this.Invoke(this.HandleThemeChange);
         }
 
         private static object TryGetResource(ControlzEx.Theming.Theme theme, string key)
