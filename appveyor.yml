@@ -1,11 +1,9 @@
 # http://www.appveyor.com/docs/appveyor-yml
 
-# configuration for develop/CI and master/Release branch
-
 branches:
   only:
     - develop
-    - master
+    - main
 
 environment:
   azure-key-vault-url:

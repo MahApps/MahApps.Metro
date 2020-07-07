@@ -4,6 +4,7 @@ mode: ContinuousDeployment
 next-version: 2.1.0
 branches:
   master:
+    regex: ^main
     mode: ContinuousDeployment
     tag: rc
     prevent-increment-of-merged-branch-version: true

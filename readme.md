@@ -32,14 +32,14 @@
     <img src="https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square">
   </a>
   <br />
-  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/master">
-    <img alt="masterstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=master">
+  <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/main">
+    <img alt="main status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/main.svg?style=flat-square&&label=main">
   </a>
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
-    <img alt="devstatus" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
+    <img alt="dev status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
   </a>
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
-    <img alt="devtests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
+    <img alt="dev tests" src="https://img.shields.io/appveyor/tests/punker76/mahapps-metro/develop.svg?style=flat-square">
   </a>
   <br />
   <a href="https://github.com/MahApps/MahApps.Metro/issues">
