@@ -17,11 +17,16 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_ColorPaletteCustom01", Type = typeof(ColorPalette))]
     [TemplatePart(Name = "PART_ColorPaletteCustom02", Type = typeof(ColorPalette))]
     [TemplatePart(Name = "PART_ColorPaletteRecent", Type = typeof(ColorPalette))]
+    [TemplatePart(Name = "PART_PopupTabControl", Type = typeof(TabControl))]
+    [TemplatePart(Name = "PART_ColorPalettesTab", Type = typeof(TabItem))]
+    [TemplatePart(Name = "PART_AdvancedTab", Type = typeof(TabItem))]
     [StyleTypedProperty(Property = nameof(StandardColorPaletteStyle), StyleTargetType = typeof(ColorPalette))]
     [StyleTypedProperty(Property = nameof(AvailableColorPaletteStyle), StyleTargetType = typeof(ColorPalette))]
     [StyleTypedProperty(Property = nameof(CustomColorPalette01Style), StyleTargetType = typeof(ColorPalette))]
     [StyleTypedProperty(Property = nameof(RecentColorPaletteStyle), StyleTargetType = typeof(ColorPalette))]
     [StyleTypedProperty(Property = nameof(CustomColorPalette02Style), StyleTargetType = typeof(ColorPalette))]
+    [StyleTypedProperty(Property = nameof(TabControlStyle), StyleTargetType = typeof(TabControl))]
+    [StyleTypedProperty(Property = nameof(TabItemStyle), StyleTargetType = typeof(TabItem))]
     public class ColorPicker : ColorPickerBase
     {
         /// <summary>Identifies the <see cref="DropDownClosed"/> routed event.</summary>
@@ -65,6 +70,9 @@ namespace MahApps.Metro.Controls
         private ColorPalette PART_ColorPaletteCustom01;
         private ColorPalette PART_ColorPaletteCustom02;
         private ColorPalette PART_ColorPaletteRecent;
+        private TabControl PART_PopupTabControl;
+        private TabItem PART_ColorPalettesTab;
+        private TabItem PART_AdvancedTab;
 
         static ColorPicker()
         {
@@ -166,7 +174,13 @@ namespace MahApps.Metro.Controls
             PART_ColorPaletteCustom02 = this.GetTemplateChild(nameof(PART_ColorPaletteCustom02)) as ColorPalette;
             PART_ColorPaletteRecent = this.GetTemplateChild(nameof(PART_ColorPaletteCustom02)) as ColorPalette;
 
+            PART_PopupTabControl = this.GetTemplateChild(nameof(PART_PopupTabControl)) as TabControl;
+            PART_ColorPalettesTab = this.GetTemplateChild(nameof(PART_ColorPalettesTab)) as TabItem;
+            PART_AdvancedTab = this.GetTemplateChild(nameof(PART_AdvancedTab)) as TabItem;
+
             base.OnApplyTemplate();
+
+            ValidateTabItems();
         }
 
 
@@ -199,25 +213,34 @@ namespace MahApps.Metro.Controls
                         ColorPicker cp = (ColorPicker)arg;
                         bool isFocused = false;
 
-                        if (!isFocused && cp.IsStandardColorPaletteVisible && cp.PART_ColorPaletteStandard != null) 
+                        cp.ValidateTabItems();
+
+                        if (cp.PART_PopupTabControl.SelectedItem == cp.PART_ColorPalettesTab)
                         {
-                            isFocused = cp.PART_ColorPaletteStandard.FocusSelectedItem();
+                            if (!isFocused && cp.IsStandardColorPaletteVisible && cp.PART_ColorPaletteStandard != null)
+                            {
+                                isFocused = cp.PART_ColorPaletteStandard.FocusSelectedItem();
+                            }
+                            else if (!isFocused && cp.IsAvailableColorPaletteVisible && cp.PART_ColorPaletteAvailable != null)
+                            {
+                                isFocused = cp.PART_ColorPaletteAvailable.FocusSelectedItem();
+                            }
+                            else if (!isFocused && cp.IsCustomColorPalette01Visible && cp.PART_ColorPaletteCustom01 != null)
+                            {
+                                isFocused = cp.PART_ColorPaletteCustom01.FocusSelectedItem();
+                            }
+                            else if (!isFocused && cp.IsCustomColorPalette02Visible && cp.PART_ColorPaletteCustom02 != null)
+                            {
+                                isFocused = cp.PART_ColorPaletteCustom02.FocusSelectedItem();
+                            }
+                            else if (!isFocused && cp.IsRecentColorPaletteVisible && cp.PART_ColorPaletteRecent != null)
+                            {
+                                isFocused = cp.PART_ColorPaletteRecent.FocusSelectedItem();
+                            }
                         }
-                        else if (!isFocused && cp.IsAvailableColorPaletteVisible && cp.PART_ColorPaletteAvailable != null)
+                        else if (cp.PART_PopupTabControl.SelectedItem == cp.PART_AdvancedTab)
                         {
-                            isFocused = cp.PART_ColorPaletteAvailable.FocusSelectedItem();
-                        }
-                        else if (!isFocused && cp.IsCustomColorPalette01Visible && cp.PART_ColorPaletteCustom01 != null)
-                        {
-                            isFocused = cp.PART_ColorPaletteCustom01.FocusSelectedItem();
-                        }
-                        else if (!isFocused && cp.IsCustomColorPalette02Visible && cp.PART_ColorPaletteCustom02 != null)
-                        {
-                            isFocused = cp.PART_ColorPaletteCustom02.FocusSelectedItem();
-                        }
-                        else if (!isFocused && cp.IsRecentColorPaletteVisible && cp.PART_ColorPaletteRecent != null)
-                        {
-                            isFocused = cp.PART_ColorPaletteRecent.FocusSelectedItem();
+                            cp.PART_AdvancedTab.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                         }
 
                         return null;
@@ -536,5 +559,125 @@ namespace MahApps.Metro.Controls
         }
 
         #endregion ColorPalettes
+
+        #region TabControl
+
+        /// <summary>Identifies the <see cref="TabControlStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty TabControlStyleProperty = DependencyProperty.Register(nameof(TabControlStyle), typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
+
+        /// <summary>Identifies the <see cref="TabItemStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty TabItemStyleProperty = DependencyProperty.Register(nameof(TabItemStyle), typeof(Style), typeof(ColorPicker), new PropertyMetadata(null));
+
+
+
+        public Style TabControlStyle
+        {
+            get { return (Style)GetValue(TabControlStyleProperty); }
+            set { SetValue(TabControlStyleProperty, value); }
+        }
+
+
+        public Style TabItemStyle
+        {
+            get { return (Style)GetValue(TabItemStyleProperty); }
+            set { SetValue(TabItemStyleProperty, value); }
+        }
+
+
+
+        /// <summary>Identifies the <see cref="ColorPalettesTabHeader"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorPalettesTabHeaderProperty = DependencyProperty.Register(nameof(ColorPalettesTabHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Palettes"));
+
+        /// <summary>Identifies the <see cref="ColorPalettesTabHeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty ColorPalettesTabHeaderTemplateProperty = DependencyProperty.Register(nameof(ColorPalettesTabHeaderTemplate), typeof(DataTemplate), typeof(ColorPicker), new PropertyMetadata(null));
+
+        /// <summary>Identifies the <see cref="IsColorPalettesTabVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsColorPalettesTabVisibleProperty = DependencyProperty.Register(nameof(IsColorPalettesTabVisible), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true, OnTabItemVisibilityChanged));
+
+        public object ColorPalettesTabHeader
+        {
+            get { return (object)GetValue(ColorPalettesTabHeaderProperty); }
+            set { SetValue(ColorPalettesTabHeaderProperty, value); }
+        }
+
+        public DataTemplate ColorPalettesTabHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(ColorPalettesTabHeaderTemplateProperty); }
+            set { SetValue(ColorPalettesTabHeaderTemplateProperty, value); }
+        }
+
+        public bool IsColorPalettesTabVisible
+        {
+            get { return (bool)GetValue(IsColorPalettesTabVisibleProperty); }
+            set { SetValue(IsColorPalettesTabVisibleProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="AdvancedTabHeader"/> dependency property.</summary>
+        public static readonly DependencyProperty AdvancedTabHeaderProperty = DependencyProperty.Register(nameof(AdvancedTabHeader), typeof(object), typeof(ColorPicker), new PropertyMetadata("Advanced"));
+
+        /// <summary>Identifies the <see cref="AdvancedTabHeaderTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty AdvancedTabHeaderTemplateProperty = DependencyProperty.Register(nameof(AdvancedTabHeaderTemplate), typeof(DataTemplate), typeof(ColorPicker), new PropertyMetadata(null));
+
+        /// <summary>Identifies the <see cref="IsAdvancedTabVisible"/> dependency property.</summary>
+        public static readonly DependencyProperty IsAdvancedTabVisibleProperty = DependencyProperty.Register(nameof(IsAdvancedTabVisible), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true, OnTabItemVisibilityChanged));
+
+        public object AdvancedTabHeader
+        {
+            get { return (object)GetValue(AdvancedTabHeaderProperty); }
+            set { SetValue(AdvancedTabHeaderProperty, value); }
+        }
+
+        public DataTemplate AdvancedTabHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(AdvancedTabHeaderTemplateProperty); }
+            set { SetValue(AdvancedTabHeaderTemplateProperty, value); }
+        }
+
+        public bool IsAdvancedTabVisible
+        {
+            get { return (bool)GetValue(IsAdvancedTabVisibleProperty); }
+            set { SetValue(IsAdvancedTabVisibleProperty, value); }
+        }
+
+
+        private static void OnTabItemVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ColorPicker colorPicker && colorPicker.IsInitialized)
+            {
+                colorPicker.ValidateTabItems();
+            }
+        }
+
+        private void ValidateTabItems()
+        {
+            // If both TabItems are invisble we set the content to null
+            if (!IsAdvancedTabVisible && !IsColorPalettesTabVisible)
+            {
+                PART_PopupTabControl.SelectedIndex = -1;
+            }
+            // If the color palettes tab is selected but not visible we select the advanced tab and vice vera
+            else if (PART_PopupTabControl.SelectedItem == PART_ColorPalettesTab && !IsColorPalettesTabVisible)
+            {
+                PART_PopupTabControl.SelectedItem = PART_AdvancedTab;
+            }
+            else if (PART_PopupTabControl.SelectedItem == PART_AdvancedTab && !IsAdvancedTabVisible)
+            {
+                PART_PopupTabControl.SelectedItem = PART_ColorPalettesTab;
+            }
+            else
+            {
+                if (IsColorPalettesTabVisible)
+                {
+                    PART_ColorPalettesTab.IsSelected = true;
+                }
+                else if (IsAdvancedTabVisible)
+                {
+                    PART_AdvancedTab.IsSelected = true;
+                }
+            }
+        }
+
+        #endregion
     }
 }

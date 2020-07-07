@@ -3,7 +3,7 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:controlzex="urn:controlzex"
                     xmlns:mah="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib" >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
@@ -173,6 +173,8 @@
         <Setter Property="RecentColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="IsAdvancedTabVisible" Value="True" />
+        <Setter Property="IsColorPalettesTabVisible" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type mah:ColorPicker}">
@@ -314,8 +316,12 @@
                                         BorderBrush="{DynamicResource MahApps.Brushes.ComboBox.PopupBorder}"
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <TabControl>
-                                        <TabItem Header="Palletes">
+                                    <TabControl x:Name="PART_PopupTabControl" Style="{TemplateBinding TabControlStyle}"
+                                                ItemContainerStyle="{TemplateBinding TabItemStyle}" >
+                                        <TabItem Header="{TemplateBinding ColorPalettesTabHeader}"
+                                                 x:Name="PART_ColorPalettesTab"
+                                                 HeaderTemplate="{TemplateBinding ColorPalettesTabHeaderTemplate}"
+                                                 Visibility="{TemplateBinding IsColorPalettesTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                             <ScrollViewer CanContentScroll="False"
                                                           HorizontalScrollBarVisibility="Disabled"
                                                           VerticalScrollBarVisibility="Auto">
@@ -363,7 +369,10 @@
                                             </ScrollViewer>
 
                                         </TabItem>
-                                        <TabItem Header="Custom">
+                                        <TabItem Header="{TemplateBinding AdvancedTabHeader}"
+                                                 x:Name="PART_AdvancedTab"
+                                                 HeaderTemplate="{TemplateBinding AdvancedTabHeaderTemplate}"
+                                                 Visibility="{TemplateBinding IsAdvancedTabVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                             <ScrollViewer>
                                                 <mah:ColorCanvas mah:TextBoxHelper.AutoWatermark="{TemplateBinding mah:TextBoxHelper.AutoWatermark}"
                                                                  mah:TextBoxHelper.ButtonCommand="{TemplateBinding mah:TextBoxHelper.ButtonCommand}"
