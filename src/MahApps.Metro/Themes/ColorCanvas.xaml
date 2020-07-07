@@ -65,8 +65,7 @@
 
 
     <DataTemplate x:Key="MahApps.DataTemplates.ColorPicker.NoColor">
-        <Path x:Shared="False"
-              Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+        <Path Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
               SnapsToDevicePixels="True"
               Stretch="Fill"
               Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"

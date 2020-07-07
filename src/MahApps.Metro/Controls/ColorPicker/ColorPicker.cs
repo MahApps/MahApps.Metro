@@ -174,10 +174,10 @@ namespace MahApps.Metro.Controls
         {
             base.OnSelectedColorChanged(NewValue, OldValue);
 
-            if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged)
+            if (this.AddToRecentColorsTrigger == AddToRecentColorsTrigger.SelectedColorChanged && SelectedColor.HasValue)
             {
-                BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(this), RecentColorPaletteItemsSource as ObservableCollection<Color?>);
                 BuildInColorPalettes.AddColorToRecentColors(NewValue, RecentColorPaletteItemsSource);
+                BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(this), RecentColorPaletteItemsSource as ObservableCollection<Color?>);
             }
         }
 
@@ -231,10 +231,10 @@ namespace MahApps.Metro.Controls
                         Mouse.Capture(null);
                     }
 
-                    if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed)
+                    if (colorPicker.AddToRecentColorsTrigger == AddToRecentColorsTrigger.ColorPickerClosed && colorPicker.SelectedColor.HasValue)
                     {
-                        BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker), colorPicker.RecentColorPaletteItemsSource);
                         BuildInColorPalettes.AddColorToRecentColors(colorPicker.SelectedColor, colorPicker.RecentColorPaletteItemsSource);
+                        BuildInColorPalettes.ReduceRecentColors(BuildInColorPalettes.GetMaximumRecentColorsCount(colorPicker), colorPicker.RecentColorPaletteItemsSource);
                     }
                 }
             }

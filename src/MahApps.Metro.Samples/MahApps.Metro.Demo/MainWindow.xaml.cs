@@ -536,7 +536,6 @@ namespace MetroDemo
                                                            new SolidColorBrush(colorPicker.SelectedColor ?? Colors.Blue),
                                                            true,
                                                            false));
-                ColorPalette.AddColorToRecentColors(colorPicker.SelectedColor);
             }
         }
     }

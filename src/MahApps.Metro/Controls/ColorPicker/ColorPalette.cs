@@ -40,63 +40,12 @@ namespace MahApps.Metro.Controls
         }
 
 
-        #region Build in Palettes
-        public static ObservableCollection<Color> PrimaryColorPalette { get; } = new ObservableCollection<Color>(
-            new Color[] 
-            { 
-                Colors.Transparent, 
-                Colors.White, 
-                Colors.LightGray,
-                Colors.Gray, 
-                Colors.Black, 
-                Colors.DarkRed,
-                Colors.Red,
-                Colors.Orange,
-                Colors.Brown,
-                Colors.Yellow, 
-                Colors.LimeGreen, 
-                Colors.Green, 
-                Colors.DarkTurquoise, 
-                Colors.Aqua, 
-                Colors.Navy,
-                Colors.Blue, 
-                Colors.Indigo, 
-                Colors.Purple,
-                Colors.Fuchsia
-            });
-
-        public static ObservableCollection<Color> WpfColorPalette { get; } = new ObservableCollection<Color>(
-            typeof(Colors).GetProperties().Where(x => x.PropertyType == typeof(Color))
-                .Select(x => (Color)x.GetValue(null))
-                .OrderBy(c => new HSVColor(c).Hue)
-                .ThenBy(c => new HSVColor(c).Saturation)
-                .ThenByDescending(c => new HSVColor(c).Value));
-
-
-        public static ObservableCollection<Color?> RecentColors { get; } = new ObservableCollection<Color?>();
-
-        public static void AddColorToRecentColors(Color? color)
-        {
-            var oldIndex = RecentColors.IndexOf(color);
-            if (oldIndex > -1)
-            {
-                RecentColors.Move(oldIndex, 0);
-            }
-            else
-            {
-                RecentColors.Insert(0, color);
-            }
-        }
-
-
-        #endregion
-
         internal bool FocusSelectedItem()
         {
             ListBoxItem listBoxItem = null;
-            if (SelectedItem != null)
+            if (SelectedIndex >= 0)
             {
-                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromItem(SelectedItem);
+                listBoxItem = (ListBoxItem)ItemContainerGenerator.ContainerFromIndex(SelectedIndex);
             }
             else if (Items.Count > 0)
             {
@@ -110,6 +59,5 @@ namespace MahApps.Metro.Controls
             }
             return false;
         }
-
     }
 }

@@ -167,6 +167,8 @@
         <Setter Property="CustomColorPalette02Style" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <Setter Property="RecentColorPaletteHeader" Value="Recent Colors" />
         <Setter Property="IsRecentColorPaletteVisible" Value="True" />
+        <Setter Property="AddToRecentColorsTrigger" Value="ColorPickerClosed" />
+        <Setter Property="mah:BuildInColorPalettes.MaximumRecentColorsCount" Value="18" />
         <Setter Property="RecentColorPaletteItemsSource" Value="{x:Static mah:BuildInColorPalettes.RecentColors}" />
         <Setter Property="RecentColorPaletteStyle" Value="{DynamicResource MahApps.Styles.ColorPalette.ColorPickerDropDown}" />
         <!--  change SnapsToDevicePixels to true to view a better border and validation error  -->
@@ -313,9 +315,7 @@
                                         BorderThickness="{DynamicResource ComboBoxPopupBorderThemeThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                     <TabControl>
-                                        <TabItem Header="Palletes"
-                                                 Margin="0"
-                                                 Padding="0">
+                                        <TabItem Header="Palletes">
                                             <ScrollViewer CanContentScroll="False"
                                                           HorizontalScrollBarVisibility="Disabled"
                                                           VerticalScrollBarVisibility="Auto">

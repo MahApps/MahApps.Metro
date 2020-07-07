@@ -40,6 +40,8 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
@@ -95,7 +97,8 @@
     </Style>
 
     <DataTemplate x:Key="MahApps.Templates.ColorPaletteItem">
-        <Border Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
+        <Border x:Name="ColorPresenter" 
+                Width="{DynamicResource MahApps.Sizes.ColorListBox.ItemWidth}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Center"
                 Background="{DynamicResource MahApps.Brushes.Checkerd.Small}"
