@@ -31,13 +31,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border x:Name="Border"
-                            Margin="0"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Controls:ClipBorder x:Name="Border"
+                                         Margin="0"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -49,7 +49,7 @@
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                    RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </Border>
+                    </Controls:ClipBorder>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -79,13 +79,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border x:Name="Border"
-                            Margin="0"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Controls:ClipBorder x:Name="Border"
+                                         Margin="0"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -97,7 +97,7 @@
                                                    ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
                                                    RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </Border>
+                    </Controls:ClipBorder>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -403,18 +403,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="Border"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="DisabledVisualElement"
+                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             IsHitTestVisible="False"
+                                             Opacity="0"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Margin="{TemplateBinding BorderThickness}"
                                                    Padding="{TemplateBinding Padding}"
@@ -465,18 +465,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Border x:Name="Background"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="Background"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="DisabledVisualElement"
+                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             IsHitTestVisible="False"
+                                             Opacity="0"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                        Padding="{TemplateBinding Padding}"
@@ -540,18 +540,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Border x:Name="Background"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="Background"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="DisabledVisualElement"
+                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             IsHitTestVisible="False"
+                                             Opacity="0"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Margin="{TemplateBinding BorderThickness}">
                             <Rectangle x:Name="MouseOverRectangle"
                                        Fill="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Background.MouseOver}"
@@ -619,18 +619,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="Background"
-                                Background="{x:Null}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="Background"
+                                             Background="{x:Null}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="DisabledVisualElement"
+                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             IsHitTestVisible="False"
+                                             Opacity="0"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Padding="{TemplateBinding Padding}"
                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -780,18 +780,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Border x:Name="DisabledVisualElement"
-                                Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="Border"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ClipBorder x:Name="DisabledVisualElement"
+                                             Background="{DynamicResource MahApps.Brushes.Control.Disabled}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             IsHitTestVisible="False"
+                                             Opacity="0"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Controls:ContentControlEx x:Name="PART_ContentPresenter"
                                                    Margin="{TemplateBinding BorderThickness}"
                                                    Padding="{TemplateBinding Padding}"
@@ -863,12 +863,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Controls:ClipBorder x:Name="Border"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
@@ -889,7 +889,7 @@
                                                            RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
-                        </Border>
+                        </Controls:ClipBorder>
 
                         <Rectangle x:Name="FocusVisualWhite"
                                    IsHitTestVisible="False"
@@ -973,12 +973,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Grid>
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Controls:ClipBorder x:Name="Border"
+                                             Background="{TemplateBinding Background}"
+                                             BorderBrush="{TemplateBinding BorderBrush}"
+                                             BorderThickness="{TemplateBinding BorderThickness}"
+                                             CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
 
                             <Grid>
                                 <Rectangle x:Name="MouseOverRectangle"
@@ -999,7 +999,7 @@
                                                            RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}"
                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
-                        </Border>
+                        </Controls:ClipBorder>
 
                         <Rectangle x:Name="FocusVisualWhite"
                                    IsHitTestVisible="False"
@@ -1083,18 +1083,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                    <Controls:ClipBorder x:Name="Border"
+                                         Background="{TemplateBinding Background}"
+                                         BorderBrush="{TemplateBinding BorderBrush}"
+                                         BorderThickness="{TemplateBinding BorderThickness}"
+                                         CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter x:Name="PART_ContentPresenter"
                                           Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="{TemplateBinding Controls:ControlsHelper.RecognizesAccessKey}" />
-                    </Border>
+                    </Controls:ClipBorder>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="Border" Property="BorderBrush" Value="Transparent" />
