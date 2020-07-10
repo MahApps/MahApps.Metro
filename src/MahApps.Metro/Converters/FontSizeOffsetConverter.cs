@@ -31,11 +31,13 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double && parameter is double) {
+            if (value is double && parameter is double)
+            {
                 var offset = (double)parameter;
                 var orgValue = (double)value;
                 return Math.Round(orgValue + offset);
             }
+
             return value;
         }
 

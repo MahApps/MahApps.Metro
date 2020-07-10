@@ -21,7 +21,8 @@ namespace MahApps.Metro.Controls
             Raise(eventToRaise, sender, EventArgs.Empty);
         }
 
-        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, T args) where T : EventArgs
+        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, T args)
+            where T : EventArgs
         {
             if (eventToRaise != null)
             {
@@ -29,9 +30,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public delegate T GetEventArgs<T>() where T : EventArgs;
+        public delegate T GetEventArgs<T>()
+            where T : EventArgs;
 
-        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs) where T : EventArgs
+        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs)
+            where T : EventArgs
         {
             if (eventToRaise != null)
             {

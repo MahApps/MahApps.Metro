@@ -9,7 +9,6 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-
     /// <summary>
     /// A class for manipulating an open ProgressDialog.
     /// </summary>
@@ -91,6 +90,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         throw new ArgumentOutOfRangeException(nameof(value));
                     }
+
                     this.WrappedDialog.ProgressValue = value;
                 };
             this.WrappedDialog.Invoke(action);
@@ -153,6 +153,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         throw new InvalidOperationException("Dialog isn't visible to close");
                     }
+
                     this.WrappedDialog.Dispatcher.VerifyAccess();
                     this.WrappedDialog.PART_NegativeButton.Click -= this.PART_NegativeButton_Click;
                 };
@@ -161,10 +162,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return this.CloseCallback()
                        .ContinueWith(_ => this.WrappedDialog.Invoke(() =>
-                                                                        {
-                                                                            this.IsOpen = false;
-                                                                            this.Closed?.Invoke(this, EventArgs.Empty);
-                                                                        }));
+                           {
+                               this.IsOpen = false;
+                               this.Closed?.Invoke(this, EventArgs.Empty);
+                           }));
         }
     }
 }

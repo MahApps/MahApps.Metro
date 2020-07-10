@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
         Task<ProgressDialogController> ShowProgressAsync(object context, string title, string message,
-            bool isCancelable = false, MetroDialogSettings settings = null);
+                                                         bool isCancelable = false, MetroDialogSettings settings = null);
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.        
@@ -96,7 +96,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         Task ShowMetroDialogAsync(object context, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null);
+                                  MetroDialogSettings settings = null);
 
         /// <summary>
         /// Hides a visible Metro Dialog instance.
@@ -110,11 +110,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// This happens if <see cref="ShowMetroDialogAsync"/> hasn't been called before.
         /// </exception>
         Task HideMetroDialogAsync(object context, BaseMetroDialog dialog, MetroDialogSettings settings = null);
-        
+
         /// <summary>
         /// Gets the current shown dialog.
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
-        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;        
+        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context)
+            where TDialog : BaseMetroDialog;
     }
 }

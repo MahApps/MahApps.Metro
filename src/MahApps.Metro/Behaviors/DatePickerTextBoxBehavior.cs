@@ -11,7 +11,6 @@ using Microsoft.Xaml.Behaviors;
 
 namespace MahApps.Metro.Behaviors
 {
-
     public class DatePickerTextBoxBehavior : Behavior<DatePickerTextBox>
     {
         protected override void OnAttached()

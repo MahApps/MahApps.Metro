@@ -50,6 +50,7 @@ namespace MahApps.Metro.Behaviors
                 AssociatedObject.SelectedItem = null;
             }
         }
+
         protected override void OnDetaching()
         {
             AssociatedObject.SelectionChanged -= OnSelectionChanged;

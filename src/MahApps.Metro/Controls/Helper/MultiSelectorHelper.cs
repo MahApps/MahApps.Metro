@@ -250,7 +250,6 @@ namespace MahApps.Metro.Controls
                                 break;
                         }
                     }
-
                 }
                 finally
                 {

@@ -34,7 +34,7 @@ namespace MahApps.Metro.Converters
             var whichButton = parameter as string;
             if (values != null && !string.IsNullOrEmpty(whichButton))
             {
-                var showButton = values.Length > 0 && (bool) values[0];
+                var showButton = values.Length > 0 && (bool)values[0];
                 var useNoneWindowStyle = values.Length > 1 && (bool)values[1];
                 var windowResizeMode = values.Length > 2 ? (ResizeMode)values[2] : ResizeMode.CanResize;
 
@@ -52,6 +52,7 @@ namespace MahApps.Metro.Converters
                         {
                             return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                         }
+
                         return Visibility.Collapsed;
                     case ResizeMode.CanResize:
                     case ResizeMode.CanResizeWithGrip:
@@ -59,6 +60,7 @@ namespace MahApps.Metro.Converters
                         return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
             }
+
             return Visibility.Visible;
         }
 

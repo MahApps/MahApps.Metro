@@ -144,7 +144,6 @@
         </Style.Triggers>
     </Style>
 
-
     <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
            BasedOn="{StaticResource MahApps.Styles.Button.ToolBar}"

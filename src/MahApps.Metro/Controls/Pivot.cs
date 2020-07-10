@@ -64,6 +64,7 @@ namespace MahApps.Metro.Controls
                     internalIndex = index;
                     break;
                 }
+
                 widthToScroll += ((PivotItem)Items[index]).ActualWidth;
             }
 
@@ -100,6 +101,7 @@ namespace MahApps.Metro.Controls
                 scroller.ScrollChanged += scroller_ScrollChanged;
                 scroller.PreviewMouseWheel += scroller_MouseWheel;
             }
+
             if (headers != null)
             {
                 headers.SelectionChanged += headers_SelectionChanged;
@@ -134,8 +136,10 @@ namespace MahApps.Metro.Controls
 
                         RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
                     }
+
                     break;
                 }
+
                 position += widthOfItem;
             }
         }

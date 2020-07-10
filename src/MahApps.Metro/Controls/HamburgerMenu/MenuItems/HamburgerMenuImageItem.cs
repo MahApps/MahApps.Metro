@@ -22,15 +22,9 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public ImageSource Thumbnail
         {
-            get
-            {
-                return (ImageSource)GetValue(ThumbnailProperty);
-            }
+            get { return (ImageSource)GetValue(ThumbnailProperty); }
 
-            set
-            {
-                SetValue(ThumbnailProperty, value);
-            }
+            set { SetValue(ThumbnailProperty, value); }
         }
 
         protected override Freezable CreateInstanceCore()

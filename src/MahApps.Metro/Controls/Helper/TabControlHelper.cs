@@ -276,12 +276,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(TransitionProperty, value);
         }
 
-
-
         /// <summary>
         /// Defines the position of the <see cref="TabItem"/> Underline
         /// </summary>
-
         public static readonly DependencyProperty UnderlinePlacementProperty =
             DependencyProperty.RegisterAttached("UnderlinePlacement",
                                                 typeof(Dock?),

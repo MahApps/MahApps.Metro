@@ -113,6 +113,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+
             return false;
         }
 

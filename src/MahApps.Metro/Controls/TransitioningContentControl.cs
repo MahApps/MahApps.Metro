@@ -252,7 +252,6 @@ namespace MahApps.Metro.Controls
             if (oldContent != newContent)
             {
                 this.StartTransition(oldContent, newContent);
-
             }
         }
 

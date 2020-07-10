@@ -49,6 +49,7 @@ namespace MahApps.Metro.Behaviors
                 {
                     targetPasswordBox.Password = (string)e.NewValue;
                 }
+
                 targetPasswordBox.PasswordChanged += PasswordBoxPasswordChanged;
             }
         }
@@ -148,9 +149,11 @@ namespace MahApps.Metro.Behaviors
                 {
                     selection.Changed -= this.PasswordBoxSelectionChanged;
                 }
+
                 this.AssociatedObject.Loaded -= this.PasswordBoxLoaded;
                 this.AssociatedObject.PasswordChanged -= PasswordBoxPasswordChanged;
             }
+
             base.OnDetaching();
         }
 

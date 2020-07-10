@@ -66,6 +66,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             var indeterminateState = bar.GetIndeterminate();
             var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
             if (indeterminateState != null && containingObject != null)
@@ -78,6 +79,7 @@ namespace MahApps.Metro.Controls
                             indeterminateState.Storyboard.Stop(containingObject);
                             indeterminateState.Storyboard.Remove(containingObject);
                         }
+
                         if (newValue)
                         {
                             bar.ResetStoryboard(bar.ActualSize(true), false);
@@ -123,6 +125,7 @@ namespace MahApps.Metro.Controls
                 this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
                 this.InvalidateArrange();
             }
+
             return this.Orientation == Orientation.Horizontal ? this.ActualWidth : this.ActualHeight;
         }
 
@@ -132,6 +135,7 @@ namespace MahApps.Metro.Controls
             {
                 return;
             }
+
             lock (this.lockme)
             {
                 //perform calculations
@@ -212,6 +216,7 @@ namespace MahApps.Metro.Controls
                 templateGrid = this.GetTemplateChild("ContainingGrid") as FrameworkElement;
                 if (templateGrid == null) return null;
             }
+
             var groups = VisualStateManager.GetVisualStateGroups(templateGrid);
             return groups?.OfType<VisualStateGroup>()
                          .SelectMany(group => group.States.OfType<VisualState>())
@@ -286,6 +291,7 @@ namespace MahApps.Metro.Controls
                 {
                     this.SetEllipseDiameter(actualSize);
                 }
+
                 if (this.EllipseOffset.Equals(0))
                 {
                     this.SetEllipseOffset(actualSize);

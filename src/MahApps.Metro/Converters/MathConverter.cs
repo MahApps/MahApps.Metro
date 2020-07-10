@@ -45,6 +45,7 @@ namespace MahApps.Metro.Converters
             {
                 return Binding.DoNothing;
             }
+
             return DoConvert(values[0], values[1], this.Operation);
         }
 
