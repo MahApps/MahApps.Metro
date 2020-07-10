@@ -26,7 +26,7 @@
   </a>
   <br />
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/main">
-    <img alt="main status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/main.svg?style=flat-square&&label=main">
+    <img alt="main status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/master.svg?style=flat-square&&label=main">
   </a>
   <a href="https://ci.appveyor.com/project/punker76/mahapps-metro/branch/develop">
     <img alt="dev status" src="https://img.shields.io/appveyor/ci/punker76/mahapps-metro/develop.svg?style=flat-square&&label=develop">
