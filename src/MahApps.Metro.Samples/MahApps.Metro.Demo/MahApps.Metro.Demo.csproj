@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <!-- Project properties -->
     <PropertyGroup>
@@ -27,8 +28,8 @@
         <PackageReference Include="MaterialDesignColors" Version="1.*" />
         <PackageReference Include="NHotkey.Wpf" Version="2.*" />
         <PackageReference Include="Fody" Version="6.*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Costura.Fody" Version="4.*" />
     </ItemGroup>

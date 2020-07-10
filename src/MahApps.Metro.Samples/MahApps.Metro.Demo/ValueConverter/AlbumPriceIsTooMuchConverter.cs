@@ -24,6 +24,7 @@ namespace MetroDemo.ValueConverter
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -43,8 +44,8 @@ namespace MetroDemo.ValueConverter
             {
                 return new ValidationResult(false, $"The price {album.Price} of the album '{album.Title}' by '{album.Artist.Name}' is too much!");
             }
+
             return ValidationResult.ValidResult;
         }
     }
-
 }

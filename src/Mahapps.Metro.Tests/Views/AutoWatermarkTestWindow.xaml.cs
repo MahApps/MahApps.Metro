@@ -34,9 +34,9 @@ namespace MahApps.Metro.Tests
         [Display(Prompt = "AutoWatermark")]
         public HotKey HotKey { get; set; }
 
-        public AutoWatermarkTestSubModel SubModel { get; set; }= new AutoWatermarkTestSubModel();
+        public AutoWatermarkTestSubModel SubModel { get; set; } = new AutoWatermarkTestSubModel();
 
-        public ObservableCollection<AutoWatermarkTestSubModel> CollectionProperty { get; set; } = new ObservableCollection<AutoWatermarkTestSubModel>(new [] { new AutoWatermarkTestSubModel() });
+        public ObservableCollection<AutoWatermarkTestSubModel> CollectionProperty { get; set; } = new ObservableCollection<AutoWatermarkTestSubModel>(new[] { new AutoWatermarkTestSubModel() });
     }
 
     public class AutoWatermarkTestSubModel

@@ -23,6 +23,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.header = value;
                 this.NotifyOfPropertyChange(() => this.Header);
             }
@@ -37,6 +38,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.isOpen = value;
                 this.NotifyOfPropertyChange(() => this.IsOpen);
             }
@@ -51,6 +53,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.position = value;
                 this.NotifyOfPropertyChange(() => this.Position);
             }
@@ -65,6 +68,7 @@ namespace Caliburn.Metro.Demo.ViewModels
                 {
                     return;
                 }
+
                 this.theme = value;
                 this.NotifyOfPropertyChange(() => this.Theme);
             }

@@ -92,10 +92,11 @@ namespace MahApps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => {
-                                                                                         w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
-                                                                                         w.ShowTitleBar = false;
-                                                                                     });
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w =>
+                {
+                    w.IconOverlayBehavior = OverlayBehavior.HiddenTitleBar;
+                    w.ShowTitleBar = false;
+                });
             var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
@@ -130,7 +131,6 @@ namespace MahApps.Metro.Tests
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
-
 
         private Button GetButton(MetroWindow window, string buttonName)
         {

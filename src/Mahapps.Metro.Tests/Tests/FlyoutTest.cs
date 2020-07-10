@@ -179,9 +179,7 @@ namespace MahApps.Metro.Tests
 
             bool eventRaised = false;
 
-            window.RightFlyout.IsOpenChanged += (sender, args) => {
-                eventRaised = true;
-            };
+            window.RightFlyout.IsOpenChanged += (sender, args) => { eventRaised = true; };
 
             window.RightFlyout.IsOpen = true;
 
@@ -197,11 +195,12 @@ namespace MahApps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            var ex = Record.Exception(() => {
-                                    var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
-                                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
-                                    Assert.NotNull(flyoutOnGrid);
-                                });
+            var ex = Record.Exception(() =>
+                {
+                    var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
+                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
+                    Assert.NotNull(flyoutOnGrid);
+                });
             Assert.Null(ex);
         }
 

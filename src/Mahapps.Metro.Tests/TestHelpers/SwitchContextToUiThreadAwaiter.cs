@@ -22,13 +22,18 @@ namespace MahApps.Metro.Tests.TestHelpers
             return this;
         }
 
-        public bool IsCompleted { get { return false; } }
+        public bool IsCompleted
+        {
+            get { return false; }
+        }
 
         public void OnCompleted(Action continuation)
         {
             this.uiContext.Invoke(new Action(continuation));
         }
 
-        public void GetResult() { }
+        public void GetResult()
+        {
+        }
     }
 }

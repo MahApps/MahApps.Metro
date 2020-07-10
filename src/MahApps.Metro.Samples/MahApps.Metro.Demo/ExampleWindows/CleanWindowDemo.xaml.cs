@@ -73,6 +73,7 @@ namespace MetroDemo.ExampleWindows
                 {
                     return this.FirstTemplate;
                 }
+
                 return this.SecondTemplate;
             }
         }

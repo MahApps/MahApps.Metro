@@ -4,12 +4,15 @@
 
 using System.Windows;
 
-namespace MetroDemo.ExampleWindows {
+namespace MetroDemo.ExampleWindows
+{
     /// <summary>
     /// Interaction logic for DynamicFlyout.xaml
     /// </summary>
-    public partial class DynamicFlyout {
-        public DynamicFlyout() {
+    public partial class DynamicFlyout
+    {
+        public DynamicFlyout()
+        {
             this.InitializeComponent();
         }
 

@@ -21,16 +21,16 @@ namespace Mahapps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<AutoWatermarkTestWindow>().ConfigureAwait(false);
 
             window.Invoke(() =>
-                              {
-                                  var autoWatermark = "AutoWatermark";
+                {
+                    var autoWatermark = "AutoWatermark";
 
-                                  Assert.Equal(autoWatermark, window.TestTextBox.GetValue(TextBoxHelper.WatermarkProperty));
-                                  Assert.Equal(autoWatermark, window.TestTextBoxSubModel.GetValue(TextBoxHelper.WatermarkProperty));
-                                  Assert.Equal(autoWatermark, window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty));
-                                  Assert.Equal(autoWatermark, window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty));
-                                  Assert.Equal(autoWatermark, window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty));
-                                  Assert.Equal(autoWatermark, window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty));
-                              });
+                    Assert.Equal(autoWatermark, window.TestTextBox.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.Equal(autoWatermark, window.TestTextBoxSubModel.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.Equal(autoWatermark, window.TestComboBox.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.Equal(autoWatermark, window.TestNumericUpDown.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.Equal(autoWatermark, window.TestDatePicker.GetValue(TextBoxHelper.WatermarkProperty));
+                    Assert.Equal(autoWatermark, window.TestHotKeyBox.GetValue(TextBoxHelper.WatermarkProperty));
+                });
         }
     }
 }

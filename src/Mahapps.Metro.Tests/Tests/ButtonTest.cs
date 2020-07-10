@@ -37,13 +37,13 @@ namespace MahApps.Metro.Tests
             var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             ControlsHelper.SetContentCharacterCasing(defaultButton, CharacterCasing.Normal);
-            Assert.Equal("SomeText", presenter.Content); 
+            Assert.Equal("SomeText", presenter.Content);
 
             ControlsHelper.SetContentCharacterCasing(defaultButton, CharacterCasing.Lower);
-            Assert.Equal("sometext", presenter.Content); 
+            Assert.Equal("sometext", presenter.Content);
 
             ControlsHelper.SetContentCharacterCasing(defaultButton, CharacterCasing.Upper);
-            Assert.Equal("SOMETEXT", presenter.Content); 
+            Assert.Equal("SOMETEXT", presenter.Content);
         }
 
         [Fact]

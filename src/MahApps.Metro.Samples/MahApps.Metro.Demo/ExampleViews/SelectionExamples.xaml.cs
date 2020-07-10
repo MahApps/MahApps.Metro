@@ -16,14 +16,15 @@ namespace MetroDemo.ExampleViews
         {
             InitializeComponent();
 
-            this.DataContextChanged += (sender, args) => {
-                                           var vm = args.NewValue as MainWindowViewModel;
-                                           if (vm != null)
-                                           {
-                                               CollectionViewSource.GetDefaultView(vm.Albums).GroupDescriptions.Clear();
-                                               CollectionViewSource.GetDefaultView(vm.Albums).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
-                                           }
-                                       };
+            this.DataContextChanged += (sender, args) =>
+                {
+                    var vm = args.NewValue as MainWindowViewModel;
+                    if (vm != null)
+                    {
+                        CollectionViewSource.GetDefaultView(vm.Albums).GroupDescriptions.Clear();
+                        CollectionViewSource.GetDefaultView(vm.Albums).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
+                    }
+                };
         }
     }
 }

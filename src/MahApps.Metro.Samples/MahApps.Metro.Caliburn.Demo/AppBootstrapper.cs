@@ -71,9 +71,9 @@ namespace Caliburn.Metro.Demo
         {
             var startupTasks =
                 GetAllInstances(typeof(StartupTask))
-                .Cast<ExportedDelegate>()
-                .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
-            
+                    .Cast<ExportedDelegate>()
+                    .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
+
             startupTasks.Apply(s => s());
 
             DisplayRootViewFor<IShell>();

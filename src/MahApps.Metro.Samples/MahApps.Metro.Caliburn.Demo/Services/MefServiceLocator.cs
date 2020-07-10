@@ -19,7 +19,8 @@ namespace Caliburn.Metro.Demo.Services
             this.compositionContainer = compositionContainer;
         }
 
-        public T GetInstance<T>() where T : class
+        public T GetInstance<T>()
+            where T : class
         {
             var instance = this.compositionContainer.GetExportedValue<T>();
             if (instance != null)

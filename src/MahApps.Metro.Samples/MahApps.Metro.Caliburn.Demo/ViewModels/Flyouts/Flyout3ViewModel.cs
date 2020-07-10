@@ -4,6 +4,7 @@
 
 using Caliburn.Micro;
 using MahApps.Metro.Controls;
+
 //using MetroDemo.Models;
 
 namespace Caliburn.Metro.Demo.ViewModels.Flyouts
@@ -15,10 +16,7 @@ namespace Caliburn.Metro.Demo.ViewModels.Flyouts
 
         public IObservableCollection<object> Artists
         {
-            get
-            {
-                return this.artists;
-            }
+            get { return this.artists; }
         }
 
         public Flyout3ViewModel()

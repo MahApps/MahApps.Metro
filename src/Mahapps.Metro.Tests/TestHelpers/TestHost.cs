@@ -42,7 +42,7 @@ namespace MahApps.Metro.Tests.TestHelpers
             appThread = new Thread(StartDispatcher);
             appThread.SetApartmentState(ApartmentState.STA);
             appThread.Start();
-            
+
             gate.WaitOne();
         }
 
@@ -55,7 +55,6 @@ namespace MahApps.Metro.Tests.TestHelpers
                     var message = $"Exit TestApp with Thread.CurrentThread: {Thread.CurrentThread.ManagedThreadId}" +
                                   $" and Current.Dispatcher.Thread: {Application.Current.Dispatcher.Thread.ManagedThreadId}";
                     Debug.WriteLine(message);
-                    
                 };
             app.Startup += async (sender, args) =>
                 {

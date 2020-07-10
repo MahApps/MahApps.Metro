@@ -16,9 +16,9 @@ namespace Caliburn.Metro.Demo.Controls
         public ThemeManager()
         {
             this.themeResources = new ResourceDictionary
-                                      {
-                                          Source = new Uri("pack://application:,,,/MahApps.Metro.Caliburn.Demo;component/Resources/Theme1.xaml")
-                                      };
+                                  {
+                                      Source = new Uri("pack://application:,,,/MahApps.Metro.Caliburn.Demo;component/Resources/Theme1.xaml")
+                                  };
         }
 
         public ResourceDictionary GetThemeResources()

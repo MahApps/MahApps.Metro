@@ -7,7 +7,6 @@ using System.Windows.Markup;
 
 namespace MetroDemo.Markup
 {
-
     /// <summary>
     /// Markup extension for Enum values.
     /// </summary>
@@ -38,7 +37,9 @@ namespace MetroDemo.Markup
         /// <summary>
         /// Initializes a new instance of EnumBindingSourceExtension.
         /// </summary>
-        public EnumBindingSourceExtension() { }
+        public EnumBindingSourceExtension()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of EnumBindingSourceExtension.

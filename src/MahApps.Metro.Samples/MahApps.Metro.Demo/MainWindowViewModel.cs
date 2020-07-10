@@ -181,12 +181,12 @@ namespace MetroDemo
             this.GenreDropDownMenuItemCommand = new SimpleCommand(
                 o => true,
                 async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("DropDownButton Menu", $"You are clicked the '{x}' menu item."); }
-                );
+            );
 
             this.GenreSplitButtonItemCommand = new SimpleCommand(
                 o => true,
                 async x => { await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync("Split Button", $"The selected item is '{x}'."); }
-                );
+            );
 
             this.ShowHamburgerAboutCommand = ShowAboutCommand.Command;
 
@@ -242,6 +242,7 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
 
         private ObservableCollection<Artist> _selectedArtists = new ObservableCollection<Artist>();
+
         public ObservableCollection<Artist> SelectedArtists
         {
             get => _selectedArtists;
@@ -455,11 +456,11 @@ namespace MetroDemo
                 var resources = theme.LibraryThemes.First(x => x.Origin == "MahApps.Metro").Resources.MergedDictionaries.First();
 
                 var brushResources = resources.Keys
-                                     .Cast<object>()
-                                     .Where(key => resources[key] is SolidColorBrush)
-                                     .Select(key => key.ToString())
-                                     .OrderBy(s => s)
-                                     .ToList();
+                                              .Cast<object>()
+                                              .Where(key => resources[key] is SolidColorBrush)
+                                              .Select(key => key.ToString())
+                                              .OrderBy(s => s)
+                                              .ToList();
 
                 return brushResources;
             }

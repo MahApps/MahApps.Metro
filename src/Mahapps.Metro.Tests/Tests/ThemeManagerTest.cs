@@ -7,13 +7,13 @@ namespace MahApps.Metro.Tests
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Windows;    
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Media;
     using ControlzEx.Theming;
     using MahApps.Metro.Controls;
-    using MahApps.Metro.Tests.TestHelpers;    
+    using MahApps.Metro.Tests.TestHelpers;
     using Xunit;
 
     public class ThemeManagerTest : AutomationTestBase
