@@ -1,12 +1,15 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
-    using System.ComponentModel;
-    using System.Windows.Controls;
-
     public static class ToggleButtonHelper
     {
         /// <summary>
@@ -16,7 +19,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ContentDirectionProperty =
             DependencyProperty.RegisterAttached("ContentDirection", typeof(FlowDirection), typeof(ToggleButtonHelper),
                                                 new FrameworkPropertyMetadata(FlowDirection.LeftToRight,
-            //FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits,
+                                                                              //FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits,
                                                                               ContentDirectionPropertyChanged));
 
         /// <summary>

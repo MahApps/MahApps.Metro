@@ -1,19 +1,22 @@
-﻿using System.Windows;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System.ComponentModel;
+using System.Windows;
 
 namespace MahApps.Metro.Controls
 {
-    using System.ComponentModel;
-
     public static class VisibilityHelper
     {
         public static readonly DependencyProperty IsVisibleProperty
             = DependencyProperty.RegisterAttached(
                 "IsVisible",
-                typeof (bool?),
-                typeof (VisibilityHelper),
+                typeof(bool?),
+                typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                    IsVisibleChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                                              IsVisibleChangedCallback));
 
         private static void IsVisibleChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -43,8 +46,8 @@ namespace MahApps.Metro.Controls
                 typeof(bool?),
                 typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                    IsCollapsedChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                                              IsCollapsedChangedCallback));
 
         private static void IsCollapsedChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -74,8 +77,8 @@ namespace MahApps.Metro.Controls
                 typeof(bool?),
                 typeof(VisibilityHelper),
                 new FrameworkPropertyMetadata(default(bool?),
-                    FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
-                    IsHiddenChangedCallback));
+                                              FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                                              IsHiddenChangedCallback));
 
         private static void IsHiddenChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
