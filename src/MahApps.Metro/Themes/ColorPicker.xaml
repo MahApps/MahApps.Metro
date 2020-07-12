@@ -14,7 +14,7 @@
     <Converters:ColorToNameConverter x:Key="ColorToNameConverter" />
 
     <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorAndName">
-        <Grid>
+        <Grid Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -36,15 +36,11 @@
                        Grid.Column="1"
                        Margin="2,0,0,0" />
         </Grid>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                <Setter Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
     </DataTemplate>
 
     <DataTemplate x:Key="MahApps.Templates.ColorPickerContent.ColorOnly">
         <Border Grid.Column="0"
+                Visibility="{Binding Converter={Converters:NotNullToVisibilityConverter}}"
                 Height="{DynamicResource MahApps.Sizes.ColorListBox.ItemHeight}"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
