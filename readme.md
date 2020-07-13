@@ -108,7 +108,7 @@ A big thank you has to go to [JetBrains](https://www.jetbrains.com) who provide 
 
 Thanks to all the great people who have already contributed to the project! 
 
-[![Contributors](https://opencollective.com/mahappsmetro/contributors.svg?button=false&avatarHeight=80&width=900)](https://github.com/MahApps/MahApps.Metro/graphs/contributors)
+[![Contributors](https://opencollective.com/mahappsmetro/contributors.svg?width=900&button=false)](https://github.com/MahApps/MahApps.Metro/graphs/contributors)
 
 ## Sponsoring
 
